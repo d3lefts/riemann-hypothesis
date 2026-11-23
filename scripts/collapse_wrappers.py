@@ -238,7 +238,14 @@ def main():
                 break
             for mt in IDENT_RE.finditer(body):
                 t = mt.group(2)
+                if last not in t:
+                    continue
                 if t.rsplit(".", 1)[-1] != last:
+                    # This match will not be rewritten. Avoid deleting a name
+                    # embedded in it, e.g. N.foo⟩ or the projection N.foo.symm.
+                    if last in NAME_COMPONENT.findall(t):
+                        ok = False
+                        break
                     continue
                 if not (n == t or n.endswith("." + t)):
                     ok = False  # field notation or a different declaration with this name
