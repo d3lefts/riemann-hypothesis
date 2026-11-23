@@ -1,6 +1,7 @@
 module
 
-public import Mathlib
+public import Mathlib.NumberTheory.LSeries.DirichletContinuation
+public import Mathlib.Tactic
 
 @[expose] public section
 

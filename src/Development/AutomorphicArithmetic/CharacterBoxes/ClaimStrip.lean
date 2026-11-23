@@ -1,6 +1,7 @@
 module
 
 public import Development.AutomorphicArithmetic.CharacterBoxes.HalfPlane
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
 
 @[expose] public section
 
