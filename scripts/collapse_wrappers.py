@@ -23,6 +23,7 @@ it cannot parse counts as a mismatch), when the wrapper file declares `variable`
 not resolve to exactly one project declaration, when a caller
 mentions `N` in a way that might not be a reference (field notation, a local declaration of
 the same short name), when the wrapper is imported by a protected module, or when they are
+referenced by a possible indirect caller, or when they are
 listed in `scripts/collapse-wrappers-exclude.txt` (e.g. because a caller failed to compile).
 This is not reversible by a script.
 
@@ -126,6 +127,38 @@ def written_names(full):
     return {".".join(parts[i:]) for i in range(len(parts))} | {"_root_." + full}
 
 
+# Index possible mentions by final name component, including short references under
+# `open`. A hit in a comment or string can only cause us to keep an extra wrapper.
+NAME_COMPONENT = re.compile(r"[\w'!?]+")
+
+
+def indirect_uses(mods, wrappers, rev):
+    names = {n.rsplit(".", 1)[-1] for n, _ in wrappers.values()}
+    mentions = collections.defaultdict(set)
+    for caller, mod in mods.items():
+        for word in names.intersection(NAME_COMPONENT.findall(mod.body)):
+            mentions[word].add(caller)
+
+    for wrapper, (name, _) in wrappers.items():
+        short = name.rsplit(".", 1)[-1]
+        if not NAME_COMPONENT.fullmatch(short):
+            yield wrapper
+            continue
+        direct = rev[wrapper]
+        seen = {wrapper, *direct}
+        possible = mentions[short] - seen
+        if not possible:
+            continue
+        pending = list(direct)
+        while pending:
+            new = set(rev[pending.pop()]) - seen
+            if not new.isdisjoint(possible):
+                yield wrapper
+                break
+            seen.update(new)
+            pending.extend(new)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("root")
@@ -180,6 +213,9 @@ def main():
             stats["signature-mismatch-or-unparsed"] += 1
             continue
         wrappers[m] = (n, x)
+    for m in list(indirect_uses(mods, wrappers, rev)):
+        del wrappers[m]
+        stats["possible-indirect-use"] += 1
     name_to_mod = {n: m for m, (n, _) in wrappers.items()}
 
     def final(x, seen=()):
