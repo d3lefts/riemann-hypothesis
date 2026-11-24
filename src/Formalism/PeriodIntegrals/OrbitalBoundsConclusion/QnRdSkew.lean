@@ -260,9 +260,8 @@ private theorem RdV_eq_zero_of_not_mem_compact {n : ℕ} {G : Set (Matrix (Fin n
     {f : Matrix (Fin n) (Fin n) ℂ → ℂ} {K : Set (Matrix (Fin n) (Fin n) ℂ)} (hK : IsCompact K)
     (hz : ∀ g ∈ G, g ∉ K → f g = 0) {g : Matrix (Fin n) (Fin n) ℂ} (hg : g ∈ G) (hgK : g ∉ K) :
     RdV X f g = 0 := by
-  rw [rdV_local (F := fun _ => (0 : ℂ)) hG hK.isClosed.isOpen_compl hgK contDiffOn_const
-    (fun h hU hGh => hz h hGh hU) hg]
-  simp
+  simpa using rdV_local (F := fun _ => (0 : ℂ)) hG hK.isClosed.isOpen_compl hgK contDiffOn_const
+    (fun h hU hGh => hz h hGh hU) hg
 
 theorem skew_reduction_analytic : StepAnalytic := by
   intro n G μ X f₁ f₂ hGc hG hconc hinv hfin hs₁ hs₂ hK₁ _

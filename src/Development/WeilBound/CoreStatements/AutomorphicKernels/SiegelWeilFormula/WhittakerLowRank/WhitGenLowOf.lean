@@ -306,7 +306,7 @@ theorem exists_of_std (ψ : AddChar K ℂ) (hψ : GlobalTheory.JR.IsStdChar ψ) 
   · intro x
     obtain ⟨n, hn⟩ := hex e x
     refine ⟨-(n : ℤ), fun i => (hn i).trans_eq ?_⟩
-    simp [norm_zpow]
+    simp
   · intro y
     obtain ⟨n, hn⟩ := hex e' y
     refine ⟨(n : ℤ), fun i => (hn i).trans_eq ?_⟩
@@ -668,7 +668,7 @@ theorem selfDual_euclid {W : Type} [NormedAddCommGroup W] [InnerProductSpace ℝ
   have hi2 : Integrable (fun y => 𝓕 Φ (S y)) := by
     have := hi.smul c⁻¹
     refine this.congr (Filter.Eventually.of_forall fun y => ?_)
-    simp [smul_smul, hc0.ne']
+    simp [hc0.ne']
   have hi3 : Integrable (𝓕 Φ) := by
     have h1 : Integrable (𝓕 Φ) (Measure.map S volume) := hm.integrable_map_iff.mpr hi2
     rw [hmap, integrable_smul_measure hne' ENNReal.ofReal_ne_top] at h1
@@ -871,7 +871,7 @@ theorem trace_tmul (r : R) (x : E) : Algebra.trace R (R ⊗[F] E) (r ⊗ₜ[F] x
       r • (Algebra.lmul F E x).baseChange R := by
     refine TensorProduct.AlgebraTensorModule.curry_injective ?_
     ext y
-    simp [Algebra.TensorProduct.tmul_mul_tmul, TensorProduct.smul_tmul', mul_comm]
+    simp [Algebra.TensorProduct.tmul_mul_tmul, TensorProduct.smul_tmul']
   rw [Algebra.trace_apply, h, map_smul, LinearMap.trace_baseChange, smul_eq_mul, Algebra.trace_apply]
 
 theorem sigR_tmul (r : R) (x : E) : sigR R σ (r ⊗ₜ[F] x) = r ⊗ₜ[F] σ x := rfl
@@ -987,7 +987,7 @@ theorem BR_nondeg [Algebra.IsSeparable F E] (L : R →+ ℝ)
       · congr 1
         simp [hR, hform, v, Pi.single_apply, Finset.sum_mul]
       · intro c _ hc
-        simp [hR, hform, Pi.single_apply, hc]
+        simp [hR, hform, hc]
       · simp
     rw [← e]
     exact h _
@@ -1033,7 +1033,7 @@ theorem pairHerm_hermUnit [CharZero F] (hσ : ∀ x, σ (σ x) = x) (n : ℕ) (S
   have hsum : (∑ c, ∑ d, (S : Matrix (Fin n) (Fin n) (R ⊗[F] E)) c d *
       (hermUnit R σ hσ n a b u : Matrix (Fin n) (Fin n) (R ⊗[F] E)) d c) = w + sigR R σ w := by
     rw [hs, hw]
-    simp [hermUnit, mul_add, Finset.sum_add_distrib, ite_and, Finset.sum_ite_eq, Finset.sum_ite_eq']
+    simp [hermUnit, mul_add, Finset.sum_add_distrib, ite_and, Finset.sum_ite_eq']
   have h2 : algebraMap F R (1 / 2) * 2 = 1 := by
     rw [show (2 : R) = algebraMap F R 2 from (map_ofNat _ 2).symm, ← map_mul,
       one_div_mul_cancel (two_ne_zero), map_one]

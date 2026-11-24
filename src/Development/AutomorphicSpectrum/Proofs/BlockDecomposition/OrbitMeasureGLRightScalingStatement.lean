@@ -166,7 +166,7 @@ theorem map_two {γ δ : Type} [MeasurableSpace γ] [MeasurableSpace δ] (c : Me
     (h1 : c.map f = r • c) (h2 : e.map h = s • e) :
     (c.prod e).map (Prod.map f h) = (r * s) • c.prod e := by
   rw [← Measure.map_prod_map c e hf hh, h1, h2]
-  simp only [ENNReal.smul_def, Measure.prod_smul_left, Measure.prod_smul_right, smul_smul, ENNReal.coe_mul, smul_eq_mul]
+  simp only [ENNReal.smul_def, Measure.prod_smul_left, Measure.prod_smul_right, smul_smul, ENNReal.coe_mul]
   rw [mul_comm]
 
 theorem map_id_prod {β γ : Type} [MeasurableSpace β] [MeasurableSpace γ] (b : Measure β) (X : Measure γ)
@@ -265,7 +265,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.orbit_measure_GL_right_scaling : ∀ (D : D7) (n t : ℕ) (B W : HSp D) (d : HypDec B W t) (hn : W.rank + t = n) (I : IkD d n) (μ : Measure (Mx D W.rank t)), μ.IsAddHaarMeasure → ∀ x₀ (g : GL (Fin t) (AE D)), (nuT hn I μ x₀).map (fun z => (z.1, mm z.2 g.1)) = ((absA D (Matrix.GeneralLinearGroup.det g))⁻¹ ^ (W.rank + t) : ℝ≥0) • nuT hn I μ x₀ := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.Cov.nuT_cov | exact GlobalTheory.CompanionTheory.ColumnSplitting.Cov.nuT_cov | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.Cov.nuT_cov <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.Cov.nuT_cov
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OrbitMeasureGLRightScalingStatement =====

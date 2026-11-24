@@ -501,7 +501,7 @@ theorem lsd_fst (z : AE D) (k : Fin (Module.finrank D.host.F D.host.E)) :
   | zero => simp
   | tmul a e =>
     rw [lsd_cE_tmul, map_mul, Fock.DRho.infPart_tmul, Algebra.TensorProduct.basis_repr_tmul]
-    simp [Finsupp.smul_apply, Algebra.smul_def]
+    simp [Finsupp.smul_apply]
   | add x y hx hy =>
     have h1 : cE D.host.F D.host.E (x + y) k = cE D.host.F D.host.E x k + cE D.host.F D.host.E y k := by
       rw [map_add (f := _)]; rfl
@@ -516,7 +516,7 @@ theorem lsd_snd (z : AE D) (k : Fin (Module.finrank D.host.F D.host.E)) :
   | zero => simp
   | tmul a e =>
     rw [lsd_cE_tmul, map_mul, Fock.DRho.finPart_tmul, Algebra.TensorProduct.basis_repr_tmul]
-    simp [Finsupp.smul_apply, Algebra.smul_def]
+    simp [Finsupp.smul_apply]
   | add x y hx hy =>
     have h1 : cE D.host.F D.host.E (x + y) k = cE D.host.F D.host.E x k + cE D.host.F D.host.E y k := by
       rw [map_add (f := _)]; rfl

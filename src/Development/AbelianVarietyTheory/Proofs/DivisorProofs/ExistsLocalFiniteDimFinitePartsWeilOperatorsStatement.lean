@@ -121,7 +121,7 @@ theorem _root_.GlobalTheory.T.exists_nhds_transportedAction_finite_openSubgroups
         co.e (GlobalTheory.WeilM.actAB (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) p
           (co.e.symm (GlobalTheory.WeilCont.adeleJoin D.host.F 0 x', GlobalTheory.WeilCont.adeleJoin D.host.F 0 y'))) =
           (GlobalTheory.WeilCont.adeleJoin D.host.F 0 x, GlobalTheory.WeilCont.adeleJoin D.host.F 0 y) := by
-  first | exact @GlobalTheory.WeilTransNbhdD.exists_nhds_finite_preimage_D | exact GlobalTheory.WeilTransNbhdD.exists_nhds_finite_preimage_D | (intros; apply GlobalTheory.WeilTransNbhdD.exists_nhds_finite_preimage_D <;> assumption)
+  first | exact @GlobalTheory.WeilTransNbhdD.exists_nhds_finite_preimage_D
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNhdsTransportedActionFiniteOpenSubgroupsStatement =====
@@ -347,7 +347,7 @@ theorem _root_.GlobalTheory.T.exists_openSubgroups_schroedinger_fix_standardChar
         IsOpen (L₁ : Set (κ → FiniteAdeleRing (𝓞 D.host.F) D.host.F)) ∧
         IsOpen (L₂ : Set (κ → FiniteAdeleRing (𝓞 D.host.F) D.host.F)) ∧
         ∀ x ∈ L₁, ∀ y ∈ L₂, GlobalTheory.WeilM.schr ψ (GlobalTheory.WeilCont.adeleJoin D.host.F 0 x, GlobalTheory.WeilCont.adeleJoin D.host.F 0 y) Φ = Φ := by
-  first | exact @GlobalTheory.SchrFixNbhd.schr_fix_nbhd | exact GlobalTheory.SchrFixNbhd.schr_fix_nbhd | (intros; apply GlobalTheory.SchrFixNbhd.schr_fix_nbhd <;> assumption)
+  first | exact @GlobalTheory.SchrFixNbhd.schr_fix_nbhd
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOpenSubgroupsSchroedingerFixStandardCharStatement =====
@@ -397,7 +397,7 @@ theorem _root_.GlobalTheory.T.isCompact_finiteAdeleAnnihilator_stdChar : ∀ (D 
     ∀ (κ : Type) [Fintype κ] (L : AddSubgroup (κ → FiniteAdeleRing (𝓞 D.host.F) D.host.F)),
       IsOpen (L : Set (κ → FiniteAdeleRing (𝓞 D.host.F) D.host.F)) →
       IsCompact {x : κ → FiniteAdeleRing (𝓞 D.host.F) D.host.F | ∀ y ∈ L, ψ (pairA D.host.F 0 (x ⬝ᵥ y)) = 1} := by
-  first | exact @GlobalTheory.AnnCompactStdChar.isCompact_annihilator_of_isStdChar | exact GlobalTheory.AnnCompactStdChar.isCompact_annihilator_of_isStdChar | (intros; apply GlobalTheory.AnnCompactStdChar.isCompact_annihilator_of_isStdChar <;> assumption)
+  first | exact @GlobalTheory.AnnCompactStdChar.isCompact_annihilator_of_isStdChar
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCompactFiniteAdeleAnnihilatorStdCharStatement =====
@@ -523,7 +523,7 @@ theorem _root_.GlobalTheory.T.exists_local_finiteDim_finiteParts_weilOperators :
       (∀ i, g i ∈ GlobalTheory.WeilM.SB (κ → FiniteAdeleRing (𝓞 D.host.F) D.host.F)) ∧ (∀ i j, g i (y j) = if i = j then 1 else 0) ∧
       ∀ p ∈ N, ∃ f : Fin m → SchwartzMap (κ → mixedEmbedding.mixedSpace D.host.F) ℂ,
         om p Φ = ∑ i, GlobalTheory.WeilM.pureA D.host.F (f i) (g i) := by
-  first | exact @GlobalTheory.WeilCont.exists_local_finite_parts | exact GlobalTheory.WeilCont.exists_local_finite_parts | (intros; apply GlobalTheory.WeilCont.exists_local_finite_parts <;> assumption)
+  first | exact @GlobalTheory.WeilCont.exists_local_finite_parts
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLocalFiniteDimFinitePartsWeilOperatorsStatement =====

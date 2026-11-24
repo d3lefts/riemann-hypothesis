@@ -138,7 +138,7 @@ theorem sum_le_sum_of_threshold {α : Type*} [DecidableEq α] (e : α → ℤ) (
     Finset.sum_le_sum_of_subset_of_nonneg Finset.inter_subset_right (fun i hi hni => by
       have : i ∉ U := fun h => hni (Finset.mem_inter.2 ⟨h, hi⟩)
       linarith [hU' i hi this])
-  simp only [Finset.sum_sub_distrib, Finset.sum_const, smul_eq_mul] at h1 h2
+  simp only [Finset.sum_sub_distrib, Finset.sum_const] at h1 h2
   rw [hc] at h2
   linarith
 
@@ -219,11 +219,7 @@ theorem KO_det {m : Type} [Fintype m] [DecidableEq m] {κ : GL m k} (hκ : κ �
 
 theorem card_filter_lt (N n : ℕ) (hn : n ≤ N) : (Finset.univ.filter fun i : Fin N => (i : ℕ) < n).card = n := by
   first
-  | exact @_root_.GlobalTheory.CardValuationLt.card_val_lt
-  | exact _root_.GlobalTheory.CardValuationLt.card_val_lt
   | (apply _root_.GlobalTheory.CardValuationLt.card_val_lt <;> assumption)
-  | (intros; apply _root_.GlobalTheory.CardValuationLt.card_val_lt <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.CardValuationLt.card_val_lt <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.CardValuationLt.card_val_lt ..)
 
 theorem indic_antitone (N n : ℕ) : Antitone (indic (Finset.univ.filter fun i : Fin N => (i : ℕ) < n)) := by
@@ -535,11 +531,7 @@ theorem pot_nonneg {N : ℕ} {ν : Fin N → ℤ} (h : ∀ i, 0 ≤ ν i) : 0 �
 theorem pos_iff_lt {N : ℕ} {e : Fin N → ℤ} (ha : Antitone e) (i : Fin N) :
     0 < e i ↔ (i : ℕ) < (Finset.univ.filter fun j => 0 < e j).card := by
   first
-  | exact @_root_.GlobalTheory.PositiveIffLtCard.pos_iff_lt_card
-  | exact _root_.GlobalTheory.PositiveIffLtCard.pos_iff_lt_card
   | (apply _root_.GlobalTheory.PositiveIffLtCard.pos_iff_lt_card <;> assumption)
-  | (intros; apply _root_.GlobalTheory.PositiveIffLtCard.pos_iff_lt_card <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.PositiveIffLtCard.pos_iff_lt_card <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.PositiveIffLtCard.pos_iff_lt_card ..)
 
 theorem nonneg_of_dom {N : ℕ} {ν e : Fin N → ℤ} (hν : Antitone ν) (he : ∀ i, 0 ≤ e i)
@@ -1099,7 +1091,6 @@ theorem term_eq (q N : ℕ) (hq : 0 < q) (α : Fin N → ℂˣ) (S : Finset (Fin
   push_cast [Nat.cast_sub hnN]
   simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum, Finset.sum_const,
     nsmul_eq_mul]
-  push_cast
   linear_combination hc
 
 end GlobalTheory.SatakeSubsetSum

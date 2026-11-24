@@ -75,9 +75,8 @@ private theorem det_norm_le_prod_rows (ρ : ℕ) (A : Matrix (Fin ρ) (Fin ρ) �
 theorem goal1 :
   Formalism.HadamardInequality.Hadamard := by
   intro ρ A
-  have h0 := det_norm_le_prod_rows ρ A
   calc ‖A.det‖ ^ 2 ≤ (∏ i, ‖(WithLp.toLp 2 (A i) : EuclideanSpace ℂ (Fin ρ))‖) ^ 2 :=
-        pow_le_pow_left₀ (norm_nonneg _) h0 2
+        pow_le_pow_left₀ (norm_nonneg _) (det_norm_le_prod_rows ρ A) 2
     _ = ∏ i, ∑ j, ‖A i j‖ ^ 2 := by
         rw [← Finset.prod_pow]
         refine Finset.prod_congr rfl (fun i _ => ?_)

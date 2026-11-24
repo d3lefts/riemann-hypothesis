@@ -138,7 +138,7 @@ theorem Sys.box (h : Sys L P) (M : Fin n → ℤ) (hM : Box L M) : P M := by
       by_cases hj : j = a
       · subst hj
         simp
-      · simp [hj, Function.update_of_ne hj]
+      · simp [hj]
     rw [e]
     have h0 : P (Function.update (fun j => if j ∈ s then M j else L j.castSucc) a (L a.castSucc)) := by
       have e2 : Function.update (fun j => if j ∈ s then M j else L j.castSucc) a (L a.castSucc) =
@@ -551,7 +551,6 @@ theorem etaK_comm {n : ℕ} {E : Fin (n + 1) → Fin (n + 1) → Module.End ℂ 
 theorem exists_castSucc {n : ℕ} (a : Fin (n + 1)) (h : a ≠ Fin.last n) : ∃ a' : Fin n, a = a'.castSucc := by
   first
   | exact ⟨a.castPred h, (Fin.castSucc_castPred a h).symm⟩
-  | (obtain ⟨j, hj⟩ := Fin.exists_castSucc_eq.mpr h; exact ⟨j, hj.symm⟩)
 
 theorem top_of_stab {N : ℕ} {E : Fin N → Fin N → Module.End ℂ V} (hI : Irr E) (S : Submodule ℂ V) (hS : Stab E S)
     (v : V) (hv : v ∈ S) (hv0 : v ≠ 0) : S = ⊤ := by
@@ -1228,7 +1227,7 @@ theorem isWt_mono {n : ℕ} {E : Fin n → Fin n → Module.End ℂ V} {y : Fin 
     (a : Fin n → ℕ) (v : V) (h : IsWt E v) : IsWt E (mono y a v) := by
   unfold mono
   refine list_prod_pres (IsWt E) _ (fun f hf => ?_) v h
-  simp only [List.mem_ofFn, Set.mem_range] at hf
+  simp only [List.mem_ofFn] at hf
   obtain ⟨x, rfl⟩ := hf
   exact pow_pres (IsWt E) (y x) (fun w hw => isWt_vec hy x w hw) (a x)
 
@@ -1396,7 +1395,6 @@ theorem qr_branchingAlg_of : Qr.Decomp → Qr.CapIndep → Qr.IrredCap → Qr.Br
     iSup_subtype.trans htop
   first
   | exact DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top hind hsup
-  | exact DirectSum.isInternal_submodule_of_independent_of_iSup_eq_top hind hsup
 
 end Formalism.FourierDecayAlt.P
 end -- clump:auto

@@ -859,12 +859,12 @@ theorem size_arith (f k m N L PPF Bw C b lx Sg cs np Rp lg l1 l2 l3 EM hI FP Arc
   have hN0 : 0 ≤ N := by linarith
   have hmN : m ≤ N := by linarith
   have hPPF : 0 ≤ PPF := by linarith
-  have hC2 : 1 ≤ C ^ 2 := by nlinarith
-  have hC3 : C ≤ C ^ 3 := by nlinarith [mul_nonneg hC0 (by linarith : (0 : ℝ) ≤ C ^ 2 - 1)]
-  have hC23 : C ^ 2 ≤ C ^ 3 := by nlinarith [mul_nonneg (sq_nonneg C) (by linarith : (0 : ℝ) ≤ C - 1)]
+  have hC2 : 1 ≤ C ^ 2 := one_le_pow₀ hC
+  have hC3 : C ≤ C ^ 3 := le_self_pow₀ hC (by norm_num)
+  have hC23 : C ^ 2 ≤ C ^ 3 := pow_le_pow_right₀ hC (by norm_num)
   have hC31 : 1 ≤ C ^ 3 := by linarith
   have hC30 : 0 ≤ C ^ 3 := by linarith
-  have hN2 : 1 ≤ N ^ 2 := by nlinarith
+  have hN2 : 1 ≤ N ^ 2 := one_le_pow₀ hN1
   have hN3 : 0 ≤ N ^ 3 := pow_nonneg hN0 3
   have hm2 : 0 ≤ m ^ 2 := sq_nonneg m
   have pN2 : 0 ≤ N ^ 2 := sq_nonneg N
@@ -906,8 +906,8 @@ theorem size_arith (f k m N L PPF Bw C b lx Sg cs np Rp lg l1 l2 l3 EM hI FP Arc
       186 * (C ^ 2 * f ^ 2 * N ^ 2 * b * L) := by linarith
   have hCL : 1 ≤ C * L := o hC hL
   have hLC : 0 ≤ L * (C - 1) := mul_nonneg hL0 (by linarith)
-  have e1 : L + l2 ≤ 4 * C * L := by nlinarith
-  have e3 : L + l3 ≤ 4 * C * L := by nlinarith
+  have e1 : L + l2 ≤ 4 * C * L := by linarith
+  have e3 : L + l3 ≤ 4 * C * L := by linarith
   have h4CL : 0 ≤ 4 * C * L := mul_nonneg (mul_nonneg (by norm_num) hC0) hL0
   have e2 : Bw * (L + l2) ≤ (C * b) * (4 * C * L) := by
     have := mul_le_mul_of_nonneg_left e1 hBw0
@@ -1026,18 +1026,17 @@ theorem size_le (O : FunData K Df) (C x CH b : ℝ) (hC : 1 ≤ C) (hx : 1 ≤ x
   have hrN : (O.k : ℝ) + O.m - 1 ≤ O.N := by
     rw [hN]
     have h0 : (0 : ℝ) ≤ O.m * (O.tt + (O.k + O.m + 5)) := by positivity
-    nlinarith
+    linarith
   have hN1 : (1 : ℝ) ≤ O.N := by linarith
-  have hmf : (2 : ℝ) ≤ O.m * O.f := by nlinarith
-  have hNN : (O.N : ℝ) ≤ (O.N : ℝ) ^ 2 := by nlinarith
+  have hmf : (2 : ℝ) ≤ O.m * O.f := le_trans hm2r (le_mul_of_one_le_right (by linarith) hf)
+  have hNN : (O.N : ℝ) ≤ (O.N : ℝ) ^ 2 := le_self_pow₀ hN1 two_ne_zero
   have hb2N : 2 * (O.N : ℝ) ≤ b := by
     have h1 := mul_le_mul_of_nonneg_right hmf (sq_nonneg (O.N : ℝ))
     linarith
   have hbfN : (O.f : ℝ) * (2 * (O.N : ℝ)) ≤ b := by
-    have h2 : (0 : ℝ) ≤ (O.f : ℝ) * O.N * (O.m * O.N - 2) := by
-      apply mul_nonneg (by positivity)
-      nlinarith
-    nlinarith
+    have hMN : (2 : ℝ) ≤ O.m * O.N := le_trans hm2r (le_mul_of_one_le_right (by linarith) hN1)
+    have h2 : (0 : ℝ) ≤ (O.f : ℝ) * O.N * (O.m * O.N - 2) := mul_nonneg (by positivity) (by linarith)
+    linarith [show (O.f : ℝ) * O.N * (O.m * O.N - 2) = O.m * O.f * O.N ^ 2 - O.f * (2 * O.N) by ring]
   have hb : 1 ≤ b := by linarith
   have hSg0 := Sig0_nonneg O C b
   have hcs0 : 0 ≤ O.cS := by
@@ -1047,7 +1046,7 @@ theorem size_le (O : FunData K Df) (C x CH b : ℝ) (hC : 1 ≤ C) (hx : 1 ≤ x
   have hnp1 : 1 ≤ O.np := by
     unfold FunData.np FunData.r
     have h0 : (0 : ℝ) ≤ O.m * (O.k + O.m + 4) := by positivity
-    nlinarith
+    linarith
   have hRp1 : 1 ≤ O.Rp C := by
     unfold FunData.Rp
     have h1 : (0 : ℝ) ≤ ((O.m : ℝ) + 1) * ((O.ga C : ℝ) + 1) := by positivity
@@ -1181,7 +1180,6 @@ theorem hence_local {D nV dQ n : ℕ} (w : Pl K) (RR : Submodule (𝓞 K) (Fin D
     rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, heq]
     first
       | exact Matrix.smul_mulVec _ _ _
-      | exact Matrix.smul_mulVec_assoc _ _ _
   obtain ⟨t, ht, htc⟩ := unit_at_val w c hc
   have hw0 : ((w.asIdeal : Ideal (𝓞 K)) : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) ≠ 0 :=
     FractionalIdeal.coeIdeal_ne_zero.mpr w.ne_bot
@@ -1210,7 +1208,8 @@ theorem re_dot_self_nonneg {ι : Type} [Fintype ι] (z : ι → ℂ) : 0 ≤ (st
   have h1 : (star (z i)).re = (z i).re := Complex.conj_re (z i)
   have h2 : (star (z i)).im = -(z i).im := Complex.conj_im (z i)
   rw [h1, h2]
-  nlinarith [sq_nonneg (z i).re, sq_nonneg (z i).im]
+  have := add_nonneg (mul_self_nonneg (z i).re) (mul_self_nonneg (z i).im)
+  linarith
 
 private theorem star_sum_dotProduct_sum {ι P : Type} [Fintype ι] [Fintype P] (x y : P → ι → ℂ) :
     star (∑ p, x p) ⬝ᵥ ∑ p, y p = ∑ p, ∑ p', star (x p) ⬝ᵥ y p' := by
@@ -1289,7 +1288,6 @@ theorem fcoord_sum {ι V P : Type} [Fintype ι] [DecidableEq ι] [AddCommGroup V
   rw [hv]
   first
     | exact Matrix.mulVec_sum _ _ _
-    | exact map_sum (Matrix.mulVecLin ((X v)⁻¹)) _ _
 
 theorem normAt_sq_eq {ι V : Type} [Fintype ι] [DecidableEq ι] [AddCommGroup V] [Module K V] (b : Module.Basis ι K V)
     (X : InfinitePlace K → Matrix ι ι ℂ) (v : InfinitePlace K) (x : V) :
@@ -1322,9 +1320,6 @@ theorem fcoord_scale {d : ℕ} (t : InfinitePlace K → ℝ) (ht : ∀ v, 0 < t 
   rw [hinv, Complex.ofReal_inv, inv_inv]
   first
     | exact Matrix.smul_mulVec _ _ _
-    | exact Matrix.smul_mulVec_assoc _ _ _
-    | (funext i
-       simp only [Matrix.mulVec, dotProduct, Matrix.smul_apply, smul_eq_mul, Pi.smul_apply, Finset.mul_sum, mul_assoc])
 
 theorem isUnit_scaleFrame {d : ℕ} (t : InfinitePlace K → ℝ) (ht : ∀ v, 0 < t v)
     (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ) (hX : ∀ v, IsUnit (X v).det) (v : InfinitePlace K) :
@@ -1451,8 +1446,10 @@ theorem ip_first [_root_.NumberField.IsTotallyComplex K] (wf : Df.WF) (S : Indef
         rw [← Real.exp_nat_mul, ← Real.exp_add,
           show ((2 : ℕ) : ℝ) * (-(g v) / 2) + g v = 0 by push_cast; ring, Real.exp_zero]
       have h5 : nq ^ 2 ≤ (Real.exp (-(g v) / 2) * ny) ^ 2 := by
-        have := mul_le_mul_of_nonneg_left h3 (sq_nonneg (Real.exp (-(g v) / 2)))
-        nlinarith
+        calc nq ^ 2 = 1 * nq ^ 2 := (one_mul _).symm
+          _ = Real.exp (-(g v) / 2) ^ 2 * (Real.exp (g v) * nq ^ 2) := by rw [← he, mul_assoc]
+          _ ≤ Real.exp (-(g v) / 2) ^ 2 * ny ^ 2 := mul_le_mul_of_nonneg_left h3 (sq_nonneg _)
+          _ = (Real.exp (-(g v) / 2) * ny) ^ 2 := by ring
       exact (pow_le_pow_iff_left₀ hnq (mul_nonneg (Real.exp_pos _).le hny) two_ne_zero).mp h5
     have hop := norm_nonneg (LinearMap.toContinuousLinearMap (Matrix.toEuclideanLin
       ((X' v)⁻¹ * (LinearMap.toMatrix bQ bn (Matrix.mulVecLin vb)).map v.embedding * Df.XQ Bs.μ0 v)))

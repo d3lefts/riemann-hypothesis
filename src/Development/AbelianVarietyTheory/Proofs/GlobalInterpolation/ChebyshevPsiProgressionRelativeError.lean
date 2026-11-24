@@ -1555,7 +1555,9 @@ lemma zsum (s t : Set ℂ) (ht : t.Finite) (hst : s ⊆ t) (o : ℂ → ℕ) (u 
     Real.rpow_sub_one hu.ne']
   have h3 : 0 < u ^ ρ.re := Real.rpow_pos_of_pos hu _
   have h4 : u ^ ρ.re / ‖ρ‖ ≤ 2 * u ^ ρ.re := by
-    rw [div_le_iff₀ (by linarith)]; nlinarith
+    rw [div_le_iff₀ (by linarith)]
+    have := mul_le_mul_of_nonneg_left h2 (show (0 : ℝ) ≤ 2 * u ^ ρ.re by positivity)
+    linarith
   calc (o ρ : ℝ) * (u ^ ρ.re / ‖ρ‖) ≤ (o ρ : ℝ) * (2 * u ^ ρ.re) := by gcongr
     _ = _ := by field_simp
 
@@ -1652,17 +1654,23 @@ lemma mainLower (θ β V : ℝ) (hθ : θ ≤ 1) (h1 : 7 / 8 ≤ β) (h2 : β < 
     rw [← Real.exp_mul, ← Real.exp_add]; congr 1; rw [hx]; ring
   have e2 : Real.exp (-x) ≤ 1 / (1 + x) := by
     rw [Real.exp_neg, one_div]; exact inv_anti₀ (by linarith) (by linarith [Real.add_one_le_exp x])
-  have e3 : 8 * (1 - β) ≤ x := by rw [hx]; nlinarith
+  have e3 : 8 * (1 - β) ≤ x := by
+    rw [hx]; have := mul_le_mul_of_nonneg_left hV (by linarith : (0 : ℝ) ≤ 1 - β); linarith
   have e4 : Real.exp (-x) / β ≤ 1 - min 1 x / 4 := by
     rw [div_le_iff₀ hb]; refine e2.trans ?_
     rw [div_le_iff₀ (by linarith)]
     rcases le_total 1 x with h | h
-    · rw [min_eq_left h]; nlinarith
+    · rw [min_eq_left h]
+      have h5 : (3 / 2 : ℝ) ≤ (1 - 1 / 4) * (1 + x) := by linarith
+      have h6 := mul_le_mul h5 h1 (by norm_num) (by linarith)
+      linarith
     · rw [min_eq_right h]
       have : 0 ≤ (1 - x / 4) * (1 + x) := by apply mul_nonneg <;> linarith
       have h5 : (1 - x / 4) * (1 + x) * (1 - x / 8) ≤ (1 - x / 4) * (1 + x) * β := by
         gcongr; linarith
-      nlinarith [mul_nonneg hx0.le (sub_nonneg.2 h), mul_nonneg hx0.le (mul_nonneg hx0.le hx0.le)]
+      have h6 : (1 - x / 4) * (1 + x) * (1 - x / 8) =
+          1 + 11 / 32 * (x * (1 - x)) + 9 / 32 * x + 1 / 32 * (x * (x * x)) := by ring
+      linarith [mul_nonneg hx0.le (sub_nonneg.2 h), mul_nonneg hx0.le (mul_nonneg hx0.le hx0.le)]
   have hu := Real.exp_pos V
   have e5 : 0 < Real.exp (-x) / β := by positivity
   rw [e1, mul_div_assoc (Real.exp V) (Real.exp (-x))]
@@ -1692,19 +1700,31 @@ lemma realEnd (Ce Ca η₀ c' K cw R₀ : ℝ) (hCe : 0 < Ce) (hCa : 0 < Ca) (h�
   have hc3c : c₃ ≤ c' ^ 2 / 4 := min_le_right _ _
   refine ⟨20 * R + 4 * R ^ 2, c₃, 4 * ((3072 * Ce + 2 * Ca) / cw + 2 * Ca * K), by positivity, hc3,
     by positivity, fun m V w hm hV => ?_⟩
-  have hV1 : 20 * R * m ≤ V := by nlinarith [sq_nonneg R]
-  have hV2 : 4 * R ^ 2 ≤ V := by nlinarith [sq_nonneg R]
-  have hV0 : 0 < V := by nlinarith
+  have hV1 : 20 * R * m ≤ V := by
+    linarith [mul_nonneg (sq_nonneg R) (by linarith : (0 : ℝ) ≤ m)]
+  have hV2 : 4 * R ^ 2 ≤ V := by
+    have h1 : 4 * R ^ 2 ≤ 4 * R ^ 2 * m := le_mul_of_one_le_right (by positivity) hm
+    have h2 : 0 ≤ 20 * R * m := by positivity
+    linarith
+  have hV0 : 0 < V := by
+    have h4 : (4 : ℝ) ≤ R ^ 2 := by
+      have := mul_le_mul hR2 hR2 (by norm_num) (by linarith)
+      linarith [show R * R = R ^ 2 by ring]
+    linarith
   set s := √V with hs
   have hs2 : s * s = V := Real.mul_self_sqrt hV0.le
   have hsR : 2 * R ≤ s := Real.le_sqrt_of_sq_le (by linarith)
-  have hL : R * (10 * m + s) ≤ V := by nlinarith
+  have hL : R * (10 * m + s) ≤ V := by
+    have hRs : 2 * R * s ≤ V := by
+      rw [← hs2]; exact mul_le_mul_of_nonneg_right hsR (Real.sqrt_nonneg V)
+    linarith
   have hL0 : 0 < 10 * m + s := by linarith
   refine ⟨hV0, le_trans (by gcongr) hL, fun hw => ?_⟩
   have hL2 : 2 * (10 * m + s) ≤ V := le_trans (by gcongr) hL
   have hLη : 10 * m + s ≤ η₀ * V := by
     have := mul_le_mul_of_nonneg_left hL hη.le
-    nlinarith
+    have h1 : 10 * m + s ≤ (η₀ * R) * (10 * m + s) := le_mul_of_one_le_left hL0.le hRη
+    linarith
   set P := Real.exp (-c₃ * V / m) + Real.exp (-√(c₃ * V)) with hP
   have hw0 : 0 < w := lt_of_lt_of_le (by positivity) hw
   have hsq : ∀ a : ℝ, 0 ≤ a → c₃ ≤ a ^ 2 → √(c₃ * V) ≤ a * s := fun a ha h => by
@@ -1726,7 +1746,9 @@ lemma realEnd (Ce Ca η₀ c' K cw R₀ : ℝ) (hCe : 0 < Ce) (hCa : 0 < Ca) (h�
         rw [neg_mul, neg_div]; linarith
       linarith [Real.exp_pos (-√(c₃ * V))]
     · have h1 : s / 2 ≤ V / (10 * m + s) := by
-        rw [le_div_iff₀ hL0]; nlinarith
+        rw [le_div_iff₀ hL0]
+        have := mul_le_mul_of_nonneg_left h (Real.sqrt_nonneg V)
+        linarith
       have h2 := hsq (c' / 2) (by positivity) (by linarith)
       have h3 : Real.exp (-(c' * (V / (10 * m + s)))) ≤ Real.exp (-√(c₃ * V)) := by
         apply Real.exp_le_exp.2
@@ -1785,20 +1807,25 @@ lemma etaChoice (c d : ℝ) (hc : 0 < c) (hd : 0 < d) :
       rw [one_div_mul_eq_div, le_div_iff₀ h0, one_mul]; exact le_min h1 h
     refine le_trans ?_ (le_mul_of_one_le_left (Real.exp_pos _).le h3)
     apply Real.exp_le_exp.2
-    nlinarith
+    have := mul_le_mul_of_nonneg_right ha hR0
+    linarith
   · have hl : 1 ≤ Real.log (d / δ) := by
-      rw [Real.le_log_iff_exp_le (by positivity), le_div_iff₀ hδ]; nlinarith
+      rw [Real.le_log_iff_exp_le (by positivity), le_div_iff₀ hδ]
+      have := mul_le_mul_of_nonneg_right h (by linarith : (0 : ℝ) ≤ Real.exp 1)
+      linarith
     refine ⟨d * Real.log (d / δ), by positivity, Or.inr rfl, ?_⟩
     have h4 : 4 ≤ d * R := by rw [div_le_iff₀ hd] at hR; linarith
     rw [min_eq_right (h.trans h1)]
     have h5 : Real.exp (-Real.log (d / δ)) ≤ 1 / d₀ * δ := by
       rw [Real.exp_neg, Real.exp_log (by positivity), inv_div, one_div_mul_eq_div]
-      gcongr; nlinarith
+      gcongr
+      have := le_mul_of_one_le_right h0.le he
+      linarith
     refine le_trans ?_ (mul_le_mul_of_nonneg_right h5 (Real.exp_pos _).le)
     rw [← Real.exp_add]
     apply Real.exp_le_exp.2
     have := mul_le_mul_of_nonneg_right hb hR0
-    nlinarith [mul_nonneg (sub_nonneg.2 h4) (sub_nonneg.2 hl)]
+    linarith [mul_nonneg (sub_nonneg.2 h4) (sub_nonneg.2 hl)]
 
 
 
@@ -1842,15 +1869,21 @@ theorem psiAP_relative : ∃ c₀ : ℝ, 0 < c₀ ∧ ∀ c₁ : ℝ, 0 < c₁ �
   have hT2 : 2 ≤ T := by linarith [Real.add_one_le_exp (8 * m + √V)]
   have hTu : T ≤ Real.exp V := Real.exp_le_exp.2 (by linarith)
   have hTA : ((M : ℝ) * T) ^ A ≤ Real.exp V := by
-    rw [hMm, hT, ← Real.exp_add, ← Real.exp_mul, Real.exp_le_exp]; nlinarith
+    rw [hMm, hT, ← Real.exp_add, ← Real.exp_mul, Real.exp_le_exp]
+    have := mul_le_mul_of_nonneg_right (by linarith : m + (8 * m + √V) ≤ L) hA.le
+    linarith
   have hlog : ∀ ρ : ℂ, |ρ.im| ≤ T → 0 < Real.log (M * (|ρ.im| + 2)) ∧ Real.log (M * (|ρ.im| + 2)) ≤ L := by
     intro ρ hρ
     have h0 := abs_nonneg ρ.im
-    refine ⟨Real.log_pos (by nlinarith), ?_⟩
+    refine ⟨Real.log_pos (by
+      have := mul_le_mul hM3 (by linarith : (2 : ℝ) ≤ |ρ.im| + 2) (by norm_num) (by linarith)
+      linarith), ?_⟩
     rw [Real.log_le_iff_le_exp (by positivity)]
     have : Real.exp L = M * (M * T) := by
       rw [hMm, hT, ← Real.exp_add, ← Real.exp_add]; congr 1; rw [hLd]; ring
-    rw [this]; gcongr; nlinarith
+    rw [this]; gcongr
+    have := mul_le_mul_of_nonneg_right hM3 (by linarith : (0 : ℝ) ≤ T)
+    linarith
   have hzf : ∀ (χ : DirichletCharacter ℂ M), ∀ ρ ∈ zerosBox χ (1 / 2) T,
       (ρ.im = 0 ∧ IsExc c₁ χ ρ.re) ∨ ρ.re ≤ 1 - c / L := by
     intro χ ρ hρ
@@ -1899,7 +1932,9 @@ theorem psiAP_relative : ∃ c₀ : ℝ, 0 < c₀ ∧ ∀ c₁ : ℝ, 0 < c₁ �
   · refine core c 1 hc.le hmin1 ?_ ?_ (Or.inl ⟨h0, fun χ ρ hρ => (hzf χ ρ hρ).resolve_left fun h => hno _ _ h.2⟩)
     · rw [mul_one]
       refine le_trans ?_ (le_mul_of_one_le_left (Real.exp_pos _).le hK)
-      apply Real.exp_le_exp.2; nlinarith
+      apply Real.exp_le_exp.2
+      have := mul_le_mul_of_nonneg_right hc'' hVL
+      linarith
     · rw [h0]; simp only [Int.cast_zero, zero_mul]; linarith
   · obtain ⟨hne, hβ1, hz, ho, hlow⟩ := hX2 χ₁ β hχ₁
     have hβ2 : β < 1 := hχ₁.2.2.1
@@ -1916,7 +1951,9 @@ theorem psiAP_relative : ∃ c₀ : ℝ, 0 < c₀ ∧ ∀ c₁ : ℝ, 0 < c₁ �
         rw [pow_succ (M : ℝ) 2]; gcongr
       have h4 : min 1 c * (1 / (M : ℝ) ^ 3) ≤ c / (M : ℝ) ^ 3 := by
         rw [mul_one_div]; gcongr; exact min_le_right _ _
-      rw [h1]; nlinarith
+      rw [h1]
+      have h5 : 1 - β ≤ (1 - β) * L := le_mul_of_one_le_right (by linarith) (by linarith)
+      linarith
     · refine le_trans ?_ (mainLower θ β V hθ1 hβ1 hβ2 (by linarith))
       gcongr; linarith
     · simp only [Complex.ofReal_re]; linarith

@@ -646,7 +646,6 @@ theorem isCx_of_isMul {x : KeyIn R} {n l d : ℕ} {s : Fin x.P.g → RR x n} {z 
     refine h1.symm.trans ?_
     have h2 : valT (T := R) (z a).left (x.P.L.U (ch a)) (fam x s i (ch a)) = 0 := hz.2.1 a i
     rw [valT_eq _ _ (hz.1 a)] at h2
-    beta_reduce
     rw [valT_eq _ _ (hz.1 a), map_mul, h2, zero_mul]
     rfl
 
@@ -824,7 +823,7 @@ open GlobalTheory.KeyKa
 
 
 theorem _root_.GlobalTheory.T.keyInvariantFromIntersection_unique : Out.Laws → ∀ (K : Type) [Field K] [CharZero K] (x : KeyIn K) (n l l' : ℕ) (al : ℕ → Matrix (Fin 4) (Fin 4) ℤ) (s : Fin x.P.g → RR x n) (κ κ' : Kˣ), admitted x.P.g n l l' al → KaVal x n l l' al s κ → KaVal x n l l' al s κ' → κ = κ' := by
-  first | exact @GlobalTheory.KaUnique.kaVal_unique | exact GlobalTheory.KaUnique.kaVal_unique | (intros; apply GlobalTheory.KaUnique.kaVal_unique <;> assumption)
+  first | exact @GlobalTheory.KaUnique.kaVal_unique
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.KeyInvariantFromIntersectionUniqueStatement =====

@@ -120,7 +120,7 @@ theorem chi_transvection [CharZero k] (χ : GL (Fin n) k →* ℚ) (hpos : ∀ g
     funext x
     by_cases hx : x = i
     · subst hx; simp [ha]
-    · simp [Function.update_apply, hx]
+    · simp [hx]
   have key' : diagonal (Function.update (1 : Fin n → k) i 2⁻¹) *
       diagonal (Function.update (1 : Fin n → k) i 2) = 1 := by
     simpa using key 2⁻¹ (inv_ne_zero h2)
@@ -533,7 +533,7 @@ theorem chiV_props (hC : KComm) (hL : LiftU) (hJ : MatVInj) (hU : MatVU) (hK : K
     by_cases hw : w = v
     · rw [hw]
       have hc := congrArg Subtype.val (hs ⟨_, hU I v x⟩)
-      simp only [Subgroup.coe_mul, Subgroup.coe_mk] at hc
+      simp only [Subgroup.coe_mul] at hc
       rw [hyv, hc, mul_inv_cancel_right]
     · rw [hys w hw, one_mul, inv_one, mul_one]
   · obtain ⟨m, hm, hsm⟩ := hs

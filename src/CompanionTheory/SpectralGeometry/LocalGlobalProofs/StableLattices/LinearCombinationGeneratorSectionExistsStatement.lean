@@ -103,7 +103,7 @@ theorem _root_.GlobalTheory.T.linear_combination_generator_section_exists : ∀ 
     ∀ (t : LB.Gen (LB.LinComb M φ ε)), t.IsGen → ∀ (R : LB.Gen (LB.LinComb M φ₂ ε₂)), R.IsGen →
     ∃ t' : LB.Gen (LB.LinComb M φ ε), t'.IsGen ∧
       ∀ (Z : Scheme.{0}) (s : Z ⟶ S₀) (z : Z) (J : (Z ⟶ X) → M.ι), Good M z J → val t' (s ≫ e) z J = val R s z J := by
-  first | exact @GlobalTheory.CompanionTheory.SecNorm.exists_gen_normalised_along | exact GlobalTheory.CompanionTheory.SecNorm.exists_gen_normalised_along | (intros; apply GlobalTheory.CompanionTheory.SecNorm.exists_gen_normalised_along <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SecNorm.exists_gen_normalised_along
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.LinearCombinationGeneratorSectionExistsStatement =====

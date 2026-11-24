@@ -178,11 +178,7 @@ theorem sub_mem_of_path {Q Z : Type} [AddCommGroup Q] [Module ℂ Q] (E : Q →�
 theorem exists_fg_subst {D : D7} {a b : ℕ} (τ : D.what₂.Tau) (ε : Fin a → Bool) (ε' : Fin b → Bool) (P : PolF D b a) :
     ∃ V : Submodule ℂ (PolF D b a), V.FG ∧ ∀ g k, GlobalTheory.IndefiniteRowSideFullHecke.RaisingLoweringOperators.subst τ ε ε' g k P ∈ V := by
   first
-  | exact @_root_.GlobalTheory.SubstitutionFinitelyGenerated.subst_mem_fg
-  | exact _root_.GlobalTheory.SubstitutionFinitelyGenerated.subst_mem_fg
   | (apply _root_.GlobalTheory.SubstitutionFinitelyGenerated.subst_mem_fg <;> assumption)
-  | (intros; apply _root_.GlobalTheory.SubstitutionFinitelyGenerated.subst_mem_fg <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.SubstitutionFinitelyGenerated.subst_mem_fg <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.SubstitutionFinitelyGenerated.subst_mem_fg ..)
 
 section Oriented
@@ -688,7 +684,7 @@ theorem _root_.GlobalTheory.T.weil_model_rational_structure_alt : _root_.GlobalT
     Function.Injective Φ → LinearMap.range Φ = Mo.Pol ψ' τ → GlobalTheory.RealDict.IsFockMap ψ θ ε A B Mo Φ →
       ∀ k ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.KInf D.sp.cm.sig Xs τ, ∀ f ∈ Mo.Pol ψ' τ, ∀ f₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf D.host.F (Fin M.rank × Fin X.rank),
           GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F) (om (k, 1)) f f₁ → f₁ - f ∈ (GlobalTheory.RealQuot.coinv ε A B eT).map Φ := by
-  first | exact @_root_.GlobalTheory.RealDict.sub_mem_map_coinv_alt | exact _root_.GlobalTheory.RealDict.sub_mem_map_coinv_alt | (intros; apply _root_.GlobalTheory.RealDict.sub_mem_map_coinv_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.RealDict.sub_mem_map_coinv_alt
 end
 end -- clump:auto
 end -- clump:auto

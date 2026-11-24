@@ -84,7 +84,7 @@ theorem posSemidef_sub_smul_one {n : Type} [Fintype n] [DecidableEq n] {A : Matr
       (diagonal (fun i => ((hH.eigenvalues i - δ' : ℝ) : ℂ))) := by
     have d : diagonal (fun i => ((hH.eigenvalues i - δ' : ℝ) : ℂ)) =
         diagonal (RCLike.ofReal ∘ hH.eigenvalues) - (δ' : ℂ) • (1 : Matrix n n ℂ) := by
-      ext i j; by_cases h : i = j <;> simp [diagonal, one_apply, h]
+      ext i j; by_cases h : i = j <;> simp [diagonal, h]
     conv_lhs => rw [hH.spectral_theorem]
     rw [d, map_sub, map_smul, map_one]
   rw [e, conjStarAlgAut_apply, isUnit_coe.posSemidef_star_right_conjugate_iff]
@@ -126,11 +126,7 @@ variable {N : ℕ}
 theorem exists_mem_HnGe {E : Type} [Field E] (Ψ : Finset (E →+* ℂ)) {Z : CM Ψ N N}
     (hZ : Z ∈ Hn Ψ N) : ∃ δ : ℝ, 0 < δ ∧ Z ∈ HnGe Ψ N δ := by
   first
-  | exact @_root_.GlobalTheory.PosSemidefShiftByScalar.main
-  | exact _root_.GlobalTheory.PosSemidefShiftByScalar.main
   | (apply _root_.GlobalTheory.PosSemidefShiftByScalar.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.PosSemidefShiftByScalar.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.PosSemidefShiftByScalar.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.PosSemidefShiftByScalar.main ..)
 
 theorem entry_bound {C D Z : Matrix (Fin N) (Fin N) ℂ} {δ : ℝ} (hδ : 0 < δ)

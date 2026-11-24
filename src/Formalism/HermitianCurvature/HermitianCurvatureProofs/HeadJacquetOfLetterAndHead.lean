@@ -245,8 +245,7 @@ theorem hpartLevi : HpartLevi := by
     | (simp; done)
     | (simp [Complex.conj_I]; done)
     | (simp [Complex.conj_I]; ring; done)
-    | (simp only [mul_one, mul_zero, sub_zero, zero_sub, add_zero, zero_add, map_neg, hcI, hc2, neg_neg,
-        neg_mul] <;> ring)
+    | (simp only [mul_one, mul_zero, sub_zero, zero_sub, add_zero, zero_add, map_neg, hcI, hc2, neg_neg] <;> ring)
 
 end Formalism.FourierDecayAlt.P.WirtingerOperators.LeviExponential
 end -- clump:auto
@@ -455,7 +454,7 @@ theorem xiCoef : XiCoef := by
     simp [herm, bvec, dotProduct, Matrix.mulVec, Pi.single_apply]
   rw [h1]
   simp only [Hpk_eI_row, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
-  simp only [bvec, Matrix.mulVec_single_one, Matrix.transpose_apply]
+  simp only [bvec, Matrix.mulVec_single_one]
   exact level_point_first_lines k r j hj Z τ γ a p
 
 theorem x0_GV (k r j : ℕ) (hj : j + 1 ≤ r) (Z : Matrix (Fin j) (Fin j) ℂ) (τ : ℂ) (γ : B.Mat k (r - (j + 1)))
@@ -476,7 +475,7 @@ theorem xiCoefV : XiCoefV := by
     ext s
     simp only [bvec, Matrix.mulVec_single_one, Matrix.col_apply, Hpk_eI_col, Pi.single_apply]
   rw [hH]
-  simp only [bvec, Matrix.mulVec_single_one, Matrix.col_apply, Matrix.conjTranspose_apply, level_point_first_lines]
+  simp only [bvec, Matrix.mulVec_single_one]
   simp only [Matrix.mulVec, dotProduct]
   simp only [Matrix.col_apply, Matrix.conjTranspose_apply, level_point_first_lines]
   split_ifs with hp

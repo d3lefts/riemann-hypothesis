@@ -153,12 +153,8 @@ theorem mem_smul_top_iff (A : Submodule (𝓞 K) V) (I : Ideal (𝓞 K)) (w : �
     w ∈ (I • ⊤ : Submodule (𝓞 K) ↥A) ↔ (w : V) ∈ (I • A : Submodule (𝓞 K) V) := by
   have e : (I • ⊤ : Submodule (𝓞 K) ↥A).map A.subtype = I • A := by
     rw [Submodule.map_smul'', Submodule.map_top, Submodule.range_subtype]
-  rw [← e]
-  constructor
-  · intro hw
-    exact Submodule.mem_map_of_mem hw
-  · rintro ⟨w', hw', e'⟩
-    rwa [← Subtype.ext (a1 := w') (a2 := w) e']
+  rw [← e, Submodule.mem_map]
+  exact ⟨fun hw => ⟨w, hw, rfl⟩, fun ⟨w', hw', h⟩ => by rwa [← Subtype.ext h]⟩
 
 end DA
 
@@ -202,7 +198,6 @@ theorem quot_eq_iff {h : V →ₗ⋆[K] V →ₗ[K] K} {A : Submodule (𝓞 K) V
       (b : V ≃ₗ[K] V) x - (a : V ≃ₗ[K] V) x ∈ ((extP K 𝔭) ^ J • A : Submodule (𝓞 K) V) := by
   rw [QuotientGroup.eq, Subgroup.mem_subgroupOf, mem_stabB]
   have ha := hD a.2
-  have hb := hD b.2
   have e1 : ((a⁻¹ * b : ↥D) : V ≃ₗ[K] V) x - x =
       (a : V ≃ₗ[K] V)⁻¹ ((b : V ≃ₗ[K] V) x - (a : V ≃ₗ[K] V) x) := by
     rw [map_sub, ← LinearEquiv.mul_apply, ← LinearEquiv.mul_apply, inv_mul_cancel,
@@ -718,10 +713,10 @@ theorem kap_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF
         = (P.relIndex Q * Q.relIndex W * W.relIndex P) * Q.relIndex R := by ring
       _ = (Q.relIndex R * W.relIndex Q) * P.relIndex W := by rw [← c1]; ring
       _ = _ := by rw [← c2]; ring
-  have h2 := nu_mul_relIndex hK hF hs hd (by first | exact hM₁ | exact hM₁.toIsLattice) hM₁i (by first | exact hM₂ | exact hM₂.toIsLattice) hM₂i h𝔭
-  have h3 := nu_mul_relIndex hK hF (S.isSymm hs) (S.isTotPosDef hd) (by first | exact hT₁ | exact hT₁.toIsLattice) hT₁i (by first | exact hT₂ | exact hT₂.toIsLattice) hT₂i h𝔭
+  have h2 := nu_mul_relIndex hK hF hs hd (by first | exact hM₁) hM₁i (by first | exact hM₂) hM₂i h𝔭
+  have h3 := nu_mul_relIndex hK hF (S.isSymm hs) (S.isTotPosDef hd) (by first | exact hT₁) hT₁i (by first | exact hT₂) hT₂i h𝔭
   rw [← LocalizedFibreSets.cut_locF, ← LocalizedFibreSets.cut_locF, ← hQ, ← hR] at h3
-  filter_upwards [pair hK hF hs hd (by first | exact hM₁ | exact hM₁.toIsLattice) hM₁i (by first | exact hM₂ | exact hM₂.toIsLattice) hM₂i h𝔭 hn hx hx₁ hx₂] with J hJ
+  filter_upwards [pair hK hF hs hd (by first | exact hM₁) hM₁i (by first | exact hM₂) hM₂i h𝔭 hn hx hx₁ hx₂] with J hJ
   filter_upwards [hJ] with k hk
   rw [relIndex_fix_eq hs, relIndex_fix_eq hs, ← hP, ← hW] at hk
   unfold kap oM

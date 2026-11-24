@@ -90,7 +90,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeR
 open Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.RecTie GlobalTheory.HeightCounting.Up.RealOfReading
 
 theorem _root_.GlobalTheory.T.coefField_eq_TC_cf_at_member_of_published_inputs : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ _ w Z _ _ t _ _ _ => t.r.z.R.C = TC.cf w.I w.l Z := by
-  first | exact @_root_.GlobalTheory.HeightCounting.Up.CoefficientAgreement.coefficientField_tied_at_member_alt | exact _root_.GlobalTheory.HeightCounting.Up.CoefficientAgreement.coefficientField_tied_at_member_alt | (intros; apply _root_.GlobalTheory.HeightCounting.Up.CoefficientAgreement.coefficientField_tied_at_member_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.Up.CoefficientAgreement.coefficientField_tied_at_member_alt
 end
 end
 end -- clump:auto
@@ -133,7 +133,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeR
 open Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.RecTie GlobalTheory.HeightCounting.Up.RealOfReading
 
 theorem _root_.GlobalTheory.T.exists_eigIdx_labeling_at_member : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ T w Z Wt _ t _ _ _ => ∃ (Xd : DivX (w.D Z)) (E : EigIdx (w.D Z) Xd), Nonempty (E.Pi → (famR (w.st Z) w.I t.hX (usedOf w.I T Wt) t.r.z.Xg t.r.z.tr).A.fam.base.Ix) := by
-  first | exact @_root_.GlobalTheory.HeightCounting.Up.IdxAt.exists_divisor_eigenvalueIndex_labeling_alt | exact _root_.GlobalTheory.HeightCounting.Up.IdxAt.exists_divisor_eigenvalueIndex_labeling_alt | (intros; apply _root_.GlobalTheory.HeightCounting.Up.IdxAt.exists_divisor_eigenvalueIndex_labeling_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.Up.IdxAt.exists_divisor_eigenvalueIndex_labeling_alt
 end
 end
 end -- clump:auto
@@ -189,7 +189,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeR
 open Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.RecTie GlobalTheory.HeightCounting.Up.RealOfReading
 
 theorem _root_.GlobalTheory.T.nonempty_agree_realOfRead_at_member : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ T w Z Wt _ t nch n c => ∀ (hC : t.r.z.R.C = TC.cf w.I w.l Z) (Xd : DivX (w.D Z)) (E : EigIdx (w.D Z) Xd) (labPi : E.Pi → (famR (w.st Z) w.I t.hX (usedOf w.I T Wt) t.r.z.Xg t.r.z.tr).A.fam.base.Ix) hb htup hg hf, Nonempty (GlobalTheory.NJoin.Agree (realOfRead t.r.z.R.toRealDat t.r.z.F.lv2 t.r.Y n.tp hC Xd E labPi hb htup hg hf) c.a.all.gal.mt (realOfRead t.r.z.R.toRealDat t.r.z.F.lv2 t.r.Y n.tp hC Xd E labPi hb htup hg hf).rep) := by
-  first | exact @_root_.GlobalTheory.HeightCounting.Up.StandardFrameAgreement.frobeniusTraces_agree_of_layer_alt | exact _root_.GlobalTheory.HeightCounting.Up.StandardFrameAgreement.frobeniusTraces_agree_of_layer_alt | (intros; apply _root_.GlobalTheory.HeightCounting.Up.StandardFrameAgreement.frobeniusTraces_agree_of_layer_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.Up.StandardFrameAgreement.frobeniusTraces_agree_of_layer_alt
 end
 end
 end -- clump:auto
@@ -227,7 +227,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeR
 open Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.RecTie GlobalTheory.HeightCounting.Up.RealOfReading
 
 theorem _root_.GlobalTheory.T.xiH_tupT_eq_tp_xi_of_used0_at_member : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ _ w Z _ _ t _ n _ => ∀ μ, Used0 (w.D Z) μ → t.r.z.R.toLevCh.xiH (t.r.Y.tupT μ) = n.tp.xi μ := by
-  first | exact @_root_.GlobalTheory.HeightCounting.Up.heckeCharacter_tuple_layer_alt | exact _root_.GlobalTheory.HeightCounting.Up.heckeCharacter_tuple_layer_alt | (intros; apply _root_.GlobalTheory.HeightCounting.Up.heckeCharacter_tuple_layer_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.Up.heckeCharacter_tuple_layer_alt
 end
 end
 end -- clump:auto
@@ -291,7 +291,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeR
 open Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.RecTie GlobalTheory.HeightCounting.Up.RealOfReading
 
 theorem _root_.GlobalTheory.T.typesTrue_at_member_of_published_inputs : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ _ w Z _ _ t _ _ _ => TypesTrue (w.D Z).ntypes t.r.z.R.C.P t.r.z.R.C.W := by
-  first | exact @_root_.GlobalTheory.HeightCounting.Up.TypesAt.inertialTypes_at_member_alt | exact _root_.GlobalTheory.HeightCounting.Up.TypesAt.inertialTypes_at_member_alt | (intros; apply _root_.GlobalTheory.HeightCounting.Up.TypesAt.inertialTypes_at_member_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.Up.TypesAt.inertialTypes_at_member_alt
 end
 end
 end -- clump:auto
@@ -412,7 +412,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeR
 open Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.RecTie GlobalTheory.HeightCounting.Up.RealOfReading
 
 theorem _root_.GlobalTheory.T.exists_parameter_choice_and_lamAt_gap_at_member : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ _ w Z _ _ _ _ _ _ => (∃ L : SizeData₂ (w.D Z), Nonempty (ParameterChoice' (w.D Z) L)) ∧ ∀ (τ : (w.D Z).what₂.Tau) (n : ℕ), n + 1 < (w.D Z).R.r → 100 * ((w.D Z).R.r : ℚ) ^ 4 ≤ Formalism.L2.NTheta.lamAt ((w.D Z).hc τ) n - Formalism.L2.NTheta.lamAt ((w.D Z).hc τ) (n + 1) := by
-  first | exact @_root_.GlobalTheory.HeightCounting.Up.ParamsLayer.parameters_gap_regular_alt | exact _root_.GlobalTheory.HeightCounting.Up.ParamsLayer.parameters_gap_regular_alt | (intros; apply _root_.GlobalTheory.HeightCounting.Up.ParamsLayer.parameters_gap_regular_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.Up.ParamsLayer.parameters_gap_regular_alt
 end
 end
 end -- clump:auto
@@ -446,7 +446,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeR
 open Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Lev Formalism.IndefR.RecTie GlobalTheory.HeightCounting.Up.RealOfReading
 
 theorem _root_.GlobalTheory.T.good_idempotent_reads_as_type_projector_at_member : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ T w Z Wt _ t nch n c => ∀ (hC : t.r.z.R.C = TC.cf w.I w.l Z) (Xd : DivX (w.D Z)) (E : EigIdx (w.D Z) Xd) (labPi : E.Pi → (famR (w.st Z) w.I t.hX (usedOf w.I T Wt) t.r.z.Xg t.r.z.tr).A.fam.base.Ix) hb htup hg hf, GlobalTheory.NRows.GoodIdempotentReadsAsGoodTypeProjector (realOfRead t.r.z.R.toRealDat t.r.z.F.lv2 t.r.Y n.tp hC Xd E labPi hb htup hg hf) := by
-  first | exact @_root_.GlobalTheory.HeightCounting.Up.IdempotentAdelicReading.unramified_component_at_member_alt | exact _root_.GlobalTheory.HeightCounting.Up.IdempotentAdelicReading.unramified_component_at_member_alt | (intros; apply _root_.GlobalTheory.HeightCounting.Up.IdempotentAdelicReading.unramified_component_at_member_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.Up.IdempotentAdelicReading.unramified_component_at_member_alt
 end
 end
 end -- clump:auto
@@ -492,7 +492,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.exists_linked_data_pinned_at_layer : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ _ w Z _ _ t nch n c => ∃ X : _root_.GlobalTheory.NRows.LinkedData hL (w.D Z), _root_.GlobalTheory.HeightCounting.Up.PinnedAtCharacterChoice c.a X.P ∧ HEq X.X.R t.r.z.R.toRealDat := by
-  first | exact @_root_.GlobalTheory.HeightCounting.Up.isTied_of_layer_member_alt | exact _root_.GlobalTheory.HeightCounting.Up.isTied_of_layer_member_alt | (intros; apply _root_.GlobalTheory.HeightCounting.Up.isTied_of_layer_member_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.Up.isTied_of_layer_member_alt
 end
 end
 end -- clump:auto

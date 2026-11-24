@@ -65,24 +65,15 @@ theorem count_mem_kSpan_self {V : Type*} [AddCommGroup V] [Module ℂ V] {n : �
 theorem count_mem_khwSub_iff {W : Type*} [AddCommGroup W] [Module ℂ W] {n : ℕ} (ε : Fin n → Bool)
     (E : Fin n → Fin n → Module.End ℂ W) (ν : Fin n → ℝ) (v : W) :
     v ∈ khwSub ε E ν ↔ Formalism.REAL.KHighest ε E ν v := by
-  simp only [khwSub, Submodule.mem_inf, Submodule.mem_iInf, LinearMap.mem_ker]
-  simp only [LinearMap.sub_apply, LinearMap.smul_apply, sub_eq_zero, Formalism.REAL.KHighest,
-    Formalism.REAL.IsWeight]
-  constructor
-  · rintro ⟨h1, h2⟩
-    exact ⟨fun a => by simpa using h1 a, fun a b hab he => h2 a b ⟨hab, he⟩⟩
-  · rintro ⟨h1, h2⟩
-    exact ⟨fun a => by simpa using h1 a, fun a b h => h2 a b h.1 h.2⟩
+  exact tensHW_mem_khwSub ε E ν v
 
 theorem count_eq_zero_of_orth {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V] {m : ℕ}
     (A : Fin m → Submodule ℂ V) (htop : (⨆ k, A k) = ⊤) (x : V)
     (h : ∀ k, ∀ z ∈ A k, ⟪x, z⟫_ℂ = 0) : x = 0 := by
   have hle : (⨆ k, A k) ≤ (ℂ ∙ x)ᗮ :=
     iSup_le fun k z hz => (Submodule.mem_orthogonal_singleton_iff_inner_right).mpr (h k z hz)
-  rw [htop] at hle
-  have hx : x ∈ (ℂ ∙ x)ᗮ := hle Submodule.mem_top
-  rw [Submodule.mem_orthogonal_singleton_iff_inner_right] at hx
-  exact inner_self_eq_zero.mp hx
+  have hx : x ∈ (ℂ ∙ x)ᗮ := hle (by rw [htop]; exact Submodule.mem_top)
+  rwa [Submodule.mem_orthogonal_singleton_iff_inner_right, inner_self_eq_zero] at hx
 
 theorem count_not_two_of_finrank_le_one {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (S : Submodule ℂ V) [FiniteDimensional ℂ S] (hS : Module.finrank ℂ S ≤ 1) {y z : V} (hy : y ∈ S)
@@ -172,10 +163,9 @@ theorem pieriCount_of_st (hc : CompRedStatement) (hr : KRepRelStatement) (ht : T
     intro ν y hy0 hy
     by_contra hno
     push Not at hno
-    apply hy0
-    refine count_eq_zero_of_orth _ htop y fun k z hz => ?_
-    exact Formalism.REAL.kOrth _ n ε _ ν (μ k) y (x k) hrelR hunitR hy (hx k).2 (hno k).symm y
-      (count_mem_kSpan_self _ _ _) z hz
+    exact hy0 (count_eq_zero_of_orth _ htop y fun k z hz =>
+      Formalism.REAL.kOrth _ n ε _ ν (μ k) y (x k) hrelR hunitR hy (hx k).2 (hno k).symm y
+        (count_mem_kSpan_self _ _ _) z hz)
   have hnn : ∀ i, 0 ≤ weylK ε (Λ + γ i) := by
     intro i
     by_cases hd : KDom ε (Λ + γ i)
@@ -192,18 +182,15 @@ theorem pieriCount_of_st (hc : CompRedStatement) (hr : KRepRelStatement) (ht : T
       rw [count_finrank_piLp, Nat.cast_mul, count_weylK_eq T]
     have hdimR' : (Module.finrank ℂ (PiLp 2 (fun _ : ι => T.V)) : ℝ) =
         ∑ k, weylK ε (Λ + γ (idx k)) := by
-      have hfin' : Module.finrank ℂ (PiLp 2 (fun _ : ι => T.V)) = ∑ k, Module.finrank ℂ
-          (Formalism.REAL.kSpan ε (tensAct (kunits T) (fun a b => dρ (Matrix.single a b 1))) (x k)) := hfin
-      rw [hfin', Nat.cast_sum]
+      rw [hfin, Nat.cast_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [hdimk, hidx]
     have hsub : univ.image idx ⊆ univ.erase i0 := by
       intro i hi
       obtain ⟨k, -, rfl⟩ := Finset.mem_image.mp hi
       exact Finset.mem_erase.mpr ⟨hne k, Finset.mem_univ _⟩
-    have h1 : ∑ k, weylK ε (Λ + γ (idx k)) = ∑ i ∈ univ.image idx, weylK ε (Λ + γ i) :=
-      by rw [Finset.sum_image fun a _ b _ h => hidx_inj h]
     have h2 := Finset.sum_le_sum_of_subset_of_nonneg hsub (fun i _ _ => hnn i)
+    rw [Finset.sum_image fun a _ b _ h => hidx_inj h] at h2
     have h3 := Finset.sum_erase_add univ (fun i => weylK ε (Λ + γ i)) (Finset.mem_univ i0)
     have h4 := hw n ε _ hd0
     linarith

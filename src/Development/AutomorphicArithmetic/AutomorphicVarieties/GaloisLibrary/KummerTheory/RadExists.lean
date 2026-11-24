@@ -79,21 +79,13 @@ theorem UpperTheory.Reformulated.B.HilbertNinetyCapelliIdentities.h90 :
             ∃ (β : Ω), β ≠ (0 : Ω) ∧ ∀ (g : UpperTheory.Reformulated.B.HilbertNinetyCapelliIdentities.G K Ω), (g : Ω → Ω) β = f g * β := by
   intro K Ω _ _ _ _ _ f hlc h0 hc
   classical
-  have h1 : f 1 = 1 := by
-    have h := hc 1 1
-    rw [mul_one, AlgEquiv.one_apply] at h
-    exact (mul_eq_left₀ (h0 1)).1 h.symm
-  have hU : f ⁻¹' {1} ∈ nhds (1 : Gal(Ω/K)) :=
-    (hlc {1}).mem_nhds h1
-  obtain ⟨L, hL, hLU⟩ := (krullTopology_mem_nhds_one_iff K Ω _).1 hU
-  have hH : ∀ (g h : Gal(Ω/K)), h ∈ L.fixingSubgroup → f (g * h) = f g := by
-    intro g h hh
-    have : f h = 1 := hLU hh
-    rw [hc, this, map_one, mul_one]
-  have hopen : IsOpen (L.fixingSubgroup : Set Gal(Ω/K)) := L.fixingSubgroup_isOpen
-  haveI : Finite (Gal(Ω/K) ⧸ L.fixingSubgroup) :=
-    Subgroup.quotient_finite_of_isOpen _ hopen
-  letI : Fintype (Gal(Ω/K) ⧸ L.fixingSubgroup) := Fintype.ofFinite _
+  have h1 : f 1 = 1 := (mul_eq_left₀ (h0 1)).1 (by simpa using (hc 1 1).symm)
+  obtain ⟨L, hL, hLU⟩ :=
+    (krullTopology_mem_nhds_one_iff K Ω _).1 ((hlc {1}).mem_nhds h1)
+  have hH : ∀ (g h : Gal(Ω/K)), h ∈ L.fixingSubgroup → f (g * h) = f g :=
+    fun g h hh => by rw [hc, hLU hh, map_one, mul_one]
+  let : Fintype (Gal(Ω/K) ⧸ L.fixingSubgroup) :=
+    @Fintype.ofFinite _ (Subgroup.quotient_finite_of_isOpen _ L.fixingSubgroup_isOpen)
   let χ : (Gal(Ω/K) ⧸ L.fixingSubgroup) → (L →* Ω) := fun q =>
     ((q.out : Gal(Ω/K)) : Ω →* Ω).comp (L.val : L →* Ω)
   have hχ : ∀ q (x : L), χ q x = (q.out : Gal(Ω/K)) (x : Ω) := fun q x => rfl
@@ -108,15 +100,14 @@ theorem UpperTheory.Reformulated.B.HilbertNinetyCapelliIdentities.h90 :
     change p.out.symm (q.out x) = x
     rw [AlgEquiv.symm_apply_eq]
     exact h.symm
-  have hli := (linearIndependent_monoidHom L Ω).comp χ hinj
-  have hex : ∃ x : L, ∑ q, f q.out * χ q x ≠ 0 := by
+  obtain ⟨x, hx⟩ : ∃ x : L, ∑ q, f q.out * χ q x ≠ 0 := by
     by_contra hne
     push Not at hne
-    have := Fintype.linearIndependent_iff.1 hli (fun q => f q.out) (by
+    have := Fintype.linearIndependent_iff.1
+      ((linearIndependent_monoidHom L Ω).comp χ hinj) (fun q => f q.out) (by
       funext x
       simpa [Finset.sum_apply] using hne x) (QuotientGroup.mk 1)
     exact h0 _ this
-  obtain ⟨x, hx⟩ := hex
   have key : ∀ g : Gal(Ω/K),
       f g * g (∑ q, f q.out * χ q x) = ∑ q, f q.out * χ q x := by
     intro g
@@ -137,8 +128,7 @@ theorem UpperTheory.Reformulated.B.HilbertNinetyCapelliIdentities.h90 :
   have hg : g b ≠ 0 := (map_ne_zero g).2 hx
   rw [map_inv₀]
   field_simp
-  rw [mul_comm]
-  exact hk.symm
+  exact hk.symm.trans (mul_comm _ _)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HilbertNinety =====

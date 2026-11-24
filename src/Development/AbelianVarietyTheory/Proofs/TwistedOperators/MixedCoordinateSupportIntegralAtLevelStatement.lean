@@ -227,7 +227,7 @@ theorem mixS_support_integral : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), I
   let U' : AddSubgroup (AE D) := ⨅ i, ⨅ j, U.comap ((d.extY X).comp (g i j))
   have hU'o : IsOpen (U' : Set (AE D)) := by
     have e : (U' : Set (AE D)) = ⋂ i, ⋂ j, ((d.extY X).comp (g i j)) ⁻¹' (U : Set (WO V X)) := by
-      ext c; simp [U', AddSubgroup.mem_iInf]
+      ext c; simp [U']
     rw [e]
     exact isOpen_iInter_of_finite fun i => isOpen_iInter_of_finite fun j => hUo.preimage (hf i j)
   obtain ⟨N, hN, hNden⟩ := annih_den D ψ hψ U' hU'o
@@ -338,7 +338,7 @@ theorem _root_.GlobalTheory.T.mixedCoordinate_support_integral_at_level : ∀ {D
       ∀ (ξ : Matrix (Fin X.rank) (Fin r) D.host.E) (x : Mx D X.rank r),
         x.map (finPart D) = (ξ.map (incA D) : Mx D X.rank r).map (finPart D) → (_root_.I195MixedCoordinates_f893ad7fd8680f4ca1164b63.source d) X ψ μ' 𝓕' Ψ x 0 ≠ 0 →
         ∀ i j, IsIntegral ℤ (((M * n : ℕ) : D.host.E) * ξ i j) := by
-  first | exact @GlobalTheory.MixSupport.mixS_support_integral | exact GlobalTheory.MixSupport.mixS_support_integral | (intros; apply GlobalTheory.MixSupport.mixS_support_integral <;> assumption)
+  first | exact @GlobalTheory.MixSupport.mixS_support_integral
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.MixedCoordinateSupportIntegralAtLevelStatement =====

@@ -77,8 +77,7 @@ theorem det_mem {h : V →ₗ⋆[K] V →ₗ[K] K} {n : ℕ} (x : Fin n → V) (
   have e : S.subtype.mapMatrix (Matrix.of fun i j => (⟨h (x i) (x j), hx i j⟩ : S)) = U0.gram h x := by
     ext i j
     rfl
-  rw [e] at key
-  rw [← key]
+  rw [← e, ← key]
   exact Subtype.mem _
 
 theorem smul_apply' (h : V →ₗ⋆[K] V →ₗ[K] K) (c : K) (x y : V) : (c • h) x y = c * h x y := by
@@ -534,7 +533,7 @@ theorem jordan_exists (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
     ext v
     rw [mem_locF_span_iff hK hF hP b v, mem_locF_span_iff hK hF hP x v, hbS, hys]
   · rw [hb i, hb j]
-    simp only [map_smulₛₗ, LinearMap.smul_apply, map_smul, hyo i j hij, smul_zero]
+    simp only [map_smulₛₗ, LinearMap.smul_apply, hyo i j hij, smul_zero]
   · rw [hb i, ha i, map_smulₛₗ h, LinearMap.smul_apply, map_smul, smul_eq_mul, smul_eq_mul,
       starRingEnd_apply, hτfix]
     ring

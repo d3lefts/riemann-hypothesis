@@ -143,7 +143,7 @@ theorem GlobalTheory.CornerUnip.corner_unipB_superDiag : ∀ (R : Type) [CommRin
       | cast i => rw [corner_cc]; exact hd i
   · unfold superDiag
     simp only [Finset.sum_filter]
-    simp [Fin.sum_univ_castSucc, corner_cc, corner_cl, corner_lc, corner_ll]
+    simp [Fin.sum_univ_castSucc, corner_cc, corner_cl, corner_lc]
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GlCornerEmbeddingUpperUnitriangularSuperDiagonal =====
@@ -157,7 +157,7 @@ open NumberField IsDedekindDomain ValuativeRel Matrix MeasureTheory TensorProduc
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.glCornerEmbedding_upperUnitriangular_superDiagonalSum : ∀ (R : Type) [CommRing R] (m : ℕ) (u : GL (Fin m) R), u ∈ unipB R (Fin m) → corner u ∈ unipB R (Fin (m + 1)) ∧ superDiag (corner u) = superDiag u := by
-  first | exact @GlobalTheory.CornerUnip.corner_unipB_superDiag | exact GlobalTheory.CornerUnip.corner_unipB_superDiag | (intros; apply GlobalTheory.CornerUnip.corner_unipB_superDiag <;> assumption)
+  first | exact @GlobalTheory.CornerUnip.corner_unipB_superDiag
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GlCornerEmbeddingUpperUnitriangularSuperDiagonalStatement =====

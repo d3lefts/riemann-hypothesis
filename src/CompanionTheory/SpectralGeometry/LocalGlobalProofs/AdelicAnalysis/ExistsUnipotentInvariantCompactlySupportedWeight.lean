@@ -150,7 +150,7 @@ theorem selfDual_rationalForm_Ainf_unique : ∀ (F : Type) [Field F] [NumberFiel
   obtain ⟨a, ha, ha'⟩ := GlobalTheory.GaugeEx.SdInf.exists_equiv_Ainf F
   have hpc : Continuous (psiInf F ψ) := hψ.1.comp (continuous_id.prodMk continuous_const)
   have hadd : ∀ x y, psiInf F ψ (x + y) = psiInf F ψ x * psiInf F ψ y := fun x y => by
-    simp only [psiInf, map_add (f := _), ← AddChar.map_add_eq_mul]
+    simp only [psiInf, ← AddChar.map_add_eq_mul]
     congr 1
     exact Prod.ext rfl (add_zero _).symm
   have hAR : (A.map (algebraMap F (Ainf F)))ᵀ = A.map (algebraMap F (Ainf F)) := by
@@ -886,7 +886,7 @@ theorem selfDual_twist : ∀ (V : Type) [AddCommGroup V] [TopologicalSpace V] [I
     refine h4.congr (Filter.Eventually.of_forall fun y => ?_)
     have hsR : (s : ℝ) ≠ 0 := by exact_mod_cast hs0
     have hsC : ((s : ℝ) : ℂ) ≠ 0 := by exact_mod_cast hsR
-    simp [NNReal.smul_def, smul_smul]
+    simp [NNReal.smul_def]
     rw [← mul_assoc, mul_inv_cancel₀ hsC, one_mul]
   have hintH : Integrable H μ := by
     have h5 : Integrable H (μ.map B) := (hemb.integrable_map_iff).2 hint2
@@ -992,7 +992,7 @@ theorem dot_smul {F R : Type} [Field F] [CommRing R] [Algebra F R] {ι : Type} [
       algebraMap F R a * (x ⬝ᵥ (B.map (algebraMap F R) *ᵥ y)) := by
   have e : (a • B).map (algebraMap F R) = algebraMap F R a • B.map (algebraMap F R) := by
     ext i j
-    simp [Algebra.smul_def]
+    simp
   rw [e, Matrix.smul_mulVec, dotProduct_smul, smul_eq_mul]
 
 theorem isUnit_det_map {F R : Type} [Field F] [CommRing R] [Algebra F R] {ι : Type} [Fintype ι]

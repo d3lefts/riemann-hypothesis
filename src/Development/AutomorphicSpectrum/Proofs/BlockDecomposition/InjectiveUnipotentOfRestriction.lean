@@ -303,7 +303,7 @@ theorem adS_eq_adLL (lev : Fin n → ℕ) (s : Bool) (p q : Fin n) {x : Cq n V} 
   · rw [if_pos (Or.inr hl), if_pos hl]
   · rw [if_neg hl]
     split_ifs
-    · simp [Module.End.mul_apply, annL_of_supp hx hl]
+    · simp [annL_of_supp hx hl]
     · rfl
 
 theorem lK_eq_Lv (lev : Fin n → ℕ) (E1 E2 : Fin n → Fin n → Module.End ℂ V) (p q : Fin n) {x : Cq n V}
@@ -341,7 +341,7 @@ theorem boundary_prod_creation_levi_vanish (lev : Fin n → ℕ) (E1 E2 : Fin n 
     have h3 := LinearMap.congr_fun (cartanK lev E1 E2 f)
       (((t.map fun i => (creL (false, i) : Module.End ℂ (Cq n V))).prod : Module.End ℂ (Cq n V)) x)
     simp only [LinearMap.add_apply, Module.End.mul_apply, hf, ih'] at h3
-    simp only [List.map_cons, List.prod_cons, Module.End.mul_apply, List.length_cons, pow_succ, map_smul]
+    simp only [List.map_cons, List.prod_cons, Module.End.mul_apply, List.length_cons, pow_succ]
     rw [eq_neg_of_add_eq_zero_left h3, mul_neg_one, neg_smul, map_smul]
 
 theorem bd_prodL : ∀ (n : ℕ) (lev : Fin n → ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (E1 E2 : Fin n → Fin n → Module.End ℂ V)
@@ -411,7 +411,7 @@ theorem Lv_apply (lev : Fin n → ℕ) (E1 E2 : Fin n → Fin n → Module.End �
   simp only [Lv, adLL, LinearMap.add_apply, LinearMap.sum_apply, Pi.add_apply, Finset.sum_apply, liftL_apply]
   congr 1
   refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun k _ => ?_
-  split_ifs <;> simp [Module.End.mul_apply]
+  split_ifs <;> simp
 
 theorem creL_annL_mem {S : Submodule ℂ V} {x : Cq n V} (hx : ∀ A, x A ∈ S) (l k : Lt n) (A : Finset (Lt n)) :
     creL k (annL l x) A ∈ S := by
@@ -542,14 +542,14 @@ theorem ip_creL (i : Lt n) (x z : Cq n V) : ip (creL i x) z = ip x (annL i z) :=
     rw [Finset.sum_filter]
     refine Finset.sum_congr rfl fun A _ => ?_
     rw [GlobalTheory.CompanionTheory.LvChain.creL_apply]
-    split_ifs <;> simp [inner_smul_left, GlobalTheory.CompanionTheory.LvChainAdj.sgL_conj] <;> ring
+    split_ifs <;> simp [GlobalTheory.CompanionTheory.LvChainAdj.sgL_conj] <;> ring
   have hR : GlobalTheory.CompanionTheory.LvChainAdj.ip x (PositivityTheory.RgBcC.RealD.annL i z) =
       ∑ B ∈ Finset.univ.filter (fun B => i ∉ B),
         PositivityTheory.RgBcC.RealD.sgL i B * ⟪x B, z (insert i B)⟫_ℂ := by
     rw [Finset.sum_filter]
     refine Finset.sum_congr rfl fun B _ => ?_
     rw [GlobalTheory.CompanionTheory.LvChain.annL_apply]
-    split_ifs <;> simp [inner_smul_right]
+    split_ifs <;> simp
   rw [hL, hR]
   refine Finset.sum_nbij' (fun A => A.erase i) (fun B => insert i B) ?_ ?_ ?_ ?_ ?_
   · intro A _
@@ -633,7 +633,7 @@ theorem adCL_conj (p q : Fin n) (l k : Lt n) : (starRingEnd ℂ) (adCL false p q
 
 theorem adCL_swap (p q : Fin n) (l k : Lt n) : adCL false p q l k = adCL false q p k l := by
   unfold PositivityTheory.RgBcC.RealD.adCL
-  simp only [Bool.false_xor, Bool.false_bne, Prod.ext_iff]
+  simp only [Bool.false_xor, Prod.ext_iff]
   congr 1
   · exact if_congr
       ⟨fun ⟨h1, h2, h3, h4⟩ => ⟨h3.symm, h2.symm, h1.symm, h4.symm⟩,
@@ -775,7 +775,7 @@ theorem half_two (z0 z1 y0 y1 : R) :
     ((1 / 2 : ℂ) • (z0 + (1 : ℂ) • z1)) * (y0 + (1 : ℂ) • y1)
       + ((1 / 2 : ℂ) • (z0 + (-1 : ℂ) • z1)) * (y0 + (-1 : ℂ) • y1)
       = z1 * y1 + z0 * y0 := by
-  simp only [add_mul, mul_add, smul_mul_assoc, mul_smul_comm, smul_add, smul_smul, mul_assoc]
+  simp only [add_mul, mul_add, smul_mul_assoc, mul_smul_comm, smul_add, smul_smul]
   module
 
 end RingId
@@ -884,8 +884,7 @@ theorem cE_dE (σ ρ : ℂ) (a b a' b' : Fin n) :
       = ((1 + σ * ρ) / 2) • (if a = a' ∧ b = b' ∧ tau lev a b then 1 else 0) := by
   simp only [cE, dE, smul_mul_assoc, mul_smul_comm, ← smul_add]
   rw [anti_comb, cT_dT, cT_dT, cT_dT, cT_dT]
-  simp only [Bool.false_eq_true, Bool.true_eq_false, false_and, true_and, if_false, smul_zero, add_zero,
-    ite_false]
+  simp only [Bool.false_eq_true, Bool.true_eq_false, false_and, true_and, if_false, smul_zero, add_zero]
   module
 
 theorem LT_cT (E : Fin n → Fin n → Module.End ℂ V) (a b a' b' : Fin n) (s : Bool) :
@@ -1303,7 +1302,7 @@ theorem bdL_inRR_eq {n : ℕ} {lev : Fin n → ℕ} {V : Type} [AddCommGroup V] 
     · rw [if_pos (Or.inr hl : inRR lev l), if_pos hl]
     · rw [if_neg hl]
       split_ifs
-      · simp [Module.End.mul_apply, h1 l hl]
+      · simp [h1 l hl]
       · rfl
   · refine sum_congr rfl fun l _ => sum_congr rfl fun m _ => sum_congr rfl fun k _ => ?_
     by_cases hl : inUU lev l
@@ -1315,13 +1314,13 @@ theorem bdL_inRR_eq {n : ℕ} {lev : Fin n → ℕ} {V : Type} [AddCommGroup V] 
             k.2.1.2 = m.2.1.2) := fun t => hm t.2.1
         rw [if_neg hn]
         split_ifs
-        · simp [Module.End.mul_apply, h2 l m hm]
+        · simp [h2 l m hm]
         · rfl
     · have hn : ¬(inUU lev l ∧ inUU lev m ∧ l.2.1.2 = m.2.1.1 ∧ k.1 = xor l.1 m.1 ∧ k.2.1.1 = l.2.1.1 ∧
           k.2.1.2 = m.2.1.2) := fun t => hl t.1
       rw [if_neg hn]
       split_ifs
-      · simp [Module.End.mul_apply, h1 l hl]
+      · simp [h1 l hl]
       · rfl
 
 variable {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]

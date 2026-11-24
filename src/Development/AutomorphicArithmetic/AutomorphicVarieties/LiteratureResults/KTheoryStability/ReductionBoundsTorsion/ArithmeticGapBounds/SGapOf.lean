@@ -395,35 +395,35 @@ theorem diagonal_decomposition_transvections {ι F : Type*} [Fintype ι] [Decida
   simp only [map_mul, SpecialLinearGroup.coeMonoidHom_apply, SpecialLinearGroup.diag2n_coe, SpecialLinearGroup.transvection_coe, mul_add, add_mul,
     one_mul, mul_one, single_mul_single_same]
   simp only [single_mul_single_of_ne _ _ _ _ hij.symm, single_mul_single_of_ne _ _ _ _ hij,
-    zero_add, add_zero, single_mul_single_same, zero_mul, mul_zero]
+    add_zero, zero_mul]
   ext x y
   by_cases hxi : i = x
   · subst x
     by_cases hyi : i = y
-    · subst y; (simp [Matrix.add_apply, Matrix.one_apply, Matrix.single_apply, diagonal_apply, hij, hij.symm, ha, *]
-        <;> (try field_simp) <;> (try ring) <;> (try (split_ifs <;> simp_all)))
+    · subst y; (simp [Matrix.add_apply, hij.symm, *]
+        <;> (try field_simp) <;> (try ring))
     by_cases hyj : j = y
-    · subst y; (simp [Matrix.add_apply, Matrix.one_apply, Matrix.single_apply, diagonal_apply, hij, hij.symm, ha, *]
-        <;> (try field_simp) <;> (try ring) <;> (try (split_ifs <;> simp_all)))
-    (simp [Matrix.add_apply, Matrix.one_apply, Matrix.single_apply, diagonal_apply, hij, hij.symm, ha, *]
-        <;> (try field_simp) <;> (try ring) <;> (try (split_ifs <;> simp_all)))
+    · subst y; (simp [Matrix.add_apply, hij.symm, *]
+        <;> (try field_simp) <;> (try ring))
+    (simp [Matrix.add_apply, hij.symm, *]
+        <;> (try field_simp) <;> (try ring))
   by_cases hxj : j = x
   · subst x
     by_cases hyi : i = y
-    · subst y; (simp [Matrix.add_apply, Matrix.one_apply, Matrix.single_apply, diagonal_apply, hij, hij.symm, ha, *]
-        <;> (try field_simp) <;> (try ring) <;> (try (split_ifs <;> simp_all)))
+    · subst y; (simp [Matrix.add_apply, hij.symm, *]
+        <;> (try field_simp) <;> (try ring))
     by_cases hyj : j = y
-    · subst y; (simp [Matrix.add_apply, Matrix.one_apply, Matrix.single_apply, diagonal_apply, hij, hij.symm, ha, *]
-        <;> (try field_simp) <;> (try ring) <;> (try (split_ifs <;> simp_all)))
-    (simp [Matrix.add_apply, Matrix.one_apply, Matrix.single_apply, diagonal_apply, hij, hij.symm, ha, *]
-        <;> (try field_simp) <;> (try ring) <;> (try (split_ifs <;> simp_all)))
+    · subst y; (simp [Matrix.add_apply, hij.symm, *]
+        <;> (try field_simp) <;> (try ring))
+    (simp [Matrix.add_apply, *]
+        <;> (try field_simp) <;> (try ring))
   by_cases hyi : i = y
-  · subst y; (simp [Matrix.add_apply, Matrix.one_apply, Matrix.single_apply, diagonal_apply, hij, hij.symm, ha, *]
+  · subst y; (simp [Matrix.add_apply, Matrix.one_apply, diagonal_apply, hij.symm, *]
         <;> (try field_simp) <;> (try ring) <;> (try (split_ifs <;> simp_all)))
   by_cases hyj : j = y
-  · subst y; (simp [Matrix.add_apply, Matrix.one_apply, Matrix.single_apply, diagonal_apply, hij, hij.symm, ha, *]
+  · subst y; (simp [Matrix.add_apply, Matrix.one_apply, diagonal_apply, *]
         <;> (try field_simp) <;> (try ring) <;> (try (split_ifs <;> simp_all)))
-  (simp [Matrix.add_apply, Matrix.one_apply, Matrix.single_apply, diagonal_apply, hij, hij.symm, ha, *]
+  (simp [Matrix.add_apply, Matrix.one_apply, diagonal_apply, *]
         <;> (try field_simp) <;> (try ring) <;> (try (split_ifs <;> simp_all)))
 
 theorem sl_top {ι F : Type*} [Fintype ι] [DecidableEq ι] [Nontrivial ι] [Field F]
@@ -655,7 +655,7 @@ theorem comm_mem {G : Subgroup (SpecialLinearGroup (Fin N) L)} {i j k : Fin N} (
     exact Subtype.ext (m1 hpq x)
   have m : (1 + Matrix.single i k a) * (1 + Matrix.single k j b) * (1 + Matrix.single i k (-a)) *
       (1 + Matrix.single k j (-b)) = (1 + Matrix.single i j (a * b) : Matrix (Fin N) (Fin N) L) := by
-    simp [Matrix.add_mul, Matrix.mul_add, Matrix.single_mul_single_same, Matrix.single_mul_single_of_ne, hik, hkj, hij, hik.symm, hkj.symm, hij.symm]
+    simp [Matrix.add_mul, Matrix.mul_add, Matrix.single_mul_single_same, Matrix.single_mul_single_of_ne, hik.symm, hkj.symm, hij.symm]
     simp only [hn]
     abel
   have hx := G.mul_mem (G.mul_mem (G.mul_mem ha hb) (G.inv_mem ha)) (G.inv_mem hb)
@@ -767,7 +767,7 @@ theorem dens_holds : Dens := by
         simp
       · rw [Pi.mulSingle_eq_of_ne hw, Pi.single_eq_of_ne hw]
         ext a b
-        simp [SpecialLinearGroup.transvection_coe, Matrix.transvection])
+        simp)
     rw [hs]
   rw [dense_iff_closure_eq, ← Subgroup.topologicalClosure_coe, htop, Subgroup.coe_top]
 

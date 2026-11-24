@@ -840,9 +840,9 @@ theorem desc_fourG_eq_fourK_desc : ∀ (F E : Type) [NontriviallyNormedField F] 
     have hinv : ((g⁻¹ : GL (Fin r) F) : Matrix (Fin r) (Fin r) F) * (g : Matrix (Fin r) (Fin r) F) = 1 := by
       rw [← Units.val_mul, inv_mul_cancel, Units.val_one]
     refine ⟨hgS, ⟨_, ⟨(g, _), ⟨hgS, hYT⟩, rfl⟩, ?_⟩, ⟨_, ⟨(g, _), ⟨hgS, hYT⟩, rfl⟩, ?_⟩⟩
-    · simp only [act, pt, Matrix.mulVec_mulVec, hinv, Matrix.one_mulVec, LinearEquiv.symm_apply_apply]
+    · simp only [pt, Matrix.mulVec_mulVec, hinv, Matrix.one_mulVec, LinearEquiv.symm_apply_apply]
     · have hρc : ρe c = fun i : Fin r => Algebra.trace F A.K (τ ^ (i : ℕ) * c) := rfl
-      simp only [act, pt, Matrix.vecMul_vecMul, hinv, Matrix.vecMul_one]
+      simp only [pt, Matrix.vecMul_vecMul, hinv, Matrix.vecMul_one]
       rw [← hρc, LinearEquiv.symm_apply_apply]
 
 end GlobalTheory.JR.LinDesc.Swap
@@ -1171,7 +1171,6 @@ theorem pi_selfDual (F E : Type) [NontriviallyNormedField F] [NontriviallyNormed
   have hβs : β.IsSymm := by
     first
     | exact ⟨fun x y => by simp [hβ, dotProduct_comm]⟩
-    | exact fun x y => by simp [hβ, dotProduct_comm]
   have hβn : β.Nondegenerate := Matrix.Nondegenerate.toBilin' (Matrix.nondegenerate_of_det_ne_zero (by simp))
   have key := (_root_.GlobalTheory.JR.selfDual_iff_lattice_volume_and_plancherel F E ψ hψ (Fin r → F) β hβs hβn (Measure.pi fun _ => μF) inferInstance).1 Mg
     (by rw [hMg]; exact hSo) (by rw [hMg]; exact hSc)
@@ -1250,7 +1249,7 @@ theorem fourG_act_pt_eq_fourK : ∀ (F E : Type) [NontriviallyNormedField F] [No
   let ρL : A.K →ₗ[F] (Fin r → F) :=
     { toFun := fun c i => Algebra.trace F A.K (τ ^ (i : ℕ) * c)
       map_add' := by intro x y; funext i; simp [mul_add]
-      map_smul' := by intro a x; funext i; simp [mul_smul_comm] }
+      map_smul' := by intro a x; funext i; simp }
   have hρ : Function.Bijective ρL := (GlobalTheory.JR.EtInv.invK_regular_iff_isUnit F E A r τ p lam hG).1
   let e₁ : A.K ≃ₗ[F] (Fin r → F) := (bas A hG).equivFun.trans gL
   let e₂ : A.K ≃ₗ[F] (Fin r → F) := (LinearEquiv.ofBijective ρL hρ).trans hL

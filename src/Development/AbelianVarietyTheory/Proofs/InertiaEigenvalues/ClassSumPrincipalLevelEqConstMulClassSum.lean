@@ -64,7 +64,7 @@ theorem _root_.GlobalTheory.T.exists_const_twistedSum_fockVectors_principalDatum
       ∑ u ∈ F.attach, ((B.levLam ψ ⟨u.1, hF u.1 u.2⟩ : ℂˣ) : ℂ) •
         ω ((((GlobalTheory.ClassRegroup.finEquiv S).symm u.1 : GfC S) : GA D S), 1) (B.F.fock ((GlobalTheory.FlatVecSum.princ B).vecFlat ψ) P) =
       κ • B.F.fock (B.vecFlat ψ) P := by
-  first | exact @GlobalTheory.LevTransl.sum_om_fock_princ | exact GlobalTheory.LevTransl.sum_om_fock_princ | (intros; apply GlobalTheory.LevTransl.sum_om_fock_princ <;> assumption)
+  first | exact @GlobalTheory.LevTransl.sum_om_fock_princ
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsConstTwistedSumFockVectorsPrincipalDatumStatement =====
@@ -154,7 +154,7 @@ theorem classSum_princ_eq : ∀ (D : D7) (S T : HSp D) (B : Base S T), B.Good �
     (fun y => series B.F ω ((GlobalTheory.FlatVecSum.princ B).vecFlat ψ) (((GlobalTheory.ClassRegroup.finEquiv S).symm y : GfC S) : GA D S) (F y) g)
     (fun γ y => (hinv g).1 γ y) (fun k hk y => (hinv g).2 k hk y)
   simp only [symm_finPt S (hC₀.fin _), inner_sum B ψ ω hF hκ hlaw (hC.fin _)] at key
-  simp only [Pi.smul_apply, smul_eq_mul, Finset.sum_apply, show (GlobalTheory.FlatVecSum.princ B).F = B.F from rfl]
+  simp only [Pi.smul_apply, smul_eq_mul, show (GlobalTheory.FlatVecSum.princ B).F = B.F from rfl]
   rw [key, Finset.mul_sum]
   exact Finset.sum_congr rfl fun i _ => by ring
 

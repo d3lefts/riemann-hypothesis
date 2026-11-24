@@ -95,7 +95,7 @@ theorem _root_.GlobalTheory.T.exists_archOperator_unitaryW_seesaw : ∀ {F E : T
     {a a' : ℕ} (B : Base F E) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W),
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsTriple B G X om om' → ∀ h ∈ UAt σ G.W (evI F),
     ∃ T : SInf F (Fin a × Fin (a + a')) →ₗ[ℂ] SInf F (Fin a × Fin (a + a')), ∀ f : SInf F (Fin a × Fin (a + a')), Acts (evI F) (om (1, h)) f (T f) := by
-  first | exact @GlobalTheory.ArchFactor.exists_archOperator | exact GlobalTheory.ArchFactor.exists_archOperator | (intros; apply GlobalTheory.ArchFactor.exists_archOperator <;> assumption)
+  first | exact @GlobalTheory.ArchFactor.exists_archOperator
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsArchOperatorUnitaryWSeesawStatement =====
@@ -121,7 +121,7 @@ theorem _root_.GlobalTheory.T.contDiff_heisenbergArchimedeanDiffOperator_family 
     ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun p : ℝ × (κ → mixedEmbedding.mixedSpace F) => G p.1 p.2) →
     ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) P → ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) Q →
     ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun p : ℝ × (κ → mixedEmbedding.mixedSpace F) => GlobalTheory.HeisOrbit.dOp (P p.1) (Q p.1) (G p.1) p.2) := by
-  first | exact @GlobalTheory.HeisOrbit.dOp_contDiff_family | exact GlobalTheory.HeisOrbit.dOp_contDiff_family | (intros; apply GlobalTheory.HeisOrbit.dOp_contDiff_family <;> assumption)
+  first | exact @GlobalTheory.HeisOrbit.dOp_contDiff_family
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ContDiffHeisenbergArchimedeanDiffOperatorFamilyStatement =====
@@ -148,7 +148,7 @@ theorem _root_.GlobalTheory.T.heisenbergArchimedeanDiffOperator_hasDerivAt_famil
     ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun p : ℝ × (κ → mixedEmbedding.mixedSpace F) => G p.1 p.2) →
     (∀ y, HasDerivAt (fun t => G t y) (g' y) 0) → HasDerivAt P P' 0 → HasDerivAt Q Q' 0 → ∀ y,
     HasDerivAt (fun t => GlobalTheory.HeisOrbit.dOp (P t) (Q t) (G t) y) (GlobalTheory.HeisOrbit.dOp (P 0) (Q 0) g' y + GlobalTheory.HeisOrbit.dOp P' Q' (G 0) y) 0 := by
-  first | exact @GlobalTheory.HeisOrbit.DOpDeriv.dOp_hasDerivAt | exact GlobalTheory.HeisOrbit.DOpDeriv.dOp_hasDerivAt | (intros; apply GlobalTheory.HeisOrbit.DOpDeriv.dOp_hasDerivAt <;> assumption)
+  first | exact @GlobalTheory.HeisOrbit.DOpDeriv.dOp_hasDerivAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.HeisenbergArchimedeanDiffOperatorHasDerivAtFamilStatement =====
@@ -256,7 +256,7 @@ theorem _root_.GlobalTheory.T.smooth_weilOrbit_preserved_by_heisenbergDerivative
     (∀ (t : ℝ) (f : SInf F (Fin a × Fin (a + a'))), Acts (evI F) (om (1, γ (Multiplicative.ofAdd t))) f (T t f)) → ∀ u, At (evI F) u → ∀ f ∈ G.M.Pol B.ψ B.emb,
     ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun p : ℝ × (Fin a × Fin (a + a') → mixedEmbedding.mixedSpace F) => T p.1 f p.2) → (∃ f' ∈ G.M.Pol B.ψ B.emb, ∀ x, HasDerivAt (fun t => T t f x) (f' x) 0) → ∀ f₁ : SInf F (Fin a × Fin (a + a')), ActsD (evI F) (G.M.heisLine B.ψ u) f f₁ →
     ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun p : ℝ × (Fin a × Fin (a + a') → mixedEmbedding.mixedSpace F) => T p.1 f₁ p.2) ∧ ∃ f₁' ∈ G.M.Pol B.ψ B.emb, ∀ x, HasDerivAt (fun t => T t f₁ x) (f₁' x) 0 := by
-  first | exact @GlobalTheory.HeisOrbit.orbit_heis | exact GlobalTheory.HeisOrbit.orbit_heis | (intros; apply GlobalTheory.HeisOrbit.orbit_heis <;> assumption)
+  first | exact @GlobalTheory.HeisOrbit.orbit_heis
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SmoothWeilOrbitPreservedByHeisenbergDerivativesStatement =====
@@ -370,7 +370,7 @@ theorem _root_.GlobalTheory.T.continuous_archimedeanWeilOperator_line_triple : �
     ∀ T : ℝ → SInf F (Fin a × Fin (a + a')) →ₗ[ℂ] SInf F (Fin a × Fin (a + a')),
     (∀ (t : ℝ) (f : SInf F (Fin a × Fin (a + a'))), Acts (evI F) (om (1, γ (Multiplicative.ofAdd t))) f (T t f)) →
     ∀ (f : SInf F (Fin a × Fin (a + a'))) (x : Fin a × Fin (a + a') → mixedEmbedding.mixedSpace F), Continuous fun t => T t f x := by
-  first | exact @GlobalTheory.ArchLineCont.continuous_apply | exact GlobalTheory.ArchLineCont.continuous_apply | (intros; apply GlobalTheory.ArchLineCont.continuous_apply <;> assumption)
+  first | exact @GlobalTheory.ArchLineCont.continuous_apply
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ContinuousArchimedeanWeilOperatorLineTripleStatement =====
@@ -398,7 +398,7 @@ theorem _root_.GlobalTheory.T.exists_complexStructure_gaussVacuum_fockEquations 
         ((Fin a × Fin (a + a') → mixedEmbedding.mixedSpace F) × (Fin a × Fin (a + a') → mixedEmbedding.mixedSpace F)),
       (∀ w, J₀ (J₀ w) = -w) ∧ ∀ w x, GlobalTheory.GaussLine.dHeis (GlobalTheory.GaussLine.pairInf F (Fin a × Fin (a + a'))) (J₀ w) ⇑f₀ x =
         Complex.I * GlobalTheory.GaussLine.dHeis (GlobalTheory.GaussLine.pairInf F (Fin a × Fin (a + a'))) w ⇑f₀ x := by
-  first | exact @GlobalTheory.GaussFockJ.exists_complex_structure | exact GlobalTheory.GaussFockJ.exists_complex_structure | (intros; apply GlobalTheory.GaussFockJ.exists_complex_structure <;> assumption)
+  first | exact @GlobalTheory.GaussFockJ.exists_complex_structure
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsComplexStructureGaussVacuumFockEquationsStatement =====
@@ -426,7 +426,7 @@ theorem _root_.GlobalTheory.T.one_parameter_operator_unique : ∀ {F E : Type} [
     (∀ (t : ℝ) (f : SInf F (Fin a × Fin (a + a'))), Acts (evI F) (om (1, γ (Multiplicative.ofAdd t))) f (T t f)) →
     ∀ (μ : Measure (Fin a × Fin (a + a') → mixedEmbedding.mixedSpace F)), μ.IsAddHaarMeasure →
     ∀ (t : ℝ) (f : SInf F (Fin a × Fin (a + a'))), ∫ x, ‖T t f x‖ ^ 2 ∂μ = ∫ x, ‖f x‖ ^ 2 ∂μ := by
-  first | exact @GlobalTheory.ArchimedeanUnitaryL2.integral_norm_sq_eq | exact GlobalTheory.ArchimedeanUnitaryL2.integral_norm_sq_eq | (intros; apply GlobalTheory.ArchimedeanUnitaryL2.integral_norm_sq_eq <;> assumption)
+  first | exact @GlobalTheory.ArchimedeanUnitaryL2.integral_norm_sq_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.OneParameterOperatorUniqueStatement =====
@@ -458,7 +458,7 @@ theorem _root_.GlobalTheory.T.one_parameter_weil_operator_derivative : ∀ {F E 
       ∀ (t : ℝ) (p q : Fin a × Fin (a + a') → mixedEmbedding.mixedSpace F) (f g : SInf F (Fin a × Fin (a + a'))),
         ⇑g = GlobalTheory.GaussLine.heisFun (GlobalTheory.GaussLine.pairInf F (Fin a × Fin (a + a'))) p q ⇑f →
         ⇑(T t g) = GlobalTheory.GaussLine.heisFun (GlobalTheory.GaussLine.pairInf F (Fin a × Fin (a + a'))) (A t (p, q)).1 (A t (p, q)).2 ⇑(T t f) := by
-  first | exact @GlobalTheory.ArchLineAct.intertwine | exact GlobalTheory.ArchLineAct.intertwine | (intros; apply GlobalTheory.ArchLineAct.intertwine <;> assumption)
+  first | exact @GlobalTheory.ArchLineAct.intertwine
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.OneParameterWeilOperatorDerivativeStatement =====
@@ -484,7 +484,7 @@ theorem _root_.GlobalTheory.T.thetaTriple_polynomialFock_stable_mul_trace_linear
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsTriple B G X om om' → ∀ (q : Fin a × Fin (a + a') → mixedEmbedding.mixedSpace F),
     ∀ f ∈ G.M.Pol B.ψ B.emb, ∃ f₁ ∈ G.M.Pol B.ψ B.emb,
       ∀ x, f₁ x = (GlobalTheory.GaussLine.pairInf F (Fin a × Fin (a + a')) x q : ℂ) * f x := by
-  first | exact @GlobalTheory.PolMul.pol_mul_pairInf | exact GlobalTheory.PolMul.pol_mul_pairInf | (intros; apply GlobalTheory.PolMul.pol_mul_pairInf <;> assumption)
+  first | exact @GlobalTheory.PolMul.pol_mul_pairInf
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ThetaTriplePolynomialFockStableMulTraceLinearStatement =====
@@ -507,7 +507,7 @@ open scoped Classical
 
 theorem _root_.GlobalTheory.T.tracePairingArchimedeanVars_nondegenerate_right : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] (q : κ → mixedEmbedding.mixedSpace F),
     (∀ x, GlobalTheory.GaussLine.pairInf F κ x q = 0) → q = 0 := by
-  first | exact @GlobalTheory.GaussLine.pairInf_nondeg | exact GlobalTheory.GaussLine.pairInf_nondeg | (intros; apply GlobalTheory.GaussLine.pairInf_nondeg <;> assumption)
+  first | exact @GlobalTheory.GaussLine.pairInf_nondeg
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.TracePairingArchimedeanVarsNondegenerateRightStatement =====
@@ -572,7 +572,7 @@ theorem _root_.GlobalTheory.T.unitaryArchimedeanLine_operators_oneParameter : �
     ∀ T : ℝ → SInf F (Fin a × Fin (a + a')) →ₗ[ℂ] SInf F (Fin a × Fin (a + a')),
     (∀ (t : ℝ) (f : SInf F (Fin a × Fin (a + a'))), Acts (evI F) (om (1, γ (Multiplicative.ofAdd t))) f (T t f)) →
     (∀ (s t : ℝ) (f : SInf F (Fin a × Fin (a + a'))), T (s + t) f = T s (T t f)) ∧ ∀ f : SInf F (Fin a × Fin (a + a')), T 0 f = f := by
-  first | exact @GlobalTheory.LineGroup.archOp_oneParam | exact GlobalTheory.LineGroup.archOp_oneParam | (intros; apply GlobalTheory.LineGroup.archOp_oneParam <;> assumption)
+  first | exact @GlobalTheory.LineGroup.archOp_oneParam
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnitaryArchimedeanLineOperatorsOneParameterStatement =====
@@ -647,7 +647,7 @@ theorem _root_.GlobalTheory.T.weilAction_oneParamSubgroup_gaussVacuum_smooth : �
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsTriple B G X om om' → ∀ γ ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Lines σ G.W, ∀ T : ℝ → SInf F (Fin a × Fin (a + a')) →ₗ[ℂ] SInf F (Fin a × Fin (a + a')),
     (∀ (t : ℝ) (f : SInf F (Fin a × Fin (a + a'))), Acts (evI F) (om (1, γ (Multiplicative.ofAdd t))) f (T t f)) → ∀ f₀, G.M.IsGauss B.ψ B.emb f₀ →
     ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun p : ℝ × (Fin a × Fin (a + a') → mixedEmbedding.mixedSpace F) => T p.1 f₀ p.2) ∧ ∃ f' ∈ G.M.Pol B.ψ B.emb, ∀ x, HasDerivAt (fun t => T t f₀ x) (f' x) 0 := by
-  first | exact @GlobalTheory.GaussLine.smooth_vacuum_line | exact GlobalTheory.GaussLine.smooth_vacuum_line | (intros; apply GlobalTheory.GaussLine.smooth_vacuum_line <;> assumption)
+  first | exact @GlobalTheory.GaussLine.smooth_vacuum_line
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.WeilActionOneParamSubgroupGaussVacuumSmoothStatement =====

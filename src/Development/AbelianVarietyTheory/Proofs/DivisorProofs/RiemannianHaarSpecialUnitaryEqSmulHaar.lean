@@ -386,8 +386,8 @@ theorem skewHermitian_of_diagonal_imaginary_frame {r : ℕ} (G M Y : Matrix (Fin
     rw [Matrix.mul_add, Matrix.add_mul, e1, e2]
     ext a b
     by_cases h : a = b
-    · subst h; simp [diagonal_apply, hd]; ring
-    · simp [diagonal_apply, h]
+    · subst h; simp [hd]; ring
+    · simp [h]
   have hL : (M⁻¹)ᵀ * Mᵀ = 1 := by rw [← transpose_mul, mul_nonsing_inv _ hu, transpose_one]
   have hR : M.map (starRingEnd ℂ) * (M⁻¹).map (starRingEnd ℂ) = 1 := by
     rw [← Matrix.map_mul, mul_nonsing_inv _ hu, Matrix.map_one _ (map_zero _) (map_one _)]
@@ -676,9 +676,7 @@ theorem haar_map_mul_right_of_compact {G : Type} [Group G] [TopologicalSpace G] 
     have h2 : (1 : ℝ≥0∞) * ν C = ((Measure.modularCharacterFun g : NNReal) : ℝ≥0∞) * ν C := by
       rw [one_mul]; exact h1
     first
-    | exact ((ENNReal.mul_eq_mul_right hpos hfin).1 h2).symm
     | exact ((ENNReal.mul_left_inj hpos hfin).1 h2).symm
-    | exact (ENNReal.mul_right_cancel hpos hfin h2).symm
   have hΔ' : Measure.modularCharacterFun g = 1 := by exact_mod_cast hΔ
   rw [hm, hΔ', one_smul]
 
@@ -918,7 +916,6 @@ theorem haar_chart_formula : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
         · refine ht_per _ _ fun i k => ⟨-toIocDiv Real.two_pi_pos (-Real.pi) (θ i k), ?_⟩
           have := toIocMod_add_toIocDiv_zsmul Real.two_pi_pos (-Real.pi) (θ i k)
           rw [zsmul_eq_mul] at this
-          beta_reduce
           push_cast
           linarith
       · rintro _ ⟨θ, -, rfl⟩; exact ⟨θ, rfl⟩
@@ -1189,7 +1186,7 @@ theorem GlobalTheory.hasStrictFDerivAt_mul_curves_at_identity : ∀ (ι : Type) 
   clear_value f₁ f₂
   clear hf₁ hf₂ h₁ h₂ hσ ht σ t
   refine ContinuousLinearMap.ext fun w => ?_
-  simp [z₁, z₂, Matrix.one_apply, Finset.sum_add_distrib, ite_mul]
+  simp [z₁, z₂, Matrix.one_apply, Finset.sum_add_distrib]
   ring
 end -- clump:auto
 end -- clump:auto

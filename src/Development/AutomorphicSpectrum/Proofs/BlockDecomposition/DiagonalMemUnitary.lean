@@ -513,7 +513,7 @@ theorem dual_weight (hG : IsDualFam E G) (μ : Fin n → ℤ) {v : E.V →L[ℂ]
         by_cases hc : i = a
         · subst hc
           simp
-        · simp [Matrix.single_apply, hc, Ne.symm hc]
+        · simp [hc, Ne.symm hc]
       · rw [Matrix.diagonal_apply_ne _ hij, Matrix.smul_apply, Matrix.single_apply,
           if_neg (fun hh => hij (hh.1.symm.trans hh.2)), smul_zero]
     show NormedSpace.exp _ = _
@@ -795,7 +795,7 @@ theorem sum_sym (f : Fin n → Fin n → ℤ) (hf : ∀ a b, f a b = f b a) :
       + (if a = b then f a a else 0) := by
     intro a b
     rcases lt_trichotomy a b with h | h | h
-    · simp [h, h.ne, h.le, not_lt.2 h.le]
+    · simp [h, h.ne, not_lt.2 h.le]
     · subst h; simp
     · simp [h, h.ne', not_lt.2 h.le, hf a b]
   have hA : ∑ a, ∑ b, (if a < b then f a b else 0) = ∑ p ∈ prs n, f p.1 p.2 := by
@@ -831,7 +831,7 @@ theorem lev_symm_le {lev : Fin n → ℕ} (hlev : Monotone lev) {L : Fin n → �
   have hw1 : ∀ a b, lev a < lev b → w b ≤ w a := by
     intro a b h
     simp only [hw]
-    split_ifs <;> first | omega | simp
+    split_ifs <;> first | omega
   have hw2 : ∀ a b, a < b → lev a = lev b → w a ≤ w b := by
     intro a b _ h
     simp only [hw, h]; exact le_refl _
@@ -1575,7 +1575,7 @@ theorem trace_sandwich {W H : Type} [AddCommGroup W] [Module ℂ W]
     apply TensorProduct.ext'
     intro φ h
     ext v
-    simp [e, M, sandwich, dualTensorHomEquiv, dualTensorHomEquivOfBasis_apply, dualTensorHom_apply,
+    simp [e, M, sandwich, dualTensorHomEquiv, dualTensorHom_apply,
       Module.Dual.transpose_apply]
   have hconj : e.conj M = sandwich a b := by
     rw [LinearEquiv.conj_apply]
@@ -1706,7 +1706,6 @@ theorem trace_dualT_inv (lam : Fin n → ℤ) (E : KMod n) (T : E.V →L[ℂ] E.
     simpa [inv_pow] using h
   obtain ⟨-, -, h3⟩ := hT
   obtain ⟨-, h2⟩ := h3 k⁻¹ (fun a => (z a)⁻¹) hk' hinj'
-  beta_reduce at h2
   rw [trace_dualT, h2]
   have hw : (fun a => (z a)⁻¹ ^ 2) = fun a => conj (z a ^ 2) := by
     funext a
@@ -1732,7 +1731,7 @@ open scoped InnerProductSpace
 open PositivityTheory.RgBcC PositivityTheory.RgBcC.Real PositivityTheory.RgBcC.RealD GlobalTheory.CompanionTheory.RealCount GlobalTheory.CompanionTheory.RealCountG
 
 theorem _root_.GlobalTheory.T.twisted_trace_weyl_character : ∀ {n : ℕ} (lam : Fin n → ℤ) (E : KMod n) (T : E.V →L[ℂ] E.V), IsLefK lam E T → ∀ (k : Matrix.unitaryGroup (Fin n) ℂ) (z : Fin n → ℂ), k.1 = diagonal z → Function.Injective (fun a => z a ^ 2) → LinearMap.trace ℂ (E.V →L[ℂ] ℂ) (dualT E (E.ρ k⁻¹ * T) : (E.V →L[ℂ] ℂ) →ₗ[ℂ] (E.V →L[ℂ] ℂ)) = (∏ a, ∏ b, (1 + z a / z b)) * weylChar lam (fun a => z a ^ 2) := by
-  first | exact @GlobalTheory.CompanionTheory.RealCountG.LefDual.trace_dualT_inv | exact GlobalTheory.CompanionTheory.RealCountG.LefDual.trace_dualT_inv | (intros; apply GlobalTheory.CompanionTheory.RealCountG.LefDual.trace_dualT_inv <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.RealCountG.LefDual.trace_dualT_inv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TwistedTraceWeylCharacterStatement =====

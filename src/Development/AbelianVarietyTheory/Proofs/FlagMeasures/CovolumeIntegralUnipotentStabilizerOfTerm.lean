@@ -597,8 +597,8 @@ theorem main_gen {Λ : Submodule (𝓞 E) S.V} (hΛ : Formalism.HermitianLattice
         rw [Matrix.mulVec_mulVec, ← hLZ, ← Matrix.mulVec_mulVec, lo_mulVec hL _ hy]
       rw [Matrix.sub_mulVec, Matrix.one_mulVec, cancel_lemma hZdet h2, sub_self]
     rw [hn, add_sub_cancel_left, ← hu, Fintype.sum_sum_type, hAm1, Matrix.fromBlocks_mulVec]
-    simp only [Sum.elim_inl, Sum.elim_inr, Matrix.zero_mulVec, add_zero, zero_add, hau, Pi.zero_apply, zero_smul,
-      Finset.sum_const_zero, hvdef, Pi.add_apply]
+    simp only [Sum.elim_inl, Sum.elim_inr, Matrix.zero_mulVec, add_zero, hau, Pi.zero_apply, zero_smul,
+      Finset.sum_const_zero, hvdef]
     exact comb_mem_X F _ (up_last hbU _)
   have horthF' : ∀ x ∈ orth S (Xsp F'), n x - x ∈ Xsp F' := by
     intro x hx
@@ -621,7 +621,7 @@ theorem main_gen {Λ : Submodule (𝓞 E) S.V} (hΛ : Formalism.HermitianLattice
       rw [Matrix.sub_mulVec, Matrix.one_mulVec, cancel_lemma hZH (cancel_lemma haH h2), sub_self]
     rw [hn, add_sub_cancel_left, ← hu, Fintype.sum_sum_type, hAm1, Matrix.fromBlocks_mulVec]
     simp only [Sum.elim_inl, Sum.elim_inr, Matrix.zero_mulVec, add_zero, zero_add, hbu, Pi.zero_apply, zero_smul,
-      Finset.sum_const_zero, hvdef, Pi.add_apply]
+      Finset.sum_const_zero, hvdef]
     exact comb_mem_X F' _ (up_last haU _)
   exact ⟨n, ⟨⟨hAut, fun j => flag_step F n hbU hnF j, horthF⟩, ⟨hAut, fun j => flag_step F' n haU hnF' j, horthF'⟩⟩,
     hnF'⟩
@@ -715,7 +715,7 @@ theorem Dr1_ne_zero {T' : ℕ} (F : LFlag S r T) (F' : LFlag S r (T' : E)) (τ :
     have h2 : (starRingEnd ℂ (τ (w (Fin.last r))) * τ (w (Fin.last r)) * -(T' : ℂ)).re =
         -(T' : ℝ) * Complex.normSq (τ (w (Fin.last r))) := by
       rw [mul_comm (starRingEnd ℂ _), Complex.mul_conj]
-      simp [Complex.ofReal_mul]
+      simp
       ring
     rw [h2] at hp
     have h3 : 0 ≤ (T' : ℝ) * Complex.normSq (τ (w (Fin.last r))) :=
@@ -847,7 +847,7 @@ open scoped ENNReal Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.congruence_stabU_from_integral_unipotent_isometry : ∀ (D : D7) (u u' : D.what₂.Word) (F0 : Fb D u) (Λ : LatV D), Stand D u u' → IsBase D u F0 → IsRowLat D F0 Λ → ∀ F' : FlagU D u', IsTermF D Λ (lf D F0) F' → ∃ I : Ideal (𝓞 D.host.E), I ≠ ⊥ ∧ (Ideal.absNorm I : ℝ) ≤ (∏ τ, ‖embS D τ (Gval (lf D F0) F')‖) ^ 4 * ∏ τ, ‖embS D τ (Dr1 (lf D F0) F')‖ ^ 2 ∧ ∀ a ∈ GlobalTheory.LoopV.stabU (ZhatL (lf D F0) F'), GlobalTheory.LoopV.EntIn I (a - 1) → ∃ n ∈ NLam Λ (lf D F0) ∩ NLam Λ F', ∀ c, n (frame F' c) = ∑ i, a i c • frame F' i := by
-  first | exact @GlobalTheory.LoopV.Cong.congruence_mem | exact GlobalTheory.LoopV.Cong.congruence_mem | (intros; apply GlobalTheory.LoopV.Cong.congruence_mem <;> assumption)
+  first | exact @GlobalTheory.LoopV.Cong.congruence_mem
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.CongruenceStabUFromIntegralUnipotentIsometryStatement =====

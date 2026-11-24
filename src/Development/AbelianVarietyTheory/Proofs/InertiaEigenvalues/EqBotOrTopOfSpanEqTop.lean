@@ -93,7 +93,6 @@ theorem invariant_all {Γ k K : Type} [Field k] [Field K] [Algebra k K] {r : ℕ
     rw [Matrix.map_smul _ c (fun a => by rw [smul_eq_mul, map_mul, Algebra.smul_def])]
     first
       | rw [Matrix.smul_mulVec]
-      | rw [Matrix.smul_mulVec_assoc]
     exact W.smul_of_tower_mem c (hA x hx)
 
 theorem bot_or_top {Γ k K : Type} [Field k] [Field K] [Algebra k K] {r : ℕ}
@@ -119,9 +118,9 @@ theorem bot_or_top {Γ k K : Type} [Field k] [Field K] [Algebra k K] {r : ℕ}
       by_cases hai : a = i
       · subst hai
         rw [Finset.sum_eq_single j (fun b _ hb => by simp [Matrix.single_apply, hb, Ne.symm hb]) (by simp)]
-        simp [Matrix.single_apply]
+        simp
       · rw [Finset.sum_eq_zero (fun b _ => by simp [Matrix.single_apply, hai, Ne.symm hai])]
-        simp [Pi.single_apply, hai]
+        simp [hai]
     rw [h2] at h1
     have h3 := W.smul_mem (x j)⁻¹ h1
     rwa [smul_smul, inv_mul_cancel₀ hj, one_smul] at h3
@@ -158,11 +157,6 @@ theorem eq_bot_or_top_of_span_eq_top {Γ k K : Type} [Field k] [Field K] [Algebr
     (hW : ∀ g, ∀ x ∈ W, ((M g).map (algebraMap k K)).mulVec x ∈ W) : W = ⊥ ∨ W = ⊤ := by
   first
   | (rename_i h_3 h_4 h_5; revert Γ k K h_3 h_4 h_5 r M h W hW; exact @_root_.GlobalTheory.InvariantBotOrTop.main)
-  | exact @_root_.GlobalTheory.InvariantBotOrTop.main
-  | exact _root_.GlobalTheory.InvariantBotOrTop.main
-  | (apply _root_.GlobalTheory.InvariantBotOrTop.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.InvariantBotOrTop.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.InvariantBotOrTop.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.InvariantBotOrTop.main ..)
 
 end GlobalTheory.BurnsideIff

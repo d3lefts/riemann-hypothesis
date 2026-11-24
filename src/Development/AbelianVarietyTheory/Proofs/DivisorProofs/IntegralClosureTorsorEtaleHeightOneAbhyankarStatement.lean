@@ -139,7 +139,7 @@ open scoped TensorProduct
 theorem _root_.GlobalTheory.T.etale_integralClosure_pi_of_etale : ∀ (R : Type) [CommRing R] (ι : Type) [Fintype ι] (E : ι → Type) [∀ i, CommRing (E i)]
     [∀ i, Algebra R (E i)], (∀ i, Algebra.Etale R (integralClosure R (E i))) →
     Algebra.Etale R (integralClosure R (∀ i, E i)) := by
-  first | (exact @GlobalTheory.PiClosure.etale_integralClosure_pi) | (exact GlobalTheory.PiClosure.etale_integralClosure_pi) | (intros; apply GlobalTheory.PiClosure.etale_integralClosure_pi  <;> assumption)
+  first | (exact @GlobalTheory.PiClosure.etale_integralClosure_pi)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleIntegralClosurePiOfEtaleStatement =====
@@ -202,11 +202,7 @@ theorem tensorLift_tmul (u : A →+* C) (v : B →+* C)
 theorem ringHom_ext {g h : A ⊗[R] B →+* C} (h1 : ∀ a : A, g (a ⊗ₜ[R] (1 : B)) = h (a ⊗ₜ[R] (1 : B)))
     (h2 : ∀ b : B, g ((1 : A) ⊗ₜ[R] b) = h ((1 : A) ⊗ₜ[R] b)) : g = h := by
   first
-  | exact @_root_.GlobalTheory.RingHomTensorExtensionality.ringHom_ext_tensor
-  | exact _root_.GlobalTheory.RingHomTensorExtensionality.ringHom_ext_tensor
   | (apply _root_.GlobalTheory.RingHomTensorExtensionality.ringHom_ext_tensor <;> assumption)
-  | (intros; apply _root_.GlobalTheory.RingHomTensorExtensionality.ringHom_ext_tensor <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.RingHomTensorExtensionality.ringHom_ext_tensor <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.RingHomTensorExtensionality.ringHom_ext_tensor ..)
 
 theorem algebraMap_tmul_one (r : R) :
@@ -743,7 +739,7 @@ theorem _root_.GlobalTheory.T.etale_integralClosure_torsor_of_fraction_fields : 
     (letI := (GlobalTheory.KeyOriginNoeth.baseHom A₁ R₁ (GlobalTheory.KeyOriginBC.BC β DA)).toAlgebra;
       Algebra.Etale (Localization.AtPrime P₁)
         (integralClosure (Localization.AtPrime P₁) (Localization.AtPrime P₁ ⊗[R₁] GlobalTheory.KeyOriginBC.BC β DA))) := by
-  first | (exact @GlobalTheory.KeyOriginTransport.etale_closure_of_field) | (exact GlobalTheory.KeyOriginTransport.etale_closure_of_field) | (intros; apply GlobalTheory.KeyOriginTransport.etale_closure_of_field  <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginTransport.etale_closure_of_field)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleIntegralClosureTorsorOfFractionFieldsStatement =====
@@ -856,7 +852,7 @@ theorem _root_.GlobalTheory.T.ramificationIdx_dvd_of_galois_degree_dvd_unit_dvr 
     (∀ P : Ideal (integralClosure S L), P.IsMaximal → P.ramificationIdx S ∣ q) ∧
     (∀ P : Ideal (integralClosure S L), P.IsMaximal → ∀ [P.LiesOver (maximalIdeal S)],
       Algebra.IsSeparable (S ⧸ maximalIdeal S) (integralClosure S L ⧸ P)) := by
-  first | (exact @GlobalTheory.RamGalDVR.ramGal) | (exact GlobalTheory.RamGalDVR.ramGal) | (intros; apply GlobalTheory.RamGalDVR.ramGal  <;> assumption)
+  first | (exact @GlobalTheory.RamGalDVR.ramGal)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RamificationIdxDvdOfGaloisDegreeDvdUnitDvrStatement =====
@@ -883,11 +879,11 @@ theorem exists_point_pi {K G A Ω : Type} [CommRing K] [Fintype G] [DecidableEq 
     (f := fun g => z (Pi.single g 1)) (by rw [hsum]; exact one_ne_zero)
   have hidem : z (Pi.single g 1) = 1 := by
     have h2 : z (Pi.single g 1) * z (Pi.single g 1) = z (Pi.single g 1) * 1 := by
-      rw [← map_mul, mul_one]; congr 1; funext h; by_cases hh : h = g <;> simp [Pi.single_apply, hh]
+      rw [← map_mul, mul_one]; congr 1; funext h; by_cases hh : h = g <;> simp [hh]
     exact mul_left_cancel₀ hg h2
   refine ⟨g, fun f => ?_⟩
   have hf : f * Pi.single g 1 = (fun _ => f g) * Pi.single g 1 := by
-    funext h; by_cases hh : h = g <;> simp [Pi.single_apply, hh]
+    funext h; by_cases hh : h = g <;> simp [hh]
   calc z f = z f * z (Pi.single g 1) := by rw [hidem, mul_one]
     _ = z (fun _ => f g) * z (Pi.single g 1) := by rw [← map_mul, ← map_mul, hf]
     _ = z (fun _ => f g) := by rw [hidem, mul_one]
@@ -1077,7 +1073,7 @@ theorem _root_.GlobalTheory.T.zmodTorsor_field_eq_prod_galois : ∀ (K M : Type)
     ∃ (ι : Type) (_ : Fintype ι) (L : ι → Type) (_ : ∀ i, Field (L i)) (_ : ∀ i, Algebra K (L i)),
       (∀ i, FiniteDimensional K (L i)) ∧ (∀ i, IsGalois K (L i)) ∧
       (∀ i, Module.finrank K (L i) ∣ q) ∧ Nonempty (M ≃ₐ[K] ∀ i, L i) := by
-  first | (exact @GlobalTheory.KeyOriginCut.torsor_field_eq_prod_galois) | (exact GlobalTheory.KeyOriginCut.torsor_field_eq_prod_galois) | (intros; apply GlobalTheory.KeyOriginCut.torsor_field_eq_prod_galois  <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginCut.torsor_field_eq_prod_galois)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ZmodTorsorFieldEqProdGaloisStatement =====
@@ -1195,7 +1191,7 @@ theorem _root_.GlobalTheory.T.generic_fibre_base_change_injective : ∀ (A R : T
     ∀ π : A, Irreducible (algebraMap A (Localization.AtPrime (P₁.comap φ)) π) →
     ∀ y : R₁, y ^ q = φ (algebraMap A R π) →
     GlobalTheory.KeyOriginEnlarge.ClosureEtaleAt A₁ R₁ (GlobalTheory.KeyOriginBC.BC β DA) P₁ := by
-  first | (exact @GlobalTheory.AbhHeightOne.closureEtaleAt_of_root_of_uniformiser) | (exact GlobalTheory.AbhHeightOne.closureEtaleAt_of_root_of_uniformiser) | (intros; apply GlobalTheory.AbhHeightOne.closureEtaleAt_of_root_of_uniformiser  <;> assumption)
+  first | (exact @GlobalTheory.AbhHeightOne.closureEtaleAt_of_root_of_uniformiser)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GenericFibreBaseChangeInjective =====
@@ -1311,7 +1307,7 @@ theorem _root_.GlobalTheory.T.height_one_contraction_of_etale_prime : ∀ (A : T
     (P.comap (algebraMap A (Localization.AtPrime Q))).height = 1 ∧
       P.comap (algebraMap A[X] (Localization.AtPrime Q)) =
         (P.comap (algebraMap A (Localization.AtPrime Q))).map (Polynomial.C : A →+* A[X]) := by
-  first | (exact @GlobalTheory.EtaleHeightOne.height_one_and_comap_eq_map_C) | (exact GlobalTheory.EtaleHeightOne.height_one_and_comap_eq_map_C) | (intros; apply GlobalTheory.EtaleHeightOne.height_one_and_comap_eq_map_C  <;> assumption)
+  first | (exact @GlobalTheory.EtaleHeightOne.height_one_and_comap_eq_map_C)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeightOneContractionOfEtalePrime =====
@@ -1476,7 +1472,7 @@ theorem _root_.GlobalTheory.T.height_one_prime_over_constant_ideal : ∀ (A : Ty
     (∃ _ : IsDomain (Localization.AtPrime P), IsDiscreteValuationRing (Localization.AtPrime P)) ∧
       ∀ π : A, Irreducible (algebraMap A (Localization.AtPrime p) π) →
         Irreducible (algebraMap A (Localization.AtPrime P) π) := by
-  first | (exact @GlobalTheory.EtalePolyDvr.isDiscreteValuationRing_atPrime_of_etale_polynomial) | (exact GlobalTheory.EtalePolyDvr.isDiscreteValuationRing_atPrime_of_etale_polynomial) | (intros; apply GlobalTheory.EtalePolyDvr.isDiscreteValuationRing_atPrime_of_etale_polynomial  <;> assumption)
+  first | (exact @GlobalTheory.EtalePolyDvr.isDiscreteValuationRing_atPrime_of_etale_polynomial)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeightOnePrimeOverConstantIdeal =====
@@ -1618,7 +1614,7 @@ theorem _root_.GlobalTheory.T.integralClosure_torsor_etale_height_one_abhyankar 
           ∃ y : A₁, y ^ q = f π) →
     ∀ (P₁ : Ideal (GlobalTheory.KeyOriginBC.Loc₁ f i i₁ EA QA jA hcomp hj)) [P₁.IsPrime], P₁.height ≤ 1 → algebraMap A₁ (GlobalTheory.KeyOriginBC.Loc₁ f i i₁ EA QA jA hcomp hj) (f a) ∈ P₁ →
       GlobalTheory.KeyOriginEnlarge.ClosureEtaleAt A₁ (GlobalTheory.KeyOriginBC.Loc₁ f i i₁ EA QA jA hcomp hj) (GlobalTheory.KeyOriginBC.BC (GlobalTheory.KeyOriginBC.fibBC f i i₁ EA QA jA hcomp hj hf) DA) P₁ := by
-  first | (exact @GlobalTheory.KeyOriginBC.closureEtaleAt_of_mem_height_le_one) | (exact GlobalTheory.KeyOriginBC.closureEtaleAt_of_mem_height_le_one) | (intros; apply GlobalTheory.KeyOriginBC.closureEtaleAt_of_mem_height_le_one  <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginBC.closureEtaleAt_of_mem_height_le_one)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralClosureTorsorEtaleHeightOneAbhyankarStatement =====

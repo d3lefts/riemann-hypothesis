@@ -1509,8 +1509,7 @@ theorem linD (X : Sys p) : LinD X :=
 variable {X : Sys p}
 
 theorem vGe_of_eO_zero (he : X.eO = 0) {j : ℕ} {F : X.Fm j} {g g' : ℝ} (h : X.vGe j F g) : X.vGe j F g' := by
-  unfold Sys.vGe Sys.vsc at h ⊢
-  simpa [he] using h
+  simpa [Sys.vGe, Sys.vsc, he] using h
 
 theorem low_term_bound_of_eO_eq_zero_of_aux0 (D : Formalism.BasicNotions.D7) (Y : Pend X) (he : X.eO = 0) (h0 : Conclusion0 D X) : LowTermBound D X Y := by
   intro Gn G0n PRn S VV _ _ _ _ F hFm
@@ -1524,9 +1523,7 @@ theorem low_term_bound_of_eO_eq_zero_of_aux0 (D : Formalism.BasicNotions.D7) (Y 
       | nil => rfl
       | cons v _ => exact (hPl v).elim
     subst hLv
-    have h1 : F0 ∈ scale (1 : X.G.Kf) (X.Int 0) := by simpa [he] using hF0
-    rw [scale_one] at h1
-    exact h1
+    simpa [he, scale_one] using hF0
   have key : ∀ m' ≤ X.mm, X.chainK m' F ∈ X.Int m' := by
     intro m'
     induction m' with

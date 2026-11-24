@@ -389,7 +389,7 @@ variable {G K : Type} [Group G] [Group K]
 
 theorem mem_Gq {ρ : G →* K} {q : K} {δ : G} : δ ∈ Gq ρ q ↔ ∃ γ, q⁻¹ * ρ γ * q = ρ δ := by
   unfold Gq
-  simp [MulAut.conj_apply]
+  simp
 
 theorem F_rep {m : ℕ} (ρ : G →* K) (q : K) (F : (Fin (m + 1) → K) → ℝ) (hF : Inv ρ F) (a b : G)
     (h : b * a⁻¹ ∈ Gq ρ q) (y : Fin (m + 1) → K) :
@@ -476,7 +476,7 @@ theorem bd_cmap {G H : Type} [Group G] [Group H] (f : G →* H) (m : ℕ) (z : C
     apply Finsupp.lhom_ext
     intro g r
 
-    simp [bd, cmap, Finsupp.mapDomain_single, map_sum, Finsupp.mapDomain_add, Finsupp.mapDomain_smul, hc]
+    simp [bd, cmap, Finsupp.mapDomain_single, Finsupp.mapDomain_add, Finsupp.mapDomain_smul]
     rw [Finsupp.mapDomain_finsetSum]
     simp only [Finsupp.mapDomain_single, hc]
   exact LinearMap.congr_fun key z
@@ -537,7 +537,6 @@ theorem pHeckeKer (hT : PTransfer) (hE : PEvDC) : PHeckeKer := by
     have hψ : ∀ h, ψ h ∈ ρ.range := fun h => by
       convert hmem h using 1
       simp only [ψ, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom, MulAut.conj_apply, Subgroup.coe_subtype]
-      done
     let φ := (MonoidHom.ofInjective hρ).symm.toMonoidHom.comp (ψ.codRestrict ρ.range hψ)
     have hφ : ∀ h, ρ (φ h) = q * ρ c.out * ρ h * (q * ρ c.out)⁻¹ := by
       intro h
@@ -728,7 +727,7 @@ theorem aff_gamma (π : 𝓞 L) (hπ : Prime π) (n r : ℕ) (hn : 1 ≤ n) (c :
     show diagonal _ = _
     congr 1
     funext a
-    split_ifs <;> first | rfl | simp
+    split_ifs <;> first | rfl
   have hQ : (qO * (c : Matrix (Fin (n + r)) (Fin (n + r)) (𝓞 L))).map alg =
       ((qel L (n + r) π hπ.ne_zero : GK L (n + r)) : Matrix (Fin (n + r)) (Fin (n + r)) L) * cL := by
     rw [Matrix.map_mul, hqM]; rfl
@@ -751,7 +750,6 @@ theorem aff_gamma (π : 𝓞 L) (hπ : Prime π) (n r : ℕ) (hn : 1 ≤ n) (c :
         ((((qel L (n + r) π hπ.ne_zero : GK L (n + r)) : Matrix (Fin (n + r)) (Fin (n + r)) L) * cL) *ᵥ e) a := by
       rw [RingHom.map_mulVec, hQ]
       congr 1
-      try exact he'
     rw [hzO, Pi.add_apply, Pi.smul_apply, map_add (f := _), smul_eq_mul, map_mul, h5, map_sub, map_one]
     simp only [Pi.add_apply, Pi.smul_apply, Pi.sub_apply, smul_eq_mul, Pi.single_apply]
     split_ifs
@@ -863,8 +861,7 @@ theorem pStabVan : PStabVan := by
     obtain ⟨a, rfl⟩ := finSumFinEquiv.surjective a
     obtain ⟨b, rfl⟩ := finSumFinEquiv.surjective b
     rcases a with a | a <;> rcases b with b | b
-    · simp only [Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_apply_left, finSumFinEquiv_apply_right,
-        finSumFinEquiv_symm_apply_castAdd, finSumFinEquiv_symm_apply_natAdd, Matrix.fromBlocks_apply₁₁]
+    · simp only [Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_apply_left, finSumFinEquiv_symm_apply_castAdd]
       apply aff_alg_inj
       rw [← aff_toK_val, hM, aff_blk_top]
       rfl
@@ -880,8 +877,8 @@ theorem pStabVan : PStabVan := by
       have := congrArg Fin.val hh
       simp only [Fin.val_castAdd, Fin.val_natAdd] at this
       omega
-    · simp only [Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_apply_left, finSumFinEquiv_apply_right,
-        finSumFinEquiv_symm_apply_castAdd, finSumFinEquiv_symm_apply_natAdd]
+    · simp only [Matrix.reindex_apply, Matrix.submatrix_apply, finSumFinEquiv_apply_right,
+        finSumFinEquiv_symm_apply_natAdd]
       show (f x : Matrix (Fin (n + r)) (Fin (n + r)) (𝓞 L)) (Fin.natAdd n a) (Fin.natAdd n b) =
         (1 : Matrix (Fin r) (Fin r) (𝓞 L)) a b
       apply aff_alg_inj
@@ -1287,18 +1284,18 @@ theorem fc_pz_gt {l i : ℕ} (h : i + 1 < l) : fc l (pz v i f) = pz v i (fc (l -
 theorem fc_pz_diag (i : ℕ) : fc (i + 1) (pz v i f) = fc (i + 1) (pz v (i + 1) f) := by
   funext j
   simp only [fc, pz]
-  split_ifs <;> first | rfl | (exfalso; omega) | (congr 1; omega) | (congr 2; omega)
+  split_ifs <;> first | rfl | (exfalso; omega)
 
 theorem fc_pz_zero : fc 0 (pz v 0 f) = fun j => v (f j) := by
   funext j
   simp only [fc, pz]
-  split_ifs <;> first | rfl | (exfalso; omega) | (congr 1; omega) | (congr 2; omega)
+  split_ifs <;> first | rfl | (exfalso; omega)
 
 theorem tk_fc_pz_top (m : ℕ) : tk (m + 2) (fc (m + 2) (pz v (m + 2) f)) = tk (m + 2) f := by
   funext j
   simp only [tk, fc, pz]
   have := j.isLt
-  split_ifs <;> first | rfl | (exfalso; omega) | (congr 1; omega) | (congr 2; omega)
+  split_ifs <;> first | rfl | (exfalso; omega)
 
 theorem tk_pz_ext (m : ℕ) {i : ℕ} (hi : i ≤ m) (g : ℕ → Y) :
     tk (m + 2) (pz v i (ext (tk (m + 1) g))) = tk (m + 2) (pz v i g) := by

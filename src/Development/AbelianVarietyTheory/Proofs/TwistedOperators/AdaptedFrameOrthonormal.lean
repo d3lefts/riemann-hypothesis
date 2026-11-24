@@ -296,7 +296,7 @@ theorem _root_.GlobalTheory.T.compactChain_topPair_movedVector_rowCharacter : �
     (d : FinDatum G t (.top t j)), S.Z.HasVec d →
     W.om (.top t j) (G.toPair (.top t j) (GlobalTheory.RowReal.ptTop W g j) (GlobalTheory.RowReal.ptTop W g (j + 1))) (movedVec t S d) =
       GlobalTheory.RowReal.rowScal (GlobalTheory.RowReal.rowEntries D sc.cGap) j g • movedVec t S d := by
-  first | exact @GlobalTheory.RowReal.om_ptTop_movedVec | exact GlobalTheory.RowReal.om_ptTop_movedVec | (intros; apply GlobalTheory.RowReal.om_ptTop_movedVec <;> assumption)
+  first | exact @GlobalTheory.RowReal.om_ptTop_movedVec
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.CompactChainTopPairMovedVectorRowCharacterStatement =====
@@ -319,7 +319,7 @@ theorem _root_.GlobalTheory.T.compactChainTopRowRealPoint_inOrthonormalBasis : �
     (W.onb (.top n) τ)⁻¹ * compAt W.θ τ (mt _ (GlobalTheory.RowReal.ptTop W g n)) * W.onb (.top n) τ =
       (rowComp (GlobalTheory.RowReal.rowSizes D) g n τ).1.submatrix (Fin.cast (GlobalTheory.RowReal.rank_top G (Nat.lt_succ_iff.1 n.2)))
         (Fin.cast (GlobalTheory.RowReal.rank_top G (Nat.lt_succ_iff.1 n.2))) := by
-  first | exact @GlobalTheory.RowReal.ptTop_inOnb | exact GlobalTheory.RowReal.ptTop_inOnb | (intros; apply GlobalTheory.RowReal.ptTop_inOnb <;> assumption)
+  first | exact @GlobalTheory.RowReal.ptTop_inOnb
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.CompactChainTopRowRealPointInOrthonormalBasisStatement =====
@@ -401,7 +401,7 @@ theorem _root_.GlobalTheory.T.fockSubstitution_rowStep_rename_unitary : ∀ {D :
       (fun τ => ((v τ : Matrix.unitaryGroup _ ℂ) : Matrix _ _ ℂ).submatrix (Fin.cast (GlobalTheory.RowReal.rank_top G (j := j + 1) j.2))
         (Fin.cast (GlobalTheory.RowReal.rank_top G (j := j + 1) j.2))) Q) =
       linSub (homMat _ _ (u, v)) (GlobalTheory.RowReal.trCol G j Q) := by
-  first | exact @GlobalTheory.RowReal.trCol_fockSubAll_unitary | exact GlobalTheory.RowReal.trCol_fockSubAll_unitary | (intros; apply GlobalTheory.RowReal.trCol_fockSubAll_unitary <;> assumption)
+  first | exact @GlobalTheory.RowReal.trCol_fockSubAll_unitary
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FockSubstitutionRowStepRenameUnitaryStatement =====
@@ -537,7 +537,7 @@ theorem _root_.GlobalTheory.T.compactChain_chiPair_movedVector_columnCharacter :
     (d : FinDatum G t (.chi i D.R.m)), S.Z.HasVec d →
     W.om (.chi i D.R.m) (G.toPair (.chi i D.R.m) (GlobalTheory.RowReal.ptGrid W g i) (GlobalTheory.RowReal.ptGrid W g (i + 1))) (movedVec t S d) =
       GlobalTheory.RowReal.colScal (GlobalTheory.RowReal.rowEntries D sc.cGap) i g • movedVec t S d := by
-  first | exact @GlobalTheory.RowReal.om_ptGrid_movedVec | exact GlobalTheory.RowReal.om_ptGrid_movedVec | (intros; apply GlobalTheory.RowReal.om_ptGrid_movedVec <;> assumption)
+  first | exact @GlobalTheory.RowReal.om_ptGrid_movedVec
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.CompactChainChiPairMovedVectorColumnCharacterStatement =====
@@ -572,7 +572,7 @@ theorem sum_conjSub_cast {ι : Type} {a a' b b' : ℕ} (ha : a = a') (hb : b = b
   refine Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => ?_
   congr 2
   simp only [Matrix.kroneckerMap_apply, Matrix.transpose_apply, Matrix.star_apply, RCLike.star_def, RingHomCompTriple.comp_apply,
-    RingHom.id_apply, Complex.conj_conj]
+    RingHom.id_apply]
   ring
 
 theorem trRow_fockSubAll : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc) (i : Fin D.R.m)
@@ -624,7 +624,7 @@ theorem _root_.GlobalTheory.T.fockSubstitution_columnStep_rename_conj : ∀ {D :
       (fun τ => ((u τ : Matrix.unitaryGroup _ ℂ) : Matrix _ _ ℂ).submatrix (Fin.cast (GlobalTheory.RowReal.rank_gridM G (i := i) i.2.le))
         (Fin.cast (GlobalTheory.RowReal.rank_gridM G (i := i) i.2.le))) Q) =
       linSub (homMat _ _ (u, v)) (GlobalTheory.RowReal.trRow G i Q) := by
-  first | exact @GlobalTheory.RowReal.trRow_fockSubAll | exact GlobalTheory.RowReal.trRow_fockSubAll | (intros; apply GlobalTheory.RowReal.trRow_fockSubAll <;> assumption)
+  first | exact @GlobalTheory.RowReal.trRow_fockSubAll
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FockSubstitutionColumnStepRenameConjStatement =====

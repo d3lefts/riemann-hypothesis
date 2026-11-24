@@ -380,7 +380,7 @@ private theorem slicePr_apply_eq (V W : Type) (w : List W) (z : List V × List W
     by_cases h : w' = w
     · subst h
       simp [Finsupp.single_apply]
-    · simp [h, Finsupp.single_apply, Ne.symm h]
+    · simp [h, Ne.symm h]
 
 theorem slicePr_mem {V W : Type} (D : Set (List V × List W)) (p b : ℕ) (w : List W) :
     ∀ z ∈ chains2 D p b, slicePr V W w z ∈ chains {l | (l, w) ∈ D} p := by
@@ -424,7 +424,7 @@ theorem sum_slicePr {V W : Type} (z : List V × List W →₀ ℤ) (U : Finset (
   apply Finset.sum_congr rfl
   intro q hq
   simp [slicePr, Finsupp.linearCombination_single, hU q hq, Finset.sum_ite_eq,
-    Finset.sum_ite_eq', Finsupp.smul_single]
+    Finsupp.smul_single]
 
 theorem exists_sum_bd {V : Type} (F : Set (List V)) (p : ℕ) {ι : Type} (S : Finset ι)
     (f : ι → List V →₀ ℤ) (hS : ∀ i ∈ S, ∃ b ∈ chains F (p + 1), bd V b = f i) :
@@ -606,9 +606,6 @@ open GlobalTheory.SeqCx
 theorem _root_.GlobalTheory.T.pairSeqBoundaries_lower_bidegree_of_subClosed : ∀ (V W : Type) (D : Set (List V × List W)), SubClosed2 D → (∀ a b, ∀ x ∈ chains2 D (a + 1) b, hbd V W x ∈ chains2 D a b) ∧ (∀ a b, ∀ x ∈ chains2 D a (b + 1), vbd V W x ∈ chains2 D a b) ∧ (∀ b, ∀ x ∈ chains2 D 0 b, hbd V W x = 0) := by
   first
   | exact @GlobalTheory.SeqCx.bd_chains2
-  | exact @GlobalTheory.SeqCx.vbd_single
-  | exact @GlobalTheory.SeqCx.hbd_single
-  | exact @GlobalTheory.SeqCx.map_supported_mem
 end
 end -- clump:auto
 end -- clump:auto
@@ -840,11 +837,6 @@ open GlobalTheory.SeqCx
 theorem _root_.GlobalTheory.T.pairSeqHorizontalCycle_is_boundary_of_slices_exact : ∀ (V W : Type) (D : Set (List V × List W)) (a b : ℕ), (∀ w : List W, w.length = b → (∃ l, (l, w) ∈ D) → ExactAt {l | (l, w) ∈ D} a) → ∀ x ∈ chains2 D a b, hbd V W x = 0 → ∃ y ∈ chains2 D (a + 1) b, hbd V W y = x := by
   first
   | exact @GlobalTheory.SeqCx.dblRow_exact
-  | exact @GlobalTheory.SeqCx.DblRow.decomp
-  | exact @GlobalTheory.SeqCx.DblRow.hbd_incl
-  | exact @GlobalTheory.SeqCx.DblRow.incl_apply
-  | exact @GlobalTheory.SeqCx.DblRow.proj_apply
-  | exact @GlobalTheory.SeqCx.DblRow.pair_injective
 end
 end -- clump:auto
 end -- clump:auto
@@ -1162,7 +1154,6 @@ open GlobalTheory.SeqCx Matrix UpperTheory.V.KL
 theorem _root_.GlobalTheory.T.splitSeq_exactAt_of_two_mul_add_stableRange_le : ∀ (R : Type) [CommRing R] (s : ℕ), StableRangeLe R s → ∀ n p : ℕ, 2 * p + s + 1 ≤ n → ExactAt (splitSeq R n) p := by
   first
   | exact @GlobalTheory.SeqCx.exactAt_splitSeq_of_stableRange
-  | exact @GlobalTheory.SeqCx.splitAcyclic_step
 end
 end -- clump:auto
 end -- clump:auto

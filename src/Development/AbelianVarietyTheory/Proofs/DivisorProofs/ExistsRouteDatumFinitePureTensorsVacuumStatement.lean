@@ -163,11 +163,7 @@ theorem IsPureSum.add {κ : Type} [Fintype κ] {vac : ∀ v : GlobalTheory.Indef
     {v₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)} {φ₀ : (κ → Fv F v₁) → ℂ} {Φ Ψ : (κ → AF F) → ℂ} (h : IsPureSum vac v₁ φ₀ Φ)
     (h' : IsPureSum vac v₁ φ₀ Ψ) : IsPureSum vac v₁ φ₀ (Φ + Ψ) := by
   first
-  | exact @_root_.GlobalTheory.ClosingLemmaThird.main
-  | exact _root_.GlobalTheory.ClosingLemmaThird.main
   | (apply _root_.GlobalTheory.ClosingLemmaThird.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ClosingLemmaThird.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ClosingLemmaThird.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.ClosingLemmaThird.main ..)
 
 theorem IsPureSum.sum {κ : Type} [Fintype κ] {vac : ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F), (κ → Fv F v) → ℂ}
@@ -306,7 +302,6 @@ theorem isPureSum_of_slices {F : Type} [Field F] [NumberField F] {κ : Type} [Fi
     · subst e; rwa [Function.update_self]
     · rw [Function.update_of_ne e]; exact h1 k v
   · filter_upwards [hstd k, hvac, Filter.eventually_cofinite_ne v₁] with v a b c
-    beta_reduce
     rw [Function.update_of_ne c, a, b]
 
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {μ₀ : T}
@@ -632,7 +627,7 @@ theorem _root_.GlobalTheory.T.exists_pureTensorSum_datum_routeThroughSmallVertex
             GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (evFin D.host.F Bs.v₁) (Γ.M'.co.rho Bs.ψ γ) φ₀
               (Bs.ψ (⅟(2 : AF D.host.F) * symp (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (inclR (F := D.host.F) (AF D.host.F) (θ : D.host.E))
                 (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Γ.V'.J) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Γ.W.J) γ γ) • φ₀)) := by
-  first | exact @GlobalTheory.SmallDatumPure.exists_datum_pure_selfdual | exact GlobalTheory.SmallDatumPure.exists_datum_pure_selfdual | (intros; apply GlobalTheory.SmallDatumPure.exists_datum_pure_selfdual <;> assumption)
+  first | exact @GlobalTheory.SmallDatumPure.exists_datum_pure_selfdual
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPureTensorSumDatumRouteThroughSmallVertexStatement =====
@@ -748,7 +743,7 @@ theorem _root_.GlobalTheory.T.heisenbergLatticeVacuum_unique_up_to_scalar : ∀ 
           GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (evFin D.host.F v) (Γ.M'.co.rho Bs.ψ γ) ψ₀
             (Bs.ψ (⅟(2 : AF D.host.F) * symp (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (inclR (F := D.host.F) (AF D.host.F) (θ : D.host.E))
               (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Γ.V'.J) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Γ.W.J) γ γ) • ψ₀)) → ∃ c : ℂ, ψ₀ = c • φ₀ := by
-  first | exact @GlobalTheory.LatVacUniq.vacuum_unique | exact GlobalTheory.LatVacUniq.vacuum_unique | (intros; apply GlobalTheory.LatVacUniq.vacuum_unique <;> assumption)
+  first | exact @GlobalTheory.LatVacUniq.vacuum_unique
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeisenbergLatticeVacuumUniqueUpToScalarStatement =====
@@ -772,7 +767,7 @@ open scoped GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
 
 theorem _root_.GlobalTheory.T.localAddCharUnramified_of_splitsCompletelyAbovePlace : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (W : G.Weil) (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := D.host.F)),
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SplitsFully D.host.E v → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.PsiUnr W.ψ v := by
-  first | exact @GlobalTheory.SplitFullyUnr.psiUnr_of_splitsFully | exact GlobalTheory.SplitFullyUnr.psiUnr_of_splitsFully | (intros; apply GlobalTheory.SplitFullyUnr.psiUnr_of_splitsFully <;> assumption)
+  first | exact @GlobalTheory.SplitFullyUnr.psiUnr_of_splitsFully
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalAddCharUnramifiedOfSplitsCompletelyAbovePlaStatement =====
@@ -870,7 +865,7 @@ theorem _root_.GlobalTheory.T.exists_gridDatum_pureTensor_vacuaAE : ∀ {D : D7}
           GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (evFin D.host.F Bs.v₁) (Γ.M'.co.rho Bs.ψ γ) ψ₀
             (Bs.ψ (⅟(2 : AF D.host.F) * symp (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (inclR (F := D.host.F) (AF D.host.F) (θ : D.host.E))
               (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Γ.V'.J) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Γ.W.J) γ γ) • ψ₀)) → ∃ c : ℂ, ψ₀ = c • φ₀ := by
-  first | exact @GlobalTheory.SmallDatumVac.exists_datum_pure_vac | exact GlobalTheory.SmallDatumVac.exists_datum_pure_vac | (intros; apply GlobalTheory.SmallDatumVac.exists_datum_pure_vac <;> assumption)
+  first | exact @GlobalTheory.SmallDatumVac.exists_datum_pure_vac
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsGridDatumPureTensorVacuaAEStatement =====
@@ -960,7 +955,7 @@ theorem _root_.GlobalTheory.T.exists_routeDatum_finite_pureTensors_vacuum : ∀ 
           (Λ : Submodule 𝒪[Fv D.host.F Bs.v₁] (Fin ((G.V (.grid (i + 1) (j + 1))).rank + (G.V (.grid i j)).rank) → Fv D.host.F Bs.v₁)) (c : ℂ),
           Γ.M'.IsLinBar Bs.ψ Bs.τ₁ 1 1 ι ∧
           ∀ Y, ι φ₀ Y = c * (matLat (Fin (G.V (.grid i j)).rank) Λ : Set _).indicator 1 (P.val * Y) := by
-  first | exact @GlobalTheory.SmallDatum.exists_datum_pure_linBar | exact GlobalTheory.SmallDatum.exists_datum_pure_linBar | (intros; apply GlobalTheory.SmallDatum.exists_datum_pure_linBar <;> assumption)
+  first | exact @GlobalTheory.SmallDatum.exists_datum_pure_linBar
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRouteDatumFinitePureTensorsVacuumStatement =====

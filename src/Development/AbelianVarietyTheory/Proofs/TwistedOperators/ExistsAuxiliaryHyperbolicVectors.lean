@@ -296,7 +296,7 @@ theorem det_family {E : Type} [Field E] [NumberField E] [StarRing E] (V : HSpace
     simp only [Matrix.submatrix_apply, Matrix.of_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, P, HSpace.gram]
     conv_lhs => rw [← V.frame.sum_repr (v (e a)), ← V.frame.sum_repr (v (e b))]
 
-    simp only [map_sum, map_smul, LinearMap.map_smulₛₗ₂, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+    simp only [map_sum, map_smul, LinearMap.map_smulₛₗ₂, LinearMap.sum_apply, smul_eq_mul,
     starRingEnd_apply, Finset.sum_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
     ring
@@ -433,7 +433,7 @@ theorem gram_comb {E : Type} [Field E] [NumberField E] [StarRing E] (Y : HSpace 
     Y.hT (∑ i, P i k • b i) (∑ i, P i l • b i) = (Pᴴ * (Matrix.of fun i l => Y.hT (b i) (b l)) * P) k l := by
 
   simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum, map_smul,
-  LinearMap.map_smulₛₗ₂, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+  LinearMap.map_smulₛₗ₂, LinearMap.sum_apply, smul_eq_mul,
   starRingEnd_apply, Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
   ring

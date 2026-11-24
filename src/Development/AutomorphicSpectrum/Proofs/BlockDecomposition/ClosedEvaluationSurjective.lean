@@ -702,8 +702,6 @@ theorem ePG_true_natAdd (i t : ℕ) (j : Fin (t + 1)) :
     ePG (i + 1) (t + 1) ⟨true, j⟩ = Fin.castSucc (Fin.natAdd (i + 1) j) := by
   first
     | rfl
-    | exact Fin.ext rfl
-    | (ext; simp [GlobalTheory.BZMir.Leib.ePG])
 
 theorem HPG_entry_zero {i t : ℕ} (h : Mir k ((i + 1) + t + 1)) (hh : h ∈ HPG k (i + 1) (t + 1)) (j : Fin (t + 1)) :
     ((h : GL (Fin ((i + 1) + (t + 1) + 1)) k) : Matrix (Fin ((i + 1) + (t + 1) + 1)) (Fin ((i + 1) + (t + 1) + 1)) k)
@@ -730,7 +728,6 @@ theorem GlobalTheory.CompanionTheory.BZPhiPG.Onto.dEmb_mem_congM_and_ball : ∀ 
         exact hd b
     first
       | exact GlobalTheory.CompanionTheory.BZPhiPG.Onto.unip_mem_congGL hs hv
-      | exact Subgroup.mem_comap.2 (GlobalTheory.CompanionTheory.BZPhiPG.Onto.unip_mem_congGL hs hv)
   · have he' : GlobalTheory.BZMir.unip k ((i + 1) + (t + 1)) (Multiplicative.ofAdd (Fin.append (0 : Fin (i + 1) → k) d)) =
         (h : GL (Fin ((i + 1) + (t + 1) + 1)) k) * (κ : GL (Fin ((i + 1) + (t + 1) + 1)) k) :=
       congrArg Subtype.val he
@@ -781,7 +778,7 @@ theorem rowM_mul (n : ℕ) (a b : Fin (n + 1) → k) :
   simp only [Matrix.add_apply, Matrix.mul_apply, Matrix.of_apply, rowM_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   by_cases hr : r = Fin.last n
   · subst hr
-    simp [Finset.sum_ite_eq', ite_mul]
+    simp [Finset.sum_ite_eq']
     ring
   · simp [hr]
 

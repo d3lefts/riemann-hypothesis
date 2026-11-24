@@ -61,12 +61,8 @@ private lemma exists_moved {n : Type} [DecidableEq n] (σ : Equiv.Perm n) (hσ :
   · obtain ⟨k, hk⟩ : ∃ k, σ k ≠ k := by
       by_contra h
       exact hσ (Equiv.ext fun k => not_not.mp fun hk => h ⟨k, hk⟩)
-    refine ⟨k, ?_, hk⟩
-    rintro rfl
-    exact hk hi
-  · refine ⟨σ i, hi, ?_⟩
-    intro h
-    exact hi (σ.injective h)
+    exact ⟨k, fun hki => hk (by simpa [hki] using hi), hk⟩
+  · exact ⟨σ i, hi, fun h => hi (σ.injective h)⟩
 
 theorem goal1 :
   ∀ {n : Type} [inst : Fintype.{0} n] [inst_1 : DecidableEq.{1} n] (A : Real → Matrix.{0, 0, 0} n n Complex)
@@ -91,18 +87,13 @@ theorem goal1 :
   rw [Finset.sum_eq_single (1 : Equiv.Perm n)]
   · simp only [Equiv.Perm.sign_one, Units.val_one, Int.cast_one, one_mul, Equiv.Perm.one_apply,
       h0, smul_eq_mul, Matrix.trace]
-    refine Finset.sum_congr rfl (fun i _ => ?_)
-    rw [Finset.prod_eq_one, one_mul]
-    · rfl
-    intro j _
     simp
   · intro σ _ hσ
     rw [Finset.sum_eq_zero, mul_zero]
     intro i _
     obtain ⟨j, hji, hj⟩ := exists_moved σ hσ i
     rw [Finset.prod_eq_zero (i := j) (Finset.mem_erase.mpr ⟨hji, Finset.mem_univ j⟩), zero_smul]
-    rw [h0]
-    exact Matrix.one_apply_ne hj
+    simpa [h0] using Matrix.one_apply_ne hj
   · intro h
     exact absurd (Finset.mem_univ _) h
 

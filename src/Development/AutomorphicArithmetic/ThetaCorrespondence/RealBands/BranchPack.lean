@@ -192,7 +192,7 @@ theorem _root_.GlobalTheory.T.conj_smooth_vector_conjugate_model_mem_smooth : �
   (w : (GlobalTheory.ConjDS.conjModel M).H τ),
   GlobalTheory.Ell.SmV (GlobalTheory.Ell.lieOf (Formalism.REAL.Jm ((GlobalTheory.ConjDS.conjModel M).ε τ))) ((GlobalTheory.ConjDS.conjModel M).σ τ) w →
   GlobalTheory.ConjDS.cj (M.H τ) w ∈ M.sm τ := by
-  first | exact @GlobalTheory.ConjSmooth.cj_mem_sm | exact GlobalTheory.ConjSmooth.cj_mem_sm | (intros; apply GlobalTheory.ConjSmooth.cj_mem_sm <;> assumption)
+  first | exact @GlobalTheory.ConjSmooth.cj_mem_sm
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ConjSmoothVectorConjugateModelMemSmoothStatement =====
@@ -311,7 +311,7 @@ theorem _root_.GlobalTheory.T.conjugate_model_frame_matrix_facts_at_place : ∀ 
     ∀ s : ℝ, cmp θ τ (oneP θ Y τ X s) ∈ Formalism.QuantumDeterminants.UH (gramAt D Y τ) ∧
       (GlobalTheory.ConjDS.conjModel M).fr τ * cmp θ τ (oneP θ Y τ X s) * ((GlobalTheory.ConjDS.conjModel M).fr τ)⁻¹ =
         NormedSpace.exp (s • ((GlobalTheory.ConjDS.conjModel M).fr τ * X * ((GlobalTheory.ConjDS.conjModel M).fr τ)⁻¹)) := by
-  first | exact @GlobalTheory.PackLocFacts.frame_facts | exact GlobalTheory.PackLocFacts.frame_facts | (intros; apply GlobalTheory.PackLocFacts.frame_facts <;> assumption)
+  first | exact @GlobalTheory.PackLocFacts.frame_facts
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ConjugateModelFrameMatrixFactsAtPlaceStatement =====
@@ -431,7 +431,7 @@ theorem eu_vecOpt (y : Fin m → ℂ) (a : ℂ) : eu (vecOpt e y a) ^ 2 = eu y ^
 theorem vecOpt_zero_one : vecOpt e 0 1 = Pi.single (e none) 1 := by
   funext b
   obtain ⟨b, rfl⟩ := e.surjective b
-  cases b <;> simp [vecOpt, Pi.single_apply]
+  cases b <;> simp [vecOpt]
 
 def colM (F : Matrix (Fin N) (Fin m) ℂ) (z : Matrix (Fin N) (Fin 1) ℂ) : Matrix (Fin N) (Fin N) ℂ :=
   fun i b => (e.symm b).elim (z i 0) (F i)
@@ -580,7 +580,7 @@ theorem _root_.GlobalTheory.T.exists_signature_matrix_extension : ∀ (D : D7) (
     B *ᵥ (fun i => tauE D τ (zv d i)) = Pi.single (e none) 1 ∧
     (∀ h ∈ Formalism.QuantumDeterminants.UH (gramAt D Y τ), GlobalTheory.PackLoc.embAt θ d τ h ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ)) ∧
     ∀ h ∈ Formalism.QuantumDeterminants.UH (gramAt D Y τ), B * GlobalTheory.PackLoc.embAt θ d τ h * B⁻¹ = GlobalTheory.PackLoc.embOpt e (A * h * A⁻¹) := by
-  first | exact @GlobalTheory.PackFrame.exists_adapted_frame | exact GlobalTheory.PackFrame.exists_adapted_frame | (intros; apply GlobalTheory.PackFrame.exists_adapted_frame <;> assumption)
+  first | exact @GlobalTheory.PackFrame.exists_adapted_frame
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsSignatureMatrixExtensionStatement =====
@@ -636,7 +636,7 @@ theorem one_le_hsn_of_mem {n : ℕ} (ε : Fin n → Bool) (i : Fin n) (y : Matri
   have hcol : 1 ≤ ∑ k, ‖y k i‖ ^ 2 := by
     rw [← e2, ← h, e1]
     refine (norm_sum_le _ _).trans (le_of_eq (Finset.sum_congr rfl fun k _ => ?_))
-    by_cases hk : ε k = true <;> simp [hk, norm_mul, sq]
+    by_cases hk : ε k = true <;> simp [hk, sq]
   have hall : ∑ k, ‖y k i‖ ^ 2 ≤ ∑ a, ∑ b, ‖y a b‖ ^ 2 :=
     Finset.sum_le_sum fun a _ =>
       Finset.single_le_sum (f := fun b => ‖y a b‖ ^ 2) (fun b _ => by positivity) (Finset.mem_univ i)
@@ -773,7 +773,7 @@ theorem _root_.GlobalTheory.T.matrix_coefficient_decay_in_frame_of_translate_dec
   Formalism.MainNotions.S.IsURepOn (Formalism.MainNotions.S.UJset ε) π → g₀ ∈ Formalism.MainNotions.S.UJset ε → IsUnit F → Fᴴ * Formalism.REAL.Jm ε * F = G →
   (∀ g ∈ Formalism.MainNotions.S.UJset ε, ‖⟪π g₀ v₀, π g (π g₀ v₀)⟫_ℂ‖ ≤ A₀ * GlobalTheory.SepReal.hsn g ^ (-(20 * ((m : ℝ) + 1) ^ 2))) →
   ∃ C : ℝ, ∀ g ∈ Formalism.QuantumDeterminants.UH G, ‖⟪v₀, π (F * g * F⁻¹) v₀⟫_ℂ‖ * (1 + GlobalTheory.SepPer.hsn g) ^ (2 * N ^ 2 + 1) ≤ C := by
-  first | exact @GlobalTheory.FrameDecay.coef_frame_decay | exact GlobalTheory.FrameDecay.coef_frame_decay | (intros; apply GlobalTheory.FrameDecay.coef_frame_decay <;> assumption)
+  first | exact @GlobalTheory.FrameDecay.coef_frame_decay
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.MatrixCoefficientDecayInFrameOfTranslateDecayStatement =====
@@ -888,7 +888,7 @@ theorem _root_.GlobalTheory.T.matrix_coefficient_lipschitz_at_real_place : ∀ (
     ∫ u, ‖GlobalTheory.PackLoc.mco MP τ g₀ v₀ (GlobalTheory.PackLoc.embAt θ d τ (cmp θ τ (oneP θ Y τ X s) * GlobalTheory.PackLoc.ptY M₀ τ u)) -
       GlobalTheory.PackLoc.mco MP τ g₀ v₀ (GlobalTheory.PackLoc.embAt θ d τ (GlobalTheory.PackLoc.ptY M₀ τ u))‖ ∂(Formalism.REAL.muG (M₀.ε τ)) ≤
       Real.exp q * ‖c‖ * |s| * hsn (A * X * A⁻¹) := by
-  first | exact @GlobalTheory.PackLoc.lipAt | exact GlobalTheory.PackLoc.lipAt | (intros; apply GlobalTheory.PackLoc.lipAt <;> assumption)
+  first | exact @GlobalTheory.PackLoc.lipAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.MatrixCoefficientLipschitzAtRealPlaceStatement =====
@@ -1213,7 +1213,7 @@ theorem _root_.GlobalTheory.T.realVectors_allPlaces_of_localData : ∀ {D : D7} 
   (w : ∀ τ, M₀.H τ) (c : D.what₂.Tau → ℂ),
   (∀ τ, GlobalTheory.PackLoc.LocOK θ d M₀ M τ q (εA τ) (A τ) (εB τ) (B τ) (v₀ τ) (g₀ τ) (w τ) (c τ)) →
     ∃ p : Pack M₀ M, p.Is θ d (Fintype.card D.what₂.Tau * q) := by
-  first | exact @GlobalTheory.PackGlob.pack_of_loc | exact GlobalTheory.PackGlob.pack_of_loc | (intros; apply GlobalTheory.PackGlob.pack_of_loc <;> assumption)
+  first | exact @GlobalTheory.PackGlob.pack_of_loc
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RealVectorsAllPlacesOfLocalDataStatement =====
@@ -1331,7 +1331,7 @@ theorem _root_.GlobalTheory.T.translated_matrix_coefficient_in_adapted_frame : �
   B⁻¹ * g₀' * M.fr τ ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ) ∧
   ∀ x ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ), GlobalTheory.PackLoc.mco M τ (B⁻¹ * g₀' * M.fr τ) v₀ x =
     ⟪M.σ τ g₀' v₀, M.σ τ (B * x * B⁻¹) (M.σ τ g₀' v₀)⟫_ℂ := by
-  first | exact @GlobalTheory.PackLoc.mco_frame | exact GlobalTheory.PackLoc.mco_frame | (intros; apply GlobalTheory.PackLoc.mco_frame <;> assumption)
+  first | exact @GlobalTheory.PackLoc.mco_frame
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.TranslatedMatrixCoefficientInAdaptedFrameStatement =====
@@ -1480,7 +1480,7 @@ theorem _root_.GlobalTheory.T.transversal_coefficient_decay_at_real_place : ∀ 
       (Formalism.REAL.muG (M₀.ε τ)) ∧
     (∫ u, ‖GlobalTheory.PackLoc.mco MP τ g₀ v₀ (g * GlobalTheory.PackLoc.embAt θ d τ (GlobalTheory.PackLoc.ptY M₀ τ u))‖ ∂(Formalism.REAL.muG (M₀.ε τ))) *
       eu (B *ᵥ (g *ᵥ fun i => tauE D τ (zv d i))) ^ (2 * V.rank + 5) ≤ Real.exp q * ‖((lam * c₁ : ℝ) : ℂ)‖ := by
-  first | exact @GlobalTheory.PackLoc.farClause | exact GlobalTheory.PackLoc.farClause | (intros; apply GlobalTheory.PackLoc.farClause <;> assumption)
+  first | exact @GlobalTheory.PackLoc.farClause
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.TransversalCoefficientDecayAtRealPlaceStatement =====
@@ -1559,7 +1559,7 @@ theorem _root_.GlobalTheory.T.unitary_haar_coordinate_reversal_positive_multiple
       Integrable (fun h : Formalism.REAL.UJ (fun a => ε a.rev) => F (Formalism.MainNotions.S.umat h)) (Formalism.REAL.muG (fun a => ε a.rev))) ∧
     ∫ u, F (GlobalTheory.ConjDS.rv (Formalism.MainNotions.S.umat u)) ∂(Formalism.REAL.muG ε) =
       lam • ∫ h, F (Formalism.MainNotions.S.umat h) ∂(Formalism.REAL.muG (fun a => ε a.rev)) := by
-  first | exact @GlobalTheory.HaarRev.haar_rev | exact GlobalTheory.HaarRev.haar_rev | (intros; apply GlobalTheory.HaarRev.haar_rev <;> assumption)
+  first | exact @GlobalTheory.HaarRev.haar_rev
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnitaryHaarCoordinateReversalPositiveMultipleStatement =====

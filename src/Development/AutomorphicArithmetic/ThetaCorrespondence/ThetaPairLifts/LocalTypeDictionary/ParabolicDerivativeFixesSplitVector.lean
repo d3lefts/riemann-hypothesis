@@ -103,7 +103,7 @@ theorem _root_.GlobalTheory.T.doubleLine_eigenspace_decomposition_split : _root_
     ∀ R : (Fin a' × Fin (a + a') → AF F) → ℂ, Rest (evFin F v) (G.M'.vac v) R →
     ∀ g ∈ GlobalTheory.InertDbl.KAtD σ G.W v, ∃ c : ℂ, omd g (GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R)) =
       c • GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R) := by
-  first | exact @_root_.GlobalTheory.SplitDblLine.doubleLine_eigenfunction_split | exact _root_.GlobalTheory.SplitDblLine.doubleLine_eigenfunction_split | (intros; apply _root_.GlobalTheory.SplitDblLine.doubleLine_eigenfunction_split <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitDblLine.doubleLine_eigenfunction_split
 end
 end -- clump:auto
 end -- clump:auto
@@ -271,7 +271,7 @@ theorem _root_.GlobalTheory.T.split_det_character_trivial : _root_.GlobalTheory.
       ∀ z ∈ GlobalTheory.InertSph.latAt G.W v, (t : Matrix (Fin (a + a')) (Fin (a + a')) (AE F E)) *ᵥ z ∈ GlobalTheory.InertSph.latAt G.W v ∧
         ((t⁻¹ : GL (Fin (a + a')) (AE F E)) : Matrix (Fin (a + a')) (Fin (a + a')) (AE F E)) *ᵥ z ∈ GlobalTheory.InertSph.latAt G.W v) →
       X.α (Matrix.GeneralLinearGroup.det t) = 1 := by
-  first | exact @_root_.GlobalTheory.SplitDetChr.split_det_character_eq_one | exact _root_.GlobalTheory.SplitDetChr.split_det_character_eq_one | (intros; apply _root_.GlobalTheory.SplitDetChr.split_det_character_eq_one <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitDetChr.split_det_character_eq_one
 end
 end -- clump:auto
 end -- clump:auto
@@ -309,7 +309,7 @@ theorem _root_.GlobalTheory.T.split_det_modulus_norm_formula : _root_.GlobalTheo
       ∀ z ∈ GlobalTheory.InertSph.latAt G.W v, (t : Matrix (Fin (a + a')) (Fin (a + a')) (AE F E)) *ᵥ z ∈ GlobalTheory.InertSph.latAt G.W v ∧
         ((t⁻¹ : GL (Fin (a + a')) (AE F E)) : Matrix (Fin (a + a')) (Fin (a + a')) (AE F E)) *ᵥ z ∈ GlobalTheory.InertSph.latAt G.W v) →
       (adeleClass F).modu (Units.map (Algebra.norm (AF F) : AE F E →* AF F) (Matrix.GeneralLinearGroup.det t)) = 1 := by
-  first | exact @_root_.GlobalTheory.SplitDetModule.split_det_modulus_eq_norm_det | exact _root_.GlobalTheory.SplitDetModule.split_det_modulus_eq_norm_det | (intros; apply _root_.GlobalTheory.SplitDetModule.split_det_modulus_eq_norm_det <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitDetModule.split_det_modulus_eq_norm_det
 end
 end -- clump:auto
 end -- clump:auto
@@ -386,7 +386,7 @@ theorem _root_.GlobalTheory.T.split_double_parabolic_derivative_fixed : _root_.G
     ∀ R : (Fin a' × Fin (a + a') → AF F) → ℂ, R 0 ≠ 0 → Rest (evFin F v) (G.M'.vac v) R →
     ∀ p ∈ GlobalTheory.InertDbl.ParD σ G.W v, omd p (GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R)) =
       GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R) := by
-  first | exact @_root_.GlobalTheory.SplitDblPar.parabolic_derivative_fixes_split_vector | exact _root_.GlobalTheory.SplitDblPar.parabolic_derivative_fixes_split_vector | (intros; apply _root_.GlobalTheory.SplitDblPar.parabolic_derivative_fixes_split_vector <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitDblPar.parabolic_derivative_fixes_split_vector
 end
 end -- clump:auto
 end -- clump:auto

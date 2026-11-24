@@ -95,10 +95,10 @@ private theorem isMultiHomog_X_geometry {K : Type} {Jt : K → Type} [∀ k, Fin
     rw [Finset.sum_eq_single i]
     · simp
     · intro b _ hb
-      simp [Finsupp.single_apply, Ne.symm hb]
+      simp [Ne.symm hb]
     · intro h; exact absurd (Finset.mem_univ i) h
   · have hk' : k ≠ k' := Ne.symm hk
-    simp [Finsupp.single_apply, hk, hk']
+    simp [hk]
 
 private theorem isMultiHomog_prod_X_one {K : Type} [Fintype K] {Jt : K → Type} [∀ k, Fintype (Jt k)]
     (ch : (k : K) → Jt k) :
@@ -281,7 +281,7 @@ open GroundTheory.Heights₂.Heights.LowerBoundFree GlobalTheory.CompanionTheory
 open scoped ComplexOrder
 
 theorem _root_.GlobalTheory.T.component_data_hodge_first : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Tor.Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (II : IntersectionSystem) (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype (J k)] (Ω : Type) [Field Ω] [Algebra ℚ Ω] (W : CMType H → Type) [∀ τ, AddCommGroup (W τ)] [∀ τ, Module Ω (W τ)] (Dc : ComponentData II (CMType H) K J Ω W) (Hd : HodgeData Dc) (S₀ : Finset ℕ) (Or : CptOrigin Y S₀ Dc Hd) (z : Spec (CommRingCat.of ℂ) ⟶ Or.𝔐.X) (w : (Σ k, J k) → ℂ), CoordsAt Or.𝔐.ξ Dc.y z w → Nonempty (MuFrameAt Hd w) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.MuFrame.nonempty_muFrameAt | exact GlobalTheory.CompanionTheory.Ar.MuFrame.nonempty_muFrameAt | (intros; apply GlobalTheory.CompanionTheory.Ar.MuFrame.nonempty_muFrameAt <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.MuFrame.nonempty_muFrameAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ComponentDataHodgeFirstStatement =====

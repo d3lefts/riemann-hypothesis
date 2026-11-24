@@ -63,12 +63,10 @@ theorem normK_mem_AA (D : D7) : ((Ideal.absNorm D.host.ccK : ℕ) : D.host.E) �
     have := Ideal.mem_map_of_mem (algebraMap (𝓞 D.host.K) (𝓞 D.host.E)) (Ideal.absNorm_mem D.host.ccK)
     simpa [Host.ccE] using this
   have := FractionalIdeal.mul_mem_mul hN (one_mem_inverse_halfDifferent D)
-  rw [mul_one] at this
-  exact this
+  rwa [mul_one] at this
 
 theorem normK_ne_zero (D : D7) : ((Ideal.absNorm D.host.ccK : ℕ) : D.host.E) ≠ 0 := by
-  rw [Nat.cast_ne_zero, Ne, Ideal.absNorm_eq_zero_iff]
-  exact D.host.ccK_ne_bot
+  simpa [Nat.cast_ne_zero, Ne, Ideal.absNorm_eq_zero_iff] using D.host.ccK_ne_bot
 
 theorem exists_smul_mem_base_lattice_alt (D : D7) (j : ℕ) (y : (D.sp.W j).V) :
     ∃ s ∈ (𝓞 D.host.E)⁰, s • y ∈ (D.sp.W j).L0 :=

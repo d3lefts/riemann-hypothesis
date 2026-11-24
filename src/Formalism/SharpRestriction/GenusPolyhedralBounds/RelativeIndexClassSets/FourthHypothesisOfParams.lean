@@ -153,7 +153,6 @@ theorem rn_of (T : ParamsT D L P) (S : SizesAt L) (hZ : 10 ^ 60 ≤ zBase L) :
   have hzz2 : zBase L ^ 2 ≤ zBase L ^ 12 := by
     first
     | exact pow_le_pow_right₀ hz1 (by norm_num)
-    | exact pow_le_pow_right hz1 (by norm_num)
   have hPPA : (10 : ℝ) ^ 60 * ((D.R.f : ℝ) * D.R.r) ≤ T.PP := by
     have h1 : (10 : ℝ) ^ 60 * ((D.R.f : ℝ) * D.R.r) ≤ zBase L * zBase L :=
       mul_le_mul hZ hAZ (by positivity) (by linarith)
@@ -176,7 +175,6 @@ theorem rn_of (T : ParamsT D L P) (S : SizesAt L) (hZ : 10 ^ 60 ≤ zBase L) :
     have h5 : D.R.f * D.R.r ≤ D.R.f * D.R.r * (D.R.r + 1) := by
       first
       | exact Nat.le_mul_of_pos_right _ (by omega)
-      | exact Nat.le_mul_of_pos_right (by omega)
     generalize D.R.f * D.R.r * (D.R.r + 1) = X at *
     generalize D.R.f * D.R.r = Y at *
     omega
@@ -192,7 +190,6 @@ theorem rn_of (T : ParamsT D L P) (S : SizesAt L) (hZ : 10 ^ 60 ≤ zBase L) :
     have h := Nat.ceil_lt_add_one (div_nonneg hb.le hTOpos.le)
     have e : (T.TO : ℝ) * (L.sc.b / T.TO + 1) = L.sc.b + T.TO := by
       field_simp
-      try ring
     have := mul_le_mul_of_nonneg_left h.le hTOpos.le
     linarith
   exact
@@ -590,8 +587,6 @@ theorem ekl : ((runOf T S hZ).kl : ℝ) =
   have hd : (Dm D : ℝ) = (T.Dp : ℝ) := by
     first
     | (unfold Dm; exact_mod_cast dm_eq T)
-    | (simp only [Dm]; exact_mod_cast dm_eq T)
-    | exact_mod_cast dm_eq T
   rw [hd]
 
 theorem enV : (D.R.nV : ℝ) = (T.nP : ℝ) + (T.TO : ℝ) * T.nWn := by
@@ -636,12 +631,10 @@ theorem qq_ge (P : ParameterChoice' D L) : ((D.R.k : ℝ) * L.sc.b) ^ 8 ≤ (qq 
   unfold qq
   first
   | (rw [Nat.cast_min]; exact le_min (g_ge P 0) (g_ge P 1))
-  | (push_cast; exact le_min (g_ge P 0) (g_ge P 1))
 
 theorem eRR : WeightFamilies.RRv D 2 = D.host.rdE ^ 2 := by
   unfold WeightFamilies.RRv
   first
-  | rfl
   | simp
 
 theorem eg0 : (g0 D : ℝ) = 1250 * D.R.r := by

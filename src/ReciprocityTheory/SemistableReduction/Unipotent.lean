@@ -152,7 +152,6 @@ theorem unip_pow_card_eq_zero {K : Type*} [Field K] [CharZero K] {r : ℕ} (N : 
   have hdiv : P' + m * (P /ₘ m) = P := by
     rw [hP']
     first
-      | exact Polynomial.modByMonic_add_div P hmon
       | exact Polynomial.modByMonic_add_div P m
   have hPeq : aeval N P' = aeval N P := by
     have h := congrArg (aeval N) hdiv
@@ -163,7 +162,6 @@ theorem unip_pow_card_eq_zero {K : Type*} [Field K] [CharZero K] {r : ℕ} (N : 
     refine le_trans ?_ hmdeg
     first
       | exact Polynomial.natDegree_modByMonic_le P hmon
-      | exact Polynomial.natDegree_modByMonic_le P m
   have hP'0 : P'.coeff 0 = 0 := by
     have h := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 0) hdiv
     simp only [Polynomial.coeff_add, Polynomial.mul_coeff_zero, hmc, zero_mul, add_zero] at h
@@ -225,7 +223,7 @@ theorem unip_normSq_single {r : ℕ} (j : Fin r) : normSq (Pi.single j (1 : ℂ)
   rw [Finset.sum_eq_single j]
   · simp
   · intro b _ hb
-    simp [Pi.single_apply, hb]
+    simp [hb]
   · intro h
     exact absurd (Finset.mem_univ j) h
 

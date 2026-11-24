@@ -321,7 +321,7 @@ theorem selfDual {B : Base F E} {r s : ℕ} (hY : Y.IsHerm σ B r s) (hd : ((1 :
   PositivityTheory.ThKG.Loc.Iwa.selfDual_of hd hY.lat.toIsLattice (fun y hy x hx => SelfDual.inclR_mem_intLoc v (by
     rw [PositivityTheory.ThKG.Loc.Iwa.hE_smul, one_mul]; exact ⟨⟨_, (hY.dual y).1 hy x hx⟩, rfl⟩)) (s := 1)
     ((Ideal.ne_top_iff_one _).1 v.isPrime.ne_top) fun y hy => by
-      simp only [OneMemClass.coe_one, map_one, one_smul]
+      simp only [map_one, one_smul]
       refine (hY.dual y).2 fun x hx => ?_
       obtain ⟨o, ho⟩ := hy x hx
       rw [PositivityTheory.ThKG.Loc.Iwa.hE_smul, one_mul] at ho
@@ -545,7 +545,7 @@ private theorem hnf_exists [IsDomain R] [IsDiscreteValuationRing R] {π : R} (h�
       · refine ⟨G.adjugate *ᵥ Pi.single i 1, ?_⟩
         rw [Matrix.mulVecLin_apply, Matrix.mulVec_mulVec, Matrix.mul_adjugate]
         funext l
-        by_cases h : l = i <;> simp [h, Matrix.smul_mulVec]
+        by_cases h : l = i <;> simp [h]
       · intro l hl
         simp [hl.ne']
     obtain ⟨n, hn⟩ := IsDiscreteValuationRing.ideal_eq_span_pow_irreducible hI hπ
@@ -606,7 +606,7 @@ private theorem hnf_exists [IsDomain R] [IsDiscreteValuationRing R] {π : R} (h�
         refine ⟨x + Pi.single i t, ?_⟩
         rw [Matrix.mulVec_add, ← hx]
         funext l
-        simp [hp, mul_comm]
+        simp [hp]
       · exact ih w hw fun l hl => absurd l.2 (by omega)
   choose x hx using huN
   choose y hy using fun j : Fin c => span c (G *ᵥ Pi.single j 1) ⟨Pi.single j 1, rfl⟩
@@ -1000,7 +1000,7 @@ theorem zeta (h : LF O (ϖ : k) nrm q) {A : kˣ →* ℂ} (hA : ∀ u : kˣ, nrm
   · have h0 : x ≠ 0 := fun h0 => by rw [h0, map_zero] at hx; exact (zpow_pos hq _).ne hx
     have : A (Units.mk0 x h0 * (ϖ ^ m)⁻¹) = 1 := hA _ (by
       simp only [Units.val_mul, Units.val_mk0, Units.val_inv_eq_inv_val, Units.val_zpow_eq_zpow_val, map_mul, map_inv₀,
-        map_zpow₀, hx, h.nrm_pi, _root_.inv_zpow', ne_eq]
+        map_zpow₀, hx, h.nrm_pi, _root_.inv_zpow']
       exact mul_inv_cancel₀ (zpow_pos hq _).ne')
     rw [map_mul, map_inv, map_zpow, mul_inv_eq_one₀ (zpow_ne_zero _ hϖ)] at this
     beta_reduce
@@ -1351,8 +1351,7 @@ theorem locUnrSplit : LocUnrSplit := by
     let p := bd b b * (bd y 1 * κ⁻¹) * (bd b b)⁻¹
     have hp : p.1 * (fromRows (1 : Matrix (Fin n) (Fin n) (Fv F v)) 1 : Matrix (Fin n ⊕ Fin n) (Fin n) (Fv F v)) = (fromRows (1 : Matrix (Fin n) (Fin n) (Fv F v)) 1 : Matrix (Fin n ⊕ Fin n) (Fin n) (Fv F v)) * (b * t * b⁻¹).1 := by
       have : ((bd b b)⁻¹).1 * (fromRows (1 : Matrix (Fin n) (Fin n) (Fv F v)) 1 : Matrix (Fin n ⊕ Fin n) (Fin n) (Fv F v)) = (fromRows (1 : Matrix (Fin n) (Fin n) (Fv F v)) 1 : Matrix (Fin n ⊕ Fin n) (Fin n) (Fv F v)) * (b⁻¹).1 := by
-        simp only [bd_inv, Matrix.fromBlocks_mul_fromRows, Matrix.fromRows_mul, Matrix.mul_one, Matrix.one_mul, Matrix.zero_mul,
-          add_zero, zero_add]
+        simp only [bd_inv, Matrix.fromBlocks_mul_fromRows, Matrix.fromRows_mul, Matrix.mul_one, Matrix.one_mul, add_zero, zero_add]
       simp only [p, Units.val_mul, Matrix.mul_assoc, this]
       rw [← Matrix.mul_assoc (κ⁻¹).1, hκ]
       simp only [bd_val, Matrix.fromBlocks_mul_fromRows, Matrix.fromRows_mul, Matrix.one_mul, Matrix.zero_mul,

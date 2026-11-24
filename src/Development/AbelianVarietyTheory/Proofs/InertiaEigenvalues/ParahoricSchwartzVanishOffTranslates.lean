@@ -103,7 +103,7 @@ theorem dvr_matrix_proj_preimage (O K : Type) [CommRing O] [IsDomain O] [IsDiscr
     rw [Submodule.Quotient.mk_eq_zero]
     rw [hmem] at hcx ⊢
     have e : (fun i => algebraMap O K ((c • v) i)) = algebraMap O K c • (fun i => algebraMap O K (v i)) := by
-      funext i; simp [Algebra.smul_def]
+      funext i; simp
     rw [e] at hcx
     have hc' : algebraMap O K c ≠ 0 := by
       intro h; exact hc ((IsFractionRing.injective O K) (by rw [h, map_zero]))
@@ -191,42 +191,32 @@ theorem exists_residue_annihilator_of_not_standard_column_form (O K : Type) [Com
     let T : Matrix (Fin r) (Fin r) O := fun i j => u j (Sum.inl i)
     have hT : IsUnit T.det := by
       rw [← IsLocalRing.residue_ne_zero_iff_isUnit, RingHom.map_det]
-      have : (IsLocalRing.residue O).mapMatrix T = 1 := by
+      have h1 : (IsLocalRing.residue O).mapMatrix T = 1 := by
         ext i j
-        have := congrFun (hu1 j) i
-        show IsLocalRing.residue O (u j (Sum.inl i)) = _
-        rw [this]; simp [Pi.single_apply, Matrix.one_apply]
-      rw [this, Matrix.det_one]; exact one_ne_zero
+        simpa [Pi.single_apply, Matrix.one_apply, eq_comm] using congrFun (hu1 j) i
+      rw [h1, Matrix.det_one]
+      exact one_ne_zero
     have hmax := (IsDiscreteValuationRing.irreducible_iff_uniformizer ϖ).1 hϖ
-    have hdiv : ∀ (i : Fin t) (j : Fin r), ∃ c, u j (Sum.inr i) = ϖ * c := by
-      intro i j
-      have : u j (Sum.inr i) ∈ IsLocalRing.maximalIdeal O := (IsLocalRing.residue_eq_zero_iff _).1 (hu0 j i)
-      rw [hmax, Ideal.mem_span_singleton] at this
-      exact this
+    have hdiv : ∀ (i : Fin t) (j : Fin r), ∃ c, u j (Sum.inr i) = ϖ * c := fun i j =>
+      Ideal.mem_span_singleton.1 (by simpa only [hmax] using (IsLocalRing.residue_eq_zero_iff _).1 (hu0 j i))
     choose C hC using hdiv
-    have hcol : ∀ j, ∃ c : Fin r → K, ∑ l, c l • (fun i => algebraMap O K (x i l)) = fun i => algebraMap O K (u j i) :=
-      fun j => (Submodule.mem_span_range_iff_exists_fun K).1 (hu j)
-    choose d hd using hcol
+    choose d hd using fun j => (Submodule.mem_span_range_iff_exists_fun K).1 (hu j)
     let D : Matrix (Fin r) (Fin r) K := fun l j => d j l
     have hBD : x.map (algebraMap O K) * D = B.map (algebraMap O K) := by
       ext p j
-      have := congrFun (hd j) p
-      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at this
+      have h := congrFun (hd j) p
+      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at h
       rw [Matrix.mul_apply, Matrix.map_apply]
-      show _ = algebraMap O K (u j p)
-      rw [← this]
-      exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
+      simpa [B, D, mul_comm] using h
     have hTD : (x.submatrix Sum.inl id).map (algebraMap O K) * D = T.map (algebraMap O K) := by
       ext i j
-      have := congrFun₂ hBD (Sum.inl i) j
-      simpa [Matrix.mul_apply] using this
+      exact congrFun₂ hBD (Sum.inl i) j
     have hdetT : (T.map (algebraMap O K)).det = algebraMap O K T.det := by
       rw [RingHom.map_det]; rfl
-    have hTK : IsUnit (T.map (algebraMap O K)).det := by
-      rw [hdetT]; exact hT.map _
     have hDu : IsUnit D.det := by
-      rw [← hTD, Matrix.det_mul] at hTK
-      exact isUnit_of_mul_isUnit_right hTK
+      have h := hT.map (algebraMap O K)
+      rw [← hdetT, ← hTD, Matrix.det_mul] at h
+      exact isUnit_of_mul_isUnit_right h
     have hdetTi : ((T⁻¹).map (algebraMap O K)).det = algebraMap O K (T⁻¹).det := by
       rw [RingHom.map_det]; rfl
     have hg : IsUnit (D * (T⁻¹).map (algebraMap O K)) := by
@@ -253,9 +243,7 @@ theorem exists_residue_annihilator_of_not_standard_column_form (O K : Type) [Com
       rw [mul_comm]; congr 2; ext j; simp [Pi.single_apply, eq_comm]
     refine ⟨fun i => f (Pi.single i 1), ?_, ?_⟩
     · intro h0
-      apply hf0
-      apply LinearMap.ext
-      intro v
+      refine hf0 (LinearMap.ext fun v => ?_)
       rw [LinearMap.zero_apply, hf v, h0, zero_dotProduct]
     · intro u hu hu0
       rw [← hf]

@@ -322,7 +322,7 @@ theorem value_mul_E_pow_eq_sum : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZer
     simp only [inclL_smul_coord, hc]
     funext i
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.single_apply, mul_ite, mul_one, mul_zero,
-      Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true]
+      Finset.sum_ite_eq, Finset.mem_univ, if_true]
     rw [hYi i, pow_add]
     simp only [map_mul, map_pow]
     ring
@@ -373,7 +373,7 @@ theorem GlobalTheory.BKGal.HatVal.Epow_smul_jB_toBcris_eq_sum : ∀ (l : ℕ) [F
   have hcol : ∀ j τ i, (D.mxInv τ *ᵥ (E K l e ^ H • ej j) τ) i = E K l e ^ H * D.mxInv τ i j := by
     intro j τ i
     simp only [hej, Pi.smul_apply, Matrix.mulVec_smul, Matrix.mulVec_single_one, smul_eq_mul,
-      Matrix.col_apply, Matrix.transpose_apply]
+      Matrix.col_apply]
   have hℓ : ∀ j i τ, E K l e ^ H * D.mxInv τ i j ∈ A O K := fun j i τ => by
     rw [← hcol]; exact D.mem_extc_iff.1 (mem_tot.1 (hL j) τ) i
   set ℓ : ι → ι → ZMod a → A O K := fun j i τ => ⟨_, hℓ j i τ⟩ with hℓdef
@@ -1345,7 +1345,7 @@ theorem GlobalTheory.BKGal.XiPole.jB_single_mem_filT : ∀ (l : ℕ) [Fact l.Pri
     funext j
     by_cases hj : j = i
     · subst hj; simp
-    · simp [Pi.single_apply, hj]
+    · simp [hj]
   rw [e1, map_smul] at hB
   have htm : toB l O m = (1 : O) ⊗ₜ[ℤ_[l]] Per.aB l (muOf ε ^ η) := toB_tmul C _ _
 
@@ -1775,7 +1775,7 @@ theorem phi_mem_MMl_of_mem_Y : ∀ (O K : Type) [CommRing O] [NormedField K] [Is
   convert h2 using 1
   rw [Subalgebra.smul_def]
   funext τ i
-  simp only [Pi.smul_apply, smul_eq_mul, Subtype.coe_mk]
+  simp only [Pi.smul_apply, smul_eq_mul]
   rw [PowerSeries.smul_eq_C_mul, ← mul_assoc, ← map_mul, ← mul_pow, inv_mul_cancel₀ hl, one_pow,
     map_one, one_mul]
 

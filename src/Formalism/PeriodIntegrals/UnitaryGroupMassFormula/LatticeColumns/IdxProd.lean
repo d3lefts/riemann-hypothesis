@@ -58,8 +58,7 @@ private theorem natCard_eq_of_surjective_of_same_fibres {α β γ : Type*} (q : 
     (h : ∀ a b, q a = q b ↔ f a = f b) : Nat.card γ = Nat.card β := by
   refine Nat.card_congr (Equiv.ofBijective (fun c => f (Function.surjInv hq c)) ⟨?_, ?_⟩)
   · intro c c' hcc
-    have h1 := (h (Function.surjInv hq c) (Function.surjInv hq c')).2 hcc
-    simpa only [Function.surjInv_eq hq] using h1
+    simpa only [Function.surjInv_eq hq] using (h _ _).2 hcc
   · intro b
     obtain ⟨a, rfl⟩ := hf b
     exact ⟨q a, (h _ _).1 (Function.surjInv_eq hq (q a))⟩
@@ -86,9 +85,9 @@ theorem IdxAbs_relIndex {G : Type} [Group G] (K K2 : Subgroup G) {ι : Type} [Fi
     (hsurj : ∀ f : ∀ i, Lp i, ∃ z ∈ K, ∀ i, π i z = f i)
     (hloc : ∀ z ∈ K, (∀ i, ∃ w ∈ K2, π i w = π i z) → z ∈ K2) :
     K2.relIndex K = ∏ i, (K2.map (π i)).relIndex (Lp i) := by
-  obtain ⟨ψ, hψ⟩ : ∃ ψ : ∀ i, K →* Lp i, ∀ i (a : K), ((ψ i a : Lp i) : Gp i) = π i a :=
-    ⟨fun i => ((π i).comp K.subtype).codRestrict (Lp i) (fun z => hK i z z.2),
-      fun _ _ => rfl⟩
+  let ψ : ∀ i, K →* Lp i := fun i =>
+    ((π i).comp K.subtype).codRestrict (Lp i) (fun z => hK i z z.2)
+  have hψ : ∀ i (a : K), ((ψ i a : Lp i) : Gp i) = π i a := fun _ _ => rfl
   have hs : ∀ f : ∀ i, Lp i, ∃ a : K, ∀ i, ψ i a = f i := by
     intro f
     obtain ⟨z, hzK, hz⟩ := hsurj f
@@ -98,9 +97,8 @@ theorem IdxAbs_relIndex {G : Type} [Group G] (K K2 : Subgroup G) {ι : Type} [Fi
     intro a
     simp only [Subgroup.mem_subgroupOf, Subgroup.mem_map, hψ]
     exact ⟨fun ha _ => ⟨(a : G), ha, rfl⟩, fun h => hloc a a.2 h⟩
-  have key := index_eq_prod_index_of_surjective_prod (K2.subgroupOf K)
+  exact index_eq_prod_index_of_surjective_prod (K2.subgroupOf K)
     (fun i => (K2.map (π i)).subgroupOf (Lp i)) ψ hs hm
-  exact key
 
 end PI.MassDataKppVolLemmas
 end -- clump:auto

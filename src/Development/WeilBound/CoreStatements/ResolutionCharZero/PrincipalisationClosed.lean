@@ -445,7 +445,6 @@ theorem GlobalTheory.CompanionTheory.Hypotheses₂.Conormal.finite_projective_co
   haveI : IsScalarTower A (A ⧸ I) I.Cotangent := by
     first
     | infer_instance
-    | exact IsScalarTower.of_algebraMap_smul fun _ _ => rfl
   obtain ⟨l, hl⟩ := (Algebra.FormallySmooth.iff_split_injection (R := k) (P := A) (A := A ⧸ I)
     Ideal.Quotient.mk_surjective).mp hQ
   have hsurj : Function.Surjective (algebraMap A (A ⧸ I)) := Ideal.Quotient.mk_surjective
@@ -462,8 +461,6 @@ theorem GlobalTheory.CompanionTheory.Hypotheses₂.Conormal.finite_projective_co
     first
     | (simp only [s, i, LinearMap.comp_apply, LinearMap.extendScalarsOfSurjective_apply,
         LinearEquiv.coe_coe, LinearMap.id_apply, h, LinearEquiv.apply_symm_apply]; done)
-    | (show e (l (KaehlerDifferential.kerCotangentToTensor k A (A ⧸ I) (e.symm x))) = x
-       rw [h, LinearEquiv.apply_symm_apply])
   refine ⟨Module.Finite.of_surjective s fun x => ⟨i x, ?_⟩, Module.Projective.of_split i s hsi⟩
   simpa only [LinearMap.comp_apply, LinearMap.id_apply] using LinearMap.congr_fun hsi x
 end -- clump:auto
@@ -607,7 +604,7 @@ open AlgebraicGeometry CategoryTheory Limits TopologicalSpace
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.AnForm.R GlobalTheory.CompanionTheory.Hypotheses₂.CentreOver
 
 theorem _root_.GlobalTheory.T.conormal_rank_one_of_locally_principal : ∀ {A : Type} [CommRing A] [IsDomain A] (I : Ideal A) [Module.Finite (A ⧸ I) I.Cotangent] [Module.Projective (A ⧸ I) I.Cotangent] (P : PrimeSpectrum (A ⧸ I)), LocPrincipal I (P.asIdeal.comap (Ideal.Quotient.mk I)) → Module.rankAtStalk I.Cotangent P = 1 := by
-  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.CentreOver.rankAtStalk_cotangent_eq_one | exact GlobalTheory.CompanionTheory.Hypotheses₂.CentreOver.rankAtStalk_cotangent_eq_one | (intros; apply GlobalTheory.CompanionTheory.Hypotheses₂.CentreOver.rankAtStalk_cotangent_eq_one <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.CentreOver.rankAtStalk_cotangent_eq_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GlobalProofs.ConormalRankOneOfLocallyPrincipalStatement =====
@@ -716,8 +713,6 @@ theorem locPrincipal_of_cartAt : ∀ {X : Scheme.{0}} [IsIntegral X] (Z : X.Idea
     rw [hZV, Ideal.map_span, Set.image_singleton] at hmap
     first
       | exact hmap.symm
-      | (rw [← hmap]; rfl)
-      | (convert hmap.symm using 3)
   letI : Algebra Γ(X, U.1) Γ(X, X.basicOpen f) := (X.presheaf.map (homOfLE hWU).op).hom.toAlgebra
   haveI : IsLocalization.Away f Γ(X, X.basicOpen f) := U.2.isLocalization_basicOpen f
   have hb : (X.presheaf.map (homOfLE hWV).op).hom h ≠ 0 := by
@@ -731,7 +726,6 @@ theorem locPrincipal_of_cartAt : ∀ {X : Scheme.{0}} [IsIntegral X] (Z : X.Idea
     rw [← hZW]
     first
       | exact Z.map_ideal (U := X.affineBasicOpen f) (V := U) hWU
-      | exact Z.map_ideal_basicOpen U f
   obtain ⟨f0, hf0, hf0ne, hgen⟩ :=
     GlobalTheory.CompanionTheory.Hypotheses₂.CentreOver.exists_gen_of_map_eq_span f (Z.ideal U) _ hb hI
   refine ⟨f, f0, ?_, hf0, hf0ne, hgen⟩
@@ -787,7 +781,6 @@ theorem exists_generator_of_rankAtStalk_eq_one {B M : Type*} [CommRing B] [AddCo
   refine ⟨(v : B) * ((u : B) * (s0 : B)), (v * (u * s0)).2, (v : B) * a, ?_⟩
   first
     | (rw [mul_smul (v : B) ((u : B) * (s0 : B)) x, mul_smul (v : B) a m]; exact hv)
-    | simpa only [Submonoid.smul_def, mul_smul] using hv
 
 theorem locPrincipal_of_rankAtStalk_eq_one {A : Type} [CommRing A] [IsDomain A]
     [IsNoetherianRing A] (I : Ideal A) [Module.Finite (A ⧸ I) I.Cotangent]
@@ -805,8 +798,6 @@ theorem locPrincipal_of_rankAtStalk_eq_one {A : Type} [CommRing A] [IsDomain A]
     intro r y
     first
       | (rw [← Ideal.Quotient.algebraMap_eq]; exact algebraMap_smul (A ⧸ I) r y)
-      | rfl
-      | (obtain ⟨y', rfl⟩ := Ideal.toCotangent_surjective I y; rfl)
   have step : ∀ x ∈ I, ∃ s ∉ p, ∃ b : A, s * x - b * f0 ∈ I ^ 2 := by
     intro x hx
     obtain ⟨sq, hsq, bq, hsb⟩ := hm0 (I.toCotangent ⟨x, hx⟩)
@@ -882,7 +873,6 @@ theorem locPrincipal_of_rankAtStalk_eq_one {A : Type} [CommRing A] [IsDomain A]
     rw [h0rank] at hP
     first
       | exact zero_ne_one hP
-      | simp at hP
   refine ⟨t, f0, ht, hf0I, hf0ne, fun g hg => ⟨1, ?_⟩⟩
   rw [pow_one]
   exact htI g hg

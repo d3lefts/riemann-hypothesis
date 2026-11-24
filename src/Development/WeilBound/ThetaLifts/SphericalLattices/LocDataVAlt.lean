@@ -231,7 +231,7 @@ theorem trace_mem {v : HeightOneSpectrum (𝓞 F)} {y : Fv F v ⊗[F] E} (hy : y
   have hint : IsIntegral ℤ (Algebra.trace F E (x : E)) := Algebra.isIntegral_trace (RingOfIntegers.isIntegral_coe x)
   have := HeightOneSpectrum.coe_mem_adicCompletionIntegers (K := F) v (⟨_, hint⟩ : 𝓞 F)
   convert this using 1
-  first | rfl | simp | (exact (IsScalarTower.algebraMap_apply (𝓞 F) F (Fv F v) (⟨_, hint⟩ : 𝓞 F)))
+  first | rfl
 
 theorem odd_absNorm {v : HeightOneSpectrum (𝓞 F)} (h2 : (2 : 𝓞 F) ∉ v.asIdeal) : Odd (Ideal.absNorm v.asIdeal) := by
   have hc : Nat.card (𝓞 F ⧸ v.asIdeal) = Ideal.absNorm v.asIdeal := by
@@ -359,7 +359,7 @@ theorem GlobalTheory.InertPsi.exists_field_data : ∀ (F E : Type) [Field F] [Nu
       rw [toCompl_tmul, map_one, mul_one])
   have htr1 : algebraMap F (Fv F v) (Algebra.trace F E 1) = 2 := by
     rw [show (1 : E) = algebraMap F E 1 from (map_one _).symm, Algebra.trace_algebraMap, hB.cm.2.2.1]
-    first | simp [map_ofNat] | (simp; exact map_ofNat _ 2) | (rw [nsmul_eq_mul, mul_one, Nat.cast_ofNat, map_ofNat])
+    first | simp [map_ofNat]
   have hvalc : ∀ a, ψL (complMap h a) = psiLoc B.ψ v (-a) := fun a => by
     rw [hval, ← map_neg, hcm, trace_tmul, htr1, mul_assoc, mul_comm 2 k, hk2, mul_one]
   refine ⟨complMap h (algebraMap F (Fv F v) s), c, Formalism.UG.qV F v, ψL, hc, hU, odd_absNorm h2, ?_, ?_, ?_⟩
@@ -552,14 +552,14 @@ theorem blow_transpose {n : ℕ} (A : Matrix (Fin n) (Fin n) (w.adicCompletion E
   ext i j
   by_cases hij : i = j
   · subst hij; simp [blow]
-  · simp [blow, Matrix.one_apply, hij, Ne.symm hij]
+  · simp [blow, hij, Ne.symm hij]
 
 theorem blow_map_cA (σ : E →ₐ[F] E) {c : w.adicCompletion E →+* w.adicCompletion E} (hc : IsConjAt σ h c) {n : ℕ}
     (A : Matrix (Fin n) (Fin n) (w.adicCompletion E)) : (blow hw h A).map (cA σ) = blow hw h (A.map c) := by
   ext i j
   by_cases hij : i = j
   · subst hij; simp [blow, cA_ptAt hw h σ hc]
-  · simp [blow, Matrix.one_apply, hij, cA_ptAt hw h σ hc]
+  · simp [blow, hij, cA_ptAt hw h σ hc]
 
 theorem map_pt_mul_incM {n : ℕ} (A : Matrix (Fin n) (Fin n) (w.adicCompletion E)) (J : Matrix (Fin n) (Fin n) E) :
     A.map (ptAt hw h) * incM F J = (A * J.map (algebraMap E _)).map (ptAt hw h) := by
@@ -761,7 +761,7 @@ theorem GlobalTheory.InertPlace.exists_hom_inert : ∀ (F E : Type) [Field F] [N
     ext i j
     by_cases hij : i = j
     · subst hij; simp [blow, locW_ptAt]
-    · simp [blow, Matrix.one_apply, hij, locW_ptAt]
+    · simp [blow, hij, locW_ptAt]
   · refine ⟨hAt g, fun z hz => ⟨?_, ?_⟩⟩
     · show ((embHom hw h P φ g : GL (Fin n) (AE F E)) : Matrix (Fin n) (Fin n) (AE F E)) *ᵥ z ∈ _
       rw [embHom_val]
@@ -990,7 +990,7 @@ theorem vecMulVec_mem {p : Fin n → w.adicCompletion E} (hp : p ∈ latAt w X.L
         simp only [incM, Matrix.smul_apply, Matrix.map_apply, Matrix.vecMulVec_apply, ← map_mul, ptAt_algebraMap]
     | zero =>
       convert zero_mem (latAtV X Y v) using 1
-      ext k l; simp [Matrix.vecMulVec_apply]
+      ext k l; simp
     | add q q' _ _ h1 h2 =>
       convert add_mem h1 h2 using 1
       ext k l; simp [Matrix.vecMulVec_apply, mul_add]
@@ -1003,7 +1003,7 @@ theorem vecMulVec_mem {p : Fin n → w.adicCompletion E} (hp : p ∈ latAt w X.L
       ring
   | zero =>
     convert zero_mem (latAtV X Y v) using 1
-    ext k l; simp [Matrix.vecMulVec_apply]
+    ext k l; simp
   | add p p' _ _ h1 h2 =>
     convert add_mem h1 h2 using 1
     ext k l; simp [Matrix.vecMulVec_apply, add_mul]

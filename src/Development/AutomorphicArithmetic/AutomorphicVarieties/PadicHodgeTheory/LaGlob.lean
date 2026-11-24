@@ -345,17 +345,11 @@ theorem UpperTheory.Reformulated.B.Qh9.isCM_of_conj :
     rw [mem_maximalRealSubfield_iff]
     constructor
     · intro hx φ
-      have := hc x φ
-      rw [hx] at this
-      exact this.symm
+      simpa [hx] using (hc x φ).symm
     · intro hx
       apply φ₀.injective
-      rw [hc]
-      exact hx φ₀
-  have hinv : ∀ x : K, c (c x) = x := by
-    intro x
-    apply φ₀.injective
-    simp [hc]
+      simpa [hc] using hx φ₀
+  have hinv : ∀ x : K, c (c x) = x := fun x => φ₀.injective (by simp [hc])
   let σ : K ≃ₐ[maximalRealSubfield K] K :=
     { toFun := c
       invFun := c
@@ -364,16 +358,11 @@ theorem UpperTheory.Reformulated.B.Qh9.isCM_of_conj :
       map_mul' := fun x y => φ₀.injective (by simp [hc])
       map_add' := fun x y => φ₀.injective (by simp [hc])
       commutes' := fun x => (hfix _).mpr x.2 }
-  have hσ : ∀ x, σ x = c x := fun _ => rfl
-  have hne : σ ≠ 1 := by
-    intro h1
-    apply IsTotallyComplex.complexEmbedding_not_isReal φ₀
-    rw [ComplexEmbedding.isReal_iff]
-    ext x
-    have hx : c x = x := by rw [← hσ, h1]; rfl
-    rw [ComplexEmbedding.conjugate_coe_eq, ← hc, hx]
-  have hord : orderOf σ = 2 :=
-    orderOf_eq_prime (by ext x; simp [pow_two, hσ, hinv]) hne
+  have hconj : ComplexEmbedding.IsConj φ₀ σ := RingHom.ext fun x => (hc x φ₀).symm
+  have hne : σ ≠ 1 :=
+    (ComplexEmbedding.isConj_ne_one_iff hconj).mpr
+      (IsTotallyComplex.complexEmbedding_not_isReal φ₀)
+  have hord : orderOf σ = 2 := ComplexEmbedding.orderOf_isConj_two_of_ne_one hconj hne
   have hbot : IntermediateField.fixedField (Subgroup.zpowers σ) = ⊥ := by
     refine le_antisymm (fun x hx => ?_) bot_le
     rw [IntermediateField.mem_fixedField_iff] at hx

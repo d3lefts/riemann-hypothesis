@@ -748,27 +748,45 @@ private theorem UpperTheory.Ru.crystallineComparison.eq_zero_of_coord {F V C : T
   rw [key, h]
   rfl
 
+private theorem UpperTheory.Ru.crystallineComparison.submodule_pi_smul_sum_eq_zero {R : Type*} [CommRing R]
+    {N : ℕ → Type*} [∀ n, AddCommGroup (N n)] [∀ n, Module R (N n)] {S : Submodule R (∀ n, N n)}
+    {κ : Type*} [Fintype κ] (t : R) (c : κ → R) (x : κ → S) (y : ∀ n, κ → N n)
+    (hxy : ∀ k n, (x k).1 n = y n k) (hy : ∀ n, t • ∑ k, c k • y n k = 0) :
+    t • ∑ k, c k • x k = 0 := by
+  refine Subtype.ext (funext fun n => ?_)
+  have hev : (∑ k, c k • x k).1 n = ∑ k, c k • y n k := by
+    let ev : S →+ N n := { toFun := fun s => s.1 n, map_zero' := rfl, map_add' := fun _ _ => rfl }
+    exact (map_sum ev _ _).trans <| Finset.sum_congr rfl fun k _ => congrArg (c k • ·) (hxy k n)
+  exact (congrArg (t • ·) hev).trans (hy n)
+
+private theorem UpperTheory.Ru.crystallineComparison.lid_rTensor_sum_eq_zero {F V A C B : Type*}
+    [Field F] [AddCommGroup V] [Module F V] [CommRing C] [Algebra F C] [CommRing B]
+    (ι : C →+* B) (hι : Function.Injective ι) (c0 : A → C) (i : A → B) (hc : ∀ a, ι (c0 a) = i a)
+    (q : F → B) (hq : ∀ z, ι (algebraMap F C z) = q z) {κ : Type*} [Fintype κ]
+    (x : κ → V) (c : κ → A) (r : C) (f : Module.Dual F V)
+    (h : ∑ k, q (f (x k)) * i (c k) = 0) :
+    TensorProduct.lid F C (LinearMap.rTensor C f (∑ k, x k ⊗ₜ[F] (c0 (c k) * r ^ 0))) = 0 := by
+  apply hι
+  simp only [map_sum, LinearMap.rTensor_tmul, TensorProduct.lid_tmul, pow_zero, mul_one,
+    map_zero, Algebra.smul_def, map_mul, hq, hc]
+  exact h
+
 theorem UpperTheory.Ru.crystallineComparison.injOf :
     UpperTheory.Ru.crystallineComparison.InjOf := by
   intro l _ K B₀ ι hι hc hq G Amp hF hE hL e e' hB hP hcomp M hM j κ _ v c u hu
-  obtain ⟨a⟩ := hL.ch M hM
+  refine (hL.ch M hM).elim fun a => ?_
   set_option synthInstance.maxHeartbeats 2000000 in
-  have h0 : (per l K).t ^ u • ∑ k, (show (per l K).A from c k) • e'.e a j (v k) = 0 := by
-    change ((UpperTheory.Ru.crystallineComparison.tA l ^ u • ∑ k, c k • (show (M.MS j).lim from e'.e a j (v k)) : (M.MS j).lim)) = 0
-    apply Subtype.ext
-    funext n
-    have := hu n
-    simp only [UpperTheory.Ru.crystallineComparison.evE] at this
-    simpa [Submodule.coe_smul, Submodule.coe_sum, Finset.sum_apply, hcomp] using this
+  have h0 : (per l K).t ^ u • ∑ k, (show (per l K).A from c k) • e'.e a j (v k) = 0 :=
+    UpperTheory.Ru.crystallineComparison.submodule_pi_smul_sum_eq_zero (S := (M.MS j).lim)
+      (UpperTheory.Ru.crystallineComparison.tA l ^ u) c (fun k => e'.e a j (v k))
+      (fun n k => e M n j ((v k).lev n)) (fun k n => hcomp M a j (v k) n) hu
   have h1 := UpperTheory.Ru.crystallineComparison.injAbs l K (per l K) G (dat Amp) hF hE hL e' hB hP M hM a j κ v c u h0
   apply UpperTheory.Ru.crystallineComparison.eq_zero_of_coord
   intro f
-  apply hι
-  have h2 := h1 f
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [UpperTheory.Ru.crystallineComparison.vec, map_sum, LinearMap.rTensor_tmul, TensorProduct.lid_tmul, pow_zero, mul_one, map_zero]
-  simp only [Algebra.smul_def, map_mul, hq, hc]
-  exact h2
+    exact UpperTheory.Ru.crystallineComparison.lid_rTensor_sum_eq_zero ι hι B₀.c (per l K).i hc
+      (per l K).q hq (fun k => M.toV j (v k)) c
+      (Ring.inverse (B₀.c (UpperTheory.Ru.crystallineComparison.tA l))) f (h1 f)
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto

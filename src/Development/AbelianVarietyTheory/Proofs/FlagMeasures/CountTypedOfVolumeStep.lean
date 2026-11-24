@@ -412,8 +412,8 @@ theorem deepBound (hV : GlobalTheory.FlagMeas.AbsoluteVolume) (hK : GlobalTheory
     have : 2 * (B.I.f : ℝ) ≤ B.I.n * B.I.f * B.g * b := by nlinarith
     rw [hXe]; nlinarith
   have hXsq : 2 * B.I.f * B.I.rd ≤ X ^ 2 := by nlinarith
-  have hVol := hV B.I p q (by first | exact hSig | exact fun v => hSig v) hqn hn8 X (by linarith) hXrd hXsq
-    c B.μf (by first | exact hc | exact fun v => ⟨hc0 v, hc v⟩ | exact fun v => ⟨hc v, hc0 v⟩)
+  have hVol := hV B.I p q (by first | exact hSig) hqn hn8 X (by linarith) hXrd hXsq
+    c B.μf (by first | exact hc)
   obtain ⟨hKs, hKg0, hKsT⟩ := GlobalTheory.CongIndex.measure_Kset_le B.I B.μf B.g hg1
   obtain ⟨hcov, -⟩ := _root_.GlobalTheory.CovolRat.covol_eq_inter_fund B.I B.μf B.fund Set.univ B.fund_spec MeasurableSet.univ
     (fun _ _ _ _ => trivial)
@@ -492,9 +492,6 @@ theorem deepBound (hV : GlobalTheory.FlagMeas.AbsoluteVolume) (hK : GlobalTheory
       ≤ ∫⁻ _ in GlobalTheory.IndefiniteRowSideFullHecke.DeepSet.deepSet B q b, ENNReal.ofReal Kc ∂(B.I.muA B.μf) := by
         first
           | exact setLIntegral_mono measurable_const hpt
-          | exact lintegral_mono_ae ((ae_restrict_iff' (by
-              simp only [GlobalTheory.IndefiniteRowSideFullHecke.DeepSet.deepSet]; exact (measurableSet_eq_fun_of_countable
-                measurable_const measurable_const))).2 (Filter.Eventually.of_forall hpt))
     _ = ENNReal.ofReal Kc * B.I.muA B.μf (GlobalTheory.IndefiniteRowSideFullHecke.DeepSet.deepSet B q b) := setLIntegral_const _ _
     _ ≤ ENNReal.ofReal Kc * B.I.muA B.μf B.fund := by
         gcongr
@@ -1436,7 +1433,7 @@ theorem exists_type (B : RowsAut) (p q : ℕ) (hs : SigIs B p q) (hn : 1 ≤ B.I
     omega
   let c : Composition (∑ i, j i) :=
     ⟨List.ofFn j, fun {b} hb => by
-      simp only [List.mem_ofFn, Set.mem_range] at hb
+      simp only [List.mem_ofFn] at hb
       obtain ⟨k, rfl⟩ := hb
       exact hjpos k, by simp [List.sum_ofFn]⟩
   have hlen : c.length = a := by simp [c, Composition.length]
@@ -1445,7 +1442,6 @@ theorem exists_type (B : RowsAut) (p q : ℕ) (hs : SigIs B p q) (hn : 1 ≤ B.I
     show (List.ofFn j).get i = j (Fin.cast hlen i)
     first
       | rw [List.get_ofFn]
-      | simp [List.get_eq_getElem, Fin.cast]
   obtain ⟨τ', h'⟩ := GlobalTheory.TypeDecomp.hasType_cast B.I x hlen j τ hT
   refine ⟨∑ i, j i, Finset.mem_Icc.mpr ⟨h1, h2⟩, c, τ', ?_⟩
   rw [hc]
@@ -1800,9 +1796,6 @@ theorem fdegOf_eq_of_isFdeg {n : ℕ} {ε : Fin n → Bool} {H : Type} [NormedAd
   rw [h4, hw]
   simp
 
-theorem le_exp_of_log_le {x y : ℝ} (h : Real.log x ≤ y) : x ≤ Real.exp y :=
-  (Real.le_exp_log x).trans (Real.exp_le_exp.mpr h)
-
 theorem one_le_rd (I : AutInst) : 1 ≤ I.rd := by
   unfold AutInst.rd
   apply Real.one_le_rpow
@@ -1833,8 +1826,8 @@ theorem count_unbundled : GlobalTheory.IndefiniteRowSideFullHecke.LatticeCountin
     nlinarith
   have hC' : 8 * 10 ^ 14 * (A + 4) ≤ C := (le_max_right _ _).trans hC
   have hH : GlobalTheory.Count.CountHyp B A n₀ (fun v => fdegOf (Formalism.REAL.muG (I.ε v)) (σ v) (w v)) p q b := by
-    refine ⟨fun v => ⟨hHC v, hDS v, hlow v, hfd v⟩, hpq, le_trans hn₁ hn, hq, le_exp_of_log_le hrd, hf, hb,
-      le_exp_of_log_le hbb, hlam, hg, hgb, hpr, hg₀, _root_.GlobalTheory.ncard_primesOver_eq_finrank_of_absNorm_eq_of_not_mem_sq I.E g₀ hpr hsplit, ?_⟩
+    refine ⟨fun v => ⟨hHC v, hDS v, hlow v, hfd v⟩, hpq, le_trans hn₁ hn, hq, Real.le_exp_of_log_le hrd, hf, hb,
+      Real.le_exp_of_log_le hbb, hlam, hg, hgb, hpr, hg₀, _root_.GlobalTheory.ncard_primesOver_eq_finrank_of_absNorm_eq_of_not_mem_sq I.E g₀ hpr hsplit, ?_⟩
     intro v a a' haa
     refine le_trans ?_ (hgap v a a' haa)
     refine le_trans ?_ hh

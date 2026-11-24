@@ -85,8 +85,7 @@ theorem nd_map_star_star {σ : Type} (F : MvPolynomial σ K) :
 
 theorem nd_mem_dual {lam : ι → DomWeight n} (h : VV K lam →ₗ⋆[K] VV K lam →ₗ[K] K) (L : Submodule (𝓞 K) (VV K lam)) (x : VV K lam) :
     x ∈ Formalism.HermitianLatticesTheory.dual h L ↔ ∀ y ∈ L, h y x ∈ (1 : Submodule (𝓞 K) K) := by
-  unfold Formalism.HermitianLatticesTheory.dual Formalism.E.hdual
-  simp only [Submodule.mem_iInf, Submodule.mem_comap, LinearMap.coe_restrictScalars]
+  simp [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual]
 
 theorem nd_half (lam : ι → DomWeight n) (T T' : Submodule (𝓞 K) (Pol K ι n))
     (G : ι → GL (Fin n) K) (M : ι → Submodule (𝓞 K) (Fin n → K))

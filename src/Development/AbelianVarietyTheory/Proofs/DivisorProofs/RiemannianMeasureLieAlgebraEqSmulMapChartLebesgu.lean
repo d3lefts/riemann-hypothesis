@@ -197,15 +197,6 @@ def invAdjoint (T : V ≃ₗ[𝕜] W) : V ≃ₗ[𝕜] W :=
   LinearEquiv.ofLinearMap (LinearMap.adjoint (T.symm : W →ₗ[𝕜] V)) (LinearMap.adjoint (T : V →ₗ[𝕜] W))
     (by rw [← LinearMap.adjoint_comp]; simp) (by rw [← LinearMap.adjoint_comp]; simp)
 
-theorem inner_invAdjoint_apply (T : V ≃ₗ[𝕜] W) (x y : V) :
-    ⟪invAdjoint T x, T y⟫_𝕜 = ⟪x, y⟫_𝕜 := by
-  change ⟪LinearMap.adjoint (T.symm : W →ₗ[𝕜] V) x, T y⟫_𝕜 = _
-  rw [LinearMap.adjoint_inner_left]; simp
-
-theorem detNorm_invAdjoint (T : V ≃ₗ[𝕜] W) : detNorm (invAdjoint T) = (detNorm T)⁻¹ :=
-  eq_inv_of_mul_eq_one_left
-    (normDet_mul_normDet_of_inner_eq T.finrank_eq (inner_invAdjoint_apply T))
-
 end NormDet
 
 section Dual
@@ -299,8 +290,7 @@ theorem skew_family_inner_re_split : ∀ {ι : Type} [Fintype ι] {r : ℕ} (s :
   have key : ∀ τ a b, F τ b a = F τ a b := by
     intro τ a b
     have h2 : (s a * s b) * (s a * s b) = 1 := by rw [mul_mul_mul_comm, hs, hs, one_mul]
-    simp only [hF, hY τ a b, hY' τ a b, map_mul, map_neg, Complex.conj_conj, Complex.conj_ofReal,
-      Complex.mul_re, Complex.neg_re, Complex.ofReal_re, Complex.ofReal_im, Complex.conj_re,
+    simp only [hF, hY τ a b, hY' τ a b, Complex.mul_re, Complex.neg_re, Complex.ofReal_re, Complex.ofReal_im, Complex.conj_re,
       Complex.conj_im, Complex.mul_im, Complex.neg_im]
     linear_combination ((Y (τ, a, b)).re * (Y' (τ, a, b)).re + (Y (τ, a, b)).im * (Y' (τ, a, b)).im) * h2
   have diag : ∀ τ a, F τ a a = (Y (τ, a, a)).im * (Y' (τ, a, a)).im := by
@@ -520,11 +510,11 @@ def frameL {Ψ : Finset (E →+* ℂ)} (x : Frame Ψ r) :
   map_add' Z Z' := by
     ext p
     have e : Matrix.of ((Z + Z') p.1) = Matrix.of (Z p.1) + Matrix.of (Z' p.1) := rfl
-    simp only [inFrame, PiLp.toLp_apply, PiLp.add_apply, e, Matrix.mul_add, Matrix.add_mul]; rfl
+    simp only [inFrame, PiLp.add_apply, e, Matrix.mul_add, Matrix.add_mul]; rfl
   map_smul' c Z := by
     ext p
     have e : Matrix.of ((c • Z) p.1) = (c : ℂ) • Matrix.of (Z p.1) := rfl
-    simp only [inFrame, PiLp.toLp_apply, PiLp.smul_apply, e, Matrix.mul_smul, Matrix.smul_mul,
+    simp only [inFrame, PiLp.smul_apply, e, Matrix.mul_smul, Matrix.smul_mul,
       RingHom.id_apply]
     rfl
 
@@ -557,8 +547,8 @@ theorem gram_angles {r : ℕ} {Ψ : Type} [Fintype Ψ] [DecidableEq Ψ] (hr : 1 
   by_cases hτ : τ = τ'
   · subst hτ
     by_cases hk : k = k'
-    · subst hk; simp [Finset.sum_add_distrib, Matrix.one_apply, Matrix.mul_apply, Matrix.replicateCol_apply, Matrix.replicateRow_apply]
-    · simp [Finset.sum_add_distrib, Matrix.one_apply, Matrix.mul_apply, Matrix.replicateCol_apply, Matrix.replicateRow_apply, hk, Ne.symm hk]
+    · subst hk; simp [Finset.sum_add_distrib, Matrix.mul_apply, Matrix.replicateCol_apply, Matrix.replicateRow_apply]
+    · simp [Matrix.mul_apply, Matrix.replicateCol_apply, Matrix.replicateRow_apply, hk, Ne.symm hk]
   · simp [Finset.sum_add_distrib, Matrix.one_apply, Matrix.mul_apply, Matrix.replicateCol_apply, Matrix.replicateRow_apply, hτ, Ne.symm hτ]
 
 theorem angles_zero (a : Fin r) : angles (0 : Fin (r - 1) → ℝ) a = 0 := by

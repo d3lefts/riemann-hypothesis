@@ -1055,7 +1055,7 @@ theorem coeffB_eq {b : T.B} {x : Γ} {N : ℕ} (h : b * algebraMap Γ T.B T.π ^
 theorem convergesAt_pi_single (n₀ : ℤ) (c : L) (ρ : ℝ) : ConvergesAt (Pi.single n₀ c) ρ := by
   refine tendsto_const_nhds.congr' ?_
   filter_upwards [(Set.finite_singleton n₀).compl_mem_cofinite] with n hn
-  simp [Pi.single_apply, show n ≠ n₀ from hn]
+  simp [show n ≠ n₀ from hn]
 
 theorem zcoeff_π_pow_mul_teich (N : ℕ) (c : L) : T.zcoeff (T.π ^ N * T.teich c) = Pi.single (N : ℤ) c := by
   funext n
@@ -1267,7 +1267,7 @@ theorem coeff_incl (x : AInf K p) (n : ℕ) :
   rw [map_pow, map_natCast, map_sub, map_sum] at h2
   rw [Ideal.mem_span_singleton, teichLift_π]
   convert h2 using 2
-  rw [TeichLift.finSum, show Finset.range (n + 1) = Finset.Iic n by ext; simp [Nat.lt_succ_iff]]
+  rw [TeichLift.finSum, show Finset.range (n + 1) = Finset.Iic n by ext; simp]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, map_pow, map_natCast, incl_teichmuller, teich_eq, teichLift_π, mul_comm]
 

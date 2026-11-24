@@ -140,7 +140,6 @@ theorem regBracket_eq {k r : ℕ} {Wp Wq H : Type} [NormedAddCommGroup Wp] [Inne
       have hk : (a * b) ^ kap k r = a ^ kap k r * b ^ kap k r := by
         first
         | exact mul_pow a b _
-        | exact Real.mul_rpow ha.le hb.le
       rw [hk]
       simp only [Complex.ofReal_mul]
       ring
@@ -405,7 +404,6 @@ private theorem aDil_mem_gv {k r : ℕ} {t : ℝ} (ht : 0 < t) : aDil k r t ∈ 
   unfold aDil
   rw [Matrix.diagonal_conjTranspose, Matrix.mul_diagonal, Matrix.diagonal_mul, Pi.star_apply]
   unfold Formalism.QuantumDeterminants.Hpk
-  beta_reduce
   have hi := i.isLt
   have hj := j.isLt
   by_cases h1 : i.val < r ∧ i.val + j.val = 2 * r + k

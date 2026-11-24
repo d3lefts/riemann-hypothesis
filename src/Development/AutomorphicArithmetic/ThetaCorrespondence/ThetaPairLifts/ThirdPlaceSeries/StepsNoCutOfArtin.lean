@@ -392,11 +392,7 @@ theorem subIner_component_mem {L Y I α : Type} [Field L] [AddCommGroup Y] [Modu
     (hU : ∀ g, ∀ y ∈ U, T g y ∈ U) (S : Finset α) :
     ∀ y : α → Y, (∀ a ∈ S, ∀ g, T g (y a) = χ a g • y a) → ∑ a ∈ S, y a ∈ U → ∀ a ∈ S, y a ∈ U := by
   first
-  | exact @_root_.GlobalTheory.EigenvectorOfSum.eigenvector_mem_of_sum_mem
-  | exact _root_.GlobalTheory.EigenvectorOfSum.eigenvector_mem_of_sum_mem
   | (apply _root_.GlobalTheory.EigenvectorOfSum.eigenvector_mem_of_sum_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.EigenvectorOfSum.eigenvector_mem_of_sum_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.EigenvectorOfSum.eigenvector_mem_of_sum_mem <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.EigenvectorOfSum.eigenvector_mem_of_sum_mem ..)
 
 theorem subIner_pullback {L X Y I α J : Type} [Field L] [AddCommGroup X] [Module L X]
@@ -1025,7 +1021,7 @@ section
 open Formalism Formalism.MainNotions Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Module GlobalTheory.Pass
 
 theorem _root_.GlobalTheory.T.globalPass_of_globalArtinReciprocity : GlobalTheory.Published.GlobalArtinReciprocity → _root_.GlobalTheory.Pass.GlobalStatement := by
-  first | exact @_root_.GlobalTheory.StepGlobalPf.main_alt_alt | exact _root_.GlobalTheory.StepGlobalPf.main_alt_alt | (intros; apply _root_.GlobalTheory.StepGlobalPf.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.StepGlobalPf.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1064,7 +1060,6 @@ theorem main_alt_alt : _root_.GlobalTheory.Pass.ResidueStatement := by
   funext g
   first
     | rfl
-    | (ext a b; simp [mapM, rhoO, redRep, mapRep])
 end GlobalTheory.Pass.ResidualSpan
 end
 end -- clump:auto

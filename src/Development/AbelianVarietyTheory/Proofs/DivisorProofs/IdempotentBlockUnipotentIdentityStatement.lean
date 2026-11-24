@@ -276,13 +276,12 @@ theorem decomposition : ∀ (R A : Type) [inst : CommRing R] [inst_1 : CommRing 
   · rw [hu.2, hblk, fromBlocks_smul]; simp [hN0, hN0']
   · rw [hv]; exact cong_mul (cong_mul (cong_mul hkdc huc) hkdic) hgdc
   · rw [hu.2, GlobalTheory.WeilM.diagCols]
-    simp only [fromBlocks_mul_fromRows, fromRows_mul, Units.val_one, Matrix.mul_one,
-      Matrix.one_mul]
+    simp only [fromBlocks_mul_fromRows, Units.val_one, Matrix.mul_one]
     rw [fromRows_ext_iff]
     constructor <;> abel
   · rw [hv, hkd, hu.1, hkdinv, hgd, GlobalTheory.WeilM.diagCols]
     simp only [Matrix.mul_assoc, fromBlocks_mul_fromRows, fromRows_mul, Matrix.mul_one,
-      Matrix.one_mul, Matrix.zero_mul, Matrix.mul_zero, add_zero, zero_add, Units.val_mk]
+      Matrix.one_mul, Matrix.zero_mul, add_zero, zero_add]
     rw [fromRows_ext_iff]
     constructor
     · refine Eq.trans ?_ (hfin.trans ?_) <;> noncomm_ring
@@ -324,10 +323,6 @@ theorem diag_decomp : ∀ (R A : Type) [CommRing R] [CommRing A] [Algebra R A] (
       (p₂.1.1 : Matrix (β ⊕ β) (β ⊕ β) A) * diagCols β = diagCols β * t₂.val ∧ gd = kd * p₁ * kd⁻¹ * p₂ := by
   first
   | exact @_root_.GlobalTheory.UnipotentCongruenceInverse.decomposition
-  | exact _root_.GlobalTheory.UnipotentCongruenceInverse.decomposition
-  | (apply _root_.GlobalTheory.UnipotentCongruenceInverse.decomposition <;> assumption)
-  | (intros; apply _root_.GlobalTheory.UnipotentCongruenceInverse.decomposition <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.UnipotentCongruenceInverse.decomposition <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.UnipotentCongruenceInverse.decomposition ..)
 
 end GlobalTheory.SiegelDiagDecomp
@@ -358,7 +353,7 @@ theorem _root_.GlobalTheory.T.idempotent_block_unipotent_identity : ∀ (R A : T
       (1 - e) • ((p₂.1.1 : Matrix (β ⊕ β) (β ⊕ β) A) - 1) = 0 ∧
       (p₁.1.1 : Matrix (β ⊕ β) (β ⊕ β) A) * diagCols β = diagCols β * t₁.val ∧
       (p₂.1.1 : Matrix (β ⊕ β) (β ⊕ β) A) * diagCols β = diagCols β * t₂.val ∧ gd = kd * p₁ * kd⁻¹ * p₂ := by
-  first | exact @GlobalTheory.SiegelDiagDecomp.diag_decomp | exact GlobalTheory.SiegelDiagDecomp.diag_decomp | (intros; apply GlobalTheory.SiegelDiagDecomp.diag_decomp <;> assumption)
+  first | exact @GlobalTheory.SiegelDiagDecomp.diag_decomp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdempotentBlockUnipotentIdentityStatement =====

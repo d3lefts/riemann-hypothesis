@@ -680,7 +680,7 @@ open GlobalTheory.HermFrame
 open scoped ComplexOrder ContDiff ComplexConjugate
 
 theorem _root_.GlobalTheory.T.del_loc_repr_contDiffOn_target : ∀ {M : Type} [TopologicalSpace M] {n : ℕ} (A : GlobalTheory.CxForm.HolAtlas M n) (α : A.Fld), A.IsForm α → ∀ (i : A.ι) (S : Finset (Fin (n + n))), ContDiffOn ℝ ∞ (fun v => (GlobalTheory.CxForm.bas n).repr (A.loc (A.del α) i v) S) (A.e i).target := by
-  first | exact @GlobalTheory.CxForm.HolAtlas.del_loc_repr_contDiffOn | exact GlobalTheory.CxForm.HolAtlas.del_loc_repr_contDiffOn | (intros; apply GlobalTheory.CxForm.HolAtlas.del_loc_repr_contDiffOn <;> assumption)
+  first | exact @GlobalTheory.CxForm.HolAtlas.del_loc_repr_contDiffOn
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DelLocReprContDiffOnTargetStatement =====
@@ -859,7 +859,7 @@ theorem delAt_pull_fderiv_ι {φ : V n → V n} {v : V n} (hφ : ContDiffAt ℂ 
       simp [del_mul_const (hEr _ _), hdel, Finset.sum_apply, Pi.single_apply, hs]
     · simp only [Sum.elim_inr]
       rw [del_sum (fun c _ => (hEc b c).mul_const _), ContinuousLinearMap.sum_apply]
-      simp [del_mul_const (hEc _ _), hdelc, Finset.sum_apply, Pi.single_apply]
+      simp [del_mul_const (hEc _ _), hdelc, Finset.sum_apply]
   rw [hF, delAt_ι hu]
 
   simp only [hw, map_sum, map_smul, Finset.mul_sum, mul_smul_comm]
@@ -1453,7 +1453,7 @@ theorem evalF_rename_mul {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas
     (u : α → A.Pt → Ev n) (v : β → A.Pt → Ev n) (R : MvPolynomial α ℝ) (Q : MvPolynomial β ℝ) :
     evalF A (Sum.elim u v) (rename Sum.inl R * rename Sum.inr Q) = evalF A u R * evalF A v Q := by
   funext x
-  simp only [evalF, LineForm.fld, Pi.mul_apply, Polynomial.map_mul, MvPolynomial.map_rename, map_mul, aeval_rename]
+  simp only [evalF, LineForm.fld, Pi.mul_apply, MvPolynomial.map_rename, map_mul, aeval_rename]
   rfl
 
 theorem evalF_chernRoots {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n) {ι : Type} (m : ι → ℕ)

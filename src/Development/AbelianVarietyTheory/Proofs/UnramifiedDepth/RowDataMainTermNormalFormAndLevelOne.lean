@@ -145,7 +145,6 @@ theorem add_pow_congr {a b : C} (ha : V.Ge 0 a) (hb : V.Ge 0 b) (n : ℕ) :
       (⟨a, ha⟩ : intRing V) ^ (V.l ^ n) + (⟨b, hb⟩ : intRing V) ^ (V.l ^ n) + (V.l : intRing V) * r := by
     obtain ⟨r, hr⟩ := exists_add_pow_prime_pow_eq V.l_prime (⟨a, ha⟩ : intRing V) ⟨b, hb⟩ n
     first
-      | exact ⟨r, hr⟩
       | exact ⟨_, by rw [hr, mul_assoc, mul_assoc]⟩
   obtain ⟨r, hr⟩ := h
   have h2 := congrArg (fun z : intRing V => (z : C)) hr
@@ -878,7 +877,6 @@ theorem mm_add_pow (e : ℕ) {a b : C} (ha : V.Ge 0 a) (hb : V.Ge 0 b) :
   apply mm_of_ge_one
   have hr0 : V.Ge 0 (r : C) := r.2
   first
-    | simpa using hr0.l_mul
     | simpa [mul_assoc] using (ha.mul_int (hb.mul_int hr0)).l_mul
 
 theorem mm_sum_pow (e : ℕ) {ι : Type} (s : Finset ι) (x : ι → C) (hx : ∀ i ∈ s, V.Ge 0 (x i)) :
@@ -980,7 +978,6 @@ theorem indepMod_first_coeff : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [Ne
       exact_mod_cast (zero_lt_one : (0 : ℝ) < 1)
     apply mm_of_ge_one
     first
-      | simpa using hr0.l_mul
       | simpa [mul_assoc] using (ha.mul_int (hb.mul_int hr0)).l_mul
   have mm_sum_pow : ∀ (e : ℕ) {ι : Type} (s : Finset ι) (x : ι → C),
       (∀ i ∈ s, V.Ge 0 (x i)) →

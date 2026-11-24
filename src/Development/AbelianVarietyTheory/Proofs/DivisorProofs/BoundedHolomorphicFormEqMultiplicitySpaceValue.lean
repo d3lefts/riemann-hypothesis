@@ -293,7 +293,7 @@ open scoped TensorProduct InnerProductSpace ContDiff
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.cuspidality_preserved_in_closure : ∀ (D : D7) (θ : InfFam D) (V : HSp D), IsInfFam θ → ∀ (μ : Measure (GA D V)) (𝓕 : Set (GA D V)) (ρ : GA D V →* (Lp ℂ 2 (nuQ V μ 𝓕) →L[ℂ] Lp ℂ 2 (nuQ V μ 𝓕))), FinPair V μ 𝓕 → IsReg V μ 𝓕 ρ → ∀ (φ ψ : GA D V → ℂ) F₀ F, IsAutFun V φ → ZCusp V φ → Repr V μ 𝓕 F₀ φ → IsAutFun V ψ → Repr V μ 𝓕 F ψ → F ∈ closure (Submodule.span ℂ {z | ∃ u : GA D V, z = ρ u F₀} : Set (Lp ℂ 2 (nuQ V μ 𝓕))) → ZCusp V ψ := by
-  first | exact @GlobalTheory.HolDict.ZClosed.zcusp_of_mem_closure | exact GlobalTheory.HolDict.ZClosed.zcusp_of_mem_closure | (intros; apply GlobalTheory.HolDict.ZClosed.zcusp_of_mem_closure <;> assumption)
+  first | exact @GlobalTheory.HolDict.ZClosed.zcusp_of_mem_closure
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CuspidalityPreservedInClosureStatement =====
@@ -433,7 +433,7 @@ theorem exists_continuousMultilinearMap_of_inner_eq_prod {ι : Type} [Fintype ι
   change ‖F y‖ ≤ _
   have h := congrArg norm (hF3 y)
   simp only [inner_self_eq_norm_sq_to_K, norm_mul, norm_prod, norm_pow, Complex.coe_algebraMap,
-    Complex.norm_real, norm_norm, Real.norm_eq_abs, Finset.prod_pow] at h
+    Complex.norm_real, Real.norm_eq_abs, Finset.prod_pow] at h
   refine le_of_eq ?_
   refine (pow_left_inj₀ (n := 2) (by positivity) (by positivity) two_ne_zero).1 ?_
   rw [mul_pow, Real.sq_sqrt (abs_nonneg c)]
@@ -586,7 +586,7 @@ open scoped TensorProduct InnerProductSpace ContDiff
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_equivariant_multilinear_of_matrixCoeff_eq_unitaryProduct : ∀ (n : ℕ) (ι : Type) [Fintype ι] [DecidableEq ι] (Hm : ι → Mt n) (H : ι → Type) [∀ τ, NormedAddCommGroup (H τ)] [∀ τ, InnerProductSpace ℂ (H τ)] [∀ τ, CompleteSpace (H τ)] (σ : ∀ τ, Mt n → (H τ →L[ℂ] H τ)) (K : Type) [NormedAddCommGroup K] [InnerProductSpace ℂ K] [CompleteSpace K] (ρ : (ι → Mt n) → (K →L[ℂ] K)) (v : ∀ τ, H τ) (k : K), (∀ τ, (Hm τ).det ≠ 0 ∧ IsURepOn (Formalism.QuantumDeterminants.UH (Hm τ)) (σ τ) ∧ IsIrredOn (Formalism.QuantumDeterminants.UH (Hm τ)) (σ τ) ∧ ‖v τ‖ = 1) → ρ 1 = 1 → (∀ u ∈ UG Hm, ∀ u' ∈ UG Hm, ρ (u * u') = ρ u * ρ u') → (∀ u ∈ UG Hm, ∀ y, ‖ρ u y‖ = ‖y‖) → (∀ u ∈ UG Hm, ⟪k, ρ u k⟫_ℂ = ((‖k‖ ^ 2 : ℝ) : ℂ) * ∏ τ, ⟪v τ, σ τ (u τ) (v τ)⟫_ℂ) → ∃ Φ : ContinuousMultilinearMap ℂ H K, Φ v = k ∧ (∀ τ, ∀ g ∈ Formalism.QuantumDeterminants.UH (Hm τ), ∀ y, Φ (Function.update y τ (σ τ g (y τ))) = ρ (Pi.mulSingle τ g) (Φ y)) ∧ ∀ y, Φ y ∈ closure (Submodule.span ℂ {z | ∃ u ∈ UG Hm, z = ρ u k} : Set K) := by
-  first | exact @GlobalTheory.exists_equivariant_multilinear_of_matrixCoeff_eq | exact GlobalTheory.exists_equivariant_multilinear_of_matrixCoeff_eq | (intros; apply GlobalTheory.exists_equivariant_multilinear_of_matrixCoeff_eq <;> assumption)
+  first | exact @GlobalTheory.exists_equivariant_multilinear_of_matrixCoeff_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEquivariantMultilinearOfMatrixCoeffEqUnitaStatement =====
@@ -615,7 +615,7 @@ private theorem single_one_mul_single_one' (p q : Mt n) (a b : Fin n) :
     p * Matrix.single a b 1 * q = ∑ i, ∑ j, (p i a * q b j) • Matrix.single i j (1 : ℂ) := by
   ext x y
   have hl : (p * Matrix.single a b 1 * q : Mt n) x y = p x a * q b y := by
-    simp [Matrix.mul_apply, Matrix.single_apply, ite_and, Finset.sum_ite_eq, Finset.sum_ite_eq', ite_mul, mul_ite]
+    simp [Matrix.mul_apply, Matrix.single_apply, ite_and, Finset.sum_ite_eq, ite_mul, mul_ite]
   rw [hl, Matrix.sum_apply, Fintype.sum_eq_single x (fun c hc => by
       rw [Matrix.sum_apply]; simp [Matrix.single_apply, hc]),
     Matrix.sum_apply, Fintype.sum_eq_single y (fun c hc => by simp [Matrix.single_apply, hc])]
@@ -657,7 +657,6 @@ theorem trace_opM_pow (ρ : Mt n →ₗ[ℂ] A) {p q : Mt n} (h : p * q = 1) (m 
     rw [← Matrix.map_mul, ← Matrix.transpose_mul, h, Matrix.transpose_one]
     first
     | simp
-    | exact Matrix.map_one _ (map_zero _) (map_one _)
   rw [pow_succ_conj_of_mul_eq_one hQP, mul_assoc, trace_map_mul, mul_assoc, hQP, mul_one]
 
 theorem glRel_opM (ρ : Mt n →ₗ[ℂ] A) (hρ : ∀ Z Z', ρ (Z * Z' - Z' * Z) = ρ Z * ρ Z' - ρ Z' * ρ Z)
@@ -971,7 +970,7 @@ open scoped TensorProduct InnerProductSpace ContDiff
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.gelfand_invariants_act_by_scalars_highest_weight : ∀ (n : ℕ) (Hm : Mt n) (q : ℕ) (x₀ : Mt n) (w : Fin n → ℤ) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] (σ : Mt n → (H →L[ℂ] H)), OrthFr Hm q x₀ → IsURepOn (Formalism.QuantumDeterminants.UH Hm) σ → IsIrredOn (Formalism.QuantumDeterminants.UH Hm) σ → ∀ v₀, v₀ ≠ 0 → SmoothVec (lieH Hm) σ v₀ → (∀ a c : Fin n, a ≤ c → dRepC Hm σ (x₀ * Matrix.single a c 1 * x₀⁻¹) v₀ = if a = c then (w a : ℂ) • v₀ else 0) → ∀ k, ∃ c : ℂ, ∀ v, SmoothVec (lieH Hm) σ v → gelfRep Hm σ k v = c • v := by
-  first | exact @GlobalTheory.HolDict.GelfScalar.gelfRep_scalar | exact GlobalTheory.HolDict.GelfScalar.gelfRep_scalar | (intros; apply GlobalTheory.HolDict.GelfScalar.gelfRep_scalar <;> assumption)
+  first | exact @GlobalTheory.HolDict.GelfScalar.gelfRep_scalar
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GelfandInvariantsActByScalarsHighestWeightStatement =====
@@ -986,7 +985,7 @@ open scoped TensorProduct InnerProductSpace ContDiff
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.inner_rho_eq_normSq_mul_prod_of_holForm : ∀ (D : D7) (θ : InfFam D) (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (w : D.what₂.Tau → Fin V.rank → ℤ) (v : M.Vec), IsInfFam θ → HolShape M → WtIs M w → IsExtVec M v → ∀ (μ : Measure (GA D V)) (𝓕 : Set (GA D V)) (ρ : GA D V →* (Lp ℂ 2 (nuQ V μ 𝓕) →L[ℂ] Lp ℂ 2 (nuQ V μ 𝓕))), FinPair V μ 𝓕 → IsReg V μ 𝓕 ρ → ∀ (J : Set (GA D V)) (χ φ : GA D V → ℂ) F, HolForm θ M w J χ φ → Repr V μ 𝓕 F φ → ∀ u ∈ GinfC V, ⟪F, ρ u F⟫_ℂ = ((‖F‖ ^ 2 : ℝ) : ℂ) * ∏ τ, ⟪(v τ : M.H τ), M.rep τ (archM V (θ τ) u) (v τ : M.H τ)⟫_ℂ := by
-  first | exact @GlobalTheory.HolDict.inner_reg_eq_coef_extremal | exact GlobalTheory.HolDict.inner_reg_eq_coef_extremal | (intros; apply GlobalTheory.HolDict.inner_reg_eq_coef_extremal <;> assumption)
+  first | exact @GlobalTheory.HolDict.inner_reg_eq_coef_extremal
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.L2MatrixCoeffBoundedHolomorphicFormEqExtremalVecStatement =====
@@ -1192,7 +1191,7 @@ open scoped TensorProduct InnerProductSpace ContDiff
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.regular_representation_of_finite_pair : ∀ (D : D7) (V : HSp D) (μ : Measure (GA D V)) (𝓕 : Set (GA D V)), FinPair V μ 𝓕 → ∃ ρ, IsReg V μ 𝓕 ρ := by
-  first | exact @GlobalTheory.QuotRegular.exists_isReg | exact GlobalTheory.QuotRegular.exists_isReg | (intros; apply GlobalTheory.QuotRegular.exists_isReg <;> assumption)
+  first | exact @GlobalTheory.QuotRegular.exists_isReg
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RegularRepresentationOfFinitePairStatement =====
@@ -1338,7 +1337,7 @@ theorem word_map {K : Type} [NormedAddCommGroup K] [InnerProductSpace ℂ K] (ρ
     by_cases h : τ = p.1
     · subst h; simp [lettersAt]
     · have h' : ¬ p.1 = τ := fun e => h e.symm
-      simp [lettersAt, Function.update_of_ne h, List.filter_cons, h']
+      simp [lettersAt, Function.update_of_ne h, h']
 
 theorem sum_bound {α β : Type} (a b : α → β → ℝ) (hb : ∀ l w, 0 ≤ b l w) (L : List α)
     (h : ∀ l ∈ L, ∃ c, ∀ w, a l w ≤ c * b l w) :

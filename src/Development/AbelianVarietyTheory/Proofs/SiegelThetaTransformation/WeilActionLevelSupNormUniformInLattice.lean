@@ -89,7 +89,7 @@ theorem mem_stdL {m : ℕ} (x : Fin m → E) : x ∈ stdL E m ↔ ∀ a, IsInteg
 theorem herm_one {m : ℕ} (x y : Fin m → E) : herm 1 x y = ∑ a, x a * cc (y a) := by
   unfold herm
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [Finset.sum_eq_single a] <;> simp +contextual [Matrix.one_apply, eq_comm]
+  rw [Finset.sum_eq_single a] <;> simp +contextual [eq_comm]
 
 omit [IsCMField E] in
 theorem nat_smul_mem {m : ℕ} (Λ : Lt E m) (s : ℕ) {v : Fin m → E} (hv : v ∈ Λ) :
@@ -334,7 +334,7 @@ theorem levelL_of_fix (hΛ : ∀ x, x ∈ Λ ↔ ∀ y ∈ Λ, IsIntegral ℤ (h
         rw [Model.herm_one, Finset.mul_sum, Finset.sum_mul, Finset.smul_sum]
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [Finset.sum_eq_single a (fun a' _ ha => by simp [hb, ha]) (by simp)]
-        simp only [hb, smul_zero, Matrix.zero_apply, cc_zero, Matrix.smul_apply, Matrix.of_apply,
+        simp only [hb, Matrix.zero_apply, cc_zero, Matrix.smul_apply, Matrix.of_apply,
           if_true, smul_eq_mul, Matrix.transpose_apply, Rat.smul_def, mul_zero]
         push_cast
         ring

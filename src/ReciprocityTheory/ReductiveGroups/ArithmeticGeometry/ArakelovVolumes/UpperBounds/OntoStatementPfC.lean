@@ -90,7 +90,7 @@ theorem gch_source (hU : IsOpen U) [Nonempty U] : (gch hU).source = univ := by
   simp [gch]
 
 theorem gch_target (hU : IsOpen U) [Nonempty U] : (gch hU).target = U := by
-  simp [gch, Subtype.range_coe]
+  simp [gch]
 
 theorem gch_isChart (hU : IsOpen U) [Nonempty U] : IsChart n (Subtype.val : U → V n) (gch hU) :=
   fun x _ => (gch_apply hU x).symm
@@ -185,7 +185,7 @@ private theorem vol_val_eq_comap_volume (hU : IsOpen U) :
         · rintro rfl
           exact ⟨ha, rfl⟩
       rw [h1, Set.encard_singleton]
-      simp [Set.indicator_apply, Set.mem_image_of_mem _ ha]
+      simp [Set.mem_image_of_mem _ ha]
     · have h1 : A ∩ Subtype.val ⁻¹' {y} = ∅ := by
         ext b
         simp only [Set.mem_inter_iff, Set.mem_preimage, Set.mem_singleton_iff,
@@ -193,7 +193,7 @@ private theorem vol_val_eq_comap_volume (hU : IsOpen U) :
         intro hb hby
         exact hy ⟨b, hb, hby⟩
       rw [h1, Set.encard_empty]
-      simp [Set.indicator_apply, hy]
+      simp [hy]
   simp_rw [hind]
   exact lintegral_indicator_one (MeasurableSet.subtype_image hmeas hA)
 
@@ -332,7 +332,6 @@ theorem dbar_ka (bb : ℝ) {f0 : Frame X.Ψ r → ℂ} (hf0 : DifferentiableOn �
     · simp only [nmat, dif_pos h]
       first
         | fun_prop
-        | exact (EuclideanSpace.proj _).differentiable
     · by_cases h' : a = b
       · simp only [nmat, dif_neg h, if_pos h']
         exact differentiable_const _

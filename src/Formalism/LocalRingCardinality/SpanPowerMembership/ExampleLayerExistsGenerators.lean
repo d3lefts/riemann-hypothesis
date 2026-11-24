@@ -116,8 +116,7 @@ lemma adjoin_eq_top_of_map {K : Type} [Field K] [Algebra ℚ K] (ι : K →ₐ[�
   rw [eq_top_iff]
   intro x _
   have h2 : ι x ∈ (adjoin ℚ S).map ι := by
-    rw [IntermediateField.adjoin_map, hS]
-    exact hx x
+    simpa [IntermediateField.adjoin_map, hS] using hx x
   obtain ⟨y, hy, hyx⟩ := h2
   rwa [← (ι : K →+* L).injective hyx]
 
@@ -304,20 +303,18 @@ theorem rdE (e q d : ℕ) (hq : 0 < q) (hd : 0 < d) :
   rw [abs_of_nonneg (by positivity), Real.mul_rpow (by positivity) (by positivity),
     ← Real.rpow_natCast (2 : ℝ) (2 ^ (e + 2) * (e + 1) - 4), ← Real.rpow_mul (by norm_num),
     ← Real.rpow_natCast ((q : ℝ) * d) (2 ^ (e + 1)), ← Real.rpow_mul hX, Real.sqrt_eq_rpow]
+  rw [Nat.cast_sub hB, Real.rpow_neg (by norm_num), Real.rpow_natCast]
+  push_cast
   congr 2
-  · rw [Nat.cast_sub hB, Real.rpow_neg (by norm_num), Real.rpow_natCast]
-    push_cast
-    field_simp
+  · field_simp
     ring
-  · push_cast
-    field_simp
+  · field_simp
     ring
 
 theorem rdF (e q d : ℕ) (hq : 0 < q) (hd : 0 < d) :
     |(((2 : ℤ) ^ (2 ^ (e + 1) * (e + 1) - 2) * ((q * d : ℕ) : ℤ) ^ (2 ^ e) : ℤ) : ℝ)| ^
         ((1 : ℝ) / (2 ^ (e + 1) : ℝ)) =
       (2 : ℝ) ^ ((e : ℝ) + 1 - (2 : ℝ) ^ (-(e : ℝ))) * Real.sqrt ((q : ℝ) * d) := by
-  have hX : (0 : ℝ) ≤ (q : ℝ) * d := by positivity
   have hB : 2 ≤ 2 ^ (e + 1) * (e + 1) := by
     have : 2 ≤ 2 ^ (e + 1) := by
       rw [pow_succ]; norm_num; exact Nat.one_le_two_pow
@@ -325,7 +322,7 @@ theorem rdF (e q d : ℕ) (hq : 0 < q) (hd : 0 < d) :
   push_cast
   rw [abs_of_nonneg (by positivity), Real.mul_rpow (by positivity) (by positivity),
     ← Real.rpow_natCast (2 : ℝ) (2 ^ (e + 1) * (e + 1) - 2), ← Real.rpow_mul (by norm_num),
-    ← Real.rpow_natCast ((q : ℝ) * d) (2 ^ e), ← Real.rpow_mul hX, Real.sqrt_eq_rpow]
+    ← Real.rpow_natCast ((q : ℝ) * d) (2 ^ e), ← Real.rpow_mul (by positivity), Real.sqrt_eq_rpow]
   congr 2
   · rw [Nat.cast_sub hB, Real.rpow_neg (by norm_num), Real.rpow_natCast]
     push_cast
@@ -350,13 +347,11 @@ open Formalism.TwoAdicCyclotomicDecomposition
 
 theorem hostDiscr_of (h1 : DiscrMaximalRealCyclotomic) : HostDiscr := by
   intro e q d hH L _ _ ζ a b h
-  have hq : 0 < q := hH.1.pos
-  have hd : 0 < d := hH.2.1.pos
   have hE := DiscrB.discr_hostE h1 hH h
   have hF := DiscrB.discr_hostF h1 hH h
   refine ⟨hE, hF, by rw [hE, hF]; exact (DiscrB.sqF e q d).symm, ?_, ?_⟩
-  · rw [hE]; exact DiscrB.rdE e q d hq hd
-  · rw [hF]; exact DiscrB.rdF e q d hq hd
+  · rw [hE]; exact DiscrB.rdE e q d hH.1.pos hH.2.1.pos
+  · rw [hF]; exact DiscrB.rdF e q d hH.1.pos hH.2.1.pos
 
 end Formalism.FrobeniusOrbits
 end -- clump:auto
@@ -1341,7 +1336,6 @@ def sqq : (hostRaw φ hinj hH he h).E := aE ζ a b
 
 theorem sqq_sq : sqq φ hinj hH he h ^ 2 = -(q : (hostRaw φ hinj hH he h).E) := by
   apply Subtype.ext
-  push_cast
   exact h.2.1
 
 include hH h in

@@ -107,7 +107,7 @@ theorem vandermonde_diag_herm {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (l : Fi
             rw [trace_mul_comm, mul_assoc, hVinv', mul_one]
     rw [of_apply, htr, diagonal_pow, diagonal_pow, diagonal_mul_diagonal, trace_diagonal, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
-    simp [V, D', vandermonde_apply, conjTranspose_apply, hconj, inv_pow]
+    simp [V, vandermonde_apply, conjTranspose_apply, hconj, inv_pow]
   · rw [det_mul, det_conjTranspose]
     exact mul_ne_zero (by simpa using hVd) hVd
   · calc Aᴴ * (Vᴴ * V) * A = (V * A)ᴴ * (V * A) := by
@@ -297,8 +297,6 @@ theorem lemOdd : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative �
       apply Subtype.ext
       first
         | exact mul_inv_cancel₀ h20
-        | (show (2 : L) * (2 : L)⁻¹ = 1; exact mul_inv_cancel₀ h20)
-        | (push_cast; exact mul_inv_cancel₀ h20)
     exact ⟨⟨2, _, hmul, by rw [mul_comm]; exact hmul⟩, rfl⟩
   have h2V : (2 : IsLocalRing.ResidueField V) ≠ 0 := by
     intro h
@@ -447,7 +445,7 @@ open scoped Classical TensorProduct
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.elliptic_charpoly_local_realisation : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ (n : ℕ) (P : E[X]), P ∈ Ell E n → (∀ᶠ w in (cofinite : Filter (Pl E)), ∃ y : UL n w, y ∈ KL n w ∧ y.1.val.charpoly = atPl w P) ∧ ∀ w : Pl E, IsSplitAt w → ∃ y : UL n w, y.1.val.charpoly = atPl w P := by
-  first | exact @GlobalTheory.IntUnitaryPoly.main | exact GlobalTheory.IntUnitaryPoly.main | (intros; apply GlobalTheory.IntUnitaryPoly.main <;> assumption)
+  first | exact @GlobalTheory.IntUnitaryPoly.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.IntegralCoefficientBaseChange.UnitaryBaseChangeCharacters.UnitaryBaseChangeLinks.EllipticCharpolyLocalRealisationStatement =====

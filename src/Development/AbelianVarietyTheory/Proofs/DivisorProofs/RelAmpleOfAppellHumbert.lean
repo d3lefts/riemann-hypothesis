@@ -95,7 +95,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 theorem _root_.GlobalTheory.T.exists_section_of_appellHumbert_thetaFunction : ∀ (g : ℕ) (A : Over (Sp ℂ)) [GrpObj A], IsAbelianScheme A →
     ∀ (M : LB A.left) (u : HolUnif A M g) (Hm : Matrix (Fin g) (Fin g) ℂ) (χ : u.Λ → ℂ),
     M.IsLB → u.IsAH Hm χ → ∀ (k : ℕ) (θ : (Fin g → ℂ) → ℂ), u.IsThetaFn Hm χ k θ → ∃ s, u.IsFnPow k s θ := by
-  first | exact @GlobalTheory.ThetaGAGA.exists_isFnPow | exact GlobalTheory.ThetaGAGA.exists_isFnPow | (intros; apply GlobalTheory.ThetaGAGA.exists_isFnPow <;> assumption)
+  first | exact @GlobalTheory.ThetaGAGA.exists_isFnPow
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -229,7 +229,7 @@ theorem exists_shift_of_semichar : ∀ (g : ℕ) (Λ Λ₁ : Submodule ℤ (Fin 
   have hne : ∀ l, χ₁ l ≠ 0 := fun l e => by simpa [e] using hχ₁ l
   have hne' : ∀ l, χ l ≠ 0 := fun l e => by simpa [e] using hχ l
   let ρ : Λ → ℂ := fun l => χ l / χ₁ (Submodule.inclusion h l)
-  have hn : ∀ l, ‖ρ l‖ = 1 := fun l => by simp [ρ, norm_div, hχ, hχ₁]
+  have hn : ∀ l, ‖ρ l‖ = 1 := fun l => by simp [ρ, hχ, hχ₁]
   have hmul : ∀ l m, ρ (l + m) = ρ l * ρ m := by
     intro l m
     simp only [ρ]
@@ -279,7 +279,7 @@ theorem _root_.GlobalTheory.T.exists_shift_semicharacters_nested_lattices : ∀ 
     (∀ l m : Λ₁, χ₁ (l + m) = χ₁ l * χ₁ m * Complex.exp (Real.pi * Complex.I * (hermForm Hm l m).im)) →
     ∃ a : Fin g → ℂ, ∀ l : Λ,
       χ l = χ₁ (Submodule.inclusion h l) * Complex.exp (2 * Real.pi * Complex.I * (hermForm Hm a l).im) := by
-  first | exact @GlobalTheory.SemicharShift.exists_shift_of_semichar | exact GlobalTheory.SemicharShift.exists_shift_of_semichar | (intros; apply GlobalTheory.SemicharShift.exists_shift_of_semichar <;> assumption)
+  first | exact @GlobalTheory.SemicharShift.exists_shift_of_semichar
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -529,7 +529,7 @@ theorem exists_unimodular_overlattice : ∀ (g : ℕ) (Λ : Submodule ℤ (Fin g
 
       rw [hx_def, map_sum, LinearMap.sum_apply]
       simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, hD,
-        LinearMap.BilinForm.apply_dualBasis_left, mul_ite, mul_one, mul_zero]
+        LinearMap.BilinForm.apply_dualBasis_left, mul_ite, mul_zero]
       simp
     have hmaps : ((imForm Hm x).restrictScalars ℤ).comp Λ₁.subtype = (Algebra.linearMap ℤ ℝ).comp φ :=
       b.ext fun j => by
@@ -574,7 +574,7 @@ theorem _root_.GlobalTheory.T.exists_unimodular_overlattice_riemannForm : ∀ (g
     ∃ (Λ₁ : Submodule ℤ (Fin g → ℂ)) (Ef : LinearMap.BilinForm ℤ Λ₁) (N : ℕ), Λ ≤ Λ₁ ∧ DiscreteTopology Λ₁ ∧
       Submodule.span ℝ (Λ₁ : Set (Fin g → ℂ)) = ⊤ ∧ (∀ a b : Λ₁, (Ef a b : ℝ) = (hermForm Hm a b).im) ∧
       Function.Bijective Ef ∧ 0 < N ∧ ∀ x ∈ Λ₁, N • x ∈ Λ := by
-  first | exact @GlobalTheory.Overlattice.exists_unimodular_overlattice | exact GlobalTheory.Overlattice.exists_unimodular_overlattice | (intros; apply GlobalTheory.Overlattice.exists_unimodular_overlattice <;> assumption)
+  first | exact @GlobalTheory.Overlattice.exists_unimodular_overlattice
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -657,7 +657,7 @@ theorem isAffineHom_of_lift : ∀ (g : ℕ) (A : Over (Sp ℂ)) [GrpObj A], IsAb
     obtain ⟨z, rfl⟩ := exists_ex_apply_eq u x hxc
     have hx' : ((u.ex z).left ≫ ψ) (IsLocalRing.closedPoint ℂ) =
         ((u.ex z₀).left ≫ ψ) (IsLocalRing.closedPoint ℂ) := by
-      first | exact hx | simpa using hx | (simp only [Scheme.Hom.comp_apply]; exact hx)
+      first | exact hx
     rw [hex, hex] at hx'
     have e1 : u'.ex (z + a) = u'.ex (z₀ + a) :=
       Over.OverMorphism.ext (ext_of_apply_closedPoint_eq B.hom (Over.w _) (Over.w _) hx')
@@ -700,7 +700,7 @@ theorem _root_.GlobalTheory.T.isAffineHom_of_lift_translation_finiteIndex_lattic
     ∀ (L : LB A.left) (L' : LB B.left) (u : HolUnif A L g) (u' : HolUnif B L' g) (a : Fin g → ℂ) (N : ℕ),
     0 < N → u.Λ ≤ u'.Λ → (∀ x ∈ u'.Λ, N • x ∈ u.Λ) →
     ∀ ψ : A.left ⟶ B.left, ψ ≫ B.hom = A.hom → (∀ z, (u.ex z).left ≫ ψ = (u'.ex (z + a)).left) → IsAffineHom ψ := by
-  first | exact @GlobalTheory.LiftAffine.isAffineHom_of_lift | exact GlobalTheory.LiftAffine.isAffineHom_of_lift | (intros; apply GlobalTheory.LiftAffine.isAffineHom_of_lift <;> assumption)
+  first | exact @GlobalTheory.LiftAffine.isAffineHom_of_lift
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -734,7 +734,7 @@ theorem _root_.GlobalTheory.T.theta_fourth_power_under_isogeny : ∀ (g : ℕ) (
     ∃ ψ : A.left ⟶ P.A.left, ψ ≫ P.A.hom = A.hom ∧ (∀ z, (u.ex z).left ≫ ψ = (u'.ex (z + a)).left) ∧
       ∀ x : A.left, ∃ (s : Out.H0 M 4) (V : P.A.left.Opens), x ∈ Out.nonzeroLocus s ∧ IsAffineOpen V ∧
         Out.nonzeroLocus s = ψ ⁻¹ᵁ V := by
-  first | exact @GlobalTheory.ThetaShift.exists_morphism_affine_cover | exact GlobalTheory.ThetaShift.exists_morphism_affine_cover | (intros; apply GlobalTheory.ThetaShift.exists_morphism_affine_cover <;> assumption)
+  first | exact @GlobalTheory.ThetaShift.exists_morphism_affine_cover
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto

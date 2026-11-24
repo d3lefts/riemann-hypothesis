@@ -321,16 +321,6 @@ theorem isFD_of_SF (Γ : Subgroup G) [Countable Γ] {Ω : Set G} (hΩ : SF (Γ :
     exact Subtype.ext (mul_inv_eq_one.1 h2)
   first
   | exact IsFundamentalDomain.mk' hΩ.1.nullMeasurableSet key
-  | exact
-      { nullMeasurableSet := hΩ.1.nullMeasurableSet
-        ae_covers := ae_of_all _ fun x => (key x).exists
-        aedisjoint := fun a b hab => Disjoint.aedisjoint (Set.disjoint_left.2 fun y hya hyb => by
-          obtain ⟨u, hu, rfl⟩ := Set.mem_smul_set.1 hya
-          obtain ⟨v, hv, hvu⟩ := Set.mem_smul_set.1 hyb
-          have e1 : (b⁻¹ * a) • u ∈ Ω := by rw [mul_smul, ← hvu, inv_smul_smul]; exact hv
-          have e2 : (1 : Γ) • u ∈ Ω := by rw [one_smul]; exact hu
-          have := (key u).unique e1 e2
-          exact hab (by rw [inv_mul_eq_one] at this; exact this.symm)) }
 
 private theorem measurableSMul_and_smulInvariantMeasure_subgroup (Γ : Subgroup G) (ν : Measure G)
     (hν : ∀ s ∈ Γ, ν.map (fun x => s * x) = ν) :
@@ -465,9 +455,6 @@ variable {G : Type*} [Group G] [MeasurableSpace G] [MeasurableMul₂ G] [Measura
 private theorem ennreal_eq_of_mul_left_eq {c a b : ℝ≥0∞} (h0 : c ≠ 0) (ht : c ≠ ⊤) (h : c * a = c * b) : a = b := by
   first
   | exact (ENNReal.mul_right_inj h0 ht).1 h
-  | (calc a = c⁻¹ * (c * a) := by rw [← mul_assoc, ENNReal.inv_mul_cancel h0 ht, one_mul]
-      _ = c⁻¹ * (c * b) := by rw [h]
-      _ = b := by rw [← mul_assoc, ENNReal.inv_mul_cancel h0 ht, one_mul])
 
 private theorem setIntegral_eq_of_fiber_measure_eq {A B : Set G} (hA : MeasurableSet A) (hB : MeasurableSet B)
     (c : ℝ≥0∞) (hc0 : c ≠ 0) (hct : c ≠ ⊤)
@@ -533,7 +520,6 @@ theorem SF_measure_univ (Γ : Subgroup G) [Countable Γ] (ν : Measure G)
   have hfd := isFD_of_SF Γ hΩ ν
   first
   | (rw [hfd.measure_eq_tsum Set.univ]; simp [Set.smul_set_univ])
-  | (rw [hfd.measure_eq_tsum' Set.univ]; simp [measure_smul])
 
 theorem SF_measure_cover (Γ : Subgroup G) [Countable Γ] (ν : Measure G)
     (hν : ∀ s ∈ Γ, ν.map (fun x => s * x) = ν) {Ω T K : Set G} (hΩ : SF (Γ : Set G) Ω)
@@ -551,7 +537,6 @@ theorem SF_measure_cover (Γ : Subgroup G) [Countable Γ] (ν : Measure G)
     _ = ∑' g : Γ, ν (K ∩ g • Ω) := by
         first
         | simp only [measure_smul]
-        | (congr 1; funext g; exact measure_smul _ _)
     _ = ν K := (hfd.measure_eq_tsum' K).symm
 
 end Shift
@@ -709,9 +694,8 @@ theorem coef_smat (G : Matrix (Fin k) (Fin k) ℂ) (y : Fin n → ℂ) :
     (fun d => hJ ε (wf d) (smat (Formalism.REAL.Jm ε) wf G *ᵥ y)) = G *ᵥ fun d => hJ ε (wf d) y := by
   funext d
   rw [smat_apply, hJ_add_right, hJ_sum_right]
-  simp only [hJ_smul_right, hon, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
-  rw [sub_mulVec, one_mulVec]
-  simp only [Pi.sub_apply]
+  simp only [hJ_smul_right, hon, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true,
+    sub_mulVec, one_mulVec, Pi.sub_apply]
   ring
 
 include hon in
@@ -738,10 +722,7 @@ def sU (M : {G : Matrix (Fin k) (Fin k) ℂ // Gᴴ * G = 1}) : Formalism.REAL.U
 
 theorem sU_mul (M M' : {G : Matrix (Fin k) (Fin k) ℂ // Gᴴ * G = 1}) (hMM : (M.1 * M'.1)ᴴ * (M.1 * M'.1) = 1) :
     sU ε wf hon M * sU ε wf hon M' = sU ε wf hon ⟨M.1 * M'.1, hMM⟩ := by
-  apply Subtype.ext
-  apply Units.ext
-  show smat (Formalism.REAL.Jm ε) wf M.1 * smat (Formalism.REAL.Jm ε) wf M'.1 = smat (Formalism.REAL.Jm ε) wf (M.1 * M'.1)
-  exact smat_mul ε wf hon M.1 M'.1
+  exact Subtype.ext (Units.ext (smat_mul ε wf hon M.1 M'.1))
 
 theorem unit_mul {G G' : Matrix (Fin k) (Fin k) ℂ} (h : Gᴴ * G = 1) (h' : G'ᴴ * G' = 1) :
     (G * G')ᴴ * (G * G') = 1 := by
@@ -819,20 +800,14 @@ theorem continuous_Phi : Continuous (Phi ε wt hon) := by
 theorem Phi_mul (M M' : UPi ι k) :
     Phi ε wt hon M * Phi ε wt hon M' =
       Phi ε wt hon ⟨fun v => M.1 v * M'.1 v, fun v => unit_mul (M.2 v) (M'.2 v)⟩ := by
-  funext v
-  exact sU_mul (ε v) (wt v) (hon v) ⟨M.1 v, M.2 v⟩ ⟨M'.1 v, M'.2 v⟩ _
+  exact funext fun v => sU_mul (ε v) (wt v) (hon v) ⟨M.1 v, M.2 v⟩ ⟨M'.1 v, M'.2 v⟩ _
 
 theorem Phi_inv (M : UPi ι k) :
     (Phi ε wt hon M)⁻¹ = Phi ε wt hon ⟨fun v => (M.1 v)ᴴ, fun v => unit_inv (M.2 v)⟩ := by
-  funext v
-  exact sU_inv (ε v) (wt v) (hon v) ⟨M.1 v, M.2 v⟩
+  exact funext fun v => sU_inv (ε v) (wt v) (hon v) ⟨M.1 v, M.2 v⟩
 
 theorem Phi_one : Phi ε wt hon ⟨fun _ => 1, fun _ => by simp⟩ = 1 := by
-  funext v
-  apply Subtype.ext
-  apply Units.ext
-  show smat (Formalism.REAL.Jm (ε v)) (wt v) 1 = 1
-  exact smat_one _ _
+  exact funext fun v => Subtype.ext (Units.ext (smat_one (ε v) (wt v)))
 
 theorem Phi_zpow_mem (M : UPi ι k) (m : ℤ) : (Phi ε wt hon M) ^ m ∈ Set.range (Phi ε wt hon) := by
   induction m using Int.induction_on with
@@ -886,8 +861,7 @@ theorem Xs_iso : ∀ s ∈ spanAt X v (lf D (X.Fu u)).fl.X, ∀ s' ∈ spanAt X 
   hJ_Xs_w X v (fun a => hJ_E_Xs X v a s' hs') s hs
 
 theorem E_mem_Xs (a : Fin D.R.rS) : rvc X v (X.eX a) ∈ spanAt X v (lf D (X.Fu u)).fl.X := by
-  refine rvc_mem X v ?_
-  rw [X_span]; exact Submodule.subset_span ⟨a, rfl⟩
+  exact rvc_mem X v (by rw [X_span]; exact Submodule.subset_span ⟨a, rfl⟩)
 
 theorem Xs_le_E : spanAt X v (lf D (X.Fu u)).fl.X ≤
     Submodule.span ℂ (Set.range fun a => rv X.B.I v (X.eR a)) := by
@@ -1071,7 +1045,7 @@ theorem smat_wt {n k : ℕ} (ε : Fin n → Bool) (wf : Fin k → Fin n → ℂ)
   rw [smat_apply, hcoef, mulVec_single_one]
   show wf b + ∑ c, (G - 1) c b • wf c = ∑ c, G c b • wf c
   have e : ∑ c, (G - 1) c b • wf c = ∑ c, G c b • wf c - wf b := by
-    simp only [Matrix.transpose_apply, Matrix.sub_apply, sub_smul, Finset.sum_sub_distrib, Matrix.one_apply,
+    simp only [Matrix.sub_apply, sub_smul, Finset.sum_sub_distrib, Matrix.one_apply,
       ite_smul, one_smul, zero_smul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   rw [e]; abel
 
@@ -1424,9 +1398,8 @@ theorem OOt_eq_zero0 (hCov : CovariantRepresentationZero) (hSch : SchurNFC) (Y :
     (t : GTerm X u u' (X.Fu u) (X.Fu u') (Y.what₂ u) (Y.what₂ u')) (hr : t.relevant) (hG : t.G = 0) :
     OOt t = 0 := by
   obtain ⟨hrel, hG0⟩ := relRepC D X Y u u' t hr hG
-  have hΩ := fundOf_spec hF t
-  have hcov := hCov D X Y u u' t hr hG (FundOf t) hΩ (hI t)
-  exact hSch D X u u' t.lam t.lam' t.rep hw hrel hG0 _ hcov
+  exact hSch D X u u' t.lam t.lam' t.rep hw hrel hG0 _
+    (hCov D X Y u u' t hr hG (FundOf t) (fundOf_spec hF t) (hI t))
 
 theorem kppOffC_of_steps0 (hFold : FoldOKC) (hFE : FundExistsC) (hOI : OOIntAllC) (hV : LemmaVC)
     (hCov : CovariantRepresentationZero) (hSch : SchurNFC) : Formalism.L2.SG.RowsConc.KppOffC := by

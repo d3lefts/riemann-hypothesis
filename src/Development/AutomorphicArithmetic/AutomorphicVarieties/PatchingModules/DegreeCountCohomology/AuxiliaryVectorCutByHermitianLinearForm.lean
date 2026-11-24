@@ -71,31 +71,19 @@ theorem UpperTheory.V.AlgebraTools.frob_form_trunc :
   have hmem : ∀ f : PowerSeries k, f ∈ I ↔ ∀ j, j < m + 1 → PowerSeries.coeff j f = 0 := by
     intro f
     rw [Ideal.mem_span_singleton, PowerSeries.X_pow_dvd_iff]
-  have hW : ∀ f g : PowerSeries k, Ideal.Quotient.mk I f = Ideal.Quotient.mk I g →
-      ∀ j, j < m + 1 → PowerSeries.coeff j f = PowerSeries.coeff j g := by
-    intro f g h j hj
-    rw [Ideal.Quotient.eq, hmem] at h
-    have := h j hj
-    rw [map_sub, sub_eq_zero] at this
-    exact this
+  have hzero : ∀ f ∈ I, Algebra.trace (ZMod l) k (PowerSeries.coeff m f) = 0 := by
+    intro f hf
+    rw [hmem] at hf
+    rw [hf m (Nat.lt_succ_self m), map_zero]
+  let Φ : PowerSeries k →ₗ[ZMod l] ZMod l :=
+    (Algebra.trace (ZMod l) k).comp ((PowerSeries.coeff m).restrictScalars (ZMod l))
+  let P : Submodule (ZMod l) (PowerSeries k) := Submodule.restrictScalars (ZMod l) I
+  have hle : P ≤ Φ.ker := fun f hf => hzero f hf
+  let lam : (PowerSeries k ⧸ I) →+ ZMod l := (Submodule.liftQ P Φ hle).toAddMonoidHom
+  have hL : ∀ f, lam (Ideal.Quotient.mk I f) = Algebra.trace (ZMod l) k (PowerSeries.coeff m f) :=
+    fun f => Submodule.liftQ_apply P Φ (h := hle) f
   let s := Function.surjInv (Ideal.Quotient.mk_surjective (I := I))
   have hs : ∀ x, Ideal.Quotient.mk I (s x) = x := Function.surjInv_eq _
-  let L : (PowerSeries k ⧸ I) → ZMod l := fun x => Algebra.trace (ZMod l) k (PowerSeries.coeff m (s x))
-  have hL : ∀ f, L (Ideal.Quotient.mk I f) = Algebra.trace (ZMod l) k (PowerSeries.coeff m f) := by
-    intro f
-    simp only [L]
-    rw [hW _ _ (hs _) m (Nat.lt_succ_self m)]
-  let lam : (PowerSeries k ⧸ I) →+ ZMod l :=
-    { toFun := L
-      map_zero' := by
-        have := hL 0
-        rw [map_zero, map_zero, map_zero] at this
-        exact this
-      map_add' := by
-        intro x y
-        obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
-        obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective y
-        rw [← map_add (f := _), hL, hL, hL, map_add (f := _), map_add (f := _)] }
   refine ⟨lam, hL, ?_, ?_⟩
   · intro x hx
     obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective x
@@ -112,9 +100,7 @@ theorem UpperTheory.V.AlgebraTools.frob_form_trunc :
     obtain ⟨b, hb⟩ := hex
     apply hb
     have := hx (Ideal.Quotient.mk I (PowerSeries.C b * PowerSeries.X ^ (m - j)))
-    rw [← map_mul] at this
-    change L _ = 0 at this
-    rw [hL] at this
+    rw [← map_mul, hL] at this
     have hjm : j ≤ m := Nat.lt_succ_iff.mp hj
     have hc : PowerSeries.coeff m (f * (PowerSeries.C b * PowerSeries.X ^ (m - j))) =
         PowerSeries.coeff j f * b := by

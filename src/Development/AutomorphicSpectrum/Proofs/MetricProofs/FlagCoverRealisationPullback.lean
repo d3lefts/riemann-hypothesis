@@ -167,7 +167,7 @@ theorem sum_detFac (hj : j ≤ N) {a b : Fin N} (hb : (b : ℕ) = a + 1) (hab : 
       simp [c1, c3, not_le.1 c3]
     · simp [c1, c3, not_lt.2 c3, show ¬ j = N by omega]
     · simp [c1, c3, not_le.1 c3, show ¬ j = N by omega]
-    · simp [c1, c2, c3, hj, show ¬ N = j by omega, Real.log_mul (norm_ne_zero_iff.2 hw) (norm_ne_zero_iff.2 ho)]
+    · simp [c2, c3, hj, show ¬ N = j by omega, Real.log_mul (norm_ne_zero_iff.2 hw) (norm_ne_zero_iff.2 ho)]
     · omega
     · simp [c1, c2, c3, show j ≤ (i : ℕ) + 1 by omega]
     · simp [c1, c2, c3, show ¬ j ≤ (i : ℕ) + 1 by omega]
@@ -1490,7 +1490,7 @@ open MvPolynomial MeasureTheory Filter Topology Matrix ReciprocityTheory.AnForm 
 open scoped ComplexOrder Classical
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.flag_cover_realisation_pullback : Inputs → ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Φ : Type) [Field Φ] (y : (Σ k, ι k) → Φ) (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N j : ℕ) (M : FlagModel y Ψ N j) (n d : ℕ) (BM : BaseMetric M n) (FA : FlagAn BM d) (K' : Type) [Fintype K'] (ι' : K' → Type) [∀ k, Fintype (ι' k)] (Φ' : Type) [Field Φ'] (y' : (Σ k, ι' k) → Φ') (M' : FlagModel y' Ψ N j) (Cv : FlagCover M' M) (CR : CovReal FA Cv), IsArithVar (mCoordIdeal y) (d + 2) → ∀ (τ : Ψ) (a b : Fin N), (b : ℕ) = a + 1 → ((b : ℕ) < j ∨ j ≤ (a : ℕ)) → Nonempty (SqSys CR.Re (τ, a) (xiCoef τ a)) := by
-  first | exact @PositivityTheory.Xgp.t_c_sqsys | exact PositivityTheory.Xgp.t_c_sqsys
+  first | exact @PositivityTheory.Xgp.t_c_sqsys
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.MetricProofs.FlagCoverRealisationPullback =====

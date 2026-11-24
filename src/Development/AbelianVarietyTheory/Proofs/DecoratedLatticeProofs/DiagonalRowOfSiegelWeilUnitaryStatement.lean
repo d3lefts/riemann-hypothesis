@@ -161,7 +161,7 @@ open MeasureTheory NumberField Formalism.BasicNotions Formalism.MainNotions.S Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.normalCount_line_integrality_separation : Formalism.L2.SG.NGCut.NormalVectorPairings.NmlLine ∧ Formalism.L2.SG.NGCut.NormalVectorPairings.NmlInt ∧ Formalism.L2.SG.NGCut.NormalVectorPairings.NmlSep := by
-  first | exact @GlobalTheory.Core.One.normalCountSteps | exact GlobalTheory.Core.One.normalCountSteps | (intros; apply GlobalTheory.Core.One.normalCountSteps <;> assumption)
+  first | exact @GlobalTheory.Core.One.normalCountSteps
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.NormalCountLineIntegralitySeparationStatement =====
@@ -1123,7 +1123,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S Global
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.corankOnePairsFamilyBounds_of_siegelWeil : HeckeCharacterZeroLocus.SiegelWeilU.SiegelWeilUnitaryConvergent → ∀ c : ℝ, GlobalTheory.Core.Diag.OneOn {c} true ∧ GlobalTheory.Core.Diag.OneOn {c} false := by
-  first | exact @GlobalTheory.Core.Diag.oneOn_singleton_of_siegelWeil | exact GlobalTheory.Core.Diag.oneOn_singleton_of_siegelWeil | (intros; apply GlobalTheory.Core.Diag.oneOn_singleton_of_siegelWeil <;> assumption)
+  first | exact @GlobalTheory.Core.Diag.oneOn_singleton_of_siegelWeil
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.CorankOnePairsFamilyBoundsOfSiegelWeilStatement =====

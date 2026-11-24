@@ -91,7 +91,7 @@ open scoped TensorProduct Classical
 theorem _root_.GlobalTheory.T.adicIntegralTensorBasis_ring_eventually : ∀ (A : Type) [Ring A] [Algebra ℚ A] [FiniteDimensional ℚ A] (κ : Type) (b : Module.Basis κ ℚ A),
     ∃ S : Finset (HeightOneSpectrum ℤ), ∀ v ∉ S, IsIntB v b 1 ∧
       ∀ y z, IsIntB v b y → IsIntB v b z → IsIntB v b (y * z) := by
-  first | (exact @GlobalTheory.AdicSpan.isIntB_one_mul_eventually) | (exact GlobalTheory.AdicSpan.isIntB_one_mul_eventually) | (intros; apply GlobalTheory.AdicSpan.isIntB_one_mul_eventually  <;> assumption)
+  first | (exact @GlobalTheory.AdicSpan.isIntB_one_mul_eventually)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdicIntegralTensorBasisRingEventuallyStatement =====
@@ -179,7 +179,7 @@ theorem isIntB_sum_leftBasis_iff_eventually : ∀ (L : Type) [Field L] [NumberFi
       rw [Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.tmul_mul_tmul, mul_one, AlgHom.id_apply,
         repr_tmul_apply, hrepr]
       by_cases h : i = j
-      · subst h; simp [repr_tmul_apply]
+      · subst h; simp
       · simp [h]
     | add x y hx hy =>
       rw [map_add (f := _), add_mul, LinearEquiv.map_add (e := _), Finsupp.add_apply, hx, hy, Pi.single_add, Pi.add_apply,
@@ -197,7 +197,7 @@ theorem isIntB_sum_leftBasis_iff_eventually : ∀ (L : Type) [Field L] [NumberFi
 
     rw [← Finsupp.finsetSum_apply, ← map_sum]
     congr 2
-    simp [Finset.sum_apply, Pi.single_apply]
+    simp [Pi.single_apply]
   rw [hS v hv]
   constructor
   · intro h i a
@@ -227,7 +227,7 @@ theorem _root_.GlobalTheory.T.almost_all_places_basis_integral : ∀ (L : Type) 
     ∃ S : Finset (HeightOneSpectrum ℤ), ∀ v ∉ S, ∀ β : Fin r → v.adicCompletion ℚ ⊗[ℚ] L,
       IsIntB v b (∑ i, Algebra.TensorProduct.map (AlgHom.id ℚ (v.adicCompletion ℚ)) ι (β i) *
         ((1 : v.adicCompletion ℚ) ⊗ₜ[ℚ] e i)) ↔ ∀ i, IsIntB v ℓ (β i) := by
-  first | (exact @GlobalTheory.AdicSpan.LeftBasis.isIntB_sum_leftBasis_iff_eventually) | (exact GlobalTheory.AdicSpan.LeftBasis.isIntB_sum_leftBasis_iff_eventually) | (intros; apply GlobalTheory.AdicSpan.LeftBasis.isIntB_sum_leftBasis_iff_eventually  <;> assumption)
+  first | (exact @GlobalTheory.AdicSpan.LeftBasis.isIntB_sum_leftBasis_iff_eventually)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AlmostAllPlacesBasisIntegral =====
@@ -276,7 +276,7 @@ theorem adicCompletion_tensor_matrixUnit_identity : ∀ (L : Type) [Field L] [Nu
         funext j'
         by_cases hj : j' = j
         · subst hj; simp
-        · simp [Pi.single_apply, hj]
+        · simp [hj]
       rw [this]; exact hpure a _
     | add x y hx hy =>
       rw [Pi.single_add]; exact hadd _ _ hx hy
@@ -306,7 +306,7 @@ theorem _root_.GlobalTheory.T.basis_change_adic_tensor_identity : ∀ (L : Type)
         (∑ i'', Algebra.TensorProduct.map (AlgHom.id ℚ (v.adicCompletion ℚ)) ι (β i'') *
           ((1 : v.adicCompletion ℚ) ⊗ₜ[ℚ] e i'')) * ((1 : v.adicCompletion ℚ) ⊗ₜ[ℚ] c k) =
       Algebra.TensorProduct.map (AlgHom.id ℚ (v.adicCompletion ℚ)) ι (β i') * ((1 : v.adicCompletion ℚ) ⊗ₜ[ℚ] e i) := by
-  first | (exact @GlobalTheory.adicCompletion_tensor_matrixUnit_identity) | (exact GlobalTheory.adicCompletion_tensor_matrixUnit_identity) | (intros; apply GlobalTheory.adicCompletion_tensor_matrixUnit_identity  <;> assumption)
+  first | (exact @GlobalTheory.adicCompletion_tensor_matrixUnit_identity)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BasisChangeAdicTensorIdentity =====
@@ -519,7 +519,7 @@ theorem _root_.GlobalTheory.T.eventually_integral_conj_of_integral_conj_generato
       IsIntB v b (↑X * ((1 : v.adicCompletion ℚ) ⊗ₜ[ℚ] (γ : G.C)) * ↑X⁻¹) →
       ∀ ρ, IsIntB v ℓ ρ →
         IsIntB v b (↑X * Algebra.TensorProduct.map (AlgHom.id ℚ (v.adicCompletion ℚ)) ι ρ * ↑X⁻¹) := by
-  first | (exact @GlobalTheory.ConjInt.isIntB_conj_map_of_isIntB_conj) | (exact GlobalTheory.ConjInt.isIntB_conj_map_of_isIntB_conj) | (intros; apply GlobalTheory.ConjInt.isIntB_conj_map_of_isIntB_conj  <;> assumption)
+  first | (exact @GlobalTheory.ConjInt.isIntB_conj_map_of_isIntB_conj)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyIntegralConjOfIntegralConjGeneratorStatement =====
@@ -567,7 +567,7 @@ open scoped TensorProduct Classical
 
 theorem _root_.GlobalTheory.T.eventually_one_tmul_adic_integral_coords : ∀ (M : Type) [AddCommGroup M] [Module ℚ M] (κ : Type) (b : Module.Basis κ ℚ M) (x : M),
     ∃ S : Finset (HeightOneSpectrum ℤ), ∀ v ∉ S, IsIntB v b ((1 : v.adicCompletion ℚ) ⊗ₜ[ℚ] x) := by
-  first | (exact @GlobalTheory.AdicSpan.exists_finset_isIntB_one_tmul) | (exact GlobalTheory.AdicSpan.exists_finset_isIntB_one_tmul) | (intros; apply GlobalTheory.AdicSpan.exists_finset_isIntB_one_tmul  <;> assumption)
+  first | (exact @GlobalTheory.AdicSpan.exists_finset_isIntB_one_tmul)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyOneTmulAdicIntegralCoordsStatement =====
@@ -613,7 +613,7 @@ open scoped TensorProduct Classical
 
 theorem _root_.GlobalTheory.T.exists_basis_over_subfield_embedding : ∀ (L : Type) [Field L] [NumberField L] (C : Type) [Ring C] [Algebra ℚ C] [FiniteDimensional ℚ C]
     (ι : L →ₐ[ℚ] C), ∃ (r : ℕ) (e : Fin r → C), ∀ x : C, ∃! c : Fin r → L, x = ∑ i, ι (c i) * e i := by
-  first | (exact @GlobalTheory.exists_left_basis_through_algHom) | (exact GlobalTheory.exists_left_basis_through_algHom) | (intros; apply GlobalTheory.exists_left_basis_through_algHom  <;> assumption)
+  first | (exact @GlobalTheory.exists_left_basis_through_algHom)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBasisOverSubfieldEmbedding =====
@@ -663,7 +663,7 @@ open scoped TensorProduct Classical
 
 theorem _root_.GlobalTheory.T.exists_int_smul_isAdicIntegralInTensorBasis : ∀ (M : Type) [AddCommGroup M] [Module ℚ M] (κ : Type) (b : Module.Basis κ ℚ M)
     (v : HeightOneSpectrum ℤ) (y : v.adicCompletion ℚ ⊗[ℚ] M), ∃ D : ℤ, D ≠ 0 ∧ IsIntB v b (D • y) := by
-  first | (exact @GlobalTheory.AdicSpan.exists_int_smul_isIntB) | (exact GlobalTheory.AdicSpan.exists_int_smul_isIntB) | (intros; apply GlobalTheory.AdicSpan.exists_int_smul_isIntB  <;> assumption)
+  first | (exact @GlobalTheory.AdicSpan.exists_int_smul_isIntB)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIntSmulIsAdicIntegralInTensorBasisStatement =====
@@ -743,7 +743,7 @@ theorem exists_sum_mul_mul_eq_matrixUnit (n : ℕ) (hn : 0 < n) (hC : Module.fin
       smul_mem' := by
         intro c f hf s x
         simp only [Set.mem_setOf_eq] at hf
-        simp [hf s x, mul_smul_comm] }
+        simp [hf s x] }
   have hrange : LinearMap.range Φ.toLinearMap ≤ W := by
     rintro _ ⟨t, rfl⟩
     exact hWl t
@@ -751,7 +751,7 @@ theorem exists_sum_mul_mul_eq_matrixUnit (n : ℕ) (hn : 0 < n) (hC : Module.fin
   let θ : (Fin r → S) →ₗ[F] C :=
     { toFun := fun β => ∑ k, (β k : C) * e k
       map_add' := by intro a b; simp [add_mul, Finset.sum_add_distrib]
-      map_smul' := by intro c a; simp [Finset.smul_sum, smul_mul_assoc] }
+      map_smul' := by intro c a; simp [Finset.smul_sum] }
   have hθ : ∀ β, θ β = ∑ k, (β k : C) * e k := fun β => rfl
   have hθinj : Function.Injective θ := by
     intro a b hab
@@ -889,7 +889,7 @@ theorem _root_.GlobalTheory.T.exists_sum_two_sided_mul_eq_matrixUnit_unitaryDatu
     (∀ x : G.C, ∃! c : Fin r → L, x = ∑ i, ι (c i) * e i) → ∀ i i' : Fin r,
     ∃ (N : ℕ) (l : Fin N → L) (c : Fin N → G.C), ∀ β : Fin r → L,
       ∑ k, ι (l k) * (∑ i'', ι (β i'') * e i'') * c k = ι (β i') * e i := by
-  first | (exact @GlobalTheory.exists_sum_mul_mul_eq_matrixUnit_htGroup) | (exact GlobalTheory.exists_sum_mul_mul_eq_matrixUnit_htGroup) | (intros; apply GlobalTheory.exists_sum_mul_mul_eq_matrixUnit_htGroup  <;> assumption)
+  first | (exact @GlobalTheory.exists_sum_mul_mul_eq_matrixUnit_htGroup)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSumTwoSidedMulEqMatrixUnitUnitaryDatumStatement =====
@@ -969,7 +969,7 @@ theorem _root_.GlobalTheory.T.existsUnique_left_basis_coords_adicCompletion : �
     ∃! β : Fin r → v.adicCompletion ℚ ⊗[ℚ] L,
       y = ∑ i, Algebra.TensorProduct.map (AlgHom.id ℚ (v.adicCompletion ℚ)) ι (β i) *
         ((1 : v.adicCompletion ℚ) ⊗ₜ[ℚ] e i) := by
-  first | (exact @GlobalTheory.LeftBasisBC.existsUnique_coords_adicCompletion) | (exact GlobalTheory.LeftBasisBC.existsUnique_coords_adicCompletion) | (intros; apply GlobalTheory.LeftBasisBC.existsUnique_coords_adicCompletion  <;> assumption)
+  first | (exact @GlobalTheory.LeftBasisBC.existsUnique_coords_adicCompletion)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUniqueLeftBasisCoordsAdicCompletionStatement =====
@@ -1116,7 +1116,7 @@ open scoped TensorProduct Classical
 theorem _root_.GlobalTheory.T.adicIntegralTensorBasis_iff_exists_integral_multiple : ∀ (L : Type) [Field L] [NumberField L] (κ : Type) (ℓ : Module.Basis κ ℚ L),
     ∃ S : Finset (HeightOneSpectrum ℤ), ∀ v ∉ S, ∀ z : L,
       IsIntB v ℓ ((1 : v.adicCompletion ℚ) ⊗ₜ[ℚ] z) ↔ ∃ s : ℤ, s ∉ v.asIdeal ∧ IsIntegral ℤ ((s : L) * z) := by
-  first | (exact @GlobalTheory.AdicSpan.isIntB_one_tmul_iff_exists_isIntegral) | (exact GlobalTheory.AdicSpan.isIntB_one_tmul_iff_exists_isIntegral) | (intros; apply GlobalTheory.AdicSpan.isIntB_one_tmul_iff_exists_isIntegral  <;> assumption)
+  first | (exact @GlobalTheory.AdicSpan.isIntB_one_tmul_iff_exists_isIntegral)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdicIntegralTensorBasisIffExistsIntegralMultipleStatement =====
@@ -1196,7 +1196,7 @@ theorem _root_.GlobalTheory.T.adicTensor_exists_rational_add_integral_mul : ∀ 
     (v : HeightOneSpectrum ℤ) (x : v.adicCompletion ℚ ⊗[ℚ] L) (D : ℤ), D ≠ 0 →
     ∃ (y : L) (ρ : v.adicCompletion ℚ ⊗[ℚ] L), IsIntB v ℓ ρ ∧
       x = (1 : v.adicCompletion ℚ) ⊗ₜ[ℚ] y + (D : v.adicCompletion ℚ ⊗[ℚ] L) * ρ := by
-  first | (exact @GlobalTheory.AdicSpan.exists_tmul_add_mul_isIntB) | (exact GlobalTheory.AdicSpan.exists_tmul_add_mul_isIntB) | (intros; apply GlobalTheory.AdicSpan.exists_tmul_add_mul_isIntB  <;> assumption)
+  first | (exact @GlobalTheory.AdicSpan.exists_tmul_add_mul_isIntB)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdicTensorExistsRationalAddIntegralMulStatement =====
@@ -1295,7 +1295,7 @@ theorem _root_.GlobalTheory.T.exists_generator_localized_integers_ideal_in_field
     (∀ c : L, (∃ s : ℤ, s ∉ v.asIdeal ∧ IsIntegral ℤ ((s : L) * c)) → ∀ a ∈ K, c * a ∈ K) →
     (∀ a ∈ K, ∃ s : ℤ, s ∉ v.asIdeal ∧ IsIntegral ℤ ((s : L) * a)) →
     ∃ g ∈ K, ∀ a ∈ K, ∃ c : L, (∃ s : ℤ, s ∉ v.asIdeal ∧ IsIntegral ℤ ((s : L) * c)) ∧ a = c * g := by
-  first | (exact @GlobalTheory.LocIntPrincipal.exists_generator) | (exact GlobalTheory.LocIntPrincipal.exists_generator) | (intros; apply GlobalTheory.LocIntPrincipal.exists_generator <;> assumption)
+  first | (exact @GlobalTheory.LocIntPrincipal.exists_generator)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsGeneratorLocalizedIntegersIdealInFieldStatement =====
@@ -1410,7 +1410,7 @@ theorem _root_.GlobalTheory.T.fractional_ideal_integral_lattice : ∀ (L : Type)
       (∃ D : ℤ, D ≠ 0 ∧ (∀ x, IsIntB v ℓ x → (D : v.adicCompletion ℚ ⊗[ℚ] L) * x ∈ I) ∧
         ∀ x ∈ I, IsIntB v ℓ ((D : v.adicCompletion ℚ ⊗[ℚ] L) * x)) →
       ∃ m : (v.adicCompletion ℚ ⊗[ℚ] L)ˣ, ∀ x, x ∈ I ↔ ∃ ρ, IsIntB v ℓ ρ ∧ x = ↑m * ρ := by
-  first | (exact @GlobalTheory.AdicSpan.isIntB_lattice_principal_eventually) | (exact GlobalTheory.AdicSpan.isIntB_lattice_principal_eventually) | (intros; apply GlobalTheory.AdicSpan.isIntB_lattice_principal_eventually  <;> assumption)
+  first | (exact @GlobalTheory.AdicSpan.isIntB_lattice_principal_eventually)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FractionalIdealIntegralLattice =====
@@ -1581,7 +1581,7 @@ theorem _root_.GlobalTheory.T.order_lattice_basis_integrality : ∀ {A B : Type}
       (∃ D : ℤ, D ≠ 0 ∧ (∀ x ∈ R, (D : B) * x ∈ I) ∧ ∀ x ∈ I, (D : B) * x ∈ R) →
       ∃ m : Bˣ, ∀ x, x ∈ I ↔ ∃ ρ ∈ R, x = ↑m * ρ) →
     ∀ X : Aˣ, (∀ ρ ∈ R, (X : A) * j ρ * ↑X⁻¹ ∈ Λ) → ∃ m : Bˣ, (X : A) * j ↑m ∈ Λ ∧ j ↑m⁻¹ * ↑X⁻¹ ∈ Λ := by
-  first | (exact @GlobalTheory.AbsLattice.exists_unit_of_conj_stable) | (exact GlobalTheory.AbsLattice.exists_unit_of_conj_stable) | (intros; apply GlobalTheory.AbsLattice.exists_unit_of_conj_stable  <;> assumption)
+  first | (exact @GlobalTheory.AbsLattice.exists_unit_of_conj_stable)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrderLatticeBasisIntegrality =====
@@ -1690,7 +1690,7 @@ theorem _root_.GlobalTheory.T.eventually_integral_conjugators_differ_by_centrali
       ∃ m : (v.adicCompletion ℚ ⊗[ℚ] L)ˣ,
         IsIntB v b (↑X * Algebra.TensorProduct.map (AlgHom.id ℚ (v.adicCompletion ℚ)) ι ↑m * ↑X'⁻¹) ∧
         IsIntB v b (↑X' * Algebra.TensorProduct.map (AlgHom.id ℚ (v.adicCompletion ℚ)) ι ↑m⁻¹ * ↑X⁻¹) := by
-  first | (exact @GlobalTheory.LatStep.lattice_step) | (exact GlobalTheory.LatStep.lattice_step) | (intros; apply GlobalTheory.LatStep.lattice_step  <;> assumption)
+  first | (exact @GlobalTheory.LatStep.lattice_step)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyIntegralConjugatorsDifferByCentralizerStatement =====

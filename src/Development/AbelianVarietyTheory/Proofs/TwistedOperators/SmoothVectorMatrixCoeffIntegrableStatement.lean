@@ -310,7 +310,7 @@ private theorem continuous_embOpt {m N : ℕ} (e : Option (Fin m) ≃ Fin N) : C
   obtain ⟨x, rfl⟩ := e.surjective a
   obtain ⟨y, rfl⟩ := e.surjective b
   cases x <;> cases y <;> simp [GlobalTheory.PackLoc.embOpt] <;>
-    first | fun_prop | exact (continuous_apply _).comp (continuous_apply _)
+    first | fun_prop
 
 private theorem continuous_exp_real_smul' {m : ℕ} (X : Matrix (Fin m) (Fin m) ℂ) :
     Continuous fun t : ℝ => NormedSpace.exp (t • X) := by
@@ -452,7 +452,7 @@ theorem _root_.GlobalTheory.T.smooth_vector_matrixCoeff_integrable : ∀ (m N : 
       ⟪v, π (GlobalTheory.PackLoc.embOpt e (Formalism.MainNotions.S.umat h)) v⟫_ℂ‖) (Formalism.REAL.muG ε') ∧
     ∫ h, ‖⟪v, π (GlobalTheory.PackLoc.embOpt e (NormedSpace.exp (s • X) * Formalism.MainNotions.S.umat h)) v⟫_ℂ -
       ⟪v, π (GlobalTheory.PackLoc.embOpt e (Formalism.MainNotions.S.umat h)) v⟫_ℂ‖ ∂(Formalism.REAL.muG ε') ≤ K * |s| * GlobalTheory.SepReal.hsn X := by
-  first | exact @GlobalTheory.PackLip.lip_core | exact GlobalTheory.PackLip.lip_core | (intros; apply GlobalTheory.PackLip.lip_core <;> assumption)
+  first | exact @GlobalTheory.PackLip.lip_core
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SmoothVectorMatrixCoeffIntegrableStatement =====

@@ -120,7 +120,7 @@ section -- clump:auto
 open NumberField IsDedekindDomain Matrix GlobalTheory.CuspRep GlobalTheory.UnitaryBC
 
 theorem _root_.GlobalTheory.T.exists_conj_polynomial_definiteUnitary_rational : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (σ : ℂ ≃+* ℂ), ∀ p ∈ Algebra.adjoin ℂ {f : infU E n → ℂ | ∃ (τ : E →+* ℂ) (i j : Fin n), f = fun x => (cEmb τ x.1).val i j}, ∃ p' ∈ Algebra.adjoin ℂ {f : infU E n → ℂ | ∃ (τ : E →+* ℂ) (i j : Fin n), f = fun x => (cEmb τ x.1).val i j}, ∀ γ ∈ ratU E n, ∀ k : infU E n, cInf k.1 = cInf γ → p' k = σ (p k) := by
-  first | exact @GlobalTheory.UnitaryBC.exists_conj_polyFun | exact GlobalTheory.UnitaryBC.exists_conj_polyFun | (intros; apply GlobalTheory.UnitaryBC.exists_conj_polyFun <;> assumption)
+  first | exact @GlobalTheory.UnitaryBC.exists_conj_polyFun
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsConjPolynomialDefiniteUnitaryRationalStatement =====
@@ -430,7 +430,7 @@ theorem conj_span_finite : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     refine congrFun (Continuous.ext_on hdense (hφ'.cont.comp (continuous_mul_const _)) hφ'.cont ?_)
     rintro _ ⟨γ, hγ, x, hx, rfl⟩
     have hxk : x * (k : UA E n) ∈ finU (E := E) (n := n) := mul_mem hx k.2
-    simp only [Function.comp_apply]
+    simp only
     rw [mul_assoc, hφ'.left γ hγ, hφ'.left γ hγ, hagree _ hxk, hagree _ hx, hkφ]
   · obtain ⟨s₀, hs₀, rfl⟩ := Finset.mem_image.1 hs
     have hsf : ((a s₀ : finU (E := E) (n := n)) : UA E n) ∈ finU (E := E) (n := n) := (a s₀).2
@@ -465,7 +465,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 open GlobalTheory.GalCut GlobalTheory.UnitaryBC GlobalTheory.Cong GlobalTheory.DefU GlobalTheory.CuspRep GlobalTheory.PRep
 
 theorem _root_.GlobalTheory.T.conjugates_automorphicForm_span_finiteDimensional : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (φ : UA E n → ℂ), IsAutFormU φ → ∃ M : Submodule ℂ (UA E n → ℂ), FiniteDimensional ℂ M ∧ ∀ (σ : ℂ ≃+* ℂ) (φ' : UA E n → ℂ), IsAutFormU φ' → (∀ g ∈ finU (E := E) (n := n), φ' g = σ (φ g)) → φ' ∈ M := by
-  first | exact @GlobalTheory.ConjSpan.conj_span_finite | exact GlobalTheory.ConjSpan.conj_span_finite | (intros; apply GlobalTheory.ConjSpan.conj_span_finite; all_goals assumption)
+  first | exact @GlobalTheory.ConjSpan.conj_span_finite
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ConjugatesAutomorphicFormSpanFiniteDimensionalStatement =====
@@ -540,7 +540,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 open GlobalTheory.GalCut GlobalTheory.UnitaryBC GlobalTheory.Cong GlobalTheory.DefU GlobalTheory.CuspRep GlobalTheory.PRep
 
 theorem _root_.GlobalTheory.T.definiteUnitaryRationalHecke_commute_complexAutomorphism : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (σ : ℂ ≃+* ℂ) (t : UA E n →₀ ℂ), (∀ g ∈ t.support, g ∈ finU (E := E) (n := n) ∧ ∃ q : ℚ, t g = q) → ∀ (φ φ' : UA E n → ℂ) (z : ℂ), IsAutFormU φ → IsAutFormU φ' → (∀ g ∈ finU (E := E) (n := n), φ' g = σ (φ g)) → opOf (RU E n) t φ = z • φ → opOf (RU E n) t φ' = σ z • φ' := by
-  first | exact @GlobalTheory.EigenConj.opOf_conj | exact GlobalTheory.EigenConj.opOf_conj | (intros; apply GlobalTheory.EigenConj.opOf_conj <;> assumption)
+  first | exact @GlobalTheory.EigenConj.opOf_conj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.DefiniteUnitaryRationalHeckeCommuteComplexAutomoStatement =====
@@ -681,11 +681,7 @@ theorem linearIndependent_simulEigen {J V : Type} [AddCommGroup V] [Module ℂ V
     (S : Set (J → ℂ)) (v : S → V) (hv : ∀ χ, v χ ≠ 0)
     (hT : ∀ (χ : S) j, T j (v χ) = (χ : J → ℂ) j • v χ) : LinearIndependent ℂ v := by
   first
-  | exact @_root_.GlobalTheory.JointEigenvectorsIndependentSatakeParameters.linearIndependent_jointEigenvectors
-  | exact _root_.GlobalTheory.JointEigenvectorsIndependentSatakeParameters.linearIndependent_jointEigenvectors
   | (apply _root_.GlobalTheory.JointEigenvectorsIndependentSatakeParameters.linearIndependent_jointEigenvectors <;> assumption)
-  | (intros; apply _root_.GlobalTheory.JointEigenvectorsIndependentSatakeParameters.linearIndependent_jointEigenvectors <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.JointEigenvectorsIndependentSatakeParameters.linearIndependent_jointEigenvectors <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.JointEigenvectorsIndependentSatakeParameters.linearIndependent_jointEigenvectors ..)
 
 def opLin {Γ V : Type} [Group Γ] [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ Γ V) (f : Γ →₀ ℂ) :
@@ -767,16 +763,16 @@ theorem mem_ker_reduction_iff {a : ℕ} (I : Ideal R) (g : GL (Fin a) R) :
     rw [GeneralLinearGroup.map_apply] at this
     rw [← Ideal.Quotient.eq, this]
     by_cases hij : i = j
-    · subst j; simp [one_apply]
-    · simp [hij, one_apply]
+    · subst j; simp
+    · simp [hij]
   · intro h
     ext i j
     rw [GeneralLinearGroup.map_apply]
     have := Ideal.Quotient.eq.2 (h i j)
     rw [this]
     by_cases hij : i = j
-    · subst j; simp [one_apply]
-    · simp [hij, one_apply]
+    · subst j; simp
+    · simp [hij]
 
 theorem exists_eq_one_add_smul' {a : ℕ} (c : R) (g : GL (Fin a) R)
     (hg : g ∈ (Matrix.GeneralLinearGroup.map (n := Fin a) (Ideal.Quotient.mk (Ideal.span {c}))).ker) :
@@ -881,7 +877,7 @@ theorem exists_congruence_surj : ∀ {E : Type} [Field E] [NumberField E] [IsCMF
       by_cases hij : i = j
       · subst hij
         by_cases hi : i = i0 <;> simp [x, d, hi]
-      · simp [x, d, Matrix.diagonal_apply, Matrix.one_apply, hij]
+      · simp [x, d, hij]
     have hdd' : Matrix.diagonal d * Matrix.diagonal d' = 1 := by
       rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
       congr 1; funext i
@@ -1073,7 +1069,7 @@ theorem exists_type_surj : ∀ (E : Type) [Field E] [NumberField E] (w : HeightO
         refine Matrix.ext fun i j => ?_
         rw [GeneralLinearGroup.map_apply]
         show algebraMap (w.adicCompletionIntegers E) (w.adicCompletion E) ((1 + ((l : w.adicCompletionIntegers E) ^ m) • x) i j) = _
-        by_cases hij : i = j <;> simp [hij, x, p, q, vecMulVec_apply, Matrix.one_apply] <;> ring
+        by_cases hij : i = j <;> simp [hij, x, p, q, vecMulVec_apply] <;> ring
       have hconj : (((g * (e ⟨h₀, hh₀⟩ : K₀.map ι) * g⁻¹ : GL (Fin a) (w.adicCompletion E))) :
           Matrix (Fin a) (Fin a) _) - 1 =
           (g : Matrix (Fin a) (Fin a) _) * vecMulVec p q * ((g⁻¹ : GL _ _) : Matrix _ _ _) := by

@@ -99,10 +99,9 @@ theorem trace_rel (E : Type) [Field E] [NumberField E] [IsCMField E] (x : E) :
   rw [trace_eq_sum_automorphisms]
   have hu : (Finset.univ : Finset (E ≃ₐ[maximalRealSubfield E] E)) = {1, complexConj E} := by
     symm
-    apply Finset.eq_of_subset_of_card_le (Finset.subset_univ _)
-    rw [Finset.card_univ, ← Nat.card_eq_fintype_card, IsGalois.card_aut_eq_finrank,
-      Algebra.IsQuadraticExtension.finrank_eq_two,
-      Finset.card_pair (complexConj_ne_one E).symm]
+    apply Finset.eq_univ_of_card
+    rw [Finset.card_pair (complexConj_ne_one E).symm, ← Nat.card_eq_fintype_card,
+      IsGalois.card_aut_eq_finrank, Algebra.IsQuadraticExtension.finrank_eq_two]
   rw [hu, Finset.sum_pair (complexConj_ne_one E).symm]
   rfl
 

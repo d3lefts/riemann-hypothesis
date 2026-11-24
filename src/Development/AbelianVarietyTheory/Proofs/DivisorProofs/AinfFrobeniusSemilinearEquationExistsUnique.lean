@@ -114,7 +114,7 @@ theorem frobSemilinear_iterate_eq_zero : ∀ (p : ℕ) [Fact p.Prime] (S : Type)
     ext i
     by_cases h : i = j
     · subst h; simp
-    · simp [Pi.single_apply, h]
+    · simp [h]
   let J : Ideal S := Ideal.span (Set.range fun ji : ι × ι => L^[N] (Pi.single ji.1 1) ji.2)
   have hJnil : IsNilpotent J := by
     refine (Ideal.FG.isNilpotent_iff_le_nilradical (Submodule.fg_span (Set.finite_range _))).2 ?_
@@ -317,7 +317,7 @@ lemma constantCoeff_F (M : Matrix ι ι (WittVector p R)) (v : ι → WittVector
   simp only [F, Pi.sub_apply, map_sub, RingHom.map_mulVec]
   congr 2
   funext j
-  simp [Function.comp_def, WittVector.constantCoeff_apply, WittVector.coeff_frobenius_charP,
+  simp [WittVector.constantCoeff_apply, WittVector.coeff_frobenius_charP,
     frobenius_def]
 
 lemma p_dvd_iff (x : WittVector p R) :

@@ -57,6 +57,7 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Development.WeilBound.CoreStatements.HodgeTatePoints.ValAtRestrict
 
 @[expose] public section
 
@@ -80,47 +81,7 @@ theorem top_le_of_mem {K : Type} [Field K] {X : Scheme.{0}} (x : Spec (CommRingC
   exact hz
 
 theorem sec_inj : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGroup T] [Finite T] (Γ : QFGroup R T) (U : Γ.G.left.Opens) (s : Γ(Γ.G.left, U)), (∀ (t : T) (h : ⊤ ≤ (Γ.pt t).left ⁻¹ᵁ U), valAt (Γ.pt t).left U h s = 0) → s = 0 := by
-  intro R _ _ T _ _ Γ U s hs
-  have := Γ.flat
-  have := Γ.gen_reduced
-  have hdom : IsDominant (genPt R).hom :=
-    ⟨(PrimeSpectrum.denseRange_comap_iff_ker_le_nilRadical _).2 (by
-      change RingHom.ker (algebraMap R (FractionRing R)) ≤ _
-      rw [(RingHom.injective_iff_ker_eq_bot _).1 (IsFractionRing.injective R (FractionRing R))]
-      exact bot_le)⟩
-  have : IsSchemeTheoreticallyDominant (genPt R).hom := .of_isDominant _
-  have : QuasiCompact (genPt R).hom :=
-    inferInstanceAs (QuasiCompact (Spec.map (CommRingCat.ofHom (algebraMap R (FractionRing R)))))
-  let j := pullback.fst Γ.G.hom (genPt R).hom
-  apply j.app_injective U
-  rw [map_zero]
-  apply eq_zero_of_basicOpen_eq_bot
-  rw [← Scheme.preimage_basicOpen, eq_bot_iff]
-  intro z hz
-  exfalso
-  have hz' : j z ∈ Γ.G.left.basicOpen s := hz
-  have hgen : (Γ.G.hom (j z)).asIdeal = ⊥ := by
-    have e : Γ.G.hom (j z) = (genPt R).hom (pullback.snd Γ.G.hom (genPt R).hom z) := by
-      rw [← Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply, pullback.condition]
-    rw [e]
-    generalize pullback.snd Γ.G.hom (genPt R).hom z = w
-    have hw : PrimeSpectrum.asIdeal (R := FractionRing R) w = ⊥ :=
-      (Ideal.eq_bot_or_top _).resolve_right (PrimeSpectrum.isPrime (R := FractionRing R) w).ne_top
-    change Ideal.comap (algebraMap R (FractionRing R)) (PrimeSpectrum.asIdeal (R := FractionRing R) w) = ⊥
-    rw [hw]
-    exact Ideal.comap_bot_of_injective _ (IsFractionRing.injective R (FractionRing R))
-  obtain ⟨t, x, hx⟩ := Γ.pt_onto _ hgen
-  rw [← hx] at hz'
-  have h : ⊤ ≤ (Γ.pt t).left ⁻¹ᵁ U := top_le_of_mem _ x (Γ.G.left.basicOpen_le s hz')
-  have h0 : (Γ.pt t).left.appLE U ⊤ h s = 0 := by
-    apply (ConcreteCategory.bijective_of_isIso (Scheme.ΓSpecIso (CommRingCat.of (FractionRing R))).hom).1
-    rw [map_zero]
-    exact hs t h
-  have h1 := Scheme.basicOpen_appLE (Γ.pt t).left ⊤ U h s
-  rw [h0, Scheme.basicOpen_zero] at h1
-  have h2 : x ∈ (⊤ : (genPt R).left.Opens) ⊓ (Γ.pt t).left ⁻¹ᵁ Γ.G.left.basicOpen s := ⟨trivial, hz'⟩
-  rw [← h1] at h2
-  exact h2
+  exact PositivityTheory.HtPt.Unc.sec_inj
 
 theorem reg_iff : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGroup T] [Finite T] (Γ : QFGroup R T) (U : Γ.G.left.Opens) (f : T → FractionRing R), (∀ g ∈ U, Γ.RegularAt f g) ↔ ∃ s : Γ(Γ.G.left, U), ∀ (t : T) (h : ⊤ ≤ (Γ.pt t).left ⁻¹ᵁ U), valAt (Γ.pt t).left U h s = f t := by
   intro R _ _ T _ _ Γ U f

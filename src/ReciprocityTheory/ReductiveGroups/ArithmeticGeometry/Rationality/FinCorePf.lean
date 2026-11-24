@@ -196,7 +196,7 @@ theorem disc_bound {K : Type} [NormedField K] [IsUltrametricDist K] [CompleteSpa
     have h2 : (fun χ : Fin 1 → ℤ => c (χ 0) * t ^ (χ 0) * ∏ i, τ i ^ χ i) =
         fun χ => (fun m : ℤ => c m * (t * τ 0) ^ m) (e χ) := by
       funext χ
-      simp [e, Fin.prod_univ_one, mul_zpow, mul_assoc]
+      simp [e, mul_zpow, mul_assoc]
     rw [h2]
     convert h using 2
     exact e.tsum_eq (fun m : ℤ => c m * (t * τ 0) ^ m)
@@ -316,8 +316,6 @@ theorem exists_unit_point (K₀ : Subfield K) (hK₀ : ResidueFieldInfiniteOn (K
     have hm : a * ⟨_, hinv⟩ = 1 := Subtype.ext (by simp [ha0])
     first
       | exact IsUnit.of_mul_eq_one _ hm
-      | exact IsUnit.of_mul_eq_one hm
-      | exact ⟨⟨a, ⟨_, hinv⟩, hm, by rw [mul_comm]; exact hm⟩, rfl⟩
   have norm_of_unit : ∀ a : unitBallRing K, IsUnit a → ‖(a : K)‖ = 1 := by
     intro a ha
     obtain ⟨b, hb⟩ := ha.exists_right_inv

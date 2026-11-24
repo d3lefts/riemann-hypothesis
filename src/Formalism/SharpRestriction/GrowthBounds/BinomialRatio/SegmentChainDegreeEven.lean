@@ -128,7 +128,7 @@ theorem kLetters_deg_odd {s : ℕ} (A0 : ℕ) (A C : Fin s → ℕ) (i : Fin s) 
   have h0 : ¬ (2 * i.val + 1 = 0) := by omega
   have h1 : (2 * i.val + 1 - 1) / 2 < s := by omega
   have h2 : (2 * i.val + 1) % 2 = 1 := by omega
-  simp only [kLetters, Fin.val_mk]
+  simp only [kLetters]
   rw [if_neg h0, dite_eq_left h1, if_pos h2]
   congr 1
   ext
@@ -141,7 +141,7 @@ theorem kLetters_deg_even {s : ℕ} (A0 : ℕ) (A C : Fin s → ℕ) (i : Fin s)
   have h0 : ¬ (2 * i.val + 2 = 0) := by omega
   have h1 : (2 * i.val + 2 - 1) / 2 < s := by omega
   have h2 : ¬ ((2 * i.val + 2) % 2 = 1) := by omega
-  simp only [kLetters, Fin.val_mk]
+  simp only [kLetters]
   rw [if_neg h0, dite_eq_left h1, if_neg h2]
   congr 1
   ext
@@ -450,7 +450,7 @@ theorem cap_succ (p : ℕ) (S : SegData s) (b : SegBlock s r) (i : Fin s) :
         rw [if_pos (show (k : ℕ) < k.val + 1 by omega), if_neg h1, if_pos rfl, zero_add]
       · have h3 : ¬ (k : ℕ) < i.val + 1 := fun h => h2 (Fin.ext (by omega))
         rw [if_neg h3, if_neg h1, if_neg h2, add_zero]
-  simp only [key, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true]
+  simp only [key, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   ring
 
 theorem levW (p : ℕ) (S : SegData s) (aTop : Fin s → ℕ) (aPlus : ℕ) (m : ℝ) (b : SegBlock s r)

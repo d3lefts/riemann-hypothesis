@@ -787,46 +787,30 @@ end -- clump:auto
 section -- clump:auto
 @[expose] public section
 
-noncomputable def UpperTheory.Reformulated.B.WeightsCompactStabilizer.GlRel.{u_1} :
-    {A : Type u_1} → [Ring A] → {n : ℕ} → (Fin n → Fin n → A) → Prop :=
-    fun {A : Type u_1} [Ring A] {n : ℕ} (E : Fin n → Fin n → A) ↦
-      ∀ (a b c d : Fin n),
-        E a b * E c d - E c d * E a b = (if b = c then E a d else (0 : A)) - if d = a then E c b else (0 : A)
+namespace UpperTheory.Reformulated.B.WeightsCompactStabilizer
 
-noncomputable def UpperTheory.Reformulated.B.WeightsCompactStabilizer.KUnit :
-    {n : ℕ} →
-      {V : Type} →
-        [inst : NormedAddCommGroup V] →
-          [inst_1 : InnerProductSpace ℂ V] → (Fin n → Bool) → (Fin n → Fin n → Module.End ℂ V) → Prop :=
-    fun {n : ℕ} {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] (ε : Fin n → Bool)
-        (E : Fin n → Fin n → Module.End ℂ V) ↦
-      ∀ (a b : Fin n), ε a = ε b → ∀ (x y : V), Inner.inner ℂ ((E a b : V → V) x) y = Inner.inner ℂ x ((E b a : V → V) y)
+open scoped InnerProductSpace
 
-noncomputable def UpperTheory.Reformulated.B.WeightsCompactStabilizer.KStab :
-    {n : ℕ} →
-      {V : Type} →
-        [inst : AddCommGroup V] →
-          [inst_1 : _root_.Module ℂ V] → (Fin n → Bool) → (Fin n → Fin n → Module.End ℂ V) → Submodule ℂ V → Prop :=
-    fun {n : ℕ} {V : Type} [AddCommGroup V] [_root_.Module ℂ V] (ε : Fin n → Bool) (E : Fin n → Fin n → Module.End ℂ V)
-        (S : Submodule ℂ V) ↦
-      ∀ (a b : Fin n), ε a = ε b → ∀ v ∈ S, (E a b : V → V) v ∈ S
+noncomputable def GlRel.{u_1} {A : Type u_1} [Ring A] {n : ℕ} (E : Fin n → Fin n → A) : Prop :=
+  ∀ (a b c d : Fin n),
+    E a b * E c d - E c d * E a b = (if b = c then E a d else 0) - if d = a then E c b else 0
 
-noncomputable def UpperTheory.Reformulated.B.WeightsCompactStabilizer.IsWeight.{u_1} :
-    {V : Type u_1} →
-      [inst : AddCommGroup V] →
-        [inst_1 : _root_.Module ℂ V] → {n : ℕ} → (Fin n → Fin n → Module.End ℂ V) → (Fin n → ℝ) → V → Prop :=
-    fun {V : Type u_1} [AddCommGroup V] [_root_.Module ℂ V] {n : ℕ} (E : Fin n → Fin n → Module.End ℂ V) (μ : Fin n → ℝ)
-        (w : V) ↦
-      ∀ (a : Fin n), (E a a : V → V) w = (↑(μ a) : ℂ) • w
+noncomputable def KUnit {n : ℕ} {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
+    (ε : Fin n → Bool) (E : Fin n → Fin n → Module.End ℂ V) : Prop :=
+  ∀ (a b : Fin n), ε a = ε b → ∀ (x y : V), ⟪E a b x, y⟫_ℂ = ⟪x, E b a y⟫_ℂ
 
-theorem UpperTheory.Reformulated.B.WeightsCompactStabilizer.exists_weight :
-    ∀ {n : ℕ} {ε : Fin n → Bool} {V : Type} [inst : NormedAddCommGroup V] [inst_1 : InnerProductSpace ℂ V]
-      {E : Fin n → Fin n → Module.End ℂ V},
-      UpperTheory.Reformulated.B.WeightsCompactStabilizer.GlRel E →
-        UpperTheory.Reformulated.B.WeightsCompactStabilizer.KUnit ε E →
-          ∀ {Q : Submodule ℂ V} [FiniteDimensional ℂ ↥Q],
-            UpperTheory.Reformulated.B.WeightsCompactStabilizer.KStab ε E Q → Q ≠ ⊥ → ∃ (ν : Fin n → ℝ), ∃ x ∈ Q, x ≠ (0 : V) ∧ UpperTheory.Reformulated.B.WeightsCompactStabilizer.IsWeight E ν x := by
-  intro n ε V _ _ E hG hU Q _ hS hQ
+noncomputable def KStab {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (ε : Fin n → Bool)
+    (E : Fin n → Fin n → Module.End ℂ V) (S : Submodule ℂ V) : Prop :=
+  ∀ (a b : Fin n), ε a = ε b → ∀ v ∈ S, E a b v ∈ S
+
+noncomputable def IsWeight.{u_1} {V : Type u_1} [AddCommGroup V] [Module ℂ V] {n : ℕ}
+    (E : Fin n → Fin n → Module.End ℂ V) (μ : Fin n → ℝ) (w : V) : Prop :=
+  ∀ (a : Fin n), E a a w = (μ a : ℂ) • w
+
+theorem exists_weight {n : ℕ} {ε : Fin n → Bool} {V : Type} [NormedAddCommGroup V]
+    [InnerProductSpace ℂ V] {E : Fin n → Fin n → Module.End ℂ V} (hG : GlRel E) (hU : KUnit ε E)
+    {Q : Submodule ℂ V} [FiniteDimensional ℂ Q] (hS : KStab ε E Q) (hQ : Q ≠ ⊥) :
+    ∃ (ν : Fin n → ℝ), ∃ x ∈ Q, x ≠ 0 ∧ IsWeight E ν x := by
   classical
   let T : Fin n → Module.End ℂ Q := fun a => (E a a).restrict (fun v hv => hS a a rfl v hv)
   have hT : ∀ a (x : Q), ((T a x : Q) : V) = E a a x := fun a x => rfl
@@ -837,7 +821,7 @@ theorem UpperTheory.Reformulated.B.WeightsCompactStabilizer.exists_weight :
   have hcomm : Pairwise (Function.onFun Commute T) := by
     intro a b hab
     have h := hG a a b b
-    rw [if_neg hab, if_neg hab.symm, sub_zero, sub_eq_zero] at h
+    rw [ite_eq_right hab, ite_eq_right hab.symm, sub_zero, sub_eq_zero] at h
     change T a * T b = T b * T a
     ext x
     have := congrArg (fun f : Module.End ℂ V => f x) h
@@ -862,6 +846,8 @@ theorem UpperTheory.Reformulated.B.WeightsCompactStabilizer.exists_weight :
   rw [hT] at h
   rw [hre a, h]
   rfl
+
+end UpperTheory.Reformulated.B.WeightsCompactStabilizer
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.WeightsCompactStabilizer =====
@@ -994,7 +980,7 @@ end UpperTheory.Lit.Bur.HWSpanType
 open Matrix GlobalTheory.RealBessel GlobalTheory.BesselMapOne Formalism.L2.Theta GlobalTheory.SmVec
 
 theorem _root_.UpperTheory.Lit.Bur.irreducible_unitary_rep_iso_harishChandraType : ∀ {k : ℕ} {Wp : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [FiniteDimensional ℂ Wp] [Nontrivial Wp] {ρ : Matrix (Fin k) (Fin k) ℂ → (Wp →L[ℂ] Wp)} (hρ : PI.UpqRep.IsURepOn (PI.UpqRep.UJset (PI.UpqRep.allPos k)) ρ) (hirr : ∀ S : Submodule ℂ Wp, (∀ g ∈ PI.UpqRep.UJset (PI.UpqRep.allPos k), ∀ v ∈ S, ρ g v ∈ S) → S = ⊥ ∨ S = ⊤), ∃ (u : Fin k → ℝ) (Wq : Type) (_ : NormedAddCommGroup Wq) (_ : InnerProductSpace ℂ Wq) (ρ' : Matrix (Fin k) (Fin k) ℂ → (Wq →L[ℂ] Wq)) (T : Wp ≃ₗ[ℂ] Wq), PI.UpqRep.IsHCTypeU k u ρ' ∧ ∀ h ∈ PI.UpqRep.UJset (PI.UpqRep.allPos k), ∀ w, T (ρ h w) = ρ' h (T w) := by
-  first | exact @UpperTheory.Lit.Bur.HWSpanType.exists_hcType_of_irred | exact UpperTheory.Lit.Bur.HWSpanType.exists_hcType_of_irred | (intros; apply UpperTheory.Lit.Bur.HWSpanType.exists_hcType_of_irred <;> assumption)
+  first | exact @UpperTheory.Lit.Bur.HWSpanType.exists_hcType_of_irred
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto

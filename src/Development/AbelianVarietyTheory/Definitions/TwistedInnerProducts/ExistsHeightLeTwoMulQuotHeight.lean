@@ -896,15 +896,6 @@ def RapidDec (Φ : GA D V → X) : Prop :=
 
 def decaySize (N : ℕ) (Φ : GA D V → X) : ℝ≥0∞ := ⨆ g, ENNReal.ofReal (‖Φ g‖ * quotHeight V g ^ N)
 
-theorem rapidDec_exp_neg : RapidDec V fun g => (Real.exp (-quotHeight V g) : ℂ) := by
-  refine ⟨fun γ hγ g => by simp only [quotHeight_left V hγ],
-    Complex.continuous_ofReal.comp (Real.continuous_exp.comp (continuous_quotHeight V).neg),
-    fun N => ⟨N.factorial, fun g => ?_⟩⟩
-  have h := Real.pow_div_factorial_le_exp _ (quotHeight_pos V g).le N
-  rw [div_le_iff₀ (by positivity)] at h
-  rw [Complex.norm_real, Real.norm_of_nonneg (Real.exp_pos _).le, Real.exp_neg, inv_mul_le_iff₀ (Real.exp_pos _)]
-  exact h
-
 variable {V}
 
 theorem decaySize_le_iff {N : ℕ} {Φ : GA D V → X} {C : ℝ} (hC : 0 ≤ C) :

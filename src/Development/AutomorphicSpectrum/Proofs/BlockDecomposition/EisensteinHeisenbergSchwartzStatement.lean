@@ -162,7 +162,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.ModerateGrowthSchwartz (schwartzA)
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.eisenstein_heisenberg_schwartz : PositivityTheory.GramSchwartzFunctions.EC.HeisSch := by
-  first | exact @GlobalTheory.CompanionTheory.HeisSchwartz.heisSch_holds | exact GlobalTheory.CompanionTheory.HeisSchwartz.heisSch_holds | (intros; apply GlobalTheory.CompanionTheory.HeisSchwartz.heisSch_holds <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.HeisSchwartz.heisSch_holds
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EisensteinHeisenbergSchwartzStatement =====

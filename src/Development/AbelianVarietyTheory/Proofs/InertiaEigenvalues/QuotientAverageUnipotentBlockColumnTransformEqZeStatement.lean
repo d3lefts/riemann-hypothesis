@@ -202,7 +202,7 @@ theorem blkU_col_mul_blkU {r m : ℕ} (hr : r ≤ m + 1) (n : UnipotentBlockColu
     have := s.1.2; have := t.1.2; omega) _ _
   have hNPP : N * P * P = 0 := by
     rw [mul_assoc, posM_mul_eq_zero (fun s t => by have := s.1.2; have := t.1.2; omega) z z, mul_zero]
-  simp only [mul_add, add_mul, mul_one, one_mul, mul_sub, sub_mul, hPN, hQN, hQP, hNPP]
+  simp only [mul_add, add_mul, mul_one, one_mul, sub_mul, hPN, hQN, hQP, hNPP]
   abel
 
 end Id
@@ -592,7 +592,7 @@ section -- clump:auto
 open NumberField IsDedekindDomain MeasureTheory Matrix GlobalTheory.CuspRep GlobalTheory.CuspGeneric
 
 theorem _root_.GlobalTheory.T.quotientAverage_unipotentBlock_columnTransform_eq_zero : ∀ (E : Type) [Field E] [NumberField E] (a : ℕ) (ψ : AddChar (Ad E) ℂ), StdPsi ψ → ∀ (m : ℕ) (f : GA E a → ℂ), m + 1 < a → Good ψ (m + 1) f → ∀ r, 0 < r → r ≤ m → ∀ g : GA E a, avg (ratV E (UnipotentBlockColumnIndex a r m)) (fun n => colT ψ (m + 1) f (blkU n * g)) = 0 := by
-  first | exact @GlobalTheory.CuspGeneric.avg_colT_blk_eq_zero | exact GlobalTheory.CuspGeneric.avg_colT_blk_eq_zero | (intros; apply GlobalTheory.CuspGeneric.avg_colT_blk_eq_zero <;> assumption)
+  first | exact @GlobalTheory.CuspGeneric.avg_colT_blk_eq_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.QuotientAverageUnipotentBlockColumnTransformEqZeStatement =====

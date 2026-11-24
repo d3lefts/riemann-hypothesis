@@ -112,7 +112,7 @@ theorem _root_.GlobalTheory.T.functional_calculus_on_sobolev : ∀ (n : ℕ) [Me
       (∀ (f : Mat n → E.V) (hf : cls μ f ∈ Msob μ E.V), Sob μ f → (Ω ⟨cls μ f, hf⟩ : Lp E.V 2 μ) = cls μ (Om f)) →
       ∀ (h : C₀(ℝ, ℂ)) (f : Mat n → E.V), Sob μ f → IsSec E f →
         ∃ f', Sob μ f' ∧ IsSec E f' ∧ cls μ f' = F.Φ h (cls μ f) := by
-  first | exact @GlobalTheory.CompanionTheory.FcSmooth.phi_keeps_sections | exact GlobalTheory.CompanionTheory.FcSmooth.phi_keeps_sections | (intros; apply GlobalTheory.CompanionTheory.FcSmooth.phi_keeps_sections <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.FcSmooth.phi_keeps_sections
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FunctionalCalculusOnSobolevStatement =====
@@ -184,7 +184,7 @@ theorem Lap_eq (hO : OmFormula) {f : Mat n → V} (hf : ContDiffOn ℝ ∞ f (GL
     Rd_sq_add _ _ hf hg
   have hS : ∑ p, Rd (bs p) (Rd (bs p) f) g = ∑ a, ∑ c, P a c + ∑ a, ∑ c, Q a c := by
     simp only [Fintype.sum_prod_type, Fintype.sum_bool, GlobalTheory.CompanionTheory.SecBd.basis_true_eq_single, GlobalTheory.CompanionTheory.SecBd.bs_f,
-      Finset.sum_add_distrib, hP, hQ]
+      hP, hQ]
   have hOm : Om f g = ∑ a, ∑ c, M a c - ∑ a, ∑ c, N a c := by
     rw [hO n V f hf g hg]
     simp only [Finset.sum_sub_distrib, hM, hN]
@@ -236,7 +236,7 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 theorem _root_.GlobalTheory.T.laplacian_casimir_relation : ∀ (n : ℕ) (E : KMod n), RCalc → OmFormula → ∃ Q : E.V →L[ℂ] E.V, ∀ f ∈ CE E, ∀ g ∈ GLs n,
     GlobalTheory.CompanionTheory.FcSmooth.Lap f g = -Om f g + Q (f g) := by
-  first | exact @GlobalTheory.CompanionTheory.FcSmooth.lap_sec | exact GlobalTheory.CompanionTheory.FcSmooth.lap_sec | (intros; apply GlobalTheory.CompanionTheory.FcSmooth.lap_sec <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.FcSmooth.lap_sec
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LaplacianCasimirRelationStatement =====
@@ -428,7 +428,7 @@ theorem _root_.GlobalTheory.T.laplacian_power_casimir_bound : ∀ (n : ℕ) [Mea
     (∀ f ∈ CE E, ∀ g ∈ GLs n, GlobalTheory.CompanionTheory.FcSmooth.Lap f g = -Om f g + Q (f g)) →
     ∀ j : ℕ, ∃ C : ℝ, ∀ f : Mat n → E.V, Sob μ f → IsSec E f →
       ‖cls μ (GlobalTheory.CompanionTheory.FcSmooth.Lap^[j] f)‖ ≤ C * ∑ i ∈ range (j + 1), ‖cls μ (Om^[i] f)‖ := by
-  first | exact @GlobalTheory.CompanionTheory.LapSec.sectionBound | exact GlobalTheory.CompanionTheory.LapSec.sectionBound | (intros; apply GlobalTheory.CompanionTheory.LapSec.sectionBound <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.LapSec.sectionBound
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LaplacianPowerCasimirBoundStatement =====
@@ -665,7 +665,7 @@ theorem _root_.GlobalTheory.T.right_word_laplacian_power_bound : ∀ (n : ℕ) [
     LgFacts → Unimod → RCalc → AlgEst → ClsFacts → IbpSob →
     ∀ w : List (Bool × Fin n × Fin n), ∃ C : ℝ, ∀ f : Mat n → V, Sob μ f →
       ‖cls μ (Rw w f)‖ ≤ C * ∑ j ∈ range (w.length + 1), ‖cls μ (GlobalTheory.CompanionTheory.FcSmooth.Lap^[j] f)‖ := by
-  first | exact @GlobalTheory.CompanionTheory.FcSmooth.WordBd.word_bound | exact GlobalTheory.CompanionTheory.FcSmooth.WordBd.word_bound | (intros; apply GlobalTheory.CompanionTheory.FcSmooth.WordBd.word_bound <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.FcSmooth.WordBd.word_bound
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RightWordLaplacianPowerBoundStatement =====
@@ -775,7 +775,7 @@ theorem _root_.GlobalTheory.T.sobolev_space_complete : ∀ (n : ℕ) [Measurable
     ∀ a : ℕ → Mat n → V, (∀ k, Sob μ (a k)) → (∀ w, CauchySeq fun k => cls μ (Rw w (a k))) →
     ∃ b : Mat n → V, Sob μ b ∧ (∀ w, Tendsto (fun k => cls μ (Rw w (a k))) atTop (𝓝 (cls μ (Rw w b)))) ∧
       ∀ g ∈ GLs n, Tendsto (fun k => a k g) atTop (𝓝 (b g)) := by
-  first | exact @GlobalTheory.CompanionTheory.SobComplete.sob_complete | exact GlobalTheory.CompanionTheory.SobComplete.sob_complete | (intros; apply GlobalTheory.CompanionTheory.SobComplete.sob_complete <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SobComplete.sob_complete
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SobolevSpaceCompleteStatement =====

@@ -244,8 +244,7 @@ theorem phi_Wm_position_of_sch (hE : IsGlRep E) (hV : IsKIrrHW ε E (lowK ε lam
         Equiv.symm_swap, Equiv.swap_apply_right]
     rw [hs]
     exact hF _
-  rw [hzero, sub_zero] at hsub
-  exact hsub
+  simpa [hzero] using hsub
 
 private theorem sum_pairs_sub_eq_sum_mul_count_diff (P : Fin n → Fin n → Prop) [DecidableRel P]
     (hP : ∀ c d, P c d ↔ P d c) (ν : Fin n → ℝ) :
@@ -371,8 +370,7 @@ theorem khw_lowK_mem_of_sch (hE : IsGlRep E) (hU : IsInfUnitary ε E)
     obtain ⟨-, hpos, hle⟩ := (hws j).2 hne
     have : 0 < 2 * (((j : ℕ) : ℝ) + 1) * (h - n + 1) := by positivity
     linarith
-  rw [hwe, Finset.sum_eq_zero (fun j _ => hz j), add_zero]
-  exact hw₀
+  simpa [hwe, hz] using hw₀
 
 theorem exists_khw_of_not_sch (hE : IsGlRep E) (hU : IsInfUnitary ε E)
     (hV : IsKIrrHW ε E (lowK ε lam) V) (hmono : StrictAnti lam) {h : ℝ} (hh : GapAtLeast ε lam h)
@@ -592,17 +590,6 @@ theorem finiteDimensional_prodSub {V₁ : Submodule ℂ M₁} {V₂ : Submodule 
   unfold prodSub
   first
     | (rw [Submodule.comap_equiv_eq_map_symm]; exact (h₁'.prod h₂').map _)
-    | (have heq : Submodule.comap (WithLp.linearEquiv 2 ℂ (M₁ × M₂)).toLinearMap (V₁.prod V₂) =
-          Submodule.map (WithLp.linearEquiv 2 ℂ (M₁ × M₂)).symm.toLinearMap (V₁.prod V₂) := by
-         ext x
-         simp only [Submodule.mem_comap, Submodule.mem_map]
-         constructor
-         · intro hx
-           exact ⟨_, hx, by simp⟩
-         · rintro ⟨y, hy, rfl⟩
-           simpa using hy
-       rw [heq]
-       exact (h₁'.prod h₂').map _)
 
 theorem prodSub_kStable {ε : Fin n → Bool} {E₁ : Fin n → Fin n → Module.End ℂ M₁}
     {E₂ : Fin n → Fin n → Module.End ℂ M₂} {V₁ : Submodule ℂ M₁} {V₂ : Submodule ℂ M₂}
@@ -622,8 +609,6 @@ theorem casimir_mem_genSub {M : Type*} [AddCommGroup M] [Module ℂ M] (E : Fin 
        refine Submodule.sum_mem _ fun a _ => ?_
        rw [LinearMap.sum_apply]
        exact Submodule.sum_mem _ fun b _ => hT a b _ (hT b a _ (hVT hw)))
-    | (simp only [LinearMap.coeFn_sum, Finset.sum_apply]
-       exact Submodule.sum_mem _ fun a _ => Submodule.sum_mem _ fun b _ => hT a b _ (hT b a _ (hVT hw)))
 
 theorem casimir_eq_casVal_of_model {ε : Fin n → Bool} {lam : Fin n → ℝ} (hgap : StdGap ε lam)
     {M₁ : Type*} [NormedAddCommGroup M₁] [InnerProductSpace ℂ M₁] {E₁ : Fin n → Fin n → Module.End ℂ M₁}

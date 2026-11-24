@@ -927,8 +927,7 @@ def PhWellDefC : Prop :=
 theorem termValC_of (h : PhWellDefC) : TermValC := by
   unfold TermValC
   intro D X Y u u' hH
-  obtain ⟨hL, -, -, -, -, -, hOI, -, -, -⟩ := hH
-  exact termVal_of (Y.cs u) (Y.cs u') (Y.FN u) (Y.FN u') Y.hK (h D X Y u hL) (h D X Y u' hL) hOI
+  exact termVal_of (Y.cs u) (Y.cs u') (Y.FN u) (Y.FN u') Y.hK (h D X Y u hH.1) (h D X Y u' hH.1) hH.2.2.2.2.2.2.1
 
 theorem regroupC_of' (hW : PhWellDefC) (h1 : SupportReindexC) (h2 : SlabAbsC) (h3 : OrbitUnfoldC) :
     Formalism.L2.SG.Pf.Slab.RegroupC := regroupC_of h1 h2 h3 (termValC_of hW)
@@ -944,12 +943,10 @@ def ColCoverC : Prop :=
 theorem supportReindexC_of (h1 : ColUniqC) (h2 : ColCoverC) : SupportReindexC := by
   unfold SupportReindexC
   intro D X Y u u' hH
-  have hH' := hH
-  obtain ⟨-, -, hF', -, hI', -, -, -, -, -⟩ := hH'
-  obtain ⟨-, Ω₀, a, hc, -, hT⟩ := hF'
+  obtain ⟨-, Ω₀, a, hc, -, hT⟩ := hH.2.2.1
   exact supportReindex_of (Y.cs u) (Y.cs u') Y.hK (Y.Dt u') (Y.reps u')
     (fun T' => ((hT T').1 Ω₀ hc subset_rfl).2.1)
-    (fun T' => (hI' T' (Y.Dt u') (Y.reps u')).1) (h1 D X Y u u' hH) (h2 D X Y u u' hH)
+    (fun T' => (hH.2.2.2.2.1 T' (Y.Dt u') (Y.reps u')).1) (h1 D X Y u u' hH) (h2 D X Y u u' hH)
 
 theorem regroupC_of'' (hW : PhWellDefC) (hU : ColUniqC) (hC : ColCoverC) (h2 : SlabAbsC) (h3 : OrbitUnfoldC) :
     Formalism.L2.SG.Pf.Slab.RegroupC := regroupC_of' hW (supportReindexC_of hU hC) h2 h3
@@ -961,11 +958,9 @@ def OrbitAlgC : Prop :=
 theorem orbitUnfoldC_of (hW : PhWellDefC) (hO : OrbitAlgC) : OrbitUnfoldC := by
   unfold OrbitUnfoldC
   intro D X Y u u' hH
-  have hH' := hH
-  obtain ⟨hL, hF, hF', -, -, hFE, -, -, -, -⟩ := hH'
-  obtain ⟨-, Ω₀, a, hc, -, hT⟩ := hF
-  obtain ⟨-, Ω₀', a', hc', -, hT'⟩ := hF'
-  exact orbitUnfold_of (Y.cs u) (Y.cs u') Y.hK (hW D X Y u hL) (hW D X Y u' hL) hFE
+  obtain ⟨-, Ω₀, a, hc, -, hT⟩ := hH.2.1
+  obtain ⟨-, Ω₀', a', hc', -, hT'⟩ := hH.2.2.1
+  exact orbitUnfold_of (Y.cs u) (Y.cs u') Y.hK (hW D X Y u hH.1) (hW D X Y u' hH.1) hH.2.2.2.2.2.1
     (fun T => ((hT T).1 Ω₀ hc subset_rfl).2.1) (fun T' => ((hT' T').1 Ω₀' hc' subset_rfl).2.1)
     (fun T => ((hT T).1 Ω₀ hc subset_rfl).1) (fun T' => ((hT' T').1 Ω₀' hc' subset_rfl).1)
     (hO D X Y u u' hH)

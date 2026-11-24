@@ -55,20 +55,17 @@ theorem sc_one_le_b (s : Scale) : 1 ≤ s.b := by
   exact Real.one_le_exp (Real.rpow_nonneg (sc_x_pos s).le _)
 
 theorem sc_one_lt_a (s : Scale) : 1 < s.a := by
-  unfold Scale.a
-  exact one_lt_mul_of_lt_of_le s.one_lt_alt (sc_one_le_b s)
+  simpa [Scale.a] using one_lt_mul_of_lt_of_le s.one_lt_alt (sc_one_le_b s)
 
 theorem sc_b'_nonneg (s : Scale) : 0 ≤ s.b' := by
   unfold Scale.b'
   exact div_nonneg (by linarith [sc_one_lt_a s]) (Real.exp_pos _).le
 
 theorem sc_w''_nonneg (s : Scale) (n : ℕ) : 0 ≤ s.w'' n := by
-  unfold Scale.w''
-  exact div_nonneg (sc_b'_nonneg s) (mul_nonneg (sc_x_pos s).le (Nat.cast_nonneg n))
+  simpa [Scale.w''] using div_nonneg (sc_b'_nonneg s) (mul_nonneg (sc_x_pos s).le (Nat.cast_nonneg n))
 
 theorem sc_delta1_pos (s : Scale) : 0 < s.delta1 := by
-  unfold Scale.delta1
-  exact Real.rpow_pos_of_pos (sc_x_pos s) _
+  simpa [Scale.delta1] using Real.rpow_pos_of_pos (sc_x_pos s) _
 
 theorem X'_le_X'' (s : Scale) (n : ℕ) (hn : 1 ≤ n) : s.X' ≤ s.X'' n := by
   have hX' : 0 < s.X' := Real.exp_pos _

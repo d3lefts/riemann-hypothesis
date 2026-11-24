@@ -122,8 +122,6 @@ lemma isClosed_powImage [IsTopologicalRing LL] (ho : IsOpen (Set.range (algebraM
   have hc : ((l : LL) ^ n) ≠ 0 := pow_ne_zero _ (natCast_ne_zero' (l := l) (LL := LL))
   exact (Homeomorph.mulLeft₀ _ hc).isClosedMap _ (isClosed_range ho)
 
-lemma norm_l_lt_one : ‖(l : ℚ_[l])‖ < 1 := Padic.norm_p_lt_one
-
 lemma padicInt_mem_range [IsModuleTopology ℚ_[l] LL] [IsTopologicalRing LL]
     (ho : IsOpen (Set.range (algebraMap O LL))) (z : ℤ_[l]) :
     algebraMap ℚ_[l] LL (algebraMap ℤ_[l] ℚ_[l] z) ∈ Set.range (algebraMap O LL) := by
@@ -152,7 +150,8 @@ lemma not_isUnit_l [IsDomain O] [IsDiscreteValuationRing O] [IsModuleTopology �
     exact hϖ.ne_zero (hinj (h0.trans (map_zero _).symm))
   set y : LL := (algebraMap O LL ϖ)⁻¹ with hy
   have hT : Tendsto (fun k : ℕ => (l : ℚ_[l]) ^ k • y) atTop (𝓝 0) := by
-    have h3 := (tendsto_pow_atTop_nhds_zero_of_norm_lt_one (norm_l_lt_one (l := l))).smul_const y
+    have h3 := (tendsto_pow_atTop_nhds_zero_of_norm_lt_one (Padic.norm_p_lt_one
+        (p := l))).smul_const y
     simpa using h3
   obtain ⟨k, q, hq⟩ := (hT.eventually (ho.mem_nhds ⟨0, map_zero _⟩)).exists
   obtain ⟨u, hu'⟩ := hu
@@ -202,7 +201,7 @@ lemma bounded [IsDomain O] [IsDiscreteValuationRing O] [IsModuleTopology ℚ_[l]
     ∃ n : ℕ, ∀ x ∈ Set.range (algebraMap O LL), ‖(l : ℚ_[l])‖ ^ n * ‖e x‖ ≤ 1 := by
   set c : ℝ := ‖(l : ℚ_[l])‖ with hc
   have hc0 : 0 < c := norm_pos_iff.2 (Nat.cast_ne_zero.2 (Fact.out : l.Prime).ne_zero)
-  have hc1 : c < 1 := norm_l_lt_one
+  have hc1 : c < 1 := Padic.norm_p_lt_one
   set K : Set LL := {y | ‖e y‖ ≤ 1} ∩ {y | c ≤ ‖e y‖} with hKdef
   have hK : IsCompact K :=
     (isCompact_ball e he' 1).inter_right (isClosed_le continuous_const (continuous_norm.comp he))
@@ -466,10 +465,6 @@ end Open
 theorem good_coeff_integers : ∀ (l : ℕ) [Fact l.Prime] (LL : Type) [Field LL] [Algebra ℚ_[l] LL] [TopologicalSpace LL] (O : Type) [CommRing O] [Algebra O LL], GoodO (Qp := ℚ_[l]) LL O → (∀ x : LL, x ∈ Set.range (algebraMap O LL) ↔ RingHom.IsIntegralElem ((algebraMap ℚ_[l] LL).comp (algebraMap ℤ_[l] ℚ_[l])) x) ∧ IsCompact (Set.range (algebraMap O LL)) ∧ (∀ n : ℕ, Finite (O ⧸ Ideal.span {((l : ℕ) : O) ^ n})) ∧ IsAdicComplete (Ideal.span {((l : ℕ) : O)}) O := by
   first
   | exact @_root_.GlobalTheory.PowerImageOpen.main
-  | exact _root_.GlobalTheory.PowerImageOpen.main
-  | (apply _root_.GlobalTheory.PowerImageOpen.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.PowerImageOpen.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.PowerImageOpen.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.PowerImageOpen.main ..)
 
 end GlobalTheory.GoodCoeff

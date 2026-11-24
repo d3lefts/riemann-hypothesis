@@ -496,7 +496,7 @@ theorem UpperTheory.exists_section_lift_of_etale_of_henselian :
     simp [ρ, hra, ResidueField.algebraMap_eq]
   refine ⟨(P.lift a hA).comp (P.equivRing.toAlgHom.comp ι), fun x => ?_⟩
   have := congrArg (fun φ => φ (P.equivRing (ι x))) hρ
-  simp only [AlgHom.comp_apply, ρ, IsScalarTower.coe_toAlgHom', ResidueField.algebraMap_eq, τ, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe, AlgEquiv.symm_apply_apply] at this
+  simp only [AlgHom.comp_apply, ρ, IsScalarTower.coe_toAlgHom', ResidueField.algebraMap_eq, τ, AlgEquiv.coe_toAlgHom, AlgEquiv.symm_apply_apply] at this
   simpa [hπ] using this
 
 end
@@ -554,7 +554,7 @@ theorem UpperTheory.exists_common_zero_of_jacobian_isUnit_henselian :
   let ψ : MvPolynomial (Fin n) A →ₐ[A] ResidueField A :=
     (Algebra.ofId A (ResidueField A)).comp (MvPolynomial.aeval (0 : Fin n → A))
   have hψ : ∀ p, ψ p = residue A (MvPolynomial.eval 0 p) := fun p => by
-    simp [ψ, MvPolynomial.coe_aeval_eq_eval, IsLocalRing.ResidueField.algebraMap_eq]
+    simp [ψ, IsLocalRing.ResidueField.algebraMap_eq]
   have hI : ∀ a ∈ I, ψ a = 0 := by
     intro a ha
     have hle : I ≤ RingHom.ker ψ := by
@@ -633,7 +633,7 @@ private lemma UpperTheory.eval_zero_pderiv {R : Type} [CommRing R] {n : ℕ} (j 
           · subst hkj
             simp at hk ⊢
             omega
-          · simp [Finsupp.single_apply, hkj, Ne.symm hkj] at hk ⊢
+          · simp [hkj] at hk ⊢
             exact hk
       · rfl
   | add p q hp hq =>

@@ -298,7 +298,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestric
 theorem _root_.GlobalTheory.T.rho_mem_MK_of_mem_MK : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts}
     {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ} (p : PtAt ex Csz), p.PointConditions' → GlobalTheory.CovTop.RecTied D L →
     ∀ (i : Fin D.R.m) (g : p.P.Gp) f, f ∈ (p.R.toRealDat.FW i).MK → (p.R.toRealDat.FW i).ρ g f ∈ (p.R.toRealDat.FW i).MK := by
-  first | exact @_root_.GlobalTheory.TieMK.act_mem_MK_alt | exact _root_.GlobalTheory.TieMK.act_mem_MK_alt | (intros; apply _root_.GlobalTheory.TieMK.act_mem_MK_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.TieMK.act_mem_MK_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -379,7 +379,7 @@ open NumberField IsDedekindDomain MeasureTheory Formalism.BasicNotions Formalism
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.norm_goodRows_finiteGroup_action : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks), R.models_HE → R.models_gE → R.models_ν0 → ∀ g x, ‖R.gE g x‖ = ‖x‖ := by
-  first | exact @GlobalTheory.norm_gE_rows | exact GlobalTheory.norm_gE_rows | (intros; apply GlobalTheory.norm_gE_rows <;> assumption)
+  first | exact @GlobalTheory.norm_gE_rows
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.NormGoodRowsFiniteGroupActionStatement =====
@@ -477,7 +477,7 @@ theorem _root_.GlobalTheory.T.row_inner_product_invariant_alt : ∀ {D : D7} {L 
         ((p.R.toRealDat.FW i).j (sgAt D.what₂.embLL (InfinitePlace.mk σ)) ((p.R.toRealDat.FW i).ρ g y)) =
       inner ℂ ((p.R.toRealDat.FW i).j (sgAt D.what₂.embLL (InfinitePlace.mk σ)) x)
         ((p.R.toRealDat.FW i).j (sgAt D.what₂.embLL (InfinitePlace.mk σ)) y) := by
-  first | exact @_root_.GlobalTheory.CovTop.geoUnitary_tied_alt | exact _root_.GlobalTheory.CovTop.geoUnitary_tied_alt | (intros; apply _root_.GlobalTheory.CovTop.geoUnitary_tied_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.geoUnitary_tied_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -578,7 +578,7 @@ theorem _root_.GlobalTheory.T.group_idempotent_coefficients_alt : ∀ {D : D7} {
     (∀ g h : p.P.Gp, (idemOf p.P.A3.A.X).coeff (h * g * h⁻¹) = (idemOf p.P.A3.A.X).coeff g) ∧
     (∀ g : p.P.Gp, IsIntegral ℤ ((Fintype.card p.P.Gp : D.what₂.LL) * (idemOf p.P.A3.A.X).coeff g)) ∧
     ∀ (σ : D.what₂.LL →+* ℂ) (g : p.P.Gp), σ ((idemOf p.P.A3.A.X).coeff g⁻¹) = starRingEnd ℂ (σ ((idemOf p.P.A3.A.X).coeff g)) := by
-  first | exact @_root_.GlobalTheory.TieIdem.tied_good_idem_alt | exact _root_.GlobalTheory.TieIdem.tied_good_idem_alt | (intros; apply _root_.GlobalTheory.TieIdem.tied_good_idem_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.TieIdem.tied_good_idem_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -724,7 +724,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestric
 theorem _root_.GlobalTheory.T.two_mul_log_card_Gp_le_b : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts}
     {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ} (p : PtAt ex Csz), p.PointConditions' → GlobalTheory.CovTop.RecTied D L →
     ∀ PP A : ℝ, GlobalTheory.CovTop.HostNum D L PP A 3 → 2 * Real.log (Fintype.card p.P.Gp : ℕ) ≤ L.sc.b := by
-  first | exact @_root_.GlobalTheory.CovTop.two_log_card_levels_le_alt | exact _root_.GlobalTheory.CovTop.two_log_card_levels_le_alt | (intros; apply _root_.GlobalTheory.CovTop.two_log_card_levels_le_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.two_log_card_levels_le_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -786,7 +786,7 @@ section
 open GlobalTheory.CovTop GlobalTheory.BigTop
 
 theorem _root_.GlobalTheory.T.liftTruncation_of_prints : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → _root_.GlobalTheory.CovTop.LiftTruncation := by
-  first | exact @_root_.GlobalTheory.CovTop.covering_cut_of_local_traces_alt | exact _root_.GlobalTheory.CovTop.covering_cut_of_local_traces_alt | (intros; apply _root_.GlobalTheory.CovTop.covering_cut_of_local_traces_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.covering_cut_of_local_traces_alt
 end
 end
 end -- clump:auto

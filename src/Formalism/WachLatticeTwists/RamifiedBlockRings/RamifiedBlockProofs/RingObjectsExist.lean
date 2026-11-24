@@ -314,9 +314,7 @@ theorem splitAux (n : ℕ) : ∀ (T : Type u) [CommRing T] (P : T[X]), P.Monic �
       ∀ (B : Type u) [CommRing B] [Algebra T B] (a : Fin n → B),
         P.map (algebraMap T B) = ∏ i, (X - C (a i)) →
         ∃ φ : T' →ₐ[T] B, ∀ i, φ (rr i) = a i := by
-  intro T _ P hP hdeg
-  obtain ⟨T', i', a', rr, h1, h2, h3, h4, h5, h6⟩ := exists_universal_splitting_algebra n T P hP hdeg
-  exact ⟨T', i', a', rr, h1, h2, h3, h4, h5, fun B _ _ a ha => h6 B a ha⟩
+  exact exists_universal_splitting_algebra n
 
 theorem splitAlg : StatSplitAlg := by
   unfold StatSplitAlg

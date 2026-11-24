@@ -133,7 +133,7 @@ private theorem pivot {R : Type} [CommRing R] [IsLocalRing R] {ι : Type} [Finty
         = H i i + 2 * c * H i j + c * c * H j j := by
       intro c
       simp [transvection, Matrix.mul_apply, Matrix.add_apply, Matrix.one_apply, Matrix.single_apply,
-        add_mul, mul_add, Finset.sum_add_distrib, ite_mul, mul_ite, Ne.symm hij, hij, hji]
+        add_mul, mul_add, Finset.sum_add_distrib, ite_mul, mul_ite, hji]
       ring
     by_cases hp : IsUnit (H i i + 2 * 1 * H i j + 1 * 1 * H j j)
     · exact ⟨transvection j i 1, by rw [det_transvection_of_ne j i hij]; exact isUnit_one,
@@ -493,7 +493,6 @@ theorem UpperTheory.V.AlgebraTools.almost_selfdual :
       ∃ s : ℕ, maximalIdeal A ^ s • Z ≤ Y₀ ⊓ Bf.dualSubmodule Y₀ := by
     first
     | exact (UpperTheory.V.AlgebraTools.dual_lattice Bf hs hnd _ hY₁).2.2
-    | exact (UpperTheory.V.AlgebraTools.dual_lattice Bf hs hnd _ hY₁.toIsLattice).2.2
   have hdual : Submodule.IsFullLattice F (Bf.dualSubmodule (Y₀ ⊓ Bf.dualSubmodule Y₀)) :=
     UpperTheory.V.AlgebraTools.almost_selfdual_dual_full Bf hnd _ hY₁
   obtain ⟨s, hs'⟩ := hbound _ hdual.toIsLattice
@@ -616,7 +615,7 @@ private theorem UpperTheory.V.AlgebraTools.selfdual_ramified_coord {A : Type} [C
   refine ⟨(Matrix.of a)ᵀ, ?_⟩
   ext i j
   have := congrFun (ha j) i
-  simp only [Finset.sum_apply, Pi.smul_apply, Algebra.smul_def, Matrix.mulVec, dotProduct] at this
+  simp only [Finset.sum_apply, Algebra.smul_def, Matrix.mulVec, dotProduct] at this
   simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, Matrix.map_apply]
   rw [← this]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _
@@ -671,7 +670,7 @@ private theorem UpperTheory.V.AlgebraTools.selfdual_ramified_basis {A : Type} [C
     simp only [Pi.basisFun_repr] at ha
     simp [hρ, Matrix.mulVec, dotProduct, ha]
   obtain ⟨Y, hY, h1, h2, h3, h4⟩ :=
-    UpperTheory.V.AlgebraTools.almost_selfdual (Matrix.toBilin' H) ρ σ u hs hn hσ hB _ (by first | exact hY₀ | exact hY₀.toIsLattice) hst
+    UpperTheory.V.AlgebraTools.almost_selfdual (Matrix.toBilin' H) ρ σ u hs hn hσ hB _ (by first | exact hY₀) hst
   have hZ := (UpperTheory.V.AlgebraTools.dual_lattice (Matrix.toBilin' H) hs hn Y hY).1
   obtain ⟨b, S, hb1, hb2⟩ := UpperTheory.V.AlgebraTools.smith_zero_one ϖ Y _ hϖ hZ h3 h4
   have hfin : Module.finrank F (Fin n → F) = n := by simp
@@ -1058,7 +1057,7 @@ theorem UpperTheory.V.Pa.Det.oneBlock :
       apply Units.ext
       have t2m := congr_arg (fun M => Matrix.map M f₂) (hr' g)
       simp only [Matrix.map_mul, Matrix.map_map] at t2m
-      simp only [Units.val_mul, pushRep, MonoidHom.comp_apply, coe_generalLinearGroup_map_eq_map, Matrix.map_map]
+      simp only [Units.val_mul, coe_generalLinearGroup_map_eq_map, Matrix.map_map]
       have fe1 : (⇑(f₂.comp f₁) ∘ ⇑(algebraMap (PowerSeries K) (FractionRing (PowerSeries K)))) =
           (⇑f₂ ∘ fun a => algebraMap (PowerSeries K) (FractionRing (PowerSeries K)) (j₁ a)) :=
         funext fun a => by simp [hf₁]
@@ -1067,8 +1066,7 @@ theorem UpperTheory.V.Pa.Det.oneBlock :
         funext fun a => by simp [hf₂]
       rw [fe1, fe2]
       exact t2m
-    simp only [pushRep, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom, MulAut.conj_apply, MulAut.conj_inv_apply, map_mul, map_inv,
-      inv_inv] at t1 ⊢
+    simp only [pushRep, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom, MulAut.conj_inv_apply, map_mul, map_inv] at t1 ⊢
     calc _ = (GeneralLinearGroup.map (f₂.comp f₁) (r g) * GeneralLinearGroup.map (f₂.comp f₁) Q₀) *
           GeneralLinearGroup.map f₂ P *
           GeneralLinearGroup.map (algebraMap (PowerSeries K') (FractionRing (PowerSeries K'))) P₂ := by

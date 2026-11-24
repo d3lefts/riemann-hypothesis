@@ -102,9 +102,9 @@ theorem echelon_projector_frobenius (l : ℕ) [Fact l.Prime] (C : Type) [Field C
   have hspan : Submodule.span C (Set.range (N.mkQ ∘ e)) = ⊤ := by
     rw [Set.range_comp, ← Submodule.map_span]
     have : Submodule.span C (Set.range e) = ⊤ := by
-      rw [eq_top_iff]; intro v _
-      have := hsupp Set.univ v (fun i hi => absurd (Set.mem_univ i) hi)
-      rwa [Set.image_univ] at this
+      rw [eq_top_iff]
+      intro v _
+      simpa using hsupp Set.univ v (by simp)
     rw [this, Submodule.map_top, Submodule.range_mkQ]
   obtain ⟨κ, a, ha, hsp, hli⟩ := exists_linearIndependent' C (N.mkQ ∘ e)
   have : Finite κ := Finite.of_injective a ha
@@ -116,7 +116,7 @@ theorem echelon_projector_frobenius (l : ℕ) [Fact l.Prime] (C : Type) [Field C
     refine Submodule.span_induction (p := fun w _ => w i = 0) ?_ ?_ ?_ ?_ hw
     · rintro _ ⟨k, ⟨m, rfl⟩, rfl⟩
       have : i ≠ a m := fun h => hi ⟨m, h.symm⟩
-      simp [e, Pi.single_apply, this]
+      simp [e, this]
     · simp
     · intro x y _ _ hx hy; simp [hx, hy]
     · intro c x _ hx; simp [hx]
@@ -141,9 +141,7 @@ theorem echelon_projector_frobenius (l : ℕ) [Fact l.Prime] (C : Type) [Field C
   have hPN : ∀ v, P v ∈ N := fun v => Submodule.projection_apply_mem hc v
   have hmemN : ∀ v, v ∈ N ↔ Y *ᵥ v = 0 := fun v => by
     rw [hN, LinearMap.mem_ker, Matrix.toLin'_apply]
-  have key : ∀ X Z : Matrix (Fin d) (Fin d) C, (∀ v, X *ᵥ v = Z *ᵥ v) → X = Z :=
-    fun X Z h => Matrix.toLin'.injective (LinearMap.ext fun v => by simpa [Matrix.toLin'_apply] using h v)
-  have hYQ : Y * Q = 0 := key _ _ fun v => by
+  have hYQ : Y * Q = 0 := Matrix.ext_iff_mulVec.mpr fun v => by
     rw [← Matrix.mulVec_mulVec, hQv, Matrix.zero_mulVec]; exact (hmemN _).mp (hPN v)
   set I : Finset (Fin d) := Finset.univ.filter (fun i => i ∉ Set.range a) with hI
   have hmemI : ∀ i, i ∈ I ↔ i ∉ Set.range a := fun i => by simp [hI]
@@ -170,11 +168,7 @@ theorem echelon_projector_frobenius (l : ℕ) [Fact l.Prime] (C : Type) [Field C
   have hkerW : LinearMap.ker (Matrix.toLin' M) ≤ W := by
     intro v hv
     rw [LinearMap.mem_ker, Matrix.toLin'_apply, hM, ← Matrix.mulVec_mulVec] at hv
-    have hAu : IsUnit A.det := isUnit_iff_ne_zero.mpr hA
-    have h0 : Q.map (frobenius C l) *ᵥ v = 0 := by
-      have := congrArg (fun x => A⁻¹ *ᵥ x) hv
-      simp only [Matrix.mulVec_mulVec, Matrix.mulVec_zero] at this
-      rwa [← mul_assoc, Matrix.nonsing_inv_mul A hAu, one_mul] at this
+    have h0 : Q.map (frobenius C l) *ᵥ v = 0 := Matrix.eq_zero_of_mulVec_eq_zero hA hv
     have := hsupp (Set.range a) v (fun i hi => by
       have hi' : i ∈ I := (hmemI i).mpr hi
       have h2 := congrFun h0 i
@@ -187,10 +181,7 @@ theorem echelon_projector_frobenius (l : ℕ) [Fact l.Prime] (C : Type) [Field C
     have h2 := Submodule.finrank_add_eq_of_isCompl hc
     have h3 := Submodule.finrank_mono hkerW
     omega
-  have hex : ∀ j, ∃ w, Matrix.toLin' M w = P (Pi.single j 1) := fun j => by
-    have : P (Pi.single j 1) ∈ LinearMap.range (Matrix.toLin' M) := hrange ▸ hPN _
-    exact this
-  choose lam hlam using hex
+  choose lam hlam using fun j => LinearMap.mem_range.mp (hrange ▸ hPN (Pi.single j 1))
   refine ⟨I, Q, Matrix.of fun k j => lam j k, hYQ, fun v hv => ?_, hrow, hcol, ?_⟩
   · rw [hQv]; exact Submodule.projection_apply_of_mem_left hc ((hmemN v).mpr hv)
   · ext i j
@@ -347,7 +338,7 @@ theorem perfectRing_tilt_fraction_field (l : ℕ) [Fact l.Prime] : PerfectRing (
   obtain ⟨a', rfl⟩ := surjective_frobenius (OCb l) l a
   obtain ⟨b', rfl⟩ := surjective_frobenius (OCb l) l b
   exact ⟨algebraMap (OCb l) (Cb l) a' / algebraMap (OCb l) (Cb l) b', by
-    simp [frobenius_def, div_pow, map_pow]⟩
+    simp [frobenius_def, map_pow]⟩
 
 theorem constantCoeff_frobW (l : ℕ) [Fact l.Prime] (x : WCb l) :
     WittVector.constantCoeff (frobW l x) = frobenius (Cb l) l (WittVector.constantCoeff x) :=

@@ -383,7 +383,7 @@ open Formalism.GaloisIrreducibility (IsSubSum)
 
 theorem exists_le_map_eq {α β : Type*} [DecidableEq β] (f : α → β) (t : Multiset α) :
     ∀ s : Multiset β, s ≤ t.map f → ∃ u ≤ t, u.map f = s := by
-  first | exact Bl.general_b_fact_right_rest.goal1 .. | (apply Bl.general_b_fact_right_rest.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_right_rest.goal1 <;> assumption) | (apply @Bl.general_b_fact_right_rest.goal1 <;> assumption) | (intros; apply @Bl.general_b_fact_right_rest.goal1 <;> assumption) | (apply @Bl.general_b_fact_right_rest.goal1 <;> first | assumption | infer_instance) | exact @Bl.general_b_fact_right_rest.goal1 α β ‹_› f t s ‹_› | exact @Bl.general_b_fact_right_rest.goal1 α β ‹_› f t s | exact @Bl.general_b_fact_right_rest.goal1 α β ‹_› f t | exact @Bl.general_b_fact_right_rest.goal1 α β ‹_› f | exact @Bl.general_b_fact_right_rest.goal1 α β ‹_› | exact @Bl.general_b_fact_right_rest.goal1 α β | exact @Bl.general_b_fact_right_rest.goal1 α
+  first | (apply Bl.general_b_fact_right_rest.goal1 <;> assumption) | exact @Bl.general_b_fact_right_rest.goal1 α β ‹_› f t s ‹_› | exact @Bl.general_b_fact_right_rest.goal1 α β ‹_› f t s | exact @Bl.general_b_fact_right_rest.goal1 α β ‹_› f t | exact @Bl.general_b_fact_right_rest.goal1 α β ‹_› f | exact @Bl.general_b_fact_right_rest.goal1 α β ‹_› | exact @Bl.general_b_fact_right_rest.goal1 α β | exact @Bl.general_b_fact_right_rest.goal1 α
 
 theorem divisor_degree_subsum : DivisorDegreeSubSum := by
   classical
@@ -446,8 +446,6 @@ theorem card_fixed_ge (β : Type) [Fintype β] [DecidableEq β] (hβ : 1 ≤ Fin
     rw [← Fintype.card_perm, ← Finset.card_univ]
     first
     | exact Finset.card_filter_add_card_filter_not _
-    | exact Finset.filter_card_add_filter_neg_card_eq_card _
-    | exact Finset.card_filter_add_card_filter_neg _
   have hneg : ((univ : Finset (Equiv.Perm β)).filter (fun s => ¬ ∃ x, s x = x)).card =
       Fintype.card (derangements β) := by
     rw [Fintype.card_subtype]
@@ -846,11 +844,9 @@ theorem primeToPart_unique {M : Type} [Monoid M] {l : ℕ} (hl : l.Prime) {x z :
   have hφz : 0 < Nat.totient oz := by
     first
     | exact Nat.totient_pos.2 hoz0
-    | exact Nat.totient_pos hoz0
   have hφm : 0 < Nat.totient m' := by
     first
     | exact Nat.totient_pos.2 hm'pos
-    | exact Nat.totient_pos hm'pos
   set j := (l ^ a) ^ Nat.totient oz with hj
   have hjz : j % oz = 1 % oz := Nat.ModEq.pow_totient hcz
   have hzj : z ^ j = z := by
@@ -915,7 +911,6 @@ private theorem ptp_lemma {M : Type} [Monoid M] {l : ℕ} (hl : l.Prime) {x : M}
   have hφm : 0 < Nat.totient (orderOf x / l ^ (orderOf x).factorization l) := by
     first
     | exact Nat.totient_pos.2 hm'pos
-    | exact Nat.totient_pos hm'pos
   have hP : primeToPart l x = x ^ ((l ^ (orderOf x).factorization l) ^
       Nat.totient (orderOf x / l ^ (orderOf x).factorization l)) := rfl
   set v := (orderOf x).factorization l with hv
@@ -1035,7 +1030,7 @@ theorem of_mul_twistedIdem {G : Type} [Group G] [Fintype G] (J : Subgroup G) (χ
   have h1 := (χ v).ne_zero
   have h2 := (χ u).ne_zero
   simp only [Equiv.coe_mulLeft, map_mul, mul_inv_rev, Units.val_mul, Units.val_inv_eq_inv_val]
-  field_simp <;> ring
+  field_simp
 
 
 
@@ -1368,7 +1363,6 @@ theorem localEstimateV_of (h : TypeSetWeight) (hC : CycleProbSum) (hS : PrimeRec
       (s := (Finset.univ : Finset (Equiv.Perm (Fin N))))
       (fun σ : Equiv.Perm (Fin N) => ∃ p ∈ σ.partition.parts, p.Prime ∧ N < 2 * p ∧ p + 3 ≤ N)
     simp only [Finset.card_univ, Fintype.card_perm, Fintype.card_fin] at hadd
-    beta_reduce at hadd
     have hQ : (Finset.univ.filter fun σ : Equiv.Perm (Fin N) =>
         ∃ p ∈ σ.partition.parts, p.Prime ∧ N < 2 * p ∧ p + 3 ≤ N) =
         Finset.univ.filter fun σ : Equiv.Perm (Fin N) =>
@@ -1817,7 +1811,7 @@ theorem propW_of (h1 : SqMassLower) (h3 : LocalEstimateII) (h4 : LocalEstimateII
     intro x hx
     by_contra hcon
     simp only [Set.mem_union, Set.mem_iUnion, not_or, not_exists, Set.mem_setOf_eq,
-      Finset.mem_univ, true_implies, forall_true_left] at hcon
+      Finset.mem_univ, true_implies] at hcon
     obtain ⟨⟨⟨⟨c1, c3⟩, c4⟩, c5⟩, c6⟩ := hcon
     have hsq : ∀ v, x v ∈ sqSet K N := by
       intro v

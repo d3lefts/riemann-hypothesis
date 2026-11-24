@@ -944,9 +944,9 @@ theorem hs_lines (hA : IsGrad ε A) (x : S7.UJ ε) (t : ℝ) (h0 : 0 ≤ tauG A 
   have hb : 0 ≤ b := hs_nonneg _
   have hc : 0 ≤ c := hs_nonneg _
   have ha1 : a ≤ 1 := by nlinarith
-  have hab : a * b ≤ 1 := by nlinarith
+  have hab : a * b ≤ 1 := by linarith
   have hc1 : 1 ≤ c := by nlinarith
-  have hbc : b ≤ c := by nlinarith [mul_le_mul_of_nonneg_right hab hc, mul_le_mul_of_nonneg_left hac hb]
+  have hbc : b ≤ c := by linarith [mul_le_mul_of_nonneg_right hab hc, mul_le_mul_of_nonneg_left hac hb]
   have hE : Real.exp t ^ 2 = Real.exp (2 * t) := by rw [← Real.exp_nat_mul]; norm_num
   have hE' : Real.exp (-t) ^ 2 ≤ Real.exp (2 * t) := by
     rw [← Real.exp_nat_mul]
@@ -1049,7 +1049,7 @@ theorem contraction (hA : IsGrad ε A) (x : S7.UJ ε) {Y : Matrix (Fin n) (Fin n
   have k1 : a * a ≤ a * (1 + b) := by nlinarith
   have k2 : 4 * (a * a) + 6 * (a * b) ≤ 6 * (a * (1 + b)) := by nlinarith
   have k3 := mul_le_mul_of_nonneg_right k2 hy
-  nlinarith
+  linarith
 
 theorem gap (g : S7.UJ ε) (hn : (n : ℝ) < hs (S7.toM g)) :
     ∃ (A' : Matrix (Fin n) (Fin n) ℂ) (α β : ℝ), IsGrad ε A' ∧ 1 ≤ β ∧ β ≤ α ∧
@@ -1091,7 +1091,7 @@ theorem gap (g : S7.UJ ε) (hn : (n : ℝ) < hs (S7.toM g)) :
   set β := Real.exp ((r : ℝ) * w) with hβ
   have hα1 : 1 < α := Real.one_lt_exp_iff.2 (by positivity)
   have hβ1 : 1 ≤ β := Real.one_le_exp (by positivity)
-  have hβα : β ≤ α := Real.exp_le_exp.2 (by nlinarith)
+  have hβα : β ≤ α := Real.exp_le_exp.2 (by linarith)
   have hαi : α⁻¹ < 1 := inv_lt_one_of_one_lt₀ hα1
   let f : ℝ → ℝ := fun s => if α ≤ s then -1 else if s ≤ α⁻¹ then 1 else 0
   have hf : ∀ s : ℝ, 0 < s → (f s = -1 ∨ f s = 0 ∨ f s = 1) ∧ f s⁻¹ = - f s := by
@@ -1200,7 +1200,7 @@ theorem cover (n : ℕ) (ε : Fin n → Bool) :
   have hapos : 0 < a := hs_Pm_pos (hA j) _
   have hb0 : 0 ≤ b := hs_nonneg _
   have hP : a * (1 + b) ≤ 20 * (n : ℝ) ^ 2 * (β / α) := by
-    have t1 : 1 + b ≤ 5 * n * β := by nlinarith [mul_le_mul hnR hβ1 zero_le_one (by linarith : (0 : ℝ) ≤ n)]
+    have t1 : 1 + b ≤ 5 * n * β := by linarith [mul_le_mul hnR hβ1 zero_le_one (by linarith : (0 : ℝ) ≤ n)]
     calc a * (1 + b) ≤ (4 * n / α) * (5 * n * β) :=
           mul_le_mul ea t1 (by linarith) (by positivity)
       _ = 20 * (n : ℝ) ^ 2 * (β / α) := by field_simp; ring
@@ -1223,10 +1223,10 @@ theorem cover (n : ℕ) (ε : Fin n → Bool) :
   have s1 : (Real.log h - Real.log n) / ((n : ℝ) + 1) ≤ large₂ - Real.log (a * (1 + b)) := by linarith
   have s2 : Real.log h - Real.log n ≤ (large₂ - Real.log (a * (1 + b))) * ((n : ℝ) + 1) := (div_le_iff₀ hN).1 s1
   rw [hE] at hlogh
-  have s3 : Real.log h ≤ -2 * ((n : ℝ) + 1) * Real.log (a * (1 + b)) := by nlinarith
+  have s3 : Real.log h ≤ -2 * ((n : ℝ) + 1) * Real.log (a * (1 + b)) := by linarith
   show 1 / (4 * ((n : ℝ) + 1)) * Real.log h ≤ -(1 / 2) * Real.log (a * (1 + b))
   rw [div_mul_eq_mul_div, one_mul, div_le_iff₀ (by positivity)]
-  nlinarith
+  linarith
 
 theorem geo : Geo := by
   intro n ε
@@ -1266,10 +1266,10 @@ theorem geo : Geo := by
     have hexp := (Real.exp_pos (2 * t)).le
     constructor
     · refine le_trans ?_ u1
-      have : (6 : ℝ)⁻¹ * Real.exp (2 * t) ≤ (3 : ℝ)⁻¹ * Real.exp (2 * t) := by nlinarith
+      have : (6 : ℝ)⁻¹ * Real.exp (2 * t) ≤ (3 : ℝ)⁻¹ * Real.exp (2 * t) := by linarith
       exact mul_le_mul_of_nonneg_right this hx0
     · refine u2.trans ?_
-      exact mul_le_mul_of_nonneg_right (by nlinarith) hx0
+      exact mul_le_mul_of_nonneg_right (by linarith) hx0
   · intro j x Y hY h0
     exact contraction (hA j) (x : S7.UJ ε) hY h0
 

@@ -221,8 +221,8 @@ theorem claim {U : Set V} {A : Γ →* (V →L[ℝ] V)} {φ : V → ℝ} (hL : P
     have hcard : (s.filter (Nr U A φ h)).card ≤ hO.toFinset.card := by
       apply Finset.card_le_card_of_injOn (fun γ => γ0⁻¹ * γ)
       · intro γ hγ
-        simp only [Finset.coe_filter, Finset.mem_filter, Set.mem_setOf_eq, Finset.mem_coe] at hγ
-        simp only [Finset.coe_filter, Set.Finite.coe_toFinset, Set.Finite.mem_toFinset, Finset.mem_coe]
+        simp only [Finset.coe_filter, Set.mem_setOf_eq] at hγ
+        simp only [Set.Finite.coe_toFinset]
         exact nr_mul hOv hγ0 hγ.2
       · intro a _ b _ hab
         exact mul_left_cancel hab
@@ -605,7 +605,7 @@ private theorem eta_succ_congr_of_coc_of_mem (H : Hyp U A φ) (hD : PDep A φ) (
       rfl)
   rw [Nat.sub_self] at e
   simp only [delG, Finset.sum_range_succ, Finset.sum_range_zero, zero_add, Finset.sum_apply,
-    Pi.add_apply, Pi.smul_apply, pow_zero, pow_one, one_smul, neg_smul, h1, h2] at e
+    Pi.smul_apply, pow_zero, pow_one, one_smul, neg_smul, h1, h2] at e
   rw [add_neg_eq_zero] at e
   exact e.symm
 
@@ -643,7 +643,7 @@ theorem pComp (hH : PHom U A φ) (hSm : PSmooth U A φ) (hD : PDep A φ) (hC : P
       apply hbd
       intro n hn
       have := apply_add_succAbove_eq_skip (ext' g) 0 i (⟨n, by omega⟩ : Fin (k + 1))
-      simp only [zero_add, Fin.val_mk] at this
+      simp only [zero_add] at this
       rw [← this]
       simp [ext', show n < k + 1 by omega]
     rw [hWk, hsum] at h0
@@ -722,8 +722,7 @@ theorem lc_dC {G : Type} [Group G] {k : ℕ} (b : (Fin (k + 1) → G) → ℝ)
   unfold bd
 
   rw [Finsupp.linearCombination_single, one_smul, map_add (f := _), map_sum]
-  simp only [map_smul, map_zsmul, Finsupp.linearCombination_single, one_smul, smul_eq_mul, zsmul_eq_mul,
-    Int.cast_pow, Int.cast_neg, Int.cast_one]
+  simp only [map_smul, Finsupp.linearCombination_single, smul_eq_mul]
   unfold dC
   rw [Fin.sum_univ_succ]
   congr 1

@@ -253,11 +253,7 @@ omit [NumberField E] [IsCMField E] in
 theorem lact_mul {Ψ : Finset (E →+* ℂ)} (γ' γ : GL (Fin r) E) (x : Frame Ψ r) :
     lact (γ' * γ) x = lact γ' (lact γ x) := by
   first
-  | exact @_root_.GlobalTheory.LeftActionFrameMul.lact_mul_frame
-  | exact _root_.GlobalTheory.LeftActionFrameMul.lact_mul_frame
   | (apply _root_.GlobalTheory.LeftActionFrameMul.lact_mul_frame <;> assumption)
-  | (intros; apply _root_.GlobalTheory.LeftActionFrameMul.lact_mul_frame <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.LeftActionFrameMul.lact_mul_frame <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.LeftActionFrameMul.lact_mul_frame ..)
 
 omit [NumberField E] [IsCMField E] in
@@ -281,11 +277,7 @@ omit [IsCMField E] in
 theorem exists_den {L : Lt E r} (hL : L.FG) :
     ∃ d : 𝓞 E, d ≠ 0 ∧ ∀ v ∈ L, ∀ a, ∃ c : 𝓞 E, (c : E) = (d : E) * v a := by
   first
-  | exact @_root_.GlobalTheory.CommonDenominatorExistence.exists_common_denominator
-  | exact _root_.GlobalTheory.CommonDenominatorExistence.exists_common_denominator
   | (apply _root_.GlobalTheory.CommonDenominatorExistence.exists_common_denominator <;> assumption)
-  | (intros; apply _root_.GlobalTheory.CommonDenominatorExistence.exists_common_denominator <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.CommonDenominatorExistence.exists_common_denominator <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.CommonDenominatorExistence.exists_common_denominator ..)
 
 theorem eq_zero_of_small (X : Data E r) (c : 𝓞 E) (h : ∀ τ : X.Ψ, ‖τ.1 (c : E)‖ < 1) : c = 0 := by
@@ -1054,7 +1046,6 @@ theorem exists_mean {K V : Type} [Group K] [TopologicalSpace K] [IsTopologicalGr
       intro t
       rw [← setIntegral_comp_of_stable hS.measurableSet (hν t) (hAS t) hkF]
       refine setIntegral_congr_fun hS.measurableSet fun x hx => ?_
-      beta_reduce
       rw [← hkA t x hx]
       have := hχ0 t
       field_simp
@@ -1214,7 +1205,6 @@ theorem integral_mul_ortho (la : Wt X.Ψ r) {x₀ : Frame X.Ψ r}
       linear_combination (-κ (X.lmulC (T t) x) x₀) * h1)
   rw [← hGI, ← integral_mul_const, ← integral_mul_const]
   refine setIntegral_congr_fun hS.measurableSet fun x hx => ?_
-  beta_reduce
   rw [mul_assoc, key x (hSU hx), hG0', mul_assoc]
 
 end GlobalTheory.SW.Repro
@@ -1244,7 +1234,6 @@ theorem kern_reproducing : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   have hI : ∫ x in slab X δ, κ x₀ x * κ x x₀ = ((∫ x in slab X δ, ‖κ x₀ x‖ ^ 2 : ℝ) : ℂ) := by
     rw [← integral_complex_ofReal]
     refine setIntegral_congr_fun hS.measurableSet fun x hx => ?_
-    beta_reduce
     rw [hsym x₀ hx₀' x (hSU hx), Complex.mul_conj']
     push_cast
     rfl
@@ -1288,13 +1277,11 @@ theorem kern_reproducing : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     rw [← setIntegral_comp_of_stable hS.measurableSet hu1 hu2 (f := fun x => κ x' x * F x)
       (((hcont x' hx'').mul (hF.continuousOn.mono hSU)).aestronglyMeasurable hS.measurableSet)]
     refine setIntegral_congr_fun hS.measurableSet fun x hx => ?_
-    beta_reduce
     rw [← hinv u huu x₀ hx₀' x (hSU hx), hux]
   have h3 : ∫ x in slab X δ, κ (rmul x' b) x * F x =
       bchar (wtOf X hr c c' n) b * ∫ x in slab X δ, κ x' x * F x := by
     rw [← integral_const_mul]
     refine setIntegral_congr_fun hS.measurableSet fun x hx => ?_
-    beta_reduce
     rw [(hhol x (hSU hx)).2 x' hx'' b hb, mul_assoc]
   rw [h2, hI, hux, hre] at key
   have hk1 : ((κ x₀ x₀).re : ℂ) ≠ 0 := Complex.ofReal_ne_zero.2 hk0.ne'

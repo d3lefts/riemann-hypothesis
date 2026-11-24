@@ -117,7 +117,7 @@ lemma rsm_gauss_total (N : ℕ) :
     ∫ z : EuclideanSpace ℂ (Fin N), Real.exp (-‖z‖ ^ 2) = Real.pi ^ N := by
   have h := GaussianFourier.integral_rexp_neg_mul_sq_norm (V := EuclideanSpace ℂ (Fin N)) one_pos
   simp only [neg_mul, one_mul, div_one] at h
-  first | rw [h] | erw [h]
+  first | rw [h]
   rw [rsm_finrank, show ((↑(2 * N) : ℝ) / 2) = ((N : ℕ) : ℝ) by push_cast; ring, Real.rpow_natCast]
 
 lemma rsm_gauss_integrable (N : ℕ) :
@@ -344,7 +344,7 @@ theorem sq_norm_zero_le_gauss_ball {N : ℕ} (F : EuclideanSpace ℂ (Fin N) →
       Real.exp (-‖z‖ ^ 2) * ‖F z‖ ^ 2 := by
     intro θ
     refine rsm_rot_int N F _ ?_ _
-    first | simp | simp [norm_circleMap_zero] | simp [abs_circleMap_zero]
+    first | simp
   have hswap : ∫ z in closedBall (0 : EuclideanSpace ℂ (Fin N)) (Real.sqrt (2 * N)),
         ∫ θ in Ioc (0 : ℝ) (2 * Real.pi), Real.exp (-‖z‖ ^ 2) * ‖F (circleMap 0 1 θ • z)‖ ^ 2
       = ∫ θ in Ioc (0 : ℝ) (2 * Real.pi), ∫ z in closedBall (0 : EuclideanSpace ℂ (Fin N)) (Real.sqrt (2 * N)),
@@ -355,7 +355,7 @@ theorem sq_norm_zero_le_gauss_ball {N : ℕ} (F : EuclideanSpace ℂ (Fin N) →
           Real.exp (-‖z‖ ^ 2) * ‖F (circleMap 0 1 θ • z)‖ ^ 2
       = ∫ z in closedBall (0 : EuclideanSpace ℂ (Fin N)) (Real.sqrt (2 * N)),
           ‖F z‖ ^ 2 * Real.exp (-‖z‖ ^ 2) := by
-    first | rw [integral_const_mul] | rw [integral_mul_left]
+    first | rw [integral_const_mul]
     rw [hswap]
     simp only [hJθ]
     rw [← intervalIntegral.integral_of_le hpi.le, intervalIntegral.integral_const, smul_eq_mul, sub_zero,
@@ -367,7 +367,7 @@ theorem sq_norm_zero_le_gauss_ball {N : ℕ} (F : EuclideanSpace ℂ (Fin N) →
         ‖F 0‖ ^ 2 * Real.exp (-‖z‖ ^ 2)
       = ‖F 0‖ ^ 2 * ∫ z in closedBall (0 : EuclideanSpace ℂ (Fin N)) (Real.sqrt (2 * N)),
         Real.exp (-‖z‖ ^ 2) := by
-    first | rw [integral_const_mul] | rw [integral_mul_left]
+    first | rw [integral_const_mul]
   have hmono : ∫ z in closedBall (0 : EuclideanSpace ℂ (Fin N)) (Real.sqrt (2 * N)),
         ‖F 0‖ ^ 2 * Real.exp (-‖z‖ ^ 2)
       ≤ ∫ z in closedBall (0 : EuclideanSpace ℂ (Fin N)) (Real.sqrt (2 * N)),
@@ -387,7 +387,7 @@ theorem sq_norm_zero_le_gauss_ball {N : ℕ} (F : EuclideanSpace ℂ (Fin N) →
       2 * ∫ z in Metric.closedBall (0 : EuclideanSpace ℂ (Fin N)) (Real.sqrt (2 * N)),
         ‖F z‖ ^ 2 * Real.exp (-‖z‖ ^ 2) := by linarith
   rw [div_mul_eq_mul_div]
-  first | exact (le_div_iff₀ hp).mpr h3 | exact (le_div_iff hp).mpr h3
+  first | exact (le_div_iff₀ hp).mpr h3
 
 end ReciprocityTheory.ChartRestriction.G.I2
 end -- clump:auto
@@ -410,12 +410,6 @@ variable {ι : Type} [Fintype ι]
 lemma lemS_finrank : Module.finrank ℝ (EuclideanSpace ℂ ι) = 2 * Fintype.card ι := by
   first
   | rw [← Module.finrank_mul_finrank ℝ ℂ (EuclideanSpace ℂ ι), Complex.finrank_real_complex,
-      finrank_euclideanSpace]
-  | rw [← FiniteDimensional.finrank_mul_finrank ℝ ℂ (EuclideanSpace ℂ ι),
-      Complex.finrank_real_complex, finrank_euclideanSpace]
-  | (rw [(WithLp.linearEquiv 2 ℝ (ι → ℂ)).finrank_eq, Module.finrank_pi_fintype]
-     simp [Complex.finrank_real_complex, mul_comm])
-  | simp [← Module.finrank_mul_finrank ℝ ℂ (EuclideanSpace ℂ ι), Complex.finrank_real_complex,
       finrank_euclideanSpace]
 
 theorem lemS_local (q : ℕ) (hq : 1 ≤ q) (F : EuclideanSpace ℂ ι → ℂ) (hF : Differentiable ℂ F)
@@ -465,7 +459,7 @@ theorem lemS_local (q : ℕ) (hq : 1 ≤ q) (F : EuclideanSpace ℂ ι → ℂ) 
       field_simp
     have hadd : ‖v0 + w z‖ ^ 2 = ‖v0‖ ^ 2 + 2 * (inner ℂ v0 (w z)).re + ‖w z‖ ^ 2 := by
       rw [norm_add_sq (𝕜 := ℂ)]
-      first | rfl | simp
+      first | rfl
     have hre : (-((q * Real.pi : ℝ) : ℂ) * inner ℂ v0 (w z)).re =
         -(q * Real.pi) * (inner ℂ v0 (w z)).re := by
       simp only [Complex.mul_re, Complex.neg_re, Complex.neg_im, Complex.ofReal_re, Complex.ofReal_im]
@@ -499,7 +493,7 @@ theorem lemS_local (q : ℕ) (hq : 1 ≤ q) (F : EuclideanSpace ℂ ι → ℂ) 
     by_cases hzb : z ∈ Metric.closedBall (0 : EuclideanSpace ℂ (Fin (Fintype.card ι))) ρ
     · rw [Set.indicator_of_mem hzb, Set.indicator_of_mem ((hmem z).2 hzb), key z]
     · have h2 : v0 + w z ∉ Metric.closedBall v0 (ρ / s) := fun h => hzb ((hmem z).1 h)
-      simp [Set.indicator_apply, hzb, h2]
+      simp [hzb, h2]
   have hC : ∫ z, (Metric.closedBall v0 (ρ / s)).indicator Hf (v0 + w z) =
       s ^ (2 * Fintype.card ι) * ∫ u, (Metric.closedBall v0 (ρ / s)).indicator Hf u := by
     set h := (Metric.closedBall v0 (ρ / s)).indicator Hf
@@ -560,7 +554,6 @@ lemma lemS_pack (hP : Ext.PackingCount) (S : Finset (EuclideanSpace ℂ ι)) (δ
     (S.card : ℝ) ≤ (1 + 4 * ρ / δ) ^ (2 * Fintype.card ι) := by
   have hr : Module.finrank ℝ (EuclideanSpace ℂ ι) = 2 * Fintype.card ι := by
     first
-      | rw [Module.finrank_real_of_complex, finrank_euclideanSpace]
       | rw [finrank_real_of_complex, finrank_euclideanSpace]
   let e := ((stdOrthonormalBasis ℝ (EuclideanSpace ℂ ι)).reindex (finCongr hr)).repr
   let P := S.map ⟨e, e.injective⟩
@@ -588,9 +581,8 @@ lemma lemS_pack (hP : Ext.PackingCount) (S : Finset (EuclideanSpace ℂ ι)) (δ
       obtain ⟨a, ha, rfl⟩ := Finset.mem_map.1 hx
       obtain ⟨b, hb, rfl⟩ := Finset.mem_map.1 hy
       have hab : a ≠ b := fun h => hxy (by rw [h])
-      simp only [Function.Embedding.coeFn_mk, LinearIsometryEquiv.dist_map, dist_eq_norm]
+      simp only [Function.Embedding.coeFn_mk, dist_eq_norm]
       first
-        | exact hsep a ha b hb hab
         | (rw [← map_sub, LinearIsometryEquiv.norm_map]; exact hsep a ha b hb hab)
     have hPc := hP (2 * Fintype.card ι) P δ (max δ ρ) hδ hR hnorm hsep'
     rw [hcard] at hPc
@@ -604,7 +596,6 @@ lemma lemS_pack (hP : Ext.PackingCount) (S : Finset (EuclideanSpace ℂ ι)) (δ
     refine hPc.trans ?_
     first
       | exact pow_le_pow_left₀ (by positivity) hle _
-      | exact pow_le_pow_left (by positivity) hle _
 
 lemma firstMinimum_le_norm (Y : GT ι) {x : EuclideanSpace ℂ ι} (hx : x ∈ lat Y.b) (hne : x ≠ 0) :
     Y.la1 ≤ ‖x‖ := by
@@ -631,7 +622,6 @@ lemma firstMinimum_pos (Y : GT ι) (hN : 0 < Fintype.card ι) : 0 < Y.la1 := by
 
 lemma lemS_Hf_eq_inner (w v : EuclideanSpace ℂ ι) : Hf w v = inner ℂ v w := by
   simp only [Hf, PiLp.inner_apply, RCLike.inner_apply]
-  all_goals (refine Finset.sum_congr rfl fun i _ => ?_; ring)
 
 lemma lemS_periodic (Y : GT ι) (q : ℕ) {F : EuclideanSpace ℂ ι → ℂ} (hF : F ∈ Y.Sec q)
     {γ : EuclideanSpace ℂ ι} (hγ : γ ∈ lat Y.b) (v : EuclideanSpace ℂ ι) :
@@ -645,15 +635,12 @@ lemma lemS_periodic (Y : GT ι) (q : ℕ) {F : EuclideanSpace ℂ ι → ℂ} (h
     rw [lemS_Hf_eq_inner]
     first
       | exact_mod_cast inner_self_eq_norm_sq_to_K (𝕜 := ℂ) γ
-      | (rw [inner_self_eq_norm_sq_to_K]; simp)
-      | (rw [inner_self_eq_norm_sq_to_K]; norm_cast)
   have hA : ∀ z : ℂ, ((q : ℂ) * (Real.pi : ℂ) * z + (q : ℂ) * (Real.pi : ℂ) * ((‖γ‖ ^ 2 : ℝ) : ℂ) / 2).re =
       q * Real.pi * z.re + q * Real.pi * ‖γ‖ ^ 2 / 2 := by
     intro z
     simp
     first
       | (left; rw [← Complex.ofReal_pow, Complex.ofReal_re])
-      | ring
   have key : Real.exp (q * Real.pi * (Hf v γ).re + q * Real.pi * ‖γ‖ ^ 2 / 2) ^ 2 *
       Real.exp (-(q * Real.pi) * (‖v‖ ^ 2 + 2 * (Hf v γ).re + ‖γ‖ ^ 2)) =
         Real.exp (-(q * Real.pi) * ‖v‖ ^ 2) := by

@@ -303,7 +303,7 @@ private theorem prod_factorial_add_single_one_eq_succ_mul_prod_factorial (B : κ
     refine Finset.prod_congr rfl fun y hy => ?_
     have hyx : y ≠ x := Finset.ne_of_mem_erase hy
     have hxy : x ≠ y := Ne.symm hyx
-    simp [Finsupp.single_apply, hxy]
+    simp [hxy]
   rw [h2]
   simp [Nat.factorial_succ]
   ring
@@ -326,7 +326,7 @@ private theorem pairing_X_mul_eq_pairing_pderiv (x : κ) (F G : MvPolynomial κ 
         ext y
         by_cases hy : x = y
         · subst hy; simp; omega
-        · simp [Finsupp.single_apply, hy]
+        · simp [hy]
       have hAx : (A - Finsupp.single x 1 : κ →₀ ℕ) x + 1 = A x := by simp; omega
       have hf : (A.prod fun _ e => (e.factorial : C)) =
           ((A x : ℕ) : C) * ((A - Finsupp.single x 1).prod fun _ e => (e.factorial : C)) := by
@@ -1180,7 +1180,7 @@ def homPart (N : ℕ) (S : MvPowerSeries κ C) : MvPolynomial κ C :=
 theorem coeff_homPart (N : ℕ) (S : MvPowerSeries κ C) (A : κ →₀ ℕ) :
     AddMonoidAlgebra.coeff (homPart N S) A =
       if ∑ q, A q = N then MvPowerSeries.coeff A S else 0 := by
-  simp [homPart, MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial,
+  simp [homPart, MvPolynomial.coeff_monomial,
     Finset.mem_finsuppAntidiag]
 
 omit [DecidableEq κ] in
@@ -1267,7 +1267,7 @@ theorem aeval_cayDet (C : Type) [Field C] (l L E n : ℕ) (hl : (l : C) ≠ 0) :
   simp only [AlgHom.mapMatrix_apply, Matrix.map_apply, Matrix.mvPolynomialX_apply,
     MvPolynomial.aeval_X, map_mul, map_pow, MvPolynomial.rename_C, MvPolynomial.rename_X,
     Matrix.smul_apply, RingHom.mapMatrix_apply, Matrix.of_apply, map_sub, MvPolynomial.map_X,
-    MvPolynomial.map_C, smul_eq_mul, map_neg, map_natCast] at h ⊢
+    smul_eq_mul, map_neg, map_natCast] at h ⊢
   linear_combination (-MvPolynomial.X (Sum.inr (b, c))) * h
 
 open ReciprocityTheory.ChartRestriction.G.Sh.PowerSeriesCoeffGaps in
@@ -1560,7 +1560,7 @@ theorem constantCoeff_hP (l i n : ℕ) (h1 : MvPowerSeries (PVar n) C) (h : HM2 
 theorem weight_sum (n : ℕ) (α : PVar n →₀ ℕ) (a b : ℝ) :
     α.sum (fun j e => Sum.elim (fun _ => a) (fun _ => b) j * (e : ℝ)) = (degL α : ℝ) * a + (degR α : ℝ) * b := by
   rw [Finsupp.sum_fintype _ _ (by simp), Fintype.sum_sum_type, degL, degR]
-  simp only [Sum.elim_inl, Sum.elim_inr, Fintype.sum_prod_type, Nat.cast_sum, Finset.sum_mul, mul_comm]
+  simp only [Sum.elim_inl, Sum.elim_inr, Fintype.sum_prod_type, Nat.cast_sum, mul_comm]
   simp only [Finset.mul_sum]
 
 theorem lambdaFactor_zero_eq_one [CharZero C] (l i : ℕ) (h1 : MvPowerSeries (PVar 0) C) (y : ℕ) : LamP C l i 0 h1 y = 1 := by

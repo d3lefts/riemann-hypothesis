@@ -140,8 +140,6 @@ lemma isIntegral_algebraMap_O (F : IntermediateField ℚ ℂ) (o : 𝓞 F) :
     IsIntegral ℤ (algebraMap (𝓞 F) ℂ o) := by
   first
     | exact (NumberField.RingOfIntegers.isIntegral o).algebraMap
-    | exact IsIntegral.algebraMap o.isIntegral_coe
-    | exact (o.isIntegral_coe).map (IsScalarTower.toAlgHom ℤ F ℂ)
 
 lemma lunit_of (F : IntermediateField ℚ ℂ) {α β u : ℂ} {k l : ℕ} (hα : α ≠ 0) (hβ : β ≠ 0) (hu : u ≠ 0)
     (hl : ¬ l ∣ k)
@@ -388,7 +386,7 @@ lemma vol_std_ne_bot {a : ℕ} {b : ℤ} {d : ℕ} {ha : 0 < a} {hd : 0 < d} {la
   · have hD : (Matrix.of fun (j i : m) => if i = j then lam * (a : ℂ) else 0) =
         Matrix.diagonal (fun _ => lam * (a : ℂ)) := by
       ext i j
-      by_cases h : i = j <;> simp [Matrix.diagonal_apply, h, eq_comm]
+      by_cases h : i = j <;> simp [h, eq_comm]
     rw [hD, Matrix.det_diagonal, Finset.prod_const]
     exact pow_ne_zero _ (mul_ne_zero hlam (by exact_mod_cast ha.ne'))
 
@@ -765,7 +763,7 @@ theorem conj_entry_int {a₀ : ℕ} {b₀ c₀ : ℤ} {dK : ℕ} {ha : 0 < a₀}
     · subst hi; simp
     · simp [Pi.single_eq_of_ne hi]
   rw [hsingle, ← Nat.cast_smul_eq_nsmul ℂ, ← Nat.cast_smul_eq_nsmul ℂ] at hmk
-  simp only [map_smul, LinearEquiv.map_smul, Pi.smul_apply, smul_eq_mul] at hmk
+  simp only [map_smul, Pi.smul_apply, smul_eq_mul] at hmk
   have hω1 : (cmL a₀ b₀ dK ha hdK lam hlam).ω₁ = lam * (a₀ : ℂ) := rfl
   have hω2 : (cmL a₀ b₀ dK ha hdK lam hlam).ω₂ = lam * cmTheta b₀ dK := rfl
   rw [hω1, hω2, cmTheta] at hmk
@@ -920,8 +918,8 @@ theorem gram_G (L : PeriodPair) {n : Type} [Fintype n] [DecidableEq n] (h : Matr
       (((area L : ℝ) : ℂ)⁻¹ • (1 : Matrix (Fin 4 × n) (Fin 4 × n) ℂ)) u w := by
     by_cases huw : u = w
     · subst huw
-      simp [Pi.single_apply, Matrix.one_apply]
-    · simp [Pi.single_apply, Matrix.one_apply, huw]
+      simp [Pi.single_apply]
+    · simp [Pi.single_apply, huw]
       intro hi
       exact absurd hi.symm huw
   rw [hl] at h1

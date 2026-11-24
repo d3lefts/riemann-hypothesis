@@ -181,7 +181,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.heckeChar_value_split_prime_not_root_of_unity : ∀ (D : D7) (χ : (AE D)ˣ →* Circle), IsHeckeChar D χ → (∀ τ : D.what₂.Tau, ∃ a : ℚ, a ≠ 0 ∧ HasInfExp D χ τ a) → ∀ p : ℕ, GlobalTheory.IndefiniteRowSideFullHecke.IteratedLiftChains.SplitsCompletely D p → ∀ w : HeightOneSpectrum (𝓞 D.host.E), (p : 𝓞 D.host.E) ∈ w.asIdeal → GlobalTheory.LFun.UnrAt χ w → ¬ IsOfFinOrder (GlobalTheory.LFun.val (F := D.host.F) χ w) := by
-  first | exact @GlobalTheory.SplitValueAdelic.not_isOfFinOrder_val | exact GlobalTheory.SplitValueAdelic.not_isOfFinOrder_val | (intros; apply GlobalTheory.SplitValueAdelic.not_isOfFinOrder_val <;> assumption)
+  first | exact @GlobalTheory.SplitValueAdelic.not_isOfFinOrder_val
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HeckeCharValueSplitPrimeNotRootOfUnityStatement =====
@@ -240,7 +240,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.heckeCharQuotient_ne_one_completelySplitPrime : ∀ (D : D7) (c : Com D), c.Is → ∀ i j : ℕ, 1 ≤ i → i < j → j ≤ D.R.m → ∀ p : ℕ, GlobalTheory.IndefiniteRowSideFullHecke.IteratedLiftChains.SplitsCompletely D p → ∀ w : HeightOneSpectrum (𝓞 D.host.E), (p : 𝓞 D.host.E) ∈ w.asIdeal → w.under (𝓞 D.host.F) ∉ c.S → GlobalTheory.LFun.val (F := D.host.F) (c.μ i * (c.μ j)⁻¹) w ≠ 1 := by
-  first | exact @GlobalTheory.ChainOnto.QuotVal.val_quot_ne_one | exact GlobalTheory.ChainOnto.QuotVal.val_quot_ne_one | (intros; apply GlobalTheory.ChainOnto.QuotVal.val_quot_ne_one <;> assumption)
+  first | exact @GlobalTheory.ChainOnto.QuotVal.val_quot_ne_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HeckeCharQuotientNeOneCompletelySplitPrimeStatement =====
@@ -288,7 +288,7 @@ theorem small_entries_and_strings_avoid_excluded : ∀ (K : Type) [Field K] [Num
         linarith
       linarith
   · intro x hx1 hxne β hβ heq
-    simp only [GlobalTheory.LFun.seg, Multiset.mem_map, Finset.mem_range] at hβ
+    simp only [GlobalTheory.LFun.seg, Multiset.mem_map] at hβ
     obtain ⟨i, -, rfl⟩ := hβ
     set c : ℂ := (k : ℂ) / 2 - (((t : ℂ) - 1) / 2 - (i : ℂ)) with hc
     have hsplit : GlobalTheory.LFun.npow w ((k : ℂ) / 2) =
@@ -333,7 +333,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.small_entries_and_strings_avoid_excluded_norm_powers : ∀ (K : Type) [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K)) (r t : ℕ), r + 2 ≤ t → ∀ k ∈ ({(t : ℤ) - 1, 1 - (t : ℤ), (t : ℤ) + 1, -((t : ℤ) + 1)} : Set ℤ), (∀ β : ℂ, β ≠ 0 → ‖β‖ ≤ ((Ideal.absNorm w.asIdeal : ℕ) : ℝ) ^ ((r : ℝ) / 2) → ‖β⁻¹‖ ≤ ((Ideal.absNorm w.asIdeal : ℕ) : ℝ) ^ ((r : ℝ) / 2) → β ≠ GlobalTheory.LFun.npow w ((k : ℂ) / 2)) ∧ ∀ x : ℂˣ, ‖(x : ℂ)‖ = 1 → x ≠ 1 → ∀ β ∈ GlobalTheory.LFun.seg w x t, (β : ℂ) ≠ GlobalTheory.LFun.npow w ((k : ℂ) / 2) := by
-  first | exact @GlobalTheory.RkNs.small_entries_and_strings_avoid_excluded | exact GlobalTheory.RkNs.small_entries_and_strings_avoid_excluded | (intros; apply GlobalTheory.RkNs.small_entries_and_strings_avoid_excluded <;> assumption)
+  first | exact @GlobalTheory.RkNs.small_entries_and_strings_avoid_excluded
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SmallEntriesAndStringsAvoidExcludedNormPowersStatement =====
@@ -414,7 +414,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.chain_each_step_splitPlace_without_excludedParams : ∀ D : D7, ChainNS D := by
-  first | exact @GlobalTheory.ChainNS.chainNS_holds | exact GlobalTheory.ChainNS.chainNS_holds | (intros; apply GlobalTheory.ChainNS.chainNS_holds <;> assumption)
+  first | exact @GlobalTheory.ChainNS.chainNS_holds
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ChainEachStepSplitPlaceWithoutExcludedParamsStatement =====
@@ -491,7 +491,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.LiftRows (Given)
 
 theorem _root_.GlobalTheory.T.twistedThetaChain_step_adjoint_scalar : ∀ D : D7, SoftQ D → UpParQ D → UpQ D → QOfVal D → UpVal D → StepExactNS D → LFull D → Restore D → StepLam D := by
-  first | exact @GlobalTheory.ChainTw.stepLam_of_ns | exact GlobalTheory.ChainTw.stepLam_of_ns | (intros; apply GlobalTheory.ChainTw.stepLam_of_ns <;> assumption)
+  first | exact @GlobalTheory.ChainTw.stepLam_of_ns
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.TwistedThetaChainStepAdjointScalarStatement =====

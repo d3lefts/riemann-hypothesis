@@ -81,7 +81,7 @@ theorem _root_.GlobalTheory.T.level_quotient_module_surjection : ∀ (p : ℕ) [
     ∃ g : D.La →+ (Fin (D.m * D.n) → 𝓞 D.F ⧸ w0 ^ r), Function.Surjective g ∧
       (∀ (c : 𝓞 D.F) (x : D.La), g (algebraMap (𝓞 D.F) D.O c • x) = Ideal.Quotient.mk (w0 ^ r) c • g x) ∧
       ∀ x, g x = 0 ↔ x ∈ GlobalTheory.UPel.HT.EtLev.wSub D w0 r := by
-  first | (exact @GlobalTheory.UPel.HT.EtLev.latQuot_free) | (exact GlobalTheory.UPel.HT.EtLev.latQuot_free) | (intros; apply GlobalTheory.UPel.HT.EtLev.latQuot_free <;> assumption)
+  first | (exact @GlobalTheory.UPel.HT.EtLev.latQuot_free)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelQuotientModuleSurjection =====
@@ -148,7 +148,7 @@ theorem toPi_E (a i j : ι) (x : N) : U.toPi a (U.E i j x) = Pi.single i (U.toPi
   rw [toPi_apply, U.apply_apply]
   by_cases h : k = i
   · subst h; simp [toPi_apply]
-  · simp [h, Pi.single_apply]
+  · simp [h]
 
 end MatrixUnits
 
@@ -161,7 +161,7 @@ def stdUnits (M : Type*) [AddCommGroup M] [Module R M] : MatrixUnits R (ι → M
     · simp [h, Pi.single_apply]
   sum_diag := by
     ext x m
-    simp [LinearMap.sum_apply, Finset.sum_apply, Pi.single_apply]
+    simp [Finset.sum_apply, Pi.single_apply]
 
 end GlobalTheory.Morita
 
@@ -361,7 +361,7 @@ theorem morita_local : ∀ (R : Type) [CommRing R] (I : Ideal R), IsLocalRing (R
     funext l
     by_cases hl : l = i
     · subst hl; simp
-    · simp [Pi.single_apply, hl]
+    · simp [hl]
   have hΦO : ∀ (o : O) (x : M), Φ (o • x) = o • Φ x := by
     intro o x
     choose r hr using fun i j => Ideal.Quotient.mk_surjective (I := I) (φ o i j)
@@ -395,7 +395,7 @@ theorem _root_.GlobalTheory.T.morita_nonempty_equiv_of_local_quotient_matrix : �
     ∀ (M N : Type) [AddCommGroup M] [Module O M] [Module R M] [IsScalarTower R O M]
       [AddCommGroup N] [Module O N] [Module R N] [IsScalarTower R O N],
     (M ≃ₗ[R] (Fin (m * k) → R ⧸ I)) → (N ≃ₗ[R] (Fin (m * k) → R ⧸ I)) → Nonempty (M ≃ₗ[O] N) := by
-  first | (exact @GlobalTheory.MoritaLocal.morita_local) | (exact GlobalTheory.MoritaLocal.morita_local) | (intros; apply GlobalTheory.MoritaLocal.morita_local  <;> assumption)
+  first | (exact @GlobalTheory.MoritaLocal.morita_local)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MoritaNonemptyEquivOfLocalQuotientMatrixStatement =====
@@ -554,7 +554,7 @@ theorem _root_.GlobalTheory.T.order_surjects_matrix_algebra_mod_prime_power : �
     (p : 𝓞 D.F) ∈ w0 →
     ∃ φ : D.O →ₐ[𝓞 D.F] Matrix (Fin D.m) (Fin D.m) (𝓞 D.F ⧸ w0 ^ r), Function.Surjective φ ∧
       ∀ b, φ b = 0 → b ∈ (w0 ^ r) • (⊤ : Submodule (𝓞 D.F) D.O) := by
-  first | (exact @GlobalTheory.UPel.HT.MatRed.exists_matRed) | (exact GlobalTheory.UPel.HT.MatRed.exists_matRed) | (intros; apply GlobalTheory.UPel.HT.MatRed.exists_matRed <;> assumption)
+  first | (exact @GlobalTheory.UPel.HT.MatRed.exists_matRed)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrderSurjectsMatrixAlgebraModPrimePowerStatement =====

@@ -642,7 +642,7 @@ theorem _root_.GlobalTheory.T.eta_character_archimedean_formula : ∀ (F E : Typ
     _root_.UpperTheory.TP.W.GoodK σ B → ∀ η : (AF F)ˣ →* Circle, IsEtaF E η → ∀ a : (AF F)ˣ, At (evI F) ((a : AF F) - 1) →
       (η a : ℂ) = ∏ w, piInf (B.emb w) ((idFF F E a : (AF F ⊗[F] E)ˣ) : AF F ⊗[F] E) /
         ((‖piInf (B.emb w) ((idFF F E a : (AF F ⊗[F] E)ˣ) : AF F ⊗[F] E)‖ : ℝ) : ℂ) := by
-  first | exact @_root_.GlobalTheory.EtaSignReal.eta_eq_prod_sign_k | exact _root_.GlobalTheory.EtaSignReal.eta_eq_prod_sign_k | (intros; apply _root_.GlobalTheory.EtaSignReal.eta_eq_prod_sign_k <;> assumption)
+  first | exact @_root_.GlobalTheory.EtaSignReal.eta_eq_prod_sign_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -715,7 +715,7 @@ open Formalism.IndefR.DatumF
 
 theorem _root_.GlobalTheory.T.exists_hecke_character_trivial_exponent : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
     _root_.UpperTheory.TP.W.GoodK σ B → ∃ ξ : (AF F ⊗[F] E)ˣ →* Circle, IsHeckeCharF ξ ∧ HasExp B.emb ξ (fun _ => 1) := by
-  first | exact @_root_.GlobalTheory.WeilTypeChar.exists_weil_char_k | exact _root_.GlobalTheory.WeilTypeChar.exists_weil_char_k | (intros; apply _root_.GlobalTheory.WeilTypeChar.exists_weil_char_k <;> assumption)
+  first | exact @_root_.GlobalTheory.WeilTypeChar.exists_weil_char_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -817,7 +817,7 @@ theorem _root_.GlobalTheory.T.extend_character_to_norm_group : ∀ (F E : Type) 
       ∃ lam' : (AF F ⊗[F] E)ˣ →* Circle, IsHeckeCharF lam' ∧
         (∀ z : (AF F ⊗[F] E)ˣ, At (evI F) ((z : AF F ⊗[F] E) - 1) → lam' z = 1) ∧
         ∀ a, lam' (idFF F E a) = lam a := by
-  first | exact @_root_.GlobalTheory.HeckeExtend.exists_extend_hecke_k | exact _root_.GlobalTheory.HeckeExtend.exists_extend_hecke_k | (intros; apply _root_.GlobalTheory.HeckeExtend.exists_extend_hecke_k <;> assumption)
+  first | exact @_root_.GlobalTheory.HeckeExtend.exists_extend_hecke_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -915,7 +915,7 @@ open scoped TensorProduct Matrix
 
 theorem _root_.GlobalTheory.T.inert_completion_isField : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
     _root_.UpperTheory.TP.W.GoodK σ B → ∀ (v : Pl F) (w : HeightOneSpectrum (𝓞 E)), Formalism.UG.IsInertAt F E v w → IsField (Fv F v ⊗[F] E) := by
-  first | exact @_root_.GlobalTheory.InertTensorField.isField_tensor_of_isInertAt_k | exact _root_.GlobalTheory.InertTensorField.isField_tensor_of_isInertAt_k | (intros; apply _root_.GlobalTheory.InertTensorField.isField_tensor_of_isInertAt_k <;> assumption)
+  first | exact @_root_.GlobalTheory.InertTensorField.isField_tensor_of_isInertAt_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -932,7 +932,7 @@ section
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
 theorem _root_.GlobalTheory.T.nonempty_algHom_or_exists_inert_of_goodK : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
     _root_.UpperTheory.TP.W.GoodK σ B → ∀ v : Pl F, Nonempty (E →ₐ[F] Fv F v) ∨ ∃ w : HeightOneSpectrum (𝓞 E), Formalism.UG.IsInertAt F E v w := by
-  first | exact @_root_.GlobalTheory.KFinLoc.split_or_inert_k | exact _root_.GlobalTheory.KFinLoc.split_or_inert_k | (intros; apply _root_.GlobalTheory.KFinLoc.split_or_inert_k <;> assumption)
+  first | exact @_root_.GlobalTheory.KFinLoc.split_or_inert_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -1330,7 +1330,7 @@ theorem _root_.GlobalTheory.T.weil_datum_splitting_characters : ∀ (F E : Type)
         IsWeilDatumOF σ JS JT (fun w : InfinitePlace F => (B.emb w).1) ξ₀ B.ψ χS χT ω →
         IsHeckeCharF νS → IsHeckeCharF νT → ResEtaF νS 0 → ResEtaF νT 0 →
         ∃ ω', IsWeilDatumOF σ JS JT (fun w : InfinitePlace F => (B.emb w).1) ξ₀ B.ψ (χS * νS) (χT * νT) ω' := by
-  first | exact @_root_.GlobalTheory.WeilTwistF.exists_weilDatumOF_twist_k | exact _root_.GlobalTheory.WeilTwistF.exists_weilDatumOF_twist_k | (intros; apply _root_.GlobalTheory.WeilTwistF.exists_weilDatumOF_twist_k <;> assumption)
+  first | exact @_root_.GlobalTheory.WeilTwistF.exists_weilDatumOF_twist_k
 end
 end -- clump:auto
 end -- clump:auto

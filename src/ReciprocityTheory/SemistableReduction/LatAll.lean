@@ -700,7 +700,7 @@ theorem bwp_ext_poly {σ : Type*} [Fintype σ] [DecidableEq σ] (k : ℕ) (g D :
       intro t; ext i
       by_cases hi : i = m
       · subst hi; simp [z, e]
-      · simp [z, e, Function.update_apply, hi, Pi.single_apply]
+      · simp [z, e, hi]
     let Pc : ℂ → ℂ[X] := fun c => if h : D (z + c • w) = 0 then 0 else P (z + c • w) e h
     let R : Finset ℂ → ℂ[X] := fun S =>
       ∑ c ∈ S, Polynomial.C ((Lagrange.basis S id c).eval 0) * Pc c
@@ -821,15 +821,14 @@ theorem bwp_finite_det_id_line {p : ℕ} (z : Fin p × Fin p → ℂ) :
   ext i j
   by_cases h : i = j
   · subst h
-    simp [Matrix.charmatrix_apply, bwpMat, bwpId, Matrix.diagonal_apply]
+    simp [bwpMat, bwpId]
     ring
-  · simp [Matrix.charmatrix_apply, bwpMat, bwpId, Matrix.diagonal_apply, h]
+  · simp [bwpMat, bwpId, h]
 
 theorem bwp_continuous_of_matrix {p : ℕ} :
     Continuous (fun y : Fin p → Fin p → ℂ => Matrix.of y) := by
   first
     | exact continuous_id
-    | exact continuous_pi fun i => continuous_pi fun j => (continuous_apply j).comp (continuous_apply i)
 
 theorem bwp_exists_bound_unitary {p : ℕ} (P : Matrix (Fin p) (Fin p) ℂ → ℂ) (hP : IsHoloGL P) :
     ∃ C : ℝ, ∀ U ∈ Matrix.unitaryGroup (Fin p) ℂ, ‖P U‖ ≤ C := by
@@ -848,8 +847,6 @@ theorem bwp_exists_bound_unitary {p : ℕ} (P : Matrix (Fin p) (Fin p) ℂ → �
       (pi_norm_le_iff_of_nonneg zero_le_one).mpr fun j => ?_
     first
       | exact entry_norm_bound_of_unitary hU i j
-      | exact Matrix.UnitaryGroup.entry_norm_bound hU i j
-      | exact Matrix.norm_entry_le_one_of_unitary hU i j
   have hK : IsCompact S := Metric.isCompact_of_isClosed_isBounded hcl hbd
   have hsub : S ⊆ {y | (Matrix.of y).det ≠ 0} := fun y hy => by
     have h := congrArg Matrix.det (show Matrix.conjTranspose (Matrix.of y) * Matrix.of y = 1 from hy)
@@ -911,7 +908,6 @@ theorem bwp_line_poly (hH : LemmaHStatement) (hO : OnePolyGrowthStatement) {p : 
         cases s
         first
           | simp only [Function.update_self]
-          | simp only [Function.update_same]
         exact hT (x ()) b (hx ()) hb htri)
       (fun k hk => hC (k ()) (hk ())) hR (fun _ => bwpMat (z + t • v)) (fun _ => hdet)
       (fun _ j => hcol j)
@@ -974,7 +970,7 @@ theorem bwPoly_holds (hH : LemmaHStatement) (hE : ∀ n, ReciprocityTheory.L2Dba
     intro t ht
     have hb : bwpMat (t • z) = x * (t • (1 : Matrix (Fin p) (Fin p) ℂ)) := by
       ext i j
-      simp [bwpMat, hz, Matrix.mul_smul]
+      simp [bwpMat, hz]
     have hbdet : (t • (1 : Matrix (Fin p) (Fin p) ℂ)).det ≠ 0 := by
       rw [Matrix.det_smul, Matrix.det_one, mul_one]
       exact pow_ne_zero _ ht
@@ -1006,7 +1002,7 @@ theorem bwPoly_holds (hH : LemmaHStatement) (hE : ∀ n, ReciprocityTheory.L2Dba
     refine Finset.sum_congr rfl (fun j _ => ?_)
     rw [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X, mul_comm]
   have hc := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q (∑ i, a i)) hΦ
-  simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, if_pos rfl] at hc
+  simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow] at hc
   rw [Finset.sum_ite_eq] at hc
   split_ifs at hc with hk
   · exact hc.symm
@@ -1031,7 +1027,7 @@ open Filter Topology Function Metric Polynomial
 theorem entire_poly_of_growth (k : ℕ) : ∀ (g : ℂ → ℂ) (A : ℝ), Differentiable ℂ g →
     (∀ t, ‖g t‖ ≤ A * (1 + ‖t‖) ^ k) →
     ∃ P : Polynomial ℂ, P.natDegree ≤ k ∧ ∀ t, g t = P.eval t := by
-  first | exact Bl.IterateZero.goal1 .. | (apply Bl.IterateZero.goal1 <;> assumption) | (intros; apply Bl.IterateZero.goal1 <;> assumption)
+  first | (apply Bl.IterateZero.goal1 <;> assumption)
 
 theorem exists_entire_of_finite_growth (f : ℂ → ℂ) (B : Set ℂ) (A : ℝ) (k : ℕ) (hB : B.Finite)
     (hf : DifferentiableOn ℂ f Bᶜ) (hb : ∀ t ∉ B, ‖f t‖ ≤ A * (1 + ‖t‖) ^ k) :

@@ -144,7 +144,6 @@ theorem globOf : GlobOf := by
     congr 1
     first
     | exact Algebra.algebra_ext _ _ (fun x => (hcomp x).symm)
-    | exact Algebra.algebra_ext _ _ (fun x => hcomp x)
   have hp2 := hp.two_le
   haveI : FiniteDimensional (HeightOneSpectrum.adicCompletion F v) (HeightOneSpectrum.adicCompletion E w.1) :=
     Module.finite_of_finrank_pos (by omega)
@@ -290,7 +289,7 @@ private theorem cptConj_map {G H : Type} [Group G] [TopologicalSpace G] [IsTopol
   have hc := cptConj_conj h⁻¹
   have key : ∀ x : G, (MulAut.conj h⁻¹).toMonoidHom x = h⁻¹ * x * h := by
     intro x
-    simp [MulAut.conj_apply]
+    simp
   unfold GlobalTheory.BCT.cptPart
   rw [MonoidHom.map_closure, MonoidHom.map_closure]
   congr 1
@@ -328,7 +327,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.L.cptConj :
     rw [← hmap, Subgroup.mem_map]
     constructor
     · intro hx
-      exact ⟨x, hx, by simp [MulAut.conj_apply]⟩
+      exact ⟨x, hx, by simp⟩
     · rintro ⟨y, hy, hyx⟩
       have hyx' : y = (x : G) := by
         simpa [MulAut.conj_apply] using hyx
@@ -870,7 +869,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.L.sumCoset :
   by_cases hg : F g = 0
   · simp [Set.indicator_apply, hg]
   · rw [Finset.sum_eq_single (DoubleCoset.mk T K g)]
-    · simp [Set.indicator_apply]
+    · simp
     · intro b _ hb
       simp only [Set.indicator_apply, Set.mem_setOf_eq]
       rw [if_neg (fun h => hb h.symm)]

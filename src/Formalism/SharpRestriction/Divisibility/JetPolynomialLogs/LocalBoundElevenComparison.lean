@@ -81,7 +81,6 @@ lemma inv_le_gamma {l : ℕ} (hl : 3 ≤ l) : 1 / (l : ℝ) ≤ gam l := by
   have h2 : (0:ℝ) < (l:ℝ) ^ 2 - 1 := by nlinarith
   first
   | (rw [div_le_div_iff₀ h1 h2]; nlinarith)
-  | (rw [div_le_div_iff h1 h2]; nlinarith)
 
 lemma two_gamma_le_three_div {l : ℕ} (hl : 3 ≤ l) : 2 * gam l ≤ 3 / (l : ℝ) := by
   unfold gam
@@ -91,7 +90,6 @@ lemma two_gamma_le_three_div {l : ℕ} (hl : 3 ≤ l) : 2 * gam l ≤ 3 / (l : �
   rw [mul_div_assoc']
   first
   | (rw [div_le_div_iff₀ h2 h1]; nlinarith)
-  | (rw [div_le_div_iff h2 h1]; nlinarith)
 
 theorem proposition_six : PropSix7 := by
   intro l d inst hl hd hev TT k D w E hk hw hE hoff hon
@@ -209,7 +207,6 @@ lemma tsum_le_of_dominated {f g b : ℕ → ℝ} (hg0 : ∀ e, 0 ≤ g e) (hgf :
   have hg : Summable g := Summable.of_nonneg_of_le hg0 (fun e => (hgf e).trans (hfb e)) hb
   first
   | exact Summable.tsum_le_tsum hgf hg hf
-  | exact tsum_le_tsum hgf hg hf
 
 lemma least_odd_top_level_spec {d : ℕ} [NeZero d] (TT : Finset (ZMod d)) (s : ZMod d) (e : ℕ)
     (h : dTop d TT s = (e : ℕ∞)) :
@@ -226,7 +223,6 @@ lemma least_odd_top_level_spec {d : ℕ} [NeZero d] (TT : Finset (ZMod d)) (s : 
     rw [htop] at h
     first
     | exact ENat.top_ne_coe e h
-    | simp at h
   have hle : ∀ e' : ℕ, Odd e' → s + (e' : ZMod d) ∈ TT → dTop d TT s ≤ (e' : ℕ∞) := by
     intro e' h1 h2
     unfold dTop
@@ -358,9 +354,8 @@ theorem tieB_of (hB4 : ∀ (l : ℕ) [Fact l.Prime] (d : ℕ) [NeZero d] (be : M
     TieB := by
   intro l _ d _ h5 h2 he be h1 hb2 h3 h4
   obtain ⟨K0, hK0, hU⟩ := wfrac_unram (l := l) (by omega)
-  obtain ⟨ζ, hζ⟩ := exists_prim l (l ^ d - 1) (by
-    have : 1 < l ^ d := Nat.one_lt_pow (by omega) (by omega)
-    omega)
+  obtain ⟨ζ, hζ⟩ := exists_prim l (l ^ d - 1)
+    (Nat.sub_pos_of_lt (Nat.one_lt_pow (by omega) (by omega)))
   refine ⟨K0, ζ, hU, hζ, ?_⟩
   unfold BHyp
   exact ⟨fun n => hK0 _ (h1 n), torus_invariant_of_teichmuller l d be ζ hζ hb2, no_low_bidegree_of_vanishing l d be h3, hB4 l d be h3 h4⟩
@@ -430,18 +425,17 @@ theorem local_bound_eleven_comparison (L : product_zeroth_first_parts.Loc) (k : 
     Finset.sum_nonneg fun s _ => by
       unfold Formalism.DworkPowerSeriesWeights.OddLevelGainBounds.oddLevelGainSum
       exact tsum_nonneg fun e => by
-        split_ifs <;> first | exact le_max_right _ _ | exact le_rfl | positivity
+        split_ifs <;> first | exact le_max_right _ _ | exact le_rfl
   have h11 : 11 / (L.l : ℝ) * ∑ s, w s = 11 * (∑ s, w s) / (L.l : ℝ) := by ring
   unfold product_zeroth_first_parts.Loc.FD
   linarith
 
 theorem corollary_split_eleven_one (hB : TieB) (hB0 : KernelFromExponentialTwist) (hF : TieFrame) (L : product_zeroth_first_parts.Loc) (hL : L.AdmB) : L.Cor2 11 1 := by
   intro a ha k w E hk hw hE hD1 hD2
-  have hlp := local_bound_eleven_comparison L k w E hk hw hE hD1 hD2
   refine kval_mono (thmA_of hB hB0 hF L hL a ha) ?_
-  have hg := Finset.sum_le_sum (s := L.TT) fun s _ => base_term_le_top_term L s
   rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
-  linarith
+  linarith [local_bound_eleven_comparison L k w E hk hw hE hD1 hD2,
+    Finset.sum_le_sum (s := L.TT) fun s _ => base_term_le_top_term L s]
 
 theorem split_bound_eleven_one : product_zeroth_first_parts.SplitConstantsUniformBound 11 1 := by
   unfold product_zeroth_first_parts.SplitConstantsUniformBound

@@ -95,7 +95,7 @@ theorem re_form {n : ℕ} (ε : Fin n → Bool) (x : Fin n → ℂ) :
     (star x ⬝ᵥ (sgnDiag ℂ ε *ᵥ x)).re = ∑ i, (if ε i then 1 else -1) * Complex.normSq (x i) := by
   simp only [sgnDiag, Matrix.mulVec_diagonal, dotProduct, Complex.re_sum, Pi.star_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
-  split_ifs <;> simp [Complex.mul_re, Complex.normSq_apply] <;> ring
+  split_ifs <;> simp [Complex.mul_re, Complex.normSq_apply]
 
 theorem card_neg_le {n : ℕ} (ε ε' : Fin n → Bool) (M : Matrix (Fin n) (Fin n) ℂ)
     (h : Mᴴ * sgnDiag ℂ ε * M = sgnDiag ℂ ε') :
@@ -231,7 +231,7 @@ theorem permGL_diagonal (π : Equiv.Perm (Fin n)) (d : Fin n → A) :
   show ((1 : Matrix (Fin n) (Fin n) A).submatrix id π)ᵀ * Matrix.diagonal d *
     (1 : Matrix (Fin n) (Fin n) A).submatrix id π = _
   ext i j
-  simp [Matrix.mul_apply, Matrix.one_apply, Matrix.diagonal_apply, Matrix.transpose_apply]
+  simp [Matrix.mul_apply, Matrix.one_apply, Matrix.diagonal_apply]
   split_ifs with hij
   · rw [hij]
   · rfl
@@ -279,11 +279,6 @@ theorem stabArch_conj : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
         b⁻¹ * ((b' * P * b⁻¹)⁻¹ * AdelicU.matHom w.Completion σ J k * (b' * P * b⁻¹)) * b⁻¹⁻¹ ∈
           Formalism.UG.UJ (sigR w.Completion σ) 1
      rw [inv_inv, inv_inv, key, mul_mem_cancel_right hP, mul_mem_cancel_left (inv_mem hP)])
-  | (simp only [Subgroup.mem_comap, MonoidHom.coe_comp, Function.comp_apply, MulEquiv.coe_toMonoidHom,
-        MulAut.conj_apply]
-     simp only [map_mul, map_inv, inv_inv]
-     exact (mul_mem_cancel_right hP).symm.trans ((mul_mem_cancel_left (inv_mem hP)).symm.trans
-       (by rw [← key]; exact Iff.rfl)))
 
 end GlobalTheory.MajorantConj
 
@@ -304,7 +299,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.archimedean_majorant_stabilisers_conjugate : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J → ∀ (a a' : GL (Fin n) (AF F ⊗[F] E)), IsMajorantFrame σ J a → IsMajorantFrame σ J a' → ∀ w : InfinitePlace F, ∃ g : GArch σ J w, ∀ k : GArch σ J w, k ∈ stabArch σ J w (Formalism.UG.bc (compInf F E w) a') ↔ g⁻¹ * k * g ∈ stabArch σ J w (Formalism.UG.bc (compInf F E w) a) := by
-  first | exact @GlobalTheory.MajorantConj.stabArch_conj | exact GlobalTheory.MajorantConj.stabArch_conj | (intros; apply GlobalTheory.MajorantConj.stabArch_conj <;> assumption)
+  first | exact @GlobalTheory.MajorantConj.stabArch_conj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ArchimedeanMajorantStabilisersConjugateStatement =====
@@ -717,7 +712,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.exists_adelic_unitary_conj_selfDual_majorant_levels : ∀ (D : D7) (T : HSp D) (L L' : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)) (a a' : GL (Fin T.rank) (AE D)), IsLevel T L a → IsLevel T L' a' → ∃ g : GA D T, ∀ k : GA D T, k ∈ lev T L' a' ↔ g⁻¹ * k * g ∈ lev T L a := by
-  first | exact @GlobalTheory.EisCont.LevelConj.exists_conj | exact GlobalTheory.EisCont.LevelConj.exists_conj | (intros; apply GlobalTheory.EisCont.LevelConj.exists_conj <;> assumption)
+  first | exact @GlobalTheory.EisCont.LevelConj.exists_conj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsAdelicUnitaryConjSelfDualMajorantLevelsStatement =====
@@ -787,7 +782,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.goodMajorantLevel_conj_unitaryAdelicMaximalCompact : ∀ (D : D7) (T T₀ : HSp D) (r : ℕ) (d : HypDec T T₀ r) (b : GL (Fin T.rank) (AE D)), IsMaj T b → HasIw d (Kmax T b) → ∀ l : Lvl T, l.Good → HasIw d l.K ∧ IsCompact (l.K : Set (GA D T)) ∧ ∃ q : stab d, ConjBy (q : GA D T) l.K (Kmax T b) := by
-  first | exact @GlobalTheory.RegSch.good_level_conj_stab | exact GlobalTheory.RegSch.good_level_conj_stab | (intros; apply GlobalTheory.RegSch.good_level_conj_stab <;> assumption)
+  first | exact @GlobalTheory.RegSch.good_level_conj_stab
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.GoodMajorantLevelConjUnitaryAdelicMaximalCompactStatement =====

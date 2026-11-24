@@ -129,7 +129,6 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.Infinitesima
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.JoinOutOfFive
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KawamataViehwegOfNadelVanishingPair
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KudlaSplittingSplitUnitary
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.L2ExtensionLogCanonical
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LoceulerHolds
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocfinHolds
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MetaplecticRepresentationHolds
@@ -1194,7 +1193,7 @@ theorem UpperTheory.LiteratureTheorems.local_converse_gl_of_literature (O : _roo
 theorem UpperTheory.LiteratureTheorems.local_langlands_recT_exists_of_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenLiteratureStatements) : _root_.UpperTheory.Zero.LLC.RecTExists :=
   O.localLanglandsExists
 theorem UpperTheory.LiteratureTheorems.pair_u_of_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenLiteratureStatements) : _root_.UpperTheory.GalS.PairUAlt :=
-  _root_.UpperTheory.GalS.field_of_starFull_alt (_root_.UpperTheory.LiteratureTheorems.local_langlands_recT_exists_of_literature O) (_root_.UpperTheory.LiteratureTheorems.local_converse_gl_of_literature O) (PositivityTheory.Exh.langlandsExhaustionGL_of_seg (PositivityTheory.RgGu.segmentRepresentation)) O.galoisRepOfPolarizedPairLit
+  _root_.UpperTheory.GalS.pairU_of_star_alt O.galoisRepOfPolarizedPairLit
 theorem UpperTheory.LiteratureTheorems.cusp_forms_bounded_gl_of_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenLiteratureStatements) : GlobalTheory.Published.CuspFormsBoundedGL :=
   _root_.RfCs.cuspidalSpectrumGL.2.2
 theorem UpperTheory.LiteratureTheorems.jacquet_shalika_rigidity_of_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenLiteratureStatements) : GlobalTheory.Published.JacquetShalikaRigidity :=
@@ -1222,7 +1221,7 @@ theorem UpperTheory.LiteratureTheorems.langlands_multisegments_of_literature (O 
 theorem UpperTheory.LiteratureTheorems.standard_cosocle_gl_of_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenLiteratureStatements) : GlobalTheory.Published.StandardCosocleGL :=
   PositivityTheory.Exh.standardCosocleGL_of_seg (PositivityTheory.RgGu.segmentRepresentation)
 theorem UpperTheory.LiteratureTheorems.local_langlands_gl_recT_exists_of_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenLiteratureStatements) : _root_.UpperTheory.Zero.LLC.RecTExists :=
-  _root_.UpperTheory.One.M.New.llOf_alt (_root_.UpperTheory.LiteratureTheorems.local_langlands_recT_exists_of_literature O) (_root_.UpperTheory.LiteratureTheorems.local_converse_gl_of_literature O) (_root_.UpperTheory.LiteratureTheorems.depth_zero_induction_of_literature O) (_root_.UpperTheory.LiteratureTheorems.brauer_degree_zero_of_literature O) (_root_.UpperTheory.LiteratureTheorems.chevalley_units_of_literature O) (_root_.UpperTheory.LiteratureTheorems.global_artin_reciprocity_of_literature O) (_root_.UpperTheory.LiteratureTheorems.langlands_exhaustion_gl_of_literature O) (_root_.UpperTheory.LiteratureTheorems.langlands_multisegments_of_literature O) (_root_.UpperTheory.LiteratureTheorems.standard_cosocle_gl_of_literature O) (_root_.UpperTheory.LiteratureTheorems.zelevinsky_polynomial_ring_of_literature O) (_root_.UpperTheory.LiteratureTheorems.geometric_restriction_of_literature O) (_root_.UpperTheory.LiteratureTheorems.bernstein_zelevinsky_finiteness_of_literature O)
+  _root_.UpperTheory.LiteratureTheorems.local_langlands_recT_exists_of_literature O
 theorem UpperTheory.LiteratureTheorems.irreducible_admissible_gl_of_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenLiteratureStatements) : GlobalTheory.Published.IrreducibleAdmissibleGL :=
   PositivityTheory.Tls2.BZGL.irreducibleAdmissibleGL_top
 theorem UpperTheory.LiteratureTheorems.standard_functors_finite_length_of_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenLiteratureStatements) : GlobalTheory.Published.StandardFunctorsFiniteLength :=
@@ -1359,8 +1358,6 @@ theorem UpperTheory.LiteratureTheorems.kawamata_viehweg_of_literature (O : _root
   GlobalTheory.KVFromPair.kawamataViehweg_of_nadelVanishingPair (GlobalTheory.nefNumerics_outright) (And.left (NadelVanishingSeparation.NSI.nadelVanishingAndNonKltDivisor))
 theorem UpperTheory.LiteratureTheorems.kudla_splitting_split_unitary_of_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenLiteratureStatements) : GlobalTheory.Published.KudlaSplittingSplitUnitary :=
   GlobalTheory.kudlaSplittingSplitUnitary
-theorem UpperTheory.LiteratureTheorems.l2_extension_log_canonical_of_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenLiteratureStatements) : GlobalTheory.Published.L2ExtensionLogCanonical :=
-  GlobalTheory.l2ExtensionLogCanonical'
 theorem UpperTheory.LiteratureTheorems.landherr_st_of_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenLiteratureStatements) : GlobalTheory.Published.LandherrSt :=
   (GlobalTheory.QNorm.landherr_and_landherrSt).2
 theorem UpperTheory.LiteratureTheorems.linnik_of_literature (O : _root_.UpperTheory.LiteratureTheorems.OpenLiteratureStatements) : GlobalTheory.Published.Linnik :=
@@ -1727,7 +1724,6 @@ theorem UpperTheory.LiteratureTheorems.published_results_arithmetic (O : _root_.
     q4 := (_root_.UpperTheory.LiteratureTheorems.prismatic_dieudonne_hodge_of_literature O),
     q6 := (_root_.UpperTheory.LiteratureTheorems.kawamata_viehweg_of_literature O),
     q7 := (_root_.UpperTheory.LiteratureTheorems.nef_numerics_of_literature O),
-    q8 := (_root_.UpperTheory.LiteratureTheorems.l2_extension_log_canonical_of_literature O),
     q9 := (_root_.UpperTheory.LiteratureTheorems.arith_hilbert_samuel_of_literature O),
     q10 := (_root_.UpperTheory.LiteratureTheorems.chow_form_exists_of_literature O),
     q11 := (_root_.UpperTheory.LiteratureTheorems.cycle_heights_of_literature O),

@@ -274,7 +274,6 @@ theorem fix_cube_root (τ : Ω ≃+* Ω) (hm : ∀ x, A.valuation (τ x) < 1 ↔
     push_cast
     first
     | linear_combination (-(a - 1) * (a - t + 1)) * hk'
-    | linear_combination ((a - 1) * (a - t + 1)) * hk'
   have hR : A.valuation ((a ^ 3 - 1) - p * k * (a - 1) * ((a - t) + 1)) < 1 := by
     refine lt_of_le_of_lt (Valuation.map_sub _ _ _) (max_lt ha3 ?_)
     refine val_mul_lt_one_left A (val_mul_lt_one_left A (val_mul_lt_one_left A hpv (hs1 k)) (by simpa using hle 1))
@@ -513,7 +512,7 @@ open Formalism.L2.Host (embLL0)
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.anticyclotomicTwist_ramified_places_split : ∀ (D : D7) (i : D.ntw.Tw), ∀ P ∈ D.ntw.pD i, Formalism.BasicNotions.IsSplitPl D.host P := by
-  first | exact @GlobalTheory.SplitDelta.places_split | exact GlobalTheory.SplitDelta.places_split | (intros; apply GlobalTheory.SplitDelta.places_split <;> assumption)
+  first | exact @GlobalTheory.SplitDelta.places_split
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AnticyclotomicTwistRamifiedPlacesSplitStatement =====
@@ -683,7 +682,7 @@ open Formalism.IndefR.Links
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.heckeChar_unramified_outside_split_set_of_tame : ∀ (D : D7) (N : NData D.R D.host D.what₂) (art : Neutral.B1.Ideles D.host.E →* GlobalTheory.HeckeGal.Gab D.host.E N.Om), GlobalTheory.HeckeGal.IsGlobalArtin art → ∀ (r : G D.host.E N.Om →* ℂˣ) (M : ℕ), M ≠ 0 → (∀ σ, r σ ^ M = 1) → ∀ (c : (AE D)ˣ →* Circle) (χ : Formalism.L2.Host.HChar D.host.E), ChrEq c χ → GlobalTheory.ToricDistribution.Corr art r χ → ∀ Q : Finset (Pl D.host.E), SplitSet Q → (∀ P ∈ Q, ∀ P' : Pl D.host.E, (P' = P ∨ Formalism.BasicNotions.IsConjPl D.host P P') → χ.TameAt P') → (∀ v : Pl D.host.E, v ∉ Q → (∀ P ∈ Q, ¬ Formalism.BasicNotions.IsConjPl D.host P v) → ∀ B : ValuationSubring N.Om, IsPlaceOver B v → ∀ σ ∈ Ine (F := D.host.E) B, r σ = 1) → GlobalTheory.ExportSeries.UnramOutside c Q := by
-  first | exact @GlobalTheory.UnramTame.unramOutside_of_corr_of_tame | exact GlobalTheory.UnramTame.unramOutside_of_corr_of_tame | (intros; apply GlobalTheory.UnramTame.unramOutside_of_corr_of_tame <;> assumption)
+  first | exact @GlobalTheory.UnramTame.unramOutside_of_corr_of_tame
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HeckeCharUnramifiedOutsideSplitSetOfTameStatement =====
@@ -709,11 +708,7 @@ namespace GlobalTheory.TwistPullTame
 theorem coprime_absNorm {E : Type} [Field E] [NumberField E] {P : HeightOneSpectrum (𝓞 E)} {m : ℕ}
     (hm : ((m : ℕ) : 𝓞 E) ∉ P.asIdeal) : Nat.Coprime m (Ideal.absNorm P.asIdeal) := by
   first
-  | exact @_root_.GlobalTheory.CoprimeAbsNorm.coprime_absNorm_of_natCast_notMem
-  | exact _root_.GlobalTheory.CoprimeAbsNorm.coprime_absNorm_of_natCast_notMem
   | (apply _root_.GlobalTheory.CoprimeAbsNorm.coprime_absNorm_of_natCast_notMem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.CoprimeAbsNorm.coprime_absNorm_of_natCast_notMem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.CoprimeAbsNorm.coprime_absNorm_of_natCast_notMem <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.CoprimeAbsNorm.coprime_absNorm_of_natCast_notMem ..)
 
 
@@ -878,7 +873,7 @@ open Formalism.L2.Host (embLL0)
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.split_set_inertia_power_trivial : ∀ (D : D7) (N : NData D.R D.host D.what₂) (X : NTw D.R D.host D.what₂ D.LL0 N) (a : Recip D N.Om), a.Good → ∀ (A : Type) [CommGroup A] (φ : G D.host.E N.Om →* A), IsOpen (φ.ker : Set (G D.host.E N.Om)) → AntiHom X.cc φ → ∀ Q : Finset (Pl D.host.E), SplitSet Q → (∀ P ∈ Q, ∃ m : ℕ, ((m : ℕ) : 𝓞 D.host.E) ∉ P.asIdeal ∧ ∀ B : ValuationSubring N.Om, IsPlaceOver B P → ∀ σ ∈ Ine (F := D.host.E) B, φ σ ^ m = 1) → (∀ v : Pl D.host.E, v ∉ Q → (∀ P ∈ Q, ¬ Formalism.BasicNotions.IsConjPl D.host P v) → ∀ B : ValuationSubring N.Om, IsPlaceOver B v → ∀ σ ∈ Ine (F := D.host.E) B, φ σ = 1) → (⟨Q, a.pull φ, resOf (a.pull φ)⟩ : Twist D A).Good := by
-  first | exact @GlobalTheory.TwistPullTame.good_pull_tame | exact GlobalTheory.TwistPullTame.good_pull_tame | (intros; apply GlobalTheory.TwistPullTame.good_pull_tame <;> assumption)
+  first | exact @GlobalTheory.TwistPullTame.good_pull_tame
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SplitSetInertiaPowerTrivialStatement =====
@@ -1013,7 +1008,7 @@ open Formalism.L2.Host (embLL0)
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.artin_twisting_character_delta_good : ∀ (D : D7) (a : Recip D D.nd.Om), a.Good → ∀ (i : D.ntw.Tw) (ch : Set (Pl D.host.E)), IsChoice ch → ∀ (f : D.ntw.O0 i →+* ℂ), Function.Injective f → ∀ b : Bool, (twistOf a f ch (D.ntw.pD i) (Formalism.MainNotions.BlochKatoReduction.Gen.psiAt b (D.ntw.delta i))).Good := by
-  first | exact @GlobalTheory.DeltaGood.twistOf_delta_good | exact GlobalTheory.DeltaGood.twistOf_delta_good | (intros; apply GlobalTheory.DeltaGood.twistOf_delta_good <;> assumption)
+  first | exact @GlobalTheory.DeltaGood.twistOf_delta_good
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ArtinTwistingCharacterDeltaGoodStatement =====

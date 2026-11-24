@@ -241,12 +241,7 @@ theorem isClosed_sLoc (ε : Fin n → Bool) (e : Fin r → Fin n → ℂ) (z : F
   have hset : SLoc ε e z = (⋂ a : Fin r, {g : Formalism.REAL.UJ ε | (uMat g - 1) *ᵥ e a ∈ spanLt e a.1}) ∩
       {g | (uMat g - 1) *ᵥ z ∈ spanLt e r} := by
     ext g
-    constructor
-    · intro hg
-      obtain ⟨h1, h2⟩ := hg
-      exact ⟨Set.mem_iInter.2 h1, h2⟩
-    · rintro ⟨h1, h2⟩
-      exact ⟨Set.mem_iInter.1 h1, h2⟩
+    simp [SLoc, InS, Set.mem_iInter]
   rw [hset]
   exact (isClosed_iInter fun a => hcl _ _).inter (hcl _ _)
 
@@ -277,9 +272,7 @@ theorem isUnit_det_of (ε : Fin (2 * r + k + 1) → Bool) (P : Matrix (Fin (2 * 
     rw [h0, zero_mul] at h
     exact zero_ne_one h
   rw [isUnit_iff_ne_zero]
-  intro h0
-  apply h1
-  rw [← hH, Matrix.det_mul, h0, mul_zero]
+  exact fun h0 => h1 (by rw [← hH, Matrix.det_mul, h0, mul_zero])
 
 theorem psiP_eq (ε : Fin (2 * r + k + 1) → Bool) (P : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) :
     psiP (ε := ε) P = Formalism.FourierDecayAlt.P.HaarUniquenessConjugation.phi ε P := rfl

@@ -393,7 +393,7 @@ theorem _root_.GlobalTheory.T.conjIdealIndicator_unitBlockTranslate_reads_weilOp
     ∀ (G : VC D a d → ℂ) (o : ℕ), Reads ψ θ hS hT ⊤ δ 1 G (Tm (cosetFn (cA D e) (D.host.conj • modul P c) 0)) →
     ∃ ζ : ℂ, IsRootOne ζ ∧ Reads ψ θ hS hT ⊤ δ 1 (ζ • Wd D (tor0 D ⊤ δ) (pt D (tor0 D ⊤ δ) δ (unitBlock D o a d)) G)
       (Tm (cosetFn (cA D e) (D.host.conj • modul P c) (unitPt S T (cA D e) o))) := by
-  first | exact @GlobalTheory.BotSmallTransl.reads_transl | exact GlobalTheory.BotSmallTransl.reads_transl | (intros; apply GlobalTheory.BotSmallTransl.reads_transl <;> assumption)
+  first | exact @GlobalTheory.BotSmallTransl.reads_transl
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjIdealIndicatorUnitBlockTranslateReadsWeilOpeStatement =====
@@ -470,7 +470,7 @@ open scoped Pointwise
 
 theorem _root_.GlobalTheory.T.gridLocalTensorPlaces_coprime_two_q_d : ∀ {D : D7} (large₂ : SizeData₂ D), GlobalTheory.SqTop.Rec large₂ → ∀ {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} (G : GridData L sc) {μ₀ : T},
     L.Is μ₀ → ∀ (t : T), ∀ w ∈ locPl G t, ((D.host.QS * D.host.q * D.host.d : ℕ) : 𝓞 D.host.E) ∉ w.asIdeal := by
-  first | exact @GlobalTheory.StdPairPlaces.natCast_two_q_d_notMem | exact GlobalTheory.StdPairPlaces.natCast_two_q_d_notMem | (intros; apply GlobalTheory.StdPairPlaces.natCast_two_q_d_notMem <;> assumption)
+  first | exact @GlobalTheory.StdPairPlaces.natCast_two_q_d_notMem
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GridLocalTensorPlacesCoprimeTwoQDStatement =====
@@ -822,7 +822,7 @@ open scoped Pointwise
 
 theorem _root_.GlobalTheory.T.normalisedVacua_ratio_algebraicUnit_everyPrime : ∀ {D : D7}, GlobalTheory.NormSum.Inp D → ∀ {δ t0 : ℂ}, Crv D ⊤ δ → GL3Theta.IsTwoTorsionPointUnkilled D (lamOf D ⊤ δ) t0 → ∀ {a d : ℕ} {e₁ e₂ : VC D a d → ℂ},
     oddE0 D ⊤ δ t0 a d e₁ → oddE0 D ⊤ δ t0 a d e₂ → ∃ ζ : ℂ, IsAlgUnit ζ ∧ e₂ = ζ • e₁ := by
-  first | exact @GlobalTheory.VacRatio.vacuum_ratio_isAlgUnit | exact GlobalTheory.VacRatio.vacuum_ratio_isAlgUnit | (intros; apply GlobalTheory.VacRatio.vacuum_ratio_isAlgUnit <;> assumption)
+  first | exact @GlobalTheory.VacRatio.vacuum_ratio_isAlgUnit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormalisedVacuaRatioAlgebraicUnitEveryPrimeStatement =====
@@ -960,7 +960,7 @@ open scoped Pointwise
 theorem _root_.GlobalTheory.T.squareNuChar_conductorExponents_pos_prod_modulus : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} (G : GridData L sc) {μ₀ : T}, L.Is μ₀ →
     ∀ (t : T) (i j : Fin D.R.m) (c : Formalism.L2.DIV.Pl D.host.E → ℕ), (∀ w ∈ locPl G t, GlobalTheory.CMVal.ExpAt (nuH G t i j) w (c w)) →
     (∀ w ∈ locPl G t, 1 ≤ c w) ∧ modul (locPl G t) c = GlobalTheory.SqTop.modT G t := by
-  first | exact @GlobalTheory.SqTop.CondExpo.expo_modul | exact GlobalTheory.SqTop.CondExpo.expo_modul | (intros; apply GlobalTheory.SqTop.CondExpo.expo_modul <;> assumption)
+  first | exact @GlobalTheory.SqTop.CondExpo.expo_modul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareNuCharConductorExponentsPosProdModulusStatement =====
@@ -1300,7 +1300,7 @@ theorem _root_.GlobalTheory.T.standardPairSecond_unitBlockCoset_rootOfUnity : �
     ∀ (ν : (Formalism.L2.Theta.AE D)ˣ →* Circle) (νH : Formalism.L2.Host.HChar D.host.E), ChrEq ν νH → (∀ w ∈ P, GlobalTheory.CMVal.ExpAt νH w (c w)) →
     ∃ ζ : ℂ, IsRootOne ζ ∧ ∀ y : WO S T, cosetFn (cA D e) (D.host.conj • modul P c) (unitPt S T (cA D e) o) y ≠ 0 →
       GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.stdSnd ν e (modul P c) o S T βS 1 y = ζ := by
-  first | exact @GlobalTheory.BotCosetValue.stdSnd_coset_value | exact GlobalTheory.BotCosetValue.stdSnd_coset_value | (intros; apply GlobalTheory.BotCosetValue.stdSnd_coset_value <;> assumption)
+  first | exact @GlobalTheory.BotCosetValue.stdSnd_coset_value
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardPairSecondUnitBlockCosetRootOfUnityStatement =====
@@ -1329,7 +1329,7 @@ theorem _root_.GlobalTheory.T.unitBlockCoset_iff_maximalLevel_congruent_conjIdea
     cosetFn (cA D e) (D.host.conj • modul P c) (unitPt S T (cA D e) o) (actO S T g⁻¹ 1 y) ≠ 0 →
     (cosetFn (cA D e) (D.host.conj • modul P c) (unitPt S T (cA D e) o) (actO S T g'⁻¹ 1 y) ≠ 0 ↔
       CongOne D (D.host.conj • modul P c) (k'⁻¹ * k)) := by
-  first | exact @GlobalTheory.BotSmallDict.CosetCong.coset_iff_congOne | exact GlobalTheory.BotSmallDict.CosetCong.coset_iff_congOne | (intros; apply GlobalTheory.BotSmallDict.CosetCong.coset_iff_congOne <;> assumption)
+  first | exact @GlobalTheory.BotSmallDict.CosetCong.coset_iff_congOne
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitBlockCosetIffMaximalLevelCongruentConjIdealStatement =====
@@ -1380,7 +1380,7 @@ open scoped Pointwise
 
 theorem _root_.GlobalTheory.T.unitaryChar_finiteIdele_eq_heckeChar_value : ∀ {D : D7} (c : (Formalism.L2.Theta.AE D)ˣ →* Circle) (χ : Formalism.L2.Host.HChar D.host.E), ChrEq c χ →
     ∀ x y, IsFinIdl x y → ((c x : Circle) : ℂ) = ((χ.1 (GlobalTheory.Mem.Col2.SplitChar.finIdl D y) : ℂˣ) : ℂ) := by
-  first | exact @GlobalTheory.BotPointDict.chr_at_finIdl | exact GlobalTheory.BotPointDict.chr_at_finIdl | (intros; apply GlobalTheory.BotPointDict.chr_at_finIdl <;> assumption)
+  first | exact @GlobalTheory.BotPointDict.chr_at_finIdl
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryCharFiniteIdeleEqHeckeCharValueStatement =====
@@ -1857,7 +1857,7 @@ theorem _root_.GlobalTheory.T.smallStage_bottomKernel_eq_term : _root_.GlobalThe
           ∀ (ea : P'.a = A'.rank) (ed : P'.d = WW.rank) (h : GA D P'.d) (g : GA D WW), GlobalTheory.BotFormula.IsFinPt WW g h →
             ∀ (x : GA D P'.a) (g' : GA D A'), GlobalTheory.BotFormula.IsFinPt A' g' x → ∀ T' : Tup D P'.a P'.d P'.n,
               X.ker' W.ψ W.θ s (GlobalTheory.BotFormula.minorF ea ed T') g g' = Ω₂ * u * P'.term x h T' := by
-  first | exact @_root_.GlobalTheory.BotSmallDict.bottomKernel_eq_classSum_term | exact _root_.GlobalTheory.BotSmallDict.bottomKernel_eq_classSum_term | (intros; apply _root_.GlobalTheory.BotSmallDict.bottomKernel_eq_classSum_term <;> assumption)
+  first | exact @_root_.GlobalTheory.BotSmallDict.bottomKernel_eq_classSum_term
 end
 end -- clump:auto
 end -- clump:auto

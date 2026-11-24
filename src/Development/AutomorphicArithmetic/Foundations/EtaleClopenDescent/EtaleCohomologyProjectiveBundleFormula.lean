@@ -310,9 +310,7 @@ theorem UpperTheory.chernClass_pullback_blowupSecondLocus_eq :
       intro U x
       rw [lineUnit_map, lineUnit_map, lineUnit_line]
       first
-        | exact (mul_div_cancel _ _).symm
-        | exact (mul_div_cancel_left _ _).symm
-        | exact (mul_div_cancel'_right _ _).symm)
+        | exact (mul_div_cancel _ _).symm)
   rw [hsum, h0, add_zero]
 end -- clump:auto
 end -- clump:auto
@@ -498,9 +496,9 @@ private theorem lh_pullback_map_fst_snd_of_lh (q : ℕ) {U V E X : Spc} (f : U �
         · simp only [Category.assoc, Category.id_comp, pullback.lift_fst, pullback.lift_fst_assoc, pullback.lift_snd, pullback.lift_snd_assoc, pullback.map]
         · simp only [Category.assoc, Category.id_comp, pullback.lift_fst, pullback.lift_fst_assoc, pullback.lift_snd, pullback.lift_snd_assoc, pullback.map]
       · apply pullback.hom_ext
-        · simp only [Category.assoc, Category.id_comp, pullback.lift_fst, pullback.lift_fst_assoc, pullback.lift_snd, pullback.lift_snd_assoc, pullback.map]
+        · simp only [Category.assoc, Category.id_comp, pullback.lift_fst, pullback.lift_snd, pullback.map]
           exact pullback.condition
-        · simp only [Category.assoc, Category.id_comp, pullback.lift_fst, pullback.lift_fst_assoc, pullback.lift_snd, pullback.lift_snd_assoc, pullback.map])
+        · simp only [Category.assoc, Category.id_comp, pullback.lift_snd, pullback.lift_snd_assoc, pullback.map])
     (by
       apply pullback.hom_ext
       · simp only [Category.assoc, Category.id_comp, pullback.lift_fst, pullback.lift_fst_assoc, pullback.lift_snd, pullback.lift_snd_assoc, pullback.map]
@@ -1195,7 +1193,7 @@ theorem UpperTheory.leraHirsch_chernPowers_on_unitChart :
           congrArg Prod.snd e
         subst e1
         have e3 := congrArg (Um.scale ![(hQ A _ hx).unit⁻¹, 1]) e2
-        rw [um_scale_scale_eq_of_mul_eq_one _ _ (by intro j; fin_cases j <;> simp <;> exact inv_mul_cancel _),
+        rw [um_scale_scale_eq_of_mul_eq_one _ _ (by intro j; fin_cases j <;> simp),
           um_scale_scale_eq_of_mul_eq_one _ _ (by intro j; fin_cases j <;> simp <;> exact inv_mul_cancel _)] at e3
         subst e3
         rfl

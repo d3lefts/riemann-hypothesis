@@ -131,7 +131,7 @@ theorem UpperTheory.V.Pa.trConst :
   haveI : IsScalarTower S.x.A S.F R := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
   obtain ⟨M, hMfin, -, -, hMj, -⟩ := trLat l S R e θ hT
   have htow : ∀ y : S.B, algebraMap S.B S.U.AA y = algebraMap S.Bh S.U.AA (algebraMap S.B S.Bh y) :=
-    fun y => by first | rfl | exact IsScalarTower.algebraMap_apply _ _ _ _
+    fun y => by first | exact IsScalarTower.algebraMap_apply _ _ _ _
   set ψ1 : S.B →+* R := θ.comp (algebraMap S.B S.U.AA) with hψ1
   set ψ2 : S.B →+* R :=
     (algebraMap S.F R).comp ((algebraMap S.x.A S.F).comp S.P.f.toRingHom) with hψ2
@@ -802,7 +802,7 @@ theorem UpperTheory.V.Pa.kapSel1 :
     · subst hmj
       simp only [Pi.single_eq_same, map_inv, Matrix.map_mul]
       rfl
-    · simp [Pi.single_apply, hmj]
+    · simp [hmj]
   · have hcj : h.p₀ (G.frame.conj g) = G0.frame.conj (h.p₀ g) := by
       apply Subtype.ext
       simp [Glob.Hom.p₀, Glob.frame, GFrame.conj, h.c]
@@ -814,7 +814,7 @@ theorem UpperTheory.V.Pa.kapSel1 :
     by_cases hmj : m = j
     · subst hmj
       rw [Pi.single_eq_same, Pi.single_eq_same, Matrix.map_neg _ (map_neg _), Matrix.transpose_map]
-    · simp [Pi.single_apply, hmj]
+    · simp [hmj]
   · have hg' : h.p₀ g ∈ Subgroup.map (G0.φu u) (L.Ju u) := by
       obtain ⟨a, ha, rfl⟩ := hg
       refine ⟨a, ha, ?_⟩
@@ -1368,10 +1368,10 @@ theorem UpperTheory.V.Pa.invEv :
   intro l hl L G G0 h n x hl2 Y _ hT hd
   have hmul : ∀ g g', x.ρX x.Fr (g * g') = x.ρX x.Fr g * x.ρX x.Fr g' := by
     intro g g'
-    simp only [NP.ρX, mat, map_mul, Units.val_mul]
+    simp only [NP.ρX, mat, map_mul]
     exact Matrix.map_mul
   have hone : x.ρX x.Fr 1 = 1 := by
-    simp only [NP.ρX, mat, map_one, Units.val_one]
+    simp only [NP.ρX, mat, map_one]
     exact Matrix.map_one _ (map_zero _) (map_one _)
   have hsurj : Function.Surjective h.p₀ := by
     intro g
@@ -1487,7 +1487,7 @@ private theorem smul_a (c : X) (u : DD X g) : (c • u).a = c * u.a := rfl
 private theorem smul_ep (c : X) (u : DD X g) (m : Fin g) : (c • u).ep m = c * u.ep m := by
   rw [Algebra.smul_def]
   show _ = _
-  simp [DD.instAlgebra]
+  simp
   rw [RingHom.algebraMap_toAlgebra]
   simp [DD.C]
   change c * u.ep m + (0 : Fin g → X) m * u.a = c * u.ep m

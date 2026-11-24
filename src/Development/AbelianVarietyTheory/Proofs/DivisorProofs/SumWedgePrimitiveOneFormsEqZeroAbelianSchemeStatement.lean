@@ -91,7 +91,7 @@ theorem wsum_eq_zero_of_mul : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [Grp
   intro l l'
   have h2 := key (l ∘ₗ pF (lift (𝟙 A) (toUnit A ≫ η[A]))) (l' ∘ₗ pF (lift (toUnit A ≫ η[A]) (𝟙 A)))
   simp only [Fin.sum_univ_add, U, V, Fin.append_left, Fin.append_right, LinearMap.comp_apply,
-    (hax _).1, (hax _).2.1, (hax _).2.2.2.1, (hax _).2.2.2.2.1, map_zero, mul_zero, zero_mul, sub_zero,
+    (hax _).1, (hax _).2.1, (hax _).2.2.2.1, (hax _).2.2.2.2.1, map_zero, mul_zero, sub_zero,
     zero_sub] at h2
   rw [← h2, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun k _ ↦ ?_
@@ -113,7 +113,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.sum_wedge_primitive_oneForms_eq_zero_abelianScheme : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (g : ℕ), IsAbelianScheme A → SmoothOfRelativeDimension g A.hom → ∀ (n : ℕ) (u v : Fin n → GlobForm A.hom), wsum (OAff (A ⊗ A).hom) (fun k ↦ pF μ[A] (u k)) (fun k ↦ pF μ[A] (v k)) = wsum (OAff (A ⊗ A).hom) (fun k ↦ pF (fst A A) (u k)) (fun k ↦ pF (fst A A) (v k)) + wsum (OAff (A ⊗ A).hom) (fun k ↦ pF (snd A A) (u k)) (fun k ↦ pF (snd A A) (v k)) → wsum (OAff A.hom) u v = 0 := by
-  first | exact @GlobalTheory.AbCoh.wsum_eq_zero_of_mul | exact GlobalTheory.AbCoh.wsum_eq_zero_of_mul | (intros; apply GlobalTheory.AbCoh.wsum_eq_zero_of_mul <;> assumption)
+  first | exact @GlobalTheory.AbCoh.wsum_eq_zero_of_mul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SumWedgePrimitiveOneFormsEqZeroAbelianSchemeStatement =====

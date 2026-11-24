@@ -1122,7 +1122,7 @@ theorem expU_two_pi (a : Fin n) (hX : (Matrix.single a a Complex.I)ᴴ = -(Matri
       by_cases hc : i = a
       · subst hc
         simp
-      · simp [Matrix.single_apply, hc, Ne.symm hc]
+      · simp [hc, Ne.symm hc]
     · rw [Matrix.diagonal_apply_ne _ hij, Matrix.smul_apply, Matrix.single_apply,
         if_neg (fun hh => hij (hh.1.symm.trans hh.2)), smul_zero]
   rw [e, Matrix.exp_diagonal, ← Matrix.diagonal_one]
@@ -1426,7 +1426,6 @@ theorem dirac_ineq0 : ∀ {n : ℕ} (lam : Fin n → ℤ) (V : Type) [NormedAddC
       rw [Finset.mul_sum]
       exact Finset.sum_congr rfl fun i _ => by
         rw [Pi.smul_apply, inner_smul_right, inner_self_eq_norm_sq_to_K]
-        push_cast
         rfl
     rw [← e1, hsk, e2]
   have hEq' : (∑ i, ‖D x i‖ ^ 2) = -((4 * (S - R) + 3 * R - T) * ∑ i, ‖x i‖ ^ 2) := by

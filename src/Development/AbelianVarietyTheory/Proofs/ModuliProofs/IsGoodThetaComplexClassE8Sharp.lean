@@ -922,7 +922,7 @@ theorem matrixUnits_apply {La : Type} [AddCommGroup La]
     · rw [Matrix.single_mul_single_of_ne _ _ _ _ huv]; simp
   · have : (∑ u : Fin 8, Matrix.single u 0 (1:ℤ) * Matrix.single (0 : Fin 8) u (1:ℤ)) = 1 := by
       ext i j
-      simp only [Matrix.single_mul_single_same, Matrix.sum_apply, Matrix.single_apply, Matrix.one_apply, mul_one]
+      simp only [Matrix.single_mul_single_same, Matrix.sum_apply, Matrix.single_apply, Matrix.one_apply]
       by_cases hij : i = j
       · subst hij; simp
       · rw [if_neg hij]
@@ -1148,7 +1148,7 @@ theorem polarised_lattice_eighth_power :
       ext i k
       by_cases hi : i = 0
       · subst hi; simp [Matrix.sum_apply, Matrix.single_apply]
-      · simp [Matrix.sum_apply, Matrix.single_apply, hi, Ne.symm hi]
+      · simp [Matrix.sum_apply, hi, Ne.symm hi]
 
     rw [hφ, ← Module.End.mul_apply, ← map_mul, this, map_sum, LinearMap.sum_apply,
     Submodule.coe_sum]
@@ -1421,7 +1421,7 @@ theorem GlobalTheory.exists_periods_of_sharpClass : Out.Laws → Out.Laws2 → (
       rw [hα, Finset.prod_eq_single v]
       · simp
       · intro v' _ hv'
-        simp [Matrix.single_apply, hv'.symm]
+        simp [hv'.symm]
       · simp
     have h2 : e.symm (Pi.single 0 (x v)) = r (Matrix.single 0 v 1) (e.symm x) := by
       rw [AddEquiv.symm_apply_eq]
@@ -1429,9 +1429,9 @@ theorem GlobalTheory.exists_periods_of_sharpClass : Out.Laws → Out.Laws2 → (
       rw [hre, AddEquiv.apply_symm_apply, Finset.sum_eq_single v]
       · by_cases hu : u' = 0
         · subst hu; simp
-        · simp [Pi.single_eq_of_ne hu, Matrix.single_apply, Ne.symm hu]
+        · simp [Ne.symm hu]
       · intro v' _ hv'
-        simp [Matrix.single_apply, hv'.symm]
+        simp [hv'.symm]
       · simp
     change u.ex _ ≫ pr v = u.ex _ ≫ pr 0
     rw [h2, ← hr, ← LinearMap.map_smul, hF, Category.assoc, h1]

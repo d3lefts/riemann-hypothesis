@@ -398,7 +398,7 @@ theorem exists_clear {Ω : Type} [Field Ω] [CharZero Ω] (r : σ → Ω) {b : �
     obtain ⟨N1, A1, h1, e1⟩ := hx
     obtain ⟨N2, A2, h2, e2⟩ := hw
     refine ⟨N1 * N2, C (N2 : ℤ) * A1 + C (N1 : ℤ) * A2, mul_ne_zero h1 h2, ?_⟩
-    simp only [map_add (f := _), map_mul, aeval_C, eq_intCast, Int.cast_natCast, map_natCast, ← e1, ← e2, Nat.cast_mul]
+    simp only [map_add (f := _), map_mul, map_natCast, ← e1, ← e2, Nat.cast_mul]
     ring
   | mul x w _ _ hx hw =>
     obtain ⟨N1, A1, h1, e1⟩ := hx
@@ -536,7 +536,7 @@ theorem exists_finset_at [CharZero Ω] (k₀ : K) (hy : ∀ k, ∃ j, y ⟨k, j�
       obtain ⟨N1, A1, h1, e1, v1⟩ := hx
       obtain ⟨N2, A2, h2, e2, v2⟩ := hw
       refine ⟨N1 * N2, C (N2 : ℤ) * A1 + C (N1 : ℤ) * A2, mul_ne_zero h1 h2, ?_, ?_⟩
-      · simp only [map_add (f := _), map_mul, aeval_C, eq_intCast, Int.cast_natCast, map_natCast, ← e1, ← e2,
+      · simp only [map_add (f := _), map_mul, map_natCast, ← e1, ← e2,
           Nat.cast_mul, AddMemClass.coe_add]
         ring
       · simp only [map_add (f := _), map_mul, v1, v2, mul_zero, add_zero]
@@ -551,7 +551,7 @@ theorem exists_finset_at [CharZero Ω] (k₀ : K) (hy : ∀ k, ∃ j, y ⟨k, j�
   have hG : aeval (ratio y k₀ i) (G - C (N : ℤ)) = 0 := by
     simp [← e1]
   have h1 := vanish y hz i hi hzi _ hG
-  simp only [map_sub, e2, aeval_C, eq_intCast, zero_sub, neg_eq_zero, Int.cast_natCast, map_natCast] at h1
+  simp only [map_sub, e2, zero_sub, neg_eq_zero, map_natCast] at h1
   exact hN (Nat.cast_eq_zero.mp h1)
 
 theorem exists_finset [CharZero Ω] (k₀ : K) (hy : ∀ k, ∃ j, y ⟨k, j⟩ ≠ 0)
@@ -657,7 +657,7 @@ theorem homog_rename (k₀ : K) {F : MvPolynomial (J k₀) ℤ} {n : ℕ} (h : F
       Finsupp.mapDomain_notin_range _ _ (by
         rintro ⟨i', hi'⟩
         exact hk (congrArg Sigma.fst hi').symm)
-    simp [h0, Pi.single_apply, hk]
+    simp [h0, hk]
 
 theorem rel_at_point {y : (Σ k, J k) → Ω} (k₀ k : K) {A B : MvPolynomial (J k₀) ℤ} {n : ℕ}
     (hA : A.IsHomogeneous n) (hB : B.IsHomogeneous n) (j j' : J k)
@@ -695,7 +695,7 @@ theorem gForm_homog (k₀ : K) (i : J k₀) (e : ℕ) {G : K → MvPolynomial (J
   by_cases hk : k' = k₀
   · subst hk
     simp [Finset.sum_apply]
-  · simp [Finset.sum_apply, Pi.single_apply, hk]
+  · simp [Finset.sum_apply, hk]
 
 def hDeg (k₀ : K) : K → ℕ := fun k => if k = k₀ then 0 else 1
 
@@ -768,7 +768,7 @@ theorem ampleQ_of_forms (y : (Σ k, J k) → Ω) (k₀ : K) (a : K → ℤ) (ha�
     by_cases hk : k = k₀
     · subst hk
       simp [hDeg, ha₀]
-    · simp [hDeg, Pi.single_apply, hk, ha k hk]
+    · simp [hDeg, hk, ha k hk]
 
   have hform : ∀ (p : I) (j : ∀ k, J k), IsMultiHomog (gForm k₀ p.2 (eT p.1) fun k => F k (p.1 k) (j k))
       (Pi.single k₀ N) ∧ aeval y (gForm k₀ p.2 (eT p.1) fun k => F k (p.1 k) (j k)) = S p * aeval y (hForm k₀ j) := by
@@ -789,7 +789,7 @@ theorem ampleQ_of_forms (y : (Σ k, J k) → Ω) (k₀ : K) (a : K → ℤ) (ha�
       simp [ha k (Finset.ne_of_mem_erase hk)]
     have e2 : ∏ k ∈ Finset.univ.erase k₀, y ⟨k, c k⟩ ^ (-(((1 : ℕ) : ℤ) * ((1 * (Pi.single k₀ N : K → ℕ) k : ℕ) : ℤ))) = 1 := by
       refine Finset.prod_eq_one fun k hk => ?_
-      simp [Pi.single_apply, Finset.ne_of_mem_erase hk]
+      simp [Finset.ne_of_mem_erase hk]
     rw [e1, e2]
     simp [ha₀]
     ring

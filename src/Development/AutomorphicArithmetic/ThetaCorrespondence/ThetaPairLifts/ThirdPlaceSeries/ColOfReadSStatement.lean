@@ -218,7 +218,7 @@ theorem _root_.GlobalTheory.T.heckeCombination_scalarForm_keeps_adelicLaws : ∀
       ∀ b y, ∀ γ ∈ GQ ((I.rec7 l Z).sp.X j), ∀ (e : {e // A.chOf j e = b}), ∀ g ∈ GinfC ((I.rec7 l Z).sp.X j), ∀ (κ : A.U j b) (y' : (I.chain l u a).Y j),
         IsTr (G := fun _ => 1) (infM θ _ (rankN (I.rec7 l Z) j hj) g) ⟨y.1, y.2⟩ ⟨y'.1, y'.2⟩ →
         trc c (A.rd θ j hj b φ y) (γ * (A.h j b e * g) * κ.1) = (A.chi j b κ : ℂ) * trc c (A.rd θ j hj b φ y') (A.h j b e) := by
-  first | exact @GlobalTheory.AdForm.trc_rd_laws | exact GlobalTheory.AdForm.trc_rd_laws | (intros; apply GlobalTheory.AdForm.trc_rd_laws <;> assumption)
+  first | exact @GlobalTheory.AdForm.trc_rd_laws
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HeckeCombinationScalarFormKeepsAdelicLawsStatement =====
@@ -301,7 +301,7 @@ theorem _root_.GlobalTheory.T.heckeCombination_scalarForm_values_mem_weylModule 
       (∀ g ∈ c.support, g ∈ grpAt _ fun x => ∃ i, x = (p i).v) → ∀ φ ∈ (I.fm l u a).Fi j,
       (∀ b y i g, g • Q j i = Q j i → rTrans ((β j i).gl g) (trc c (A.rd θ j hj b φ y)) = trc c (A.rd θ j hj b φ y)) →
       ∀ e : (I.stp u a j).Cl, (fun (e : (I.stp u a j).Cl) (z : (I.chain l u a).Y j) => trc c (A.rd θ j hj (A.chOf j e) φ z) (A.h j (A.chOf j e) ⟨e, rfl⟩)) e ∈ ValC (Gr B.fields.emb B.embLL (B.R.N j)) (Col2.lamT (B.hcW u) j) := by
-  first | exact @GlobalTheory.AdForm.TransAct.trc_val_mem | exact GlobalTheory.AdForm.TransAct.trc_val_mem | (intros; apply GlobalTheory.AdForm.TransAct.trc_val_mem <;> assumption)
+  first | exact @GlobalTheory.AdForm.TransAct.trc_val_mem
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HeckeCombinationScalarFormValuesMemWeylModuleStatement =====
@@ -527,7 +527,7 @@ theorem _root_.GlobalTheory.T.heckeCombination_scalarForm_values_stabiliser_inva
       (∀ g ∈ c.support, g ∈ grpAt _ fun x => ∃ i, x = (p i).v) → ∀ φ ∈ (I.fm l u a).Fi j,
       (∀ b y i g, g • Q j i = Q j i → rTrans ((β j i).gl g) (trc c (A.rd θ j hj b φ y)) = trc c (A.rd θ j hj b φ y)) →
       ∀ (e : (I.stp u a j).Cl) (s : (I.stp u a j).Stab e), (I.stp u a j).tr B.fields.emb B.embLL e.1 s.1 ((fun (e : (I.stp u a j).Cl) (z : (I.chain l u a).Y j) => trc c (A.rd θ j hj (A.chOf j e) φ z) (A.h j (A.chOf j e) ⟨e, rfl⟩)) e) = (fun (e : (I.stp u a j).Cl) (z : (I.chain l u a).Y j) => trc c (A.rd θ j hj (A.chOf j e) φ z) (A.h j (A.chOf j e) ⟨e, rfl⟩)) e := by
-  first | exact @GlobalTheory.AdForm.trans_stab | exact GlobalTheory.AdForm.trans_stab | (intros; apply GlobalTheory.AdForm.trans_stab <;> assumption)
+  first | exact @GlobalTheory.AdForm.trans_stab
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HeckeCombinationScalarFormValuesStabiliserInvariStatement =====
@@ -750,9 +750,6 @@ theorem twS_ramL : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (I : TC B 
     rw [infM_one_eq]
     first
     | exact (Matrix.one_mul _).symm
-    | exact (one_mul _).symm
-    | exact (one_smul _ _).symm
-    | (show _ = _; simp [Matrix.one_mul])
   have key := (GlobalTheory.T.scalarForms_on_charts_of_trueColumnTuple I hOk hPins l Z u a Ch₀ A hA θ hθ j hj (S j η φ) (h2 η).1.1).2 (A.chOf j c) y' 1 (one_mem _)
     ⟨c, rfl⟩ 1 (one_mem _) 1 y' hTr
   rw [hrdS] at key
@@ -832,7 +829,7 @@ theorem _root_.GlobalTheory.T.true_geometry_joint_twist_relation_alt : ∀ {B : 
     ∀ t, (∀ j, j ≤ B.R.m → ∀ η φ, (J t).A.RamL (J t).ι j φ → (J t).A.RamL (J t).ι j (S' t j η φ)) ∧
       ∀ (row : ∀ t, RowCh (_root_.GlobalTheory.Fam.pk_z W) (_root_.GlobalTheory.Fam.complexLevelStructure W) u a.g t) (kom : ∀ (_ : W.P.T) j, Om ((I.rec7 l Z).sp.X j) ((I.rec7 l Z).sp.X (j + 1))) (dd : ∀ t j, (J t).Ch j → (J t).Ch (j + 1) → WO ((I.rec7 l Z).sp.X j) ((I.rec7 l Z).sp.X (j + 1)) →₀ ℂ) (s : ∀ t j, (J t).Ch j → ℂ) (cV cK : W.P.T → ℕ → ℂ) (cP : W.P.T → ℂ),
         @ReadS _ _ _ a.fld a.val a.top a.loc _ a.o ((a.fam row (_root_.GlobalTheory.Fam.columnChoiceOfCoefficients a J kom dd (fun t j => S' t j (k.ε j)) s cV cK cP)).t t) k.ε (S' t 0) := by
-  first | exact @_root_.GlobalTheory.Fam.colOf_readS_alt | exact _root_.GlobalTheory.Fam.colOf_readS_alt | (intros; apply _root_.GlobalTheory.Fam.colOf_readS_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.Fam.colOf_readS_alt
 end
 end -- clump:auto
 end -- clump:auto

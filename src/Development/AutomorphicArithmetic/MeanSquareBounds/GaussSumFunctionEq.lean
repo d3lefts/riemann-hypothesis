@@ -14,7 +14,7 @@ public import Mathlib.Analysis.Calculus.Deriv.Basic
 public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 public import Formalism.LandauZeroFreeBounds.NoZeroComplex
-public import Formalism.PeriodIntegrals.ExplicitFormulaCounts.ExplicitFormula
+public import Formalism.PeriodIntegrals.ZerosWindow
 public import Development.AutomorphicArithmetic.CharacterBoxes.PairGood
 public import Development.AutomorphicArithmetic.MeanSquareBounds.realCond
 import Mathlib.Algebra.Order.Floor.Extended
@@ -71,6 +71,8 @@ import Mathlib.Tactic.ReduceModChar
 import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.NumberTheory.Harmonic.Bounds
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.FinsumMemLeOfSubset
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.TruncatedExplicitFormula
 
 -- This file was produced by scripts/clump.py from the modules listed below.
 -- Members: Development.AutomorphicArithmetic.MeanSquareBounds.SmallZeros, Development.AutomorphicArithmetic.MeanSquareBounds.GIntegral, Development.AutomorphicArithmetic.MeanSquareBounds.IntThin, Development.AutomorphicArithmetic.MeanSquareBounds.PsiThin, Development.AutomorphicArithmetic.MeanSquareBounds.Thin, Development.AutomorphicArithmetic.MeanSquareBounds.GaussSumFunctionEq
@@ -627,7 +629,7 @@ end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.MeanSquareBounds.IntThin =====
 
 -- ===== clump member: Development.AutomorphicArithmetic.MeanSquareBounds.PsiThin =====
--- clump-header: {"m": "Development.AutomorphicArithmetic.MeanSquareBounds.PsiThin", "h": "module\n\npublic import Development.AutomorphicArithmetic.MeanSquareBounds.PrimeSetTwoBounds\npublic import Formalism.PeriodIntegrals.ExplicitFormula\npublic import Formalism.LandauZeroFreeBounds.NoZeroComplex\npublic import Formalism.PeriodIntegrals.ExplicitFormulaCounts.ExplicitFormula\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Algebra.Order.Star.Real\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Harmonic.Bounds\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\nimport Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MeanSquareHypWIff\n\n"}
+-- clump-header: {"m": "Development.AutomorphicArithmetic.MeanSquareBounds.PsiThin", "h": "module\n\npublic import Development.AutomorphicArithmetic.MeanSquareBounds.PrimeSetTwoBounds\npublic import Formalism.PeriodIntegrals.ExplicitFormula\npublic import Formalism.LandauZeroFreeBounds.NoZeroComplex\npublic import Formalism.PeriodIntegrals.ZerosWindow\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Algebra.Order.Star.Real\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Harmonic.Bounds\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\nimport Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.MeanSquareHypWIff\nimport Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.FinsumMemLeOfSubset\nimport Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.TruncatedExplicitFormula\n\n"}
 section -- clump:auto
 @[expose] public section
 
@@ -1008,8 +1010,8 @@ theorem psi_thin :
         ‖PI.psi0 χ u‖ ≤ C * u * (Real.log u + lam) ^ 2 * Real.exp (-c * Real.log u / (lam + Real.sqrt (Real.log u))) := by
   intro c₀ hc₀
   obtain ⟨c, hc, hzf⟩ := pt_zero_free c₀ hc₀
-  obtain ⟨C7, hC7, h7⟩ := explicitFormula_closed
-  obtain ⟨C, hC, h11⟩ := zerosWindow_closed
+  obtain ⟨C7, hC7, h7⟩ : PI.ExplicitFormula := GlobalTheory.ExplicitFormula.truncated_explicit_formula
+  obtain ⟨C, hC, h11⟩ : PI.ZerosWindow := GlobalTheory.ZeroWindow.count_zeros_window
   have hC2 : 0 < 6 * C * (3 / (c / 3) + 4) := by positivity
   refine ⟨C7 * (5 + 6 * C * (3 / (c / 3) + 4)) + 6 * C * (3 / (c / 3) + 4), min (c / 3) 1, by positivity,
     lt_min (by positivity) one_pos, ?_⟩

@@ -742,7 +742,7 @@ variable {O K : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Fie
 private instance : Module.Finite K (EL Δ τ) := Module.Finite.trans (Lsq K Δ) (EL Δ τ)
 
 private theorem sg_mul (x y : EL Δ τ) : sigL (x * y) = sigL x * sigL y := by
-  ext <;> simp [sigL] <;> ring
+  ext <;> simp [sigL]
 
 private theorem sg_sg (x : EL Δ τ) : sigL (sigL x) = x := by
   ext <;> simp [sigL]
@@ -756,7 +756,7 @@ private def sigA : EL Δ τ →ₐ[O] EL Δ τ where
   map_one' := by ext <;> simp [sigL, QuadraticAlgebra.re_one, QuadraticAlgebra.im_one]
   map_mul' := sg_mul
   map_zero' := by ext <;> simp [sigL]
-  map_add' x y := by ext <;> simp [sigL, add_comm]
+  map_add' x y := by ext <;> simp [sigL]
   commutes' r := by
     rw [IsScalarTower.algebraMap_apply O (Lsq K Δ) (EL Δ τ), IsScalarTower.algebraMap_apply O K (Lsq K Δ)]
     ext <;> simp [sigL]
@@ -947,7 +947,7 @@ theorem UpperTheory.V.Z.Sym.Loc.finU :
   obtain ⟨b1, N, hN, b2⟩ := core h hd S h1 h2
   let col : Y → Fin 3 → Sp Δ τ := fun y j => P.symm ((y.1 : Matrix (Fin 3) (Fin 3) (Lsq K Δ)) *ᵥ Pi.single j 1)
   have hcol : ∀ y j, col y j ∈ S y := fun y j => ⟨Pi.single j 1, fun i => by
-    by_cases hij : i = j <;> simp [Pi.single_apply, hij, isIntegral_one, isIntegral_zero], P.apply_symm_apply _⟩
+    by_cases hij : i = j <;> simp [hij, isIntegral_one, isIntegral_zero], P.apply_symm_apply _⟩
   choose z hz using fun y : Y => tor_bound h hd.reg N (fun p : Bool × Fin 3 => cmp p.1 (col y p.2).2)
     fun p q => b2 y _ (hcol y p.2) _ (hcol y q.2) p.1 q.1
   obtain ⟨M, hM, hb⟩ := Bd.fin (κ := Fin 3) fun i =>
@@ -959,7 +959,7 @@ theorem UpperTheory.V.Z.Sym.Loc.finU :
   obtain ⟨x, hx, k, hk, e⟩ := hs (ι (z ⟨y, hy⟩) * y) fun i j => by
     have := hb (i, ⟨y, hy⟩, j)
     simp only [LinearMap.comp_apply, LinearMap.proj_apply, LinearEquiv.coe_coe, hP.tor, col, P.apply_symm_apply,
-      mulVec_mulVec, mulVec_single_one] at this
+      mulVec_single_one] at this
     exact this
   exact ⟨(z ⟨y, hy⟩)⁻¹, x, hx, k, hk, by rw [map_inv, mul_assoc, ← e, inv_mul_cancel_left]⟩
 end -- clump:auto
@@ -1380,18 +1380,15 @@ theorem UpperTheory.V.Z.Sym.Glob.gqG :
       (fun v => orb (ιv v) (Cint (Ov v) (cv v τ)) (theta (cv v Δ)) (D.Jv v) (D.fGv t v) (((ι δ).1 v)))
       (by
         intro v hv
-        beta_reduce
         rw [hfS v hv, hJS v hv]
         exact (hGorb v hv).2.1)
       (by
         intro v hv
-        beta_reduce
         rw [hfN v hv, hJN v hv]
         exact (hfin v hv).1)
       (by
         intro v hv
         have hs := (hgood v hv).1
-        beta_reduce
         rw [← (hfin v hs).1]
         rw [Tf.orbOne _ _ (ιv v) _ (theta (cv v Δ)) _ _ _ ?_ (hcomm v) (hmapKU v hv) (hy v hv)]
         · simp [one, (hgood v hv).2.1]

@@ -163,7 +163,7 @@ theorem mem_span_of_twistedDualGens (E : ChartBundle O (mseg x) N V) {M : ℕ} {
       intro v hv
       obtain ⟨β, hβ, rfl⟩ := hgen v hv
 
-      simp only [LinearMap.smul_apply, map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
+      simp only [LinearMap.smul_apply, map_sum, map_smul, smul_eq_mul]
       refine sum_mem fun g _ => ?_
       exact mul_mem (hβ g) (h2 g)
     obtain ⟨u, -, hu⟩ := hg.generate s₀ hs _ h3
@@ -372,7 +372,7 @@ private theorem refl_lemma_4 {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω
     · by_cases h : q = q'
       · subst h
         simpa using R.one_mem
-      · simp [Pi.single_apply, h]
+      · simp [h]
     · simp [Pi.single_apply]
   choose n₁ hn₁ using hgen
   have h2 : ∀ l l' q' q, ∃ n, f l ^ n * (B l).repr (f l' ^ n₁ l' q' • b l' q') q ∈ R :=
@@ -484,7 +484,7 @@ theorem PositivityTheory.Xgn.t_minor_graded : ∀ {o Ω : Type} [CommRing o] [Fi
       unfold flagMinor
       congr 1
       ext r d
-      simp [Matrix.updateCol_ne (Fin.castSucc_ne_last d), A]
+      simp [A]
     simp only [hsub] at key
     have hA0 : A.det ≠ 0 := hdetA ▸ hJ
     refine ⟨∑ x : Fin ((i : ℕ) + 1), (-1) ^ ((x : ℕ) + ((Fin.last (i : ℕ) : Fin ((i : ℕ) + 1)) : ℕ)) *
@@ -509,7 +509,7 @@ theorem PositivityTheory.Xgn.t_minor_graded : ∀ {o Ω : Type} [CommRing o] [Fi
         unfold flagMinor
         rw [Matrix.det_succ_row _ (Fin.last _)]
         refine Finset.sum_congr rfl fun j _ => ?_
-        simp [sub, Fin.snoc_last, Fin.snoc_castSucc, Fin.succAbove_last]
+        simp [sub, Fin.snoc_last, Fin.succAbove_last]
         left
         congr 1
         ext r d
@@ -613,7 +613,7 @@ private theorem exists_pow_mul_basis_repr_mem {o Ω : Type} [CommRing o] [Field 
     · by_cases h : q = q'
       · subst h
         simpa using R.one_mem
-      · simp [Pi.single_apply, h]
+      · simp [h]
     · simp [Pi.single_apply]
   choose n₁ hn₁ using hgen
   have h2 : ∀ l l' q' q, ∃ n, f l ^ n * (B l).repr (f l' ^ n₁ l' q' • b l' q') q ∈ R :=
@@ -690,7 +690,7 @@ theorem genDual_span {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (R₀ 
         · by_cases h : q' = q
           · subst h
             simpa using R₀.one_mem
-          · simp [Pi.single_apply, h]
+          · simp [h]
         · simp [Pi.single_apply]
       choose n₁ hn₁ using hgen
       have hψb : ∀ q, f l ^ Finset.univ.sup n₁ * ψ (b l q) ∈ R := by

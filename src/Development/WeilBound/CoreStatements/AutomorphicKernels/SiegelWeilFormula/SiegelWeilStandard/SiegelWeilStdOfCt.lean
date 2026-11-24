@@ -177,7 +177,7 @@ private theorem integral_mul_star_eq_of_lintegral_norm_sq_eq {α : Type*} [Measu
     refine integral_congr_ae ?_
     filter_upwards [ha.coeFn_toLp, hb.coeFn_toLp] with x hxa hxb
     rw [hxa, hxb]
-    simp [mul_comm]
+    simp
   rw [hi hu hv, hi hu' hv', inner_eq_sum_norm_sq_div_four, inner_eq_sum_norm_sq_div_four]
   have e1 := hn 1
   have e2 := hn (-1)
@@ -932,7 +932,7 @@ theorem var_span' (R : RD d) (w : InfinitePlace F) (k : Fin d.m × Fin d.n × Bo
   set e : ℂ := ((R.ε : ℤ) : ℂ)
   have he : e * e = 1 := by rcases Int.units_eq_one_or R.ε with h | h <;> simp [e, h]
   have hes : star e = e := by simp [e]
-  have hz : star R.ζ * R.ζ = 1 := by rcases R.hζ with ⟨-, h⟩ | ⟨-, h⟩ <;> rw [h] <;> simp [Complex.ext_iff]
+  have hz : star R.ζ * R.ζ = 1 := by rcases R.hζ with ⟨-, h⟩ | ⟨-, h⟩ <;> rw [h] <;> simp
   have hfi : fr * fi = 1 := by simp only [fr, fi]; rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
   have hif : fi * fr = 1 := by simp only [fr, fi]; rw [← Units.val_mul, inv_mul_cancel, Units.val_one]
 
@@ -965,7 +965,7 @@ theorem var_span' (R : RD d) (w : InfinitePlace F) (k : Fin d.m × Fin d.n × Bo
     have hre : (e * trace ((d.cw w X)ᵀ * M)).re = e.re * (trace ((d.cw w X)ᵀ * M)).re := by
       rcases Int.units_eq_one_or R.ε with h | h <;> simp [e, h]
     rw [hre]
-    rcases Int.units_eq_one_or R.ε with h | h <;> simp [e, h] <;> ring
+    rcases Int.units_eq_one_or R.ε with h | h <;> simp [e, h]
 
   have hM : ∀ (c : ℂ) (x : Matrix (Fin d.m) (Fin d.n) ℂ),
       trace (xᵀ * Matrix.of fun b j => if j = k.2.1 then c * fi k.1 b else 0) = c * (fi * x) k.1 k.2.1 := fun c x => by
@@ -973,7 +973,7 @@ theorem var_span' (R : RD d) (w : InfinitePlace F) (k : Fin d.m × Fin d.n × Bo
       c * ∑ b, fi k.1 b * x b k.2.1
     simp only [mul_ite, mul_zero]
     rw [Finset.sum_eq_single k.2.1 (fun j _ hj => by simp only [if_neg hj, mul_zero, Finset.sum_const_zero]) (by simp)]
-    simp only [if_pos rfl, Finset.mul_sum]
+    simp only [Finset.mul_sum]
     exact Finset.sum_congr rfl fun b _ => by simp only [if_true]; ring
   obtain ⟨Z₁, h1, e1⟩ := key (Matrix.of fun b j => if j = k.2.1 then 1 * fi k.1 b else 0)
   obtain ⟨Z₂, h2, e2⟩ := key (Matrix.of fun b j => if j = k.2.1 then (-Complex.I) * fi k.1 b else 0)

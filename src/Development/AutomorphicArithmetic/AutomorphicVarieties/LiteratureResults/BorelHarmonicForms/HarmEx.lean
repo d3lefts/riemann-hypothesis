@@ -542,7 +542,7 @@ theorem UpperTheory.V.Lit.Bor.casPi :
     exact h.sub_right ((Commute.one_right _).smul_right _)
   have hz : cas (shift (lie E a) r) e ∈ Zalg E a := by
     rw [Cm.Zalg_eq_map]
-    exact ⟨_, hc, by simp only [cas, map_sum, map_sub, map_mul, uC_shift, AlgHom.toRingHom_eq_coe, RingHom.coe_coe]⟩
+    exact ⟨_, hc, by simp only [cas, map_sum, map_sub, map_mul, uC_shift, RingHom.coe_coe]⟩
   exact π.exists_scalar hz (zalg_commute hz)
 end -- clump:auto
 end -- clump:auto
@@ -767,7 +767,7 @@ theorem UpperTheory.V.Lit.Bor.harmEx :
     rw [dCo_apply, AlternatingMap.zero_apply, ← h1]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [inclCo_apply, ← hIL]
-    simp only [map_zsmul, LinearMap.map_smul_of_tower]
+    simp only [map_zsmul]
   · cases q with
     | zero => trivial
     | succ q =>

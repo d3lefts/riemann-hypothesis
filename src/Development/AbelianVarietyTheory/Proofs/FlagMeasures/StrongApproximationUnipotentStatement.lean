@@ -1030,7 +1030,7 @@ variable (L : LocE F E) {n : ℕ} (Hm : Matrix (Fin n) (Fin n) E)
 
 theorem eich_smul_base (c : E) (hc : L.cj c = c) (x u : Fin n → E) (s : E) (v : Fin n → E) :
     eich L Hm (c • x) u s v = eich L Hm x (c • u) (c ^ 2 * s) v := by
-  simp only [eich, Eichler.hf_smul_r, Eichler.hf_smul_l, hc]
+  simp only [eich, Eichler.hf_smul_r, hc]
   module
 
 theorem cj_alg (a : F) : L.cj (algebraMap F E a) = algebraMap F E a := L.cj.commutes a
@@ -1239,11 +1239,7 @@ theorem hf_sub_l {N : ℕ} (Hm : Matrix (Fin N) (Fin N) R) (a b y : Fin N → R)
 
 theorem exists_bound {ι : Type} [Fintype ι] (f : ι → R) : ∃ e ∈ 𝒪[K], e ≠ 0 ∧ ∀ i, Sm L e⁻¹ (f i) := by
   first
-  | exact @_root_.GlobalTheory.SmulIntegralDenominator.main
-  | exact _root_.GlobalTheory.SmulIntegralDenominator.main
   | (apply _root_.GlobalTheory.SmulIntegralDenominator.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.SmulIntegralDenominator.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.SmulIntegralDenominator.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.SmulIntegralDenominator.main ..)
 
 def piL {N r : ℕ} (Hm : Matrix (Fin N) (Fin N) R) (X Y : Fin r → Fin N → R) (T : Finset (Fin r))

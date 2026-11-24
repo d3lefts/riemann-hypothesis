@@ -614,7 +614,7 @@ theorem gram_eq {d : ℕ} (nm : HermFam F V) (σ : F →+* ℂ) (b : Module.Basi
   simp_rw [form_smul_left, form_sum_right, nm.smul_right, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_
-  simp [Complex.star_def]
+  simp
   ring
 
 theorem gram_det (F V : Type) [Field F] [AddCommGroup V] [Module F V] (nm : HermFam F V)
@@ -676,7 +676,7 @@ theorem relIndex_smul_eq_absNorm : ∀ (F : Type) [Field F] [NumberField F] (I :
       (f := (g : 𝓞 F →+ F)) hgi
     rw [← Submodule.map_toAddSubgroup, ← Submodule.map_toAddSubgroup] at a1 a2
     rw [← a1, ← a2, hpJ, hJ]
-  have hle2 : p * J ≤ J := by first | exact Ideal.mul_le_left | exact Ideal.mul_le_right
+  have hle2 : p * J ≤ J := by first | exact Ideal.mul_le_right
   have hidx : (p * J).toAddSubgroup.relIndex J.toAddSubgroup * Ideal.absNorm J = Ideal.absNorm (p * J) :=
     by simpa only [Ideal.absNorm_eq_index] using
       AddSubgroup.relIndex_mul_index (H := (p * J).toAddSubgroup) (K := J.toAddSubgroup) hle2
@@ -735,7 +735,6 @@ theorem relIndex_sup_span_singleton_eq_absNorm
     · intro htop
       apply hu
       have : (1 : 𝓞 F) ∈ LinearMap.ker f := by
-        change (1 : 𝓞 F) ∈ (LinearMap.ker f : Submodule (𝓞 F) (𝓞 F))
         rw [show (LinearMap.ker f : Submodule (𝓞 F) (𝓞 F)) = ⊤ from htop]
         trivial
       simpa using (hmem 1).mp this

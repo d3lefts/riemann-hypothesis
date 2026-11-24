@@ -102,11 +102,7 @@ theorem idem_sandwich_zero (J : Subgroup G) (χ : J →* ℂˣ) (u u' : J) (g : 
   have h2 : ((1 : ℂ) - ((χ u * χ u' : ℂˣ) : ℂ)) • X = 0 := by
     rw [sub_smul, one_smul, ← h1, sub_self]
   rcases smul_eq_zero.mp h2 with h3 | h3
-  · exfalso
-    apply hne
-    apply Units.ext
-    rw [Units.val_one]
-    exact (sub_eq_zero.mp h3).symm
+  · exact absurd (Units.ext (by simpa using (sub_eq_zero.mp h3).symm)) hne
   · exact h3
 
 noncomputable def antiLift (σ : G → G) (hσ : ∀ x y, σ (x * y) = σ y * σ x) :
@@ -194,7 +190,7 @@ theorem gelfand_trick {V : Type} [AddCommGroup V] [Module ℂ V] [FiniteDimensio
         (twistedIdem J χ * MonoidAlgebra.of ℂ G g * twistedIdem J χ))
     (hirr : IsIrr ρ) :
     Module.finrank ℂ (eqvSpace ρ (fun u : J => (u : G)) (fun u => ((χ u : ℂˣ) : ℂ))) ≤ 1 := by
-  first | exact Bl.CyclicComponents.goal1 .. | (apply Bl.CyclicComponents.goal1 <;> assumption) | (intros; apply Bl.CyclicComponents.goal1 <;> assumption) | (apply @Bl.CyclicComponents.goal1 <;> assumption) | (intros; apply @Bl.CyclicComponents.goal1 <;> assumption) | (apply @Bl.CyclicComponents.goal1 <;> first | assumption | infer_instance)
+  first | (apply Bl.CyclicComponents.goal1 <;> assumption)
 
 end GelfandTrick
 
@@ -294,9 +290,8 @@ theorem IsUT.inv_val (u : GL (Fin N) K) (h : IsUT (u : Matrix (Fin N) (Fin N) K)
   have hlow : ∀ i j, j < i → ((u⁻¹ : GL (Fin N) K) : Matrix (Fin N) (Fin N) K) i j = 0 := by
     intro i j hij
     rw [Matrix.coe_units_inv]
-    have : Invertible (u : Matrix (Fin N) (Fin N) K) := u.invertible
-    have hb : Matrix.BlockTriangular (u : Matrix (Fin N) (Fin N) K) id := fun i j hij => h.2 i j hij
-    exact Matrix.blockTriangular_inv_of_blockTriangular hb hij
+    exact Matrix.blockTriangular_inv_of_blockTriangular
+      (fun i j hij => h.2 i j hij) hij
   refine ⟨fun i => ?_, hlow⟩
   have h1 : ((u * u⁻¹ : GL (Fin N) K) : Matrix (Fin N) (Fin N) K) i i = 1 := by
     rw [mul_inv_cancel]; simp
@@ -306,7 +301,7 @@ theorem IsUT.inv_val (u : GL (Fin N) K) (h : IsUT (u : Matrix (Fin N) (Fin N) K)
     rcases lt_or_gt_of_ne hm with h' | h'
     · rw [h.2 i m h', zero_mul]
     · rw [hlow m i h', mul_zero]
-  · intro h'; exact absurd (Finset.mem_univ _) h'
+  · simp
 
 def uniSub (K : Type) [Field K] (N : ℕ) : Subgroup (GL (Fin N) K) where
   carrier := {u | IsUT (u : Matrix (Fin N) (Fin N) K)}
@@ -345,16 +340,11 @@ theorem besselSpace_zero_eq_equivariant {V : Type} [AddCommGroup V] [Module ℂ 
   ext x
   constructor
   · intro h u
-    have := h ⟨u.1, (mem_besselSet_zero_iff_upper_triangular _).mpr u.2⟩
-    show ρ (u : GL (Fin N) K) x = ((uniChar ψ₀ N u : ℂˣ) : ℂ) • x
-    rw [uniChar_val, ← besselChar_zero_eq_edge_sum]
-    exact this
+    simpa [uniChar_val, besselChar_zero_eq_edge_sum] using
+      h ⟨u.1, (mem_besselSet_zero_iff_upper_triangular _).mpr u.2⟩
   · intro h u
-    have : ρ (u : GL (Fin N) K) x =
-        ((uniChar ψ₀ N ⟨u.1, (mem_besselSet_zero_iff_upper_triangular _).mp u.2⟩ : ℂˣ) : ℂ) • x :=
+    simpa [uniChar_val, besselChar_zero_eq_edge_sum] using
       h ⟨u.1, (mem_besselSet_zero_iff_upper_triangular _).mp u.2⟩
-    rw [uniChar_val, ← besselChar_zero_eq_edge_sum] at this
-    exact this
 
 end GG
 end Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
@@ -851,8 +841,7 @@ theorem flip_char (ψ₀ : AddChar K ℂ) (u : uniSub K N) :
   refine ⟨IsUT.flip u.2, ?_⟩
   apply Units.ext
   rw [uniChar_val, uniChar_val]
-  show ψ₀ (edgeSum (flipM _)) = _
-  rw [edgeSum_flip]
+  exact congrArg (fun z => ψ₀ z) (edgeSum_flip ((u : GL (Fin N) K) : Matrix (Fin N) (Fin N) K))
 
 end Flip
 

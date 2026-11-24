@@ -907,7 +907,7 @@ theorem pad_getD {x y : List ℤ} (hx : ∀ v ∈ x, 0 < v) (hy : ∀ v ∈ y, v
   · rw [List.getD_append_right _ _ _ _ (not_lt.mp h1), posFn_eq_zero (not_lt.mp h1)]
     by_cases h2 : (i : ℕ) - x.length < n - x.length - y.length
     · rw [List.getD_append _ _ _ _ (by simpa using h2), negFn_eq_zero (by omega)]
-      simp [List.getD_eq_getElem?_getD, List.getElem?_replicate, h2]
+      simp [List.getD_eq_getElem?_getD, h2]
     · rw [List.getD_append_right _ _ _ _ (by simp; omega)]
       simp only [List.length_replicate]
       have hj : n - ((i : ℕ) + 1) < y.length := by omega
@@ -1541,11 +1541,11 @@ theorem BlockHW.mul {σ : Type} {m n : ℕ} {z : Fin m × Fin n → σ} {α : �
     {P Q : MvPolynomial σ ℂ} (h : BlockHW z α P) (hQ : ∀ w, pderiv (z w) Q = 0) :
     BlockHW z α (P * Q) := by
   have h1 : ∀ a b, rowOp ℂ z a b (P * Q) = rowOp ℂ z a b P * Q := fun a b => by
-    simp only [rowOp_apply, Derivation.leibniz, hQ, smul_zero, zero_add, smul_eq_mul,
+    simp only [rowOp_apply, Derivation.leibniz, hQ, smul_eq_mul,
       Finset.sum_mul]
     exact Finset.sum_congr rfl fun _ _ => by ring
   have h2 : ∀ a b, colOp ℂ z a b (P * Q) = colOp ℂ z a b P * Q := fun a b => by
-    simp only [colOp_apply, Derivation.leibniz, hQ, smul_zero, zero_add, smul_eq_mul,
+    simp only [colOp_apply, Derivation.leibniz, hQ, smul_eq_mul,
       Finset.sum_mul]
     exact Finset.sum_congr rfl fun _ _ => by ring
   exact ⟨fun a b hab => by rw [h1, h.1 a b hab, zero_mul],

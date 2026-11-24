@@ -78,7 +78,6 @@ theorem rmulF_meas (ρ : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ)
   simp only [Formalism.FourierDecayAlt.B.rmulF, Matrix.mul_apply, Matrix.of_apply]
   refine Finset.measurable_sum _ fun l _ => ?_
   first
-  | exact (measurable_pi_iff.mp (measurable_pi_apply i) l).mul measurable_const
   | fun_prop
 
 theorem orbit_identity (L : LocBessel k r) {γ : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ}
@@ -167,9 +166,7 @@ theorem gProxy_eq (L : LocBessel k r) (γ : Matrix (Fin (2 * r + k + 1)) (Fin (2
 private theorem gProxy_nonneg (γ : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) (b : ℝ) (x : PairSp k r) :
     0 ≤ gProxy γ b x := by
   unfold gProxy
-  apply Real.rpow_nonneg
-  unfold Formalism.FourierDecayAlt.B.gN
-  exact Real.sqrt_nonneg _
+  exact Real.rpow_nonneg (Formalism.FourierDecayAlt.P.gN_nonneg_bessel_integrability _) _
 
 theorem cell_convergence : Formalism.MainNotions.S.Pv.AmpDD.CellConv := by
   intro k r L h μG γ μR νR ν hκ hgap hcell hdata hmono

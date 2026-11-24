@@ -210,7 +210,7 @@ open scoped BigOperators
 namespace GlobalTheory.NormSum
 
 theorem intSt_and_archSt : IntSt ∧ ArchSt :=
-  ⟨GlobalTheory.T.classSumDenominatorBound_of_cmThetaHypotheses _root_.GlobalTheory.NormSum.inp_all, _root_.GlobalTheory.ArchTop.archSt_of_inp GlobalTheory.T.cmThetaNormBoundHypotheses_satisfied⟩
+  ⟨GlobalTheory.T.classSumDenominatorBound_of_cmThetaHypotheses _root_.GlobalTheory.NormSum.inp_all, _root_.GlobalTheory.ArchTop.archSt_of_inp _root_.GlobalTheory.NormSum.inp_all⟩
 
 end GlobalTheory.NormSum
 end -- clump:auto
@@ -436,7 +436,7 @@ theorem prod_localIdele_comp (z : ∀ v : HeightOneSpectrum (𝓞 L), (v.adicCom
       if w ∈ F then ((z w : (w.adicCompletion L)ˣ) : w.adicCompletion L) else 1 := by
   classical
   induction F using Finset.induction_on with
-  | empty => exact ⟨rfl, fun w => by simp; rfl⟩
+  | empty => exact ⟨rfl, fun w => by simp⟩
   | insert a F ha ih =>
     rw [Finset.prod_insert ha, Units.val_mul]
     have e1 : ∀ x y : AdeleRing (𝓞 L) L, (x * y).1 = x.1 * y.1 := fun _ _ => rfl
@@ -1877,7 +1877,7 @@ open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.E
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.geometric_condition_large_grid_alt : GlobalTheory.NT.RayField → ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (CF : ℝ) (N : _root_.GlobalTheory.Mem.Top.Bl.NormChoiceExtension hL) (S : SExt) (Γ : GeoP), (∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c → Nonempty (_root_.GlobalTheory.HeightCounting.Up.extensionWithList hL CF K B f T w Z Wt p0 t nch n xd c)) → _root_.GlobalTheory.Fc.RL.LinkedAt (_root_.GlobalTheory.Mem.Top.Bl.parametersOfExtension (_root_.GlobalTheory.Mem.LiteralAutomorphy.extensionWithAtProperty hL N (GridA CF)) S Γ) _root_.GlobalTheory.Fc.R1.SlotDivisorCondition → _root_.GlobalTheory.Fc.RL.LinkedAt (_root_.GlobalTheory.Mem.Top.Bl.parametersOfExtension (_root_.GlobalTheory.Mem.LiteralAutomorphy.extensionWithAtProperty hL N (GridA CF)) S Γ) _root_.GlobalTheory.Fc.RL.Row_tie_alt → _root_.GlobalTheory.Fc.RL.LinkedAt (_root_.GlobalTheory.Mem.Top.Bl.parametersOfExtension (_root_.GlobalTheory.Mem.LiteralAutomorphy.extensionWithAtProperty hL N (GridA CF)) S Γ) fun Q L => _root_.GlobalTheory.Fc.RL.RowGeometricCondition Q L CF := by
-  first | exact @_root_.GlobalTheory.Mem.LiteralAutomorphy.rowGeo_at_gridA_alt | exact _root_.GlobalTheory.Mem.LiteralAutomorphy.rowGeo_at_gridA_alt | (intros; apply _root_.GlobalTheory.Mem.LiteralAutomorphy.rowGeo_at_gridA_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.Mem.LiteralAutomorphy.rowGeo_at_gridA_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1912,7 +1912,7 @@ theorem rowFun_at_gridA_alt : GlobalTheory.Published.DiscreteSeriesCover → Glo
       (fun Fm hc x hx i => ⟨(hτ Fm hc x hx i).2.1, (hτ Fm hc x hx i).2.2.1⟩)
   have key := hCF CF hle 𝒜 (_root_.GlobalTheory.Fc.summandSelection σ τ') hduty hrows
     (GlobalTheory.Fc.FourBoundsAtBundles.evW_of_atAll fun Fm hc x hx i => (hτ Fm hc x hx i).2.2.2.2.2)
-  first | exact key | exact ⟨τ', key⟩
+  first | exact key
 end GlobalTheory.Fc.StageOne
 end
 end -- clump:auto

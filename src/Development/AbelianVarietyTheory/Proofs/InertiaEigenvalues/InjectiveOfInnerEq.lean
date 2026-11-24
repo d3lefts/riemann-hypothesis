@@ -209,7 +209,7 @@ open GlobalTheory.RawLift
 
 
 theorem _root_.GlobalTheory.T.exists_heckeRepresentatives_rightTranslate_identity : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (i : Fin D.R.m), TransLaws R i → ∀ (B : GfC (Wc D i) → ((R.HW i (sg0 D A)).H →L[ℂ] (R.HW i (sg0 D A)).H)), (∀ (γ : GfC (Wc D i)) x y, trPair R i (γ : GA D (Wc D i)) x y = ⟪x, B γ y⟫_ℂ) → (∀ v α, GlobalTheory.UpInj.cf (Wc D i) v α = α → ∃ C, GlobalTheory.UpInj.DCRep (GlobalTheory.UpInj.cf (Wc D i) v) (GlobalTheory.UpInj.KR R i) α C) ∧ (∀ v α C, GlobalTheory.UpInj.cf (Wc D i) v α = α → GlobalTheory.UpInj.DCRep (GlobalTheory.UpInj.cf (Wc D i) v) (GlobalTheory.UpInj.KR R i) α C → ∀ γ, ∑ δ ∈ C, B (γ * δ) = B γ * ∑ δ ∈ C, B δ) := by
-  first | exact @GlobalTheory.UpInj.heckeReps | exact GlobalTheory.UpInj.heckeReps | (intros; apply GlobalTheory.UpInj.heckeReps <;> assumption)
+  first | exact @GlobalTheory.UpInj.heckeReps
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsHeckeRepresentativesRightTranslateIdentityStatement =====
@@ -320,8 +320,8 @@ theorem hasSum_inner_quotient_eulerProduct_injective : ∀ (Γ : Type) [Group Γ
         simp only [mul_inv_rev, map_mul, map_inv, hidem, hcγ, inv_one, mul_one, inv_mul_cancel]
         exact K.one_mem
       · rw [Function.update_of_ne hw, hfγ' w, QuotientGroup.eq, Subgroup.mem_comap]
-        simp only [hγ, mul_inv_rev, inv_inv, map_mul, map_inv, horth v w _ hw.symm, inv_one, mul_one,
-          one_mul, inv_mul_cancel]
+        simp only [hγ, map_mul, map_inv, horth v w _ hw.symm, inv_one, mul_one,
+          inv_mul_cancel]
         exact K.one_mem
     have hupd : Function.update f v (x0 v) = f := by
       rw [← hv]; exact Function.update_eq_self v f

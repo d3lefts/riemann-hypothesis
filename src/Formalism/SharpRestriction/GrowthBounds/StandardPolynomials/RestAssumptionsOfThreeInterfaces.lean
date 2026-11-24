@@ -330,8 +330,7 @@ theorem glIntProd {O : Type} [CommRing O] [IsDomain O] {σ κ : Type} (s : Finse
 
 theorem monomial_sum_eq_prod_tensor {X : Loc} {O : Type} [CommRing O] [IsDomain O] {ι : Type} (s : Finset ι) (a : ι → MonH X) :
     (monomial (∑ i ∈ s, a i) (1 : KK O) : RHH O X) = ∏ i ∈ s, (monomial (a i) (1 : KK O) : RHH O X) := by
-  have := mono_sum (O := O) s (fun _ => 1) a
-  simpa using this
+  simpa using mono_sum (O := O) s (fun _ => 1) a
 
 end Small
 
@@ -835,7 +834,7 @@ theorem facSysAt_of {D : Formalism.BasicNotions.D7} (hA2 : Formalism.MainNotions
   intro X _ _ O _ _ _ _ S hSq hD1 hHI hCB mm hmm n hn1 hnc β hβ s hs
   have hp : X.p.Prime := Fact.out
   haveI hKz : CharZero (KK O) := dvr_fraction_field_charZero S hp
-  simp only [colGens, Set.mem_setOf_eq] at hs
+  simp only [colGens] at hs
   choose lv jp hOK y hy γ hγ hx using hs
   let L : LvDat C0 CE1 CE2 (mm + (n : ℝ) * ka1 X) X β := ⟨lv, jp, hOK, γ, hγ⟩
   have hs' : s = fun j => L.word O j (psiR (KK O) (L.LL j) (y j)) := funext fun j => hx j

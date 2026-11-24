@@ -212,7 +212,7 @@ open scoped GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
 theorem _root_.GlobalTheory.T.archSupported_smul_conjugateUnitary_sub_one_eq_zero : ∀ (D : D7) (V : HSp D) {J : Matrix (Fin V.rank) (Fin V.rank) D.host.E} (c : D.host.E) (hJ : J = c • V.gram)
     (g : GA D V), g ∈ GfC V → ∀ u : AF D.host.F, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F) u →
       u • (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.mat (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU V c hJ g) - 1) = 0 := by
-  first | exact @GlobalTheory.ConjFinArch.smul_mat_conjU_sub_one | exact GlobalTheory.ConjFinArch.smul_mat_conjU_sub_one | (intros; apply GlobalTheory.ConjFinArch.smul_mat_conjU_sub_one <;> assumption)
+  first | exact @GlobalTheory.ConjFinArch.smul_mat_conjU_sub_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ArchSupportedSmulConjugateUnitarySubOneEqZeroStatement =====
@@ -433,7 +433,7 @@ theorem _root_.GlobalTheory.T.finiteSupport_unitaryPoint_replaces_pureTensorFact
         (∀ v, φ' v ∈ GlobalTheory.WeilM.SB (Fin n × Fin d → Fv F v)) ∧ (∀ v ∉ S, φ' v = φ v) ∧
         (∀ v, φ' v - φ v ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.augAt om v) ∧
         om (gS, 1) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ' := by
-  first | exact @GlobalTheory.PlaceProd.pure_of_finSupp | exact GlobalTheory.PlaceProd.pure_of_finSupp | (intros; apply GlobalTheory.PlaceProd.pure_of_finSupp <;> assumption)
+  first | exact @GlobalTheory.PlaceProd.pure_of_finSupp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FiniteSupportUnitaryPointReplacesPureTensorFactoStatement =====
@@ -607,7 +607,7 @@ theorem _root_.GlobalTheory.T.latticeStabilizers_fix_vacua_fixes_pureTensor_left
     ∀ (f : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin n × Fin d)) (φ : ∀ w : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F), (Fin n × Fin d → Fv F w) → ℂ),
       (∀ w, φ w ∈ GlobalTheory.WeilM.SB (Fin n × Fin d → Fv F w)) → (∀ w ∉ S, φ w = M.vac w) →
       om (k, 1) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ := by
-  first | exact @GlobalTheory.SphGlobX.fixes_pure_left | exact GlobalTheory.SphGlobX.fixes_pure_left | (intros; apply GlobalTheory.SphGlobX.fixes_pure_left <;> assumption)
+  first | exact @GlobalTheory.SphGlobX.fixes_pure_left
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.LatticeStabilizersFixVacuaFixesPureTensorLeftStatement =====
@@ -713,7 +713,7 @@ theorem _root_.GlobalTheory.T.local_action_finite_places : _root_.GlobalTheory.F
           (∀ v, φ' v ∈ GlobalTheory.WeilM.SB (Fin a' × Fin (a + a') → Fv F v)) ∧ (∀ᶠ v in Filter.cofinite, φ' v = G.M'.vac v) ∧
           (∀ v, φ' v - φ v ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.augAt om' v) ∧
           om' (g, 1) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ' := by
-  first | exact @_root_.GlobalTheory.LocActV.finite_adele_acts_placewise | exact _root_.GlobalTheory.LocActV.finite_adele_acts_placewise | (intros; apply _root_.GlobalTheory.LocActV.finite_adele_acts_placewise <;> assumption)
+  first | exact @_root_.GlobalTheory.LocActV.finite_adele_acts_placewise
 end
 end -- clump:auto
 end -- clump:auto
@@ -857,7 +857,7 @@ theorem _root_.GlobalTheory.T.triple_assembly_inverse_finite : GlobalTheory.Publ
       ∀ R Rf, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsMatched Bs Γ Xc om om' R Rf →
         (∀ g ∈ GfC W, ∀ Φ ∈ algF ψ θ true A B, GlobalTheory.TripleAssembly.mapA ψ e Bs Γ R Rf (ωA (g, 1) Φ) = GlobalTheory.TripleAssembly.mapA ψ e Bs Γ R Rf Φ) ∧
           ∀ g ∈ GfC W₁, ∀ Φ ∈ algF ψ θ false A₁ B, GlobalTheory.TripleAssembly.mapB ψ e Bs Γ R Rf (ωB (g, 1) Φ) = GlobalTheory.TripleAssembly.mapB ψ e Bs Γ R Rf Φ := by
-  first | exact @_root_.GlobalTheory.TripleAssembly.triple_map_comp_inverse_finite | exact _root_.GlobalTheory.TripleAssembly.triple_map_comp_inverse_finite | (intros; apply _root_.GlobalTheory.TripleAssembly.triple_map_comp_inverse_finite <;> assumption)
+  first | exact @_root_.GlobalTheory.TripleAssembly.triple_map_comp_inverse_finite
 end
 end -- clump:auto
 end -- clump:auto

@@ -600,11 +600,11 @@ theorem oscillator_deriv_along_line_quadratic : _root_.GlobalTheory.FunPr.ThetaL
   have trace_real {ι : Type} [Fintype ι] (f : ι → ℝ) :
       Algebra.trace ℝ (ι → ℝ) f = ∑ i, f i := by
     rw [Algebra.trace_eq_matrix_trace (Pi.basisFun ℝ ι)]
-    simp [Matrix.trace, Algebra.leftMulMatrix_eq_repr_mul, Pi.single_apply]
+    simp [Matrix.trace, Algebra.leftMulMatrix_eq_repr_mul]
   have trace_complex {ι : Type} [Fintype ι] (f : ι → ℂ) :
       Algebra.trace ℝ (ι → ℂ) f = ∑ i, 2 * (f i).re := by
     rw [Algebra.trace_eq_matrix_trace (Pi.basis fun _ : ι => Complex.basisOneI)]
-    simp [Matrix.trace, Algebra.leftMulMatrix_eq_repr_mul, Fintype.sum_sigma, Pi.single_apply, Fin.sum_univ_two,
+    simp [Matrix.trace, Algebra.leftMulMatrix_eq_repr_mul, Fintype.sum_sigma, Fin.sum_univ_two,
       Complex.coe_basisOneI, Complex.coe_basisOneI_repr]
     refine Finset.sum_congr rfl fun i _ => ?_
     ring
@@ -668,7 +668,7 @@ theorem _root_.GlobalTheory.T.oscillator_lie_action_quadratic : _root_.GlobalThe
         (∀ i, ActsD (evI F) (M.heisLine ψ (v i)) f (g₁ i)) → (∀ i, ActsD (evI F) (M.heisLine ψ (u i)) (g₁ i) (g₂ i)) →
         ∀ F₁ : ℝ → SInf F (Fin n × Fin d), (∀ t, Acts (evI F) (om (1, γ (Multiplicative.ofAdd t))) f (F₁ t)) →
         ∀ y, HasDerivAt (fun t => F₁ t y) (∑ i, c i * g₂ i y + c₀ * f y) 0 := by
-  first | exact @_root_.GlobalTheory.OscQuad.oscillator_deriv_along_line_quadratic | exact _root_.GlobalTheory.OscQuad.oscillator_deriv_along_line_quadratic | (intros; apply _root_.GlobalTheory.OscQuad.oscillator_deriv_along_line_quadratic <;> assumption)
+  first | exact @_root_.GlobalTheory.OscQuad.oscillator_deriv_along_line_quadratic
 end
 end -- clump:auto
 end -- clump:auto
@@ -753,7 +753,7 @@ theorem _root_.GlobalTheory.T.twist_lie_derivative_model : _root_.GlobalTheory.F
     IsTriple B G X om om' → ∀ γ ∈ Lines σ G.W,
     ∃ δ : SInf F (Fin a' × Fin (a + a')) →ₗ[ℂ] SInf F (Fin a' × Fin (a + a')), ∀ f ∈ G.M'.Pol B.ψ B.emb,
       δ f ∈ G.M'.Pol B.ψ B.emb ∧ ActsD (evI F) (fun t => om' (1, γ (Multiplicative.ofAdd t))) f (δ f) := by
-  first | exact @_root_.GlobalTheory.DerPol.exists_lie_derivative_model | exact _root_.GlobalTheory.DerPol.exists_lie_derivative_model | (intros; apply _root_.GlobalTheory.DerPol.exists_lie_derivative_model <;> assumption)
+  first | exact @_root_.GlobalTheory.DerPol.exists_lie_derivative_model
 end
 end -- clump:auto
 end -- clump:auto

@@ -195,7 +195,7 @@ theorem ppos_ortho {x : Frame X.Ψ r} (hx : x ∈ X.dom) (ho : X.IsOrtho x) (τ 
     simp only [Data.gramPos, Matrix.submatrix_apply, ho τ, Matrix.diagonal_apply, Fin.castLE_inj,
       Matrix.one_apply]
     split_ifs with h
-    · simp [sgn, Fin.coe_castLE, a.isLt]
+    · simp [sgn, a.isLt]
     · rfl
   unfold Data.ppos
   rw [hg, Matrix.inv_eq_left_inv (mul_one (1 : Matrix (Fin X.p0) (Fin X.p0) ℂ))]
@@ -531,7 +531,7 @@ theorem ubasis_at (ξ : Fin r → E) (z0 x0 : Frame X.Ψ r) (hξ0 : ξ ≠ 0) (h
           refine Finset.sum_congr rfl fun a _ => ?_
           ring
       _ = ∑ k, c k * conj (c k) := by
-          simp only [hO, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.sum_ite_eq',
+          simp only [hO, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
             Finset.mem_univ, if_true]
       _ = ((∑ k, ‖c k‖ ^ 2 : ℝ) : ℂ) := by
           push_cast

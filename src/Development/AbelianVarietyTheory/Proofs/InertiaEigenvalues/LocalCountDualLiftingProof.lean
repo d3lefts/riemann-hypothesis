@@ -182,7 +182,7 @@ theorem exists_dualLat_isOpen : ∀ {G : Type} [Group G] [TopologicalSpace G] {Q
     refine ⟨(Pi.single i (1 : O) : Module.Free.ChooseBasisIndex O LT.T → O) j, ?_⟩
     rcases eq_or_ne j i with rfl | h
     · simp
-    · simp [Pi.single_apply, h]
+    · simp [h]
   have hT'eq : T' = Submodule.span O (Set.range bf) := by
     apply le_antisymm
     · intro y hy
@@ -374,7 +374,6 @@ theorem GlobalTheory.Pass.LocDual.isSummandTw_locU : ∀ (D : D7) (i : D.nd.Loc)
       fun (_ : Fin 1) => (Br.loc D.nbr i w hw (rTwO D.nd i r x) g).mulVec (JL.mulVec v)
     intro g v
     funext b
-    change JL.mulVec ((Br.loc D.nbr i w hw M g).mulVec v) = (Br.loc D.nbr i w hw (rTwO D.nd i r x) g).mulVec (JL.mulVec v)
     simp only [Matrix.mulVec_mulVec]
     rw [hloc, loc_eq]
     change Matrix.mulVec (J.map f * (mapM (toK D.nd i) M (decS D.nd w (Br.iota D.nbr i w hw g))).map f) v = _
@@ -1052,11 +1051,7 @@ variable {V : Type} [AddCommGroup V] [Module K V] {f : Γ → V →ₗ[K] V}
 theorem hasRelCompl_sup {X U : Submodule K V} (hXs : StableUnder f X) (hUs : StableUnder f U)
     (hX : HasRelCompl f X) (hU : HasRelCompl f U) : HasRelCompl f (X ⊔ U) := by
   first
-  | exact @_root_.GlobalTheory.ComplementedSup.complemented_sup
-  | exact _root_.GlobalTheory.ComplementedSup.complemented_sup
   | (apply _root_.GlobalTheory.ComplementedSup.complemented_sup <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ComplementedSup.complemented_sup <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ComplementedSup.complemented_sup <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.ComplementedSup.complemented_sup ..)
 
 end General

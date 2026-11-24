@@ -1156,7 +1156,6 @@ private theorem gen_ne_zero_of_mem_htOne_heightData {p : Ideal (KTp K d.D d.N)} 
     rintro rfl
     first
       | (simp at hht; done)
-      | (rw [Ideal.height_bot] at hht; exact zero_ne_one hht)
   obtain ⟨q, hqp, hq⟩ := hpr.exists_mem_prime_of_ne_bot hne
   have hqi : (Ideal.span {q}).IsPrime := (Ideal.span_singleton_prime hq.ne_zero).mpr hq
   have hle : Ideal.span {q} ≤ p := (Ideal.span_singleton_le_iff_mem p).mpr hqp
@@ -1176,8 +1175,6 @@ private theorem gen_ne_zero_of_mem_htOne_heightData {p : Ideal (KTp K d.D d.N)} 
     have h2 := (Ideal.height_le_iff.mp h0) ⊥ Ideal.isPrime_bot hbot
     first
       | (simp at h2; done)
-      | exact absurd h2 (not_lt_of_ge bot_le)
-      | exact ENat.not_lt_zero _ h2
   have hprin : p.IsPrincipal := ⟨⟨q, hspan.symm⟩⟩
   haveI := hprin
   simp only [Data.gen, dif_pos hprin]
@@ -1193,9 +1190,6 @@ theorem fprod_ne_zero (E : Ideal (KTp K d.D d.N) → ℤ) (hE : {q | q ∈ d.HtO
   have hg := gen_ne_zero_of_mem_htOne_heightData d hq
   first
     | exact (map_ne_zero_iff _ (IsFractionRing.injective _ _)).mpr hg
-    | exact (map_ne_zero_iff _ (FaithfulSMul.algebraMap_injective _ _)).mpr hg
-    | exact (map_ne_zero_iff _ (NoZeroSMulDivisors.algebraMap_injective _ _)).mpr hg
-    | (simpa using hg)
 
 theorem sig_fprod (E : Ideal (KTp K d.D d.N) → ℤ) (hE : {q | q ∈ d.HtOne ∧ E q ≠ 0}.Finite)
     (hg : ∀ q ∈ d.HtOne, E q ≠ 0 → ReciprocityTheory.MultiplicativeHeights.IsMultiHomogeneous
@@ -1429,10 +1423,7 @@ theorem disc_global (hd : d.AxH 𝒜) (h : d.S1) (hI2be : d.HeightIntegralBoundE
   rw [heq]
   have ha4 : ∀ c, hd.a4.choose c ∈ 𝒜 c d.wF ∧ hd.a4.choose c ≠ 0 := by
     first
-    | exact hd.a4.choose_spec
     | exact hd.a4.choose_spec.1
-    | exact fun c => hd.a4.choose_spec.1 c
-    | exact fun c => ⟨hd.a4.choose_spec.1 c, hd.a4.choose_spec.2 c⟩
   have hH : d.Hgt h d.wF hd.a4.choose = d.Hgt h d.wF ta' :=
     (d.h_ind hd h hI2be).1 d.wF hd.a4.choose ta' (by simp) ha4 hta'
   have haG : d.aG h d.wF hd.a4.choose = d.aG h d.wF ta' :=
@@ -1441,8 +1432,6 @@ theorem disc_global (hd : d.AxH 𝒜) (h : d.S1) (hI2be : d.HeightIntegralBoundE
     have hc : 0 < Fintype.card (K →+* ℂ) := by
       first
       | (rw [NumberField.Embeddings.card]; exact Module.finrank_pos)
-      | exact Fintype.card_pos
-      | exact Fintype.card_pos_iff.mpr inferInstance
     exact_mod_cast hc
   have hmean : meanK (fun sg => d.mSgP sg a b - 2 * d.Nsg d.wF hd.a4.choose sg) ≤
       d.del * Real.log d.del +
@@ -1466,8 +1455,8 @@ theorem disc_global (hd : d.AxH 𝒜) (h : d.S1) (hI2be : d.HeightIntegralBoundE
     have h1 := ReciprocityTheory.MultiplicativeHeights.Closed.sphere_height_lower_bound K (d.D + 1) (d.N + 1) _ Om (Nat.succ_pos _) hOm0 hOmH
     have ht : ((d.aG h d.wF hd.a4.choose).toNat : ℝ) = (d.aG h d.wF hd.a4.choose : ℝ) := by
       exact_mod_cast Int.toNat_of_nonneg haG0
-    simp only [Fin.sum_univ_succ, Fin.succ_ne_zero, eq_self_iff_true, if_true, if_false,
-      ite_true, ite_false, Nat.cast_zero, zero_mul, zero_add, Finset.sum_const,
+    simp only [Fin.sum_univ_succ, Fin.succ_ne_zero, if_true, if_false,
+      Nat.cast_zero, zero_mul, zero_add, Finset.sum_const,
       Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, Nat.cast_mul, Nat.cast_ofNat] at h1
     rw [ht] at h1
     linear_combination h1

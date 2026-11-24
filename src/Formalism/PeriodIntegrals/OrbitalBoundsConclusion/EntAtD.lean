@@ -113,7 +113,7 @@ theorem coeff_lapT (t : H) (Q : PolyXZ H N0 N1) (ν : XZ (Bool × H) N0 N1 →�
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   have hne : (ν + Finsupp.single (Sum.inr (zF t a b)) 1 : XZ (Bool × H) N0 N1 →₀ ℕ) (Sum.inr (zT t a b)) =
       ν (Sum.inr (zT t a b)) := by
-    simp [Finsupp.single_apply, zF, zT]
+    simp [zF, zT]
   rw [hne]
   ring
 
@@ -123,8 +123,7 @@ theorem symm_add_single (m : XV H N0 →₀ ℕ) (κ : ZV H N0 N1 →₀ ℕ) (v
       Finsupp.sumFinsuppEquivProdFinsupp.symm (m, κ + Finsupp.single v 1) := by
   ext x
   rcases x with x | x <;>
-    simp [Finsupp.single_apply, Finsupp.sumFinsuppEquivProdFinsupp_symm_inl,
-      Finsupp.sumFinsuppEquivProdFinsupp_symm_inr]
+    simp [Finsupp.single_apply]
 
 theorem symm_inr (m : XV H N0 →₀ ℕ) (κ : ZV H N0 N1 →₀ ℕ) (v : ZV H N0 N1) :
     (Finsupp.sumFinsuppEquivProdFinsupp.symm (m, κ) : XZ (Bool × H) N0 N1 →₀ ℕ) (Sum.inr v) = κ v := rfl
@@ -166,8 +165,6 @@ theorem sum_ind (t t' : H) (a : Fin N0) (b : Fin N1) :
     rw [if_pos rfl, Finset.sum_eq_single a, Finset.sum_eq_single b]
     all_goals first
       | (simp; done)
-      | (intro x _ hx; simp [hx]; done)
-      | (intro x _ hx; exact Finset.sum_eq_zero fun y _ => by simp [hx])
   · rw [if_neg ht]
     exact Finset.sum_eq_zero fun a' _ => Finset.sum_eq_zero fun b' _ => by simp [ht]
 
@@ -184,7 +181,6 @@ theorem bal_up (n n' : H → ℕ) (t : H) (hn : ∀ s, n s = n' s + if s = t the
 private theorem finsupp_le_apply_of_le {c d : ZV H N0 N1 →₀ ℕ} (h : c ≤ d) (x : ZV H N0 N1) : c x ≤ d x := by
   first
     | exact h x
-    | exact Finsupp.le_def.1 h x
 
 theorem tsub_up {c κ : ZV H N0 N1 →₀ ℕ} {t : H} {a : Fin N0} {b : Fin N1} (hle : up κ t a b ≤ c) :
     c - κ = up (c - up κ t a b) t a b := by
@@ -433,8 +429,8 @@ theorem bridge_list (L : List H) (P : PolyXZ H N0 N1) (m : XV H N0 →₀ ℕ) (
       intro u
       by_cases h : u = s
       · subst h
-        simp [List.count_cons]
-      · simp [List.count_cons, h, Ne.symm h]
+        simp
+      · simp [h, Ne.symm h]
     rw [prod_factorial_eq_succ_mul_of_update (fun u => (s :: L).count u) (fun u => L.count u) s hn]
     rw [List.map_cons, List.prod_cons, (show ∀ (f g : Module.End ℤ (PolyXZ H N0 N1)) (x : PolyXZ H N0 N1), (f * g) x = f (g x) from fun _ _ _ => rfl), coeff_lapT]
     simp only [symm_add_single, symm_inr, ← ih]
@@ -467,16 +463,13 @@ private theorem count_flatMap_replicate (n : H → ℕ) (s : H) (l : List H) :
     by_cases h : x = s
     · subst h
       simp [ih]
-    · simp [ih, h, Ne.symm h, List.count_replicate, List.count_append]
+    · simp [ih, h, List.count_replicate, List.count_append]
 
 theorem count_list (n : H → ℕ) (s : H) :
     ((Finset.univ : Finset H).toList.flatMap fun t => List.replicate (n t) t).count s = n s := by
   rw [count_flatMap_replicate]
   first
     | (rw [Finset.sum_map_toList]; simp; done)
-    | (simp [Finset.sum_map_toList]; done)
-    | (simp [Finset.sum_toList]; done)
-    | (rw [← Finset.sum_toList]; simp; done)
 
 end Br
 
@@ -516,7 +509,6 @@ theorem card_cells_eq_sum_rowLen (α : YoungDiagram) (n : ℕ) (h : ∀ r, n ≤
     rw [YoungDiagram.rowLen_eq_card]
     first
       | rfl
-      | (simp only [YoungDiagram.row]; congr 1)
   · intro x hx
     simp only [Finset.mem_coe, Finset.mem_range] at hx ⊢
     by_contra hc
@@ -710,11 +702,11 @@ theorem fcoeff_mul {H : Type} [DecidableEq H] {N0 N1 p : ℕ} [Fact p.Prime] (E 
   refine Finset.sum_nbij' (fun x => x.2) (fun κ2 => (κ - κ2, κ2)) ?_ ?_ ?_ ?_ ?_
   · intro x hx
     simp at hx
-    simp only [Finset.mem_coe, Finset.mem_Iic]
+    simp only [Finset.mem_Iic]
     rw [← hx]
     exact le_add_self
   · intro κ2 hκ2
-    simp only [Finset.mem_coe, Finset.mem_Iic] at hκ2
+    simp only [Finset.mem_Iic] at hκ2
     simpa using tsub_add_cancel_of_le hκ2
   · intro x hx
     simp at hx
@@ -743,8 +735,7 @@ theorem prof_le_totalDegree {H : Type} {N0 N1 : ℕ} (P : PolyXZ H N0 N1) (μ : 
         rw [Finsupp.tsub_apply]
         exact tsub_le_self.trans (by
           first
-          | exact le_of_eq rfl
-          | exact (Finsupp.snd_sumFinsuppEquivProdFinsupp _ _).le)
+          | exact le_of_eq rfl)
     _ = ∑ x ∈ (Finset.univ : Finset (Fin N0 × Fin N1)).image
           (fun ab => (Sum.inr ((true, t), ab.1, ab.2) : XZ (Bool × H) N0 N1)), μ x := by
         rw [Finset.sum_image (by intro x _ y _ h; simpa [Prod.ext_iff] using h), Fintype.sum_prod_type]
@@ -896,7 +887,7 @@ theorem heart_pderiv_minor {Lt : Type} [Fintype Lt] [DecidableEq Lt] (N0 N1 : �
   rw [Matrix.of_apply, map_sum]
   refine Finset.sum_eq_zero fun a0 _ => ?_
   rw [Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_X]
-  simp [Pi.single_apply, hs, Ne.symm hs]
+  simp [hs]
 
 private theorem derivation_finset_sum_apply' {R A ι : Type} [CommRing R] [CommRing A] [Algebra R A]
     (s : Finset ι) (D : ι → Derivation R A A) (x : A) : (∑ i ∈ s, D i) x = ∑ i ∈ s, D i x := by
@@ -1091,12 +1082,11 @@ theorem eK_apply (k : JI H N0 N1 → ℕ) (s : Bool) (t : H) (a : Fin N0) (b : F
     eK k ((s, t), a, b) = k (t, a, b) := by
   first
   | rfl
-  | simp [eK]
 
 theorem sum_eJ (k : JI H N0 N1 → ℕ) : ∑ j, k j • eJ j = eK k := by
   ext ⟨⟨s, t⟩, a, b⟩
   rw [eK_apply, Finsupp.finsetSum_apply, Finset.sum_eq_single (t, a, b)]
-  · cases s <;> simp [eJ, vX, Finsupp.single_apply]
+  · cases s <;> simp [eJ, vX]
   · rintro ⟨t', a', b'⟩ _ hne
     simp only [eJ, vX, Finsupp.add_apply, Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul,
       Prod.mk.injEq]
@@ -1155,7 +1145,7 @@ theorem cc_zero (S : ℂ_[p]) (ut : H → ℂ_[p]) :
   rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, MvPowerSeries.coeff_monomial, if_neg]
   intro h
   have h2 := DFunLike.congr_fun h (vX false j)
-  simp [eJ, vX, Finsupp.single_apply] at h2
+  simp [eJ, vX] at h2
 
 private theorem monomial_pow_lemma {σ R : Type*} [CommSemiring R] (n : σ →₀ ℕ) (a : R) (k : ℕ) :
     MvPowerSeries.monomial n a ^ k = MvPowerSeries.monomial (k • n) (a ^ k) := by
@@ -1384,9 +1374,7 @@ lemma nonzeroCount_add_zeroCount (L : List (ℕ × Fin N1)) : nzc L + z0c L = L.
 lemma dRow_apply (t : H) (r : ℕ) (b : Fin N1) (P : PolyXZ H N0 N1) :
     dRow (N0 := N0) t r b P =
       ∑ a : Fin N0, X (Sum.inl ((false, t), r, a)) * pderiv (Sum.inr ((true, t), a, b)) P := by
-  unfold dRow
-  rw [der_sum_apply]
-  simp only [Derivation.smul_apply, smul_eq_mul]
+  simp [dRow, der_sum_apply, Derivation.smul_apply, smul_eq_mul]
 
 lemma lap_apply (t : H) (P : PolyXZ H N0 N1) :
     lapT N0 N1 t P = ∑ a : Fin N0, ∑ b : Fin N1,
@@ -1606,7 +1594,7 @@ def MS (t : H) (a b : ℕ) : Submodule ℤ (PolyXZ H N0 N1) :=
 
 lemma ms_mul (t : H) {a b a' b' : ℕ} {P Q : PolyXZ H N0 N1} (hP : P ∈ MS t a b) (hQ : Q ∈ MS t a' b') :
     P * Q ∈ MS t (a + a') (b + b') := by
-  first | exact UpperTheory.Reformulated.B.Qj21.ms_mul .. | (apply UpperTheory.Reformulated.B.Qj21.ms_mul <;> assumption) | (intros; apply UpperTheory.Reformulated.B.Qj21.ms_mul <;> assumption) | (apply @UpperTheory.Reformulated.B.Qj21.ms_mul <;> assumption) | (intros; apply @UpperTheory.Reformulated.B.Qj21.ms_mul <;> assumption) | (apply @UpperTheory.Reformulated.B.Qj21.ms_mul <;> first | assumption | infer_instance) | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b a' b' P Q hP hQ | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b a' b' P Q hP | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b a' b' P Q | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b a' b' P | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b a' b' | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b a' | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H
+  first | (apply UpperTheory.Reformulated.B.Qj21.ms_mul <;> assumption) | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b a' b' P Q hP hQ | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b a' b' P Q hP | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b a' b' P Q | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b a' b' P | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b a' b' | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b a' | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a b | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t a | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 t | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 N1 | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H N0 | exact @UpperTheory.Reformulated.B.Qj21.ms_mul H
 
 lemma ms_prod (t : H) {ι : Type} (s : Finset ι) (f : ι → PolyXZ H N0 N1) (a b : ι → ℕ)
     (h : ∀ i ∈ s, f i ∈ MS t (a i) (b i)) :
@@ -1614,9 +1602,7 @@ lemma ms_prod (t : H) {ι : Type} (s : Finset ι) (f : ι → PolyXZ H N0 N1) (a
   classical
   induction s using Finset.induction_on with
   | empty =>
-    simp only [Finset.prod_empty, Finset.sum_empty]
-    apply Submodule.subset_span
-    exact ⟨[], by simp [tmL], by simp [nzc], by simp [z0c]⟩
+    exact Submodule.subset_span ⟨[], by simp [tmL, nzc, z0c]⟩
   | insert i s hi ih =>
     rw [Finset.prod_insert hi, Finset.sum_insert hi, Finset.sum_insert hi]
     exact ms_mul t (h i (Finset.mem_insert_self i s)) (ih (fun j hj => h j (Finset.mem_insert_of_mem hj)))
@@ -1651,8 +1637,7 @@ lemma minor_mem (t : H) (p : ℕ) (hp : 0 < p) (I : Fin p ↪o Fin N1) :
     omega
 
 lemma colLen_pos (α : YoungDiagram) (c : Fin (α.rowLen 0)) : 0 < α.colLen c := by
-  rw [← YoungDiagram.mem_iff_lt_colLen]
-  exact YoungDiagram.mem_iff_lt_rowLen.mpr c.2
+  exact YoungDiagram.mem_iff_lt_colLen.mp (YoungDiagram.mem_iff_lt_rowLen.mpr c.2)
 
 lemma sum_colLen_le (α : YoungDiagram) : ∑ c : Fin (α.rowLen 0), α.colLen c ≤ α.cells.card := by
   have e : ∑ c : Fin (α.rowLen 0), α.colLen c =
@@ -1791,12 +1776,12 @@ theorem pMinorAff : PMinorAff := by
 
       simp [y, map_sum, Derivation.leibniz, MvPolynomial.pderiv_X, Pi.single_apply]
 
-    · simp [map_sum, Derivation.leibniz, MvPolynomial.pderiv_X, Pi.single_apply, hc]
+    · simp [map_sum, Derivation.leibniz, MvPolynomial.pderiv_X, hc]
   have hy : ∀ (bb : Fin N1) (i : Fin k), dRow (N0 := N0) t 0 bb (y i) = 0 := by
     intro bb i
     rw [hD]
 
-    simp [y, map_sum, Derivation.leibniz, MvPolynomial.pderiv_X, Pi.single_apply]
+    simp [y, map_sum, Derivation.leibniz, MvPolynomial.pderiv_X]
   simp only [minorXZ]
 
   rw [minorAff_derDet, map_sum]

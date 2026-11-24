@@ -487,7 +487,7 @@ theorem _root_.GlobalTheory.CNorm.pows_eq_range_dif_pow : ∀ (p : ℕ) (M : Typ
   refine ⟨?_, fun a => ⟨fun ha => ?_, fun ha => ?_⟩⟩
   · ext x
     simp only [_root_.GlobalTheory.CNorm.pows, Subgroup.mem_map, Subgroup.mem_top, true_and,
-      powMonoidHom_apply, MonoidHom.mem_range]
+      powMonoidHom_apply]
     constructor
     · rintro ⟨y, rfl⟩
       exact ⟨_, (K3 y).symm⟩
@@ -574,7 +574,7 @@ theorem herbPhi_stable (p : ℕ) (A : Type) [CommGroup A] (σ : A →* A) (hp : 
     rw [Subgroup.relIndex]
     congr 1
     ext x
-    simp only [Subgroup.mem_subgroupOf, Subgroup.mem_map, MonoidHom.mem_range]
+    simp only [Subgroup.mem_subgroupOf, Subgroup.mem_map]
     constructor
     · rintro ⟨y, hy, e⟩
       exact ⟨⟨y, hy⟩, Subtype.ext e⟩

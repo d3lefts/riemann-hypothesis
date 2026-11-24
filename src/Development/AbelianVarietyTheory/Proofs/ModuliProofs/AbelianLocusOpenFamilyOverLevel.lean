@@ -528,7 +528,7 @@ theorem exists_stableBas_polAV (H : SecBaseChangeAnySt) {S : Scheme.{0}} (P : Po
   have q := congrArg (pull P.A P.L n e) hc
 
   rw [map_sum, map_zero] at q
-  simp only [map_smulₛₗ, pull_pull, h₂] at q
+  simp only [map_smulₛₗ, pull_pull] at q
   have q' := congrArg (pa e'.left (V := ⊤) (le_pre_top _)) (Fintype.linearIndependent_iff.1 hb'.1 _ q i)
   rw [map_zero, pa_pa _ _ _ _ (𝟙 _) (congrArg (fun u => u.left) h₁) (le_pre_top _), pa_id] at q'
   exact (rs_self _ _).symm.trans q'
@@ -1006,7 +1006,7 @@ theorem relAmple_of_pointwise {S : Scheme.{0}} [IsLocallyNoetherian S] (G : Over
       IsPullback φ G'.hom G.hom f ∧ L'.IsLB ∧ LBIso L' (M.pull φ) ∧ p ∈ Set.range f ∧ Out.RelAmple G' L') :
     Out.RelAmple G M := by
   refine GlobalTheory.AmpleLocal.relAmple_of_locally S G M hM inferInstance inferInstance (fun s => ?_)
-  obtain ⟨V, hV, hsV, -⟩ := (TopologicalSpace.Opens.isBasis_iff_nbhd.mp (by first | exact AlgebraicGeometry.isBasis_affine_open S | exact S.isBasis_affineOpens | exact AlgebraicGeometry.Scheme.isBasis_affineOpens S | exact isBasis_affineOpens S)) (show s ∈ (⊤ : S.Opens) from trivial)
+  obtain ⟨V, hV, hsV, -⟩ := (TopologicalSpace.Opens.isBasis_iff_nbhd.mp (by first | exact S.isBasis_affineOpens)) (show s ∈ (⊤ : S.Opens) from trivial)
   have hV' : IsAffineOpen V := hV
   have : IsNoetherianRing Γ(S, V) := IsLocallyNoetherian.component_noetherian ⟨V, hV'⟩
   let y : Spec (CommRingCat.of Γ(S, V)) ⟶ S := hV'.fromSpec
@@ -1017,7 +1017,7 @@ theorem relAmple_of_pointwise {S : Scheme.{0}} [IsLocallyNoetherian S] (G : Over
   have hB : IsPullback (pullback.fst G.hom y) B.hom G.hom y := IsPullback.of_hasPullback _ _
   have hLB : (M.pull (pullback.fst G.hom y)).IsLB := pull_isLB hM _
   have hflat : Flat B.hom := by
-    first | (show Flat (pullback.snd G.hom y); infer_instance) | exact MorphismProperty.pullback_snd _ _ inferInstance
+    first | (show Flat (pullback.snd G.hom y); infer_instance)
   have hprojB := (GlobalTheory.ProjSpace.isProjBy_iff_isProjOver _).2 (hproj _ y B _ hB)
   have hfib : Out.RelAmple ((Over.pullback (Spec.map (CommRingCat.ofHom g))).obj B)
       ((M.pull (pullback.fst G.hom y)).pull (pullback.fst B.hom (Spec.map (CommRingCat.ofHom g)))) := by
@@ -1033,7 +1033,6 @@ theorem relAmple_of_pointwise {S : Scheme.{0}} [IsLocallyNoetherian S] (G : Over
         | (show y ((Spec.map (CommRingCat.ofHom g)) a) = s
            rw [hpt']
            exact hq)
-        | exact (Scheme.comp_base_apply _ _ _).trans (by rw [hpt']; exact hq)
     obtain ⟨K, _, i, u, hu⟩ := exists_lift_fieldExtension f x a s' (hs'.trans ha.symm)
     have h₂ : IsPullback (pullback.fst G.hom (spMap i ≫ x)) (pullback.snd G.hom (spMap i ≫ x)) G.hom
         (spMap i ≫ x) := IsPullback.of_hasPullback _ _
@@ -1061,17 +1060,12 @@ theorem relAmple_of_polarised_at_points : ∀ (E : Type) [Field E] [NumberField 
   intro E _ _ _ H S _ t hP hproj hpt
   have hflat : Flat t.G.hom := by
     first
-      | exact inferInstance
       | (haveI := t.semi.smooth; infer_instance)
   refine relAmple_of_pointwise t.G t.PP.L t.PP.isLB hproj (fun p => ?_)
   obtain ⟨S', f, t', m, hp, hA, -⟩ := hpt p
   refine ⟨S', f, t'.G, m.cm.F, t'.PP.L, m.cart.1, t'.PP.isLB, ?_, hp, hA⟩
   first
     | (obtain ⟨w, hw, -⟩ := m.lin; exact ⟨w, hw⟩)
-    | (obtain ⟨w, hw⟩ := m.lin; exact ⟨w, hw⟩)
-    | (obtain ⟨w, hw, -⟩ := m.lin; exact ⟨w, hw.1⟩)
-    | (obtain ⟨w, -, hw, -⟩ := m.lin; exact ⟨w, hw⟩)
-    | (obtain ⟨w, hw, -⟩ := m.lin; exact (hw : False))
 
 end GlobalTheory.AmpleGlobal
 end -- clump:auto

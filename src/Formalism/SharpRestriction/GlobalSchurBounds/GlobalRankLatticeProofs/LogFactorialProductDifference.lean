@@ -296,9 +296,7 @@ lemma up_num_le (n m : ℕ) (lam v : ℕ → ℝ) (Bd : ℝ) (hBd : 1 ≤ Bd)
         ring
 
 lemma up_fact_pos (N : ℕ) : 0 < ∏ i ∈ range N, ((i.factorial : ℕ) : ℝ) := by
-  apply Finset.prod_pos
-  intro i _
-  exact Nat.cast_pos.mpr (Nat.factorial_pos i)
+  exact Finset.prod_pos (fun i _ => Nat.cast_pos.mpr (Nat.factorial_pos i))
 
 lemma up_fact_mono (N P : ℕ) (h : N ≤ P) :
     ∏ i ∈ range N, ((i.factorial : ℕ) : ℝ) ≤ ∏ i ∈ range P, ((i.factorial : ℕ) : ℝ) := by
@@ -306,11 +304,8 @@ lemma up_fact_mono (N P : ℕ) (h : N ≤ P) :
   | base => exact le_refl _
   | succ P _ ih =>
     rw [Finset.prod_range_succ]
-    have h0 : 1 ≤ P.factorial := Nat.factorial_pos P
-    have h1 : (1 : ℝ) ≤ ((P.factorial : ℕ) : ℝ) := by exact_mod_cast h0
-    have h2 : 0 ≤ ∏ i ∈ range P, ((i.factorial : ℕ) : ℝ) := le_of_lt (up_fact_pos P)
-    have h3 := mul_le_mul_of_nonneg_left h1 h2
-    linarith
+    have h1 : (1 : ℝ) ≤ ((P.factorial : ℕ) : ℝ) := by exact_mod_cast Nat.factorial_pos P
+    exact le_trans ih (by simpa using mul_le_mul_of_nonneg_left h1 (up_fact_pos P).le)
 
 private theorem one_le_mul_of_one_le_of_one_le' {a b : ℝ} (ha : 1 ≤ a) (hb : 1 ≤ b) : 1 ≤ a * b := by
   nlinarith
@@ -321,13 +316,11 @@ lemma up_fact_one (N : ℕ) : 1 ≤ ∏ i ∈ range N, ((i.factorial : ℕ) : �
   | succ N ih =>
     rw [Finset.prod_range_succ]
     have h0 : 1 ≤ N.factorial := Nat.factorial_pos N
-    have h1 : (1 : ℝ) ≤ ((N.factorial : ℕ) : ℝ) := by exact_mod_cast h0
-    exact one_le_mul_of_one_le_of_one_le' ih h1
+    exact one_le_mul_of_one_le_of_one_le' ih (by exact_mod_cast h0)
 
 lemma up_four_le (n t : ℕ) (ht : 1 ≤ t) : (4 : ℝ) ≤ ((n : ℝ) + 2) * ((t : ℝ) + t) := by
   have h1 : (1 : ℝ) ≤ t := by exact_mod_cast ht
-  have h2 : (0 : ℝ) ≤ n := Nat.cast_nonneg n
-  nlinarith
+  nlinarith [(Nat.cast_nonneg n : (0 : ℝ) ≤ (n : ℝ)), h1]
 
 
 private theorem mul_le_mul_of_one_le {a b c d : ℝ} (hab : a ≤ b) (hcd : c ≤ d) (ha : 1 ≤ a) (hc : 1 ≤ c) :
@@ -585,7 +578,6 @@ theorem exp_neg_r_le_third (D : D7) : Real.exp (-(D.R.r : ℝ)) ≤ 1 / 3 := by
     have h2 := D.R.m_add_three_le_k
     first
       | (show 2 ≤ D.R.k + D.R.m - 1; omega)
-      | omega
   have hr' : (2 : ℝ) ≤ D.R.r := by exact_mod_cast hr
   have h3 : (3 : ℝ) ≤ Real.exp 2 := by
     have := Real.add_one_le_exp (2 : ℝ)

@@ -109,7 +109,7 @@ theorem exists_posDef_majorant_of_sigPosH_eq_one : ∀ {n : ℕ} (H : Matrix (Fi
   refine ⟨((2 / a : ℝ) : ℂ) • vecMulVec u (star u) - H, ?_, ?_, ?_⟩
   · unfold IsHermitian
     rw [conjTranspose_sub, conjTranspose_smul, hH.eq, conjTranspose_vecMulVec, star_star]
-    simp [Complex.star_def]
+    simp
   · intro x hx
     set q := star z ⬝ᵥ H *ᵥ x with hq
     set t : ℂ := q / (a : ℂ) with ht
@@ -142,7 +142,7 @@ theorem exists_posDef_majorant_of_sigPosH_eq_one : ∀ {n : ℕ} (H : Matrix (Fi
       push_cast; ring
     rw [e1, ← Complex.star_def, hnt]
     simp only [Complex.sub_re, Complex.add_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
-      mul_zero, sub_zero, zero_mul]
+      mul_zero, sub_zero]
     have hapos : 0 < a := hz
     by_cases h0 : x' = 0
     · have htne : t ≠ 0 := by
@@ -211,7 +211,7 @@ section -- clump:auto
 open Matrix GlobalTheory.LKTrip
 
 theorem _root_.GlobalTheory.T.exists_posDef_majorant_of_positiveIndex_one : ∀ {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ) (hH : H.IsHermitian), H.det ≠ 0 → sigPosH hH = 1 → ∀ z : Fin n → ℂ, 0 < (star z ⬝ᵥ H *ᵥ z).re → ∃ P : Matrix (Fin n) (Fin n) ℂ, P.IsHermitian ∧ (∀ x : Fin n → ℂ, x ≠ 0 → 0 < (star x ⬝ᵥ P *ᵥ x).re) ∧ ∀ (Y : Matrix (Fin n) (Fin n) ℂ) (s : ℝ) (c : ℂ), 0 < s → Yᴴ * H * Y = (s : ℂ) • H → Y *ᵥ z = c • z → Yᴴ * P * Y = (s : ℂ) • P := by
-  first | (exact @GlobalTheory.exists_posDef_majorant_of_sigPosH_eq_one) | (exact GlobalTheory.exists_posDef_majorant_of_sigPosH_eq_one) | (intros; apply GlobalTheory.exists_posDef_majorant_of_sigPosH_eq_one  <;> assumption)
+  first | (exact @GlobalTheory.exists_posDef_majorant_of_sigPosH_eq_one)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPosDefMajorantOfPositiveIndexOneStatement =====
@@ -275,7 +275,7 @@ theorem herm_scale_entry_bound : ∀ {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ),
   have hYe : Y *ᵥ e = fun i => Y i j := by
     rw [he, mulVec_single_one]; rfl
   have hqe : q e = (P j j).re := by
-    simp [hq, he, mulVec_single_one]
+    simp [hq, he]
   have hle : ‖Y i j‖ ≤ ‖Y *ᵥ e‖ := by
     rw [hYe]; exact norm_le_pi_norm (fun i => Y i j) i
   have hPjj : (P j j).re ≤ C :=
@@ -300,7 +300,7 @@ section -- clump:auto
 open Matrix
 
 theorem _root_.GlobalTheory.T.hermitian_similitude_entry_sq_bound : ∀ {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ), P.IsHermitian → (∀ x : Fin n → ℂ, x ≠ 0 → 0 < (star x ⬝ᵥ P *ᵥ x).re) → ∃ K : ℝ, ∀ (Y : Matrix (Fin n) (Fin n) ℂ) (s : ℝ), 0 < s → Yᴴ * P * Y = (s : ℂ) • P → ∀ i j, ‖Y i j‖ ^ 2 ≤ K * s := by
-  first | (exact @GlobalTheory.herm_scale_entry_bound) | (exact GlobalTheory.herm_scale_entry_bound) | (intros; apply GlobalTheory.herm_scale_entry_bound  <;> assumption)
+  first | (exact @GlobalTheory.herm_scale_entry_bound)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianSimilitudeEntrySqBoundStatement =====
@@ -331,7 +331,7 @@ theorem re_quad_eq_sum {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) (hM : M.IsHerm
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [mulVec_diagonal]
   simp only [Pi.star_apply, Function.comp_apply, Complex.star_def, Complex.normSq_apply, Complex.mul_re,
-    Complex.conj_re, Complex.conj_im, Complex.ofReal_re, Complex.ofReal_im, Complex.mul_im]
+    Complex.conj_re, Complex.conj_im, Complex.mul_im]
   have e1 : ((RCLike.ofReal (hM.eigenvalues i) : ℂ)).re = hM.eigenvalues i := by simp
   have e2 : ((RCLike.ofReal (hM.eigenvalues i) : ℂ)).im = 0 := by simp
   simp only [e1, e2]

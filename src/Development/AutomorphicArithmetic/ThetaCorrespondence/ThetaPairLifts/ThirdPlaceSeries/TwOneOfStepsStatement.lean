@@ -393,7 +393,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.twisted_conj_coef_at' : _root_.GlobalTheory.BigOn.Exp.TwAdmAlt → _root_.GlobalTheory.BigOn.Exp.TwConj.CoefficientCondition := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.TwConj.coefAt_of_twAdm_alt | exact _root_.GlobalTheory.BigOn.Exp.TwConj.coefAt_of_twAdm_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.TwConj.coefAt_of_twAdm_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.TwConj.coefAt_of_twAdm_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -529,7 +529,7 @@ theorem _root_.GlobalTheory.T.conjTwist_function_eq_sum_evaluations_alt : Global
   ∀ Φ Φ' : GA (Fm.D x i) (Wc (Fm.D x i) j) → ℂ, GlobalTheory.ConjTwist.ConjFun (p.O j) (p.κ j) τ 1 Φ Φ' →
     ∃ (n : ℕ) (b : Fin n → ℂ) (g : Fin n → NX.FmK p.Sx ((j : ℕ) + 1)),
       Φ = ∑ k, b k • evW p.nexp p.v₀ j (g k).val ∧ ∑ k, τ (b k) • evW p.nexp p.v₀ j (g k).val = Φ' := by
-  first | exact @_root_.GlobalTheory.ConjExpandRational.exists_evW_expansion_of_conjFun | exact _root_.GlobalTheory.ConjExpandRational.exists_evW_expansion_of_conjFun | (intros; apply _root_.GlobalTheory.ConjExpandRational.exists_evW_expansion_of_conjFun <;> assumption)
+  first | exact @_root_.GlobalTheory.ConjExpandRational.exists_evW_expansion_of_conjFun
 end
 end
 end -- clump:auto
@@ -644,7 +644,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.twisted_conj_fix_at' : GlobalTheory.Published.RayClassFieldSt → _root_.GlobalTheory.BigOn.Exp.TwAdmAlt → _root_.GlobalTheory.BigOn.Exp.TwConj.FixedPointCondition := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.TwConj.fixAt_holds_alt | exact _root_.GlobalTheory.BigOn.Exp.TwConj.fixAt_holds_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.TwConj.fixAt_holds_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.TwConj.fixAt_holds_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -712,52 +712,40 @@ theorem charPowPrimeOrder_embeddings_differ_by_coprime_power :
       ∀ (ψ : Γ →* Cˣ), (∀ g, ψ g ^ (l ^ n) = 1) → ∀ e e' : C →+* ℂ,
         ∃ a : ℕ, Nat.Coprime a l ∧ ∀ g, e' ((ψ g : Cˣ) : C) = e (((ψ g ^ a : Cˣ)) : C) := by
   intro Γ _ C _ _ l n hl ψ hψ e e'
-  haveI : NeZero (l ^ n) := ⟨pow_ne_zero _ hl.ne_zero⟩
+  have : NeZero (l ^ n) := ⟨pow_ne_zero _ hl.ne_zero⟩
   obtain ⟨ζ, hζ⟩ := IsCyclic.exists_generator (α := rootsOfUnity (l ^ n) C)
   set u : Cˣ := (ζ : Cˣ) with hu
-  have hul : u ^ (l ^ n) = 1 := (mem_rootsOfUnity _ _).mp ζ.2
   set k := orderOf u with hk
-  have hkd : k ∣ l ^ n := orderOf_dvd_of_pow_eq_one hul
-  have hk0 : 0 < k := Nat.pos_of_ne_zero (fun h => by
-    rw [h] at hkd; exact (NeZero.ne (l ^ n)) (Nat.eq_zero_of_zero_dvd hkd))
-  haveI : NeZero k := ⟨hk0.ne'⟩
+  have hkd : k ∣ l ^ n := orderOf_dvd_of_pow_eq_one ((mem_rootsOfUnity _ _).mp ζ.2)
+  have hk0 : 0 < k := Nat.pos_of_dvd_of_pos hkd (NeZero.pos (l ^ n))
+  have : NeZero k := ⟨hk0.ne'⟩
   have hpu : IsPrimitiveRoot (u : C) k := IsPrimitiveRoot.coe_units_iff.mpr (IsPrimitiveRoot.orderOf u)
   have h1 : IsPrimitiveRoot (e (u : C)) k := hpu.map_of_injective e.injective
   have h2 : IsPrimitiveRoot (e' (u : C)) k := hpu.map_of_injective e'.injective
-  obtain ⟨i, hik, hi⟩ := h1.eq_pow_of_pow_eq_one h2.pow_eq_one
-  have hic : i.Coprime k := (h1.pow_iff_coprime hk0 i).mp (by rw [hi]; exact h2)
+  obtain ⟨i, hik, hic, hi⟩ := (h1.isPrimitiveRoot_iff).mp h2
+  have hc : (i + k).Coprime k := by simpa using hic
   refine ⟨i + k, ?_, ?_⟩
-  · have hc : (i + k).Coprime k := by simpa using hic
-    rw [Nat.coprime_comm, Nat.Prime.coprime_iff_not_dvd hl]
-    intro hdvd
-    obtain ⟨m, -, hm⟩ := (Nat.dvd_prime_pow hl).mp hkd
+  · obtain ⟨m, -, hm⟩ := (Nat.dvd_prime_pow hl).mp hkd
     rcases m with _ | m
-    · simp at hm
-      have : i = 0 := by omega
-      subst this
-      rw [hm] at hdvd
-      exact hl.one_lt.ne' (Nat.dvd_one.mp (by simpa using hdvd))
+    · simp only [pow_zero] at hm
+      have hi0 : i = 0 := by omega
+      simp [hm, hi0]
     · have hlk : l ∣ k := by rw [hm]; exact dvd_pow_self l (Nat.succ_ne_zero m)
-      have := Nat.Coprime.coprime_dvd_left hdvd hc
-      have := Nat.Coprime.coprime_dvd_right hlk this
-      exact hl.one_lt.ne' (by simpa using this)
+      exact hc.coprime_dvd_right hlk
   · have hEu : e' (u : C) = e (u : C) ^ (i + k) := by
-      rw [pow_add, hi, h1.pow_eq_one, mul_one]
+      rw [pow_add, ← hi, h1.pow_eq_one, mul_one]
     let E : Cˣ →* ℂˣ := Units.map (e : C →* ℂ)
     let E' : Cˣ →* ℂˣ := Units.map (e' : C →* ℂ)
     have hEu' : E' u = E u ^ (i + k) := by
       ext; simp [E, E', hEu]
     intro g
-    have hmem : ψ g ∈ rootsOfUnity (l ^ n) C := (mem_rootsOfUnity _ _).mpr (hψ g)
-    obtain ⟨j, hj⟩ := Subgroup.mem_zpowers_iff.mp (hζ ⟨ψ g, hmem⟩)
+    obtain ⟨j, hj⟩ := Subgroup.mem_zpowers_iff.mp (hζ ⟨ψ g, (mem_rootsOfUnity _ _).mpr (hψ g)⟩)
     have hj' : u ^ j = ψ g := by
-      have := congrArg Subtype.val hj
-      simpa [hu] using this
+      simpa [hu] using congrArg Subtype.val hj
     have key : E' (ψ g) = E (ψ g ^ (i + k)) := by
       rw [← hj', map_zpow, map_pow, map_zpow, hEu', ← zpow_natCast, ← zpow_natCast, ← _root_.zpow_mul,
         ← _root_.zpow_mul, mul_comm]
-    have := congrArg Units.val key
-    simpa [E, E'] using this
+    simpa [E, E'] using congrArg Units.val key
 
 end GlobalTheory
 end -- clump:auto
@@ -1261,7 +1249,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.twisted_conj_tuple_at' : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.CasselmanWallach → _root_.GlobalTheory.BigOn.Exp.TwAdmAlt → _root_.GlobalTheory.BigOn.Exp.TwistCharacter → _root_.GlobalTheory.BigOn.Exp.TwConj.TupleCondition := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.TwConj.tupAt_alt | exact _root_.GlobalTheory.BigOn.Exp.TwConj.tupAt_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.TwConj.tupAt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.TwConj.tupAt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1343,7 +1331,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.conjTw_of_discrete_series_and_casselman_wallach : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.CasselmanWallach → GlobalTheory.SerStd.SeriesRatS → _root_.GlobalTheory.BigOn.Exp.TwAdmAlt → _root_.GlobalTheory.BigOn.Exp.TwistCharacter → _root_.GlobalTheory.BigOn.Exp.ConjugateTwist := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.TwConj.conj_tw_of_prints | exact _root_.GlobalTheory.BigOn.Exp.TwConj.conj_tw_of_prints | (intros; apply _root_.GlobalTheory.BigOn.Exp.TwConj.conj_tw_of_prints <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.TwConj.conj_tw_of_prints
 end
 end -- clump:auto
 end -- clump:auto

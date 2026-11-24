@@ -238,7 +238,7 @@ theorem trunc_zero (u : Mx D ρ ρ) : trunc u 0 = 1 := by
   ext i j; simp [trunc]
 
 theorem trunc_top (u : Mx D ρ ρ) : trunc u ρ = u := by
-  ext i j; simp [trunc, j.2]
+  ext i j; simp [trunc]
 
 theorem colPart_mem (u : Mx D ρ ρ) (k : ℕ) : colPart u k ∈ supMx D ρ := by
   intro i j h
@@ -258,7 +258,7 @@ theorem trunc_succ {u : Mx D ρ ρ} (hu : u ∈ GlobalTheory.UnitU.uniSet D ρ) 
   · simp [h, Nat.lt_succ_of_lt h, h.ne]
   · have h1 : j.1 < k + 1 := by omega
     have h2 : ¬ j.1 < k := by omega
-    simp only [h1, if_true, h2, if_false, h, true_and]
+    simp only [h, true_and]
     rcases lt_trichotomy i j with hij | rfl | hij
     · simp [hij, one_apply_ne hij.ne]
     · simp [(hu i i).2]
@@ -428,7 +428,7 @@ open GlobalTheory.Unf
 open scoped ComplexOrder ENNReal NNReal ContDiff
 
 theorem _root_.GlobalTheory.T.haar_adelicUpperUnitriangular_entry_translate_invariant : ∀ (D : D7) (ρ : ℕ) (ν : Measure (UX D ρ)), ν.IsHaarMeasure → Measurable (fun u : UX D ρ => (u.1.1 : Mx D ρ ρ)) ∧ IsFiniteMeasureOnCompacts (Measure.map (fun u : UX D ρ => (u.1.1 : Mx D ρ ρ)) ν) ∧ ∀ t : Mx D ρ ρ, (∀ i j, ¬ i < j → t i j = 0) → Measure.map (fun x => x + t) (Measure.map (fun u : UX D ρ => (u.1.1 : Mx D ρ ρ)) ν) = Measure.map (fun u : UX D ρ => (u.1.1 : Mx D ρ ρ)) ν := by
-  first | exact @GlobalTheory.UnitTransl.haar_val_add_invariant | exact GlobalTheory.UnitTransl.haar_val_add_invariant | (intros; apply GlobalTheory.UnitTransl.haar_val_add_invariant <;> assumption)
+  first | exact @GlobalTheory.UnitTransl.haar_val_add_invariant
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HaarAdelicUpperUnitriangularEntryTranslateInvariStatement =====

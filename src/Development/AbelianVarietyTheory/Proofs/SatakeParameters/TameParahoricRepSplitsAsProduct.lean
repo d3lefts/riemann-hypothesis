@@ -352,7 +352,7 @@ theorem coset : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [
     rw [hh, hcancel, hy, hκ₁]
     group
   rw [hg, ← hκ', hκeq, map_mul, map_mul, map_mul, incl_permO, incl_diagO_one]
-  simp only [Subgroup.coe_mk, mul_assoc]
+  simp only [mul_assoc]
 
 end GlobalTheory.TypeDim.Coset
 end -- clump:auto
@@ -462,7 +462,7 @@ lemma exists_rid_ne_zero {x : V ⊗[ℂ] W} (hx : x ≠ 0) :
     intro w
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | tmul v y => simp [e, TensorProduct.equivFinsuppOfBasisRight_apply_tmul_apply]
+    | tmul v y => simp [e]
     | add y z hy hz => simp only [map_add (f := _), hy, hz, Finsupp.add_apply]
   rw [key]; simpa using hi
 
@@ -692,11 +692,7 @@ theorem jacquet_mk_ne_zero (hp : GlobalTheory.Published.DepthZeroJacquetInjectiv
     (π : Irr k n) (v : π.V) (θ : Fin n → kˣ →* ℂˣ) (hv : v ≠ 0) (hI : IsIwVec θ π.π v) :
     (Submodule.Quotient.mk v : Jacquet π.π (unipB k (Fin n))) ≠ 0 := by
   first
-  | exact @_root_.GlobalTheory.PointStabilizer.mk_ne_zero
-  | exact _root_.GlobalTheory.PointStabilizer.mk_ne_zero
   | (apply _root_.GlobalTheory.PointStabilizer.mk_ne_zero <;> assumption)
-  | (intros; apply _root_.GlobalTheory.PointStabilizer.mk_ne_zero <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.PointStabilizer.mk_ne_zero <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.PointStabilizer.mk_ne_zero ..)
 
 end GlobalTheory.TameIwahori.JacquetNonzero

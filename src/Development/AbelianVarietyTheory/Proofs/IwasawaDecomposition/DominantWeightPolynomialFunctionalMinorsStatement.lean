@@ -164,7 +164,7 @@ open GlobalTheory.Mem.CanonicalSurjection
 theorem _root_.GlobalTheory.T.exists_functional_frameMinorPolynomials_eq_minorProduct : ∀ (D : D7) (k : Type) [Field k] [CharZero k] (N : ℕ) (nu : Bool × Formalism.MainNotions.G.HH D → YoungDiagram)
     (J : KM.ColChoice N nu), ∃ ph : Module.Dual k (MvPolynomial ((Bool × Formalism.MainNotions.G.HH D) × ℕ × Fin N) k),
       ∀ y : Bool × Formalism.MainNotions.G.HH D → Fin N → ℕ → k, ph (GL3Columns.DeX N nu y) = GL3Columns.minY N nu J y := by
-  first | exact @GlobalTheory.Mem.RangeMinors.exists_dual_DeX_eq_minY | exact GlobalTheory.Mem.RangeMinors.exists_dual_DeX_eq_minY | (intros; apply GlobalTheory.Mem.RangeMinors.exists_dual_DeX_eq_minY <;> assumption)
+  first | exact @GlobalTheory.Mem.RangeMinors.exists_dual_DeX_eq_minY
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsFunctionalFrameMinorPolynomialsEqMinorProdStatement =====
@@ -329,7 +329,7 @@ theorem _root_.GlobalTheory.T.prod_bideterminants_eq_columnChoice_minorProduct :
     (ν : D.what₂.Tau → Fin N → ℕ), NuFits D nu ν → ∀ g : D.what₂.Tau → Matrix (Fin N) (Fin N) K → K,
     (∀ τ, g τ ∈ bideterminantFunctionsOfShape K N (ν τ)) → ∃ J : KM.ColChoice N nu, ∀ y : D.what₂.Tau → Matrix (Fin N) (Fin N) K,
       ∏ τ, g τ (y τ) = GL3Columns.minY N nu J (fun s => GL3Columns.colsOf (y (tauPl D s))) := by
-  first | exact @GlobalTheory.Mem.CanonicalSurjection.prod_bidFns_eq_minY | exact GlobalTheory.Mem.CanonicalSurjection.prod_bidFns_eq_minY | (intros; apply GlobalTheory.Mem.CanonicalSurjection.prod_bidFns_eq_minY <;> assumption)
+  first | exact @GlobalTheory.Mem.CanonicalSurjection.prod_bidFns_eq_minY
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ProdBideterminantsEqColumnChoiceMinorProductStatement =====
@@ -509,7 +509,7 @@ theorem _root_.GlobalTheory.T.weightPolynomial_frames_mem_span_bideterminantProd
       MvPolynomial.eval (fun k : ι × Fin N × Fin N => (M k.1 * y k.1) k.2.1 k.2.2) (MvPolynomial.map φ Q)) ∈
     Submodule.span L {F | ∃ g : ι → Matrix (Fin N) (Fin N) L → L, (∀ τ, g τ ∈ bideterminantFunctionsOfShape L N (ν τ)) ∧
       F = fun y => ∏ τ, g τ (y τ)} := by
-  first | exact @GlobalTheory.Mem.WeightBideterminants.weightPolynomial_mem_span_bideterminantProducts | exact GlobalTheory.Mem.WeightBideterminants.weightPolynomial_mem_span_bideterminantProducts | (intros; apply GlobalTheory.Mem.WeightBideterminants.weightPolynomial_mem_span_bideterminantProducts <;> assumption)
+  first | exact @GlobalTheory.Mem.WeightBideterminants.weightPolynomial_mem_span_bideterminantProducts
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.WeightPolynomialFramesMemSpanBideterminantProducStatement =====
@@ -555,7 +555,7 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions F
 attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.toy_entPl_canOnto : ∀ (D : D7) (Pl : Examples₂.EntPl D), CanOnto Pl := by
-  first | exact @GlobalTheory.Mem.CanonicalSurjection.canOnto_all | exact GlobalTheory.Mem.CanonicalSurjection.canOnto_all | (intros; apply GlobalTheory.Mem.CanonicalSurjection.canOnto_all <;> assumption)
+  first | exact @GlobalTheory.Mem.CanonicalSurjection.canOnto_all
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DominantWeightPolynomialFunctionalMinorsStatement =====

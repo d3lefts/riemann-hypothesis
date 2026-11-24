@@ -179,11 +179,7 @@ theorem exists_den_field {E Ω : Type*} [Field E] [NumberField E] [Field Ω] (ι
     (A : ValuationSubring Ω) {x : E} (hx : A.valuation (ι x) ≤ 1) :
     ∃ s t : 𝓞 E, A.valuation (ι s) = 1 ∧ (s : E) * x = t := by
   first
-  | exact @_root_.GlobalTheory.UnitDenominatorValuation.exists_unit_denominator
-  | exact _root_.GlobalTheory.UnitDenominatorValuation.exists_unit_denominator
   | (apply _root_.GlobalTheory.UnitDenominatorValuation.exists_unit_denominator <;> assumption)
-  | (intros; apply _root_.GlobalTheory.UnitDenominatorValuation.exists_unit_denominator <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.UnitDenominatorValuation.exists_unit_denominator <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.UnitDenominatorValuation.exists_unit_denominator ..)
 
 end GlobalTheory.CMRam
@@ -262,7 +258,7 @@ theorem index_one_root : ∀ (E K : Type) [Field E] [NumberField E] [Field K] [N
   set z : 𝓞 K := ⟨Z, hZi⟩ with hzdef
   have hz : z ^ k = ((g : ℕ) : 𝓞 K) := by
     apply NumberField.RingOfIntegers.ext
-    simp only [RingOfIntegers.coe_eq_algebraMap, map_pow, map_natCast]
+    simp only [map_pow, map_natCast]
     exact hZ
   have hgP : ((g : ℕ) : 𝓞 K) ∈ P := by
     have h0 : ((g : ℕ) : 𝓞 E) ∈ P.under (𝓞 E) := hPv ▸ hgv

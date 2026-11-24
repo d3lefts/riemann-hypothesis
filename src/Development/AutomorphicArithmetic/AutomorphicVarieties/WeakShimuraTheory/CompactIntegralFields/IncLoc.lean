@@ -253,7 +253,7 @@ private theorem rt_wt {O Γ : Type} [CommRing O] [Group Γ] (Φ : Fr O Γ)
   have hc : Φ.χ 2 g = Φ.ν g * (Φ.χ 1 g)⁻¹ := eq_mul_inv_of_mul_eq (by rw [mul_comm]; exact hm 1 g)
   rw [map_inv]
   fin_cases i <;> fin_cases j <;> simp [Fr.rt, wt, lamW, muW, hc, hd] <;>
-    (apply Additive.ofMul.injective; simp only [ofMul_mul, ofMul_inv, ofMul_zpow, ofMul_pow]; abel)
+    (apply Additive.ofMul.injective; simp only [ofMul_mul, ofMul_inv]; abel)
 
 end UpperTheory.V.Ws.X1
 
@@ -1277,7 +1277,7 @@ private noncomputable def cmp {k : Type} [Field k] (p : M4 k) :
     rw [Matrix.mulVecLin_add, LinearMap.add_comp, LinearMap.comp_add]
   map_smul' a X := by
     ext v i
-    simp [Matrix.smul_mulVec, Matrix.mulVec_smul]
+    simp
 
 private theorem cmp_zero {k : Type} [Field k] (p X : M4 k) (h : cmp p X = 0) : p * X * p = 0 := by
   apply Matrix.toLin'.injective

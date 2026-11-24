@@ -152,7 +152,7 @@ theorem isIntegral_or_isIntegral_of_fieldFactor : ∀ (K : UQ) (B : InvAlg K) (f
     refine ⟨⟨0, 1, fun h => hf0 ?_⟩, mul_comm, ?_⟩
     · obtain ⟨c, hc⟩ := (hmk 0 1).1 h
       have := congrArg (f * ·) hc
-      simp only [mul_sub, mul_zero, mul_one, zero_sub] at this
+      simp only [zero_sub] at this
       rw [← mul_assoc, mul_sub, mul_one, hf.eq, sub_self, zero_mul] at this
       simpa using this
     · intro a ha
@@ -177,7 +177,6 @@ theorem isIntegral_or_isIntegral_of_fieldFactor : ∀ (K : UQ) (B : InvAlg K) (f
     rw [AlgEquiv.commutes]
     first
       | exact IsScalarTower.algebraMap_apply K.O K.E (B.A ⧸ I) x
-      | rw [← Ideal.Quotient.mk_algebraMap, ← Ideal.Quotient.mk_algebraMap, ← IsScalarTower.algebraMap_apply]
   haveI : Algebra.IsIntegral (FractionRing K.O) (B.A ⧸ I) := by
     refine ⟨fun x => ?_⟩
     have hx : IsIntegral K.E x := Algebra.IsIntegral.isIntegral x
@@ -268,28 +267,6 @@ variable {K : UQ} (B : InvAlg K)
 theorem al_ne (a : K.O) (ha : K.Small a) : al K a ≠ 0 := by
   intro h
   exact ha.1 ((IsFractionRing.injective K.O K.E) (by simpa using h))
-
-theorem isIntegral_sigma {r : B.A} (hr : IsIntegral K.O r) : IsIntegral K.O (B.σ r) := by
-  obtain ⟨q, hq, h0⟩ := hr
-  have hsub : ∀ x : K.O, K.c (algebraMap K.O K.E x) ∈ (algebraMap K.O K.E).range := fun x => by
-    obtain ⟨y, hy⟩ := K.c_int x; exact ⟨y, hy.symm⟩
-  let ψ : K.O ≃+* (algebraMap K.O K.E).range :=
-    RingEquiv.ofBijective (algebraMap K.O K.E).rangeRestrict
-      ⟨fun x y h => IsFractionRing.injective K.O K.E (congrArg Subtype.val h), (algebraMap K.O K.E).rangeRestrict_surjective⟩
-  let cO : K.O →+* K.O := ψ.symm.toRingHom.comp
-    (((K.c : K.E →+* K.E).comp (algebraMap K.O K.E)).codRestrict _ hsub)
-  have hcO : ∀ x, algebraMap K.O K.E (cO x) = K.c (algebraMap K.O K.E x) := fun x => by
-    have := ψ.apply_symm_apply ⟨K.c (algebraMap K.O K.E x), hsub x⟩
-    exact congrArg Subtype.val this
-  have hcomp : (algebraMap K.O B.A).comp cO = (B.σ : B.A →+* B.A).comp (algebraMap K.O B.A) := by
-    ext x
-    simp only [RingHom.comp_apply, RingHom.coe_coe]
-    rw [IsScalarTower.algebraMap_apply K.O K.E B.A, IsScalarTower.algebraMap_apply K.O K.E B.A x, B.σ_alg, hcO]
-  refine ⟨q.map cO, hq.map cO, ?_⟩
-  rw [eval₂_map, hcomp]
-  have := hom_eval₂ q (algebraMap K.O B.A) (B.σ : B.A →+* B.A) r
-  rw [h0, map_zero] at this
-  exact this.symm
 
 theorem sigma_smul (c : K.E) (x : B.A) : B.σ (c • x) = K.c c • B.σ x := by
   rw [Algebra.smul_def, Algebra.smul_def, map_mul, B.σ_alg]

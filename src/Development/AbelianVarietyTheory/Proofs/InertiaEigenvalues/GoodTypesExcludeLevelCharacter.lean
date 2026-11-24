@@ -153,7 +153,7 @@ theorem coeff_one_zOf_mul (ψ : G → ℂ) (a : MonoidAlgebra ℂ G) :
   rw [coeff_mul', tr, Finset.mul_sum]
   refine Fintype.sum_equiv (Equiv.inv G) _ _ fun q => ?_
   rw [zOf, coeff_sum_single]
-  simp only [Equiv.inv_apply, inv_inv, mul_one]
+  simp only [Equiv.inv_apply, mul_one]
   ring
 
 theorem zOf_mul_avg_eq_zero (ψ : G → ℂ) (hψ : IsIrr ψ) (P : G → Prop) [DecidablePred P] (χ : G →* ℂ) (h1 : P 1)
@@ -325,7 +325,7 @@ theorem _root_.GlobalTheory.T.definiteSpace_forms_functional_principalType : ∀
     [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.Hk3.Core R F →
     ∀ (i : Fin D.R.m) (t : T) (y : (R.HV i t).H) (l : (R.cV i).W →ₗ[ℂ] ℂ),
       HasType (Vc D i) (R.βV i) (flag1L (R.datVt i t)) (fun h => l (R.extV i t y h)) := by
-  first | exact @GlobalTheory.DefiniteType.hasType_extV | exact GlobalTheory.DefiniteType.hasType_extV | (intros; apply GlobalTheory.DefiniteType.hasType_extV <;> assumption)
+  first | exact @GlobalTheory.DefiniteType.hasType_extV
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DefiniteSpaceFormsFunctionalPrincipalTypeStatement =====
@@ -439,7 +439,7 @@ theorem _root_.GlobalTheory.T.convolution_singleFactor_goodProjector_eq_zero : �
       M * D.ntypes.eSer kv0.1 (Formalism.CyclotomicNorms.monicOf (a kv0)) = 0) → ∀ x : G,
     ∑ y : G, (open Classical in if ∀ kv, kv ≠ kv0 → eR y kv = 1 then M.coeff (eR y kv0) else 0) *
       D.ntypes.e0.coeff (eR (y⁻¹ * x)) = 0 := by
-  first | exact @GlobalTheory.DownLift.conv_single_goodProj_eq_zero | exact GlobalTheory.DownLift.conv_single_goodProj_eq_zero | (intros; apply GlobalTheory.DownLift.conv_single_goodProj_eq_zero <;> assumption)
+  first | exact @GlobalTheory.DownLift.conv_single_goodProj_eq_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ConvolutionSingleFactorGoodProjectorEqZeroStatement =====
@@ -542,7 +542,7 @@ theorem _root_.GlobalTheory.T.levelCharacter_teichmullerLabel_of_goodTypes : ∀
           (Units.map (iso : ZMod (D.host.g k) →* kP PP)))) c ∧
         (c = ((D.nd.chiT k v i : (ZMod (D.host.g k))ˣ) : ZMod (D.host.g k)) ∨
           c = (((D.nd.chiT k v i)⁻¹ : (ZMod (D.host.g k))ˣ) : ZMod (D.host.g k))) := by
-  first | exact @GlobalTheory.CharLabTransport.charLab_of_goodTypes | exact GlobalTheory.CharLabTransport.charLab_of_goodTypes | (intros; apply GlobalTheory.CharLabTransport.charLab_of_goodTypes <;> assumption)
+  first | exact @GlobalTheory.CharLabTransport.charLab_of_goodTypes
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LevelCharacterTeichmullerLabelOfGoodTypesStatement =====
@@ -680,7 +680,7 @@ theorem _root_.GlobalTheory.T.mirabolicAverage_eq_coeff_singlePlaceElement : ∀
       (GlobalTheory.MirAvg.mirEl ((zpowGroupHom ε).comp ((R.chi ((i : ℕ) + 1) (plg kv0).1).comp
         (Units.map (iso kv0 : ZMod (D.host.g kv0.1) →* kP (plg kv0).1))))
         (fun j => (iso kv0).symm (a j)) b).coeff (eR y kv0) else 0) := by
-  first | exact @GlobalTheory.MirAvg.mirC_eq_coeff_mirEl | exact GlobalTheory.MirAvg.mirC_eq_coeff_mirEl | (intros; apply GlobalTheory.MirAvg.mirC_eq_coeff_mirEl <;> assumption)
+  first | exact @GlobalTheory.MirAvg.mirC_eq_coeff_mirEl
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MirabolicAverageEqCoeffSinglePlaceElementStatement =====
@@ -774,7 +774,7 @@ theorem _root_.GlobalTheory.T.goodProjector_conv_mirabolicAvg_eq_zero : GlobalTh
     (F : Face D A), GlobalTheory.LiftRows.Given R F → ∀ (i : Fin D.R.m) (PP : R.Pg) (a : Fin D.R.r → kP PP.1), a ≠ 0 →
     ∀ (b : Bool) (ε : ℤ), (ε = 1 ∨ ε = -1) → ∀ x : G,
       ∑ y : G, GlobalTheory.DownLift.mirC R i PP a b ε y * RealDat.eC (A := A) (sg0 D A) (y⁻¹ * x) = 0 := by
-  first | exact @GlobalTheory.GoodNoChiTr.conv_mirC_eC | exact GlobalTheory.GoodNoChiTr.conv_mirC_eC | (intros; apply GlobalTheory.GoodNoChiTr.conv_mirC_eC <;> assumption)
+  first | exact @GlobalTheory.GoodNoChiTr.conv_mirC_eC
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GoodProjectorConvMirabolicAvgEqZeroStatement =====

@@ -114,9 +114,6 @@ lemma sa_scalar (hirr : Irr π) (A : H →L[ℂ] H) (hA : IsSelfAdjoint A)
     intro f g
     first
     | exact (hc g).cfc_real f
-    | exact Commute.cfc_real (hc g) f
-    | exact (hc g).cfc (by rw [hA.star_eq]; exact hc g) f
-    | exact Commute.cfc (hc g) (by rw [hA.star_eq]; exact hc g) f
   have hsub : ∀ s ∈ spectrum ℝ A, ∀ t ∈ spectrum ℝ A, s < t → False := by
     intro s hs t ht hst
     set m := (s + t) / 2 with hm
@@ -190,7 +187,6 @@ theorem stSchur : StSchur := by
   have hc : ∀ g, Commute T (π g) := fun g => by
     first
     | exact hT g
-    | simpa [Commute, SemiconjBy, ContinuousLinearMap.mul_def] using hT g
   have hcs : ∀ g, Commute (star T) (π g) := fun g => commute_star π hπ T hc g
   obtain ⟨r1, h1⟩ := sa_scalar π hirr (ℜ T : H →L[ℂ] H) (ℜ T).2 (fun g => by
     rw [realPart_apply_coe]
@@ -337,7 +333,7 @@ theorem stOrthOf : StOrthOf := by
     refine integral_congr_ae ?_
     filter_upwards [hT w v, hT w' v'] with g h1 h2
     rw [h1, h2]
-    simp [cfL_apply, RCLike.inner_apply, mul_comm]
+    simp [cfL_apply, RCLike.inner_apply]
   have hpiadj : ∀ (h : G) (x y : H), ⟪π h⁻¹ x, y⟫_ℂ = ⟪x, π h y⟫_ℂ := by
     intro h x y
     rw [← inner_pi π hiso h (π h⁻¹ x) y, ← ContinuousLinearMap.mul_apply, ← map_mul, mul_inv_cancel, map_one,
@@ -409,7 +405,7 @@ theorem stOrthOf : StOrthOf := by
     rw [integral_pos_iff_support_of_nonneg (fun g => Complex.normSq_nonneg _) hφi]
     apply hφc.isOpen_support.measure_pos μ
     refine ⟨1, ?_⟩
-    simp [φ, cf, hee, hne]
+    simp [φ, cf, hne]
   refine ⟨(∫ g, φ g ∂μ)⁻¹, inv_pos.mpr hφpos, fun v w v' w' => ⟨integrable_cf π hL2 v w v' w', ?_⟩⟩
   have hκ : conj (c e e) = ((∫ g, φ g ∂μ : ℝ) : ℂ) := by
     have h1 := hBc e e e e

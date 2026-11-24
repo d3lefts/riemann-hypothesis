@@ -315,22 +315,21 @@ theorem hilbertSamuel_ALogA_le (T D : ℕ) (PP b z : ℝ) (hD1 : 1 ≤ D) (hDT :
   have hT1 : (1 : ℝ) ≤ T := le_trans hD1' hDT'
   set A : ℝ := 26 * (26 * (D : ℝ) ^ 2 + 2 * z * T) with hAdef
   have hA1 : 1 ≤ A := by
-    have : (0 : ℝ) ≤ 2 * z * T := by positivity
-    nlinarith
-  have hmax : max A 1 = A := max_eq_left hA1
-  rw [hmax]
-  have hApos : 0 < A := by linarith
+    rw [hAdef]
+    have hnonneg : (0 : ℝ) ≤ 2 * z * T := by positivity
+    linarith only [hnonneg, one_le_pow₀ hD1' (n := 2)]
+  rw [max_eq_left hA1]
   have hAle : A ≤ 702 * (T : ℝ) ^ 2 := by
-    have h1 : (D : ℝ) ^ 2 ≤ (T : ℝ) ^ 2 := by nlinarith
-    have h2 : 2 * z * (T : ℝ) ≤ T := by nlinarith
-    have h3 : (T : ℝ) ≤ (T : ℝ) ^ 2 := by nlinarith
-    nlinarith
-  have hT0 : (0 : ℝ) < T := by linarith
-  have hTsq : (T : ℝ) ≤ Real.sqrt b := by nlinarith
+    rw [hAdef]
+    have h1 := pow_le_pow_left₀ (Nat.cast_nonneg D) hDT' 2
+    have h2 := mul_le_mul_of_nonneg_right hz (Nat.cast_nonneg (α := ℝ) T)
+    linarith only [h1, h2, le_self_pow₀ hT1 (by decide : 2 ≠ 0)]
+  have hT0 : (0 : ℝ) < T := zero_lt_one.trans_le hT1
+  have hTsq : (T : ℝ) ≤ Real.sqrt b := (le_mul_of_one_le_right hT0.le hPP).trans hTP
   have hlogT : 2 * Real.log T ≤ PP := by
     have h1 : Real.log T ≤ Real.log (Real.sqrt b) := Real.log_le_log hT0 hTsq
-    rw [Real.log_sqrt (by linarith)] at h1
-    linarith
+    rw [Real.log_sqrt (zero_le_one.trans hb)] at h1
+    linarith only [h1, hlogb]
   have hlog702 : Real.log 702 < 7 := by
     rw [Real.log_lt_iff_lt_exp (by norm_num)]
     have he := Real.exp_one_gt_d9
@@ -338,24 +337,23 @@ theorem hilbertSamuel_ALogA_le (T D : ℕ) (PP b z : ℝ) (hD1 : 1 ≤ D) (hDT :
       rw [← Real.exp_nat_mul]; norm_num
     rw [this]
     have h27 : (2.7 : ℝ) ^ 7 ≤ Real.exp 1 ^ 7 := by
-      apply pow_le_pow_left₀ (by norm_num); linarith
-    nlinarith
+      apply pow_le_pow_left₀ (by norm_num); linarith only [he]
+    exact lt_of_lt_of_le (by norm_num : (702 : ℝ) < 2.7 ^ 7) h27
   have hlogA : Real.log A ≤ 8 * PP := by
-    have h1 : Real.log A ≤ Real.log (702 * (T : ℝ) ^ 2) := Real.log_le_log hApos hAle
+    have h1 : Real.log A ≤ Real.log (702 * (T : ℝ) ^ 2) := Real.log_le_log (zero_lt_one.trans_le hA1) hAle
     have h2 : Real.log (702 * (T : ℝ) ^ 2) = Real.log 702 + 2 * Real.log T := by
       rw [Real.log_mul (by norm_num) (by positivity), Real.log_pow]; push_cast; ring
-    linarith
+    linarith only [h1, h2, hlog702, hlogT, hPP]
   have hlogA0 : 0 ≤ Real.log A := Real.log_nonneg hA1
   have hmain : A * Real.log A ≤ 702 * (T : ℝ) ^ 2 * (8 * PP) :=
     mul_le_mul hAle hlogA hlogA0 (by positivity)
   have hsq : ((T : ℝ) * PP) ^ 2 ≤ b := by
     have h0 : 0 ≤ (T : ℝ) * PP := by positivity
     calc ((T : ℝ) * PP) ^ 2 ≤ Real.sqrt b ^ 2 := pow_le_pow_left₀ h0 hTP 2
-      _ = b := Real.sq_sqrt (by linarith)
-  have hTPP : (T : ℝ) ^ 2 * PP ≤ (T : ℝ) ^ 2 * PP ^ 2 := by
-    have : PP ≤ PP ^ 2 := by nlinarith
-    exact mul_le_mul_of_nonneg_left this (by positivity)
-  nlinarith
+      _ = b := Real.sq_sqrt (zero_le_one.trans hb)
+  have hTPP : (T : ℝ) ^ 2 * PP ≤ (T : ℝ) ^ 2 * PP ^ 2 :=
+    mul_le_mul_of_nonneg_left (le_self_pow₀ hPP (by decide)) (sq_nonneg _)
+  linarith only [hmain, hTPP, hsq, hb]
 
 end GlobalTheory
 end -- clump:auto
@@ -502,7 +500,7 @@ open GlobalTheory.BadCount
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.twisted_bundle_degree_lower_bound : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → ∃ C : ℝ, 0 ≤ C ∧ ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j : ℕ, 1 ≤ (T.Q.Dw j).p → 1 ≤ (T.Q.Dw j).q → 2 < Module.finrank ℚ D.host.E / 2 → InR D j → ∀ (Y : Deep T.toCore j) (e : ℕ) (o : ℝ), Y.Good e o → ∀ Lb : ℝ, 1 ≤ Lb → Real.log Y.d.l₂.M ≤ 30 * Lb → fieldSz D.host.E ≤ 3 * Lb → Real.log (D.R.f * D.R.r) ≤ Lb → o ≤ 391 * (D.R.f * D.R.r * Lb) ^ 2 → ∀ c₁ : ℝ, GlobalTheory.FlatLine.FlatExistsAt Y.U (xiR D) c₁ → |c₁| ≤ 9 * D.R.r * Lb → ∀ (la : AllWt.Weight (T.Q.Dw j)) (w : Psi T.Q.H → ℤ) Z, (∀ τ, |w τ| ≤ 3 * (D.R.r : ℤ)) → GoodOn Y.U (xiR D) (fun _ => D.sp.W j) Y.dict Z (wtOf (T.Q.Dw j) la 0) → Y.degC la Z - Y.rkC la Z * (C * ((D.R.f : ℝ) * D.R.r * Lb) ^ 2) ≤ Y.degC (la + GlobalTheory.FlatLine.parWt (T.Q.Dw j) w) Z := by
-  first | exact @_root_.GlobalTheory.TwistDeg.degree_twist_ge | exact _root_.GlobalTheory.TwistDeg.degree_twist_ge | (intros; apply _root_.GlobalTheory.TwistDeg.degree_twist_ge <;> assumption)
+  first | exact @_root_.GlobalTheory.TwistDeg.degree_twist_ge
 end
 end -- clump:auto
 end -- clump:auto
@@ -634,7 +632,7 @@ open GlobalTheory.BadCount
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.coverHeightSum_of_flatDeg_coverDegree_share : GlobalTheory.CovTop.HypothesesX → _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → GlobalTheory.Published.GrothendieckDeformation → GlobalTheory.HSCore.Quoted → GlobalTheory.Published.SiegelToroidalIntegral → GlobalTheory.Published.ToroidalForFanKS → GlobalTheory.Published.SemiAbelianLieSeminegative → _root_.GlobalTheory.CovTop.DeepGoodness → _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.FlatDegreeCondition → _root_.GlobalTheory.CovTop.CoverDegree → _root_.GlobalTheory.CovTop.ShareCondition → _root_.GlobalTheory.CovTop.CoverHeightSum := by
-  first | exact @_root_.GlobalTheory.CovTop.ShortRoad.hilbertSamuel_of_component_estimates_alt | exact _root_.GlobalTheory.CovTop.ShortRoad.hilbertSamuel_of_component_estimates_alt | (intros; apply _root_.GlobalTheory.CovTop.ShortRoad.hilbertSamuel_of_component_estimates_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.ShortRoad.hilbertSamuel_of_component_estimates_alt
 end
 end
 end -- clump:auto

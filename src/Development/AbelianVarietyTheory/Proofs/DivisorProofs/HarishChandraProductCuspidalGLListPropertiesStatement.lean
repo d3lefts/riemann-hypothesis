@@ -194,7 +194,7 @@ theorem stage_right [Fintype F] {a m n : ℕ} (hn : n = a + m) (k : ℂ) (φ Fm 
       fun u v => ∑ h : GL (Fin m) F, k * (α ((1 : GL (Fin a) F)⁻¹ * u * 1) * φ (h⁻¹ * v * h)) := by
     funext u v
     rw [hF]
-    simp [Finset.mul_sum, Finset.sum_mul, mul_left_comm]
+    simp [Finset.mul_sum, mul_left_comm]
   rw [e, hcT_sum]
   rw [Finset.sum_congr rfl fun h _ =>
     (show hcT a m (fun u v => k * (α ((1 : GL (Fin a) F)⁻¹ * u * 1) * φ (h⁻¹ * v * h))) n x =
@@ -439,7 +439,7 @@ open Polynomial GlobalTheory.CuspGL GlobalTheory.BI GlobalTheory.Shin Semidirect
 open scoped Classical
 
 theorem _root_.GlobalTheory.T.harishChandraInductionGL_assoc : ∀ (F : Type) [Field F] [Finite F], ∀ (a b c n : ℕ) (α : GL (Fin a) F → ℂ) (β : GL (Fin b) F → ℂ) (γ : GL (Fin c) F → ℂ), IsCl α → IsCl β → IsCl γ → n = a + b + c → hc (a + b) c (hc a b α β (a + b)) γ n = hc a (b + c) α (hc b c β γ (b + c)) n := by
-  first | (exact @GlobalTheory.Shin.HcAssoc.hc_assoc) | (exact GlobalTheory.Shin.HcAssoc.hc_assoc) | (intros; apply GlobalTheory.Shin.HcAssoc.hc_assoc <;> assumption)
+  first | (exact @GlobalTheory.Shin.HcAssoc.hc_assoc)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HarishChandraInductionGLAssocStatement =====
@@ -774,7 +774,7 @@ open Polynomial GlobalTheory.CuspGL GlobalTheory.BI GlobalTheory.Shin Semidirect
 open scoped Classical
 
 theorem _root_.GlobalTheory.T.harishChandraProductCuspidalGL_list_properties : ∀ (F : Type) [Field F] [Finite F] (θ : AlgebraicClosure F →* ℂ), (∀ L n, IsCl (J θ L n)) ∧ (∀ (L L' : List (ℕ × ℕ)) (n : ℕ), n = deg L + deg L' → J θ (L ++ L') n = hc (deg L) (deg L') (J θ L (deg L)) (J θ L' (deg L')) n) ∧ ∀ (L L' : List (ℕ × ℕ)) (n : ℕ), n = deg L → L.Perm L' → J θ L n = J θ L' n := by
-  first | (exact @GlobalTheory.Shin.J_list_props) | (exact GlobalTheory.Shin.J_list_props) | (intros; apply GlobalTheory.Shin.J_list_props <;> assumption)
+  first | (exact @GlobalTheory.Shin.J_list_props)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HarishChandraProductCuspidalGLListPropertiesStatement =====

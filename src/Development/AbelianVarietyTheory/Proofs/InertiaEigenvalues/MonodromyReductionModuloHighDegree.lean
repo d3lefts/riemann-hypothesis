@@ -80,7 +80,7 @@ theorem wS_eq_one_of_lt (l : ℕ) [Fact l.Prime] [NormedAlgebra ℚ_[l] K] {e n 
     (Nat.Prime.coprime_iff_not_dvd hp).2 fun h => absurd (hp.dvd_factorial.1 h) (by omega)
   unfold wS
   rw [norm_natCast_eq l, Padic.norm_natCast_eq_one_iff]
-  first | exact hc | exact hc.symm
+  first | exact hc
 
 theorem norm_coeff_N_mul_wS_le (e : ℕ) (f : K⟦X⟧) (n : ℕ) :
     ‖coeff n (N K f)‖ * wS K e n ≤ ‖coeff n f‖ * wS K e n := by
@@ -187,7 +187,7 @@ theorem smul_mem_MMHigh (P : PhiMod O K l e a ι) {f : ZMod a → K⟦X⟧}
     rw [Finset.sum_apply, Finset.sum_apply, Finset.sum_eq_single τ']
     · simp [Subalgebra.smul_def]
     · intro b _ hb
-      simp [Subalgebra.smul_def, Pi.single_apply, Ne.symm hb]
+      simp [Ne.symm hb]
     · simp
   rw [h1]
   change _ ∈ SHigh O K l e • P.MM

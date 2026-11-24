@@ -207,7 +207,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.actRead_at_member_of_recT : ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ _ _ _ _ _ t _ _ _ => GlobalTheory.CenLocAt.ActRead t.r.Y := by
-  first | exact @_root_.GlobalTheory.CenLocAt.actRead_at_mem_of_recT | exact _root_.GlobalTheory.CenLocAt.actRead_at_mem_of_recT | (intros; apply _root_.GlobalTheory.CenLocAt.actRead_at_mem_of_recT <;> assumption)
+  first | exact @_root_.GlobalTheory.CenLocAt.actRead_at_mem_of_recT
 end
 end -- clump:auto
 end -- clump:auto
@@ -305,7 +305,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.cenRat_at_members : ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ _ _ _ _ _ t _ _ _ => GlobalTheory.CenLocAt.CenRat t.r.Y t.r.z.cG := by
-  first | exact @_root_.GlobalTheory.CenRatAt.cenRat_at_alt | exact _root_.GlobalTheory.CenRatAt.cenRat_at_alt | (intros; apply _root_.GlobalTheory.CenRatAt.cenRat_at_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CenRatAt.cenRat_at_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -553,7 +553,7 @@ theorem _root_.GlobalTheory.T.exists_conj_parahoric_block_lift : ∀ {D : D7} {G
   ∃ c : G, ∀ g : G,
     Formalism.IndefR.Lev.IsLevelLift (Formalism.IndefR.Links.Vc D k) (R.βV k) (R.datVt k s) (R.eG g) (P.ψ (L ((R.eG.trans cG) (c * g * c⁻¹)))) ∧
     Formalism.IndefR.Lev.levChi (Formalism.IndefR.Links.Vc D k) (R.βV k) (Formalism.IndefR.Lev.flagL (R.datVt k s)) (P.ψ (L ((R.eG.trans cG) (c * g * c⁻¹)))) = 1 := by
-  first | exact @GlobalTheory.ParahLift.exists_conj_parahoric_lift | exact GlobalTheory.ParahLift.exists_conj_parahoric_lift | (intros; apply GlobalTheory.ParahLift.exists_conj_parahoric_lift <;> assumption)
+  first | exact @GlobalTheory.ParahLift.exists_conj_parahoric_lift
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsConjParahoricBlockLiftStatement =====
@@ -613,7 +613,7 @@ theorem _root_.GlobalTheory.T.g0_lift_unitary_central_frame_alt : ∀ hL : _root
       (s'.w ∈ t.r.z.R.Q s → ∃ y, GlobalTheory.CenFrame.IsCompOf s' (L g) y ∧ Matrix.GeneralLinearGroup.map φ y = 1) ∧
       ∀ hP : s'.w ∈ t.r.z.R.Pg, ∃ y, GlobalTheory.CenFrame.IsCompOf s' (L g) y ∧
         GlobalTheory.FrameBlockDiagonal.IsBlockDiagonalWithIdentity (t.r.z.R.eG ((t.r.z.R.eG.trans t.r.z.cG).symm g) ⟨s'.w, hP⟩) (Matrix.GeneralLinearGroup.map φ y) := by
-  first | exact @_root_.GlobalTheory.BlockLiftFrame.atMem_alt | exact _root_.GlobalTheory.BlockLiftFrame.atMem_alt | (intros; apply _root_.GlobalTheory.BlockLiftFrame.atMem_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BlockLiftFrame.atMem_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -866,7 +866,7 @@ theorem block_upper_of_conj_generic {A : Type} [CommGroup A] (r t : ℕ) (hr : 2
       rw [diagUnit_val, Matrix.smul_apply, diagonal_mul, mul_diagonal, hP2e, smul_eq_mul]
       by_cases he : e = k
       · subst he
-        try simp only [if_pos rfl, ite_true]
+        try simp only [ite_true]
         rw [hfhigh e hk]
         by_cases ha : a.val < r
         · rw [hflow a ha]; field_simp
@@ -1290,7 +1290,7 @@ theorem _root_.GlobalTheory.T.conjugate_blockUpper_of_eigenfunction_unipotentTyp
         ∃ c : ℂ, ∀ g, f (g * κ) = c * f g) ∧
       (Matrix.GeneralLinearGroup.map φ y = 1 → ∀ g, f (g * κ) = f g)) →
     b ∈ Formalism.L2.DIV.blockTri (Formalism.L2.DIV.blk2 r) := by
-  first | exact @GlobalTheory.CenFrameGen.block_upper_of_eigen | exact GlobalTheory.CenFrameGen.block_upper_of_eigen | (intros; apply GlobalTheory.CenFrameGen.block_upper_of_eigen <;> assumption)
+  first | exact @GlobalTheory.CenFrameGen.block_upper_of_eigen
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ConjugateBlockUpperOfEigenfunctionUnipotentTypeStatement =====
@@ -1366,7 +1366,7 @@ open Formalism.L2.DIV Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.L
 
 theorem _root_.GlobalTheory.T.exists_residue_ne_zero_ne_one_at_member : ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ _ w Z _ _ t _ _ c =>
   ∀ PP ∈ t.r.z.R.Pg, ∃ x : Formalism.L2.DIV.kP PP, x ≠ 0 ∧ x ≠ 1 := by
-  first | exact @_root_.GlobalTheory.ResThree.main_alt_alt | exact _root_.GlobalTheory.ResThree.main_alt_alt | (intros; apply _root_.GlobalTheory.ResThree.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.ResThree.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1653,7 +1653,7 @@ theorem _root_.GlobalTheory.T.central_frame_split_nontrivial_at_alt : ∀ hL : _
         (i.val < (w.st Z).toD7.R.r → i = j → (b * Matrix.GeneralLinearGroup.map φ y * b⁻¹).val i j = 1)) →
         ∃ c : ℂ, ∀ g, f (g * κ) = c * f g) ∧
       (Matrix.GeneralLinearGroup.map φ y = 1 → ∀ g, f (g * κ) = f g)) := by
-  first | exact @_root_.GlobalTheory.FrameTypes.main_alt_alt | exact _root_.GlobalTheory.FrameTypes.main_alt_alt | (intros; apply _root_.GlobalTheory.FrameTypes.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.FrameTypes.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1715,7 +1715,7 @@ theorem _root_.GlobalTheory.T.central_frame_split_place_nontrivial_alt : ∀ hL 
       (b : GL (Fin (w.st Z).toD7.R.nV) (Formalism.L2.DIV.kP s'.w)), s'.w ∈ t.r.z.R.Pg → GlobalTheory.CenFrame.IsResidue s' φ →
         GlobalTheory.CenFrame.FrameRed (GlobalTheory.FrameBlockDiagonal.rankV (w.st Z).toD7 k) (ad.PV k) (t.r.z.R.βV k) s' φ b →
         b ∈ Formalism.L2.DIV.blockTri (Formalism.L2.DIV.blk2 (w.st Z).toD7.R.r) := by
-  first | exact @_root_.GlobalTheory.FrameBlockTriangular.blockTri_at_alt | exact _root_.GlobalTheory.FrameBlockTriangular.blockTri_at_alt | (intros; apply _root_.GlobalTheory.FrameBlockTriangular.blockTri_at_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.FrameBlockTriangular.blockTri_at_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1732,7 +1732,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.exists_split_reduction_standard_frame_conj : ∀ (D : D7) (V : HSp D) (n : ℕ) (hn : V.rank = n) (hF : D.host.F = maximalRealSubfield D.host.E) (P : principalLevelFrame.RowPsi V n) (β : GL (Fin V.rank) (EAf D)) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)), R3.StdFrame hF P → IsBaseFrame V β Λ 1 → ∀ s : ReciprocityTheory.Aut.SplitPlace D.host.E, ∃ (φ : Os s →+* kP s.w) (b : GL (Fin n) (kP s.w)), IsResidue s φ ∧ FrameRed hn P β s φ b := by
-  first | exact @GlobalTheory.FrameRedSplit.frameRed_exists | exact GlobalTheory.FrameRedSplit.frameRed_exists | (intros; apply GlobalTheory.FrameRedSplit.frameRed_exists <;> assumption)
+  first | exact @GlobalTheory.FrameRedSplit.frameRed_exists
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsSplitReductionStandardFrameConjStatement =====
@@ -1832,7 +1832,7 @@ theorem _root_.GlobalTheory.T.level_finE_mem_divisor_standard_alt : ∀ hL : _ro
     ∀ PP, PP ∈ t.r.z.R.Pg ∨ PP ∈ t.r.z.R.Q s → ∃ (s' : ReciprocityTheory.Aut.SplitPlace (w.st Z).toD7.host.E) (φ : GlobalTheory.CenFrame.Os s' →+* Formalism.L2.DIV.kP s'.w)
       (b : GL (Fin (w.st Z).toD7.R.nV) (Formalism.L2.DIV.kP s'.w)), s'.w = PP ∧ GlobalTheory.CenFrame.IsResidue s' φ ∧
         GlobalTheory.CenFrame.FrameRed (GlobalTheory.FrameBlockDiagonal.rankV (w.st Z).toD7 k) (ad.PV k) (t.r.z.R.βV k) s' φ b := by
-  first | exact @_root_.GlobalTheory.FrameInt.main_alt_alt | exact _root_.GlobalTheory.FrameInt.main_alt_alt | (intros; apply _root_.GlobalTheory.FrameInt.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.FrameInt.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1881,7 +1881,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.frameAt_of_tup_eq_mu_at_members : ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ _ w Z _ _ t _ _ c => ∀ (ad : MtAd t.r.Y c.a.all.gal.mt) (i : (w.st Z).toD7.nd.Loc) s k, t.r.Y.tup s = (w.st Z).toD7.nd.mu i → GlobalTheory.CenLocAt.FrameAt t.r.Y t.r.z.cG k (ad.PV k) s := by
-  first | exact @_root_.GlobalTheory.CenLocAt.frameAt_of_layer_alt | exact _root_.GlobalTheory.CenLocAt.frameAt_of_layer_alt | (intros; apply _root_.GlobalTheory.CenLocAt.frameAt_of_layer_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CenLocAt.frameAt_of_layer_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1924,7 +1924,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.cenLoc_at_members : ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ _ w Z _ _ _ _ _ c => CenLoc (w.D Z) c.a.all.gal.mt := by
-  first | exact @_root_.GlobalTheory.CenLocAt.cenLoc_at_member | exact _root_.GlobalTheory.CenLocAt.cenLoc_at_member | (intros; apply _root_.GlobalTheory.CenLocAt.cenLoc_at_member <;> assumption)
+  first | exact @_root_.GlobalTheory.CenLocAt.cenLoc_at_member
 end
 end -- clump:auto
 end -- clump:auto

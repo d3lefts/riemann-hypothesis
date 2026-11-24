@@ -95,8 +95,7 @@ theorem Lin_linForm (b b' : Fin n) (v w : Fin d → k) :
 
     simp [MvPowerSeries.pderiv_X, MvPowerSeries.pderiv_C, Derivation.leibniz, Finset.mul_sum,
     map_sum, Pi.single_apply, Prod.ext_iff]
-  · simp [MvPowerSeries.pderiv_X, MvPowerSeries.pderiv_C, Derivation.leibniz, Pi.single_apply,
-      Prod.ext_iff, h]
+  · simp [MvPowerSeries.pderiv_X, MvPowerSeries.pderiv_C, Derivation.leibniz, Prod.ext_iff, h]
 
 theorem div_Lin_aeval {ι : Type} [DecidableEq ι] (cp : ι → Fin n) (u : ι → Fin d → k) (φ : ι → PS k n d)
     (l : ι) (hl : ∀ l', Lin (cp l) (u l) (φ l') = C (if l = l' then 1 else 0)) (Q : MvPolynomial ι k) :
@@ -112,7 +111,7 @@ theorem div_Lin_aeval {ι : Type} [DecidableEq ι] (cp : ι → Fin n) (u : ι �
     · subst h
       simp
       ring
-    · simp [h, Pi.single_apply]
+    · simp [h]
       ring
 
 theorem div_Lin_iter_aeval {ι : Type} [DecidableEq ι] (cp : ι → Fin n) (u : ι → Fin d → k) (φ : ι → PS k n d)
@@ -158,12 +157,9 @@ theorem div_iter_pderiv_monomial {ι : Type} [DecidableEq ι] (i : ι) (t : ℕ)
       ext j
       first
         | (simp only [Finsupp.coe_tsub, Pi.sub_apply, Finsupp.single_apply]; split_ifs <;> omega)
-        | (simp only [Finsupp.tsub_apply, Finsupp.single_apply]; split_ifs <;> omega)
-        | (simp [Finsupp.single_apply]; split_ifs <;> omega)
     have h2 : (s - Finsupp.single i t) i = s i - t := by
       first
         | simp only [Finsupp.coe_tsub, Pi.sub_apply, Finsupp.single_eq_same]
-        | simp
     rw [Function.iterate_succ_apply', ih, MvPolynomial.pderiv_monomial, h1, h2,
       Nat.descFactorial_succ]
     congr 1
@@ -176,7 +172,7 @@ theorem div_listSum_apply_of_notMem {ι : Type} (a : ι →₀ ℕ) (L : List ι
   | nil => simp
   | cons x L ih =>
     simp only [List.mem_cons, not_or] at hl
-    simp [Finsupp.single_apply, Ne.symm hl.1, ih hl.2]
+    simp [Ne.symm hl.1, ih hl.2]
 
 theorem div_fold_monomial {ι : Type} [DecidableEq ι] (a : ι →₀ ℕ) (L : List ι) (hL : L.Nodup) (s : ι →₀ ℕ)
     (c : k) :
@@ -215,7 +211,7 @@ theorem linMon_aeval_monomial {ι : Type} [Fintype ι] [DecidableEq ι] (cp : ι
   have hS : ((Finset.univ : Finset ι).toList.map fun l => Finsupp.single l (a l)).sum = a := by
     rw [hLs]
     ext j
-    simp [Finsupp.finsetSum_apply, Finsupp.single_apply]
+    simp
   have hP : ((Finset.univ : Finset ι).toList.map fun l => ((α l).descFactorial (a l) : k)).prod =
       ∏ l, ((α l).descFactorial (a l) : k) := hLp k _
   rw [hS, hP, one_mul]
@@ -262,17 +258,14 @@ theorem ordGe_one_iff (f : PS k n d) : OrdGe 1 f ↔ constantCoeff f = 0 := by
     have h0 := h 0 (by simp)
     first
       | simpa [MvPowerSeries.coeff_zero_eq_constantCoeff_apply] using h0
-      | simpa [MvPowerSeries.coeff_zero_eq_constantCoeff] using h0
   · intro h m hm
     have hm0 : m = 0 := by
       have hd : m.degree = 0 := by omega
       first
         | exact (Finsupp.degree_eq_zero_iff m).1 hd
-        | exact Finsupp.degree_eq_zero_iff.1 hd
     subst hm0
     first
       | simpa [MvPowerSeries.coeff_zero_eq_constantCoeff_apply] using h
-      | simpa [MvPowerSeries.coeff_zero_eq_constantCoeff] using h
 
 theorem OrdGe.mul {a b : ℕ} {f g : PS k n d} (hf : OrdGe a f) (hg : OrdGe b g) : OrdGe (a + b) (f * g) := by
   intro m hm
@@ -281,17 +274,10 @@ theorem OrdGe.mul {a b : ℕ} {f g : PS k n d} (hf : OrdGe a f) (hg : OrdGe b g)
   replace hp : p.1 + p.2 = m := by
     first
       | exact Finset.HasAntidiagonal.mem_antidiagonal.mp hp
-      | exact Finset.mem_antidiagonal.mp hp
-      | simpa using hp
   have hdeg : p.1.degree + p.2.degree = m.degree := by
     rw [← hp]
     first
       | exact (map_add _ _ _).symm
-      | (simp only [Finsupp.degree_eq_weight_one, map_add (f := _)])
-      | (rw [Finsupp.degree_eq_sum, Finsupp.degree_eq_sum, Finsupp.degree_eq_sum, ← Finset.sum_add_distrib]; rfl)
-      | (simp only [Finsupp.degree_eq_sum, Finsupp.coe_add, Pi.add_apply, Finset.sum_add_distrib])
-      | (unfold Finsupp.degree
-         exact (Finsupp.sum_add_index' (h := fun _ (x : ℕ) => x) (fun _ => rfl) (fun _ _ _ => rfl)).symm)
   by_cases h1 : p.1.degree < a
   · rw [hf _ h1, zero_mul]
   · rw [hg _ (by omega), mul_zero]
@@ -352,8 +338,6 @@ theorem cro_prod_monomial {ι σ : Type} (s : Finset ι) (f : ι → σ →₀ �
   refine Finset.induction_on s ?_ ?_
   · first
       | simp
-      | simp [MvPowerSeries.monomial_zero_eq_C]
-      | (rw [Finset.prod_empty, Finset.sum_empty]; rfl)
   · intro i s hi ih
     rw [Finset.prod_insert hi, Finset.sum_insert hi, ih, MvPowerSeries.monomial_mul_monomial, one_mul]
 
@@ -372,7 +356,6 @@ theorem cro_coeff_lin (G : FGLaw k d) (i j : Fin d) :
       simp [Finsupp.single_apply] at h2
       first
         | exact h2.symm
-        | exact h2
   rw [hrhs] at hu
   rw [← hu]
   unfold ev
@@ -384,8 +367,6 @@ theorem cro_coeff_lin (G : FGLaw k d) (i j : Fin d) :
       (fun p : Fin 2 × Fin d => (![0, pt k d 0] : Fin 2 → Pt k 1 d) p.1 p.2) := by
     first
       | exact MvPowerSeries.hasSubst_of_constantCoeff_zero hc0
-      | exact MvPowerSeries.HasSubst.of_constantCoeff_nilpotent (fun p => by rw [hc0 p]; exact IsNilpotent.zero)
-      | exact MvPowerSeries.hasSubst_of_constantCoeff_nilpotent (fun p => by rw [hc0 p]; exact IsNilpotent.zero)
   rw [MvPowerSeries.coeff_subst ha, finsum_eq_single _ (Finsupp.single ((1 : Fin 2), i) 1)]
   · rw [Finsupp.prod_single_index (by simp)]
     simp [pt, MvPowerSeries.coeff_X]
@@ -418,7 +399,6 @@ theorem cro_coeff_lin (G : FGLaw k d) (i j : Fin d) :
         subst h1
         first
           | simp [pt, MvPowerSeries.X_pow_eq]
-          | simp [pt, MvPowerSeries.X, MvPowerSeries.monomial_pow]
       rw [hprod, MvPowerSeries.coeff_monomial, if_neg]
       intro heq
       apply hD
@@ -430,7 +410,7 @@ theorem cro_coeff_lin (G : FGLaw k d) (i j : Fin d) :
         · have h0 : D ((0 : Fin 2), s2) = 0 := by
             by_contra hne
             exact hx _ (Finsupp.mem_support_iff.mpr hne) rfl
-          simp [h0, Finsupp.single_apply]
+          simp [h0]
         · simp [Finsupp.single_apply] at hev ⊢
           split_ifs at hev ⊢ <;> omega
       · intro s hs hne
@@ -517,13 +497,9 @@ theorem cro_word_const {ι : Type} [Fintype ι] (Op Op' : ι → PS k n d → PS
     have h1 : ((Finset.univ : Finset ι).toList.map m).sum = ∑ i, m i := by
       first
         | exact Finset.sum_map_toList _ _
-        | exact Finset.sum_toList _ _
-        | simp [Finset.sum_map_toList]
-        | simp
     rw [h1]
     first
       | exact (Finsupp.degree_eq_sum m).symm
-      | (unfold Finsupp.degree; exact (Finset.sum_subset (Finset.subset_univ _) fun i _ hi => by simpa using hi).symm)
   have hX' : OrdGe (((Finset.univ : Finset ι).toList.map m).sum + 0) X := by rw [hs, add_zero]; exact hX
   have hY' : OrdGe (((Finset.univ : Finset ι).toList.map m).sum + 0) Y := by rw [hs, add_zero]; exact hY
   have hXY' : OrdGe (((Finset.univ : Finset ι).toList.map m).sum + 0 + 1) (X - Y) := by
@@ -553,7 +529,6 @@ theorem cro_dofN_lin (F : Fin d → PS k 2 d)
   unfold DofN Lin
   rw [← Finset.sum_sub_distrib]
   refine cro_ordGe_sum _ _ fun j _ => ?_
-  beta_reduce
   rw [← sub_mul]
   have key : ∀ A : PS k n d, constantCoeff A = v j →
       OrdGe (t + 1) ((A - C (v j)) * pderiv (b, j) X) := by
@@ -576,7 +551,6 @@ theorem cro_dofN_lin (F : Fin d → PS k 2 d)
   first
     | (simp only [map_mul, MvPowerSeries.constantCoeff_C, hc]
        simp)
-    | simp [hc]
 
 theorem nabValN_eq_lin [Algebra ℚ k] {O : Type} [CommRing O] [StarRing O] (B : FB k d O) (h : PS k 2 d)
     (hg : B.IsCanonGauge k h) (w0 : O) (m : ℕ) (f : PS k n d) {ι : Type} [Fintype ι] (cp : ι → Fin n)

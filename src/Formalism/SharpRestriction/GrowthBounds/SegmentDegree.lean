@@ -670,10 +670,7 @@ theorem m0_le_Bw_of_isW (hX : X.Hyp p K) (hLa : 1088 ≤ X.CLa) (hk : 1088 ≤ X
   classical
   have hV := hX.valid
   have h41 := (top_count_lower_bounds 1088 (by norm_num) p n' r K X hX hLa hk).1
-  have hlt : x < X.F.fr j 0 := by
-    have h1 : x ≤ X.F.fr (j - 1) (r - 1) := hW
-    have h2 := TE.fr_prev_lt hV j
-    omega
+  have hlt : x < X.F.fr j 0 := lt_of_le_of_lt (hW : x ≤ X.F.fr (j - 1) (r - 1)) (TE.fr_prev_lt hV j)
   have hB := (TE.Bdeg_bounds hX hk h41 j b hA x hx hlt).1
   have hc := (TE.c_bounds hX h41 j x hx).1
   have B := basics hX
@@ -713,9 +710,7 @@ theorem mem_degAt_ext {R : Type} [CommRing R] (j : ℤ) {n : ℕ} {bb : Fin (seg
     exact mem_degAt_segRen_off j A x hx
 
 theorem mem_restr_late (j : ℤ) (b : ℤ → ℕ) (x : ℤ) (hx : x ∈ X.toLate j) : X.restr j b x = b x := by
-  classical
-  unfold Dat.restr
-  rw [if_pos hx]
+  simp [Dat.restr, hx]
 
 end CD
 
@@ -944,23 +939,12 @@ theorem bfam_at_w_letter_eq {L₁ N₁ : ℕ} (hV : X.F.Valid L₁ N₁) (la : F
       · exact lt_trans (ih h (by omega)) (hV.2.2.1 k b (by omega))
       · subst h
         exact hV.2.2.1 k a (by omega)
-  have hle0 : X.F.fr (j - 1) 0 ≤ X.F.fr (j - 1) i := by
-    rcases Nat.eq_zero_or_pos i with h | h
-    · rw [h]
-    · exact (hmono _ 0 i h hi).le
-  have hleR : X.F.fr (j - 1) i ≤ X.F.fr (j - 1) (r - 1) := by
-    rcases eq_or_lt_of_le (Nat.le_pred_of_lt hi) with h | h
-    · rw [h]
-      exact le_rfl
-    · exact (hmono _ i (r - 1) h (by omega)).le
+  have hle0 : X.F.fr (j - 1) 0 ≤ X.F.fr (j - 1) i := fr_zero_le hV (j - 1) i hi
+  have hleR : X.F.fr (j - 1) i ≤ X.F.fr (j - 1) (r - 1) :=
+    TE.fr_le hV (j - 1) i (r - 1) (Nat.le_pred_of_lt hi) (by omega)
   have hlt : X.F.fr (j - 1) (r - 1) < X.F.fr j 0 := by
-    have h := hV.2.2.2.1 (j - 1)
-    simp only [sub_add_cancel] at h
-    exact h
-  have hle2 : X.F.fr j 0 ≤ X.F.fr j (r - 1) := by
-    rcases Nat.eq_zero_or_pos (r - 1) with h | h
-    · rw [h]
-    · exact (hmono j 0 (r - 1) h (by omega)).le
+    simpa using hV.2.2.2.1 (j - 1)
+  have hle2 : X.F.fr j 0 ≤ X.F.fr j (r - 1) := fr_zero_le hV j (r - 1) (by omega)
   have hmem : X.F.fr (j - 1) i ∈ X.F.letters j := by
     unfold Formalism.MainNotions.G.Frames.letters
     rw [Finset.mem_filter, Finset.mem_Icc]

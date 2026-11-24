@@ -313,13 +313,13 @@ theorem bdL_apply (S : Lr n → Prop) (E1 E2 : Fin n → Fin n → Module.End �
   rw [LinearMap.add_apply, LinearMap.sum_apply, LinearMap.sum_apply]
   congr 1
   · refine Finset.sum_congr rfl fun l _ => ?_
-    split_ifs <;> simp [Module.End.mul_apply]
+    split_ifs <;> simp
   · refine Finset.sum_congr rfl fun l _ => ?_
     rw [LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
-    split_ifs <;> simp [Module.End.mul_apply]
+    split_ifs <;> simp
 
 theorem bdq_apply (E1 E2 : Fin n → Fin n → Module.End ℂ V) (y : Finset (Lr n) → V) :
     bdq E1 E2 y = (∑ l : Lr n, liftq n (Tl E1 E2 l) (annq l y)) +
@@ -1228,7 +1228,7 @@ theorem gl_diag {F : Fin n → Fin n → Module.End ℂ V} (h : Formalism.REAL.G
   rw [sub_eq_iff_eq_add.1 this]
   by_cases h1 : c = a
   · subst h1
-    simp [hab.symm, hab]
+    simp [hab.symm]
     abel
   · by_cases h2 : b = c
     · subst h2

@@ -127,7 +127,6 @@ theorem pderiv_glAct (LL : M.Letters N) (J : ℕ) (a : Fin N) (c c' d' : Fin r)
           by_cases hcd : c = d'
           · subst hcd
             simp
-            try abel
           · simp [hcd, Ne.symm hcd]
         · have hne : (i, d') ≠ (a, c) := fun h' => hai (congrArg Prod.fst h').symm
           simp [hai, hne]
@@ -364,7 +363,7 @@ theorem hypU_proved (hB : G.BlockOK) : Formalism.InvariantFactorPaths.KP.LL.HypU
   intro j jp c y hy
   simp only [M.Y, Submodule.mem_inf, Submodule.mem_iInf] at hy ⊢
   refine ⟨hpol _ _ G.uPos c ?_ ?_ y hy.1, fun k => ?_⟩
-  · simp only [M.BlockData.lettersAt, eq_self_iff_true, if_true]
+  · simp only [M.BlockData.lettersAt, if_true]
     omega
   · intro i hi
     simp only [M.BlockData.lettersAt, if_neg hi]
@@ -815,10 +814,10 @@ theorem dLvl_eq (hB : G.BlockOK) (j : Fin G.T.t → ℕ) (jp : ℕ) (hl : G.Leve
       have e2 := finPos_eq_cast (G.T.pos i + 1) (hposN i) a0
       by_cases h1 : (a0 : ℕ) = G.T.pos i
       · have h2 : ¬ (a0 : ℕ) = G.T.pos i + 1 := by omega
-        simp only [e1, e2, h1, h2, if_true, if_false, or_false]
+        simp only [e1, e2, h1, if_true]
         simp
       · by_cases h2 : (a0 : ℕ) = G.T.pos i + 1
-        · simp only [e1, e2, h1, h2, if_true, if_false, or_true]
+        · simp only [e1, e2, h2, if_true, or_true]
           simp
         · simp only [e1, e2, h1, h2, if_false, or_false]
           simp

@@ -362,7 +362,7 @@ theorem form_cons_eq_smul {a : ℕ} (f h g₀ : A) (g : Fin a → A) (k : Fin a)
     by_cases hi : i = k.succ
     · subst hi
       simp [v]
-    · simp [Function.update_apply, hi]
+    · simp [hi]
   have hv2 : exteriorPower.ιMulti A (a + 1) (Function.update v k.succ (KaehlerDifferential.D K A f)) = 0 := by
     apply AlternatingMap.map_eq_zero_of_eq _ _ (i := 0) (j := k.succ)
     · simp [v, Function.update_apply, (Fin.succ_ne_zero k).symm]
@@ -1158,7 +1158,7 @@ section -- clump:auto
 open AlgebraicGeometry CategoryTheory
 
 theorem _root_.GlobalTheory.T.hasStrictlySemistableChartAt_of_smooth : ∀ (O : Type) [CommRing O] (ϖ : O) (X : Scheme.{0}) (p : X ⟶ Spec (CommRingCat.of O)) (V : X.Opens) (x : X), x ∈ V → Smooth (V.ι ≫ p) → GlobalTheory.SSG.ChartAt ϖ p x := by
-  first | (exact @GlobalTheory.SSG.chartAt_of_smooth) | (exact GlobalTheory.SSG.chartAt_of_smooth) | (intros; apply GlobalTheory.SSG.chartAt_of_smooth  <;> assumption)
+  first | (exact @GlobalTheory.SSG.chartAt_of_smooth)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HasStrictlySemistableChartAtOfSmoothStatement =====
@@ -1479,7 +1479,6 @@ theorem G_lift (T : Thick (smFun Z q)) (w : Spec (CommRingCat.of (T.B ⧸ T.J)) 
   change Thick.mk _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ = _
   congr 1
   all_goals first
-    | exact RingHom.comp_id _
     | (funext j; exact (j : Empty).elim)
     | (apply Subtype.ext; apply Prod.ext; rfl; exact hw)
     | (have h1 : s = 1 := hs1

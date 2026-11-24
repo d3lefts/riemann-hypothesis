@@ -96,7 +96,6 @@ theorem pullback_isColimit {U : Scheme.{0}} {ι : Type} {V : ι → Scheme.{0}} 
     refine hdis i k (pullback.snd y (j i) p) (pullback.snd y (j k) q) ?_
     rw [← Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply, ← pullback.condition, ← pullback.condition,
       Scheme.Hom.comp_apply, Scheme.Hom.comp_apply]
-    change y ((pullback.fst y (j i)) p) = y ((pullback.fst y (j k)) q)
     rw [hp, hq]
 
 theorem sec_subsingleton_of_isEmpty {R : Type} [CommRing R] (G : Shv R) (W : Scheme.{0}) [IsEmpty W] :
@@ -220,7 +219,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.freeEtaleSheaf_presheaf_over_coproduct_eq_sum : ∀ (R : Type) [CommRing R] (U : Scheme.{0}) (ι : Type) (V : ι → Scheme.{0}) (j : ∀ i, V i ⟶ U), IsColimit (Cofan.mk U j) → ∀ (P : PSh) (t : P ⟶ yoneda.obj U) (Q : ι → PSh) (a : ∀ i, Q i ⟶ P) (b : ∀ i, Q i ⟶ yoneda.obj (V i)), (∀ i, IsPullback (a i) (b i) t (yoneda.map (j i))) → Nonempty (IsColimit (Cofan.mk ((free R).obj P) (fun i => (free R).map (a i)))) := by
-  first | (exact @GlobalTheory.EtC.FreeCofan.main) | (exact GlobalTheory.EtC.FreeCofan.main) | (intros; apply GlobalTheory.EtC.FreeCofan.main  <;> assumption)
+  first | (exact @GlobalTheory.EtC.FreeCofan.main)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FreeEtaleSheafPresheafOverCoproductEqSumStatement =====

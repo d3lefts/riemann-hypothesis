@@ -361,7 +361,6 @@ theorem pol_int (hP : GlobalTheory.Published.Principalisation) (h : IsArithVar p
     have := _root_.GlobalTheory.Mix.pol_chernDens_comb k X p σ D L c y hy
     rw [← e] at this
     simp only [Fintype.sum_option, a, Lj, Option.elim, dens_const]
-    beta_reduce at this
     simp only [MLine.ofHerm] at this ⊢
     linarith
   have hi : ∀ j, Intg (Lj j) ((MLine.ofHerm M σ).logSec s) := fun j =>
@@ -369,7 +368,6 @@ theorem pol_int (hP : GlobalTheory.Published.Principalisation) (h : IsArithVar p
   have := _root_.GlobalTheory.Mix.sum_int_eq_zero_of_dens k X p σ D _ a Lj hd _ hi
   simp only [Fintype.sum_option, a, Lj, Option.elim] at this
   rw [← e]
-  beta_reduce
   linarith
 
 end GlobalTheory.MixPolar

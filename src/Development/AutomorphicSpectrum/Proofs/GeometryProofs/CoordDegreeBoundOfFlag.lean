@@ -95,12 +95,11 @@ theorem UpperTheory.Reformulated.B.Ud9.exists_indep_of_sat :
       refine ⟨a * b, mul_ne_zero ha hb, ?_⟩
       rw [smul_add]
       refine S.add_mem ?_ ?_
-      · rw [mul_comm, mul_smul]; exact S.smul_mem _ hax
-      · rw [mul_smul]; exact S.smul_mem _ hby
+      · simpa only [mul_smul, smul_comm a b] using S.smul_mem b hax
+      · simpa only [mul_smul] using S.smul_mem a hby
     | smul c x _ hx =>
       obtain ⟨a, ha, hax⟩ := hx
-      refine ⟨a, ha, ?_⟩
-      rw [smul_comm]; exact S.smul_mem _ hax
+      exact ⟨a, ha, by simpa only [smul_comm a c] using S.smul_mem c hax⟩
   let N : Submodule R F := S.comap F.subtype
   have h0 : Module.rank R (F ⧸ N) = 0 := by
     rw [rank_eq_zero_iff]
@@ -108,18 +107,14 @@ theorem UpperTheory.Reformulated.B.Ud9.exists_indep_of_sat :
     obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective N q
     obtain ⟨a, ha, hax⟩ := (hF x).1 x.2
     obtain ⟨b, hb, hbx⟩ := hT _ hax
-    refine ⟨b * a, mul_ne_zero hb ha, ?_⟩
-    rw [← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero]
-    change (b * a) • (x : E) ∈ S
-    rwa [mul_smul]
+    exact ⟨b * a, mul_ne_zero hb ha, by
+      rwa [← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero, mul_smul]⟩
   have h1 : Module.rank R F = Module.rank R N := by
     rw [← rank_quotient_add_rank_of_isDomain N, h0, zero_add]
   have h2 : Module.rank R N ≤ Module.rank R S := by
-    let g : N →ₗ[R] S := (F.subtype.comp N.subtype).codRestrict S (fun x => x.2)
-    refine LinearMap.rank_le_of_injective g ?_
-    intro x y hxy
-    have h : ((g x : S) : E) = ((g y : S) : E) := congrArg Subtype.val hxy
-    exact Subtype.ext (Subtype.ext h)
+    let g : N →ₗ[R] S := (F.subtype.comp N.subtype).codRestrict S fun x => x.2
+    exact LinearMap.rank_le_of_injective g fun x y hxy =>
+      Subtype.ext (Subtype.ext (congrArg (fun z : S => (z : E)) hxy))
   have h3 : Module.rank R S ≤ Cardinal.mk I :=
     (rank_span_le _).trans Cardinal.mk_image_le
   have h4 : Cardinal.mk (Fin (Module.finrank R F)) ≤ Cardinal.mk I := by

@@ -296,11 +296,11 @@ theorem expo_iff (α : Fin d ⊕ Fin d →₀ ℕ) (a b e : Fin d →₀ ℕ) (p
         Sum.elim p (Sum.elim (fun i => α (Sum.inl i) - p i) (fun i => α (Sum.inr i))) s := by
     intro s
     rcases s with i | i | i
-    · simp [Finsupp.finsetSum_apply, Finsupp.single_apply]
+    · simp [Finsupp.single_apply]
     · simp only [Finsupp.coe_add, Pi.add_apply, Finsupp.finsetSum_apply, Finsupp.single_apply]
       rw [Finset.sum_eq_single i (fun j _ hj => by simp [hj, Ne.symm hj]) (by simp)]
       simp
-    · simp [Finsupp.finsetSum_apply, Finsupp.single_apply]
+    · simp [Finsupp.single_apply]
   constructor
   · intro h
     have h1 : ∀ i, a i = p i := fun i => by
@@ -363,7 +363,7 @@ section -- clump:auto
 open MvPowerSeries GlobalTheory GlobalTheory.Katz GlobalTheory.QLog
 
 theorem _root_.GlobalTheory.T.coeff_prod_pow_first_add_second_threeGroups : ∀ {R : Type} [CommRing R] {d : ℕ} (α : Fin d ⊕ Fin d →₀ ℕ) (a b e : Fin d →₀ ℕ), coeff (Finsupp.sumElim a (Finsupp.sumElim b e)) (α.prod fun s k => (Sum.elim (fun i => (x1 i + x2 i : MvPowerSeries (Fin d ⊕ (Fin d ⊕ Fin d)) R)) x3 s) ^ k) = if α = Finsupp.sumElim (a + b) e then (∏ i, ((a + b) i).choose (a i) : R) else 0 := by
-  first | exact @GlobalTheory.BinomLeft.coeff_prod_pow_add | exact GlobalTheory.BinomLeft.coeff_prod_pow_add | (intros; apply GlobalTheory.BinomLeft.coeff_prod_pow_add <;> assumption)
+  first | exact @GlobalTheory.BinomLeft.coeff_prod_pow_add
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffProdPowFirstAddSecondThreeGroupsStatement =====
@@ -577,11 +577,7 @@ theorem order_prod_sub_prod {R τ ι : Type} [CommRing R] (s : Finset ι)
     (hab : ∀ i ∈ s, (k i : ℕ∞) + 1 ≤ (a i - b i).order) :
     (∑ i ∈ s, (k i : ℕ∞)) + 1 ≤ (∏ i ∈ s, a i - ∏ i ∈ s, b i).order := by
   first
-  | exact @_root_.GlobalTheory.OrderProductDifference.target
-  | exact _root_.GlobalTheory.OrderProductDifference.target
   | (apply _root_.GlobalTheory.OrderProductDifference.target <;> assumption)
-  | (intros; apply _root_.GlobalTheory.OrderProductDifference.target <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.OrderProductDifference.target <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.OrderProductDifference.target ..)
 
 theorem order_pow_sub_pow {R τ : Type} [CommRing R] (u l : MvPowerSeries τ R)

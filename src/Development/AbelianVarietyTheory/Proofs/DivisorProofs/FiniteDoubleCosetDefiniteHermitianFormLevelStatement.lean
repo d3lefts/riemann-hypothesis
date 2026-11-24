@@ -85,7 +85,7 @@ theorem _root_.GlobalTheory.T.borel_finite_classNumber_centraliserTorus : (∀ (
         ∀ z, GlobalTheory.TorCls.TC D σ β y (AfP p) z.1 → GlobalTheory.TorCls.TC D σ β y ℚ_[p] z.2 →
           ∃ γ : Dˣ × ℚˣ, (γ.1 : D) * β * (σ γ.1).unop = algebraMap ℚ D γ.2 * β ∧ Commute (γ.1 : D) y ∧
             ∃ s ∈ S, ∃ u ∈ U, z = GlobalTheory.TorCls.dg D p γ * s * u := by
-  first | (exact @GlobalTheory.TorCls.Borel.classes_finite) | (exact GlobalTheory.TorCls.Borel.classes_finite) | (intros; apply GlobalTheory.TorCls.Borel.classes_finite  <;> assumption)
+  first | (exact @GlobalTheory.TorCls.Borel.classes_finite)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BorelFiniteClassNumberCentraliserTorusStatement =====
@@ -111,7 +111,7 @@ theorem _root_.GlobalTheory.T.exists_polynomialLocus_similitudeCentralizerTorus 
     (∀ (R : Type) [CommRing R] [Algebra ℚ R] [TopologicalSpace R] [IsTopologicalRing R],
       letI : TopologicalSpace (R ⊗[ℚ] D) := moduleTopology R (R ⊗[ℚ] D)
       Continuous (φ R)) := by
-  first | (exact @GlobalTheory.TorLoc.exists_locus) | (exact GlobalTheory.TorLoc.exists_locus) | (intros; apply GlobalTheory.TorLoc.exists_locus  <;> assumption)
+  first | (exact @GlobalTheory.TorLoc.exists_locus)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolynomialZeroLocusCoordinatesStatement =====
@@ -297,7 +297,7 @@ theorem _root_.GlobalTheory.T.finite_doubleCoset_definiteHermitianForm_level : �
   Subgroup.Commensurable K' (KHT p G.m G.n 1 G.Fw) → ∀ B : GlobalTheory.LKDef.DForm G,
     Finite (DoubleCoset.Quotient (B.emb.range : Set (G.GAf × Gr G 1))
       ((L.K.toSubgroup.prod K' : Subgroup (G.GAf × Gr G 1)) : Set (G.GAf × Gr G 1))) := by
-  first | (exact @GlobalTheory.DefClassFin.finite_doubleCoset) | (exact GlobalTheory.DefClassFin.finite_doubleCoset) | (intros; apply GlobalTheory.DefClassFin.finite_doubleCoset <;> assumption)
+  first | (exact @GlobalTheory.DefClassFin.finite_doubleCoset)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteDoubleCosetDefiniteHermitianFormLevelStatement =====

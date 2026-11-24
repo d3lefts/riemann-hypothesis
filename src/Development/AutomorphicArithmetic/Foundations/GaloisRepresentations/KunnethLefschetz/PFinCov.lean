@@ -153,8 +153,7 @@ theorem chart_key {k : Type} [Field k] {X : Scheme.{0}} [IsIntegral X] (p : X �
     simp [kHom]
   simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_ofHom]
   rw [fromZero_eq_mk i hx c hg, hsec]
-  simp only [Scheme.Hom.comp_appTop, Scheme.Opens.ι_appTop, Scheme.Opens.topIso_inv, CommRingCat.hom_comp,
-    RingHom.comp_apply]
+  simp only [Scheme.Hom.comp_appTop, Scheme.Opens.ι_appTop, Scheme.Opens.topIso_inv]
   erw [← CommRingCat.comp_apply, ← Functor.map_comp]
   rfl
 
@@ -990,7 +989,7 @@ theorem jetIndep_chain {n : ℕ} (w : Fin n → K) (F : MvPolynomial (Fin n) k) 
   | C a => simp
   | add f g hf hg => simp [hf, hg, add_smul, Finset.sum_add_distrib]
   | mul_X f i hf =>
-    simp only [map_mul, aeval_X, Derivation.leibniz, hf, pderiv_X, Finset.sum_add_distrib, mul_smul, Finset.smul_sum, Derivation.leibniz]
+    simp only [map_mul, aeval_X, Derivation.leibniz, hf, pderiv_X, Finset.smul_sum, Derivation.leibniz]
     simp [Pi.single_apply]
     simp only [apply_ite (aeval w), map_zero, add_smul, ite_smul, zero_smul, Finset.sum_add_distrib,
       Finset.sum_ite_eq, Finset.mem_univ, if_true, mul_smul]
@@ -1625,7 +1624,7 @@ private lemma proj_germ_id {A σ : Type} [CommRing A] [SetLike σ A] [AddSubgrou
   simp only [RingHom.id_apply]
   rw [← IsLocalization.mk'_pow, ← IsLocalization.mk'_mul]
   apply IsLocalization.mk'_eq_of_eq
-  simp only [Submonoid.coe_mul, SubmonoidClass.coe_pow, map_mul, map_pow]
+  simp only [Submonoid.coe_mul, SubmonoidClass.coe_pow]
   ring
 
 private lemma ι_appLE {X : Scheme.{0}} (U : X.Opens) (h : ⊤ ≤ U.ι ⁻¹ᵁ U) : U.ι.appLE U ⊤ h = U.topIso.inv := by

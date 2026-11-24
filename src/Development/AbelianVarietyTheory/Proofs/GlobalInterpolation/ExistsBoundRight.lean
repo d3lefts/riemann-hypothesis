@@ -1,6 +1,5 @@
 module
 
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExplicitFormula.GoodHeight
 public import Mathlib.Analysis.Analytic.Order
 public import Mathlib.Analysis.CStarAlgebra.Classes
 public import Mathlib.NumberTheory.LSeries.DirichletContinuation
@@ -101,7 +100,27 @@ theorem exists_far (S : Finset ℝ) (T : ℝ) : ∃ T' : ℝ, T ≤ T' ∧ T' �
 
 theorem one_le_order {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) {w : ℂ} (h1 : w ≠ 1)
     (hw : LFunction χ w = 0) : 1 ≤ analyticOrderNatAt (LFunction χ) w := by
-  apply PI.EF.one_le_mult <;> assumption
+  have hU : IsPreconnected ({1}ᶜ : Set ℂ) :=
+    (isConnected_compl_singleton_of_one_lt_rank (by rw [Complex.rank_real_complex]; norm_num) 1).isPreconnected
+  have han : AnalyticOnNhd ℂ (LFunction χ) ({1}ᶜ : Set ℂ) := by
+    intro z hz
+    have hd : DifferentiableOn ℂ (LFunction χ) ({1}ᶜ : Set ℂ) := fun u hu =>
+      (differentiableAt_LFunction χ u (.inl hu)).differentiableWithinAt
+    exact hd.analyticAt (isOpen_compl_singleton.mem_nhds hz)
+  have h2 : (2 : ℂ) ∈ ({1}ᶜ : Set ℂ) := by norm_num
+  have hw1 : w ∈ ({1}ᶜ : Set ℂ) := h1
+  have hne2 : analyticOrderAt (LFunction χ) 2 ≠ ⊤ := by
+    rw [(han 2 h2).analyticOrderAt_eq_zero.mpr
+      (LFunction_ne_zero_of_one_le_re χ (.inr (by norm_num)) (by norm_num))]
+    exact ENat.zero_ne_top
+  have hnetop := han.analyticOrderAt_ne_top_of_isPreconnected hU h2 hw1 hne2
+  have hne0 : analyticOrderAt (LFunction χ) w ≠ 0 := (han w hw1).analyticOrderAt_ne_zero.mpr hw
+  unfold analyticOrderNatAt
+  obtain ⟨n, hn⟩ := ENat.ne_top_iff_exists.mp hnetop
+  rw [← hn] at hne0 ⊢
+  simp only [ENat.toNat_natCast]
+  have : n ≠ 0 := by rintro rfl; exact hne0 rfl
+  omega
 
 theorem exists_bound_right : ∃ B : ℝ, 0 ≤ B ∧ ∀ (N : ℕ) [NeZero N] (χ : DirichletCharacter ℂ N)
     (s : ℂ), 2 ≤ s.re → ‖deriv (LFunction χ) s / LFunction χ s‖ ≤ B := by
@@ -198,7 +217,7 @@ theorem exists_height : ∃ C : ℝ, 0 < C ∧ ∀ (N : ℕ) [NeZero N] (χ : Di
     have hle : (N : ℝ) * (|y| + 2) ≤ ((N : ℝ) * T) ^ 3 := by
       have e : ((N : ℝ) * T) ^ 3 = (N * T) * (N * T) ^ 2 := by ring
       rw [e]
-      nlinarith [mul_le_mul_of_nonneg_left h4 (by linarith : (0 : ℝ) ≤ N * T),
+      linarith [mul_le_mul_of_nonneg_left h4 (by linarith : (0 : ℝ) ≤ N * T),
         mul_nonneg (by linarith : (0 : ℝ) ≤ N) (by linarith : (0 : ℝ) ≤ T + 1 - |y|),
         mul_nonneg (by linarith : (0 : ℝ) ≤ N) (by linarith : (0 : ℝ) ≤ T - 1)]
     calc Real.log (N * (|y| + 2)) ≤ Real.log (((N : ℝ) * T) ^ 3) := Real.log_le_log hpos hle
@@ -209,7 +228,7 @@ theorem exists_height : ∃ C : ℝ, 0 < C ∧ ∀ (N : ℕ) [NeZero N] (χ : Di
     have e1 : (w - (2 + (y : ℂ) * I)).re = w.re - 2 := by simp
     have e2 : (w - (2 + (y : ℂ) * I)).im = w.im - y := by simp
     rw [← sq_le_sq₀ (norm_nonneg _) (by norm_num), Complex.sq_norm, Complex.normSq_apply, e1, e2]
-    constructor <;> intro h <;> nlinarith
+    constructor <;> intro h <;> linarith
   have hcover : ∀ (y₀ y : ℝ) (w : ℂ), y₀ ≤ y → y ≤ y₀ + 1 → -1 ≤ w.re → w.re < 1 →
       ‖w - (2 + (y : ℂ) * I)‖ ≤ 7 / 2 →
       ‖w - (2 + (y₀ : ℂ) * I)‖ ≤ 7 / 2 ∨ ‖w - (2 + ((y₀ + 1 : ℝ) : ℂ) * I)‖ ≤ 7 / 2 := by
@@ -220,15 +239,15 @@ theorem exists_height : ∃ C : ℝ, 0 < C ∧ ∀ (N : ℕ) [NeZero N] (χ : Di
     by_cases hv : w.im ≤ y₀ + 1 / 2
     · left
       by_cases hv' : y₀ ≤ w.im
-      · nlinarith [mul_nonneg (sub_nonneg.mpr hv') (sub_nonneg.mpr hv)]
+      · linarith [mul_nonneg (sub_nonneg.mpr hv') (sub_nonneg.mpr hv)]
       · push Not at hv'
-        nlinarith [mul_nonneg (sub_nonneg.mpr h1) (by linarith : (0 : ℝ) ≤ y + y₀ - 2 * w.im)]
+        linarith [mul_nonneg (sub_nonneg.mpr h1) (by linarith : (0 : ℝ) ≤ y + y₀ - 2 * w.im)]
     · right
       push Not at hv
       by_cases hv' : w.im ≤ y₀ + 1
-      · nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ w.im - y₀ - 1 / 2) (sub_nonneg.mpr hv')]
+      · linarith [mul_nonneg (by linarith : (0 : ℝ) ≤ w.im - y₀ - 1 / 2) (sub_nonneg.mpr hv')]
       · push Not at hv'
-        nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ y₀ + 1 - y)
+        linarith [mul_nonneg (by linarith : (0 : ℝ) ≤ y₀ + 1 - y)
           (by linarith : (0 : ℝ) ≤ 2 * w.im - y - y₀ - 1)]
   have hZ : ∀ y : ℝ, 2 ≤ |y| → ∃ Z : Finset ℂ,
       (∀ w, w ∈ Z ↔ ‖w - (2 + (y : ℂ) * I)‖ ≤ 7 / 2 ∧ w ≠ 1 ∧ LFunction χ w = 0) ∧
@@ -333,7 +352,7 @@ theorem exists_height : ∃ C : ℝ, 0 < C ∧ ∀ (N : ℕ) [NeZero N] (χ : Di
     have e2 : 0 ≤ C * L ^ 2 := mul_nonneg hC.le (sq_nonneg L)
     have e3 : 0 ≤ C ^ 2 * L ^ 2 := mul_nonneg (sq_nonneg C) (sq_nonneg L)
     have e4 : 0 ≤ L ^ 2 := sq_nonneg L
-    nlinarith
+    linarith
   · push Not at hre
     obtain ⟨Z, hZm, hZc, hdiff⟩ := hloc N χ hprim s (by linarith) hre.le (by rw [hsim]; linarith) hLs
     have hlogs : Real.log (N * (|s.im| + 2)) ≤ 3 * L := hlog3 _ (by rw [hsim]; linarith)
@@ -386,6 +405,6 @@ theorem exists_height : ∃ C : ℝ, 0 < C ∧ ∀ (N : ℕ) [NeZero N] (χ : Di
       mul_nonneg hC.le (mul_nonneg hL0 (by linarith only [hLhalf]))
     have g2 : 0 ≤ B * L ^ 2 := mul_nonneg hB (sq_nonneg L)
     have g3 : 0 ≤ L ^ 2 := sq_nonneg L
-    nlinarith only [htri, hD, hsum2, g1, g2, g3]
+    linarith only [htri, hD, hsum2, g1, g2, g3]
 
 end GlobalTheory.GoodHeight

@@ -203,7 +203,7 @@ theorem _root_.GlobalTheory.T.exists_unlinked_langlandsDatum_generic : ∀ (k : 
     (x : IrrGL (k := k)), IsGeneric x.rep →
     ∃ (c : ℕ) (Δ : Fin c → Segment k), (∀ i j, i ≠ j → ¬ (Δ i).Linked (Δ j)) ∧
       IsL ((List.ofFn Δ : List (Segment k)) : Multiset (Segment k)) x.rep := by
-  first | (exact @GlobalTheory.GenericLDatum.exists_unlinked_isL) | (exact GlobalTheory.GenericLDatum.exists_unlinked_isL) | (intros; apply GlobalTheory.GenericLDatum.exists_unlinked_isL  <;> assumption)
+  first | (exact @GlobalTheory.GenericLDatum.exists_unlinked_isL)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsUnlinkedLanglandsDatumGenericStatement =====
@@ -268,7 +268,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 theorem _root_.GlobalTheory.T.isTame_of_mem_weilDeligneListSum : ∀ {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
     {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
     (l : List (WD h)), IsTameWD (sumList l) → ∀ y ∈ l, IsTameWD y := by
-  first | (exact @GlobalTheory.TameSum.isTameWD_of_mem_sumList) | (exact GlobalTheory.TameSum.isTameWD_of_mem_sumList) | (intros; apply GlobalTheory.TameSum.isTameWD_of_mem_sumList  <;> assumption)
+  first | (exact @GlobalTheory.TameSum.isTameWD_of_mem_sumList)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsTameOfMemWeilDeligneListSumStatement =====
@@ -329,7 +329,7 @@ theorem _root_.GlobalTheory.T.segmentSum_no_monodromy_length_one : ∀ {E Ω : T
     (rc : IrrGL (k := w.adicCompletion E) → WD h), UpperTheory.Zero.LLC.IsRecT h rc →
     ∀ (l : List (Segment (w.adicCompletion E))), (segSum rc l).mono0 →
       (∀ Δ ∈ l, Δ.len = 1) ∧ segSum rc l = sumList (l.map fun Δ => rc Δ.first) := by
-  first | (exact @GlobalTheory.SegSumOne.segSum_of_mono0) | (exact GlobalTheory.SegSumOne.segSum_of_mono0) | (intros; apply GlobalTheory.SegSumOne.segSum_of_mono0  <;> assumption)
+  first | (exact @GlobalTheory.SegSumOne.segSum_of_mono0)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.SegmentSumNoMonodromyLengthOneStatement =====
@@ -1101,7 +1101,7 @@ theorem exists_eq_pow_of_aeval {K F : Type*} [Field K] [Fintype K] [Field F] [Al
     exact h2 (i + (n - j)) (by omega) (by omega) H2
   have hinj : Set.InjOn (fun i : ℕ => w ^ (Nat.card K) ^ i) (Finset.range n : Set ℕ) := by
     intro i hi j hj H
-    simp only [Finset.mem_coe, Finset.mem_range, Finset.coe_range, Set.mem_Iio] at hi hj
+    simp only [Finset.coe_range, Set.mem_Iio] at hi hj
     rcases lt_trichotomy i j with h | h | h
     · exact absurd H (hlt i j h hj)
     · exact h

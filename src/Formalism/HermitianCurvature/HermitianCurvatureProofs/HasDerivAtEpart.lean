@@ -86,7 +86,7 @@ lemma prod_update_a (z z' : Fin (2 * r + k + 1) → ℂ) (a b : Fin (r + 2) → 
   · apply Finset.prod_congr rfl
     intro j hj
     have hjl : j ≠ l := Finset.ne_of_mem_erase hj
-    simp [fct, Pi.single_apply, hjl]
+    simp [fct, hjl]
   · simp [fct]
 
 lemma prod_update_b (z z' : Fin (2 * r + k + 1) → ℂ) (a b : Fin (r + 2) → ℕ) (g : Mat k r) (l : Fin (r + 2)) :
@@ -98,7 +98,7 @@ lemma prod_update_b (z z' : Fin (2 * r + k + 1) → ℂ) (a b : Fin (r + 2) → 
   · apply Finset.prod_congr rfl
     intro j hj
     have hjl : j ≠ l := Finset.ne_of_mem_erase hj
-    simp [fct, Pi.single_apply, hjl]
+    simp [fct, hjl]
   · simp [fct]
 
 theorem hasDerivAt_cvs (D : RealPlaceData k r Wp Wq) {nf : ℕ} (X g : Mat k r) (t : CT k r nf)
@@ -164,7 +164,7 @@ theorem hasDerivAt_cvs (D : RealPlaceData k r Wp Wq) {nf : ℕ} (X g : Mat k r) 
     intro l
     split_ifs with h
     · simp [cvs, h]
-    · simp [cvs, monoM_eq, P0, G0]; try ring
+    · simp [cvs, monoM_eq, P0, G0]
   have hcb : ∀ l, cvs D (if t.b l = 0 then { t with q := 0 } else
       { t with q := C (-(t.b l : ℂ)) * t.q * dP X (qDbl D.z D.z' l), b := t.b + Pi.single l 1 }) g =
       -(t.b l : ℂ) * P0 * eval (vars g) (dP X (qDbl D.z D.z' l)) *
@@ -172,13 +172,13 @@ theorem hasDerivAt_cvs (D : RealPlaceData k r Wp Wq) {nf : ℕ} (X g : Mat k r) 
     intro l
     split_ifs with h
     · simp [cvs, h]
-    · simp [cvs, monoM_eq, P0, G0]; try ring
+    · simp [cvs, monoM_eq, P0, G0]
   have hcc : cvs D (if t.c = 0 then { t with q := 0 } else
       { t with q := C (-(t.c : ℂ)) * t.q * dP X (qGf D.z D.z'), c := t.c + 1 }) g =
       -(t.c : ℂ) * P0 * dG * ((∏ l, fct D.z D.z' t.a t.b g l) * G0⁻¹ ^ (t.c + 1)) := by
     split_ifs with h
     · simp [cvs, h]
-    · simp [cvs, monoM_eq, P0, G0, dG]; try ring
+    · simp [cvs, monoM_eq, P0, G0, dG]
   have hlist : ((dscal D X t).map fun t' => cvs D t' g).sum =
       eval (vars g) (dP X t.q) * ((∏ l, fct D.z D.z' t.a t.b g l) * G0⁻¹ ^ t.c) +
       ∑ l, (-(t.a l : ℂ) * P0 * eval (vars g) (dP X (qDl D.z D.z' l)) *
@@ -249,7 +249,7 @@ theorem hasDerivAt_epart (D : RealPlaceData k r Wp Wq) {nf : ℕ} (fib : Fin nf 
   induction es with
   | nil =>
     intro _
-    simp only [C6.Epart, List.map_nil, List.prod_nil, Finset.univ_eq_empty, Finset.sum_empty]
+    simp only [C6.Epart, List.map_nil, List.prod_nil]
     exact hasDerivAt_const _ _
   | cons e es ih =>
     intro hes
@@ -281,7 +281,7 @@ lemma list_sum_smul {α : Type*} (L : List α) (f : α → ℂ) (E : C6.EndH Wp 
 lemma dscal_es (D : RealPlaceData k r Wp Wq) {nf : ℕ} (X : Mat k r) (t : CT k r nf) :
     ∀ t' ∈ dscal D X t, t'.es = t.es := by
   intro t' ht'
-  simp only [dscal, List.mem_append, List.mem_singleton, List.mem_ofFn, Set.mem_range] at ht'
+  simp only [dscal, List.mem_append, List.mem_singleton, List.mem_ofFn] at ht'
   rcases ht' with ((h | ⟨m, h⟩) | ⟨m, h⟩) | h <;> subst h <;> (try split_ifs) <;> rfl
 
 theorem hasDerivAt_cv (D : RealPlaceData k r Wp Wq) {nf : ℕ} (fib : Fin nf → Mat k r → C6.EndH Wp Wq)
@@ -322,7 +322,7 @@ private lemma dscal_support_prop_of_support_prop (D : RealPlaceData k r Wp Wq) {
     (P : Fin (r + 2) → Prop) (hP : ∀ l, (t.a l ≠ 0 ∨ t.b l ≠ 0) → P l) :
     ∀ t' ∈ dscal D X t, ∀ l, (t'.a l ≠ 0 ∨ t'.b l ≠ 0) → P l := by
   intro t' ht' l hl
-  simp only [dscal, List.mem_append, List.mem_singleton, List.mem_ofFn, Set.mem_range] at ht'
+  simp only [dscal, List.mem_append, List.mem_singleton, List.mem_ofFn] at ht'
   rcases ht' with ((h | ⟨m, h⟩) | ⟨m, h⟩) | h <;> subst h
   · exact hP l hl
   · split_ifs at hl with hm
@@ -351,13 +351,13 @@ lemma good_step (D : RealPlaceData k r Wp Wq) {nf : ℕ} {L : Finset (Fin (r + 2
     · simp only [dco, List.mem_append] at ht'
       rcases ht' with ht' | ht'
       · exact dscal_support_prop_of_support_prop D X e.1 _ hab t' ht'
-      · simp only [dfib, List.mem_ofFn, Set.mem_range] at ht'
+      · simp only [dfib, List.mem_ofFn] at ht'
         obtain ⟨i, rfl⟩ := ht'
         exact hab
     · simp only [dco, List.mem_append] at ht'
       rcases ht' with ht' | ht'
       · rw [dscal_es D X e.1 t' ht']; exact hes
-      · simp only [dfib, List.mem_ofFn, Set.mem_range] at ht'
+      · simp only [dfib, List.mem_ofFn] at ht'
         obtain ⟨i, rfl⟩ := ht'
         intro x hx Y hY
         rcases List.mem_or_eq_of_mem_set hx with hx | rfl

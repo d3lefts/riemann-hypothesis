@@ -399,7 +399,7 @@ theorem coeff_charpolyRev_map {A B r : Type} [CommRing A] [CommRing B] [Fintype 
   apply congrArg (fun p : Polynomial B => p.coeff j)
   apply congrArg Matrix.det
   ext i k
-  by_cases h : i = k <;> simp [h, Matrix.one_apply]
+  by_cases h : i = k <;> simp [h]
 
 theorem dbarAt_chernAt : ∀ {n : ℕ} {r : Type} [Fintype r] [DecidableEq r] (H : V n → Matrix r r ℂ) (s : Set (V n)),
     IsOpen s → (∀ a b, ContDiffOn ℝ ∞ (fun v => H v a b) s) → (∀ v ∈ s, IsUnit (H v).det) → ∀ (j : ℕ), ∀ v ∈ s,
@@ -764,7 +764,7 @@ theorem delAt_chernAt : ∀ {n : ℕ} {r : Type} [Fintype r] [DecidableEq r] (H 
     rw [mdel_apply, del_eq_fderiv (hAa v i k).differentiableAt]
     have : HasFDerivAt (fun w => A w i k) (-L i k) v := (L i k).hasFDerivAt.const_sub _
     rw [this.fderiv]
-    simp [L, Pi.single_apply]
+    simp [L]
   have hK : MContDiffAt 3 (fun x => (A x)ᵀ * H x * (A x)ᴴᵀ) v :=
     (hA3.transpose.mul h3).mul hA3.conjTranspose.transpose
   have hKu : IsUnit ((A v)ᵀ * H v * (A v)ᴴᵀ).det := by simpa [hAv] using hu v hv
@@ -1138,7 +1138,7 @@ theorem integral_evalF_c1W_eq_interPoly : GlobalTheory.Published.ChernDegree →
       evalF (atlas X σ) (fun a => c1W (ψ a)) (t • G) =
         (t : ℂ) • evalF (atlas X σ) (fun a => c1W (ψ a)) G := by
     funext x
-    simp [evalF, fld, MvPolynomial.smul_eq_C_mul, Algebra.smul_def]
+    simp [evalF, fld, Algebra.smul_def]
   have hadd : ∀ G₁ G₂ : MvPolynomial κ ℝ,
       (atlas X σ).integral (evalF (atlas X σ) (fun a => c1W (ψ a)) (G₁ + G₂)) =
         (atlas X σ).integral (evalF (atlas X σ) (fun a => c1W (ψ a)) G₁) +
@@ -1303,7 +1303,6 @@ theorem interPoly_eq_zero {F : Type} [Field F] (Y : Var F) {κ : Type} (Δ : κ 
     have := hQ (mem_support_iff.mp hm)
     first
     | (rw [Finsupp.degree_eq_weight_one]; exact this)
-    | exact this
   rw [show monomial m (AddMonoidAlgebra.coeff Q m) = AddMonoidAlgebra.coeff Q m • basisMonomials κ ℝ m by
     rw [coe_basisMonomials, smul_monomial, smul_eq_mul, mul_one]]
   rw [map_smul, Var.interPoly, Module.Basis.constr_basis, dite_eq_right, smul_zero]

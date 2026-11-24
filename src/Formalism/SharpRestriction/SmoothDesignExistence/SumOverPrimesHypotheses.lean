@@ -330,8 +330,7 @@ open Formalism.BasicNotions Formalism.MainNotions.G
 
 theorem eTau_tauPl (D : D7) (z : Bool × HH D) :
     (D.eTau (tauPl D z) : D.R.GG) = plGG D z := by
-  unfold Formalism.BasicNotions.tauPl
-  simp
+  simp [Formalism.BasicNotions.tauPl]
 
 theorem ramifiedTau1_ne_ramifiedTau2 (φ : Formalism.HC.Frame) (a b : φ.A) : φ.tau1 a ≠ φ.tau2 b := by
   intro h
@@ -341,8 +340,7 @@ theorem ramifiedTau1_ne_ramifiedTau2 (φ : Formalism.HC.Frame) (a b : φ.A) : φ
   decide
 
 theorem tau1_injective_alt (φ : Formalism.HC.Frame) {a b : φ.A} (h : φ.tau1 a = φ.tau1 b) : a = b := by
-  simp only [Formalism.HC.Frame.tau1, Prod.mk.injEq, true_and] at h
-  simpa [Formalism.HC.Frame.iota] using h
+  simpa [Formalism.HC.Frame.tau1, Formalism.HC.Frame.iota] using h
 
 theorem placeFacts : PlaceFacts := by
   intro D
@@ -621,7 +619,6 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S Formal
 theorem tau_index_set_nonempty (D : D7) : Nonempty D.what₂.Tau := by
   first
   | exact D.eTau.nonempty
-  | exact ⟨D.eTau.symm 1⟩
 
 variable {eps : ℝ}
 
@@ -791,9 +788,7 @@ theorem totS_eq (u : D.what₂.Word) (w : D.what₂.places.Pl) :
     totS X K Xe ce sp u w =
       (∑ j ∈ SizeData₂.lifts D, gainS X K (D.what₂.places.resChar w) j) + lowS L Xe K ce sp u w := by
   unfold totS lowS
-  have h : ∀ j ∈ SizeData₂.lifts D, gainS X K (D.what₂.places.resChar w) j + L.F j w - ES L Xe K ce u j w =
-      gainS X K (D.what₂.places.resChar w) j + (L.F j w - ES L Xe K ce u j w) := fun j _ => by ring
-  rw [Finset.sum_congr rfl h, Finset.sum_add_distrib]
+  simp only [sub_eq_add_neg, Finset.sum_add_distrib]
   ring
 
 theorem baseChange_preserves_unitary_of (W : TwLoc D Y) (hV : CmpV c Dx T W) (hG : TupleLatticeValuation D L X Y K Dx W lev Xe ce sp)
@@ -901,9 +896,7 @@ theorem valuation_ge_add_of_le {a1 a2 : D.what₂.LL} {z1 z2 : V} {s : ℝ} (h1 
     VGe D w Λ (a1 • z1 + a2 • z2) s := by
   refine ⟨a1, z1 + (⟨a2 / a1, div_mem_intW D w h1 h2 hle⟩ : intW D.what₂.places w) • z2,
     Submodule.add_mem _ hz1 (Submodule.smul_mem _ _ hz2), ?_, Or.inr hv⟩
-  rw [Subring.smul_def, smul_add, smul_smul]
-  show a1 • z1 + a2 • z2 = a1 • z1 + (a1 * (a2 / a1)) • z2
-  rw [mul_div_cancel₀ a2 h1]
+  rw [Subring.smul_def, smul_add, smul_smul, mul_div_cancel₀ a2 h1]
 
 theorem VGe_add {y1 y2 : V} {s : ℝ} (h1 : VGe D w Λ y1 s) (h2 : VGe D w Λ y2 s) : VGe D w Λ (y1 + y2) s := by
   obtain ⟨a1, z1, hz1, rfl, ha1⟩ := h1
@@ -1400,11 +1393,9 @@ theorem szEatI_fam {eps : ℝ} (Fm : FamP eps) : ∃ C : ℝ, 0 ≤ C ∧ ∃ x0
 
 theorem one_le_Xpp {D : D7} (L : SizeData₂ D) (h : SizesAt L) (hm : 1 ≤ D.R.m) : 1 ≤ L.sc.X'' D.R.n := by
   obtain ⟨τ⟩ := S.Inh.tau_index_set_nonempty D
-  have hX : SizeXpp L := h.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.1
   have hw : L.sc.w'' D.R.n ≤ wj D 1 τ := S.wj_ge L τ 1 le_rfl hm
-  have hpos : 0 < wj D 1 τ := lt_of_lt_of_le (S.w''_pos L) hw
-  have hr := hX 1 τ 1 τ le_rfl hm le_rfl hm
-  nlinarith
+  have hr := h.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.1 1 τ 1 τ le_rfl hm le_rfl hm
+  nlinarith [S.w''_pos L, hw, hr]
 
 theorem admissible_size_family {eps : ℝ} (Fm : FamP eps) (hD : DGamSize Fm) : ∃ C : ℝ, 0 ≤ C ∧ ∃ x0 : ℝ, ∀ x ≥ x0,
     ∀ (_ : Fm.x1 < x) (i : Fm.Ix x), WeilJacquetShalikaLaw.TypePrimeSizeConds (Fm.D x i) (Fm.L x i) Fm.GK Fm.cX.err C := by
@@ -1420,9 +1411,8 @@ theorem admissible_size_family {eps : ℝ} (Fm : FamP eps) (hD : DGamSize Fm) : 
     omega
   have hlog : 0 ≤ Real.log ((Fm.L x i).sc.X'' (Fm.D x i).R.n) := Real.log_nonneg (one_le_Xpp (Fm.L x i) (Fm.sizes x h1 i) hm)
   have hb : 0 < (Fm.L x i).sc.b := by unfold Scale.b; positivity
-  have hf : (0 : ℝ) ≤ ((Fm.D x i).R.f : ℝ) := Nat.cast_nonneg _
   have hnn : 0 ≤ ((Fm.D x i).R.f : ℝ) * (Fm.L x i).sc.b * Real.log ((Fm.L x i).sc.X'' (Fm.D x i).R.n) :=
-    mul_nonneg (mul_nonneg hf hb.le) hlog
+    mul_nonneg (mul_nonneg (Nat.cast_nonneg _) hb.le) hlog
   refine (he x ee h1 i j hj S hS).trans ?_
   calc Ce * ((Fm.D x i).R.f : ℝ) * (Fm.L x i).sc.b * Real.log ((Fm.L x i).sc.X'' (Fm.D x i).R.n)
       = Ce * (((Fm.D x i).R.f : ℝ) * (Fm.L x i).sc.b * Real.log ((Fm.L x i).sc.X'' (Fm.D x i).R.n)) := by ring

@@ -734,7 +734,7 @@ section -- clump:auto
 open GroundTheory.ProfCoh
 
 theorem _root_.GlobalTheory.T.cdp_galois_le_one_of_isAlgebraic_ratFunc : ∀ (k K Ω : Type) [Field k] [IsAlgClosed k] [Field K] [Algebra (RatFunc k) K] [Algebra.IsAlgebraic (RatFunc k) K] [Field Ω] [Algebra K Ω] [IsSepClosure K Ω] (p : ℕ), p.Prime → GroundTheory.ProfCoh.cdp p (Ω ≃ₐ[K] Ω) ≤ 1 := by
-  first | (exact @GlobalTheory.TsenCD.cdp_galois_le_one_of_algebraic_ratFunc) | (exact GlobalTheory.TsenCD.cdp_galois_le_one_of_algebraic_ratFunc) | (intros; apply GlobalTheory.TsenCD.cdp_galois_le_one_of_algebraic_ratFunc  <;> assumption)
+  first | (exact @GlobalTheory.TsenCD.cdp_galois_le_one_of_algebraic_ratFunc)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CdpGaloisLeOneOfAlgebraicRatFuncStatement =====
@@ -757,7 +757,6 @@ theorem subsingleton_cohomology_trivial_zmod (G : Type) [Group G] [TopologicalSp
   let A : Rep.{0} (ULift.{0} ℤ) G := Rep.trivial (ULift.{0} ℤ) G (ULift.{0} (ZMod q))
   have hq0 : q ≠ 0 := NeZero.ne q
   have hA : ∀ a : A, q • a = 0 := fun a => by
-    change (q • a : ULift.{0} (ZMod q)) = 0
     ext
     simp
   have htors : IsAddTorsion A := fun a =>

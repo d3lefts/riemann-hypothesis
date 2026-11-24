@@ -499,7 +499,7 @@ open MeasureTheory Metric Filter Topology ReciprocityTheory.AnForm ReciprocityTh
 open scoped ContDiff
 
 theorem _root_.GlobalTheory.T.convergence_statement_holds : ConvergenceStatement := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Giv.convergence_holds | exact GlobalTheory.CompanionTheory.Ar.Giv.convergence_holds | (intros; apply GlobalTheory.CompanionTheory.Ar.Giv.convergence_holds <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Giv.convergence_holds
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.MetricProofs.ConvergenceStatementHoldsStatement =====

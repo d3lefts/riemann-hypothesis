@@ -400,7 +400,7 @@ theorem zstep : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] {
         rw [show H.h (∑ a, H.h g (Fr.es a) • Fr.e a) (y : V) = UnipOnto.lf H (y : V) (∑ a, H.h g (Fr.es a) • Fr.e a) from rfl,
         show H.h (∑ a, H.h g (Fr.e a) • Fr.es a) (y : V) = UnipOnto.lf H (y : V) (∑ a, H.h g (Fr.e a) • Fr.es a) from rfl,
         map_sum, map_sum]
-        simp [UnipOnto.lf, H.h_smul_left, h1, h2]
+        simp [UnipOnto.lf, h1, h2]
       rw [← hpr, ← hw]
       exact (hL.2.1 w).1 hwL y hyL
     · refine span_h_right (s := Set.range fun a : Fin r => Fr.f a.castSucc) ?_ x hx
@@ -491,7 +491,7 @@ lemma e_gen (a : Fin r) : Fr.e a ∈ Gen Fr L := by
     · exact M.L.O.zero_mem
   · rw [h2]; exact M.L.O.zero_mem
   · simp only [FrameD.prF, h1, h2, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq, Finset.mem_univ,
-      if_true, Finset.sum_const_zero, sub_self, sub_zero, ZeroMemClass.coe_zero]
+      if_true, Finset.sum_const_zero, sub_self, ZeroMemClass.coe_zero]
   · rw [map_zero]; exact L.zero_mem
 
 lemma es_gen (k : Fin r) : Fr.es k ∈ Gen Fr L := by

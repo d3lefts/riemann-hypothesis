@@ -381,7 +381,7 @@ open Classical
 
 
 theorem _root_.GlobalTheory.T.exists_dualElement_standardChar_splitPrime : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (e₁ : AE D) (PP : Pl D.host.E), Formalism.L2.NTheta.IsIdemAt e₁ PP → ∃ c : Datum.EAf D, (∀ Z : AE D, infPart D Z = 0 → ∀ r : Formalism.L2.Herm.intAf D.host.F D.host.E, resS D.host.F PP r = 0 → toEAf D Z = c * r → ψ (Algebra.trace (AF D.host.F) (AE D) (incA D D.host.xi0 * Z)) = 1) ∧ (∀ Z : AE D, infPart D Z = 0 → toEAf D Z = c → ψ (Algebra.trace (AF D.host.F) (AE D) (incA D D.host.xi0 * Z)) ≠ 1) := by
-  first | exact @GlobalTheory.SplitDualElt.exists_dual_elt | exact GlobalTheory.SplitDualElt.exists_dual_elt | (intros; apply GlobalTheory.SplitDualElt.exists_dual_elt <;> assumption)
+  first | exact @GlobalTheory.SplitDualElt.exists_dual_elt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsDualElementStandardCharSplitPrimeStatement =====
@@ -403,7 +403,7 @@ open Classical
 
 
 theorem _root_.GlobalTheory.T.toEAf_orientedHermitianForm_eq_trace_frames : ∀ {D : D7} (S T : HSp D) (βS : GL (Fin S.rank) (Datum.EAf D)) (βT : GL (Fin T.rank) (Datum.EAf D)) (k y : WO S T), toEAf D (hO S T y k) = Matrix.trace (frMapAdj S T βS βT k * frMapO S T βS βT y) := by
-  first | exact @GlobalTheory.TraceFrames.toEAf_hO_eq_trace_frames | exact GlobalTheory.TraceFrames.toEAf_hO_eq_trace_frames | (intros; apply GlobalTheory.TraceFrames.toEAf_hO_eq_trace_frames <;> assumption)
+  first | exact @GlobalTheory.TraceFrames.toEAf_hO_eq_trace_frames
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ToEAfOrientedHermitianFormEqTraceFramesStatement =====
@@ -516,7 +516,7 @@ theorem trace_mul_single {m n : ℕ} (M : Matrix (Fin m) (Fin n) (Datum.EAf D)) 
   rw [Matrix.trace, Finset.sum_eq_single a]
   · simp [Matrix.mul_apply, Matrix.single_apply]
   · intro j _ hj
-    simp [Matrix.mul_apply, Matrix.single_apply, Ne.symm hj]
+    simp [Matrix.mul_apply, Ne.symm hj]
   · intro h
     exact absurd (Finset.mem_univ a) h
 

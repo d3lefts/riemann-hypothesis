@@ -153,11 +153,9 @@ theorem beBessel_DD {ε : Fin (2 * r + k + 1) → Bool} {lam : Fin (2 * r + k + 
   intro v hv ξ
   have hG := grpAll k r z
   have hS := sigAll k r ε lam H σ hσ
-  have hP := piAll k r z u Wp π hz hT hπ
-  have hψ := psiAll k r z c hz
   have hD : DecayOn μW μN σ (fun v => v ∈ Formalism.MainNotions.BridgeLemma₄.DDsp σ w0) :=
     decayOn_of_pt z π μW μN σ a hG hM (fun w => Formalism.MainNotions.LeviCoordinates.discrete_series_continuousOn hσ w) hgr (ptDec_DD hG hS ha h0)
-  exact bessel_on_FI z c π μW μN σ hG hS hP hψ hM hD hv ξ
+  exact bessel_on_FI z c π μW μN σ hG hS (piAll k r z u Wp π hz hT hπ) (psiAll k r z c hz) hM hD hv ξ
 
 theorem beBessel_K {ε : Fin (2 * r + k + 1) → Bool} {lam : Fin (2 * r + k + 1) → ℝ} {u : Fin k → ℝ}
     (z : Fin (2 * r + k + 1) → ℂ) (c : ℂ) (π : Mx k r → (Wp →L[ℂ] Wp))
@@ -172,11 +170,9 @@ theorem beBessel_K {ε : Fin (2 * r + k + 1) → Bool} {lam : Fin (2 * r + k + 1
   intro v hv ξ
   have hG := grpAll k r z
   have hS := sigAll k r ε lam H σ hσ
-  have hP := piAll k r z u Wp π hz hT hπ
-  have hψ := psiAll k r z c hz
   have hD : DecayOn μW μN σ (fun v => IsKFinHpk (k := k) (r := r) σ v) :=
     decayOn_of_pt z π μW μN σ a hG hM (fun w => Formalism.MainNotions.LeviCoordinates.discrete_series_continuousOn hσ w) hgr hK
-  exact bessel_on_FI z c π μW μN σ hG hS hP hψ hM hD hv ξ
+  exact bessel_on_FI z c π μW μN σ hG hS (piAll k r z u Wp π hz hT hπ) (psiAll k r z c hz) hM hD hv ξ
 
 end Formalism.MainNotions.BeBesselW
 end -- clump:auto

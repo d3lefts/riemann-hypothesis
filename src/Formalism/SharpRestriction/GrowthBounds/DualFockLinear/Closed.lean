@@ -320,7 +320,7 @@ theorem key_inj (m : ℕ) (top vec : Bool) (d : ℕ) (ν : Fin (m + 1) → ℕ) 
         rw [Finset.sum_eq_single c]
         · simp [dg]
         · intro b _ hb
-          simp [dg, Finsupp.single_apply, hb]
+          simp [dg, hb]
         · intro hc
           exact absurd (Finset.mem_univ c) hc
       rw [hs1 α, hs1 α'] at he
@@ -1113,7 +1113,7 @@ def psi {r K : ℕ} (I : Ideal W) (A : Fin r → Fin K → W) : (Fin (r + K) →
 
 theorem psi_apply {r K : ℕ} (I : Ideal W) (A : Fin r → Fin K → W) (y : Fin (r + K) → W) (i : Fin r) :
     psi I A y i = Ideal.Quotient.mk I (y (Fin.castAdd K i) + ∑ c, A i c * y (Fin.natAdd r c)) := by
-  simp [psi, LinearMap.sum_apply]
+  simp [psi]
 
 theorem psi_surj {r K : ℕ} (I : Ideal W) (A : Fin r → Fin K → W) : Function.Surjective (psi I A) := by
   intro z

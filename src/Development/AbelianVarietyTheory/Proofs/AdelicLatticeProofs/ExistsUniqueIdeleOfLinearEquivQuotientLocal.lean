@@ -120,11 +120,7 @@ variable {R K : Type*} [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K]
 theorem valuation_eq_exp_neg_count (v : HeightOneSpectrum R) {x : K} (hx : x ≠ 0) :
     v.valuation K x = exp (-FractionalIdeal.count K v (FractionalIdeal.spanSingleton R⁰ x)) := by
   first
-  | exact @_root_.GlobalTheory.AdicValuationCountFactors.valuation_eq_exp_neg_count
-  | exact _root_.GlobalTheory.AdicValuationCountFactors.valuation_eq_exp_neg_count
   | (apply _root_.GlobalTheory.AdicValuationCountFactors.valuation_eq_exp_neg_count <;> assumption)
-  | (intros; apply _root_.GlobalTheory.AdicValuationCountFactors.valuation_eq_exp_neg_count <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.AdicValuationCountFactors.valuation_eq_exp_neg_count <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.AdicValuationCountFactors.valuation_eq_exp_neg_count ..)
 
 theorem le_of_count_le {I J : FractionalIdeal R⁰ K} (hI : I ≠ 0) (hJ : J ≠ 0)
@@ -436,20 +432,14 @@ theorem isClosed_valued_le (v : HeightOneSpectrum R) (n : ℤ) :
   obtain ⟨c, hc, h⟩ := setOf_valued_le_eq (K := K) v n
   rw [h]; exact Valued.isClosed_closedBall _ _
 
-theorem exists_exp_neg_lt {γ : ℤᵐ⁰} (hγ : γ ≠ 0) : ∃ n : ℕ, exp (-(n : ℤ)) < γ := by
-  refine ⟨(log γ).natAbs + 1, ?_⟩
-  conv_rhs => rw [← exp_log hγ]
-  rw [exp_lt_exp]
-  omega
-
 theorem exists_limit (v : HeightOneSpectrum R) (u : ℕ → v.adicCompletion K)
     (hu : ∀ m n : ℕ, n ≤ m → Valued.v (u m - u n) ≤ exp (-(n : ℤ))) :
     ∃ t : v.adicCompletion K, ∀ n : ℕ, Valued.v (t - u n) ≤ exp (-(n : ℤ)) := by
   have hc : CauchySeq u := by
     rw [(Valued.hasBasis_uniformity (v.adicCompletion K) ℤᵐ⁰).cauchySeq_iff']
     intro γ _
-    obtain ⟨n, hn⟩ := exists_exp_neg_lt
-      (γ := MonoidWithZeroHom.ValueGroup₀.embedding γ.1) (by simp)
+    obtain ⟨n, hn⟩ := WithZero.exists_exp_neg_natCast_lt
+      (x := MonoidWithZeroHom.ValueGroup₀.embedding γ.1) (by simp)
     refine ⟨n, fun m hm => ?_⟩
     simp only [Set.mem_setOf_eq, Valuation.restrict_lt_iff_lt_embedding]
     rw [Valuation.map_sub_swap]
@@ -671,7 +661,7 @@ theorem exists_adele_of_end_one
   have htb : ∀ b, b ≠ 0 → ∀ v, Valued.v (t v - ι v b * y b v) ≤ Valued.v (ι v b) := by
     intro b hb v
     have hb0 : Valued.v (ι v b) ≠ 0 := by simpa [ι] using hb
-    obtain ⟨n, hn⟩ := exists_exp_neg_lt hb0
+    obtain ⟨n, hn⟩ := WithZero.exists_exp_neg_natCast_lt hb0
     have h1 := (ht v n).trans hn.le
     have h2 := hcomp b (π v ^ n) (hπ0 v n) v
     have h3 := hcomp (π v ^ n) b hb v

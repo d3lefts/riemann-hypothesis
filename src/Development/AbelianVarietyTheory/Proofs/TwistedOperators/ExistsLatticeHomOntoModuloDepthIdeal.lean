@@ -257,7 +257,7 @@ theorem exists_coprime_basis : ∀ (F : Type) [Field F] [NumberField F] (M : Typ
       | mem y hy =>
         obtain ⟨i, rfl⟩ := hy
         exact ⟨s i, x i, Submodule.subset_span ⟨i, rfl⟩, key i⟩
-      | zero => exact ⟨1, 0, P.zero_mem, by simp [LocalizedModule.zero_mk]⟩
+      | zero => exact ⟨1, 0, P.zero_mem, by simp⟩
       | add y z _ _ hy hz =>
         obtain ⟨t, m, hm, h⟩ := hy
         obtain ⟨t', m', hm', h'⟩ := hz
@@ -347,7 +347,7 @@ theorem exists_basis_in_lattice {n : ℕ} (Λ : Submodule (𝓞 K) (Fin n → K)
     have h := Submodule.mem_map_of_mem (f := Λ.subtype) (hspan ⟨w, hw⟩)
     rw [Submodule.map_span, ← Set.range_comp] at h
     have e : (Λ.subtype (c • (⟨w, hw⟩ : Λ))) = (c : K) • w := by
-      simp [Submodule.coe_smul, algebraMap_smul]
+      simp [algebraMap_smul]
     rw [e] at h
     exact h
   have hcK : (c : K) ≠ 0 := by exact_mod_cast hc0

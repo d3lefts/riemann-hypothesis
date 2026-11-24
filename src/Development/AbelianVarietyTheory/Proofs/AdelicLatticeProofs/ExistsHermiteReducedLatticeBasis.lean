@@ -348,7 +348,7 @@ theorem exists_orthogonal_mul_upper (N : ℕ) (g : Matrix (Fin N) (Fin N) ℝ) :
     exact InnerProductSpace.gramSchmidtOrthonormalBasis_inv_triangular h f hij
   · ext i j
     have := congrArg (fun v : EuclideanSpace ℝ (Fin N) => v i) (b.sum_repr' (f j))
-    simp only [WithLp.ofLp_sum, Finset.sum_apply, PiLp.smul_apply, WithLp.ofLp_smul, Pi.smul_apply, smul_eq_mul] at this
+    simp only [WithLp.ofLp_sum, Finset.sum_apply, WithLp.ofLp_smul, Pi.smul_apply, smul_eq_mul] at this
     rw [Matrix.mul_apply]
     simp only [Matrix.of_apply]
     calc g i j = f j i := rfl
@@ -406,7 +406,7 @@ theorem unipotent_size_reduction_column {N : ℕ} (n : Matrix (Fin N) (Fin N) �
       ∀ i, i < j → (j : ℕ) ≤ i + k → |∑ l, n i l * (z l : ℝ)| ≤ 1 / 2 := by
   induction k with
   | zero =>
-    refine ⟨Pi.single j 1, by simp, fun l hl => by simp [Pi.single_apply, hl.ne'], ?_⟩
+    refine ⟨Pi.single j 1, by simp, fun l hl => by simp [hl.ne'], ?_⟩
     intro i hi hk
     exact absurd hk (by have : (i : ℕ) < j := hi; omega)
   | succ k ih =>
@@ -426,12 +426,12 @@ theorem unipotent_size_reduction_column {N : ℕ} (n : Matrix (Fin N) (Fin N) �
         rw [Finset.sum_eq_single i0]
         · simp
         · intro b _ hb
-          simp [Pi.single_apply, hb]
+          simp [hb]
         · simp
       refine ⟨z + Pi.single i0 c, ?_, ?_, ?_⟩
-      · simp [Pi.single_apply, hi0.ne', hz1]
+      · simp [hi0.ne', hz1]
       · intro l hl
-        simp [Pi.single_apply, (hi0.trans hl).ne', hz0 l hl]
+        simp [(hi0.trans hl).ne', hz0 l hl]
       · intro i hi hik
         rw [key]
         by_cases h : i = i0

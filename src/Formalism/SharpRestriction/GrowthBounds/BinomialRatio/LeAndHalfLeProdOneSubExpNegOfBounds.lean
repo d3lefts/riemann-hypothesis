@@ -200,13 +200,10 @@ theorem one_segment_of_upper_lower {D : Formalism.BasicNotions.D7} (hU : RestUp)
   have hlow := low X W Qq O Kf ι σ jO w hSet hH hc j m hm0 hcore.1 rz ry hd
   have hfac : 1 / 2 ≤ lowFac C0 CE1 CE2 X j ⌈m⌉₊ := by
     have hkm : (X.m : ℝ) = X.k - 1 := by unfold Loc.k; ring
-    unfold lowFac
-    rw [hkm]
-    exact hcore.2
+    simpa [lowFac, hkm] using hcore.2
   have hmm : (0 : ℝ) ≤ (mmB C0 CE1 CE2 X j rz ry : ℝ) := Nat.cast_nonneg _
-  have h1 : 1 / 2 * (mmB C0 CE1 CE2 X j rz ry : ℝ) ≤ lowFac C0 CE1 CE2 X j ⌈m⌉₊ * (mmB C0 CE1 CE2 X j rz ry : ℝ) :=
-    mul_le_mul_of_nonneg_right hfac hmm
-  have h2 : (mmB C0 CE1 CE2 X j rz ry : ℝ) / 2 ≤ (rankOnDigits O C0 CE1 CE2 X j m rz ry : ℝ) := by linarith
+  have h2 : (mmB C0 CE1 CE2 X j rz ry : ℝ) / 2 ≤ (rankOnDigits O C0 CE1 CE2 X j m rz ry : ℝ) := by
+    nlinarith [mul_le_mul_of_nonneg_right hfac hmm]
   exact h2
 
 end Formalism.MainNotions.ColumnSystems.Pf

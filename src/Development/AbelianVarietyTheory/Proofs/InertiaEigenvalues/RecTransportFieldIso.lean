@@ -30,7 +30,6 @@ public import Mathlib.RepresentationTheory.Semisimple
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilDeligneSemisimple
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilGroupRestriction
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.Langlands
-public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.LocalLanglandsExists
 public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.ChevalleyUnits
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLocalExtensionOfFiniteIndexWeilSubgroupStatement
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalArtinMapUniqueTransportPlaceIsoStatement
@@ -111,7 +110,7 @@ open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial Formalism.Conju
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.completion_base_change_places : ∀ (E L E' L' : Type) [Field E] [NumberField E] [Field L] [NumberField L] [Algebra E L] [Field E'] [NumberField E'] [Field L'] [NumberField L'] [Algebra E' L'] (w : HeightOneSpectrum (𝓞 E)) (v : HeightOneSpectrum (𝓞 L)) (w' : HeightOneSpectrum (𝓞 E')) (v' : HeightOneSpectrum (𝓞 L')) (j : E →+* E') (jL : L →+* L') (i : w.adicCompletion E ≃+* w'.adicCompletion E'), (∀ x : 𝓞 E, algebraMap (𝓞 E) (𝓞 L) x ∈ v.asIdeal ↔ x ∈ w.asIdeal) → (∀ x : 𝓞 E', algebraMap (𝓞 E') (𝓞 L') x ∈ v'.asIdeal ↔ x ∈ w'.asIdeal) → (∀ x : 𝓞 L, RingOfIntegers.mapRingHom jL x ∈ v'.asIdeal ↔ x ∈ v.asIdeal) → (∀ x, jL (algebraMap E L x) = algebraMap E' L' (j x)) → Algebra.adjoin E' (Set.range jL) = ⊤ → Continuous i → (∀ x, i (algebraMap E _ x) = algebraMap E' _ (j x)) → ∃ iL : v.adicCompletion L ≃+* v'.adicCompletion L', Continuous iL ∧ ∀ x, iL (algebraMap L _ x) = algebraMap L' _ (jL x) := by
-  first | exact @GlobalTheory.CompositumCompletion.exists_ringEquiv_completion | exact GlobalTheory.CompositumCompletion.exists_ringEquiv_completion | (intros; apply GlobalTheory.CompositumCompletion.exists_ringEquiv_completion <;> assumption)
+  first | exact @GlobalTheory.CompositumCompletion.exists_ringEquiv_completion
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CompletionBaseChangePlacesStatement =====
@@ -857,7 +856,7 @@ open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial Formalism.Conju
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.epsilon_unique_of_inductive : BrauerDegreeZero → ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (ε ε' : WD h → ℂˣ), (∀ x y, ε (x.lpSum y) = ε x * ε y) → (∀ x y, ε' (x.lpSum y) = ε' x * ε' y) → (∀ x y, (∀ σ, x.charPol σ = y.charPol σ) → ε x = ε y ∧ ε' x = ε' y) → (∀ ξ hξ, ε (WD.lpOfChar h ξ hξ) = ε' (WD.lpOfChar h ξ hξ)) → (∀ (H : Subgroup (Weil h)), H.FiniteIndex → IsOpen {σ : Ine (F := E) A | ineIncl h σ ∈ H} → ∀ (χ₁ χ₂ : H →* ℂˣ) (n : ℕ) (b₁ b₂ : WDRep h (Fin n → ℂ)) (v₁ v₂ : Fin n → ℂ), n = H.index → (∀ σ : H, b₁.ρ σ v₁ = (χ₁ σ : ℂ) • v₁) → (∀ σ : H, b₂.ρ σ v₂ = (χ₂ σ : ℂ) • v₂) → Submodule.span ℂ (Set.range fun σ => b₁.ρ σ v₁) = ⊤ → Submodule.span ℂ (Set.range fun σ => b₂.ρ σ v₂) = ⊤ → ε (WD.mk b₁) * ε' (WD.mk b₂) = ε (WD.mk b₂) * ε' (WD.mk b₁)) → ∀ x, ε x = ε' x := by
-  first | exact @GlobalTheory.WeilBrauer.eq_of_induced | exact GlobalTheory.WeilBrauer.eq_of_induced | (intros; apply GlobalTheory.WeilBrauer.eq_of_induced <;> assumption)
+  first | exact @GlobalTheory.WeilBrauer.eq_of_induced
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EpsilonUniqueOfInductiveStatement =====
@@ -871,7 +870,7 @@ open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial Formalism.Conju
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.local_trace_completion : ∀ (K L Ω : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] [Algebra L Ω] [IsAlgClosure L Ω] [Algebra K L] [IsScalarTower K L Ω] (A : ValuationSubring Ω) (v : HeightOneSpectrum (𝓞 K)) (v' : HeightOneSpectrum (𝓞 L)) (h : IsPlaceOver A v) (h' : IsPlaceOver A v'), IsLocalExt L h → ∃ T : v'.adicCompletion L →+ v.adicCompletion K, Continuous T ∧ ∀ z : L, T (algebraMap L _ z) = algebraMap K _ (Algebra.trace K L z) := by
-  first | exact @GlobalTheory.LocLanglands.TraceCompl.exists_trace_extension | exact GlobalTheory.LocLanglands.TraceCompl.exists_trace_extension | (intros; apply GlobalTheory.LocLanglands.TraceCompl.exists_trace_extension <;> assumption)
+  first | exact @GlobalTheory.LocLanglands.TraceCompl.exists_trace_extension
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalTraceCompletionStatement =====
@@ -976,7 +975,7 @@ open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial Formalism.Conju
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.tate_epsilon_transport : ∀ (k k' : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] [Field k'] [ValuativeRel k'] [TopologicalSpace k'] [IsNonarchimedeanLocalField k'] [CharZero k'] (i : k ≃+* k'), Continuous i → ∀ (ψ : AddChar k Circle) (ψ' : AddChar k' Circle) (χ : kˣ →* ℂˣ) (χ' : k'ˣ →* ℂˣ) (e : ℂ), (∀ x, ψ' (i x) = ψ x) → (∀ x, χ' (Units.map i.toRingHom.toMonoidHom x) = χ x) → IsTateEps ψ χ e → IsTateEps ψ' χ' e := by
-  first | exact @GlobalTheory.LocalFieldIso.isTateEps_transport | exact GlobalTheory.LocalFieldIso.isTateEps_transport | (intros; apply GlobalTheory.LocalFieldIso.isTateEps_transport <;> assumption)
+  first | exact @GlobalTheory.LocalFieldIso.isTateEps_transport
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TateEpsilonTransportStatement =====
@@ -1047,7 +1046,7 @@ open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial Formalism.Conju
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.trace_base_change_field : ∀ (E L E' L' : Type) [Field E] [Field L] [Algebra E L] [FiniteDimensional E L] [Field E'] [Field L'] [Algebra E' L'] (j : E →+* E') (jL : L →+* L'), (∀ x, jL (algebraMap E L x) = algebraMap E' L' (j x)) → Algebra.adjoin E' (Set.range jL) = ⊤ → Module.finrank E' L' = Module.finrank E L → ∀ z, Algebra.trace E' L' (jL z) = j (Algebra.trace E L z) := by
-  first | exact @GlobalTheory.trace_map_of_adjoin_range_eq_top_of_finrank_eq | exact GlobalTheory.trace_map_of_adjoin_range_eq_top_of_finrank_eq | (intros; apply GlobalTheory.trace_map_of_adjoin_range_eq_top_of_finrank_eq <;> assumption)
+  first | exact @GlobalTheory.trace_map_of_adjoin_range_eq_top_of_finrank_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TraceBaseChangeFieldStatement =====
@@ -1061,7 +1060,7 @@ open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial Formalism.Conju
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.weil_deligne_semisimple : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (n : ℕ) (a : WDRep h (Fin n → ℂ)), a.ρ.IsSemisimpleRepresentation := by
-  first | exact @GlobalTheory.WeilDeligne.WDRep.isSemisimpleRepresentation_rho | exact GlobalTheory.WeilDeligne.WDRep.isSemisimpleRepresentation_rho | (intros; apply GlobalTheory.WeilDeligne.WDRep.isSemisimpleRepresentation_rho <;> assumption)
+  first | exact @GlobalTheory.WeilDeligne.WDRep.isSemisimpleRepresentation_rho
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilDeligneSemisimpleStatement =====
@@ -1075,7 +1074,7 @@ open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial Formalism.Conju
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.weil_group_restriction : ∀ (K L Ω : Type) [Field K] [NumberField K] [Field L] [NumberField L] [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω] [Algebra L Ω] [IsAlgClosure L Ω] [Algebra K L] [IsScalarTower K L Ω] (A : ValuationSubring Ω) (v : HeightOneSpectrum (𝓞 K)) (v' : HeightOneSpectrum (𝓞 L)) (h : IsPlaceOver A v) (h' : IsPlaceOver A v'), ∃ r : Weil h' →* Weil h, (∀ (σ : Weil h') (z : Ω), (r σ : G K Ω) z = (σ : G L Ω) z) ∧ ∀ (M : Type) [Monoid M] (f : Weil h →* M), GlobalTheory.WeilDeligne.IsSmooth f → GlobalTheory.WeilDeligne.IsSmooth (f.comp r) := by
-  first | exact @GlobalTheory.WeilRestrict.weil_restrict | exact GlobalTheory.WeilRestrict.weil_restrict | (intros; apply GlobalTheory.WeilRestrict.weil_restrict <;> assumption)
+  first | exact @GlobalTheory.WeilRestrict.weil_restrict
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilGroupRestrictionStatement =====
@@ -1214,13 +1213,13 @@ open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial Formalism.Conju
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.weil_group_transport : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (E' Ω' : Type) [Field E'] [NumberField E'] [Field Ω'] [Algebra E' Ω'] [IsAlgClosure E' Ω'] (A' : ValuationSubring Ω') (w' : HeightOneSpectrum (𝓞 E')) (h' : IsPlaceOver A' w') (φ : Ω ≃+* Ω') (j : E →+* E') (c : Weil h ≃* Weil h'), (∀ x, φ (algebraMap E Ω x) = algebraMap E' Ω' (j x)) → (∀ σ, WeilRel φ σ (c σ)) → ∀ L : IntermediateField E Ω, FiniteDimensional E L → IsLocalExt L h → ∃ (L' : IntermediateField E' Ω') (jL : L →+* L'), FiniteDimensional E' L' ∧ IsLocalExt L' h' ∧ Module.finrank E' L' = Module.finrank E L ∧ (∀ x : L, φ (x : Ω) = (jL x : Ω')) ∧ Algebra.adjoin E' (Set.range jL) = ⊤ := by
-  first | exact @GlobalTheory.LocLanglands.exists_isLocalExt_transport | exact GlobalTheory.LocLanglands.exists_isLocalExt_transport | (intros; apply GlobalTheory.LocLanglands.exists_isLocalExt_transport <;> assumption)
+  first | exact @GlobalTheory.LocLanglands.exists_isLocalExt_transport
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilGroupTransportStatement =====
 
 -- ===== clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RecTransportFieldIso =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RecTransportFieldIso", "h": "module\n\npublic import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.LocalLanglandsExists\npublic import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.BrauerDegreeZero\npublic import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.ChevalleyUnits\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CompletionBaseChangePlacesStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ContinuousRingEquivLocalFieldPreservesValuation\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EpsilonUniqueOfInductiveStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLocalExtensionOfFiniteIndexWeilSubgroupStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalArtinMapUniqueTransportPlaceIsoStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalTraceCompletionStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NonemptyLinearEquivOfCharpolyEq\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PlaceOverTransportRingIsoStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PlaceOverTransportRingIsoSymmStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TateEpsilonTransportStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TraceBaseChangeFieldStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilDeligneSemisimpleStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilGroupRestrictionStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilGroupTransportStatement\nimport Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GaussSumNeZeroOfRamified\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.LinearAlgebra.Charpoly.ToMatrix\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Etale.Weakly\nimport Mathlib.RingTheory.Finiteness.ModuleFinitePresentation\nimport Mathlib.RingTheory.PicardGroup\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.Valuation.LocalSubring\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.HaveILetI\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\n\n"}
+-- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RecTransportFieldIso", "h": "module\n\npublic import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.Langlands\npublic import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.BrauerDegreeZero\npublic import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.ChevalleyUnits\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CompletionBaseChangePlacesStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ContinuousRingEquivLocalFieldPreservesValuation\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EpsilonUniqueOfInductiveStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLocalExtensionOfFiniteIndexWeilSubgroupStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalArtinMapUniqueTransportPlaceIsoStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalTraceCompletionStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NonemptyLinearEquivOfCharpolyEq\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PlaceOverTransportRingIsoStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PlaceOverTransportRingIsoSymmStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TateEpsilonTransportStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TraceBaseChangeFieldStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilDeligneSemisimpleStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilGroupRestrictionStatement\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WeilGroupTransportStatement\nimport Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GaussSumNeZeroOfRamified\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.LinearAlgebra.Charpoly.ToMatrix\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Etale.Weakly\nimport Mathlib.RingTheory.Finiteness.ModuleFinitePresentation\nimport Mathlib.RingTheory.PicardGroup\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.Valuation.LocalSubring\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.HaveILetI\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\n\n"}
 section -- clump:auto
 @[expose] public section
 
@@ -1356,155 +1355,11 @@ theorem addChar_transport (hP : PlaceIso A w A' w' φ j i) {ψ : AddChar (w.adic
   · ext x
     simp [← hψ, h0]
 
-theorem eps_char (hG : GlobalArtinReciprocity) (hC : ChevalleyUnits) (hL : LocalLanglandsExists)
-    (hP : PlaceIso A w A' w' φ j i) {ε : EpsFamily A} {ε' : EpsFamily A'} (hε : IsDeligneEps ε)
-    (hε' : IsDeligneEps ε') {ψ : AddChar (w.adicCompletion E) Circle}
-    {ψ' : AddChar (w'.adicCompletion E') Circle} (hc : Continuous ψ) (h1 : ψ ≠ 1) (hψ : ∀ x, ψ' (i x) = ψ x)
-    {ξ : Weil h →* ℂˣ} (hξ : GlobalTheory.WeilDeligne.IsSmooth ξ) {ξ' : Weil h' →* ℂˣ} (hξ' : GlobalTheory.WeilDeligne.IsSmooth ξ')
-    (hr : ∀ σ σ', WeilRel φ σ σ' → ξ σ = ξ' σ') :
-    ε E w h ψ (WD.lpOfChar h ξ hξ) = ε' E' w' h' ψ' (WD.lpOfChar h' ξ' hξ') := by
-  obtain ⟨hc', h1'⟩ := addChar_transport hP hc h1 hψ
-  obtain ⟨-, a, ha, -⟩ := hL E Ω A w h
-  obtain ⟨-, a', ha', -⟩ := hL E' Ω' A' w' h'
-  obtain ⟨χ, hχ, rfl⟩ := ha.factor ξ hξ
-  obtain ⟨χ', hχ', rfl⟩ := ha'.factor ξ' hξ'
-  obtain ⟨c, hcr, -⟩ := GlobalTheory.T.place_over_transport_ring_iso E Ω A w h E' Ω' A' w' h' φ j i hP
-  haveI : CharZero (w.adicCompletion E) := charZero_of_injective_algebraMap (algebraMap E _).injective
-  haveI : CharZero (w'.adicCompletion E') := charZero_of_injective_algebraMap (algebraMap E' _).injective
-  refine Units.ext ((GlobalTheory.T.tate_epsilon_transport _ _ i hP.cont ψ ψ' χ χ' _ hψ (fun x => ?_) (hε.char E w h ψ hc h1 a ha χ hχ)).unique
-    (hε'.char E' w' h' ψ' hc' h1' a' ha' χ' hχ'))
-  obtain ⟨σ, rfl⟩ := ha.surj x
-  have h2 := (hcr σ _).2 rfl
-  rw [← GlobalTheory.T.localArtinMap_unique_transport_placeIso hG hC E Ω A w h E' Ω' A' w' h' φ j i hP a a' ha ha' σ _ h2]
-  exact (hr σ _ h2).symm
-
 theorem valuation_lt_one_iff_map (hm : ∀ z, φ z ∈ A' ↔ z ∈ A) (z : Ω) :
     A'.valuation (φ z) < 1 ↔ A.valuation z < 1 := by
   rw [valuation_lt_one_iff', valuation_lt_one_iff', ← map_inv₀, hm, hm, map_eq_zero_iff _ φ.injective]
 
-theorem eps_ind (hG : GlobalArtinReciprocity) (hC : ChevalleyUnits) (hLL : LocalLanglandsExists)
-    (hP : PlaceIso A w A' w' φ j i) {ε : EpsFamily A} {ε' : EpsFamily A'} (hε : IsDeligneEps ε)
-    (hε' : IsDeligneEps ε') {ψ : AddChar (w.adicCompletion E) Circle}
-    {ψ' : AddChar (w'.adicCompletion E') Circle} (hc : Continuous ψ) (h1 : ψ ≠ 1) (hψ : ∀ x, ψ' (i x) = ψ x)
-    (c : Weil h ≃* Weil h') (hcr : ∀ σ σ', WeilRel φ σ σ' ↔ c σ = σ')
-    (H : Subgroup (Weil h)) (hH : H.FiniteIndex) (hHo : IsOpen {σ : Ine (F := E) A | ineIncl h σ ∈ H})
-    (χ₁ χ₂ : H →* ℂˣ) {n : ℕ} (b₁ b₂ : WDRep h (Fin n → ℂ)) (b₁' b₂' : WDRep h' (Fin n → ℂ))
-    (e₁ : ∀ σ, b₁'.ρ (c σ) = b₁.ρ σ) (e₂ : ∀ σ, b₂'.ρ (c σ) = b₂.ρ σ) (v₁ v₂ : Fin n → ℂ) (hn : n = H.index)
-    (k₁ : ∀ σ : H, b₁.ρ σ v₁ = (χ₁ σ : ℂ) • v₁) (k₂ : ∀ σ : H, b₂.ρ σ v₂ = (χ₂ σ : ℂ) • v₂)
-    (s₁ : Submodule.span ℂ (Set.range fun σ => b₁.ρ σ v₁) = ⊤)
-    (s₂ : Submodule.span ℂ (Set.range fun σ => b₂.ρ σ v₂) = ⊤) :
-    ε E w h ψ (WD.mk b₁) * ε' E' w' h' ψ' (WD.mk b₂') = ε E w h ψ (WD.mk b₂) * ε' E' w' h' ψ' (WD.mk b₁') := by
-  obtain ⟨hc', h1'⟩ := addChar_transport hP hc h1 hψ
-  obtain ⟨L, hfin, hL, hHL⟩ := GlobalTheory.T.exists_localExtension_of_finiteIndex_weilSubgroup E Ω A w h H hH hHo
-  obtain ⟨L', jL, hfin', hL', hdeg, hφ, hadj⟩ :=
-    GlobalTheory.T.weil_group_transport E Ω A w h E' Ω' A' w' h' φ j c hP.ext (fun σ => (hcr σ _).2 rfl) L hfin hL
-  haveI : NumberField L := NumberField.of_module_finite E L
-  haveI : NumberField L' := NumberField.of_module_finite E' L'
-  haveI : IsAlgClosure L Ω := ⟨IsAlgClosure.isAlgClosed E, Algebra.IsAlgebraic.tower_top (K := E) L⟩
-  haveI : IsAlgClosure L' Ω' := ⟨IsAlgClosure.isAlgClosed E', Algebra.IsAlgebraic.tower_top (K := E') L'⟩
-  obtain ⟨v, hv⟩ := exists_place h L
-  obtain ⟨v', hv'⟩ := exists_place h' L'
-  have hj : ∀ x, jL (algebraMap E L x) = algebraMap E' L' (j x) := fun x =>
-    Subtype.ext ((hφ _).symm.trans (hP.ext x))
-  obtain ⟨iL, hiL, hiL'⟩ := GlobalTheory.T.completion_base_change_places E L E' L' w v w' v' j jL i
-    (fun x => by rw [← hv, ← h]; rfl) (fun x => by rw [← hv', ← h']; rfl)
-    (fun x => by
-      rw [← hv, ← hv', ← valuation_lt_one_iff_map hP.mem]
-      exact Iff.of_eq (congrArg (fun z => A'.valuation z < 1) (hφ _).symm))
-    hj hadj hP.cont hP.loc
-  have hPL : PlaceIso A v A' v' φ jL iL := ⟨hP.mem, hφ, hiL, hiL'⟩
-  obtain ⟨ψL, hcL, h1L, hψL⟩ := exists_addChar L hv hL hc h1
-  obtain ⟨ψL', hcL', -, hψL'⟩ := exists_addChar L' hv' hL' hc' h1'
-  have hψi : ∀ x, ψL' (iL x) = ψL x := fun x => by
-    refine (HeightOneSpectrum.denseRange_algebraMap L v).induction_on (p := fun x => ψL' (iL x) = ψL x) x
-      (isClosed_eq (hcL'.comp hiL) hcL) fun z => ?_
-    rw [hiL', hψL', hψL, GlobalTheory.T.trace_base_change_field E L E' L' j jL hj hadj hdeg, ← hP.loc, hψ]
-  obtain ⟨r, hr, hrs⟩ := GlobalTheory.T.weil_group_restriction E L Ω A w v h hv
-  obtain ⟨r', hr', hrs'⟩ := GlobalTheory.T.weil_group_restriction E' L' Ω' A' w' v' h' hv'
-  have hn' : n = Module.finrank E L := hn.trans (index_eq_finrank E L Ω A w h hL H hHL)
-  have m : ∀ σ, r σ ∈ H := fun σ => (hHL _).2 fun x => by rw [hr]; exact (σ : G L Ω).commutes x
-  have m' : ∀ σ, (c.symm.toMonoidHom.comp r') σ ∈ H := fun σ => (hHL _).2 fun x => by
-    apply φ.injective
-    show φ ((c.symm (r' σ) : G E Ω) x) = _
-    rw [(hcr _ (r' σ)).2 (c.apply_symm_apply _), hr', hφ]
-    exact (σ : G L' Ω').commutes (jL x)
-  have key : ∀ (χ : H →* ℂˣ) (b : WDRep h (Fin n → ℂ)) (b' : WDRep h' (Fin n → ℂ)) (u : Fin n → ℂ),
-      (∀ σ, b'.ρ (c σ) = b.ρ σ) → (∀ σ : H, b.ρ σ u = (χ σ : ℂ) • u) →
-      Submodule.span ℂ (Set.range fun σ => b.ρ σ u) = ⊤ →
-      ∃ (x : WD hv) (x' : WD hv'), Induces x (WD.mk b) ∧ Induces x' (WD.mk b') ∧ x.lpDim = 1 ∧ x'.lpDim = 1 ∧
-        ε L v hv ψL x = ε' L' v' hv' ψL' x' := by
-    intro χ b b' u e k s
-    obtain ⟨p, hp⟩ := induces_of_eigenvector E L Ω A w v h hv r hr hrs n b u (χ.comp (r.codRestrict H m)) hn'
-      (fun σ => k ⟨r σ, m σ⟩) s
-    obtain ⟨p', hp'⟩ := induces_of_eigenvector E' L' Ω' A' w' v' h' hv' r' hr' hrs' n b' u
-      (χ.comp ((c.symm.toMonoidHom.comp r').codRestrict H m')) (hn'.trans hdeg.symm)
-      (fun σ => by
-        have := k ⟨_, m' σ⟩
-        rw [← e] at this
-        simpa using this)
-      (by
-        rw [← s, ← c.surjective.range_comp]
-        simp only [Function.comp_def, e])
-    refine ⟨_, _, hp, hp', by simp [WD.lpOfChar], by simp [WD.lpOfChar],
-      eps_char hG hC hLL hPL hε hε' hcL h1L hψi p p' fun σ σ' hσ => congrArg χ (Subtype.ext ?_)⟩
-    show r σ = c.symm (r' σ')
-    rw [eq_comm, MulEquiv.symm_apply_eq, eq_comm, ← hcr]
-    intro z
-    rw [hr, hr']
-    exact hσ z
-  obtain ⟨x₁, x₁', i₁, i₁', d₁, d₁', q₁⟩ := key χ₁ b₁ b₁' v₁ e₁ k₁ s₁
-  obtain ⟨x₂, x₂', i₂, i₂', d₂, d₂', q₂⟩ := key χ₂ b₂ b₂' v₂ e₂ k₂ s₂
-  have t := hε.ind E L w v h hv hL ψ ψL hc h1 hcL hψL x₁ x₂ _ _ i₁ i₂ (d₁.trans d₂.symm)
-  have t' := hε'.ind E' L' w' v' h' hv' hL' ψ' ψL' hc' h1' hcL' hψL' x₁' x₂' _ _ i₁' i₂' (d₁'.trans d₂'.symm)
-  rw [← q₁, ← q₂] at t'
-  apply mul_right_cancel (b := ε L v hv ψL x₂)
-  rw [mul_right_comm, t, mul_assoc _ (ε' E' w' h' ψ' (WD.mk b₁')), t']
-  simp only [mul_assoc, mul_comm, mul_left_comm]
-
 end Two
-
-theorem eps_eq_of_placeIso : GlobalArtinReciprocity → ChevalleyUnits → BrauerDegreeZero → LocalLanglandsExists → ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (E' Ω' : Type) [Field E'] [NumberField E'] [Field Ω'] [Algebra E' Ω'] [IsAlgClosure E' Ω'] (A' : ValuationSubring Ω') (w' : HeightOneSpectrum (𝓞 E')) (h' : IsPlaceOver A' w') (φ : Ω ≃+* Ω') (j : E →+* E') (i : w.adicCompletion E ≃+* w'.adicCompletion E'), PlaceIso A w A' w' φ j i → ∀ (ε : EpsFamily A) (ε' : EpsFamily A'), IsDeligneEps ε → IsDeligneEps ε' → ∀ (ψ : AddChar (w.adicCompletion E) Circle) (ψ' : AddChar (w'.adicCompletion E') Circle), Continuous ψ → ψ ≠ 1 → (∀ x, ψ' (i x) = ψ x) → ∀ (y : WD h) (y' : WD h'), WDRel φ y y' → ε E w h ψ y = ε' E' w' h' ψ' y' := by
-  intro hG hC hB hLL E Ω _ _ _ _ _ A w h E' Ω' _ _ _ _ _ A' w' h' φ j i hP ε ε' hε hε' ψ ψ' hc h1 hψ y y' hy
-  obtain ⟨hc', h1'⟩ := addChar_transport hP hc h1 hψ
-  obtain ⟨S, hS, -, -, hSadd, -, -, -, -, hSchar⟩ := GlobalTheory.T.place_over_transport_ring_iso_symm E Ω A w h E' Ω' A' w' h' φ j i hP
-  obtain ⟨c, hcr, hdeg, hq, hsm⟩ := GlobalTheory.T.place_over_transport_ring_iso E Ω A w h E' Ω' A' w' h' φ j i hP
-  have rep : ∀ (n : ℕ) (b : WDRep h (Fin n → ℂ)), ∃ b' : WDRep h' (Fin n → ℂ),
-      S (WD.mk b) = WD.mk b' ∧ ∀ σ, b'.ρ (c σ) = b.ρ σ := by
-    intro n b
-    let b' : WDRep h' (Fin n → ℂ) :=
-      { ρ := b.ρ.comp c.symm.toMonoidHom
-        N := b.N
-        smooth := (hsm _ _).2 (b.smooth.of_le fun σ hσ => by simpa using hσ)
-        semisimple := fun σ => b.semisimple _
-        nilpotent := b.nilpotent
-        comm := fun σ => by
-          have := b.comm (c.symm σ)
-          rw [← hdeg, c.apply_symm_apply, ← hq] at this
-          exact this }
-    have hb : ∀ σ, b'.ρ (c σ) = b.ρ σ := fun σ => congrArg b.ρ (c.symm_apply_apply σ)
-    exact ⟨b', (hS _ _).1 ⟨n, b, b', rfl, rfl, rfl, fun σ σ' hσ => by rw [← (hcr _ _).1 hσ, hb]⟩, hb⟩
-  have hpol : ∀ x σ, (S x).charPol (c σ) = x.charPol σ := by
-    intro x σ
-    obtain ⟨n, b, rfl⟩ := x.exists_rep
-    obtain ⟨b', h2, h3⟩ := rep n b
-    rw [h2, WD.charPol_mk, WD.charPol_mk, h3]
-  rw [← (hS y y').1 hy]
-  refine GlobalTheory.T.epsilon_unique_of_inductive hB E Ω A w h (ε E w h ψ) (fun x => ε' E' w' h' ψ' (S x)) (hε.add E w h ψ hc h1)
-    (fun x z => by rw [hSadd, hε'.add E' w' h' ψ' hc' h1']) (fun x z hxz => ⟨eps_eq_of_charPol hε hc h1 hxz,
-      eps_eq_of_charPol hε' hc' h1' fun σ => ?_⟩) (fun ξ hξ => ?_)
-    (fun H hH hHo χ₁ χ₂ n b₁ b₂ v₁ v₂ hn k₁ k₂ s₁ s₂ => ?_) y
-  · obtain ⟨σ, rfl⟩ := c.surjective σ
-    rw [hpol, hpol, hxz]
-  · have hξ' : GlobalTheory.WeilDeligne.IsSmooth (ξ.comp c.symm.toMonoidHom) :=
-      (hsm _ _).2 (hξ.of_le fun σ hσ => by simpa using hσ)
-    have hr : ∀ σ σ', WeilRel φ σ σ' → ξ σ = (ξ.comp c.symm.toMonoidHom) σ' := fun σ σ' hσ => by
-      simp [← (hcr _ _).1 hσ]
-    rw [hSchar ξ hξ _ hξ' hr]
-    exact eps_char hG hC hLL hP hε hε' hc h1 hψ hξ hξ' hr
-  · obtain ⟨b₁', f₁, e₁⟩ := rep n b₁
-    obtain ⟨b₂', f₂, e₂⟩ := rep n b₂
-    rw [f₁, f₂]
-    exact eps_ind hG hC hLL hP hε hε' hc h1 hψ c hcr H hH hHo χ₁ χ₂ b₁ b₂ b₁' b₂' e₁ e₂ v₁ v₂ hn k₁ k₂ s₁ s₂
 
 end GlobalTheory.LocLanglands.EpsUnique
 

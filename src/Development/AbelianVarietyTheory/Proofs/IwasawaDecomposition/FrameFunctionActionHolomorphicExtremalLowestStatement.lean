@@ -148,7 +148,7 @@ theorem vhol_adj (lam : ι → DomWeight n) (a : ι → Matrix (Fin n) (Fin n) �
     fockL (vact lam a x) y = fockL x (vact lam (fun τ => (a τ)ᴴ) y) := by
   simp only [vact, LinearMap.smul_apply, AlgHom.toLinearMap_apply, LinearMap.map_smulₛₗ, map_smul,
     fockL_blockAct_adj, Matrix.conjTranspose_nonsing_inv, Matrix.det_conjTranspose, starRingEnd_apply, star_prod,
-    star_zpow₀, RingHom.id_apply]
+    star_zpow₀]
 
 theorem vhol_units (lam : ι → DomWeight n) (G : ι → GL (Fin n) ℂ) :
     vact lam (fun τ => (G τ : Matrix (Fin n) (Fin n) ℂ)) = actP lam (invTrK G) := by
@@ -295,7 +295,7 @@ open scoped TensorProduct InnerProductSpace Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.frameFunctionAction_holomorphic_extremal_lowest : ∀ (ι : Type) [Fintype ι] (n : ℕ) (lam : ι → DomWeight n), IsHolFam (fun _ => allPos n) fockL (vact lam) ∧ IsBotFam (fun _ => allPos n) (vact lam) (fun τ j => -((lam τ).w j : ℝ)) (ten fun τ => extremal ℂ n (lam τ)) ∧ (ten fun τ => extremal ℂ n (lam τ)) ≠ 0 ∧ (ten fun τ => extremal ℂ n (lam τ)) ∈ VV ℂ lam := by
-  first | exact @GlobalTheory.JointHarm.vact_isHolFam_isBotFam | exact GlobalTheory.JointHarm.vact_isHolFam_isBotFam | (intros; apply GlobalTheory.JointHarm.vact_isHolFam_isBotFam <;> assumption)
+  first | exact @GlobalTheory.JointHarm.vact_isHolFam_isBotFam
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FrameFunctionActionHolomorphicExtremalLowestStatement =====

@@ -136,7 +136,7 @@ theorem theta_pos (C : Choice X θ) (u : D.what₂.Word) (τ : D.what₂.Tau) : 
     unfold Formalism.REAL.muG
     exact (isOpen_univ.measure_pos _ Set.univ_nonempty).ne'
   have h1 := hq (fun _ => 1) measurable_const
-  simp only [lintegral_const, Measure.coe_zero, Pi.zero_apply, zero_mul, lintegral_zero, mul_one] at h1
+  simp only [lintegral_const, Measure.coe_zero, Pi.zero_apply] at h1
   unfold muGB at h1
   rw [Measure.map_apply hmeas MeasurableSet.univ, Set.preimage_univ] at h1
   simp only [one_mul, mul_zero, zero_mul] at h1
@@ -179,14 +179,13 @@ theorem sigB_rep (C : Choice X θ) (τ : D.what₂.Tau) :
 private theorem conj_mem_lemma (C : Choice X θ) (τ : D.what₂.Tau) (γ : Formalism.REAL.UJ (X.B.I.ε (vOf X τ))) :
     C.Qi τ * uMat γ * C.Q τ ∈ Formalism.QuantumDeterminants.UH (Formalism.QuantumDeterminants.Hpk D.R.k D.R.rS) := by
   obtain ⟨h1, h2, h3, -⟩ := C.isT τ
-  have hγ : (uMat γ)ᴴ * Formalism.REAL.Jm (X.B.I.ε (vOf X τ)) * uMat γ = Formalism.REAL.Jm (X.B.I.ε (vOf X τ)) := γ.2
   have hA : ∀ M : Matrix (Fin X.B.I.n) (Fin (2 * D.R.rS + D.R.k + 1)) ℂ, (C.Qi τ)ᴴ * ((C.Q τ)ᴴ * M) = M := fun M => by
     rw [← Matrix.mul_assoc, ← Matrix.conjTranspose_mul, h2, Matrix.conjTranspose_one, Matrix.one_mul]
   have hB : ∀ M : Matrix (Fin X.B.I.n) (Fin (2 * D.R.rS + D.R.k + 1)) ℂ, C.Q τ * (C.Qi τ * M) = M := fun M => by
     rw [← Matrix.mul_assoc, h2, Matrix.one_mul]
   have hC : ∀ M : Matrix (Fin X.B.I.n) (Fin (2 * D.R.rS + D.R.k + 1)) ℂ,
       (uMat γ)ᴴ * (Formalism.REAL.Jm (X.B.I.ε (vOf X τ)) * (uMat γ * M)) = Formalism.REAL.Jm (X.B.I.ε (vOf X τ)) * M := fun M => by
-    rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hγ]
+    rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, γ.2]
   show (C.Qi τ * uMat γ * C.Q τ)ᴴ * Formalism.QuantumDeterminants.Hpk D.R.k D.R.rS * (C.Qi τ * uMat γ * C.Q τ) =
     Formalism.QuantumDeterminants.Hpk D.R.k D.R.rS
   rw [← h3]
@@ -271,12 +270,12 @@ theorem sideQ (hRT : ReproTr) (hL2 : L2RightTranslation) (hGp : GapOfHyp) {C : C
         rconv (muGB X (C.Q τ) (C.Qi τ) τ) (eFun (muGB X (C.Q τ) (C.Qi τ) τ) (sigB X (C.Q τ) (C.Qi τ) τ) (v0Of C τ))
           (fun x => wT C u τ (x * C.y τ)) x = wT C u τ (x * C.y τ)) ∧
       l2SG (C.nuS u τ) (fun x => wT C u τ (x * C.y τ)) ≠ 0 ∧ l2SG (C.nuS u τ) (fun x => wT C u τ (x * C.y τ)) < ⊤ := by
-  obtain ⟨hwsm, hw1, hSH, hWc, hWe, hWr, hne, hfin⟩ := hLF u τ
+  obtain ⟨_, hw1, hSH, hWc, hWe, hWr, hne, hfin⟩ := hLF u τ
   have hθ := theta_pos C u τ
   obtain ⟨h, hgap, hok⟩ := hGp D hG τ
   obtain ⟨hz, hTz⟩ := Formalism.L2.SG.Pf.zTr C u τ
   have hT : 0 < Formalism.QuantumDeterminants.Tz D.R.k D.R.rS (zB X (C.Qi τ) u τ) := by rw [hTz]; exact Tr_pos D u
-  obtain ⟨h1, h2, hg, -⟩ := C.isT τ
+  obtain ⟨_, h2, hg, -⟩ := C.isT τ
   have hy := C.y_mem τ
   obtain ⟨hrep, hiso⟩ := sigB_rep C τ
   have hHG := haarTr C τ
@@ -293,9 +292,7 @@ theorem sideQ (hRT : ReproTr) (hL2 : L2RightTranslation) (hGp : GapOfHyp) {C : C
   · obtain ⟨P, hP, hmem⟩ := C.y_low τ
     refine ⟨P, hP, ?_, hmem⟩
     show ‖X.B.σ (vOf X τ) (C.Q τ * C.y τ * C.Qi τ) (X.B.w (vOf X τ))‖ = 1
-    have := hiso (C.y τ) hy (X.B.w (vOf X τ))
-    rw [← hw1]
-    exact this
+    simpa only [sigB, ← hw1] using hiso (C.y τ) hy (X.B.w (vOf X τ))
   · exact hWc.comp (continuous_id.matrix_mul continuous_const).continuousOn hmaps
   · intro hh hhU m hm g hgU
     show wT C u τ (hh * m * g * C.y τ) = _ • _
@@ -350,8 +347,6 @@ theorem wuBesselOfLoc {D : D7} {X : HidaSetting D} {θ : ℝ} (hRT : ReproTr) (h
   have hyi2 : C.y τ * yi = 1 := by
     first
       | exact mul_eq_one_comm.mp hyi1
-      | exact (Matrix.mul_eq_one_comm (M := yi)).mp hyi1
-      | (letI := Matrix.invertibleOfLeftInverse (C.y τ) yi hyi1; exact Matrix.mul_invOf_self (C.y τ))
   have hyiU : yiᴴ * Formalism.QuantumDeterminants.Hpk D.R.k D.R.rS * yi = Formalism.QuantumDeterminants.Hpk D.R.k D.R.rS := by
     calc yiᴴ * Formalism.QuantumDeterminants.Hpk D.R.k D.R.rS * yi
         = yiᴴ * ((C.y τ)ᴴ * Formalism.QuantumDeterminants.Hpk D.R.k D.R.rS * C.y τ) * yi := by rw [hy]

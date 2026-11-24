@@ -173,7 +173,7 @@ open GlobalTheory.RowEx
 open GlobalTheory.FunObj
 
 theorem _root_.GlobalTheory.T.finite_pureData_of_cosetIndicatorExpansions_depth : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} {G : GridData L sc} {W : G.Weil} {U : Set T} (S : GridChoice W U) (t : T) (Φ : G.Datum) (β : CosFam G t) (k : ℕ), {d : PureDat G t | ∃ τ, IsCosetExpansion S t Φ β k τ ∧ d ∈ τ.support}.Finite := by
-  first | exact @GlobalTheory.RowTest.CosetFin.finite_pureDat_of_depth | exact GlobalTheory.RowTest.CosetFin.finite_pureDat_of_depth | (intros; apply GlobalTheory.RowTest.CosetFin.finite_pureDat_of_depth <;> assumption)
+  first | exact @GlobalTheory.RowTest.CosetFin.finite_pureDat_of_depth
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FinitePureDataOfCosetIndicatorExpansionsDepthStatement =====
@@ -496,7 +496,7 @@ open GlobalTheory.RowEx
 open GlobalTheory.FunObj
 
 theorem _root_.GlobalTheory.T.rowTestChoice_datum_surjective : ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn D.what₂.LL Γ Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks} (large₂ : SizeData₂ D) (F : Face D A), HidaSetting large₂ R F → ∀ (ch : Choice R), ch.Is → ∀ (Φ : ch.G.Datum), ∃ a, ch.Phi a = Φ := by
-  first | exact @GlobalTheory.ChoiceSurjectivity.choice_phi_surj | exact GlobalTheory.ChoiceSurjectivity.choice_phi_surj | (intros; apply GlobalTheory.ChoiceSurjectivity.choice_phi_surj <;> assumption)
+  first | exact @GlobalTheory.ChoiceSurjectivity.choice_phi_surj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RowTestChoiceDatumSurjectiveStatement =====

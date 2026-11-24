@@ -96,7 +96,7 @@ open GlobalTheory.StdUnn PositivityTheory.GramSchwartzFunctions PositivityTheory
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.countable_matrices_and_cosets : ∀ (D : D7) (a b : ℕ), Countable (Matrix (Fin a) (Fin b) D.host.E) ∧ Countable (GlobalTheory.Eis.Cosets (P D b) (GF D b)) := by
-  first | exact @GlobalTheory.CompanionTheory.FJE.countable_mat_cosets | exact GlobalTheory.CompanionTheory.FJE.countable_mat_cosets | (intros; apply GlobalTheory.CompanionTheory.FJE.countable_mat_cosets <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.FJE.countable_mat_cosets
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CountableMatricesAndCosetsStatement =====

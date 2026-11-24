@@ -893,7 +893,6 @@ theorem column_degree_bound : CDge := by
   all_goals first
     | exact_mod_cast h2
     | (rw [sub_nonneg]; exact_mod_cast (by omega : 1 ≤ ℓ))
-    | (rw [sub_pos]; exact_mod_cast (by omega : 1 < ℓ))
 
 end Formalism.KernelCokernelLengths
 end -- clump:auto
@@ -1056,18 +1055,10 @@ theorem main (O : Type) [CommRing O] (M : Type) [AddCommGroup M] [Module O M]
     Module.length_eq_add_of_exact _ _ (LinearMap.range f).injective_subtype
       (LinearMap.range f).mkQ_surjective (LinearMap.exact_subtype_mkQ _)
   rw [h2] at h1
-  have hk : Module.length O (LinearMap.ker f) ≠ ⊤ := by
-    intro h; apply hM; rw [h1, h]; exact top_add _
   have hr : Module.length O (LinearMap.range f) ≠ ⊤ := by
-    intro h; apply hM; rw [h1, h]; exact add_top _
-  have hc : Module.length O (M ⧸ LinearMap.range f) ≠ ⊤ := by
-    intro h; apply hM; rw [h3, h]; exact add_top _
-  lift Module.length O M to ℕ using hM with m hm
-  lift Module.length O (LinearMap.ker f) to ℕ using hk with a ha
-  lift Module.length O (LinearMap.range f) to ℕ using hr with b hb
-  lift Module.length O (M ⧸ LinearMap.range f) to ℕ using hc with c hc'
-  norm_cast at h1 h3 ⊢
-  omega
+    intro h
+    exact hM (h3.trans (by rw [h, top_add]))
+  exact ENat.add_left_injective_of_ne_top hr (h1.symm.trans (h3.trans (add_comm _ _)))
 
 theorem coker (O : Type) [CommRing O] (M M' : Type) [AddCommGroup M] [Module O M]
     [AddCommGroup M'] [Module O M'] (f : Module.End O M) (f' : Module.End O M')
@@ -1077,11 +1068,8 @@ theorem coker (O : Type) [CommRing O] (M M' : Type) [AddCommGroup M] [Module O M
     rintro _ ⟨m, rfl⟩
     exact ⟨g m, (LinearMap.congr_fun hc m).symm⟩
   have hs : Function.Surjective (Submodule.mapQ (LinearMap.range f) (LinearMap.range f') g hle) := by
-    intro x
-    induction x using Submodule.Quotient.induction_on with
-    | H y =>
-      obtain ⟨m, rfl⟩ := hg y
-      exact ⟨Submodule.Quotient.mk m, rfl⟩
+    rw [← LinearMap.range_eq_top, Submodule.range_mapQ, LinearMap.range_eq_top.mpr hg,
+      Submodule.map_top, LinearMap.range_eq_top.mpr (Submodule.mkQ_surjective _)]
   exact Module.length_le_of_surjective _ hs
 
 end Formalism.KernelCokernelLengths.KernelCokernelEqualityLemmas

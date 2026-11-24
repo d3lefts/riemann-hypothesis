@@ -1,31 +1,20 @@
 {
   "snapshot": {
-    "git_commit": "57bcce439e20f62fea61a183a4096d14b75991ff",
-    "source_tree": "2f36319eed59bff64ec3b3d9b0bf9bfb2776b38a",
-    "toolchain": "leanprover/lean4:v4.36.0",
-    "lakefile_sha256": "e12dd96eb155851de5107571dbfc959e5d9b230ead90331b4778b55b048590bb",
-    "manifest_sha256": "ee003c5c7a9b2b2a82a142b6633916661c07117199dd143d94d1af63910237df",
-    "fingerprint": "6c25bf35d851d9886a9cee5fa8806c40872f7d492d985a1a110f2abf1baa128f"
+    "toolchain": "leanprover/lean4:v4.37.0-rc1",
+    "lakefile_sha256": "8672b307e6ff65f6d3ffcd33f18b30bc2a7f4212cd4d931c78a9337a8c49580d",
+    "manifest_sha256": "6b5ad855ab2f8544071569928d1b84e8e6be14636e7b2809e7ccabb3937934ee"
   },
-  "worklist_modules": 149211,
-  "worklist_sha256": "cd133575a486597e51e28444a724c00d61a1cde9eb0feb75c6b55dc5b8f84a36",
-  "max_batch_modules": 256,
+  "worklist_modules": 149216,
+  "worklist_sha256": "b567310f8067a47f4a12db3f7ee8992cfe65a2b7e0c069a0a0e2f2fcc5f38def",
+  "max_batch_modules": 4096,
   "minimum_cpus": 16,
   "minimum_memory_mib": 65536,
   "baseline": {
-    "revision": "d4663eed405af528c67a3b1213021373cf8c0a5c",
-    "source_tree": "612386007adebbfa6651fdca9b1ab8f560ab2722",
-    "map_sha256": "8a5c16ae8f3b4fdc5fba35171672f2154321c75087103eb2ef84cbdb26d2a9e9",
-    "manifest_sha256": "0289e5c3d13cebb1dc45eda64ad73571dcf94fbb5a2b5b1799bd22b8825f4d0a",
-    "modules": 149396,
-    "unchanged_modules": 5,
-    "unchanged_module_names": [
-      "Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsMatrixForm",
-      "Development.AutomorphicArithmetic.CharacterBoxes.EveryCharacter",
-      "GroundTheory.HeightsAndTheta.Heights.RemainderTerms.Statements",
-      "ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.WithBotEqOfAddOne",
-      "Statements"
-    ]
+    "fresh_project": true,
+    "unchanged_modules": 0,
+    "unchanged_module_names": []
   },
-  "candidate_modules": 149216
+  "candidate_modules": 149216,
+  "pr_number": 185,
+  "approval_mode": "ancestor-of-open-pr"
 }

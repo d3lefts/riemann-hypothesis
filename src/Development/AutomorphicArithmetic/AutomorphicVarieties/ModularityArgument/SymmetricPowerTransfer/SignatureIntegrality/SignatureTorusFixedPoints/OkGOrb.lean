@@ -140,10 +140,10 @@ private def A0 (Δ τ : K) : Matrix (Fin 3) (Fin 3) (Lsq K Δ) :=
   !![1, 0, 0; 0, 0, -1; 0, 1, algebraMap K _ τ]
 
 private theorem Am_crd (v : Fin 3 → Lsq K Δ) : Am (crd (τ := τ) v) = crd (A0 Δ τ *ᵥ v) := by
-  ext <;> simp [Am, crd, A0, ofE, Matrix.mulVec, dotProduct, Fin.sum_univ_three]
+  ext <;> simp [Am, crd, A0, ofE, dotProduct, Fin.sum_univ_three]
 
 private theorem companion_charpoly_factor : (A0 Δ τ).charpoly = (X - 1) * (X ^ 2 - C (algebraMap K _ τ) * X + 1) := by
-  simp [Matrix.charpoly, A0, Matrix.det_fin_three, Matrix.charmatrix_apply, Matrix.diagonal]
+  simp [Matrix.charpoly, A0, Matrix.det_fin_three]
   ring
 
 private theorem hasTau_of (hd : IsDat c d m) (h : Models c d m δ ι Q) : HasTau δ τ := by
@@ -234,12 +234,12 @@ private theorem diag_of {T : Matrix (Fin 3) (Fin 3) K} {a b re im τ : K} (ha : 
       diagonal ![a, 1, b] * diagonal ![a, 1, b] - τ • diagonal ![a, 1, b] + 1) :
     T = diagonal ![re + im * a, 1, re + im * b] := by
   have e1 : (diagonal ![a, 1, b] - 1 : Matrix (Fin 3) (Fin 3) K) = diagonal ![a - 1, 0, b - 1] := by
-    ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.one_apply]
+    ext i j; fin_cases i <;> fin_cases j <;> simp
   have e2 : (re • (1 : Matrix (Fin 3) (Fin 3) K) + im • diagonal ![a, 1, b]) = diagonal ![re + im * a, re + im, re + im * b] := by
-    ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.one_apply]
+    ext i j; fin_cases i <;> fin_cases j <;> simp
   have e3 : (diagonal ![a, 1, b] * diagonal ![a, 1, b] - τ • diagonal ![a, 1, b] + 1 : Matrix (Fin 3) (Fin 3) K) =
       diagonal ![0, 2 - τ, 0] := by
-    ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.one_apply, hA, hB]
+    ext i j; fin_cases i <;> fin_cases j <;> simp [hA, hB]
     ring
   rw [e1, e2] at h1
   rw [e3] at h2
@@ -470,7 +470,7 @@ theorem UpperTheory.V.Z.Sym.Sig.fixG : UpperTheory.V.Z.Sym.Sig.FixG := by
       simp only [dg, ← map_mul]
       congr 1
       funext i
-      fin_cases i <;> simp [div_eq_mul_inv, mul_comm]
+      fin_cases i <;> simp [div_eq_mul_inv]
     have A : g * th' k g = y⁻¹ * dg ![x₁ / z₁, 1, (x₁ / z₁)⁻¹] * y := by
       have : g * th' k g = y⁻¹ * (dg ![x₁, y₁, z₁] * th' k (dg ![x₁, y₁, z₁])) * y := by
         rw [hg_def, map_mul, map_mul, map_inv, Pres.invol hF.1]
@@ -487,7 +487,7 @@ theorem UpperTheory.V.Z.Sym.Sig.fixG : UpperTheory.V.Z.Sym.Sig.FixG := by
       simp only [dg, ← map_mul]
       congr 1
       funext i
-      fin_cases i <;> simp [hp, div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc]
+      fin_cases i <;> simp [hp, div_eq_mul_inv, mul_comm, mul_assoc]
     have B : (j⁻¹ * g * th' k j) * th' k (j⁻¹ * g * th' k j) = j⁻¹ * (g * th' k g) * j := by
       simp only [map_mul, map_inv, Pres.invol hF.1]
       group
@@ -682,10 +682,10 @@ theorem orbital_integral_over_base_group : UnitaryHyperbolicOrbitCount := by
         rcases (by decide : ∀ j : Fin 3, j = 0 ∨ j = 1 ∨ j = 2) i with rfl | rfl | rfl
         · convert one_mem V.H using 1
           ext
-          simp [U] <;> field_simp
+          simp [U]
         · convert hab' using 1
           ext
-          simp [U] <;> field_simp
+          simp [U]
         · convert one_mem V.H using 1
           ext
           simp [U])
@@ -705,7 +705,7 @@ theorem orbital_integral_over_base_group : UnitaryHyperbolicOrbitCount := by
       have h1 := inv_mem (hs 1)
       convert h1 using 1
       ext
-      simp [U, Pi.mul_apply] <;> field_simp
+      simp [U, Pi.mul_apply]
     have hrng : ∀ o : orbitRel.Quotient T (GL (Fin 3) k ⧸ V.J 3),
         V.unitaryDoubleCosetIndicator d (o.out.out⁻¹ * δ * th k 3 o.out.out) ≠ 0 ↔ o ∈ Set.range Ψ := by
       intro o
@@ -735,7 +735,7 @@ theorem orbital_integral_over_base_group : UnitaryHyperbolicOrbitCount := by
           simp [U, Pi.mul_apply] <;> field_simp
         · convert one_mem V.H using 1
           ext
-          simp [U, Pi.mul_apply] <;> field_simp
+          simp [U, Pi.mul_apply]
         · convert one_mem V.H using 1
           ext
           simp [U, Pi.mul_apply]
@@ -750,7 +750,7 @@ theorem orbital_integral_over_base_group : UnitaryHyperbolicOrbitCount := by
         refine ⟨?_, ?_, ?_⟩
         · convert one_mem V.H using 1
           ext
-          simp [U] <;> field_simp
+          simp [U]
         · convert mul_mem hs0 (inv_mem hv2) using 1
           ext
           simp [U] <;> field_simp

@@ -110,7 +110,7 @@ theorem re_nonneg_of_rat {k : ℕ} (M : Matrix (Fin k) (Fin k) ℂ) (z : ℂ) (h
   let p : (Fin k → ℝ) × (Fin k → ℝ) := (fun i => (v i).re - (v i).im / z.im * z.re, fun i => (v i).im / z.im)
   have hp : ψ p = v := by
     funext i
-    apply Complex.ext <;> simp [ψ, p] <;> (try field_simp) <;> (try ring)
+    apply Complex.ext <;> simp [ψ, p] <;> (try field_simp)
   have h1 := key p
   rwa [hp] at h1
 
@@ -308,7 +308,7 @@ theorem hform_single {E : Type} [CommRing E] (σ : E →+* E) {k : ℕ} (J : Mat
     (i0 : Fin k) (s : E) :
     hform σ J (Pi.single i0 s) (Pi.single i0 s) = σ s * J i0 i0 * s := by
   unfold PI.hform
-  simp [Pi.single_apply, Finset.sum_ite_eq, Finset.sum_ite_eq', mul_assoc, mul_comm, mul_left_comm]
+  simp [Pi.single_apply, Finset.sum_ite_eq', mul_comm, mul_left_comm]
   rw [Finset.sum_eq_single i0]
   · simp
   · intro b _ hb
@@ -655,11 +655,9 @@ theorem unip_step {k : ℕ} {H W : Matrix (Fin k) (Fin k) ℂ} (hH : H.PosDef) (
     rw [Matrix.mulVec_sub]
     first
       | rw [dotProduct_sub, h1, sub_self]
-      | rw [Matrix.dotProduct_sub, h1, sub_self]
   by_contra hne
   have hpos : 0 < star u ⬝ᵥ (H *ᵥ u) := by
     first
-      | exact hH.2 u hne
       | exact hH.dotProduct_mulVec_pos hne
   rw [key] at hpos
   exact lt_irrefl _ hpos
@@ -689,8 +687,6 @@ theorem charpoly_dvd {k : ℕ} (G : Matrix (Fin k) (Fin k) ℂ) (n : ℕ)
     have h1 : Multiset.card G.charpoly.roots = G.charpoly.natDegree := by
       first
         | exact (IsAlgClosed.card_roots_eq_natDegree (k := ℂ))
-        | exact IsAlgClosed.card_roots_eq_natDegree
-        | exact (Polynomial.natDegree_eq_card_roots (IsAlgClosed.splits _)).symm
     rw [h1, Matrix.charpoly_natDegree_eq_dim, Fintype.card_fin]
   have hprod : (G.charpoly.roots.map fun a => X - C a).prod = G.charpoly :=
     Polynomial.prod_multiset_X_sub_C_of_monic_of_roots_card_eq hmon (by
@@ -824,7 +820,7 @@ theorem posDef_form_ne_zero {k : ℕ} {H : Matrix (Fin k) (Fin k) ℂ} (hH : H.P
 
 theorem exists_eigenvector {k : ℕ} (G : Matrix (Fin k) (Fin k) ℂ) (μ : ℂ) (hμ : G.charpoly.IsRoot μ) :
     ∃ v : Fin k → ℂ, v ≠ 0 ∧ G *ᵥ v = μ • v := by
-  first | exact Bl.general_b_fact_right_bis.goal1 .. | (apply Bl.general_b_fact_right_bis.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_right_bis.goal1 <;> assumption) | (apply @Bl.general_b_fact_right_bis.goal1 <;> assumption) | (intros; apply @Bl.general_b_fact_right_bis.goal1 <;> assumption) | (apply @Bl.general_b_fact_right_bis.goal1 <;> first | assumption | infer_instance)
+  first | (apply Bl.general_b_fact_right_bis.goal1 <;> assumption)
 
 theorem stepA : StepA := by
   intro k H G hH hG μ hμ
@@ -993,7 +989,7 @@ theorem tens_finite :
           induction x using TensorProduct.induction_on with
           | zero => simp
           | tmul a e =>
-            simp [Algebra.smul_def, TensorProduct.smul_tmul']
+            simp [Algebra.smul_def]
             rw [show algebraMap K (E ⊗[F] K) c = (1 : E) ⊗ₜ[F] c from rfl,
               Algebra.TensorProduct.tmul_mul_tmul, one_mul]
           | add x y hx hy => simp_all [smul_add] }

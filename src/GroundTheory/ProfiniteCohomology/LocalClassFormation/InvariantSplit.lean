@@ -1,5 +1,6 @@
 module
 
+import Mathlib
 public import GroundTheory.ProfiniteCohomology.LocalClassFormation.InvariantDefs
 public import GroundTheory.ProfiniteCohomology.GaloisCohomology.BrauerInflationDefs
 public import GroundTheory.ProfiniteCohomology.LocalClassFormation.OrderInfRes
@@ -45,7 +46,6 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.PNatToNat
-import Mathlib
 import GroundTheory.LocalFields.MaximalUnramified
 
 -- This file was produced by scripts/clump.py from the modules listed below.

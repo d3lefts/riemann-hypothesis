@@ -226,7 +226,7 @@ theorem GlobalTheory.CommProd.quot_vanish_of_prod : ∀ (G : Type) [Group G] [To
     obtain ⟨-, h0⟩ := (hz a a.2).cutoff hβB
     have e1 : ∀ b : B, ((fun g => ((βB (e.symm g).2 * βA (e.symm g).1 : NNReal) : ℝ) • f g) ∘ φ) (b, a) =
         (βA a : ℝ) • ((βB b : ℝ) • f (a * b)) := fun b => by
-      simp only [Function.comp_apply, hφs, mulEquiv_apply, NNReal.coe_mul, smul_smul]
+      simp only [Function.comp_apply, hφs, NNReal.coe_mul, smul_smul]
       rw [show φ (b, a) = (b : G) * a from rfl, hc _ a.2 _ b.2, mul_comm (βB b : ℝ)]
     simp only [e1, integral_smul, ← h0, smul_zero]
   exact (integral_congr_ae (Filter.Eventually.of_forall hin)).trans (integral_zero _ _)
@@ -245,7 +245,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.quotientIntegral_vanish_of_commutingProduct : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [SecondCountableTopology G] [LocallyCompactSpace G] [T2Space G] [MeasurableSpace G] [BorelSpace G] (A B R : Subgroup G), IsClosed (A : Set G) → IsClosed (B : Set G) → IsClosed (R : Set G) → (∀ a ∈ A, ∀ b ∈ B, a * b = b * a) → (∃ e : (A × B) ≃ₜ G, ∀ p, e p = p.1 * p.2) → (∀ a ∈ A, ∀ b ∈ B, a * b ∈ R → a ∈ R ∧ b ∈ R) → ∀ (μR : Measure R) (μG : Measure G) (ρ : Measure (R.subgroupOf B)) (μ : Measure B), μR.IsHaarMeasure → μR.IsInvInvariant → μG.IsHaarMeasure → ρ.IsHaarMeasure → ρ.IsInvInvariant → μ.IsHaarMeasure → ∀ (f : G → ℂ) (z : ℂ), IsQuotIntL1 μR μG f z → (∀ a ∈ A, IsQuotIntL1 ρ μ (fun b => f (a * b.1)) 0) → z = 0 := by
-  first | exact @GlobalTheory.CommProd.quot_vanish_of_prod | exact GlobalTheory.CommProd.quot_vanish_of_prod | (intros; apply GlobalTheory.CommProd.quot_vanish_of_prod <;> assumption)
+  first | exact @GlobalTheory.CommProd.quot_vanish_of_prod
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.QuotientIntegralVanishOfCommutingProductStatement =====

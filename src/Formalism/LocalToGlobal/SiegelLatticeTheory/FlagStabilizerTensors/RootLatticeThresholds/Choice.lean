@@ -91,12 +91,10 @@ theorem measurable_aff (A B : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1))
 
 theorem uw_inv_eq {z : Fin (2 * r + k + 1) → ℂ} {h : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ}
     (hh : h ∈ UWset k r z) : h⁻¹ = Hpk k r * hᴴ * Hpk k r := by
-  have hH : hᴴ * Hpk k r * h = Hpk k r := by
-    obtain ⟨hU, -, -⟩ := hh
-    exact hU
+  obtain ⟨hU, -, -⟩ := hh
   apply Matrix.inv_eq_left_inv
   calc Hpk k r * hᴴ * Hpk k r * h = Hpk k r * (hᴴ * Hpk k r * h) := by simp only [Matrix.mul_assoc]
-    _ = 1 := by rw [hH, Formalism.QuantumDeterminants.GBasic.Hpk_sq]
+    _ = 1 := by rw [hU, Formalism.QuantumDeterminants.GBasic.Hpk_sq]
 
 theorem uw_inv_mem {z : Fin (2 * r + k + 1) → ℂ} {h : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ}
     (hh : h ∈ UWset k r z) : h⁻¹ ∈ UWset k r z := by
@@ -432,8 +430,7 @@ theorem inUJ_mul {ε : Fin n → Bool} {a b : Matrix (Fin n) (Fin n) ℂ} (ha : 
 theorem kset_sub {ε : Fin n → Bool} {g : Matrix (Fin n) (Fin n) ℂ} (hg : g ∈ Formalism.REAL.Kset ε) : Formalism.REAL.inUJ ε g := by
   obtain ⟨hu, hc⟩ := hg
   have h1 : gᴴ * g = 1 := by
-    rw [← Matrix.star_eq_conjTranspose]
-    exact Matrix.mem_unitaryGroup_iff'.mp hu
+    simpa only [← Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp hu
   unfold Formalism.REAL.inUJ
   rw [Matrix.mul_assoc, ← hc, ← Matrix.mul_assoc, h1, Matrix.one_mul]
 
@@ -532,10 +529,9 @@ theorem host_v_pos (D : D7) : 0 < D.host.v := by
   exact half_pos h
 
 theorem frS_ne (D : D7) : frS D ≠ 0 := by
-  have hv := host_v_pos D
   have hka : 0 < D.host.ka := by
     unfold Formalism.BasicNotions.Host.ka
-    exact div_pos Real.pi_pos hv
+    exact div_pos Real.pi_pos (host_v_pos D)
   unfold Formalism.L2.SG.LocWSOf.frS
   exact Complex.ofReal_ne_zero.mpr (div_pos hka (by positivity)).ne'
 
@@ -694,8 +690,7 @@ theorem tE_inv_mul (μ : ℂ) (hμ : μ ≠ 0) (i : Fin (2 * r + k + 1)) : tE μ
   · rw [one_mul]
 
 theorem tE_mul_inv (μ : ℂ) (hμ : μ ≠ 0) (i : Fin (2 * r + k + 1)) : tE μ k r i * tE μ⁻¹ k r i = 1 := by
-  rw [mul_comm]
-  exact tE_inv_mul μ hμ i
+  exact (mul_comm (tE μ k r i) (tE μ⁻¹ k r i)).trans (tE_inv_mul μ hμ i)
 
 theorem tE_sig (μ : ℂ) (hμ : μ ≠ 0) (i : Fin (2 * r + k + 1)) : star (tE μ k r i) * tE μ k r (sig k r i) = 1 := by
   have hs := Formalism.QuantumDeterminants.GBasic.sig_val k r i
@@ -719,14 +714,12 @@ theorem tE_sig (μ : ℂ) (hμ : μ ≠ 0) (i : Fin (2 * r + k + 1)) : star (tE 
 theorem torS_inv_mul (μ : ℂ) (hμ : μ ≠ 0) : torS μ⁻¹ k r * torS μ k r = 1 := by
   rw [torS_eq, torS_eq, Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
   congr 1
-  funext i
-  exact tE_inv_mul μ hμ i
+  exact funext fun i => tE_inv_mul μ hμ i
 
 theorem torS_mul_inv (μ : ℂ) (hμ : μ ≠ 0) : torS μ k r * torS μ⁻¹ k r = 1 := by
   rw [torS_eq, torS_eq, Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
   congr 1
-  funext i
-  exact tE_mul_inv μ hμ i
+  exact funext fun i => tE_mul_inv μ hμ i
 
 theorem torS_gram (μ : ℂ) (hμ : μ ≠ 0) : (torS μ k r)ᴴ * Hpk k r * torS μ k r = Hpk k r := by
   ext i j
@@ -747,7 +740,7 @@ theorem torS_single (μ : ℂ) (i : Fin (2 * r + k + 1)) :
   rw [Matrix.mulVec_diagonal]
   by_cases h : j = i
   · subst h; simp
-  · simp [Pi.single_apply, h]
+  · simp [h]
 
 end Tor
 
@@ -822,7 +815,6 @@ theorem isFrameJ_scaled {ε : Fin (2 * r + k + 1) → Bool} (lam : ℂ) (hlam : 
       first
         | (rw [mul_one]; exact mul_inv_cancel₀ hs)
         | (rw [mul_one]; exact inv_mul_cancel₀ hs)
-        | field_simp
     · rw [mul_zero, mul_zero]
   · simp only [hJ_smul_left', hez, mul_zero]
   · simp only [hJ_smul_left', hfz, mul_zero]
@@ -951,8 +943,7 @@ open NumberField Formalism.BasicNotions Formalism.MainNotions.S Formalism.L2.SG.
 theorem colsTypeTr {D : D7} {X : HidaSetting D} {θ : ℝ} (C : Choice X θ) (u : D.what₂.Word) (τ : D.what₂.Tau) :
     ColsTypeTr C u τ := by
   have h := colsTypeTr_of X (frS_ne D) (C.isT τ) u
-  rw [show X.pl (vOf X τ) = τ from X.pl.apply_symm_apply τ] at h
-  exact h
+  rwa [show X.pl (vOf X τ) = τ from X.pl.apply_symm_apply τ] at h
 
 end Formalism.L2.SG.Pf
 
@@ -973,7 +964,7 @@ theorem star_single_dot {N : ℕ} (i : Fin N) (w : Fin N → ℂ) : star (Pi.sin
     ext j
     by_cases hj : j = i
     · subst hj; simp
-    · simp [Pi.single_apply, hj]
+    · simp [hj]
   rw [h]
   simp
 
@@ -1213,8 +1204,7 @@ theorem dsHpk_tr {n : ℕ} (hn : n = 2 * r + k + 1) (ε : Fin n → Bool) (ε' :
   subst hεe
   subst hle
   obtain ⟨c1, c2, c3, c4⟩ := cay_facts h2 hg hP
-  have := isDS_conj hds c1 c2 c3 c4
-  simpa only [Matrix.mul_assoc] using this
+  simpa only [Matrix.mul_assoc] using isDS_conj hds c1 c2 c3 c4
 
 theorem fdegHpk_tr {n : ℕ} (hn : n = 2 * r + k + 1) (ε : Fin n → Bool) (ε' : Fin (2 * r + k + 1) → Bool)
     (hε : ∀ i, ε' i = ε (Fin.cast hn.symm i)) {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
@@ -1228,8 +1218,7 @@ theorem fdegHpk_tr {n : ℕ} (hn : n = 2 * r + k + 1) (ε : Fin n → Bool) (ε'
   have hεe : ε' = ε := funext fun i => by rw [hε]; rfl
   subst hεe
   obtain ⟨c1, c2, c3, -⟩ := cay_facts h2 hg hP
-  have := isFdeg_conj hrep c1 c2 c3 hd
-  simpa only [Matrix.mul_assoc] using this
+  simpa only [Matrix.mul_assoc] using isFdeg_conj hrep c1 c2 c3 hd
 
 end DSTr
 
@@ -1242,14 +1231,13 @@ open NumberField Formalism.BasicNotions Formalism.MainNotions.S Formalism.L2.SG.
 theorem dsTr {D : D7} {X : HidaSetting D} {θ : ℝ} (C : Choice X θ) (τ : D.what₂.Tau) :
     IsDSHpk D.R.k D.R.rS (epsSH D.R) (lamD D τ) (sigB X (C.Q τ) (C.Qi τ) τ) := by
   obtain ⟨P, hP⟩ := Formalism.MainNotions.S.Inh.obj_cayleyU_rows D
-  refine ⟨P, hP, ?_⟩
-  exact dsHpk_tr (n_eq' X) (X.B.I.ε (vOf X τ)) (epsSH D.R)
+  exact ⟨P, hP, dsHpk_tr (n_eq' X) (X.B.I.ε (vOf X τ)) (epsSH D.R)
     (fun i => by rw [X.eps_eq]; exact congrArg (epsS D.R) (Fin.ext rfl))
     (X.B.lam (vOf X τ)) (lamD D τ)
     (fun i => by
       rw [X.lam_eq, show X.pl (vOf X τ) = τ from X.pl.apply_symm_apply τ]
       exact congrArg (lamS D.R (D.hc τ)) (Fin.ext rfl))
-    (X.B.σ (vOf X τ)) (X.ds (vOf X τ)) (C.Q τ) (C.Qi τ) (C.isT τ).2.1 (C.isT τ).2.2.1 P hP
+    (X.B.σ (vOf X τ)) (X.ds (vOf X τ)) (C.Q τ) (C.Qi τ) (C.isT τ).2.1 (C.isT τ).2.2.1 P hP⟩
 
 end Formalism.L2.SG.Pf
 

@@ -167,7 +167,7 @@ theorem tensor_irreducible : ∀ (V U : Type) [AddCommGroup V] [Module ℂ V] [A
     intro a y j
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | tmul m n => simp [e, TensorProduct.equivFinsuppOfBasisRight_apply_tmul_apply]
+    | tmul m n => simp [e]
     | add y z hy hz => simp only [map_add (f := _), Finsupp.add_apply, hy, hz]
   have hex : ∃ n, ∃ y ∈ N, y ≠ 0 ∧ (e y).support.card = n := ⟨_, x₁, hx₁N, hx₁, rfl⟩
   obtain ⟨x, hxN, hx0, hxc⟩ := Nat.find_spec hex
@@ -268,7 +268,7 @@ theorem _root_.GlobalTheory.T.tensor_irreducible_of_countable_dimension_irreduci
     (∀ N : Submodule ℂ U, (∀ b ∈ SU, ∀ x ∈ N, b x ∈ N) → N = ⊥ ∨ N = ⊤) →
     ∀ N : Submodule ℂ (V ⊗[ℂ] U), (∀ a ∈ SV, ∀ x ∈ N, LinearMap.rTensor U a x ∈ N) →
       (∀ b ∈ SU, ∀ x ∈ N, LinearMap.lTensor V b x ∈ N) → N = ⊥ ∨ N = ⊤ := by
-  first | exact @GlobalTheory.TensIrr.tensor_irreducible | exact GlobalTheory.TensIrr.tensor_irreducible | (intros; apply GlobalTheory.TensIrr.tensor_irreducible <;> assumption)
+  first | exact @GlobalTheory.TensIrr.tensor_irreducible
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.TensorIrreducibleOfCountableDimensionIrreducibleStatement =====

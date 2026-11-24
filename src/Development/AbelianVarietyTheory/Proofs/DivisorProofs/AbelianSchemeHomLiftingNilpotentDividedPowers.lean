@@ -84,7 +84,7 @@ open CategoryTheory AlgebraicGeometry KaehlerDifferential DividedPowers Reciproc
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.abelianSchemeSquareZeroLifts_of_deRhamCohomology : AbelianHodgeDeRham → AbelianSchemeLifts := by
-  first | exact @GlobalTheory.LiftSys.abelianSchemeLifts_of_abelianHodgeDeRham | exact GlobalTheory.LiftSys.abelianSchemeLifts_of_abelianHodgeDeRham | (intros; apply GlobalTheory.LiftSys.abelianSchemeLifts_of_abelianHodgeDeRham <;> assumption)
+  first | exact @GlobalTheory.LiftSys.abelianSchemeLifts_of_abelianHodgeDeRham
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbelianSchemeSquareZeroLiftsOfDeRhamCohomologyStatement =====

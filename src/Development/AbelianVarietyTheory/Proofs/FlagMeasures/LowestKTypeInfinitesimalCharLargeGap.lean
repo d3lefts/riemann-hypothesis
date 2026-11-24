@@ -323,7 +323,7 @@ theorem centre_scalar_low : ∀ (n : ℕ) (ε : Fin n → Bool) (lam : Fin n →
     intro m c s t
     refine ext_inner_left ℂ fun u => ?_
     rw [inner_add_right, inner_smul_right, hC1, hC1, hC1, ← gelf_comb c (hsm s u) (hsm t u) m 1 h1]
-    simp [inner_add_right, inner_smul_right]
+    simp
   have h0 : ∀ m, C m 0 = 0 := fun m => by simpa using hlin m 1 0 0
   have key : ∀ m, ∃ c : ℂ, ∀ s : lowKSub ε lam σ, C m s = c • (s : H) := by
     intro m
@@ -483,7 +483,6 @@ lemma compress_of_formula (hF : FormulaGap) {ε : Fin n → Bool} {lam : Fin n �
       Phi lam ((toMK k')ᴴ * NormedSpace.exp X * toMK k') :=
     Complex.ext (by simp [Complex.star_def]) (by simp [Complex.star_def, him])
   rw [hreal]
-  try rfl
 
 lemma two_mul_lt_gap {ε : Fin n → Bool} {lam : Fin n → ℝ} {h : ℝ} (hgap : GapAtLeast ε lam h)
     (hh : 120 * (n : ℝ) * ((rkR ε : ℕ) : ℝ) ^ ((3 : ℝ) / 2) ≤ h) (a b : Fin n) (hab : ε a ≠ ε b) :

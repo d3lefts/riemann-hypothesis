@@ -114,7 +114,7 @@ private def rho : Lsq R (algebraMap F R Δ) →+* R ⊗[F] Lsq F Δ where
     have h : (QuadraticAlgebra.omega : Lsq F Δ) * QuadraticAlgebra.omega = Δ • 1 := by
       ext <;> simp [QuadraticAlgebra.re_one, QuadraticAlgebra.im_one]
     simp only [QuadraticAlgebra.re_mul, QuadraticAlgebra.im_mul, mul_add, add_mul, Algebra.TensorProduct.tmul_mul_tmul,
-      TensorProduct.add_tmul, h, mul_one, one_mul, zero_mul, TensorProduct.zero_tmul, add_zero, ← TensorProduct.smul_tmul]
+      TensorProduct.add_tmul, h, mul_one, one_mul, zero_mul, add_zero, ← TensorProduct.smul_tmul]
     simp only [Algebra.smul_def, mul_assoc]
     abel
   map_zero' := by simp
@@ -321,8 +321,8 @@ private theorem int_of_stab (k : HH Δ)
   have h2 : (Pi.single j 1 : Fin 3 → Af F ⊗[F] Lsq F Δ) ∈ latHat F (Lsq F Δ) {x : Fin 3 → Lsq F Δ | ∀ i, IsIntegral ℤ (x i)} := by
     refine AddSubgroup.subset_closure ⟨1, fun w => ?_, Pi.single j 1, fun i => ?_, funext fun i => ?_⟩
     · rw [map_one]; exact one_mem _
-    · by_cases h : i = j <;> simp [Pi.single_apply, h, isIntegral_one, isIntegral_zero]
-    · by_cases h : i = j <;> simp [Pi.single_apply, h, Algebra.TensorProduct.one_def]
+    · by_cases h : i = j <;> simp [h, isIntegral_one, isIntegral_zero]
+    · by_cases h : i = j <;> simp [h, Algebra.TensorProduct.one_def]
   have h3 := h1 _ ((hk _).1 h2)
   rw [Matrix.mulVec_single_one] at h3
   change IsIntegral (Ov v) (ev Δ v _)
@@ -380,7 +380,7 @@ theorem finG_cls {F : Type} [Field F] [NumberField F] [IsTotallyReal F] {Δ : F}
       · exact i.elim0
       · exact i.elim0⟩)
     ⟨1, one_ne_zero, fun x hx i => by simpa using hx i⟩
-    ⟨1, one_ne_zero, fun i e he j => by by_cases h : j = i <;> simp [Pi.single_apply, h, he, isIntegral_zero]⟩
+    ⟨1, one_ne_zero, fun i e he j => by by_cases h : j = i <;> simp [h, he, isIntegral_zero]⟩
   choose l hl using exists_lift Δ hΔ
   obtain ⟨S, hS⟩ := cover_abs ι _ _ l (phi Δ)
     (fun v => (Matrix.unitaryGroup (Fin 3) (Lsq (Kv v) (cv v Δ))).subtype.comp ((rpg _ _).p v)) hl (exists_rat Δ ι hι) x hx
@@ -522,11 +522,10 @@ theorem stab_den_loc (v : Pl F) {d : Kv v} (x : Lsq (Kv v) d) :
     have him : ∀ r : Ov v, (algebraMap (Ov v) (Lsq (Kv v) d) r).im = 0 := fun r => rfl
     apply QuadraticAlgebra.ext
     · simp only [pow_two, QuadraticAlgebra.re_add, QuadraticAlgebra.re_sub, QuadraticAlgebra.re_mul,
-        QuadraticAlgebra.im_mul, QuadraticAlgebra.re_smul, QuadraticAlgebra.im_smul, smul_eq_mul, hre, him,
+        QuadraticAlgebra.re_smul, QuadraticAlgebra.im_smul, smul_eq_mul, hre, him,
         QuadraticAlgebra.re_zero]
       ring
-    · simp only [pow_two, QuadraticAlgebra.im_add, QuadraticAlgebra.im_sub, QuadraticAlgebra.re_mul,
-        QuadraticAlgebra.im_mul, QuadraticAlgebra.re_smul, QuadraticAlgebra.im_smul, smul_eq_mul, hre, him,
+    · simp only [pow_two, QuadraticAlgebra.im_add, QuadraticAlgebra.im_sub, QuadraticAlgebra.im_mul, QuadraticAlgebra.re_smul, QuadraticAlgebra.im_smul, smul_eq_mul, hre, him,
         QuadraticAlgebra.im_zero]
       ring
 
@@ -775,7 +774,7 @@ theorem finG_stab [IsTotallyReal F] (hneg : ∀ σ : F →+* ℝ, σ Δ < 0) (ι
   apply Set.Finite.of_finite_image (f := fun γ : U3 Δ => (γ : Matrix (Fin 3) (Fin 3) (Lsq F Δ)))
   · refine (Set.Finite.pi (fun _ : Fin 3 => Set.Finite.pi (fun _ : Fin 3 => hL))).subset ?_
     rintro _ ⟨γ, hγ, rfl⟩
-    simp only [Set.mem_pi]
+    simp only
     intro i _ j _
     exact key γ hγ i j
   · intro a _ b _ hab

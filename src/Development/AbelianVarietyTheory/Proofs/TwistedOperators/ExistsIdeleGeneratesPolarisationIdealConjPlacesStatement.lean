@@ -215,7 +215,7 @@ open GlobalTheory.LiftLevel
 
 
 theorem _root_.GlobalTheory.T.exists_global_scalar_prime_to_conj_polarisationLattice' : ∀ (D : D7) (n : ℕ) (Λ ΛT : Lt D.host.E n), IsAA Λ ΛT → ∀ P : Finset (Formalism.L2.DIV.Pl D.host.E), ∃ γ : D.host.E, γ ≠ 0 ∧ ∃ s : 𝓞 D.host.E, (∀ PP ∈ P, s ∉ conjI PP.asIdeal) ∧ (∀ v ∈ Λ, ((s : D.host.E) * γ⁻¹) • v ∈ ΛT) ∧ (∀ v ∈ ΛT, ((s : D.host.E) * γ) • v ∈ Λ) := by
-  first | exact @GlobalTheory.GenChoice.exists_global_scalar_prime_to_conj_polarisationLattice | exact GlobalTheory.GenChoice.exists_global_scalar_prime_to_conj_polarisationLattice | (intros; apply GlobalTheory.GenChoice.exists_global_scalar_prime_to_conj_polarisationLattice <;> assumption)
+  first | exact @GlobalTheory.GenChoice.exists_global_scalar_prime_to_conj_polarisationLattice
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsGlobalScalarPrimeToConjPolarisationLatticeStatement =====
@@ -238,8 +238,6 @@ namespace GlobalTheory.HalfUnit
 theorem cc_star (D : D7) (x : D.host.E) : cc (star x) = x := by
   first
   | exact star_star x
-  | rfl
-  | simp [cc]
 
 theorem mem_conjI_of (D : D7) (P : Ideal (𝓞 D.host.E)) (s : 𝓞 D.host.E)
     (h : Formalism.L2.Col.cO D.host.E s ∈ P) : s ∈ conjI P :=
@@ -303,7 +301,7 @@ open GlobalTheory.LiftLevel
 
 
 theorem _root_.GlobalTheory.T.exists_integral_inverse_on_conjugate_half : ∀ (D : D7) (P : Finset (Formalism.L2.DIV.Pl D.host.E)) (e : AE D), IsIdemSum e P → ∀ s : 𝓞 D.host.E, (∀ PP ∈ P, s ∉ conjI PP.asIdeal) → ∃ t : AE D, finPart D t ∈ intAE D ∧ t * incA D (s : D.host.E) * cA D e = cA D e := by
-  first | exact @GlobalTheory.HalfUnit.exists_int_inv_half | exact GlobalTheory.HalfUnit.exists_int_inv_half | (intros; apply GlobalTheory.HalfUnit.exists_int_inv_half <;> assumption)
+  first | exact @GlobalTheory.HalfUnit.exists_int_inv_half
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIntegralInverseOnConjugateHalfStatement =====
@@ -454,7 +452,7 @@ theorem adj_int_iff : ∀ (D : D7) (S T : HSp D), S.gram = 1 → ∀ (ΛT : Lt D
     funext k j
     obtain ⟨s, hsI, hs⟩ := h k j
     have hse : (⟨adjA S T βS βT 1 x k j, hint k j⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) = s := Subtype.ext hs.symm
-    simp only [Matrix.zero_apply, Pi.zero_apply, dif_pos (hint k j), hse]
+    simp only [Matrix.zero_apply, dif_pos (hint k j), hse]
     exact GlobalTheory.LiftLevel.resS_eq_zero hPP hsI
 
 end GlobalTheory.DualRed
@@ -477,7 +475,7 @@ open GlobalTheory.LiftLevel
 
 
 theorem _root_.GlobalTheory.T.ideleFrameAdjoint_integral_iff_dualLattice : ∀ (D : D7) (S T : HSp D), S.gram = 1 → ∀ (ΛT : Lt D.host.E T.rank), IsSelfDualC T ΛT → ∀ (βS : GL (Fin S.rank) (Lev.EAf D)) (βT : GL (Fin T.rank) (Lev.EAf D)), Formalism.L2.DIV.IsFrame βT ΛT → ∀ (J : Ideal (𝓞 D.host.E)), Squarefree J → ∀ x : WO S T, IsFinPt x → ((IsIntM (adjA S T βS βT 1 x) ∧ ∀ PP : Formalism.L2.DIV.Pl D.host.E, J ≤ PP.asIdeal → redM PP (adjA S T βS βT 1 x) = 0) ↔ x ∈ hatA S T (tens (stdL D.host.E S.rank) (conjI J • ΛT))) := by
-  first | exact @GlobalTheory.DualRed.adj_int_iff | exact GlobalTheory.DualRed.adj_int_iff | (intros; apply GlobalTheory.DualRed.adj_int_iff <;> assumption)
+  first | exact @GlobalTheory.DualRed.adj_int_iff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IdeleFrameAdjointIntegralIffDualLatticeStatement =====
@@ -561,7 +559,7 @@ open GlobalTheory.LiftLevel
 
 
 theorem _root_.GlobalTheory.T.ideleFrameAdjointMatrix_half_idempotent_smul : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (Lev.EAf D)) (βT : GL (Fin T.rank) (Lev.EAf D)) (e : AE D) (c : D.host.E) (x : WO S T), IsHalf (cA D e) x → adjA S T βS βT (e * incA D (star c)) x = adjA S T βS βT 1 (incA D c • x) := by
-  first | exact @GlobalTheory.AdjScalar.adjA_half_smul | exact GlobalTheory.AdjScalar.adjA_half_smul | (intros; apply GlobalTheory.AdjScalar.adjA_half_smul <;> assumption)
+  first | exact @GlobalTheory.AdjScalar.adjA_half_smul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IdeleFrameAdjointMatrixHalfIdempotentSmulStatement =====
@@ -633,7 +631,7 @@ open GlobalTheory.LiftLevel
 
 
 theorem _root_.GlobalTheory.T.incA_smul_mem_adelicCompletionMatrixGroup : ∀ (D : D7) (S T : HSp D) (Λ : Lt D.host.E S.rank) (L1 L2 : Lt D.host.E T.rank) (c : D.host.E), (∀ v ∈ L1, c • v ∈ L2) → ∀ u ∈ hatA S T (tens Λ L1), incA D c • u ∈ hatA S T (tens Λ L2) := by
-  first | exact @GlobalTheory.HatScalar.incA_smul_mem_hatA | exact GlobalTheory.HatScalar.incA_smul_mem_hatA | (intros; apply GlobalTheory.HatScalar.incA_smul_mem_hatA <;> assumption)
+  first | exact @GlobalTheory.HatScalar.incA_smul_mem_hatA
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IncASmulMemAdelicCompletionMatrixGroupStatement =====
@@ -716,7 +714,7 @@ open GlobalTheory.LiftLevel
 
 
 theorem _root_.GlobalTheory.T.prod_primes_squarefree_conjugateIdeal_prod : ∀ (D : D7) (P : Finset (Formalism.L2.DIV.Pl D.host.E)), Squarefree (∏ PP ∈ P, PP.asIdeal) ∧ (∀ PP' : Formalism.L2.DIV.Pl D.host.E, (∏ PP ∈ P, PP.asIdeal) ≤ PP'.asIdeal ↔ PP' ∈ P) ∧ conjI (∏ PP ∈ P, PP.asIdeal) = ∏ PP ∈ P, conjI PP.asIdeal := by
-  first | exact @GlobalTheory.primeProd_squarefree_le_conj | exact GlobalTheory.primeProd_squarefree_le_conj | (intros; apply GlobalTheory.primeProd_squarefree_le_conj <;> assumption)
+  first | exact @GlobalTheory.primeProd_squarefree_le_conj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ProdPrimesSquarefreeConjugateIdealProdStatement =====
@@ -843,7 +841,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.exists_idele_generates_polarisationIdeal_conjPlaces : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (hn : T.rank ≤ S.rank) (ΛT : Lt D.host.E T.rank), IsSelfDualC T ΛT → IsAA C.X.Λ ΛT → ∀ (βS : GL (Fin S.rank) (Lev.EAf D)) (βT : GL (Fin T.rank) (Lev.EAf D)), Formalism.L2.DIV.IsFrame βS (stdL D.host.E S.rank) → Formalism.L2.DIV.IsFrame βT ΛT → ∀ (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (ξ : ∀ PP : Formalism.L2.DIV.Pl D.host.E, (Formalism.L2.DIV.kP PP)ˣ →* ℂˣ), Pg.Nonempty → (∀ PP, PP ∈ Pg ∨ PP ∈ Q → (2 : 𝓞 D.host.E) ∉ PP.asIdeal) → ∀ e : AE D, IsIdemSum e (Pg ∪ Q) → ∃ a : AE D, (∃ b : AE D, a * b = e) ∧ GlobalTheory.LiftLevel.IsGen C βS βT Pg Q e a := by
-  first | exact @GlobalTheory.LiftLevel.exists_isGen | exact GlobalTheory.LiftLevel.exists_isGen | (intros; apply GlobalTheory.LiftLevel.exists_isGen <;> assumption)
+  first | exact @GlobalTheory.LiftLevel.exists_isGen
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIdeleGeneratesPolarisationIdealConjPlacesStatement =====

@@ -292,7 +292,7 @@ theorem integral_chg (T : CDVR) (io : c.F →+* T.Fr) : letI := io.toAlgebra
   have ep : pm = 𝟙 _ := by
     apply pullback.hom_ext
     · refine h2.trans ?_
-      simp only [spMap, CommRingCat.ofHom_id, Spec.map_id, Category.comp_id, Category.id_comp]
+      simp only [spMap, CommRingCat.ofHom_id, Spec.map_id, Category.id_comp]
       rfl
     · exact h1.trans (Category.id_comp _).symm
   subst ep
@@ -476,7 +476,6 @@ theorem recordAt_of_isArcFr : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E
     have key := (_root_.GlobalTheory.ArcQ.isArcFr_unique_baseChange hL hL2 E H Dw l Xo c O β Y Dv.Tv.V b aw χ W e th hth _ _ y₀ hy).2
     first
       | exact key hmono _ φ z₀ hz₀
-      | exact key _ φ z₀ hz₀
   have hI₀ : Integral T' io' z₀ := by
     have key := _root_.GlobalTheory.ArcQ.integral_of_isArcFr hL hL2 E H Dw l Xo c O β Y Dv.Tv.V b aw χ W ρ e th hB hth hP
     have h1 : Function.Injective (e₀.comp (PowerSeries.C (R := Dv.Tv.V))) := by

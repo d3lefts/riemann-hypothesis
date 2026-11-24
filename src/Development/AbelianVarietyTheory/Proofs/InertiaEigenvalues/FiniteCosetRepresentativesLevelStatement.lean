@@ -144,10 +144,6 @@ theorem reps : ∀ {D : D7} {S T : HSp D} (B : Base S T), B.Good → ∀ (ψ : T
       ∀ κ ∈ B.levJ ψ, ∃! u, u ∈ F ∧ u⁻¹ * κ ∈ (GlobalTheory.FlatVecSum.princ B).levJ ψ := by
   first
   | exact @_root_.GlobalTheory.FirstBlocksReduction.exists_reps_levJ
-  | exact _root_.GlobalTheory.FirstBlocksReduction.exists_reps_levJ
-  | (apply _root_.GlobalTheory.FirstBlocksReduction.exists_reps_levJ <;> assumption)
-  | (intros; apply _root_.GlobalTheory.FirstBlocksReduction.exists_reps_levJ <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.FirstBlocksReduction.exists_reps_levJ <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.FirstBlocksReduction.exists_reps_levJ ..)
 
 end GlobalTheory.LevReps
@@ -170,7 +166,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem _root_.GlobalTheory.T.finite_coset_representatives_level : ∀ {D : D7} {S T : HSp D} (B : Base S T), B.Good → ∀ (ψ : Twist D Circle), B.admitted ψ.Q →
     ∃ F : Finset (Bridge.Gf S), (∀ u ∈ F, u ∈ B.levJ ψ) ∧
       ∀ κ ∈ B.levJ ψ, ∃! u, u ∈ F ∧ u⁻¹ * κ ∈ (GlobalTheory.FlatVecSum.princ B).levJ ψ := by
-  first | exact @GlobalTheory.LevReps.reps | exact GlobalTheory.LevReps.reps | (intros; apply GlobalTheory.LevReps.reps <;> assumption)
+  first | exact @GlobalTheory.LevReps.reps
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteCosetRepresentativesLevelStatement =====

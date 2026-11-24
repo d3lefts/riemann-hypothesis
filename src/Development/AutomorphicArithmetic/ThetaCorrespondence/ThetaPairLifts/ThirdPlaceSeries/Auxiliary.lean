@@ -372,7 +372,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.cuspReadG_recT_of_cgTrue : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (D : D7) (T : GlobalTheory.RowTie.WDTie D.nd D.naut), _root_.GlobalTheory.HeightCounting.CGTrueT hL D T → _root_.GlobalTheory.DefiniteBC.CuspReadG (_root_.GlobalTheory.FormDict.recT_alt T hL) := by
-  first | exact @_root_.UpperTheory.One.M.cusp_read_rec_t | exact _root_.UpperTheory.One.M.cusp_read_rec_t | (intros; apply _root_.UpperTheory.One.M.cusp_read_rec_t <;> assumption)
+  first | exact @_root_.UpperTheory.One.M.cusp_read_rec_t
 end
 end -- clump:auto
 end -- clump:auto
@@ -504,7 +504,7 @@ theorem rec_spehQuot_alt : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω
   have hA := _root_.GlobalTheory.isL_of_irreducible_prod_unitarisable_nu _ (_root_.GlobalTheory.LocGL.UnitaryOrder.add_one_le_of_precedes _) a _ σ.ρ σ.irred m δ Δ s hΔ hδu hs hd0 hφ
   have hB := _root_.GlobalTheory.speh_quotient_isL _ hLM (_root_.GlobalTheory.LocGL.UnitaryOrder.add_one_le_of_precedes _) (GlobalTheory.T.parabolicInduction_in_stages_product_of_products _) a _ σ.ρ m δ Δ s hΔ hδu hs hd0 hφ d n hd _ σ'.ρ σ'.irred hq
   have h4 := _root_.GlobalTheory.T.sum_segments_langlands_at_place E Ω A w h rc hrc
-  first | (have hOpn := UpperTheory.One.M.opn _ (hrc); obtain ⟨a', ha', ε, L⟩ := hOpn) | obtain ⟨a', ha', ε, -, L⟩ := hrc
+  first | (have hOpn := UpperTheory.One.M.opn _ (hrc); obtain ⟨a', ha', ε, L⟩ := hOpn)
   rw [L.langlands _ _ (isL_of_equiv hB (equivRep (ParLaws.toRep σ'))),
     L.langlands _ _ (isL_of_equiv hA (equivRep (ParLaws.toRep σ))), List.map_flatMap, sumList_flatMap]
   congr 1
@@ -537,7 +537,7 @@ theorem _root_.GlobalTheory.T.local_langlands_speh_product' : ∀ (E Ω : Type) 
       IsUnitarisable σ.ρ → IsGeneric σ.ρ → IsSpehQuot hd σ σ' →
       rc (cls (ParLaws.toRep σ')) =
         sumList ((List.range d).map fun k : ℕ => (rc (cls (ParLaws.toRep σ))).lpTw (((d : ℝ) - 1) / 2 - k)) := by
-  first | exact @_root_.GlobalTheory.SpehRec.rec_spehQuot_alt | exact _root_.GlobalTheory.SpehRec.rec_spehQuot_alt | (intros; apply _root_.GlobalTheory.SpehRec.rec_spehQuot_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.SpehRec.rec_spehQuot_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -628,7 +628,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.recProd_recSpeh_recSatake : GlobalTheory.Published.GenericUnitaryDualGL → GlobalTheory.Published.StandardCosocleGL → ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) {R : Ranks} {H : Host R} {what₂ : Rows.Data R} (N : NData R H what₂) (A : NAut N) (T : GlobalTheory.RowTie.WDTie N A), RecProd (_root_.GlobalTheory.FormDict.recT_alt T hL) ∧ RecSpeh (_root_.GlobalTheory.FormDict.recT_alt T hL) ∧ RecSatake (_root_.GlobalTheory.FormDict.recT_alt T hL) := by
-  first | exact @_root_.GlobalTheory.FormDict.RecTLaws.transported_reciprocity_prod_and_speh_and_satake | exact _root_.GlobalTheory.FormDict.RecTLaws.transported_reciprocity_prod_and_speh_and_satake | (intros; apply _root_.GlobalTheory.FormDict.RecTLaws.transported_reciprocity_prod_and_speh_and_satake <;> assumption)
+  first | exact @_root_.GlobalTheory.FormDict.RecTLaws.transported_reciprocity_prod_and_speh_and_satake
 end
 end -- clump:auto
 end -- clump:auto
@@ -646,7 +646,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.unitary_of_local_langlands' : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (D : D7) (T : GlobalTheory.RowTie.WDTie D.nd D.naut) (A : _root_.GlobalTheory.HeightCounting.AUSideAlt D), _root_.GlobalTheory.HeightCounting.AutomorphicSideRealised hL D T A → _root_.UpperTheory.One.M.Ud.UnitaryReadS D.nbc (_root_.GlobalTheory.FormDict.recT_alt T hL) := by
-  first | exact @_root_.UpperTheory.One.M.unitaryRead_true_alt trivial | exact (_root_.UpperTheory.One.M.unitaryRead_true_alt trivial) | (intros; apply (_root_.UpperTheory.One.M.unitaryRead_true_alt trivial) <;> assumption)
+  first | exact @_root_.UpperTheory.One.M.unitaryRead_true_alt trivial
 end
 end -- clump:auto
 end -- clump:auto

@@ -375,7 +375,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.columnChoice_cloudBound_le_cG : StepW Pinned fun K B f T w => ∀ Z : w.Lt, ∃ c : ℕ, (∀ u, Formalism.L2.G.CloudBound (w.D Z) u c) ∧ ∀ L : SizeData₂ (w.D Z), L.sc = K.s → Val K.C K.cD K.ch L → (c : ℝ) ≤ G.cG L := by
-  first | exact @GlobalTheory.Mem.Top.Bl.cloudBound_step | exact GlobalTheory.Mem.Top.Bl.cloudBound_step | (intros; apply GlobalTheory.Mem.Top.Bl.cloudBound_step <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.Bl.cloudBound_step
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ColumnChoiceCloudBoundLeExplicitParametersStatement =====
@@ -676,7 +676,7 @@ theorem _root_.GlobalTheory.T.latticeLayer_trueColumns_intrinsic : ∀ {K : Ctx}
         (L : SizeData₂ (w.D Z)), L.sc = K.s → WtEq L K.a K.b → Val K.C K.cD K.ch L → ∀ X : G.Inst (w.D Z) L, CanonInst X →
         G.EpDef X K.C.cX.Ce → G.KapIDef X K.C.GK → (∀ v, G.ParametersFill X K.C.GK v) →
         G.LatTied t.Gt X ⟨vOf, Fl, Lv, Ch, Vram⟩ := by
-  first | exact @GlobalTheory.Mem.Top.Bl.latLayer_free | exact GlobalTheory.Mem.Top.Bl.latLayer_free | (intros; apply GlobalTheory.Mem.Top.Bl.latLayer_free <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.Bl.latLayer_free
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LatticeLayerTrueColumnsParametersFreeStatement =====
@@ -776,7 +776,7 @@ theorem sum_coefInv_coef (t : S → T) (ht : Function.Injective t) (P : T → Ma
       simp only at h1 ⊢
       subst h1
       rcases eq_or_ne b b' with rfl | hb <;> rcases eq_or_ne c c' with rfl | hc <;>
-        first | (simp; done) | (simp [hb, hb.symm]; done) | (simp [hc, hc.symm]; done) | simp [hb, hb.symm, hc, hc.symm]
+        first | (simp; done) | (simp [hb, hb.symm]; done)
     · have hne : x ≠ x' := fun hx => hxx (by rw [hx])
       simp only [hxx, if_false, mul_zero, Finset.sum_const_zero, hne]
   · intro τ _ hτ
@@ -892,7 +892,7 @@ theorem _root_.GlobalTheory.T.exists_freeSeries_kernel_servedPlace : ∀ {D : D7
     {h : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)} {Fl : G.Fills (D.gat u w h)} {Lv : G.Levels Fl}
     (KD : Formalism.L2.G.Cmp.KerData D c Tw u w h Lv) (E : KerEnt D Dx Tw), KD.lam = E.lam w →
     ∃ Th, ThAtServed (Formalism.L2.G.Cmp.kerAtP_of Gt { KD with Th := Th }) E := by
-  first | exact @GlobalTheory.KerTieServed.exists_th_served | exact GlobalTheory.KerTieServed.exists_th_served | (intros; apply GlobalTheory.KerTieServed.exists_th_served <;> assumption)
+  first | exact @GlobalTheory.KerTieServed.exists_th_served
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsFreeSeriesKernelServedPlaceStatement =====
@@ -1319,7 +1319,7 @@ theorem _root_.GlobalTheory.T.exists_global_module_localising_to_lattices : ∀ 
     (∀ q, G.IsLattice ((D.gat u v hg).P.W q) (L q)) →
     ∃ Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E), ∀ q,
       L q = Submodule.span ((D.gat u v hg).P.W q) {y | ∃ x ∈ Λ, y = fun i => GlobalTheory.Mem.Top.KerOne.iw0 Gs u v hg q (x i)} := by
-  first | exact @GlobalTheory.Mem.Top.KerGlob.exists_global_lattice | exact GlobalTheory.Mem.Top.KerGlob.exists_global_lattice | (intros; apply GlobalTheory.Mem.Top.KerGlob.exists_global_lattice <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.KerGlob.exists_global_lattice
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsGlobalModuleLocalisingToLatticesStatement =====
@@ -1397,7 +1397,7 @@ theorem _root_.GlobalTheory.T.exists_localCoefficientField_embedding_kernelPlace
       ∃ iK : ((w.D Z).gat u v hg).Kf →+* ℂ_[(w.D Z).what₂.places.resChar v],
         ∀ (x : (w.D Z).what₂.LL) (hx : (w.D Z).what₂.embLL x ∈ algebraicClosure ℚ ℂ),
           iK (t.cmp.embW u v hg x) = E.lam v ⟨(w.D Z).what₂.embLL x, hx⟩ := by
-  first | exact @GlobalTheory.KerIK.exists_iK | exact GlobalTheory.KerIK.exists_iK | (intros; apply GlobalTheory.KerIK.exists_iK <;> assumption)
+  first | exact @GlobalTheory.KerIK.exists_iK
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsLocalCoefficientFieldEmbeddingKernelPlaceStatement =====
@@ -1464,7 +1464,7 @@ theorem _root_.GlobalTheory.T.splitPlace_embedding_at_orbitPosition_eq_induced_a
       ∀ (q : Fin ((w.D Z).gat u v hg).P.nV) (s : Fin (((w.D Z).gat u v hg).P.n' q)) (x : (w.D Z).host.E),
         ((w.D Z).gat u v hg).P.ι q ((((w.D Z).gat u v hg).P.σ q ^ s.val) (GlobalTheory.Mem.Top.KerOne.iw0 t.full.1.g u v hg q x)) =
           t.cmp.embW u v hg (tauLL (w.D Z) (t.Gt.gat_pos u v hg ⟨q, s⟩) (if s.val % 2 = 1 then (w.D Z).host.conj x else x)) := by
-  first | exact @GlobalTheory.Mem.Top.KerOne.splitPlace_embedding_at_orbitPosition_eq_induced | exact GlobalTheory.Mem.Top.KerOne.splitPlace_embedding_at_orbitPosition_eq_induced | (intros; apply GlobalTheory.Mem.Top.KerOne.splitPlace_embedding_at_orbitPosition_eq_induced <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.KerOne.splitPlace_embedding_at_orbitPosition_eq_induced
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceEmbeddingAtOrbitPositionEqInducedStatement =====
@@ -1523,7 +1523,7 @@ theorem _root_.GlobalTheory.T.stepZeroClasses_servedPlace_eq_localOrbitPairs : �
           ((w.D Z).gat u v hg).P.IsLatTup L' →
           (cls0 a L = cls0 a' L' ↔ a = a' ∧ ∃ γ : (((w.D Z).gat u v hg).lev a).Γ, L' = (((w.D Z).gat u v hg).lev a).smul γ L)) ∧
         ∀ x, ∃ a L, ((w.D Z).gat u v hg).P.IsLatTup L ∧ cls0 a L = x := by
-  first | exact @GlobalTheory.Mem.Top.KerOne.stepZeroClasses_servedPlace_eq_localOrbitPairs_alt | exact GlobalTheory.Mem.Top.KerOne.stepZeroClasses_servedPlace_eq_localOrbitPairs_alt | (intros; apply GlobalTheory.Mem.Top.KerOne.stepZeroClasses_servedPlace_eq_localOrbitPairs_alt <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.KerOne.stepZeroClasses_servedPlace_eq_localOrbitPairs_alt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.StepZeroClassesServedPlaceEqLocalOrbitPairsStatement =====
@@ -1649,7 +1649,7 @@ theorem _root_.GlobalTheory.T.levels_kernelData_at_served_place : ∀ {K : Ctx} 
         ThAtServed (Formalism.L2.G.Cmp.kerAtP_of t.Gt KD) E ∧
         Formalism.L2.Herm.SymmetricKernelCompatibleAtPlace t.full.1.base.toHermColsCh t.full.1.g u v hg (Formalism.L2.G.Cmp.kerAtP_of t.Gt KD) ∧
         Formalism.L2.Herm.GIwPos u v hg (Formalism.L2.G.Cmp.kerAtP_of t.Gt KD) := by
-  first | exact @GlobalTheory.Mem.Top.KerOne.kerData_at_served | exact GlobalTheory.Mem.Top.KerOne.kerData_at_served | (intros; apply GlobalTheory.Mem.Top.KerOne.kerData_at_served <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.KerOne.kerData_at_served
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LevelsKernelDataAtServedPlaceStatement =====
@@ -1787,7 +1787,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_latticeLayer_kernelDatum_trueColumns : StepW Pinned fun K B f T w => ∀ (Z : w.Lt) (t : ColumnDataSplitPrimes K w Z) (Wt : Set B.places.Pl) (nch : NChoice (w.D Z)) (_ : NchT w Z Wt nch) (Y : DivX (w.D Z)), V4.MuIsW (w.st Z) f T Wt w.I.xi → TC.QpIs w.I Y.Qp → ∃ (Gy : G.LatInst (w.D Z)) (ker : KerFam (w.D Z) t.Gt t.cmp (w.tw Z) Gy), GyLay K (w.D Z) t.Gt t.cmp Gy ∧ ∃ kt : KerT t.toColT Y Gy ker, ∃ (Pl : Examples₂.EntPl (w.D Z)) (Bs : Formalism.L2.Ker.PlaceMatrixFamily (w.D Z)) (h : Formalism.L2.Ker.KerEntHyp Pl kt.O Bs Y (w.tw Z)), kt.E = Formalism.L2.Ker.kerEntC Pl kt.O Bs h := by
-  first | exact @GlobalTheory.Mem.Top.Bl.gyLay_kerT_entC | exact GlobalTheory.Mem.Top.Bl.gyLay_kerT_entC | (intros; apply GlobalTheory.Mem.Top.Bl.gyLay_kerT_entC <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.Bl.gyLay_kerT_entC
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsLatticeLayerKernelDatumTrueColumnsStatement =====

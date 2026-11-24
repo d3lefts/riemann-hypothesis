@@ -116,13 +116,13 @@ noncomputable def hE (Ω : Type) [Field Ω] (D N : ℕ) (j0 : Fin (N + 1)) :
 variable {K : Type} [Field K] {Ω : Type} [Field Ω] {D N : ℕ}
 
 theorem hL_C (r : K) : hL K D N (MvPolynomial.C r) = MvPolynomial.C (MvPolynomial.C r) := by
-  simp [hL, MvPolynomial.sumRingEquiv_C, MvPolynomial.sumRingEquiv_X_inl, MvPolynomial.sumRingEquiv_X_inr]
+  simp [hL, MvPolynomial.sumRingEquiv_C]
 
 theorem hL_X (v : TVar D N) : hL K D N (MvPolynomial.X v) =
     if h : v.1 = 0 then MvPolynomial.X v.2 else MvPolynomial.C (MvPolynomial.X ⟨v, h⟩) := by
   by_cases h : v.1 = 0
-  · simp [hL, eT, h, MvPolynomial.sumRingEquiv_C, MvPolynomial.sumRingEquiv_X_inl, MvPolynomial.sumRingEquiv_X_inr]
-  · simp [hL, eT, h, MvPolynomial.sumRingEquiv_C, MvPolynomial.sumRingEquiv_X_inl, MvPolynomial.sumRingEquiv_X_inr]
+  · simp [hL, eT, h, MvPolynomial.sumRingEquiv_X_inl]
+  · simp [hL, eT, h, MvPolynomial.sumRingEquiv_X_inr]
 
 theorem hL_rename (p : MvPolynomial {v : TVar D N // v.1 ≠ 0} K) :
     hL K D N (MvPolynomial.rename Subtype.val p) = MvPolynomial.C p := by
@@ -133,7 +133,7 @@ theorem hL_rename (p : MvPolynomial {v : TVar D N // v.1 ≠ 0} K) :
 
 theorem hE_C (j0 : Fin (N + 1)) (r : Ω) :
     hE Ω D N j0 (MvPolynomial.C r) = MvPolynomial.C (MvPolynomial.C r) := by
-  simp [hE, MvPolynomial.sumRingEquiv_C, MvPolynomial.sumRingEquiv_X_inl, MvPolynomial.sumRingEquiv_X_inr]
+  simp [hE, MvPolynomial.sumRingEquiv_C]
 
 end FractionFieldVariableLift
 
@@ -459,16 +459,14 @@ theorem compat0 (c : ι) (P : KTp K d.D d.N) :
       rcases Fin.eq_self_or_eq_succAbove (d.jc c) j with rfl | ⟨k, rfl⟩
       · by_cases hi : i = 0
         · subst hi
-          simp [e2, sImg, sac1, d.eEX4_algebraMap, hEX, hLX, hXlE, hXlL, hXrE, hXrL, hCE,
-            FractionFieldVariableLift.eS, FractionFieldVariableLift.eT, FractionFieldVariableLift.toFracY]
+          simp [e2, sImg, d.eEX4_algebraMap, hEX, hLX, hXlE, hXlL, FractionFieldVariableLift.eS, FractionFieldVariableLift.eT, FractionFieldVariableLift.toFracY]
         · set_option synthInstance.maxHeartbeats 100000 in
-          simp [e2, sImg, sac1, hi, d.eEX4_algebraMap, hEX, hLX, hXlE, hXlL, hXrE, hXrL, hCE,
-            FractionFieldVariableLift.eS, FractionFieldVariableLift.eT, FractionFieldVariableLift.toFracY, hpsi, hpsiX, hpsiC]
+          simp [e2, sImg, hi, d.eEX4_algebraMap, hEX, hLX, hXrE, hXrL, hCE,
+            FractionFieldVariableLift.eS, FractionFieldVariableLift.eT, FractionFieldVariableLift.toFracY, hpsi, hpsiX]
       · by_cases hi : i = 0
         · subst hi
-          simp [e2, sImg, sac2, d.eEX4_algebraMap, hEX, hLX, hXlE, hXlL, hXrE, hXrL,
-            FractionFieldVariableLift.eS, FractionFieldVariableLift.eT, FractionFieldVariableLift.toFracY]
-        · simp [e2, sImg, sac2, hi, d.eEX4_algebraMap, hEX, hLX, hXlE, hXlL, hXrE, hXrL,
+          simp [e2, sImg, d.eEX4_algebraMap, hEX, hLX, hXlE, hXlL, FractionFieldVariableLift.eS, FractionFieldVariableLift.eT, FractionFieldVariableLift.toFracY]
+        · simp [e2, sImg, hi, d.eEX4_algebraMap, hEX, hLX, hXrE, hXrL,
             FractionFieldVariableLift.eS, FractionFieldVariableLift.eT, FractionFieldVariableLift.toFracY, hpsi, hpsiX]
   exact RingHom.congr_fun key P
 
@@ -558,8 +556,7 @@ theorem finYX4 (hd : d.AxH 𝒜) (h : d.S1) (c : ι) :
         (ratio (Ω := Ω c) (d.thp (hd.sel k) c) (e c)) := by
       have h1 := hp c
       first
-        | (simp only [dif_pos (rfl : c = c)] at h1; exact h1)
-        | simpa using h1
+        | (simp only at h1; exact h1)
     have hq0 := hq c
     have hKT : ∀ r : KTp K d.D d.N, d.KTtoS h c (algebraMap _ _ r) = d.sH c r := fun r => by
       simp [Data.KTtoS]
@@ -570,7 +567,6 @@ theorem finYX4 (hd : d.AxH 𝒜) (h : d.S1) (c : ι) :
         div_mul_eq_mul_div, ← Finset.sum_div, ← hpc]
       first
         | exact (mul_div_cancel_left₀ y hq0).symm
-        | field_simp
     rw [hy]
     exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _
       (Submodule.subset_span (Finset.mem_coe.2 (Finset.mem_image_of_mem _ (Finset.mem_univ k))))

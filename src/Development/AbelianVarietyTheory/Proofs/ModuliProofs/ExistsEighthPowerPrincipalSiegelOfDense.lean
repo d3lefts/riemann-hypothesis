@@ -587,7 +587,7 @@ theorem isSharp_ext {h : ℕ} {W : Matrix (Fin 8) (Fin 8) ℤ} {a : J → Matrix
     rw [hmat, he, List.prod_ofFn]
     split_ifs with hw
     · subst hw
-      rw [Finset.prod_eq_single v] <;> simp +contextual [Matrix.single_apply, eq_comm]
+      rw [Finset.prod_eq_single v] <;> simp +contextual [eq_comm]
     · refine Finset.prod_eq_one fun i _ => ?_
       simp [Ne.symm hw]
   rintro (j | m) w
@@ -1387,7 +1387,7 @@ open scoped CategoryTheory.Obj TensorProduct
 open GlobalTheory.ZM
 
 theorem _root_.GlobalTheory.T.relAmple_diagonal_biadditive_of_e8Form : ∀ (W : Matrix (Fin 8) (Fin 8) ℤ) (S : Scheme.{0}) [IsLocallyNoetherian S] (G A : Over S) [GrpObj G] [IsCommMonObj G] [GrpObj A] [IsCommMonObj A] (pr : Fin 8 → (G ⟶ A)) (L : LB G.left) (P : LB (G2 A).left), IsE8 W → IsAbelianScheme G → IsAbelianScheme A → (∀ u, IsMonHom (pr u)) → (∀ (T : Over S) (y : Fin 8 → (T ⟶ A)), ∃! x : T ⟶ G, ∀ u, x ≫ pr u = y u) → L.IsLB → P.IsLB → (∀ (T : Over S) (x x' y : T ⟶ A), (∃ t : (LB.LinComb P (K := Fin 3) ![(lift (x * x') y).left, (lift x y).left, (lift x' y).left] ![1, -1, -1]).Gen, t.IsGen) ∧ ∃ t : (LB.LinComb P (K := Fin 3) ![(lift y (x * x')).left, (lift y x).left, (lift y x').left] ![1, -1, -1]).Gen, t.IsGen) → LBIso L (LB.LinComb P (K := Fin 8 × Fin 8) (fun uv => (lift (pr uv.1) (pr uv.2)).left) (fun uv => W uv.1 uv.2)) → Out.RelAmple G L → Out.RelAmple A (P.pull (lift (𝟙 A) (𝟙 A)).left) := by
-  first | exact @GlobalTheory.PowerForm.relAmple_diag | exact GlobalTheory.PowerForm.relAmple_diag | (intros; apply GlobalTheory.PowerForm.relAmple_diag <;> assumption)
+  first | exact @GlobalTheory.PowerForm.relAmple_diag
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.ModuliProofs.RelAmpleDiagonalBiadditiveOfE8FormStatement =====
@@ -1788,7 +1788,7 @@ theorem exists_isSharp_of_dense : Out.Laws → Out.Laws2 → (∀ (S : Scheme.{0
     simp only [lev, Pi.single_add, map_add (f := _), Pi.add_apply, zpow_add, Finset.prod_mul_distrib, MonObj.mul_comp]
   have hpt : ∀ i u, (t.pt i ≫ pr u).left = (lev (bas (Pi.single i 1) u)).left := fun i u => by
     have e₁ : ρ (Matrix.single 0 u 1) ≫ pr 0 = pr u := by
-      rw [hρ, List.prod_ofFn, Finset.prod_eq_single u] <;> simp +contextual [Matrix.single_apply, eq_comm]
+      rw [hρ, List.prod_ofFn, Finset.prod_eq_single u] <;> simp +contextual [eq_comm]
     have e₂ := rpt (Sum.inr (Matrix.single 0 u 1)) i
     have e₃ : (fun u' => ∑ v, (Sum.elim a id (Sum.inr (Matrix.single 0 u 1)) : Matrix (Fin 8) (Fin 8) ℤ) u' v •
         bas (Pi.single i 1) v) = Pi.single 0 (bas (Pi.single i 1) u) := by
@@ -1796,7 +1796,7 @@ theorem exists_isSharp_of_dense : Out.Laws → Out.Laws2 → (∀ (S : Scheme.{0
       by_cases hu : u' = 0
       · subst hu
         simp [Matrix.single_apply]
-      · simp [Matrix.single_apply, hu, Ne.symm hu]
+      · simp [hu, Ne.symm hu]
     rw [e₃, List.prod_ofFn] at e₂
     rw [← e₁, ← Category.assoc, e₂]
     rfl

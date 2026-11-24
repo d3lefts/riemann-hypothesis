@@ -287,13 +287,13 @@ theorem qdet_adj {n : ℕ} {ε : Fin n → Bool} {E : Fin n → Fin n → Module
       congr 1
       · by_cases h : b = c
         · subst h
-          simp only [if_true, P, mkP, MulOpposite.unop_op, sgn]
+          simp only [if_true, P, mkP, sgn]
           congr 1
           cases ε a <;> cases ε b <;> cases ε d <;> simp
         · rw [if_neg h, if_neg (Ne.symm h), smul_zero]; rfl
       · by_cases h : d = a
         · subst h
-          simp only [if_true, P, mkP, MulOpposite.unop_op, sgn]
+          simp only [if_true, P, mkP, sgn]
           congr 1
           cases ε c <;> cases ε b <;> cases ε d <;> simp
         · rw [if_neg h, if_neg (Ne.symm h), smul_zero]; rfl
@@ -617,7 +617,7 @@ theorem block_mem (ε : Fin n → Bool) (E : Fin n → Fin n → Module.End ℂ 
     obtain ⟨τ, hτ⟩ := this
     exact Finset.mem_image.mpr ⟨τ, Finset.mem_univ _, hτ⟩
   obtain ⟨k, j, hkj⟩ := h2
-  simp only [hf, Module.End.mul_apply, Module.End.intCast_apply]
+  simp only [Module.End.mul_apply, Module.End.intCast_apply]
   refine Submodule.smul_of_tower_mem _ _ (prod_mem _ _ ?_ ?_ _)
   · intro T hT
     obtain ⟨i, rfl⟩ := List.mem_ofFn.mp hT

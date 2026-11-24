@@ -381,7 +381,6 @@ theorem GlobalTheory.exists_ample_add_eff_of_isNef_isBig : GlobalTheory.Publishe
       cls_lbPow hA.isLB, cls_lbPow hM, hclsM]
     first
       | module
-      | (simp only [← natCast_zsmul, smul_sub, smul_smul, Nat.cast_mul]; rw [mul_comm (r : ℤ)]; abel)
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -765,7 +764,6 @@ private lemma two_mul_lt_pow_mul_of_le (a t t' c : ℚ) (k : ℕ) (ha : 0 ≤ a)
     linarith
   have hpow : t ^ k ≤ t' ^ k := by
     first
-    | exact pow_le_pow_left ht.le htt k
     | exact pow_le_pow_left₀ ht.le htt k
   have : t ^ k * c ≤ t' ^ k * c := mul_le_mul_of_nonneg_right hpow hc.le
   constructor <;> linarith

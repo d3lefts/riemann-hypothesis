@@ -467,7 +467,7 @@ theorem locineq : ∀ (x y : ℂ) (T : ℝ), 0 ≤ T → T < 1 → ‖x‖ ^ 2 *
   have h : ∀ i j, ‖z i * conj (z j) * T‖ < 1 := by
     intro i j
     fin_cases i <;> fin_cases j <;>
-      simp [z, hnT, Complex.norm_conj, abs_of_nonneg hT0] <;> nlinarith
+      simp [z, abs_of_nonneg hT0] <;> nlinarith
   have key := locineq_exp_prod z T hT0 h
   have c1 : ‖1 - conj x * T‖ = ‖1 - x * T‖ := by
     rw [← Complex.norm_conj (1 - x * T)]; simp
@@ -1501,7 +1501,6 @@ theorem GlobalTheory.EisM.twisted_lvalue_ne_zero_edge : ∀ (k N M : ℕ) (χ : 
       rw [GlobalTheory.EisM.ZEdge.lseries_shift e (fun n => φ n * g n)]
       apply hΛ
       simp
-      push_cast
       linarith
   refine ⟨Λ w, hne, ?_⟩
   have hc : Tendsto (fun s : ℝ => Λ ((w + s : ℝ) : ℂ)) (𝓝[>] 0) (𝓝 (Λ w)) := by
@@ -1513,7 +1512,6 @@ theorem GlobalTheory.EisM.twisted_lvalue_ne_zero_edge : ∀ (k N M : ℕ) (χ : 
   filter_upwards [self_mem_nhdsWithin] with s hs
   rw [hΛ]
   simp
-  push_cast
   have : (0 : ℝ) < s := hs
   linarith
 end -- clump:auto

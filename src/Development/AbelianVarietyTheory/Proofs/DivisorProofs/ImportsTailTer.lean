@@ -191,7 +191,7 @@ theorem mem_closure_su {K R : Type} [Field K] [CharZero K] [CommRing R] [Topolog
   refine ⟨γ * (1 + (c γ.det - 1) • P), ?_, ?_, ?_⟩
   · have e : cT c (1 + (c γ.det - 1) • P) = 1 + (γ.det - 1) • cT c P := by
       ext i j
-      simp [cT, hc, one_apply, eq_comm]
+      simp [cT, hc, eq_comm]
       by_cases h : i = j <;> simp [Matrix.one_apply, h, eq_comm]
     rw [cT_mul, e, Matrix.mul_assoc _ _ J, Matrix.mul_assoc, ← Matrix.mul_assoc _ γ, hγ', ← Matrix.mul_assoc]
     simp only [Matrix.add_mul, Matrix.mul_add, Matrix.one_mul, Matrix.mul_one, Matrix.smul_mul, Matrix.mul_smul, hPJ,
@@ -358,7 +358,7 @@ theorem unitary_trunc {R : Type} [CommRing R] (σ : R →+* R) {n : ℕ} (J u : 
     cT σ (1 + e • (u - 1)) * J * (1 + e • (u - 1)) = J := by
   have e1 : cT σ (1 + e • (u - 1)) = 1 + e • (cT σ u - 1) := by
     ext i j
-    simp [cT, hσ, one_apply, eq_comm]
+    simp [cT, hσ, eq_comm]
     by_cases h : i = j <;> simp [Matrix.one_apply, h, eq_comm]
   rw [e1]
   simp only [Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub, Matrix.one_mul, Matrix.mul_one,
@@ -719,7 +719,7 @@ theorem planeB_facts : ∀ (F E : Type) [Field F] [Field E] [Algebra F E] (σ : 
   have gram : Formalism.UG.cT (σ : E →+* E) A * J * A = planeH σ J e₁ e₂ := by
     ext k l
     rw [planeFacts_gram_apply]
-    fin_cases k <;> fin_cases l <;> simp [planeH, h12, h21, ha₁, ha₂]
+    fin_cases k <;> fin_cases l <;> simp [planeH, h12, h21]
   have dd : Matrix.diagonal ![a₁⁻¹, a₂⁻¹] * Matrix.diagonal ![a₁, a₂] = 1 := by
     rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
     congr 1; ext k; fin_cases k <;> simp [h1, h2]
@@ -754,7 +754,7 @@ theorem planeB_facts : ∀ (F E : Type) [Field F] [Field E] [Algebra F E] (σ : 
       have k0 := hv 0
       have k1 := hv 1
       rw [h] at k0 k1
-      simp only [Pi.zero_apply, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons] at k0 k1
+      simp only [Pi.zero_apply, Matrix.cons_val_zero, Matrix.cons_val_one] at k0 k1
       exact ⟨(mul_eq_zero.mp k0.symm).resolve_left (inv_ne_zero h1),
         (mul_eq_zero.mp k1.symm).resolve_left (inv_ne_zero h2)⟩
     · rintro ⟨z1, z2⟩
@@ -867,7 +867,7 @@ open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.Genus
 open scoped TensorProduct Quaternion
 
 theorem _root_.GlobalTheory.T.unitary_fixing_kernel_eq_oneAddLowRank_of_unitary : ∀ (R : Type) [CommRing R] (c : R →+* R), (∀ x, c (c x) = x) → ∀ (M : ℕ) (J : Matrix (Fin M) (Fin M) R), IsUnit J.det → ∀ (A : Matrix (Fin M) (Fin 2) R) (B : Matrix (Fin 2) (Fin M) R) (H : Matrix (Fin 2) (Fin 2) R), B * A = 1 → Formalism.UG.cT c A * J = H * B → J * A = Formalism.UG.cT c B * H → ∀ G : Matrix (Fin M) (Fin M) R, Formalism.UG.cT c G * J * G = J → G * (1 - A * B) = 1 - A * B → G = emb A B (B * G * A) ∧ Formalism.UG.cT c (B * G * A) * H * (B * G * A) = H := by
-  first | exact @GlobalTheory.PlaneSU.eq_emb_of_fix | exact GlobalTheory.PlaneSU.eq_emb_of_fix | (intros; apply GlobalTheory.PlaneSU.eq_emb_of_fix <;> assumption)
+  first | exact @GlobalTheory.PlaneSU.eq_emb_of_fix
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryFixingKernelEqOneAddLowRankOfUnitaryStatement =====

@@ -406,7 +406,7 @@ theorem sim_cut {A B : Type} [CommRing A] [CommRing B] (σ : A →+* A) (i : B �
     ext a b
     by_cases hab : a = b
     · subst hab; simp [hσ]
-    · simp [hσ, Matrix.one_apply, hab, Ne.symm hab]
+    · simp [hσ, hab, Ne.symm hab]
   have h4 : i e * (1 - i e) = 0 := by rw [mul_sub, mul_one, hie, sub_self]
   have h5 : (1 - i e) * (1 - i e) = 1 - i e := by rw [sub_mul, one_mul, h4, sub_zero]
   rw [hv, h3, add_mul, mul_add, mul_add]
@@ -450,7 +450,7 @@ theorem primeProj_holds : PrimeProj := by
   have hc : ∀ (g : GUf E n) (w : Plc E) a b, (comp w g).val a b = pLoc E w (g.1.1.val a b) := fun _ _ _ _ => rfl
   refine ⟨π, fun g w => ⟨fun h => ?_, fun h => ?_⟩⟩ <;> ext a b <;> rw [hc, hπ]
   · simp [hp, h, hc]
-  · by_cases hab : a = b <;> simp [hp, h, hab, Matrix.one_apply]
+  · by_cases hab : a = b <;> simp [hp, h, hab]
 
 end UpperTheory.Gal.Int.Geo.Pl
 end -- clump:auto
@@ -609,7 +609,7 @@ private theorem comp_th {E : Type} [Field E] [NumberField E] [IsCMField E] {A : 
 
 theorem stabOf_of (hN : NearNbhd) (hP : PrimeProj) (hD : Dict) : StabOf := by
   intro E _ _ _ A n p hp S F x U w₀ Up V hoff
-  have hoff' : ∀ u ∈ V.S, (p : 𝓞 E) ∉ u.asIdeal := by first | exact hoff.1 | exact hoff
+  have hoff' : ∀ u ∈ V.S, (p : 𝓞 E) ∉ u.asIdeal := by first | exact hoff.1
   have hcof := Filter.eventually_cofinite.1 F.a_cof
   have hc : ∀ u : Plc E, Continuous fun g : GLw n u => (F.a u)⁻¹ * g * F.a u := fun u =>
     (continuous_const.mul continuous_id).mul continuous_const
@@ -621,8 +621,8 @@ theorem stabOf_of (hN : NearNbhd) (hP : PrimeProj) (hD : Dict) : StabOf := by
       · simp only [hu, true_imp_iff]
         exact (V.shape.opn u hu).preimage (iT_cont.comp (hc u))
       · simp [hu]
-    · simp [Subgroup.one_mem]
-    · simp [iT_one, Subgroup.one_mem]
+    · simp
+    · simp [iT_one]
   choose e he using hO
   have hJ : IsOpen (V.J : Set (GLw n w₀)) := V.Kw0 ▸ V.shape.opn w₀ V.shape.mem
   obtain ⟨e₀, he₀⟩ := hN E n w₀ ((fun g : GLw n w₀ => iT ((F.a w₀)⁻¹ * g * F.a w₀)) ⁻¹' (Subtype.val '' {k : V.J | V.χ k = 1}))

@@ -470,7 +470,7 @@ theorem dlog_indep_pow_three : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field �
     obtain ⟨D', hD', hD'v⟩ := _root_.GlobalTheory.AlmostEt.exists_derOn_ext (O0 p) (integralClosure (O0 p) Ω) (Frac p Ω)
       (towerAlg T) C tr m a b _ htr Dz hDz
     have h := hF C hFC hyC (Frac p Ω) D' hD'
-    simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons] at h
+    simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one] at h
     rw [hD'v _ hzT, hD'v _ hqT, (hDzv (k + 1)).1, (hDzv (k + 1)).2, smul_zero, smul_zero,
       add_zero, smul_smul] at h
     obtain ⟨t, ht⟩ := exists_eq_of_smul_mk_eq_zero _ _ h
@@ -483,7 +483,7 @@ theorem dlog_indep_pow_three : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field �
     obtain ⟨D', hD', hD'v⟩ := _root_.GlobalTheory.AlmostEt.exists_derOn_ext (O0 p) (integralClosure (O0 p) Ω) (Frac p Ω)
       (towerAlg T) C tr m a b _ htr Dq hDq
     have h := hF C hFC hyC (Frac p Ω) D' hD'
-    simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons] at h
+    simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one] at h
     rw [hD'v _ hzT, hD'v _ hqT, (hDqv (k + 1)).1, (hDqv (k + 1)).2, smul_zero, smul_zero,
       zero_add, smul_smul] at h
     obtain ⟨t, ht⟩ := exists_eq_of_smul_mk_eq_zero _ _ h

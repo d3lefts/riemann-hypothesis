@@ -94,8 +94,7 @@ theorem hvec_smul (a : ℂ) (f : Fin n → D) : hvec (a • f) = a • hvec f :=
 theorem mx_mem {M : Submodule ℂ D} (dual : Bool) (X : Matrix (Fin n) (Fin n) ℂ)
     (hst : ∀ a b, ∀ f ∈ tensSub M, tensF dual E a b f ∈ tensSub M) {f : Fin n → D} (hf : f ∈ tensSub M) :
     mx (tensF dual E) X f ∈ tensSub M := by
-  unfold mx
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply]
+  simp only [mx, LinearMap.sum_apply, LinearMap.smul_apply]
   exact Submodule.sum_mem _ fun a _ => Submodule.sum_mem _ fun b _ =>
     Submodule.smul_mem _ _ (hst a b f hf)
 

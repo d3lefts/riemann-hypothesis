@@ -59,7 +59,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 attribute [local instance] Over.cartesianMonoidalCategory
 open scoped CategoryTheory.Obj
 theorem _root_.GlobalTheory.T.valuation_thetaRatio_eq_bilinear : TWM.VRatioGtStatement := by
-  first | exact @GlobalTheory.RatioVal.main | exact GlobalTheory.RatioVal.main | (intros; apply GlobalTheory.RatioVal.main <;> assumption)
+  first | exact @GlobalTheory.RatioVal.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.ValuationThetaRatioEqBilinearStatement =====

@@ -84,7 +84,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory GlobalTheory.AbLaw
 
 theorem _root_.GlobalTheory.T.mumford_bundle_cech_cohomology_finrank : ∀ (K : Type) [Field K] [IsAlgClosed K] (P : PolAV (Spec (CommRingCat.of K))) (κ : Type) [LinearOrder κ] [Fintype κ] (D : κ → (P.A ⊗ P.A).left.Opens), (∀ i, IsAffineOpen (D i)) → ⨆ i, D i = ⊤ → ∀ n, Module.finrank K ((cechLB (P.A ⊗ P.A).hom (translDiff P.A P.L (𝟙 P.A)) D).homology n) = if n = P.g then 1 else 0 := by
-  first | exact @GlobalTheory.MumfordCohom.finrank_cechLB_translDiff | exact GlobalTheory.MumfordCohom.finrank_cechLB_translDiff | (intros; apply GlobalTheory.MumfordCohom.finrank_cechLB_translDiff <;> assumption)
+  first | exact @GlobalTheory.MumfordCohom.finrank_cechLB_translDiff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.MumfordBundleCechCohomologyFinrankStatement =====
@@ -250,7 +250,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory GlobalTheory.AbLaw
 
 theorem _root_.GlobalTheory.T.finrank_principalPolarisation_sectionModule_le_one : ∀ (K : Type) [Field K] [IsAlgClosed K] (P : PolAV (Spec (CommRingCat.of K))), Module.finrank Γ((baseOver (Spec (CommRingCat.of K))).left, ⊤) (SecM P.A P.L 1 (baseOver (Spec (CommRingCat.of K)))) ≤ 1 := by
-  first | exact @GlobalTheory.PrincipalSections.finrank_secM_le_one | exact GlobalTheory.PrincipalSections.finrank_secM_le_one | (intros; apply GlobalTheory.PrincipalSections.finrank_secM_le_one <;> assumption)
+  first | exact @GlobalTheory.PrincipalSections.finrank_secM_le_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.FinrankPrincipalPolarisationSectionModuleLeOneStatement =====
@@ -379,7 +379,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory GlobalTheory.AbLaw
 
 theorem _root_.GlobalTheory.T.one_le_finrank_secM_one_of_isAlgClosed : ∀ (K : Type) [Field K] [IsAlgClosed K] (P : PolAV (Spec (CommRingCat.of K))), 1 ≤ Module.finrank Γ((baseOver (Spec (CommRingCat.of K))).left, ⊤) (SecM P.A P.L 1 (baseOver (Spec (CommRingCat.of K)))) := by
-  first | exact @GlobalTheory.PolSection.one_le_finrank_secM | exact GlobalTheory.PolSection.one_le_finrank_secM | (intros; apply GlobalTheory.PolSection.one_le_finrank_secM <;> assumption)
+  first | exact @GlobalTheory.PolSection.one_le_finrank_secM
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.OneLeFinrankSecMStatement =====

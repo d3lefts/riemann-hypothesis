@@ -90,7 +90,7 @@ theorem scalar_det_fin_one (g : GL (Fin 1) k) :
   apply Units.ext
   ext i j
   fin_cases i; fin_cases j
-  simp [Matrix.GeneralLinearGroup.scalar, Matrix.det_fin_one]
+  simp [Matrix.GeneralLinearGroup.scalar]
 
 theorem det_scalar_fin_one (z : kˣ) :
     Matrix.GeneralLinearGroup.det (Matrix.GeneralLinearGroup.scalar (Fin 1) z) = z := by
@@ -175,11 +175,11 @@ theorem inSupport_of_KO_eigen (hD : GlobalTheory.Published.DepthZeroJacquetInjec
     have hg : g ∈ S := by
       intro a
       by_cases ha : a = a0
-      · subst ha; simp [g, det_scalar_fin_one, hu]
+      · subst ha; simp [g, hu]
       · simp [g, Pi.mulSingle_eq_of_ne ha]
     have hdet : Matrix.GeneralLinearGroup.det (leviEmb k e g) = u := by
       rw [det_leviEmb, Finset.prod_eq_single a0]
-      · simp [g, det_scalar_fin_one]
+      · simp [g]
       · intro b _ hb; simp [g, Pi.mulSingle_eq_of_ne hb]
       · simp
     have h1 := (hc _ y₀).symm.trans (hy₀θ g hg)
@@ -211,7 +211,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil
 
 theorem _root_.GlobalTheory.T.inSupport_mul_unramifiedChar_of_integralEigenvector : GlobalTheory.Published.BernsteinZelevinskyFiniteness → GlobalTheory.Published.GeometricLemma → GlobalTheory.Published.DepthZeroJacquetInjective → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (m : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (σ : Representation ℂ (GL (Fin m) k) V) (χ : kˣ →* ℂˣ) (y : V), IsSmooth σ → σ.IsIrreducible → IsSmoothChar χ → 0 < m → y ≠ 0 → (∀ g ∈ KO k (Fin m), σ g y = (χ (Matrix.GeneralLinearGroup.det g) : ℂ) • y) → ∃ α : ℂˣ, InSupport σ (χ * unrChar k α) := by
-  first | exact @GlobalTheory.SphSupport.inSupport_mul_unrChar_of_KO_eigen | exact GlobalTheory.SphSupport.inSupport_mul_unrChar_of_KO_eigen | (intros; apply GlobalTheory.SphSupport.inSupport_mul_unrChar_of_KO_eigen <;> assumption)
+  first | exact @GlobalTheory.SphSupport.inSupport_mul_unrChar_of_KO_eigen
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.InSupportMulUnramifiedCharOfIntegralEigenvectorStatement =====

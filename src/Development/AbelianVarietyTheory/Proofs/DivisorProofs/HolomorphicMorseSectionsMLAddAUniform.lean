@@ -202,7 +202,7 @@ lemma det_toEuclideanLin {n : ℕ} (C : Matrix (Fin n) (Fin n) ℂ) :
       (EuclideanSpace.basisFun (Fin n) ℂ).toBasis C := by
     ext v i : 2
     simp [Matrix.toLin_apply, Matrix.toLpLin_apply, Matrix.mulVec, dotProduct,
-      PiLp.single_apply, Pi.single_apply]
+      Pi.single_apply]
   rw [this, LinearMap.det_toLin]
 
 lemma quad_eq {n : ℕ} (H C : Matrix (Fin n) (Fin n) ℂ) (hC : H.transpose = C.conjTranspose * C)
@@ -893,7 +893,7 @@ theorem morse_local : ∀ (n : ℕ) (U K : Set (V n)) (φ g : V n → ℝ) (ε :
       simp [hH, leviV, cHess]
     have hgzw := hgw z hz w (by linarith [min_le_right δ₁ δ₃])
     have hFn : ‖F w‖ ^ 2 = ‖f (z + w)‖ ^ 2 * Real.exp (-(m * (h w).re)) ^ 2 := by
-      simp [hF, norm_mul, Complex.norm_exp, mul_pow]
+      simp [hF, Complex.norm_exp, mul_pow]
     have hE : Real.exp (-(m * φ z)) * (Real.exp (-(m * (h w).re)) ^ 2 * Wf w) ≤
         Real.exp (-(m * φ (z + w))) := by
       simp only [hWf]

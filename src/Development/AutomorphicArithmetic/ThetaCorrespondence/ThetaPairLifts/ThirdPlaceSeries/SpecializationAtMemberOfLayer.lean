@@ -139,7 +139,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.exists_green_cuspidal_labelling_same_generators : GlobalTheory.Published.GreenCuspidal → ∀ (D : D7) (cf : CharFrame D) (Γ : GrpSide D), TypesTrue D.ntypes cf.P cf.W → (∀ k, Γ.ζ k = @GlobalTheory.GLq.LabelDatum.gen _ ⟨D.host.g_prime k⟩ (@GlobalTheory.Mem.TypePl.labDat (D.host.g k) ⟨D.host.g_prime k⟩)) → ∃ Γ' : GrpSide D, GlobalTheory.PendOf.GreenLab Γ' ∧ ∀ k, Γ'.ζ k = Γ.ζ k := by
-  first | exact @GlobalTheory.GreenSide.exists_greenLab | exact GlobalTheory.GreenSide.exists_greenLab | (intros; apply GlobalTheory.GreenSide.exists_greenLab <;> assumption)
+  first | exact @GlobalTheory.GreenSide.exists_greenLab
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsGreenCuspidalLabellingSameGeneratorsStatement =====
@@ -251,7 +251,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.weilDeligneLabels_all_places_of_fixed_and_conj : ∀ (D : D7) (T : GlobalTheory.RowTie.WDTie D.nd D.naut), LabTrue D T → LabConj D T → GlobalTheory.PendOf.LabAll D T := by
-  first | exact @GlobalTheory.LabAllOf.labAll_of_labTrue_labConj | exact GlobalTheory.LabAllOf.labAll_of_labTrue_labConj | (intros; apply GlobalTheory.LabAllOf.labAll_of_labTrue_labConj <;> assumption)
+  first | exact @GlobalTheory.LabAllOf.labAll_of_labTrue_labConj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.WeilDeligneLabelsAllPlacesOfFixedAndConjStatement =====
@@ -353,7 +353,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.exists_character_choice_pin_at_of_third_layer : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.MemberAtLayerPoint hL fun _ _ _ _ w Z _ _ t nch n c => ∃ P : _root_.GlobalTheory.NPin.CharacterChoiceData hL (w.D Z), _root_.GlobalTheory.HeightCounting.Up.PinnedAtCharacterChoice c.a P := by
-  first | exact @_root_.GlobalTheory.PinLayer.specialization_at_member_of_layer_alt | exact _root_.GlobalTheory.PinLayer.specialization_at_member_of_layer_alt | (intros; apply _root_.GlobalTheory.PinLayer.specialization_at_member_of_layer_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.PinLayer.specialization_at_member_of_layer_alt
 end
 end
 end -- clump:auto

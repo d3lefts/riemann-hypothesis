@@ -77,7 +77,6 @@ theorem coeff_one_subst (a f : PowerSeries ℂ_[p]) (ha : PowerSeries.constantCo
   have hs : PowerSeries.HasSubst a := by
     first
     | exact PowerSeries.HasSubst.of_constantCoeff_zero' ha
-    | exact PowerSeries.HasSubst.of_constantCoeff_zero ha
   have h1 : PowerSeries.coeff 1 (PowerSeries.subst a f : PowerSeries ℂ_[p]) =
       ∑ᶠ k : ℕ, PowerSeries.coeff k f * PowerSeries.coeff 1 (a ^ k) :=
     (PowerSeries.coeff_subst hs f (Finsupp.single () 1)).trans (finsum_congr fun k => smul_eq_mul _ _)
@@ -99,7 +98,6 @@ private theorem coeff_zero_subst_of_constantCoeff_eq_zero (a f : PowerSeries ℂ
   have hs : PowerSeries.HasSubst a := by
     first
     | exact PowerSeries.HasSubst.of_constantCoeff_zero' ha
-    | exact PowerSeries.HasSubst.of_constantCoeff_zero ha
   have h1 : PowerSeries.coeff 0 (PowerSeries.subst a f : PowerSeries ℂ_[p]) =
       ∑ᶠ k : ℕ, PowerSeries.coeff k f * PowerSeries.coeff 0 (a ^ k) :=
     (PowerSeries.coeff_subst hs f (Finsupp.single () 0)).trans (finsum_congr fun k => smul_eq_mul _ _)
@@ -217,8 +215,6 @@ variable {p : ℕ} [Fact p.Prime]
 theorem mem_integerRing_iff_norm_le_one (x : ℂ_[p]) : x ∈ PI.PhNormUnits.UnitaryGroupMassFormula.PAdicPowerSeriesCoefficients.intRing p ↔ ‖x‖ ≤ 1 := by
   first
   | exact Iff.rfl
-  | (simp only [PI.PhNormUnits.UnitaryGroupMassFormula.PAdicPowerSeriesCoefficients.intRing]; rfl)
-  | simp [PI.PhNormUnits.UnitaryGroupMassFormula.PAdicPowerSeriesCoefficients.intRing]
 
 theorem coeff_pow_int {f : PowerSeries ℂ_[p]} (hf : ∀ n, ‖coeff n f‖ ≤ 1) (k n : ℕ) :
     ‖coeff n (f ^ k)‖ ≤ 1 := by
@@ -251,11 +247,9 @@ theorem coeff_subst_fin {f g : PowerSeries ℂ_[p]} (hf0 : constantCoeff f = 0) 
   have hs : HasSubst f := by
     first
     | exact HasSubst.of_constantCoeff_zero' hf0
-    | exact HasSubst.of_constantCoeff_zero hf0
   have h1 : coeff n (subst f g) = ∑ᶠ k : ℕ, coeff k g * coeff n (f ^ k) := by
     first
     | exact (coeff_subst hs g (Finsupp.single () n)).trans (finsum_congr fun k => smul_eq_mul _ _)
-    | (rw [coeff_subst' hs]; simp only [smul_eq_mul])
   rw [h1, finsum_eq_sum_of_support_subset _ (s := Finset.range (n + 1))]
   intro k hk
   rw [Function.mem_support] at hk
@@ -325,8 +319,6 @@ open Formalism.MainNotions.GL3Theta Formalism.MainNotions.TaylorLogMetric Formal
 theorem l0 {p : ℕ} [Fact p.Prime] (g : G1 p) : PowerSeries.constantCoeff g.l = 0 := by
   first
     | (unfold Formalism.MainNotions.GL3Theta.G1.l flog; simp)
-    | (simp [Formalism.MainNotions.GL3Theta.G1.l, flog, PowerSeries.coeff_mk])
-    | (show PowerSeries.coeff 0 (flog _ _) = 0; simp [flog])
 
 theorem beConjOfNorm_holds : BeConjOfNorm := by
   intro p _ g S hOk hsw hadd hint hF hN hdec hph hbi

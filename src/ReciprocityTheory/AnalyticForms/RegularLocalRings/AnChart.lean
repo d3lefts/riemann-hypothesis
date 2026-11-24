@@ -104,10 +104,8 @@ theorem hasFDerivAt_mvPolynomial_eval {n : ℕ} (Q : MvPolynomial (Fin n) ℂ) (
       refine ContinuousLinearMap.ext fun v => ?_
       simp only [ContinuousLinearMap.coe_sum', Finset.sum_apply, ContinuousLinearMap.coe_smul',
         Pi.smul_apply, ContinuousLinearMap.proj_apply, ContinuousLinearMap.add_apply, smul_eq_mul,
-        Derivation.leibniz, MvPolynomial.pderiv_X, map_add, MvPolynomial.smul_eval, MvPolynomial.eval_X,
-        Pi.single_apply]
-      simp only [add_mul, Finset.sum_add_distrib, mul_ite, mul_one, mul_zero, ite_mul, zero_mul,
-        Finset.sum_ite_eq, Finset.mem_univ, if_true, Finset.mul_sum]
+        Derivation.leibniz, MvPolynomial.pderiv_X, map_add, Pi.single_apply]
+      simp only [add_mul, Finset.sum_add_distrib, mul_ite, mul_one, mul_zero, Finset.mul_sum]
       simp only [MvPolynomial.eval_mul, MvPolynomial.eval_X]
       have hs : ∑ j, MvPolynomial.eval x (if i = j then p else 0) * v j = MvPolynomial.eval x p * v i := by
         simp [apply_ite, ite_mul, Finset.sum_ite_eq]
@@ -160,8 +158,7 @@ theorem dualEv_fst_snd (p v : Fin n → ℂ) (h : MvPolynomial (Fin n) ℂ) :
     · rw [map_mul, TrivSqZeroExt.fst_mul, h1, hX]
       simp
     · rw [map_mul, TrivSqZeroExt.snd_mul, h1, h2, hX]
-      simp [Derivation.leibniz, pderiv_X, Pi.single_apply, Finset.sum_add_distrib, add_mul, Finset.mul_sum,
-        DualNumber.snd_eps, DualNumber.fst_eps]
+      simp [Derivation.leibniz, pderiv_X, Pi.single_apply, Finset.sum_add_distrib, add_mul, DualNumber.snd_eps, DualNumber.fst_eps]
       have e1 : (∑ x, (eval p) (if i = x then q else 0) * v x) = eval p q * v i := by
         rw [Finset.sum_eq_single i]
         · simp

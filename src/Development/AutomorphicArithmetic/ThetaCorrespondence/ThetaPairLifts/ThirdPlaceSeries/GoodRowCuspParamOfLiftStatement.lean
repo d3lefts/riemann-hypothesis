@@ -359,7 +359,7 @@ theorem exists_isCuspParam_of_liftAt_good_index : ∀ (D : D7) (Rw : RowSide D),
     have gB := (eta_emb _ (hAut.2.1 (GlobalTheory.IndefiniteRowSideFullHecke.CMTypeEmbeddings.embTauBar D τ)).1).2
       (((hAut.2.1 (GlobalTheory.IndefiniteRowSideFullHecke.CMTypeEmbeddings.embTauBar D τ)).2).symm.trans (hL.eta τ).2)
     rw [D.naut.infG_tw _ _ _ _ gA, D.naut.infG_tw _ _ _ _ gB, fA, fB]
-    simp [Multiset.map_map, Function.comp_def]
+    simp [Multiset.map_map]
   refine ⟨D.naut.tw ρ D.naut.etaT, D.naut.csd_tw ρ D.naut.etaT hAut.1.1 (hB1 _ hmemq).2.2, GlobalTheory.RowRegAlg.ralg_of_infG D _ hinf, hsplit,
     fun w hw => ?_, fun w hw hw' => ?_, hinf⟩
   · have hu := (hB5 w hw).1
@@ -388,7 +388,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.exists_isCuspParam_of_bc_good_index : ∀ (D : D7) (Rw : RowSide D), _root_.GlobalTheory.HeightCounting.Up.ParityLaws D → ∀ j σ π μ Pa, LiftAt D Rw j σ π μ → RowLoc D Rw σ → SphericalInertData.IsBC D.nd D.naut D.nbc j π Pa → (⟨1, D.naut.tw μ D.naut.etaTinv, D.R.t⟩ : Part D.naut.CG) ∈ Pa → D.nd.goodRow σ → ∃ π', GlobalTheory.IndefiniteRowSideFullHecke.CMTypeEmbeddings.IsCuspParam D Rw σ π' := by
-  first | exact @_root_.GlobalTheory.RowCuspFromLift.exists_isCuspParam_of_liftAt_good_index | exact _root_.GlobalTheory.RowCuspFromLift.exists_isCuspParam_of_liftAt_good_index | (intros; apply _root_.GlobalTheory.RowCuspFromLift.exists_isCuspParam_of_liftAt_good_index <;> assumption)
+  first | exact @_root_.GlobalTheory.RowCuspFromLift.exists_isCuspParam_of_liftAt_good_index
 end
 end -- clump:auto
 end -- clump:auto
@@ -618,7 +618,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.trivial_piece_mem_base_change : ∀ (D : D7) (Rw : RowSide D), _root_.GlobalTheory.HeightCounting.Up.ParityLaws D → ∀ j σ π μ Pa, LiftAt D Rw j σ π μ → RowLoc D Rw σ → SphericalInertData.IsBC D.nd D.naut D.nbc j π Pa → (⟨1, D.naut.tw μ D.naut.etaTinv, D.R.t⟩ : Part D.naut.CG) ∈ Pa := by
-  first | exact @_root_.GlobalTheory.MuBlockLoc.mu_block_mem_alt | exact _root_.GlobalTheory.MuBlockLoc.mu_block_mem_alt | (intros; apply _root_.GlobalTheory.MuBlockLoc.mu_block_mem_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.MuBlockLoc.mu_block_mem_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -661,7 +661,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.cuspParam_of_definite_liftAll : ∀ (D : D7) (Rw : RowSide D), _root_.GlobalTheory.HeightCounting.Up.ParityLaws D → SphericalInertData.Conclusion1 D → SphericalInertData.HypEFK D → SphericalInertData.HypCM D → (∀ j, 1 ≤ j → j ≤ D.R.m → (D.sp.V j).IsDefinite) → LiftAll D Rw → (∀ σ, RowLoc D Rw σ) → GlobalTheory.IndefiniteRowSideFullHecke.CMTypeEmbeddings.GoodRowCuspParam D Rw := by
-  first | exact @_root_.GlobalTheory.ParAsm.goodRowCuspParam_of_lift_alt | exact _root_.GlobalTheory.ParAsm.goodRowCuspParam_of_lift_alt | (intros; apply _root_.GlobalTheory.ParAsm.goodRowCuspParam_of_lift_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.ParAsm.goodRowCuspParam_of_lift_alt
 end
 end -- clump:auto
 end -- clump:auto

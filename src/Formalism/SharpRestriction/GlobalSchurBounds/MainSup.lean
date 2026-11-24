@@ -89,7 +89,7 @@ theorem numerical_nonvanishing_bound : Formalism.HermitianLattices.ZeroFreeRegio
     have h1 : ((4:ℝ) ^ (3 / ε)) ^ (ε / 3) ≤ x ^ (ε / 3) :=
       Real.rpow_le_rpow (by positivity) hx4 (by positivity)
     rw [← Real.rpow_mul (by norm_num : (0:ℝ) ≤ 4)] at h1
-    have h3 : 3 / ε * (ε / 3) = 1 := by field_simp <;> ring
+    have h3 : 3 / ε * (ε / 3) = 1 := by field_simp
     rw [h3, Real.rpow_one] at h1
     exact h1
   have hL : 0 < Real.log x := Real.log_pos (by linarith)
@@ -681,7 +681,10 @@ theorem exceptional_zero_real_of_landau_page {C1 c : ℝ} (hc : 0 < c) (D : D7) 
   · have hN3 : (3 : ℝ) ≤ N := by exact_mod_cast h3
     have hm3 : (3 : ℝ) ≤ max (N : ℝ) (N * |ρ.im|) := hN3.trans (le_max_left _ _)
     have hmQ : max (N : ℝ) (N * |ρ.im|) ≤ Q * (|ρ.im| + 3) := by
-      apply max_le <;> nlinarith
+      have hQ0 : 0 ≤ Q := by linarith
+      apply max_le
+      · exact le_trans hNQ (le_mul_of_one_le_right hQ0 (by linarith))
+      · exact mul_le_mul hNQ (by linarith) ha hQ0
     have hlm : 0 < Real.log (max (N : ℝ) (N * |ρ.im|)) := Real.log_pos (by linarith)
     have hll : Real.log (max (N : ℝ) (N * |ρ.im|)) ≤ Real.log (Q * (|ρ.im| + 3)) :=
       Real.log_le_log (by linarith) hmQ
@@ -699,7 +702,7 @@ theorem exceptional_zero_real_of_landau_page {C1 c : ℝ} (hc : 0 < c) (D : D7) 
       have h2 := hD3 ρ hz h0 h1
       have hg : 0 < Real.log (|ρ.im| + 3) := Real.log_pos (by linarith)
       have hll : Real.log (|ρ.im| + 3) ≤ Real.log (Q * (|ρ.im| + 3)) :=
-        Real.log_le_log (by linarith) (by nlinarith)
+        Real.log_le_log (by linarith) (le_mul_of_one_le_left (by linarith) (by push_cast at hNQ; exact hNQ))
       have hdiv : c / Real.log (Q * (|ρ.im| + 3)) ≤ c / Real.log (|ρ.im| + 3) :=
         div_le_div_of_nonneg_left hc.le hg hll
       linarith
@@ -815,8 +818,9 @@ theorem thin_of_psiThin (eps c C : ℝ) (heps : 0 < eps) (hc : 0 < c) (hC : 0 < 
     unfold lamE
     apply max_le
     · have h1 : 1 ≤ x ^ (eps / 5) := Real.one_le_rpow (by linarith) (by positivity)
-      have h2 : 1 ≤ Real.log x ^ 2 := by nlinarith
-      nlinarith
+      have h2 : 1 ≤ Real.log x ^ 2 := one_le_pow₀ hlogx
+      have h12 : 1 ≤ x ^ (eps / 5) * Real.log x ^ 2 := one_le_mul_of_one_le_of_one_le h1 h2
+      linarith
     · exact hlast
   have hsq : ∀ a : ℝ, (x ^ (2 : ℝ)) ^ (eps / 2 / a) = x ^ (eps / a) := by
     intro a
@@ -825,7 +829,8 @@ theorem thin_of_psiThin (eps c C : ℝ) (heps : 0 < eps) (hc : 0 < c) (hC : 0 < 
     ring
   have hxx : x₀ ≤ x ^ (2 : ℝ) := by
     rw [Real.rpow_two]
-    nlinarith
+    have hle : x ≤ x ^ 2 := le_self_pow₀ (by linarith) (by norm_num)
+    linarith
   have key := h (x ^ (2 : ℝ)) hxx y (lamE D) (psi0 χ) (by rw [hsq]; exact hy) (le_max_left _ _)
     (by rw [hsq, Real.log_rpow hxpos]; linarith)
     (fun u hu => hpsi N χ hχ u (hy.trans hu))
@@ -847,7 +852,9 @@ theorem rpow_le_mul_exp_neg_log {u v r k : ℝ} (hu0 : 0 < u) (hv : v = Real.log
     u ^ r ≤ u * Real.exp (-k * v) := by
   have hu : u = Real.exp v := by rw [hv, Real.exp_log hu0]
   rw [Real.rpow_def_of_pos hu0, ← hv]
-  calc Real.exp (v * r) ≤ Real.exp (v + -k * v) := Real.exp_le_exp.2 (by nlinarith)
+  calc Real.exp (v * r) ≤ Real.exp (v + -k * v) := Real.exp_le_exp.2 (by
+        have hmul := mul_le_mul_of_nonneg_left hr hv0
+        linarith)
     _ = Real.exp v * Real.exp (-k * v) := Real.exp_add _ _
     _ = u * Real.exp (-k * v) := by rw [← hu]
 
@@ -868,7 +875,9 @@ theorem psi_thin_core {C7 C2 c lam : ℝ} (hC7 : 0 < C7) (hC2 : 0 ≤ C2) (hc : 
   set s : ℝ := Real.sqrt v with hs
   have hss : s * s = v := Real.mul_self_sqrt (by linarith)
   have hs1 : 1 ≤ s := by rw [hs]; exact Real.one_le_sqrt.2 hv1
-  have hsv : s ≤ v := by nlinarith
+  have hsv : s ≤ v := by
+    have hmul := le_mul_of_one_le_right (by linarith : 0 ≤ s) hs1
+    linarith
   set c' : ℝ := min (c / 3) 1 with hc'
   have hc'0 : 0 < c' := lt_min (by positivity) one_pos
   have hc'1 : c' ≤ 1 := min_le_right _ _
@@ -887,9 +896,15 @@ theorem psi_thin_core {C7 C2 c lam : ℝ} (hC7 : 0 < C7) (hC2 : 0 ≤ C2) (hc : 
   set P : ℝ := u * E with hP
   have hP0 : 0 < P := by positivity
   have q0 : c' * v / (lam + s) ≤ v := by
-    rw [div_le_iff₀ hls]; nlinarith
+    rw [div_le_iff₀ hls]
+    have h1 : c' * v ≤ v := mul_le_of_le_one_left (by linarith) hc'1
+    have h2 : v ≤ v * (lam + s) := le_mul_of_one_le_right (by linarith) (by linarith)
+    linarith
   have q1 : c' * v / (lam + s) ≤ s := by
-    rw [div_le_iff₀ hls]; nlinarith
+    rw [div_le_iff₀ hls]
+    have h1 : c' * v ≤ v := mul_le_of_le_one_left (by linarith) hc'1
+    have h2 : s * s ≤ s * (lam + s) := mul_le_mul_of_nonneg_left (by linarith) (by linarith)
+    linarith
   have hP1 : 1 ≤ P := by
     rw [hP, huv, hE, ← Real.exp_add]
     apply Real.one_le_exp
@@ -908,8 +923,8 @@ theorem psi_thin_core {C7 C2 c lam : ℝ} (hC7 : 0 < C7) (hC2 : 0 ≤ C2) (hc : 
     rw [Real.log_mul (by positivity) hT0.ne', Real.log_mul hN0.ne' hu0.ne', hlT]
   have l2 : Real.log (N * u) = Real.log N + v := Real.log_mul hN0.ne' hu0.ne'
   have hW0 : 0 ≤ W ^ 2 := by positivity
-  have hWW : W ≤ W ^ 2 := by nlinarith
-  have hWP : W ^ 2 ≤ W ^ 2 * P := by nlinarith
+  have hWW : W ≤ W ^ 2 := le_self_pow₀ (by linarith) (by norm_num)
+  have hWP : W ^ 2 ≤ W ^ 2 * P := le_mul_of_one_le_right hW0 hP1
   have e1 : u * Real.log (N * u * T) ^ 2 / T ≤ 4 * W ^ 2 * P := by
     have a1 : Real.log (N * u * T) ^ 2 ≤ (2 * W) ^ 2 := by
       rw [l1]; apply pow_le_pow_left₀ (by linarith); linarith
@@ -1002,7 +1017,8 @@ theorem psiThin_of {C7 C2 c : ℝ} (hC7 : 0 < C7) (hC2 : 0 ≤ C2) (hc : 0 < c) 
     have h3 : (3 : ℝ) ≤ Real.exp 2 := by have := Real.add_one_le_exp (2 : ℝ); linarith
     have h4 := Real.exp_pos 1
     rw [le_div_iff₀ (by norm_num)]
-    nlinarith
+    have hmul := mul_le_mul_of_nonneg_left h3 h4.le
+    linarith
   exact psi_thin_core hC7 hC2 hc (le_max_left _ _) D h7 χ hχ.1 (log_cond_le hcond hχ)
     (fun ρ h0 h1 hz => hzf N χ hχ ρ h0 h1 hz) (fun T hT => hZ N χ hχ T hT) u hu1
 
@@ -1167,7 +1183,8 @@ theorem zero_sum_core {C7 C lam ka : ℝ} (hC : 0 < C) (hlam : 1 ≤ lam) (hka :
       have : lam ≤ Y := by linarith
       calc 3 * (lam / ka) = 3 / ka * lam := by ring
         _ ≤ 3 / ka * Y := mul_le_mul_of_nonneg_left this (by positivity)
-    nlinarith
+    have : (3 / ka + 4) * Y = 3 / ka * Y + 4 * Y := by ring
+    linarith
   rw [finsum_mem_eq_finite_toFinset_sum _ hfin, ← Finset.sum_fiberwise_of_maps_to hmaps]
   calc ∑ i ∈ Finset.range (M + 1), ∑ ρ ∈ hfin.toFinset with ⌊|ρ.im|⌋₊ = i, (zOrd χ ρ : ℝ) / ‖ρ‖
       ≤ ∑ i ∈ Finset.range (M + 1), a i * (2 * (C * La)) := Finset.sum_le_sum hfib
@@ -1196,12 +1213,14 @@ theorem zeroSumE_of {C7 C c : ℝ} (hC : 0 < C) (hc : 0 < c) (D : D7) (h7 : adm7
       apply Real.log_le_log (by positivity)
       have h2 : Real.exp 2 = Real.exp 1 * Real.exp 1 := by rw [← Real.exp_add]; norm_num
       have h3 := Real.exp_one_gt_d9
-      nlinarith
+      have h4 : (2.7 : ℝ) * 2.7 ≤ Real.exp 1 * Real.exp 1 :=
+        mul_le_mul (by linarith) (by linarith) (by norm_num) (by linarith)
+      linarith
     rwa [Real.log_exp] at h1
   have hl0 : 0 ≤ Real.log (|ρ.im| + 3) := Real.log_nonneg (by linarith [abs_nonneg ρ.im])
   have hcmp : c / 3 / lamE D ≤ c / (lamE D + Real.log (|ρ.im| + 3)) := by
     rw [div_div, div_le_div_iff₀ (by positivity) (by linarith)]
-    nlinarith
+    exact mul_le_mul_of_nonneg_left (by linarith) hc.le
   linarith
 
 theorem thin_of_zeroFree (eps C7 C11 c : ℝ) (heps : 0 < eps) (hC7 : 0 < C7) (hC11 : 0 < C11) (hc : 0 < c) :
@@ -1618,7 +1637,6 @@ theorem logNE_le_of_rows (D : D7) {Y x eps : ℝ} (he : 0 < eps) (h1 : 1 < Y) (h
   have hNE : Real.log (GlobalTheoryTheory.NE D) ≤ 2 * Y ^ (eps / 5) * Real.log Y ^ 2 := by
     first
       | (unfold GlobalTheoryTheory.NE; push_cast; exact hlog)
-      | simpa [GlobalTheoryTheory.NE] using hlog
   have ha : Y ^ (eps / 5) ≤ x ^ (eps / 5) := Real.rpow_le_rpow hY0.le hY (by linarith)
   have hl0 : 0 ≤ Real.log Y := Real.log_nonneg h1.le
   have hl : Real.log Y ≤ Real.log x := Real.log_le_log hY0 hY

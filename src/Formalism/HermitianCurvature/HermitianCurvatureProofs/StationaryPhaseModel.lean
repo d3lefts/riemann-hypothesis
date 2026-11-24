@@ -117,16 +117,12 @@ theorem A_const_nonneg {f : E → F} (hw : ∀ x ∈ A, 0 < w x) (h : Sym A w m 
     0 ≤ K := by
   have h0 := h.2 x hx 0 (Nat.zero_le _)
   have hp : 0 < w x ^ (m - ((0 : ℕ) : ℤ)) := zpow_pos (hw x hx) _
-  by_contra hK
-  push Not at hK
-  have : K * w x ^ (m - ((0 : ℕ) : ℤ)) < 0 := mul_neg_of_neg_of_pos hK hp
-  linarith [norm_nonneg (iteratedFDeriv ℝ 0 f x)]
+  exact (mul_nonneg_iff_of_pos_right hp).mp ((norm_nonneg _).trans h0)
 
 theorem Sym.mono {f : E → F} {N' : ℕ} {K' : ℝ} (hw : ∀ x ∈ A, 0 < w x) (h : Sym A w m N K f) (hN : N' ≤ N)
     (hK : K ≤ K') : Sym A w m N' K' f := by
   refine ⟨h.1.of_le (by exact_mod_cast hN), fun x hx i hi => ?_⟩
-  refine (h.2 x hx i (hi.trans hN)).trans ?_
-  exact mul_le_mul_of_nonneg_right hK (zpow_pos (hw x hx) _).le
+  exact (h.2 x hx i (hi.trans hN)).trans (mul_le_mul_of_nonneg_right hK (zpow_pos (hw x hx) _).le)
 
 theorem Sym.subset {f : E → F} {A' : Set E} (h : Sym A w m N K f) (hA : A' ⊆ A) : Sym A' w m N K f :=
   ⟨h.1, fun x hx i hi => h.2 x (hA hx) i hi⟩
@@ -137,9 +133,8 @@ theorem A_cda {f : E → F} (h : ContDiff ℝ N f) {i : ℕ} (hi : i ≤ N) (x :
 theorem Sym.add {f g : E → F} (hf : Sym A w m N K₁ f) (hg : Sym A w m N K₂ g) :
     Sym A w m N (K₁ + K₂) (fun x => f x + g x) := by
   refine ⟨hf.1.add hg.1, fun x hx i hi => ?_⟩
-  have h1 : iteratedFDeriv ℝ i (fun x => f x + g x) x = iteratedFDeriv ℝ i f x + iteratedFDeriv ℝ i g x :=
-    iteratedFDeriv_add_apply (A_cda hf.1 hi x) (A_cda hg.1 hi x)
-  rw [h1, add_mul]
+  rw [show (fun x => f x + g x) = f + g from rfl,
+    iteratedFDeriv_add_apply (A_cda hf.1 hi x) (A_cda hg.1 hi x), add_mul]
   exact (norm_add_le _ _).trans (add_le_add (hf.2 x hx i hi) (hg.2 x hx i hi))
 
 theorem Sym.neg {f : E → F} (hf : Sym A w m N K f) : Sym A w m N K (fun x => - f x) := by
@@ -156,25 +151,22 @@ theorem Sym.sub {f g : E → F} (hf : Sym A w m N K₁ f) (hg : Sym A w m N K₂
 theorem Sym.sum {ι : Type*} (s : Finset ι) {f : ι → E → F} {Kl : ι → ℝ}
     (h : ∀ l ∈ s, Sym A w m N (Kl l) (f l)) : Sym A w m N (∑ l ∈ s, Kl l) (fun x => ∑ l ∈ s, f l x) := by
   refine ⟨ContDiff.sum fun l hl => (h l hl).1, fun x hx i hi => ?_⟩
-  have h1 : iteratedFDeriv ℝ i (fun x => ∑ l ∈ s, f l x) = ∑ l ∈ s, iteratedFDeriv ℝ i (f l) :=
-    iteratedFDeriv_sum fun l hl => (h l hl).1.of_le (by exact_mod_cast hi)
-  rw [h1, Finset.sum_apply, Finset.sum_mul]
+  rw [(iteratedFDeriv_sum fun l hl => (h l hl).1.of_le (by exact_mod_cast hi)), Finset.sum_apply,
+    Finset.sum_mul]
   exact (norm_sum_le _ _).trans (Finset.sum_le_sum fun l hl => (h l hl).2 x hx i hi)
 
 theorem Sym.const_smul {f : E → F} (c : ℝ) (hf : Sym A w m N K f) :
     Sym A w m N (|c| * K) (fun x => c • f x) := by
   refine ⟨hf.1.const_smul c, fun x hx i hi => ?_⟩
-  have h1 : iteratedFDeriv ℝ i (fun x => c • f x) x = c • iteratedFDeriv ℝ i f x :=
-    iteratedFDeriv_const_smul_apply (A_cda hf.1 hi x)
-  rw [h1, norm_smul, Real.norm_eq_abs, mul_assoc]
+  change ‖iteratedFDeriv ℝ i (c • f) x‖ ≤ |c| * K * w x ^ (m - (i : ℤ))
+  rw [iteratedFDeriv_const_smul_apply (A_cda hf.1 hi x), norm_smul, Real.norm_eq_abs, mul_assoc]
   exact mul_le_mul_of_nonneg_left (hf.2 x hx i hi) (abs_nonneg c)
 
 theorem Sym.const_smul_complex {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V] {f : E → V} (c : ℂ)
     (hf : Sym A w m N K f) : Sym A w m N (‖c‖ * K) (fun x => c • f x) := by
   refine ⟨hf.1.const_smul c, fun x hx i hi => ?_⟩
-  have h1 : iteratedFDeriv ℝ i (fun x => c • f x) x = c • iteratedFDeriv ℝ i f x :=
-    iteratedFDeriv_const_smul_apply (A_cda hf.1 hi x)
-  rw [h1, norm_smul, mul_assoc]
+  change ‖iteratedFDeriv ℝ i (c • f) x‖ ≤ ‖c‖ * K * w x ^ (m - (i : ℤ))
+  rw [iteratedFDeriv_const_smul_apply (A_cda hf.1 hi x), norm_smul, mul_assoc]
   exact mul_le_mul_of_nonneg_left (hf.2 x hx i hi) (norm_nonneg c)
 
 theorem Sym.smul {f : E → ℝ} {g : E → F} (hw : ∀ x ∈ A, 0 < w x) (hf : Sym A w m₁ N K₁ f)
@@ -221,17 +213,15 @@ theorem Sym.mul {f g : E → ℝ} (hw : ∀ x ∈ A, 0 < w x) (hf : Sym A w m₁
 theorem Sym.fderiv {f : E → F} (hf : Sym A w m (N + 1) K f) : Sym A w (m - 1) N K (fderiv ℝ f) := by
   refine ⟨hf.1.fderiv_right (by norm_cast), fun x hx i hi => ?_⟩
   rw [norm_iteratedFDeriv_fderiv]
-  have h := hf.2 x hx (i + 1) (Nat.succ_le_succ hi)
   have e : m - ((i + 1 : ℕ) : ℤ) = m - 1 - (i : ℤ) := by push_cast; ring
-  rwa [e] at h
+  simpa only [e] using hf.2 x hx (i + 1) (Nat.succ_le_succ hi)
 
 theorem Sym.comp_clm {f : E → F} (T : F →L[ℝ] G) (hf : Sym A w m N K f) :
     Sym A w m N (‖T‖ * K) (fun x => T (f x)) := by
   refine ⟨T.contDiff.comp hf.1, fun x hx i hi => ?_⟩
-  have h1 : ‖iteratedFDeriv ℝ i (fun x => T (f x)) x‖ ≤ ‖T‖ * ‖iteratedFDeriv ℝ i f x‖ :=
-    T.norm_iteratedFDeriv_comp_left (A_cda hf.1 hi x) le_rfl
   rw [mul_assoc]
-  exact h1.trans (mul_le_mul_of_nonneg_left (hf.2 x hx i hi) (norm_nonneg T))
+  exact (T.norm_iteratedFDeriv_comp_left (A_cda hf.1 hi x) le_rfl).trans
+    (mul_le_mul_of_nonneg_left (hf.2 x hx i hi) (norm_nonneg T))
 
 theorem Sym.clm_apply {L : E → G →L[ℝ] F} (v : G) (hL : Sym A w m N K L) :
     Sym A w m N (K * ‖v‖) (fun x => L x v) := by
@@ -252,10 +242,9 @@ theorem Sym.const (c : F) (hK : 0 ≤ K) (hw : ∀ x ∈ A, 0 < w x) (h : ∀ x 
     Sym A w m N K (fun _ : E => c) := by
   refine ⟨contDiff_const, fun x hx i _ => ?_⟩
   rcases Nat.eq_zero_or_pos i with rfl | hi
-  · rw [norm_iteratedFDeriv_zero]
-    simpa using h x hx
-  · rw [iteratedFDeriv_const_of_ne hi.ne']
-    simpa using mul_nonneg hK (zpow_pos (hw x hx) _).le
+  · simpa [norm_iteratedFDeriv_zero] using h x hx
+  · simpa [iteratedFDeriv_const_of_ne hi.ne'] using
+      mul_nonneg hK (zpow_pos (hw x hx) _).le
 
 theorem Sym.lower {f : E → F} {W : ℝ} (p : ℕ) (hw : ∀ x ∈ A, 0 < w x) (hW : ∀ x ∈ A, w x ≤ W)
     (hf : Sym A w (m + p) N K f) : Sym A w m N (K * W ^ p) f := by
@@ -295,8 +284,7 @@ theorem A_fderiv_inv {f : E → ℝ} (hf : Differentiable ℝ f) (hpos : ∀ x, 
     fderiv ℝ (fun x => (f x)⁻¹) = fun x => -(((f x)⁻¹ * (f x)⁻¹) • fderiv ℝ f x) := by
   funext x
   have h := (hasDerivAt_inv (hpos x).ne').comp_hasFDerivAt x (hf x).hasFDerivAt
-  have h2 : HasFDerivAt (fun x => (f x)⁻¹) ((-(f x ^ 2)⁻¹) • fderiv ℝ f x) x := h
-  rw [h2.fderiv, neg_smul, sq, mul_inv]
+  rw [show fderiv ℝ (fun x => (f x)⁻¹) x = (-(f x ^ 2)⁻¹) • fderiv ℝ f x from h.fderiv, neg_smul, sq, mul_inv]
 
 theorem Sym.inv (N : ℕ) (K c : ℝ) (hc : 0 < c) : ∃ C : ℝ, 0 ≤ C ∧ ∀ (A : Set E) (w : E → ℝ) (f : E → ℝ),
     (∀ x ∈ A, 0 < w x) → Sym A w 2 N K f → (∀ x, 0 < f x) → (∀ x ∈ A, c * w x ^ 2 ≤ f x) →
@@ -422,13 +410,10 @@ theorem Sym.clm (L : E →L[ℝ] F) {σ : ℝ} (hσ : 0 < σ) : Sym A (wt σ) 1 
     rw [norm_iteratedFDeriv_zero]
     have : wt σ x ^ ((1 : ℤ) - ((0 : ℕ) : ℤ)) = wt σ x := by simp
     rw [this]
-    refine (L.le_opNorm x).trans (mul_le_mul_of_nonneg_left ?_ (norm_nonneg L))
-    unfold wt
-    linarith
+    exact (L.le_opNorm x).trans
+      (mul_le_mul_of_nonneg_left (by unfold wt; linarith) (norm_nonneg L))
   | 1 =>
-    rw [← norm_iteratedFDeriv_fderiv, norm_iteratedFDeriv_zero]
-    have h1 : _root_.fderiv ℝ (fun x => L x) x = L := L.fderiv
-    rw [h1]
+    rw [← norm_iteratedFDeriv_fderiv, norm_iteratedFDeriv_zero, L.fderiv]
     simp
   | j + 2 =>
     rw [← norm_iteratedFDeriv_fderiv]
@@ -451,9 +436,8 @@ open Formalism.FourierDecayAlt.G MeasureTheory Filter Topology
 namespace Formalism.FourierDecayAlt.P.StationaryPhaseModel
 
 theorem isAddHaar_muPi (d : ℕ) (β : ℂ) (hβ : β ≠ 0) : (muPi β (Fin d)).IsAddHaarMeasure := by
-  have hc : Real.toNNReal (‖β‖ / (2 * Real.pi)) ≠ 0 := by
-    have : 0 < ‖β‖ / (2 * Real.pi) := div_pos (norm_pos_iff.2 hβ) (by positivity)
-    exact (Real.toNNReal_pos.2 this).ne'
+  have hc : Real.toNNReal (‖β‖ / (2 * Real.pi)) ≠ 0 :=
+    (Real.toNNReal_pos.2 (div_pos (norm_pos_iff.2 hβ) (by positivity))).ne'
   have : (mu β).IsAddHaarMeasure := by
     unfold mu
     exact Measure.IsAddHaarMeasure.nnreal_smul _ hc
@@ -461,8 +445,7 @@ theorem isAddHaar_muPi (d : ℕ) (β : ℂ) (hβ : β ≠ 0) : (muPi β (Fin d))
   infer_instance
 
 theorem B_finrank (d : ℕ) : Module.finrank ℝ (Fin d → ℂ) = 2 * d := by
-  rw [Module.finrank_pi_fintype]
-  simp [Complex.finrank_real_complex, mul_comm]
+  simp [Module.finrank_pi_fintype, Complex.finrank_real_complex, mul_comm]
 
 theorem B_weight (d : ℕ) (β : ℂ) (hβ : β ≠ 0) : ∃ C₀ : ℝ, 0 ≤ C₀ ∧ ∀ σ : ℝ, 0 < σ →
     Integrable (fun x : Fin d → ℂ => wt σ x ^ (-(2 * (d : ℤ) + 2))) (muPi β (Fin d)) ∧
@@ -502,8 +485,7 @@ theorem B_weight (d : ℕ) (β : ℂ) (hβ : β ≠ 0) : ∃ C₀ : ℝ, 0 ≤ C
     ring
 
 theorem B_norm_osc {E : Type*} (φ : E → ℝ) (τ : ℝ) (x : E) : ‖osc φ τ x‖ = 1 := by
-  unfold osc
-  exact Complex.norm_exp_I_mul_ofReal _
+  simpa only [osc] using Complex.norm_exp_I_mul_ofReal (φ x / τ)
 
 section IBP
 
@@ -523,9 +505,7 @@ theorem B_hasFDerivAt_osc {φ : E → ℝ} (τ : ℝ) {x : E} (hφ : Differentia
 
 theorem B_contDiff_osc {φ : E → ℝ} (τ : ℝ) {n : ℕ} (hφ : ContDiff ℝ n φ) : ContDiff ℝ n (osc φ τ) := by
   unfold osc
-  have h1 : ContDiff ℝ n (fun y => ((φ y / τ : ℝ) : ℂ)) :=
-    Complex.ofRealCLM.contDiff.comp (hφ.div_const τ)
-  exact (contDiff_const.mul h1).cexp
+  exact (contDiff_const.mul (Complex.ofRealCLM.contDiff.comp (hφ.div_const τ))).cexp
 
 variable [MeasurableSpace E] [BorelSpace E] [FiniteDimensional ℝ E] {μ : Measure E} [μ.IsAddHaarMeasure]
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
@@ -718,9 +698,7 @@ theorem B_reduce (ι : Type) [Fintype ι] (n : ℕ) (Γ c₀ : ℝ) (hc₀ : 0 <
 end Reduce
 
 theorem B_norm_dirv {d : ℕ} (l : Fin d × Bool) : ‖dirv l‖ = 1 := by
-  unfold dirv
-  rw [Pi.norm_single]
-  split_ifs <;> simp
+  by_cases h : l.2 = true <;> simp [dirv, Pi.norm_single, h, Complex.norm_I]
 
 theorem osc_bound (d q : ℕ) (β : ℂ) (hβ : β ≠ 0) (Γ c₁ : ℝ) (hc₁ : 0 < c₁) : ∃ C : ℝ, 0 ≤ C ∧
     ∀ (A : Set (Fin d → ℂ)) (φ : (Fin d → ℂ) → ℝ) (τ : ℝ), 0 < τ →
@@ -800,14 +778,12 @@ variable {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedAddComm
 
 theorem C_line_hasDerivAt {f : E → F} {y v : E} {ζ : ℂ} (h : DifferentiableAt ℂ f (y + ζ • v)) :
     HasDerivAt (fun z : ℂ => f (y + z • v)) (fderiv ℂ f (y + ζ • v) v) ζ := by
-  have h1 : HasDerivAt (fun z : ℂ => y + z • v) v ζ := by
-    simpa using ((hasDerivAt_id ζ).smul_const v).const_add y
-  exact h.hasFDerivAt.comp_hasDerivAt ζ h1
+  simpa [Function.comp_def] using h.hasFDerivAt.comp_hasDerivAt ζ (((hasDerivAt_id ζ).smul_const v).const_add y)
 
 theorem C_norm_fderiv_le {f : E → F} {y : E} {δ M : ℝ} (hδ : 0 < δ)
     (hf : DifferentiableOn ℂ f (ball y δ)) (hM : ∀ z ∈ ball y δ, ‖f z‖ ≤ M) :
     ‖fderiv ℂ f y‖ ≤ M / δ := by
-  first | exact Bl.general_b_fact_second_bis_form.goal1 .. | (apply Bl.general_b_fact_second_bis_form.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_second_bis_form.goal1 <;> assumption)
+  first | (apply Bl.general_b_fact_second_bis_form.goal1 <;> assumption)
 
 theorem C_continuousOn_fderiv [FiniteDimensional ℂ E] {U : Set E} (hU : IsOpen U) {f : E → F}
     (hf : DifferentiableOn ℂ f U) : ContinuousOn (fderiv ℂ f) U := by
@@ -957,10 +933,9 @@ theorem holo_contDiffOn {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
   induction n generalizing f with
   | zero => exact contDiffOn_zero.2 hf.continuousOn
   | succ n ih =>
-    have h := (contDiffOn_succ_iff_fderiv_of_isOpen (𝕜 := ℂ) (n := (n : WithTop ℕ∞)) (f := f) hU).2
+    exact_mod_cast (contDiffOn_succ_iff_fderiv_of_isOpen (𝕜 := ℂ) (n := (n : WithTop ℕ∞)) (f := f) hU).2
       ⟨hf, fun h => absurd h (by simp), contDiffOn_clm_apply.2 fun v =>
         ih (C_differentiableOn_fderiv_apply hU hf v)⟩
-    exact_mod_cast h
 
 theorem holo_bound {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] [FiniteDimensional ℂ E]
     [NormedAddCommGroup F] [NormedSpace ℂ F] [CompleteSpace F] (i : ℕ) {f : E → F} {x : E} {δ M : ℝ} (hδ : 0 < δ)
@@ -1054,14 +1029,10 @@ theorem D_nsq_sym (d N : ℕ) : ∃ K : ℝ, 0 ≤ K ∧ Sym (Set.univ : Set (Fi
   refine ⟨∑ k : Fin d, (2 ^ N * ‖Lr k‖ * ‖Lr k‖ + 2 ^ N * ‖Li k‖ * ‖Li k‖), by positivity, ?_⟩
   have h2 := Sym.sum Finset.univ h1
   convert h2 using 2 with x
-  unfold D_nsq
-  refine Finset.sum_congr rfl fun k _ => ?_
-  simp only [Lr, Li, ContinuousLinearMap.comp_apply, ContinuousLinearMap.proj_apply, Complex.reCLM_apply,
-    Complex.imCLM_apply]
-  rw [Complex.sq_norm, Complex.normSq_apply]
+  simp [D_nsq, Lr, Li, ContinuousLinearMap.comp_apply, ContinuousLinearMap.proj_apply,
+    Complex.reCLM_apply, Complex.imCLM_apply, Complex.sq_norm, Complex.normSq_apply]
 
 theorem D_norm_sq_le_nsq (d : ℕ) (x : Fin d → ℂ) : ‖x‖ ^ 2 ≤ D_nsq d x := by
-  have h0 : 0 ≤ D_nsq d x := by unfold D_nsq; positivity
   have h1 : ‖x‖ ≤ Real.sqrt (D_nsq d x) := by
     rw [pi_norm_le_iff_of_nonneg (Real.sqrt_nonneg _)]
     intro k
@@ -1069,16 +1040,15 @@ theorem D_norm_sq_le_nsq (d : ℕ) (x : Fin d → ℂ) : ‖x‖ ^ 2 ≤ D_nsq d
     unfold D_nsq
     exact Finset.single_le_sum (f := fun k => ‖x k‖ ^ 2) (fun i _ => by positivity) (Finset.mem_univ k)
   calc ‖x‖ ^ 2 ≤ Real.sqrt (D_nsq d x) ^ 2 := by gcongr
-    _ = D_nsq d x := Real.sq_sqrt h0
+    _ = D_nsq d x := Real.sq_sqrt (by unfold D_nsq; positivity)
 
 theorem D_exp_decay (n : ℕ) (s : ℝ) (hs : 0 ≤ s) :
     (1 + s) ^ (2 * n) * Real.exp (-s ^ 2) ≤ 2 ^ n * n.factorial * Real.exp 1 := by
   have h1 : (1 + s) ^ 2 ≤ 2 * (1 + s ^ 2) := by nlinarith [sq_nonneg (1 - s)]
-  have h2 : (1 + s ^ 2) ^ n / n.factorial ≤ Real.exp (1 + s ^ 2) :=
-    Real.pow_div_factorial_le_exp _ (by positivity) n
   have h3 : (1 + s ^ 2) ^ n ≤ n.factorial * Real.exp (1 + s ^ 2) := by
-    rw [div_le_iff₀ (by positivity)] at h2
-    linarith
+    rw [mul_comm]
+    exact (div_le_iff₀ (by positivity)).1
+      (Real.pow_div_factorial_le_exp (1 + s ^ 2) (by positivity) n)
   calc (1 + s) ^ (2 * n) * Real.exp (-s ^ 2) = ((1 + s) ^ 2) ^ n * Real.exp (-s ^ 2) := by rw [pow_mul]
     _ ≤ (2 * (1 + s ^ 2)) ^ n * Real.exp (-s ^ 2) := by gcongr
     _ = 2 ^ n * (1 + s ^ 2) ^ n * Real.exp (-s ^ 2) := by rw [mul_pow]
@@ -1451,12 +1421,8 @@ theorem D_phi_lower (d : ℕ) (hd : 0 < d) (c : ℂ) (hc : c ≠ 0) (H : Matrix 
   by_contra hcon
   push Not at hcon
   have hx0 : 0 < ‖x‖ := by
-    have := hcon (⟨0, hd⟩, false)
-    have h2 := (abs_nonneg _).trans_lt this
-    by_contra h3
-    have h4 : ‖x‖ = 0 := le_antisymm (not_lt.1 h3) (norm_nonneg x)
-    rw [h4, mul_zero] at h2
-    exact lt_irrefl _ h2
+    have h2 : 0 < ‖c‖ / (4 * Λ) * ‖x‖ := (abs_nonneg _).trans_lt (hcon (⟨0, hd⟩, false))
+    exact pos_of_mul_pos_right h2 (by positivity)
   have hk : ∀ k, ‖(H *ᵥ x) k‖ ≤ ‖x‖ / (2 * Λ) := by
     intro k
     have h1 := hcon (k, false)
@@ -1676,24 +1642,19 @@ section TaylorInS
 variable {d : ℕ} {β : ℂ} {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] [CompleteSpace V]
 
 theorem norm_oscillatory_factor {E : Type*} (φ : E → ℝ) (τ : ℝ) (x : E) : ‖osc φ τ x‖ = 1 := by
-  unfold osc
-  rw [mul_comm]
-  exact Complex.norm_exp_ofReal_mul_I _
+  exact D_osc_norm φ τ x
 
 theorem continuous_oscillatory_factor {E : Type*} [TopologicalSpace E] {φ : E → ℝ} (hφ : Continuous φ) (τ : ℝ) :
     Continuous (osc φ τ) := by
-  unfold osc
-  fun_prop
+  exact D_osc_continuous hφ τ
 
 theorem hasDerivAt_exp_linear_phase (a p τ s : ℝ) :
     HasDerivAt (fun s : ℝ => Complex.exp (Complex.I * (((a + s * p) / τ : ℝ) : ℂ)))
       ((Complex.I * ((p / τ : ℝ) : ℂ)) * Complex.exp (Complex.I * (((a + s * p) / τ : ℝ) : ℂ))) s := by
   have h1 : HasDerivAt (fun s : ℝ => (a + s * p) / τ) (p / τ) s := by
-    have := ((hasDerivAt_id s).mul_const p).const_add a |>.div_const τ
-    simpa using this
+    simpa using (((hasDerivAt_id s).mul_const p).const_add a |>.div_const τ)
   have h2 : HasDerivAt (fun s : ℝ => (((a + s * p) / τ : ℝ) : ℂ)) ((p / τ : ℝ) : ℂ) s := h1.ofReal_comp
-  have h3 := (h2.const_mul Complex.I).cexp
-  convert h3 using 1
+  convert (h2.const_mul Complex.I).cexp using 1
   ring
 
 theorem hasDerivAt_oscillatory_integral (hβ : β ≠ 0) (φ₀ P : (Fin d → ℂ) → ℝ) (hφ₀ : Continuous φ₀) (hP : Continuous P) (τ : ℝ)
@@ -1925,9 +1886,7 @@ theorem E_P_vanish {φ : E → ℝ} (hφ : ContDiff ℝ 2 φ) (hc : fderiv ℝ �
     (hφ.fderiv_right (m := 1) (by norm_num)).differentiable (by norm_num)
   have h2 : fderiv ℝ (fderiv ℝ (E_P φ)) 0 = 0 := by
     rw [E_P_fderiv hφ]
-    have := ((hd 0).hasFDerivAt.sub (fderiv ℝ (fderiv ℝ φ) 0).hasFDerivAt).fderiv
-    rw [sub_self] at this
-    exact this
+    exact (((hd 0).hasFDerivAt.sub (fderiv ℝ (fderiv ℝ φ) 0).hasFDerivAt).fderiv).trans (sub_self (fderiv ℝ (fderiv ℝ φ) 0))
   intro i hi
   rw [← norm_eq_zero]
   interval_cases i
@@ -2091,8 +2050,7 @@ theorem E_dphi_sym {φ : E → ℝ} {N : ℕ} (hN : 1 ≤ N) (hφ : ContDiff ℝ
     rw [← norm_eq_zero, norm_iteratedFDeriv_zero, hc, norm_zero]
 
 theorem E_wt_pos {σ : ℝ} (hσ : 0 < σ) (x : E) : 0 < wt σ x := by
-  unfold wt
-  linarith [norm_nonneg x]
+  simpa [wt, add_comm] using add_pos_of_nonneg_of_pos (norm_nonneg x) hσ
 
 theorem E_ph_sym {φ : E → ℝ} {N : ℕ} (hN : 1 ≤ N) (hφ : ContDiff ℝ (N + 1 : ℕ) φ) {r Γ σ : ℝ} (hr : 0 < r)
     (hσ : 0 < σ) (hσ1 : σ ≤ 1) (hc : fderiv ℝ φ 0 = 0)
@@ -2116,8 +2074,7 @@ theorem E_ph_sym {φ : E → ℝ} {N : ℕ} (hN : 1 ≤ N) (hφ : ContDiff ℝ (
   linarith
 
 theorem E_norm_dirv {d : ℕ} (l : Fin d × Bool) : ‖(dirv l : Fin d → ℂ)‖ = 1 := by
-  unfold dirv
-  rw [Pi.norm_single]
+  simp [dirv, Pi.norm_single]
   split_ifs <;> simp
 
 theorem E_ph_low {d : ℕ} {φ : (Fin d → ℂ) → ℝ} {n : ℕ} (h3n : 3 ≤ n) (hφ : ContDiff ℝ n φ) {r Γ c₁ ρ : ℝ}
@@ -2301,8 +2258,7 @@ theorem E_integral_neg (hβ : β ≠ 0) (f : (Fin d → ℂ) → V) :
 theorem E_integral_odd (hβ : β ≠ 0) (f : (Fin d → ℂ) → V) (hf : ∀ x, f (-x) = - f x) :
     ∫ x, f x ∂(muPi β (Fin d)) = 0 := by
   have h := E_integral_neg hβ f
-  simp_rw [hf] at h
-  rw [integral_neg] at h
+  simp_rw [hf, integral_neg] at h
   have h2 : (2 : ℝ) • ∫ x, f x ∂(muPi β (Fin d)) = 0 := by
     rw [two_smul]
     nth_rewrite 1 [← h]
@@ -2352,8 +2308,7 @@ theorem model_integral_second_error {C : ℝ} (hOB : E_OB d 3 β (Γ + Γ * (r +
   have hA := model_amplitude_symbol (N := d + 1 + 3) (a₀ := a₀) (ℓ := ℓ) hρ0 (fun i hi => hC i (by omega)) hρ0 (E_sqrt_pos hτ)
     (E_sqrt_le_one hτ1) ha hl
   have h := Sym.smul hw (Sym.mul hw hP hP) hA
-  have e : ((3 : ℤ) + 3 + 0) = 2 * ((3 : ℕ) : ℤ) := by norm_num
-  rw [e] at h
+  rw [show ((3 : ℤ) + 3 + 0) = 2 * ((3 : ℕ) : ℤ) by norm_num] at h
   refine E_est (q := 3) (by norm_num) hOB hr hph hρr hρ hτ hτ1 hs _ _ (by positivity) ?_ ?_ h
   · exact (E_cut_smul_compact hρ0 _).smul_left
   · exact (tsupport_smul_subset_right _ _).trans (E_cut_smul_tsupport hρ0 _)
@@ -2369,8 +2324,7 @@ theorem E_cut_continuous (hρ0 : 0 < ρ) : Continuous (cutB d ρ) := (E_cut_cont
 theorem linear_amplitude_integral_zero (hβ : β ≠ 0) (hρ0 : 0 < ρ) :
     ∫ x, osc (quad φ) τ x • linearAmplitude d ρ ℓ x ∂(muPi β (Fin d)) = 0 := by
   refine E_integral_odd hβ _ fun x => ?_
-  rw [E_osc_quad_neg]
-  simp [linearAmplitude, E_cut_neg hρ0]
+  simp [E_osc_quad_neg, linearAmplitude, E_cut_neg hρ0]
 
 theorem model_integral_first_error {C : ℝ} (hβ : β ≠ 0) (hOB : E_OB d 2 β (Γ + Γ * (r + 1) ^ (d + 5)) (c₁ / 2) C)
     (hr : 0 < r) (hΓ : 0 < Γ) (hph : E_Phase d r Γ c₁ φ) (hρ0 : 0 < ρ) (hρr : ρ ≤ r)
@@ -2458,13 +2412,11 @@ noncomputable def E_u (d : ℕ) (ρ : ℝ) (a : (Fin d → ℂ) → V) (x : Fin 
 
 theorem E_a_zero_le {a : (Fin d → ℂ) → V} (hbd : ∀ j ≤ 2 * d + 2, ∀ x, ‖iteratedFDeriv ℝ j a x‖ ≤ S) :
     ‖a 0‖ ≤ S := by
-  rw [← norm_iteratedFDeriv_zero (𝕜 := ℝ)]
-  exact hbd 0 (Nat.zero_le _) 0
+  simpa only [norm_iteratedFDeriv_zero] using hbd 0 (Nat.zero_le _) 0
 
 theorem E_a_fderiv_le {a : (Fin d → ℂ) → V} (hbd : ∀ j ≤ 2 * d + 2, ∀ x, ‖iteratedFDeriv ℝ j a x‖ ≤ S) :
     ‖fderiv ℝ a 0‖ ≤ S := by
-  rw [← norm_iteratedFDeriv_one]
-  exact hbd 1 (by omega) 0
+  simpa only [norm_iteratedFDeriv_one] using hbd 1 (by omega) 0
 
 theorem E_u_support (hρ0 : 0 < ρ) (hρr : ρ ≤ r) {a : (Fin d → ℂ) → V}
     (hsupp : Function.support a ⊆ Metric.closedBall 0 r) :
@@ -2516,12 +2468,9 @@ theorem E_u_sym (hr : 0 < r) (hρ0 : 0 < ρ) (hτ : 0 < τ) (hτ1 : τ ≤ 1) (h
       have hev : E_u d ρ a =ᶠ[𝓝 0] fun x => a x - (a 0 + fderiv ℝ a 0 x) := by
         filter_upwards [Metric.closedBall_mem_nhds (0 : Fin d → ℂ) (half_pos hρ0)] with x hx
         simp [E_u, modelAmplitude, E_cut_one hρ0 hx]
-      rw [hev.fderiv_eq]
-      have hda : HasFDerivAt a (fderiv ℝ a 0) 0 :=
-        ((had.differentiable (by simp)) 0).hasFDerivAt
       have h3 : HasFDerivAt (fun x => a x - (a 0 + fderiv ℝ a 0 x)) (fderiv ℝ a 0 - fderiv ℝ a 0) 0 :=
-        hda.sub ((fderiv ℝ a 0).hasFDerivAt.const_add (a 0))
-      rw [h3.fderiv, sub_self, norm_zero]
+        (((had.differentiable (by simp)) 0).hasFDerivAt).sub ((fderiv ℝ a 0).hasFDerivAt.const_add (a 0))
+      rw [hev.fderiv_eq, h3.fderiv, sub_self, norm_zero]
 
 end EFinal
 
@@ -2636,10 +2585,9 @@ namespace Formalism.FourierDecayAlt.P.StationaryPhaseModel
 theorem F_fderiv_single {d : ℕ} {g : (Fin d → ℂ) → ℂ} {x : Fin d → ℂ} {k : Fin d} {D : ℂ}
     (hg : DifferentiableAt ℂ g x) (h : HasDerivAt (fun ξ => g (Function.update x k ξ)) D (x k)) :
     fderiv ℂ g x (Pi.single k 1) = D := by
-  have h1 : HasDerivAt (fun ξ => Function.update x k ξ) (Pi.single k (1:ℂ)) (x k) := hasDerivAt_update x k (x k)
   have h2 : HasFDerivAt g (fderiv ℂ g x) (Function.update x k (x k)) := by
-    rw [Function.update_eq_self]; exact hg.hasFDerivAt
-  exact (h2.comp_hasDerivAt (x k) h1).unique h
+    simpa only [Function.update_eq_self] using hg.hasFDerivAt
+  exact (h2.comp_hasDerivAt (x k) (hasDerivAt_update x k (x k))).unique h
 
 theorem F_clm_sum {d : ℕ} (L : (Fin d → ℂ) →L[ℂ] ℂ) (v : Fin d → ℂ) :
     L v = ∑ k, v k * L (Pi.single k 1) := by
@@ -2666,8 +2614,7 @@ theorem F_T_apply (c z : ℂ) : realPartMulCLM c z = (c * z).re := rfl
 
 theorem F_T_norm (c : ℂ) : ‖realPartMulCLM c‖ ≤ ‖c‖ := by
   refine ContinuousLinearMap.opNorm_le_bound _ (norm_nonneg _) fun z => ?_
-  rw [F_T_apply, Real.norm_eq_abs]
-  exact (Complex.abs_re_le_norm _).trans (norm_mul_le _ _)
+  simpa [F_T_apply, Real.norm_eq_abs] using (Complex.abs_re_le_norm (c * z)).trans (norm_mul_le c z)
 
 theorem F_norm_single {d : ℕ} (i : Fin d) (z : ℂ) : ‖(Pi.single i z : Fin d → ℂ)‖ = ‖z‖ := by
   exact Pi.norm_single (G := fun _ : Fin d => ℂ) z
@@ -2715,18 +2662,15 @@ theorem F_H_eq (hr : 0 < r) (hg : DifferentiableOn ℂ g (Metric.ball 0 (2 * r))
   have h0 : (0 : Fin d → ℂ) ∈ Metric.ball (0 : Fin d → ℂ) (2 * r) := Metric.mem_ball_self (by positivity)
   have h1 : HasDerivAt (fun ξ : ℂ => Function.update (0 : Fin d → ℂ) j ξ) (Pi.single j (1:ℂ)) 0 :=
     hasDerivAt_update (0 : Fin d → ℂ) j 0
-  have hu0 : Function.update (0 : Fin d → ℂ) j 0 = 0 := by
-    simp
   have h2 : HasFDerivAt (fun y => fderiv ℂ g y (Pi.single i 1))
       ((ContinuousLinearMap.apply ℂ ℂ (Pi.single i 1)).comp (fderiv ℂ (fderiv ℂ g) 0))
       (Function.update (0 : Fin d → ℂ) j 0) := by
-    rw [hu0]; exact F_hasFDerivAt_apply hr hg _
+    simpa using F_hasFDerivAt_apply hr hg _
   have h3 := h2.comp_hasDerivAt (0:ℂ) h1
   have hev : (fun ξ => dg (Function.update 0 j ξ) i) =ᶠ[𝓝 (0:ℂ)]
       ((fun y => fderiv ℂ g y (Pi.single i 1)) ∘ fun ξ : ℂ => Function.update (0 : Fin d → ℂ) j ξ) := by
-    have hc : ContinuousAt (fun ξ : ℂ => Function.update (0 : Fin d → ℂ) j ξ) 0 := h1.continuousAt
     have : ∀ᶠ ξ in 𝓝 (0:ℂ), Function.update (0 : Fin d → ℂ) j ξ ∈ Metric.ball (0 : Fin d → ℂ) (2 * r) :=
-      hc.eventually_mem (by rw [hu0]; exact Metric.isOpen_ball.mem_nhds h0)
+      (h1.continuousAt).eventually_mem (by simpa using Metric.isOpen_ball.mem_nhds h0)
     filter_upwards [this] with ξ hξ
     exact (F_dg_eq hg hdg hξ i).symm
   exact (h3.congr_of_eventuallyEq hev).unique (hH i j)
@@ -2879,8 +2823,7 @@ theorem F_g_contDiffOn (hg : DifferentiableOn ℂ g (Metric.ball 0 (2 * r))) (n 
 
 theorem F_phi_contDiff (hr : 0 < r) (hg : DifferentiableOn ℂ g (Metric.ball 0 (2 * r))) (c : ℂ) (n : ℕ) :
     ContDiff ℝ n (F_phi d r c g) := by
-  refine F_contDiff_mul_cut Metric.isOpen_ball (F_bump_contDiff hr n) (F_bump_tsupport hr) ?_
-  exact (realPartMulCLM c).contDiff.comp_contDiffOn (F_g_contDiffOn hg n)
+  exact F_contDiff_mul_cut Metric.isOpen_ball (F_bump_contDiff hr n) (F_bump_tsupport hr) ((realPartMulCLM c).contDiff.comp_contDiffOn (F_g_contDiffOn hg n))
 
 theorem F_phi_ev (hr : 0 < r) (c : ℂ) {x : Fin d → ℂ} (hx : x ∈ Metric.ball (0 : Fin d → ℂ) (5 * r / 4)) :
     F_phi d r c g =ᶠ[𝓝 x] (realPartMulCLM c ∘ g) := by
@@ -2944,8 +2887,7 @@ theorem F_phi_snd (hr : 0 < r) (hg : DifferentiableOn ℂ g (Metric.ball 0 (2 * 
     filter_upwards [Metric.isOpen_ball.mem_nhds h0] with y hy
     rw [F_phi_fderiv hr hg c hy, F_T_apply]
   have h3 := (h2.congr_of_eventuallyEq hev).unique h1
-  have h4 := congrArg (fun L => L u) h3
-  exact h4.symm
+  exact congrArg (fun L => L u) h3.symm
 
 end Phase
 
@@ -2961,9 +2903,8 @@ theorem F_norm_psi (β w : ℂ) : ‖psi β w‖ = 1 := by
 noncomputable def F_c (β t : ℂ) : ℂ := β * (‖t‖ : ℂ) / t
 
 theorem F_c_norm (β : ℂ) {t : ℂ} (ht : t ≠ 0) : ‖F_c β t‖ = ‖β‖ := by
-  have : ‖t‖ ≠ 0 := norm_ne_zero_iff.2 ht
   simp only [F_c, norm_div, norm_mul, Complex.norm_real, norm_norm]
-  field_simp
+  field_simp [norm_ne_zero_iff.2 ht]
 
 theorem F_re_div (β : ℂ) {t : ℂ} (ht : t ≠ 0) (w : ℂ) : (β * (w / t)).re = (F_c β t * w).re / ‖t‖ := by
   have h1 : (‖t‖ : ℂ) ≠ 0 := by exact_mod_cast norm_ne_zero_iff.2 ht
@@ -2974,8 +2915,7 @@ theorem F_re_div (β : ℂ) {t : ℂ} (ht : t ≠ 0) (w : ℂ) : (β * (w / t)).
 
 theorem F_psi_eq (β : ℂ) {t : ℂ} (ht : t ≠ 0) (w : ℂ) :
     psi β (w / t) = Complex.exp (Complex.I * (((F_c β t * w).re / ‖t‖ : ℝ) : ℂ)) := by
-  unfold psi
-  rw [F_re_div β ht]
+  simp only [psi, F_re_div β ht]
 
 theorem F_osc_phi (hr : 0 < r) (β : ℂ) {t : ℂ} (ht : t ≠ 0) {x : Fin d → ℂ}
     (hx : x ∈ Metric.closedBall (0 : Fin d → ℂ) r) :
@@ -3048,11 +2988,10 @@ theorem F_lower (hd : 0 < d) (hr : 0 < r) (hΛ : 0 < Λ) (hg : DifferentiableOn 
         _ = ‖c‖ * (‖x‖ / Λ) := by field_simp; ring
     exact lt_of_mul_lt_mul_left h4 hcpos.le
   have h5 : ‖dg x‖ < ‖x‖ / Λ := (pi_norm_lt_iff (by positivity)).2 hk
-  have h6 := hgrad x hx
   have h7 : Λ * ‖dg x‖ < ‖x‖ := by
     calc Λ * ‖dg x‖ < Λ * (‖x‖ / Λ) := by gcongr
       _ = ‖x‖ := by field_simp
-  linarith
+  linarith [hgrad x hx, h7]
 
 end Final
 
@@ -3169,9 +3108,7 @@ open Formalism.FourierDecayAlt.G MeasureTheory Filter Topology Matrix
 namespace Formalism.FourierDecayAlt.P.StationaryPhaseModel
 
 theorem norm_psi_alt (β w : ℂ) : ‖psi β w‖ = 1 := by
-  unfold psi
-  rw [mul_comm]
-  exact Complex.norm_exp_ofReal_mul_I _
+  exact F_norm_psi β w
 
 theorem cutoff_eq_contDiffBump (d : ℕ) (ρ : ℝ) (h : 0 < ρ) :
     cutB d ρ = fun x => (⟨ρ / 2, ρ, half_pos h, half_lt_self h⟩ : ContDiffBump (0 : Fin d → ℂ)) x := by
@@ -3217,20 +3154,16 @@ theorem oscillatory_integral_trivial_bound (d : ℕ) (β : ℂ) (hβ : β ≠ 0)
     ‖∫ x : Fin d → ℂ, u x • a x ∂(muPi β (Fin d))‖ ≤
       S * (muPi β (Fin d) (Metric.closedBall 0 r)).toReal := by
   have := isAddHaar_muPi d β hβ
-  have h1 : ∫ x : Fin d → ℂ, u x • a x ∂(muPi β (Fin d)) =
-      ∫ x in Metric.closedBall (0 : Fin d → ℂ) r, u x • a x ∂(muPi β (Fin d)) := by
-    symm
-    apply setIntegral_eq_integral_of_forall_compl_eq_zero
-    intro x hx
-    have : a x = 0 := by
-      by_contra hne
-      exact hx (hsupp hne)
-    rw [this, smul_zero]
-  rw [h1]
+  rw [← show ∫ x in Metric.closedBall (0 : Fin d → ℂ) r, u x • a x ∂(muPi β (Fin d)) =
+      ∫ x : Fin d → ℂ, u x • a x ∂(muPi β (Fin d)) from
+    setIntegral_eq_integral_of_forall_compl_eq_zero (fun x hx => by
+      have : a x = 0 := by
+        by_contra hne
+        exact hx (hsupp hne)
+      rw [this, smul_zero])]
   refine norm_setIntegral_le_of_norm_le_const (isCompact_closedBall _ _).measure_lt_top ?_
   intro x _
-  rw [norm_smul, hu, one_mul]
-  exact hS x
+  simpa [norm_smul, hu x] using hS x
 
 theorem F_zero (d : ℕ) (hd : 0 < d) (β : ℂ) (hβ : β ≠ 0) (r Λ : ℝ) (hr : 0 < r) (hΛ : 0 < Λ) : ∃ C : ℝ, 0 ≤ C ∧
     ∀ (g : (Fin d → ℂ) → ℂ) (dg : (Fin d → ℂ) → Fin d → ℂ) (H : Matrix (Fin d) (Fin d) ℂ),
@@ -3312,9 +3245,7 @@ theorem stationary_phase_dim_zero (β : ℂ) (x₀ : Fin 0 → ℂ) (g : (Fin 0 
 theorem add_update_eq_update_add {d : ℕ} (x₀ x : Fin d → ℂ) (k : Fin d) (ξ : ℂ) :
     x₀ + Function.update x k ξ = Function.update (x₀ + x) k (x₀ k + ξ) := by
   ext i
-  by_cases h : i = k
-  · subst h; simp
-  · simp [h]
+  by_cases h : i = k <;> simp [h]
 
 end Formalism.FourierDecayAlt.P.StationaryPhaseModel
 

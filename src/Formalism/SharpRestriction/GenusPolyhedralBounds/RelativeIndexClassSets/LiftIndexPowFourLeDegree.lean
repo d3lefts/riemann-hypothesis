@@ -73,7 +73,6 @@ theorem m_pow_four_le_n {D : D7} (L : SizeData₂ D) (hN : SizeN L) (hM : SizeM 
     rw [Real.rpow_mul hx0.le]
     first
       | (norm_num; done)
-      | exact_mod_cast (Real.rpow_natCast (L.sc.x ^ szTh L) 4).symm
   have e2 : Real.sqrt (L.sc.x * L.sc.delta1) ^ 4 = L.sc.x ^ (2 - L.sc.eps / 4) := by
     have h4 : Real.sqrt (L.sc.x * L.sc.delta1) ^ 4 = (L.sc.x * L.sc.delta1) ^ 2 := by
       calc Real.sqrt (L.sc.x * L.sc.delta1) ^ 4
@@ -91,7 +90,6 @@ theorem m_pow_four_le_n {D : D7} (L : SizeData₂ D) (hN : SizeN L) (hM : SizeM 
     by
       first
         | exact pow_le_pow_left₀ (Nat.cast_nonneg _) hMu 4
-        | gcongr
   have h2 : (L.sc.x ^ szTh L * Real.sqrt (L.sc.x * L.sc.delta1)) ^ 4
       = L.sc.x ^ (szTh L * 4 + (2 - L.sc.eps / 4)) := by
     rw [mul_pow, e1, e2, ← Real.rpow_add hx0]
@@ -110,7 +108,6 @@ theorem m_pow_four_le_f {D : D7} (L : SizeData₂ D) (h : SizesAt L) : D.R.m ^ 4
   show D.R.m ^ 4 ≤ 2 * D.R.n
   first
     | omega
-    | linarith
 
 end Formalism.BasicNotions
 end -- clump:auto
@@ -136,8 +133,7 @@ variable {j : ℕ} {X : PJ D B P j} {ka wL wF : WeightFamilies.Wt D j} {G : Glob
 
 theorem vEt_nonneg_comb4 {S : Scal B} {c : ℝ} {nus : HeightOneSpectrum (𝓞 B.KO) → ℝ} {Qf : ∀ la, LocalPointData G la}
     (hB : CombBound4 G Qf S c nus) (la : HeightOneSpectrum (𝓞 B.KO)) (ζ : PtsG G la) : 0 ≤ vEt (Qf la) ζ := by
-  unfold vEt
-  split_ifs with hj
+  unfold vEt; split_ifs with hj
   · exact div_nonneg (EReal.toReal_nonneg (hB la ζ).1) (mul_nonneg (by norm_num) (Nat.cast_nonneg _))
   · exact le_rfl
 
@@ -185,8 +181,7 @@ theorem sixteen_le_rdE_of_parA {large₂ : SizeData₂ D} {CA : ℝ} (h : ParA l
   have hr : 2 * (D.R.f : ℝ) * D.R.m ≤ D.host.rdE := h.2.2.2.2.2.2.2.2.2
   have hf' : (8 : ℝ) ≤ (D.R.f : ℝ) := by exact_mod_cast D.eight_le_f
   have hm' : (1 : ℝ) ≤ (D.R.m : ℝ) := by
-    have : 1 ≤ D.R.m := by have := D.R.two_le_m; omega
-    exact_mod_cast this
+    exact_mod_cast le_trans (by norm_num : (1 : ℕ) ≤ 2) D.R.two_le_m
   nlinarith
 
 theorem tie_eqs {K : KAdm} {H : KHyp} {Ch Ah Cq Aq C2 A2 CR : ℝ} (ht : TieC K H Ch Ah Cq Aq C2 A2 CR) :
@@ -409,12 +404,10 @@ theorem sumGP4 (large₂ : SizeData₂ D) (X : PJ D B P j) (h1 : 1 ≤ j) (K : K
   have hq : (0 : ℝ) < qq D := by
     have : (0 : ℝ) ≤ ((WeightFamilies.dimY D j + 4) * DF wL : ℝ) := by positivity
     linarith
-
   have hkN := D.R.m_add_three_le_k
   have hmN := D.R.two_le_m
   have hfN : 1 ≤ D.R.f := by
-    have h0 : 0 < D.R.toFrame.ord := D.R.toFrame.ord_pos
-    have h1 : D.R.f = 2 * D.R.toFrame.ord := rfl
+    have := D.eight_le_f
     omega
   have hf1 : (1 : ℝ) ≤ (D.R.f : ℝ) := by exact_mod_cast hfN
   have hk1 : (1 : ℝ) ≤ (D.R.k : ℝ) := by exact_mod_cast (by omega : 1 ≤ D.R.k)
@@ -433,9 +426,7 @@ theorem sumGP4 (large₂ : SizeData₂ D) (X : PJ D B P j) (h1 : 1 ≤ j) (K : K
   have hL1 : 1 ≤ large₂.sc.L := Real.one_le_rpow large₂.sc.one_lt_alt.le large₂.sc.eps_pos.le
   have hb : 0 < large₂.sc.b := Real.exp_pos _
   have hrd : 1 ≤ D.host.rdE := by
-    have e1 : 2 * (D.R.f : ℝ) * D.R.m ≤ D.host.rdE := hA.2.2.2.2.2.2.2.2.2
-    have e2 : (1 : ℝ) * 1 ≤ (D.R.f : ℝ) * D.R.m := mul_le_mul hf1 hm1 zero_le_one (by linarith)
-    linarith
+    linarith [sixteen_le_rdE_of_parA hA]
   have hRR : 1 ≤ WeightFamilies.RRv D CR := Real.one_le_rpow hrd hCR0
   have hPP : 0 ≤ WeightFamilies.PPv D large₂ C2 A2 := by linarith
   have hc0 : 0 ≤ cc D large₂ C2 A2 CR wL := by
@@ -473,7 +464,6 @@ theorem sumGP4 (large₂ : SizeData₂ D) (X : PJ D B P j) (h1 : 1 ≤ j) (K : K
     rw [show (T : ℝ) * (WeightFamilies.RRv D CR * WeightFamilies.PPv D large₂ C2 A2 * (DF wL : ℝ) ^ 2 / (qq D : ℝ)) * (g0 D : ℝ) =
       ((T : ℝ) * g0 D * WeightFamilies.RRv D CR * WeightFamilies.PPv D large₂ C2 A2 * (DF wL : ℝ) ^ 2) / (qq D : ℝ) by ring]
     exact (div_le_one hq).2 hq2
-
   have hE : 2 * (if j < D.R.m then (T : ℝ) * (max 0 (cc D large₂ C2 A2 CR wL) / (2 * (G.iet : ℝ))) *
         ∑' la, (Qf la).Net * X.lN la else 0) ≤
       (T : ℝ) * cc D large₂ C2 A2 CR wL * ((g0 D : ℝ) * (((WeightFamilies.dimY D j : ℝ) + 1) * G.del * (2 * Gc + 6 * PH) * wL.size +

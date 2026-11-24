@@ -966,7 +966,7 @@ section -- clump:auto
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.MainNotions.BlochKatoReduction Formalism.MainNotions.BlochKatoReduction.Gen GlobalTheory.TwSys GlobalTheory.SelFun GlobalTheory.Published GlobalTheory.ResSel
 
 theorem _root_.GlobalTheory.T.relaxedResidualSelmer_mem_unrelaxed : ∀ (D : Formalism.BasicNotions.D7) (N : NData D.R D.host D.what₂) (X : NTw D.R D.host D.what₂ D.LL0 N) (bkP : BKPh X) (i : X.Tw) (s : X.Sig i), FirstHalf i s → ∀ (K : Type) [Field K] [Algebra (X.O0 i) K] [TopologicalSpace K] [DiscreteTopology K], IsRes i K → ∀ (M R : ℕ) (P : Fin R ⊕ Fin R → PlE D.host) d φ φ' (Q : Finset (PlE D.host)), 1 ≤ M → Position i s M P d φ φ' → IsQ P Q → ∀ x : Z1 (red i K (Tgl i s)), cl x ∈ selOn bkP i (Tgl i s) (1 : GE N →* Kˣ) K Q → (∀ a, ∀ σ ∈ Ine (F := D.host.E) (N.plOm.1 (P (.inr a))), x.1 σ = 0 ∧ x.1 (GlobalTheory.TwistDet.cConj X σ) = 0) → cl x ∈ selOn bkP i (Tgl i s) (1 : GE N →* Kˣ) K ∅ := by
-  first | exact @GlobalTheory.ResUnr.unrelax | exact GlobalTheory.ResUnr.unrelax | (intros; apply GlobalTheory.ResUnr.unrelax <;> assumption)
+  first | exact @GlobalTheory.ResUnr.unrelax
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RelaxedResidualSelmerMemUnrelaxedStatement =====
@@ -1165,7 +1165,7 @@ theorem aeval_eps {K : Type} [Field K] (p : Polynomial K) :
   | add p q hp hq => simp [hp.1, hp.2, hq.1, hq.2]
   | monomial n a =>
     rcases n with _ | _ | n
-    · simp [Polynomial.coeff_monomial, TrivSqZeroExt.algebraMap_eq_inl]
+    · simp [TrivSqZeroExt.algebraMap_eq_inl]
     · simp [Polynomial.coeff_monomial, TrivSqZeroExt.algebraMap_eq_inl]
     · have : (DualNumber.eps : DualNumber K) ^ (n + 1 + 1) = 0 := by
         rw [pow_succ, pow_succ, mul_assoc, DualNumber.eps_mul_eps, mul_zero]
@@ -1414,11 +1414,9 @@ theorem core (hT : TameQuotient) (hG : GalHyp bkP i s) (hF : FirstHalf i s) (hR 
       (fun g c => (w (ψ g) c).snd) (hlamc.comp_continuous hψ) ((hwc.comp_continuous hψ).comp fun v c => (v c).snd)
       (fun g _ h _ => by simp only [map_mul, hlamm]) fun g hg h _ => ?_
     · funext c
-      beta_reduce
       rw [hw' g hg]
       simp
     · funext c
-      beta_reduce
       rw [hw' g hg]
       simp [add_assoc]
   have hf : ∀ π : K →ₗ[k] k, ∃ (x' : LinearMap.ker ((Φ.map (toLam X i M (Fin R ⊕ Fin R))).map aug).mulVecLin)

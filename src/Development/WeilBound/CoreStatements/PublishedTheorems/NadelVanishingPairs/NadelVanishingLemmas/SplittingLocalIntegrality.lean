@@ -498,7 +498,7 @@ theorem GlobalTheory.DI.cechZero_of_hypZero_filtered : ∀ {ι : Type} [LinearOr
   refine ⟨fun s => if s.card = b then y' s else 0, ⟨?_, fun s => ?_, fun s hs => if_neg hs⟩, ?_⟩
   · by_cases hb : b = 0
     · simp [hb, hy'N.1]
-    · simp [hb, Ne.symm hb]
+    · simp [Ne.symm hb]
   · dsimp only
     split_ifs with hs
     · exact hy'N.2.1 a s (by omega)
@@ -1048,7 +1048,7 @@ private theorem Dtot_Lop_eq_zero_of_Dtot_eq_zero_of_empty_eq_zero (p : ℕ) (d :
           h m n v • ((-1 : ℤ) ^ s.card • x) = (-1 : ℤ) ^ s.card • (h m n v • x) :=
         fun x => smul_comm _ _ _
       rw [dite_eq_left h2, ← hn_eq, hSh, hLs', dsm, hD.dh, hys s', hc]
-      simp only [neg_smul, smul_neg, neg_neg, mul_neg, mul_sub, sub_mul, smul_add, smul_sub,
+      simp only [neg_smul, neg_neg, mul_neg, mul_sub, sub_mul, smul_add, smul_sub,
         mul_smul_comm, hε, hcomm]
       abel
     · have hs'e : s' = ∅ := Finset.not_nonempty_iff_eq_empty.mp h2
@@ -1281,7 +1281,7 @@ section -- clump:auto
 open GlobalTheory GlobalTheory.DI
 
 theorem _root_.GlobalTheory.T.exteriorFormsSpanOfSets_mul_smul_mono : ∀ {K : Type} [CommRing K] {V : Type} [AddCommGroup V] [Module K V] (A : Subring K) (L : Set V), (1 : ExteriorAlgebra K V) ∈ forms (A : Set K) L 0 ∧ (∀ q x y, x ∈ forms (A : Set K) L 1 → y ∈ forms (A : Set K) L q → x * y ∈ forms (A : Set K) L (q + 1)) ∧ (∀ q (c : K) y, c ∈ A → y ∈ forms (A : Set K) L q → c • y ∈ forms (A : Set K) L q) ∧ (∀ (B : Set K) q (c : K) y, y ∈ forms B L q → c • y ∈ forms ((fun b => c * b) '' B) L q) ∧ ∀ (B B' : Set K) (L' : Set V) q, B ⊆ B' → L ⊆ L' → forms B L q ≤ forms B' L' q := by
-  first | exact @GlobalTheory.DI.forms_mul_smul_mono | exact GlobalTheory.DI.forms_mul_smul_mono | (intros; apply GlobalTheory.DI.forms_mul_smul_mono <;> assumption)
+  first | exact @GlobalTheory.DI.forms_mul_smul_mono
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExteriorFormsSpanOfSetsMulSmulMonoStatement =====

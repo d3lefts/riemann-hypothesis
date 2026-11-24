@@ -397,7 +397,7 @@ theorem rkQP_apply (τ : E →+* ℂ) (v : Vsp dim) (i : Idx dim) :
   obtain ⟨σ, b⟩ := i
   by_cases h : σ = τ
   · subst h
-    simp [rkQ, rkP, PiLp.single_apply, Sigma.mk.inj_iff]
+    simp [rkQ, rkP]
     rw [Finset.sum_eq_single b]
     · simp
     · intro x _ hx
@@ -408,7 +408,7 @@ theorem rkQP_apply (τ : E →+* ℂ) (v : Vsp dim) (i : Idx dim) :
         exact (eq_of_heq (Sigma.mk.inj_iff.mp h).2).symm
     · intro h
       exact absurd (Finset.mem_univ b) h
-  · simp [rkQ, rkP, PiLp.single_apply, Sigma.mk.inj_iff, h]
+  · simp [rkQ, rkP, h]
 
 end rk
 
@@ -639,7 +639,7 @@ end lin
 
 theorem eq_zero_of_im_L (X : PT E) {a : Vsp X.dim} (h : ∀ y ∈ X.L, (Hf y a).im = 0) : a = 0 := by
   have hH : ∀ y, Hf y a = inner ℂ a y := fun y => by
-    simp [Hf, PiLp.inner_apply, mul_comm]
+    simp [Hf, PiLp.inner_apply]
   have hf : (Complex.imLm.comp ((innerₛₗ ℂ a).restrictScalars ℝ) : Vsp X.dim →ₗ[ℝ] ℝ) = 0 :=
     X.b.ext fun i => by
       simpa [← hH] using h (X.b i) (Submodule.subset_span ⟨i, rfl⟩)
@@ -647,9 +647,6 @@ theorem eq_zero_of_im_L (X : PT E) {a : Vsp X.dim} (h : ∀ y ∈ X.L, (Hf y a).
     have := LinearMap.congr_fun hf ((Complex.I : ℂ) • a)
     first
       | exact this
-      | (simp only [LinearMap.comp_apply, LinearMap.restrictScalars_apply, innerₛₗ_apply,
-          LinearMap.zero_apply] at this
-         exact this)
   rw [inner_smul_right, inner_self_eq_norm_sq_to_K] at h0
   have h2 : ‖a‖ ^ 2 = 0 := by
     have h3 : (Complex.I * ((‖a‖ : ℂ) ^ 2)).im = ‖a‖ ^ 2 := by
@@ -1136,16 +1133,15 @@ theorem im_Hf_act (x ξ : Vsp dim) (β : 𝓞 E) :
   have hZ : Hf x (act β ξ) = ∑ σ, (starRingEnd ℂ) (σ (β : E)) * hA x ξ σ := by
     simp only [Hf, act, hA, Fintype.sum_sigma, Finset.mul_sum]
     refine Finset.sum_congr rfl fun σ _ => Finset.sum_congr rfl fun a _ => ?_
-    simp only [PiLp.toLp_apply, map_mul]
+    simp only [map_mul]
     ring
   have hre : ∑ σ, σ (β : E) * hA x ξ (ComplexEmbedding.conjugate σ) =
       ∑ σ, (starRingEnd ℂ) (σ (β : E)) * hA x ξ σ := by
     refine Fintype.sum_equiv (ComplexEmbedding.involutive_conjugate (K := E)).toPerm _ _ (fun σ => ?_)
-    simp only [Function.Involutive.coe_toPerm, ComplexEmbedding.involutive_conjugate (K := E) σ,
-      ComplexEmbedding.conjugate_coe_eq, Complex.conj_conj]
+    simp only [Function.Involutive.coe_toPerm, ComplexEmbedding.conjugate_coe_eq, Complex.conj_conj]
 
   rw [hZ, Complex.im_eq_sub_conj, map_sum]
-  simp only [map_mul, Complex.conj_conj, mul_sub, mul_div_assoc', Finset.sum_div, Finset.sum_sub_distrib]
+  simp only [map_mul, Complex.conj_conj, mul_sub, mul_div_assoc']
   rw [← hre]
   simp only [← Finset.sum_sub_distrib, ← Finset.sum_div]
 
@@ -1194,7 +1190,7 @@ theorem norm_actT_sq (t : (E →+* ℂ) → ℂ) (v : Vsp dim) :
   refine Finset.sum_congr rfl fun σ _ => ?_
   simp only [pN, Finset.mul_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
-  simp [actT, norm_mul, mul_pow]
+  simp [actT, mul_pow]
 
 end Coord
 

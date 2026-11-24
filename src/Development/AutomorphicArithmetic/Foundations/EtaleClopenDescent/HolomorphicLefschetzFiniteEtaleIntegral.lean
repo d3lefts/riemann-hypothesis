@@ -251,7 +251,7 @@ theorem _root_.GlobalTheory.T.genericGerm_differentialForm_pullback_dominant : �
         formGermI p' j hV' hη' hinst' (sectionsOn.res ℂ (Omega p' j) h
           (sectionsOn.mapOver (appTop_algebraMap hf) (omegaPull hf j) V y)) =
           φ (formGermI p j hV hη hinst y) := by
-  first | (exact @GlobalTheory.HodgeCoh.formGermI_res_mapOver) | (exact GlobalTheory.HodgeCoh.formGermI_res_mapOver) | (intros; apply GlobalTheory.HodgeCoh.formGermI_res_mapOver  <;> assumption)
+  first | (exact @GlobalTheory.HodgeCoh.formGermI_res_mapOver)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.GenericGermDifferentialFormPullbackDominantStatement =====

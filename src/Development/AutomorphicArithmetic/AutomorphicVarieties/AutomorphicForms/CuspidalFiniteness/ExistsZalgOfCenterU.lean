@@ -360,7 +360,7 @@ private theorem lin_E {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (F : Fin n �
   · simp [E]
   · rintro ⟨k, l⟩ _ hb
     have : ¬ (i = k ∧ j = l) := fun h => hb (by rw [h.1, h.2])
-    simp [E, Matrix.single_apply, this]
+    simp [E, this]
   · simp
 
 private theorem lin_lie {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (F : Fin n → Fin n → A)
@@ -539,7 +539,7 @@ theorem exists_stdBasis (F : Type) [Field F] [NumberField F] (a : ℕ) :
   simp only [Module.Basis.coe_ofEquivFun]
   change (Pi.single (v, i, j) (1 : ℝ) : InfinitePlace F × Fin a × Fin a → ℝ) (v', i', j') = Matrix.single i j (Pi.single v (1 : ℝ) : TR.Rinf F) i' j' v'
   by_cases hi : i = i' <;> by_cases hj : j = j' <;> by_cases hv : v = v' <;>
-    simp [Pi.single_apply, Matrix.single_apply, hi, hj, hv, eq_comm]
+    simp [hi, hj, hv, eq_comm]
 
 theorem exists_Zalg_of_centerU {z : UEnv F a} (hz : z ∈ (isExpLieAlgebra F a).centerU) :
     ∃ z' ∈ TR.Zalg F a, ∀ φ, uAction z (toArch F a φ) = toArch F a (z' φ) := by

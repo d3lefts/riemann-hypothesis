@@ -93,8 +93,7 @@ lemma avgS_ne_zero (h : QuotientSetting G S μG μS ν) {f : MtM m → ℝ≥0�
   unfold avgS at h0
   have h1 := (lintegral_eq_zero_iff (f := fun s => f (mm s x)) (hf.comp (measurable_mm_left x))).1 h0
   have hμ : μS Set.univ = 0 := by
-    have := ae_iff.1 h1
-    simpa [hpos] using this
+    simpa [hpos] using ae_iff.1 h1
   exact h.2.2.2.2.1.2.1 (Measure.measure_univ_eq_zero.1 hμ)
 
 theorem ineq (h : QuotientSetting G S μG μS ν) {F : MtM m → ℝ≥0∞} (hF : Measurable F)
@@ -190,10 +189,9 @@ theorem quotInv : PI.QuotInv := by
     fun s hs x hx => hFi s hs x hx
   have h1 : ∫⁻ x, F (mm x g) ∂ν ≤ ∫⁻ x, F x ∂ν := ineq h hF hFi' (g := g) hg
   obtain ⟨hginvG, hgg⟩ := h.1.2.2.2 _ hg
-  have hdet : IsUnit (Matrix.of g).det :=
-    isUnit_iff_exists_inv.2 ⟨(Matrix.of g)⁻¹.det, by rw [← Matrix.det_mul, hgg, Matrix.det_one]⟩
   have hgig : mm (minv g) g = oneM := by
-    have := Matrix.nonsing_inv_mul (Matrix.of g) hdet
+    have h : Matrix.of g * Matrix.of (minv g) = 1 := hgg
+    have := mul_eq_one_comm.1 h
     funext i j; exact congrFun (congrFun this i) j
   have h2 : ∫⁻ x, F (mm (mm x (minv g)) g) ∂ν ≤ ∫⁻ x, F (mm x g) ∂ν :=
     ineq h (F := fun x => F (mm x g)) (hF.comp (measurable_mm_left g))

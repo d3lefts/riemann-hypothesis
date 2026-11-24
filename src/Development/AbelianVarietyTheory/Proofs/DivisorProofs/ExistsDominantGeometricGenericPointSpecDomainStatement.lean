@@ -137,7 +137,7 @@ open ReciprocityTheory.ChartRestriction.G.Semi
 
 
 theorem _root_.GlobalTheory.T.exists_dominant_geometricGenericPoint_spec_domain : ∀ (A : CommRingCat.{0}) [IsDomain A], ∃ (Ω : Type) (_ : Field Ω) (_ : IsAlgClosed Ω) (y : Sp Ω ⟶ Spec A), (∀ x, (y x).asIdeal = ⊥) ∧ IsDominant y := by
-  first | exact @GlobalTheory.exists_geomGeneric_dominant | exact GlobalTheory.exists_geomGeneric_dominant | (intros; apply GlobalTheory.exists_geomGeneric_dominant <;> assumption)
+  first | exact @GlobalTheory.exists_geomGeneric_dominant
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDominantGeometricGenericPointSpecDomainStatement =====

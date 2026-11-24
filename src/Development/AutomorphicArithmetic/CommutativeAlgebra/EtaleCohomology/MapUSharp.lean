@@ -526,7 +526,7 @@ theorem UpperTheory.Gal.crystallineComparison.coeffInt_of :
     MvPolynomial.map (algebraMap (integralClosure R T) T)
   have hform : ∀ i, form (c i) = (form (c' i)).map f := by
     intro i
-    simp [form, f, Polynomial.map_sub, MvPolynomial.map_C, c']
+    simp [form, f, Polynomial.map_sub, c']
 
     rw [Polynomial.map_sum]
     simp [Polynomial.map_mul, Polynomial.map_C, MvPolynomial.map_C, MvPolynomial.map_X]
@@ -799,10 +799,10 @@ private def baseChangePts {R A S K : Type} [CommRing R] [CommRing A] [CommRing S
     apply Algebra.TensorProduct.ext
     · ext
     · ext s
-      simp [Algebra.ofId_apply]
+      simp
   right_inv g := by
     ext s
-    simp [Algebra.ofId_apply]
+    simp
 
 theorem UpperTheory.Gal.crystallineComparison.injSplit_of :
     RankOfDeg → SplitsOfEquiv → InjSplit := by
@@ -910,7 +910,7 @@ theorem UpperTheory.Gal.crystallineComparison.matRep_of :
     rw [map_sum]
     simp only [map_smul, AlgEquiv.apply_symm_apply]
     funext i'
-    simp [φ, splitMap_tmul, Finset.sum_apply, Pi.single_apply]
+    simp [φ, Finset.sum_apply, Pi.single_apply]
     show (z i') t = splitMap z (1 ⊗ₜ t) i'
     rw [splitMap_tmul, one_mul]
   refine ⟨Matrix.of fun i k => z i (e k), Matrix.of fun j i => G j (φ.symm (Pi.single i 1)), ?_, ?_⟩
@@ -1140,7 +1140,7 @@ theorem UpperTheory.Gal.crystallineComparison.normPt_of :
     rw [(hPtC Y V hV (IsLocalRing.ResidueField W)).1 (Classical.choose_spec hP)]
   have alt2 := congrArg (Multiset.map G) alt
   rw [pts_map, pts_map] at alt2
-  simp only [hG, RingHom.comp_apply, hφm, AlgHom.coe_toRingHom] at alt2
+  simp only [hG, RingHom.comp_apply, hφm] at alt2
   simp only [s, map_pow]
   exact alt2
 end -- clump:auto
@@ -1248,7 +1248,7 @@ theorem UpperTheory.Gal.crystallineComparison.ptsProd_of :
   rw [Polynomial.map_pow, Polynomial.map_prod, Multiset.map_map]
   congr 1
   rw [Finset.prod_eq_multiset_prod]
-  simp [Function.comp_def, hf]
+  simp [hf]
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.PPtsProd =====
@@ -1519,7 +1519,7 @@ theorem UpperTheory.Gal.crystallineComparison.splitsBC_of :
         | tmul r s =>
           funext i
           rw [splitMap_tmul, hz', Algebra.TensorProduct.cancelBaseChange_tmul, splitMap_tmul]
-          simp [Algebra.smul_def, mul_assoc, mul_left_comm, mul_comm]
+          simp [Algebra.smul_def, mul_assoc, mul_comm]
     have hfun : (⇑(splitMap z') : B ⊗[R'] (R' ⊗[R] S) → (I → B)) =
         (splitMap z) ∘ (Algebra.TensorProduct.cancelBaseChange R R' B B S) := funext key
     unfold Splits
@@ -1883,7 +1883,6 @@ private theorem wzChart {Y : Scheme.{0}} (hY : AffFin Y) {J : Type} [Finite J] (
   refine ⟨⟨I, B, f⟩, hd, fun s => ⟨U (a s), V (a s), hU _, hV _, hUV _, fun p _ => ?_⟩⟩
   have h2 : PAlg.mapU (f s).hom (e s) = 1 := by
     rw [← hs, mapU_sharp']
-    change (B s).obj.sharp (PAlg.Hom.f (f s).hom (e₀ s)) = 1
     rw [h1 s]
     simp [PAlg.sharp]
   have := hea s (PrimeSpectrum.comap (PAlg.mapU (f s).hom) p) (fun hmem => by

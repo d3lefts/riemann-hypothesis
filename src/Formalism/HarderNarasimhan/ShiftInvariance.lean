@@ -371,7 +371,6 @@ namespace Pgsn2pfran
 
 lemma ind_anti (c : ℝ) : Antitone (fun τ : ℝ => if τ < c then (1:ℝ) else 0) := by
   intro a b hab
-  show (if b < c then (1:ℝ) else 0) ≤ (if a < c then (1:ℝ) else 0)
   by_cases h1 : b < c
   · have h2 : a < c := lt_of_le_of_lt hab h1
     simp [h1, h2]
@@ -384,8 +383,7 @@ lemma ind_int (c HH : ℝ) (hc0 : 0 ≤ c) (hc : c ≤ HH) :
   have hi2 : IntervalIntegrable (fun τ : ℝ => if τ < c then (1:ℝ) else 0) volume c HH :=
     (ind_anti c).intervalIntegrable
   have hne : ∀ᵐ x ∂(volume : Measure ℝ), x ≠ c := by
-    rw [ae_iff]
-    simp
+    simp [ae_iff]
   have h1 : ∫ τ in (0:ℝ)..c, (if τ < c then (1:ℝ) else 0) = ∫ τ in (0:ℝ)..c, (1:ℝ) := by
     apply intervalIntegral.integral_congr_ae
     filter_upwards [hne] with x hx hmem
@@ -403,10 +401,8 @@ lemma ind_int (c HH : ℝ) (hc0 : 0 ≤ c) (hc : c ≤ HH) :
 lemma ind_lb (a xj HH : ℝ) (h : a - HH ≤ xj) (hHH : 0 ≤ HH) :
     a - xj ≤ ∫ τ in (0:ℝ)..HH, (if τ < a - xj then (1:ℝ) else 0) := by
   rcases le_total (a - xj) 0 with h0 | h0
-  · have hpos : 0 ≤ ∫ τ in (0:ℝ)..HH, (if τ < a - xj then (1:ℝ) else 0) := by
-      apply intervalIntegral.integral_nonneg hHH
-      intro u _
-      split_ifs <;> norm_num
+  · have hpos : 0 ≤ ∫ τ in (0:ℝ)..HH, (if τ < a - xj then (1:ℝ) else 0) :=
+      intervalIntegral.integral_nonneg hHH (fun u _ => by split_ifs <;> norm_num)
     linarith
   · exact le_of_eq (ind_int (a - xj) HH h0 (by linarith)).symm
 
@@ -513,8 +509,7 @@ lemma hilbert_schmidt_eq_basis_sum {ι : Type*} [Fintype ι] (A : E →ₗ[ℂ] 
   classical
   unfold hs2
   rw [trace_eq_sum_inner_orthonormalBasis v, Complex.re_sum]
-  refine Finset.sum_congr rfl (fun m _ => ?_)
-  rw [LinearMap.comp_apply, LinearMap.adjoint_inner_right, re_inner_self_eq_norm_sq_corank_share]
+  simp only [LinearMap.comp_apply, LinearMap.adjoint_inner_right, re_inner_self_eq_norm_sq_corank_share]
 
 lemma sum_norm_sq_le_hilbert_schmidt {κ : Type*} [Fintype κ] (A : E →ₗ[ℂ] F) {g : κ → E} (hg : Orthonormal ℂ g) :
     ∑ l, ‖A (g l)‖ ^ 2 ≤ hs2 A := by
@@ -550,14 +545,11 @@ lemma fam_bound (c : ℝ) (B : E →ₗ[ℂ] F) {κ : Type*} [Fintype κ] {g : �
     (hg : Orthonormal ℂ g) :
     |c * ∑ l, ‖B (g l)‖ ^ 2 - Fintype.card κ|
       ≤ Real.sqrt (Fintype.card κ) * Real.sqrt (hs2 (frK c B - LinearMap.id)) := by
-  have h1 : ∀ l, (⟪g l, ((frK c B - LinearMap.id : E →ₗ[ℂ] E)) (g l)⟫_ℂ).re = c * ‖B (g l)‖ ^ 2 - 1 := by
-    intro l
+  have h2 : ∑ l, (⟪g l, ((frK c B - LinearMap.id : E →ₗ[ℂ] E)) (g l)⟫_ℂ).re = c * ∑ l, ‖B (g l)‖ ^ 2 - Fintype.card κ := by
     simp only [frK, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.comp_apply, LinearMap.id_apply,
       inner_sub_right, inner_smul_right, LinearMap.adjoint_inner_right, Complex.sub_re, Complex.re_ofReal_mul,
-      re_inner_self_eq_norm_sq_corank_share, hg.1 l]
-    norm_num
-  have h2 : ∑ l, (⟪g l, ((frK c B - LinearMap.id : E →ₗ[ℂ] E)) (g l)⟫_ℂ).re = c * ∑ l, ‖B (g l)‖ ^ 2 - Fintype.card κ := by
-    rw [Finset.sum_congr rfl (fun l _ => h1 l), Finset.sum_sub_distrib, Finset.mul_sum]
+      re_inner_self_eq_norm_sq_corank_share, hg.1]
+    rw [Finset.sum_sub_distrib, Finset.mul_sum]
     simp
   rw [← h2]
   exact sum_re_inner_bound _ hg
@@ -596,11 +588,10 @@ lemma tQ_eq (c : ι → ℝ) (B : ∀ i, V i →ₗ[ℂ] H) :
 lemma trace_frame_sq_eq_sum (c : ι → ℝ) (B : ∀ i, V i →ₗ[ℂ] H) :
     (trace ℂ H (frQ c B ∘ₗ frQ c B)).re = ∑ n, ‖frQ c B (stdOrthonormalBasis ℂ H n)‖ ^ 2 := by
   have hadj : frQ c B = adjoint (frQ c B) := by
-    rw [LinearMap.eq_adjoint_iff]; exact Q_symm c B
-  have h := hilbert_schmidt_eq_basis_sum (frQ c B) (stdOrthonormalBasis ℂ H)
-  unfold hs2 at h
-  rw [← hadj] at h
-  exact h
+    rw [LinearMap.eq_adjoint_iff]
+    exact Q_symm c B
+  simpa [hs2, hadj.symm] using
+    hilbert_schmidt_eq_basis_sum (frQ c B) (stdOrthonormalBasis ℂ H)
 
 end fam
 
@@ -886,7 +877,7 @@ universe u v w
 
 theorem hnExtreme_mem_iff {n : ℕ} (f : Fin n → ℝ) (hf : Antitone f) (θ : ℝ) (j : Fin n) :
     θ ≤ f j ↔ (j : ℕ) < (Finset.univ.filter (fun i => θ ≤ f i)).card := by
-  first | exact Bl.general_b_fact_left_form.goal1 .. | (apply Bl.general_b_fact_left_form.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_left_form.goal1 <;> assumption) | (apply @Bl.general_b_fact_left_form.goal1 <;> assumption) | (intros; apply @Bl.general_b_fact_left_form.goal1 <;> assumption) | (apply @Bl.general_b_fact_left_form.goal1 <;> first | assumption | infer_instance)
+  first | (apply Bl.general_b_fact_left_form.goal1 <;> assumption)
 
 theorem hnExtreme_of (h1 : HNSlopes.{u, v, w}) (h2 : MuChar.{u, v, w}) (h3 : HNStep.{u, v, w})
     (h4 : SatBasic.{u, v, w}) : HNExtreme.{u, v, w} := by
@@ -960,9 +951,7 @@ theorem hnExtreme_of (h1 : HNSlopes.{u, v, w}) (h2 : MuChar.{u, v, w}) (h3 : HNS
     ⟨⟨rk ρ L - 1, by omega⟩, le_antisymm ?_ (lowB _)⟩⟩
   · rw [key]
     show 0 < rk ρ (hnStep ρ L (muMax ρ L))
-    rcases Nat.eq_zero_or_pos (rk ρ (hnStep ρ L (muMax ρ L))) with h | h
-    · exact absurd ((B4 _ (hSL _)).1 h) hstepMaxNe
-    · exact h
+    exact Nat.pos_of_ne_zero fun h => hstepMaxNe ((B4 _ (hSL _)).1 h)
   · by_contra hlt
     rw [not_le] at hlt
     set θ := slopeList ρ L ⟨rk ρ L - 1, by omega⟩ with hθdef
@@ -1382,8 +1371,7 @@ theorem theoremF_of_sharp (H : TheoremFSharp) : TheoremF := by
     h23 h24 h25 h26
   have := H K W κ κ₁ I V ι b' X' cc b X N B h v Y Y' Ball γ s u HH e η δ h1 h2 h3 h4 h5 h6 h7 h8
     h9 h10 h11 h12 h13 h14 h15 h16 h17 h18 h19 h20 h21 h22 h23 h24 h25 h26
-  have hI : (1 : ℝ) ≤ (Fintype.card I : ℝ) := by exact_mod_cast Fintype.card_pos
-  have hl : 0 ≤ Real.log (Fintype.card I : ℝ) := Real.log_nonneg hI
+  have hl : 0 ≤ Real.log (Fintype.card I : ℝ) := Real.log_nonneg (by exact_mod_cast Fintype.card_pos)
   linarith
 
 theorem frame_theorem_log_ideal : TheoremF := theoremF_of_sharp frame_theorem_sharp

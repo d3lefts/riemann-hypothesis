@@ -81,7 +81,7 @@ theorem map_sum_smul {O E : Type} [CommRing O] [CommRing E] [Algebra O E] {σ : 
   refine Finset.sum_congr rfl fun i _ => ?_
   ext α
   rw [coeff_map, MvPowerSeries.coeff_smul, MvPowerSeries.coeff_smul, coeff_map]
-  simp only [smul_eq_mul, map_mul]
+  simp only [map_mul]
 
 theorem Chart.isLie_comb : ∀ (p : ℕ) [Fact p.Prime] (O E : Type) [CommRing O] [CommRing E] [Algebra O E], IsFrame p E (RingHom.id O) → ∀ (G : PDivGroup p O) (d : ℕ) (c : QLog.Chart G d), ∀ (ι : Type) [Fintype ι] (e : ι → MvPowerSeries (Fin d) E) (l : ι → G.dual.Lie) (b : ι → O), (∀ i, QL c.μ ⊤ (e i)) → (∀ i, c.IsLie (e i) (l i)) → c.IsLie (comb b e) (∑ i, b i • l i) := by
   intro p _ O E _ _ _ hF G d c ι _ e l b _ hl
@@ -350,13 +350,13 @@ theorem main : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
   have hEq : h = comb a e0 := sub_eq_zero.1 hs'.symm
   rw [hEq]
 
-  simp only [lin, comb, Fintype.sum_sum_type, map_add (f := _), map_sum, coeff_smul, smul_eq_mul]
+  simp only [lin, comb, Fintype.sum_sum_type, map_add (f := _), map_sum, coeff_smul]
   have h2 : ∀ j, algebraMap O C (a (Sum.inr j)) * coeff (Finsupp.single i 1) (e0 (Sum.inr j)) = 0 :=
     fun j => by rw [hinr j, map_zero, zero_mul]
   have h1 : ∀ i', coeff (Finsupp.single i 1) (e0 (Sum.inl i')) = (Pi.single i' (1 : C) : Fin d → C) i :=
     fun i' => congrFun (hA i').2 i
   simp only [h2, h1, Finset.sum_const_zero, add_zero, Pi.single_apply, mul_ite, mul_one, mul_zero,
-    Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    Finset.sum_ite_eq, Finset.mem_univ, if_true]
 
 end GlobalTheory.QLog.RedO
 end -- clump:auto

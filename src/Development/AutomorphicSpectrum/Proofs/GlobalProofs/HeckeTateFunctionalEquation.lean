@@ -709,7 +709,7 @@ private theorem asIdeal_pow_dvd_finprod_iff {R : Type*} [CommRing R] [IsDedekind
       by_cases hwv : w = v
       · subst hwv
         simp [hb]
-      · simp [hb, hwv, Function.update_of_ne hwv]
+      · simp [hb, hwv]
     rw [hsplit] at hk
     have hpow : v.asIdeal ^ k = v.asIdeal ^ a v * v.asIdeal ^ (k - a v) := by
       rw [← pow_add]
@@ -1159,7 +1159,6 @@ private theorem stdChar_finiteAdele_eq (E : Type) [Field E] [NumberField E]
         intro v
         first
           | rfl
-          | (rw [RestrictedProduct.nsmul_apply]; rfl)
       have hz'' : z' ∈ (↑I : Set (HeightOneSpectrum (𝓞 E))).pi t := by
         intro v hv
         have hvI : v ∈ I := Finset.mem_coe.mp hv

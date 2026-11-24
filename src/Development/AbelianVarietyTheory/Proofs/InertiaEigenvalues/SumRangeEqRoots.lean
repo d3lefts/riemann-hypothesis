@@ -82,7 +82,7 @@ theorem fixed_mem_range {g : ℕ} [hg : Fact (Nat.Prime g)] {d : ℕ} (hd : 0 < 
     rw [Multiset.mem_toFinset, mem_roots hP0]
     have hk : k ^ g ^ d = k := by
       rw [← hcard]; exact FiniteField.pow_card k
-    simp [hP, IsRoot, sub_eq_zero, ← map_pow, hk]
+    simp [hP, IsRoot, ← map_pow, hk]
   have hle : P.roots.toFinset.card ≤ (Finset.univ.image ι).card := by
     have hinj : Function.Injective ι := fun a b h => (RingHom.injective ι.toRingHom) h
     rw [Finset.card_image_of_injective _ hinj, Finset.card_univ, hcard, ← hPdeg]
@@ -90,7 +90,7 @@ theorem fixed_mem_range {g : ℕ} [hg : Fact (Nat.Prime g)] {d : ℕ} (hd : 0 < 
   have heq := Finset.eq_of_subset_of_card_le hsub hle
   have hwm : w ∈ P.roots.toFinset := by
     rw [Multiset.mem_toFinset, mem_roots hP0]
-    simp [hP, IsRoot, sub_eq_zero, hw]
+    simp [hP, IsRoot, hw]
   rw [← heq] at hwm
   obtain ⟨k, -, hk⟩ := Finset.mem_image.1 hwm
   exact ⟨k, hk⟩
@@ -137,11 +137,7 @@ theorem N_pos' {d : ℕ} (hd : 0 < d) : 0 < g ^ d - 1 :=
 
 theorem exists_emb_eq {d : ℕ} (hd : 0 < d) {w : Fbar g} (hw : w ^ g ^ d = w) : ∃ k, emb g d k = w := by
   first
-  | exact @_root_.GlobalTheory.FixedMemRange.main
-  | exact _root_.GlobalTheory.FixedMemRange.main
   | (apply _root_.GlobalTheory.FixedMemRange.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.FixedMemRange.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.FixedMemRange.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.FixedMemRange.main ..)
 
 theorem gen_prim (L : LabelDatum g) {d : ℕ} (hd : 0 < d) : IsPrimitiveRoot (L.gen d) (g ^ d - 1) :=

@@ -334,7 +334,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.L2.D
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.OntoChain GlobalTheory.RealIndexBound GlobalTheory.OnTies
 
 theorem _root_.GlobalTheory.T.splitPart_nonzeroIndexPlaces_twisted : ∀ (D : D7) (L : SizeData₂ D) (hT : GatTies D) (Gi : Formalism.MainNotions.G.Inst D L) (Gl : Formalism.MainNotions.G.LatInst D) (Kc : Formalism.MainNotions.G.Consts) (Y : DivX D) (cX : ExtraC) (ex : Extra D L hT Gi Gl Kc Y cX) (Csz : ℝ) (p : PtAt ex Csz), SingleIndexPlacesAreTwisted p → p.R.toRealDat.tup_tw (F2 p) := by
-  first | exact @GlobalTheory.BigOn.tupTw_of_w1Row | exact GlobalTheory.BigOn.tupTw_of_w1Row | (intros; apply GlobalTheory.BigOn.tupTw_of_w1Row <;> assumption)
+  first | exact @GlobalTheory.BigOn.tupTw_of_w1Row
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SplitPartNonzeroIndexPlacesTwistedStatement =====
@@ -373,7 +373,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.L2.D
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.OntoChain GlobalTheory.RealIndexBound GlobalTheory.OnTies
 
 theorem _root_.GlobalTheory.T.char_R2_of_exAt_of_singleIndexPlacesTwisted : ∀ (D : D7) (L : SizeData₂ D) (hT : GatTies D) (Gi : Formalism.MainNotions.G.Inst D L) (Gl : Formalism.MainNotions.G.LatInst D) (Kc : Formalism.MainNotions.G.Consts) (Y : DivX D) (cX : ExtraC) (ex : Extra D L hT Gi Gl Kc Y cX) (Csz : ℝ) (p : PtAt ex Csz), p.R.toRealDat.ExAt → SingleIndexPlacesAreTwisted p → (R2 p).Char (F2 p) := by
-  first | exact @GlobalTheory.BigOn.splitPartRealisationWithScalars_char_of_weak | exact GlobalTheory.BigOn.splitPartRealisationWithScalars_char_of_weak | (intros; apply GlobalTheory.BigOn.splitPartRealisationWithScalars_char_of_weak <;> assumption)
+  first | exact @GlobalTheory.BigOn.splitPartRealisationWithScalars_char_of_weak
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SplitPartRealisationWithScalarsCharOfWeakStatement =====
@@ -464,7 +464,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.L2.D
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.OntoChain GlobalTheory.RealIndexBound GlobalTheory.OnTies
 
 theorem _root_.GlobalTheory.T.bar_tie_om_pins_phase_tie_of_pt_split : ∀ (D : D7) (L : SizeData₂ D) (hT : GatTies D) (Gi : Formalism.MainNotions.G.Inst D L) (Gl : Formalism.MainNotions.G.LatInst D) (Kc : Formalism.MainNotions.G.Consts) (Y : DivX D) (cX : ExtraC) (ex : Extra D L hT Gi Gl Kc Y cX) (Csz : ℝ) (p : PtAt ex Csz), p.PointConditions' → BarTie (fw2 p) ∧ (∀ i, OMPins p.T (R2 p) p.κ p.v₀ (om2 p) i) ∧ ∀ i, PhaseTie p.T (R2 p) p.κ p.v₀ (om2 p) (fun _ => 1) i := by
-  first | exact @_root_.GlobalTheory.BigOn.ompins_onto_alt | exact _root_.GlobalTheory.BigOn.ompins_onto_alt | (intros; apply _root_.GlobalTheory.BigOn.ompins_onto_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.ompins_onto_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -534,7 +534,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.L2.D
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.OntoChain GlobalTheory.RealIndexBound GlobalTheory.OnTies
 
 theorem _root_.GlobalTheory.T.l_unif_base_links_rank_of_pt_split : ∀ (D : D7) (L : SizeData₂ D) (hT : GatTies D) (Gi : Formalism.MainNotions.G.Inst D L) (Gl : Formalism.MainNotions.G.LatInst D) (Kc : Formalism.MainNotions.G.Consts) (Y : DivX D) (cX : ExtraC) (ex : Extra D L hT Gi Gl Kc Y cX) (Csz : ℝ) (p : PtAt ex Csz), p.PointConditions' → (R2 p).LUnif ∧ BaseLinks (R2 p) (F2 p) ∧ RankRows (S2 p) := by
-  first | exact @_root_.GlobalTheory.BigOn.SplitRows.uniform_and_base_links_and_rank_of_split_data | exact _root_.GlobalTheory.BigOn.SplitRows.uniform_and_base_links_and_rank_of_split_data | (intros; apply _root_.GlobalTheory.BigOn.SplitRows.uniform_and_base_links_and_rank_of_split_data <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.SplitRows.uniform_and_base_links_and_rank_of_split_data
 end
 end -- clump:auto
 end -- clump:auto

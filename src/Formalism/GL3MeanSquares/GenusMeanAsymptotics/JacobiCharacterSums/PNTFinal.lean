@@ -95,16 +95,16 @@ theorem num_alg (M y C D Pt t lg lm : ℝ) (hM : 1 ≤ M) (hy : M ^ 5 ≤ y) (hC
     calc M ^ 6 * Pt ≤ M ^ 6 * (M ^ 8)⁻¹ := mul_le_mul_of_nonneg_left hPt (by positivity)
       _ = (M ^ 2)⁻¹ := by field_simp
   have hB : lg * lm ^ 2 / M ^ 6 ≤ 169 * D * (M ^ 2)⁻¹ := by
-    have hlm2 : lm ^ 2 ≤ 169 * M ^ 2 := by nlinarith
+    have hlm2 : lm ^ 2 ≤ 169 * M ^ 2 := by have := pow_le_pow_left₀ hlm0 hlm 2; linarith
     have h2 : lg * lm ^ 2 ≤ D * M ^ 2 * (169 * M ^ 2) :=
       calc lg * lm ^ 2 ≤ D * M ^ 2 * lm ^ 2 := mul_le_mul_of_nonneg_right hlg (sq_nonneg _)
         _ ≤ D * M ^ 2 * (169 * M ^ 2) := mul_le_mul_of_nonneg_left hlm2 (by positivity)
     calc lg * lm ^ 2 / M ^ 6 ≤ D * M ^ 2 * (169 * M ^ 2) / M ^ 6 :=
           div_le_div_of_nonneg_right h2 (by positivity)
-      _ = 169 * D * (M ^ 2)⁻¹ := by field_simp <;> ring
+      _ = 169 * D * (M ^ 2)⁻¹ := by field_simp
   have e1 : M * (4 * y * (C * (Pt + lg * lm ^ 2 / M ^ 12)) / (M ^ 5)⁻¹)
       = 4 * C * y * (M ^ 6 * Pt + lg * lm ^ 2 / M ^ 6) := by
-    field_simp <;> ring
+    field_simp
   have h1 : M * (4 * y * (C * (Pt + lg * lm ^ 2 / M ^ 12)) / (M ^ 5)⁻¹)
       ≤ 4 * C * y * ((M ^ 2)⁻¹ + 169 * D * (M ^ 2)⁻¹) := by
     rw [e1]; exact mul_le_mul_of_nonneg_left (add_le_add hA hB) (by positivity)
@@ -115,7 +115,7 @@ theorem num_alg (M y C D Pt t lg lm : ℝ) (hM : 1 ≤ M) (hy : M ^ 5 ≤ y) (hC
     have hc : 0 ≤ 4 * M * ((M ^ 5)⁻¹ * y + 1) := by positivity
     calc M * (4 * ((M ^ 5)⁻¹ * y + 1) * lg) = 4 * M * ((M ^ 5)⁻¹ * y + 1) * lg := by ring
       _ ≤ 4 * M * ((M ^ 5)⁻¹ * y + 1) * (D * M ^ 2) := mul_le_mul_of_nonneg_left hlg hc
-      _ = 4 * D * (y * (M ^ 2)⁻¹ + M ^ 3) := by field_simp <;> ring
+      _ = 4 * D * (y * (M ^ 2)⁻¹ + M ^ 3) := by field_simp
       _ ≤ 4 * D * (y * (M ^ 2)⁻¹ + y * (M ^ 2)⁻¹) :=
           mul_le_mul_of_nonneg_left (by linarith) (by positivity)
       _ = 8 * D * y * (M ^ 2)⁻¹ := by ring
@@ -147,7 +147,7 @@ theorem logy_lt {cA M y : ℝ} (hcA : 0 < cA) (hy : 2 ≤ y)
   have hl : 0 ≤ Real.log y := Real.log_nonneg (by linarith)
   have hs := Real.sq_sqrt hl
   have h0 : 0 ≤ cA * Real.sqrt (Real.log y) := by positivity
-  have h2 : (cA * Real.sqrt (Real.log y)) ^ 2 < Real.log M ^ 2 := by nlinarith
+  have h2 : (cA * Real.sqrt (Real.log y)) ^ 2 < Real.log M ^ 2 := pow_lt_pow_left₀ h h0 two_ne_zero
   calc cA ^ 2 * Real.log y = (cA * Real.sqrt (Real.log y)) ^ 2 := by rw [mul_pow, hs]
     _ < Real.log M ^ 2 := h2
 
@@ -159,9 +159,9 @@ theorem inv_le_exp {cA c M y : ℝ} (hcA : 0 < cA) (hc : 0 < c) (hc' : c ≤ cA 
   have hly : 0 ≤ Real.log y := Real.log_nonneg (by linarith)
   have h2 := logy_lt hcA hy h
   have h3 : c * Real.log y ≤ Real.log M ^ 2 := by
-    nlinarith [mul_le_mul_of_nonneg_right hc' hly]
+    linarith [mul_le_mul_of_nonneg_right hc' hly]
   have h4 : c * Real.log y / Real.log M ≤ Real.log M := by
-    rw [div_le_iff₀ hlM]; nlinarith
+    rw [div_le_iff₀ hlM]; linarith
   calc M⁻¹ = Real.exp (-Real.log M) := by rw [Real.exp_neg, Real.exp_log hM0]
     _ ≤ Real.exp (-(c * Real.log y / Real.log M)) := Real.exp_le_exp.mpr (by linarith)
 
@@ -191,13 +191,14 @@ theorem num_main (cA κ C : ℝ) (hcA : 0 < cA) (hκ : 0 < κ) (hC : 0 < C) :
   have hkC : κ * (5 + (26 * C + 20) / κ) = 5 * κ + (26 * C + 20) := by field_simp
   have hK : (26 * C + 20) * Real.log M ≤ κ * Real.log y := by
     have := mul_le_mul_of_nonneg_left hlog' hκ.le
+    rw [← mul_assoc, hkC] at this
     have h5 : 0 ≤ 5 * κ * Real.log M := by positivity
-    nlinarith
+    linarith
   have hy5 : M ^ 5 ≤ y := by
     rw [← Real.log_le_log_iff (by positivity) hy0, Real.log_pow]
     have : 5 * Real.log M ≤ (5 + (26 * C + 20) / κ) * Real.log M := by
       have : 0 ≤ (26 * C + 20) / κ * Real.log M := by positivity
-      nlinarith
+      linarith
     push_cast; linarith
   have h12 : M ^ (12 : ℝ) = M ^ 12 := by
     rw [show (12 : ℝ) = ((12 : ℕ) : ℝ) by norm_num, Real.rpow_natCast]
@@ -212,24 +213,24 @@ theorem num_main (cA κ C : ℝ) (hcA : 0 < cA) (hκ : 0 < κ) (hC : 0 < C) :
     rw [hpow, hyk, ← Real.exp_add, inv_pow_eq_exp hM0]
     apply Real.exp_le_exp.mpr
     push_cast
-    nlinarith
+    linarith
   have ht : y ^ (-(κ / 2)) ≤ (M ^ 2)⁻¹ := by
     rw [hyk, inv_pow_eq_exp hM0]
     apply Real.exp_le_exp.mpr
     push_cast
     have : 0 ≤ 26 * C * Real.log M := by positivity
-    nlinarith
+    linarith
   have hlg : Real.log (2 * y) ≤ D * M ^ 2 := by
     have hq := logy_lt hcA hy hsq
     have hq' : Real.log y ≤ Real.log M ^ 2 * (cA ^ 2)⁻¹ := by
       rw [le_mul_inv_iff₀ (by positivity)]; linarith
-    have hLM2 : Real.log M ^ 2 ≤ M ^ 2 := by nlinarith
+    have hLM2 : Real.log M ^ 2 ≤ M ^ 2 := pow_le_pow_left₀ (by linarith) hLM 2
     have hq'' : Real.log M ^ 2 * (cA ^ 2)⁻¹ ≤ M ^ 2 * (cA ^ 2)⁻¹ :=
       mul_le_mul_of_nonneg_right hLM2 (by positivity)
     have h2 : Real.log 2 ≤ 1 := by linarith [Real.log_le_sub_one_of_pos (by norm_num : (0:ℝ) < 2)]
-    have hM1 : 1 ≤ M ^ 2 := by nlinarith
+    have hM1 : 1 ≤ M ^ 2 := one_le_pow₀ (by linarith)
     rw [Real.log_mul (by norm_num) hy0.ne', hDdef]
-    nlinarith
+    linarith
   have hlm0 : 0 ≤ Real.log (M * M ^ 12) := by rw [hlm]; linarith
   have hlm13 : Real.log (M * M ^ 12) ≤ 13 * M := by rw [hlm]; linarith
   have key := num_alg M y C D ((M * M ^ 12) ^ C * y ^ (-(κ / 2))) (y ^ (-(κ / 2)))

@@ -10,7 +10,6 @@ public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.Tri
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbelianStructureCohomologyStatement
 public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.AbelianSchemeTorusCompare
 public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.AbelianLocusOpenFamilyOverLevel
-public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechGluingOfKodairaSpencerRelation
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TranslateUnique
 public import Mathlib.Tactic.Monotonicity.Lemmas
@@ -89,6 +88,7 @@ import Mathlib.Tactic.Linter.Style
 import Mathlib.Tactic.ReduceModChar
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.SplitsAt
 import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib
 import Mathlib.AlgebraicGeometry.QuasiAffine
 import Mathlib.Data.Nat.Choose.Multinomial
 import Development.AbelianVarietyTheory.Definitions.Divisors.CommAlgFunctorCoboundaryZeroMemCocyclesOne
@@ -812,7 +812,7 @@ end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechCocycleMemCoboundaryAddMaximalSmul =====
 
 -- ===== clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechCocycleEqCoboundaryAddLogDerivativesMod =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechCocycleEqCoboundaryAddLogDerivativesMod", "h": "module\n\npublic import Mathlib\npublic import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.DenseInterior\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechGluingOfKodairaSpencerRelation\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TranslateUnique\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechCocycleMemCoboundaryAddMaximalSmul\npublic import Mathlib.Tactic.Monotonicity.Lemmas\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClosedFibreCechCocycleInTangentSpan\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechCocycleConditionLogDerivativeTransition\n\n"}
+-- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechCocycleEqCoboundaryAddLogDerivativesMod", "h": "module\n\npublic import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.DenseInterior\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechGluingOfKodairaSpencerRelation\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TranslateUnique\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechCocycleMemCoboundaryAddMaximalSmul\npublic import Mathlib.Tactic.Monotonicity.Lemmas\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClosedFibreCechCocycleInTangentSpan\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechCocycleConditionLogDerivativeTransition\nimport Mathlib\nimport Mathlib.RingTheory.PiTensorProduct\n\n"}
 section -- clump:auto
 @[expose] public section
 

@@ -634,7 +634,7 @@ theorem mfact_add_single (m : σ →₀ ℕ) (v : σ) :
   · simp [Nat.factorial_succ]
   · refine Finset.prod_congr rfl fun i hi => ?_
     have := Finset.ne_of_mem_erase hi
-    simp [Finsupp.single_apply, Ne.symm this]
+    simp [Ne.symm this]
 
 theorem coeff_pderiv' (v : σ) (m : σ →₀ ℕ) (Q : MvPolynomial σ ℂ) :
     (pderiv v Q).coeff m = Q.coeff (m + Finsupp.single v 1) * (m v + 1) := by
@@ -1182,11 +1182,9 @@ theorem deltaAt_eq (τ : D.what₂.Tau) {p q : ℕ} (hm : p + q ≤ m) (hpn : p 
   · refine Finset.prod_congr rfl fun i _ => ?_
     rw [map_pow, minorPlus_eq τ (by omega) hpn i]
     congr 1
-    try (unfold GlobalTheory.IndefiniteRowSideFullHecke.CornerMinors.nextPart; split_ifs <;> rfl)
   · refine Finset.prod_congr rfl fun i _ => ?_
     rw [map_pow, minorMinus_eq τ hm hqn i]
     congr 1
-    try (unfold GlobalTheory.IndefiniteRowSideFullHecke.CornerMinors.nextPart; split_ifs <;> rfl)
 
 theorem hookOf_eq_hookProd (l : ℕ) (a : ℕ → ℕ) (ha : Antitone a) :
     (hookOf l a : ℂ) = ((GlobalTheory.IndefiniteRowSideFullHecke.CornerMinors.hookProd (fun i : Fin l => a i) : ℚ) : ℂ) := by

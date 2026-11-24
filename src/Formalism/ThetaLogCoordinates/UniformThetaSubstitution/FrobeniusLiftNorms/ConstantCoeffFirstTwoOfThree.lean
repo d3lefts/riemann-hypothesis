@@ -141,7 +141,7 @@ theorem partial_coboundary_product {F : MvPowerSeries (Fin 2) K} (hF : constantC
   rw [MvPowerSeries.subst_mul (has_subst_coboundary_first hF), MvPowerSeries.subst_mul (has_subst_last_pair 0), MvPowerSeries.subst_mul (has_subst_last_pair 1),
     subst_single_var (has_subst_coboundary_first hF), subst_single_var (has_subst_coboundary_first hF), subst_single_var (has_subst_last_pair 0), subst_single_var (has_subst_last_pair 0),
     subst_single_var (has_subst_last_pair 1), subst_single_var (has_subst_last_pair 1), include_three_coboundary hF]
-  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one]
   unfold at1
   ring
 
@@ -165,18 +165,14 @@ section Supp
 variable {K : Type} [Field K]
 
 theorem powq_modEq_one {p : ℕ} (hp : 2 ≤ p) (x : ℕ) : (p ^ 2) ^ x ≡ 1 [MOD p ^ 2 - 1] := by
-  have h : p ^ 2 ≡ 1 [MOD p ^ 2 - 1] := Nat.modEq_sub (Nat.one_le_pow _ _ (by omega))
-  simpa using h.pow x
+  simpa using (Nat.modEq_sub (Nat.one_le_pow _ _ (by omega))).pow x
 
 theorem suppOK_sub {p : ℕ} {f g : MvPowerSeries (Fin 2) K} (hf : SuppOK p f) (hg : SuppOK p g) :
     SuppOK p (f - g) := by
   intro n hn
   rw [map_sub] at hn
   by_cases h : MvPowerSeries.coeff n f = 0
-  · apply hg n
-    intro h'
-    apply hn
-    rw [h, h', sub_zero]
+  · exact hg n (by simpa [h] using hn)
   · exact hf n h
 
 theorem suppOK_C_mul {p : ℕ} (a : K) {f : MvPowerSeries (Fin 2) K} (hf : SuppOK p f) :

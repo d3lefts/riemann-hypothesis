@@ -526,7 +526,7 @@ theorem _root_.GlobalTheory.T.fixed_space_le_iSup_eigenspace_of_goodness : ∀ (
         ⨆ σ ∈ {σ : D.what₂.FT | D.what₂.isot j σ ≠ ⊥ ∧ D.nd.goodRow σ},
           Module.End.eigenspace (hkT D T S In i j b k P)
             (algebraMap (T.O i) (FractionRing (T.O i)) (cHkT D T i b P : T.O i) ^ k * readT D T i b (In.eig j σ k P)) := by
-  first | exact @_root_.GlobalTheory.HeightCounting.FormsStep.v0t_le_supr_eigenspace | exact _root_.GlobalTheory.HeightCounting.FormsStep.v0t_le_supr_eigenspace | (intros; apply _root_.GlobalTheory.HeightCounting.FormsStep.v0t_le_supr_eigenspace <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.FormsStep.v0t_le_supr_eigenspace
 end
 end -- clump:auto
 end -- clump:auto
@@ -606,7 +606,7 @@ theorem _root_.GlobalTheory.T.lattice_basis_free_module_place_alt : ∀ (D : D7)
       ∃ s : Multiset (FractionRing (T.O i)),
         (LinearMap.charpoly (hkB D T S In hst i j b k P)).map
           (algebraMap (T.O i) (FractionRing (T.O i))) = (s.map fun a => X - C a).prod := by
-  first | exact @_root_.GlobalTheory.HeightCounting.FormsStep.hkB_charpoly_splits_alt | exact _root_.GlobalTheory.HeightCounting.FormsStep.hkB_charpoly_splits_alt | (intros; apply _root_.GlobalTheory.HeightCounting.FormsStep.hkB_charpoly_splits_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.FormsStep.hkB_charpoly_splits_alt
 end
 end -- clump:auto
 end -- clump:auto

@@ -378,7 +378,7 @@ theorem D₁_D₁ (c : Pr N →₀ ℤ) : D₁ N (D₁ N c) = 0 := by
     · simp [d₁_zero]
     rcases p with _ | p
 
-    · simp [d₁_succ, map_sum, D₁_single, d₁_zero]
+    · simp [d₁_succ, D₁_single, d₁_zero]
     have h := alt_sum_zero (n := p) (fun θ => single (⟨p, r, θ ≫ a, b⟩ : Pr N) (1 : ℤ))
 
     rw [d₁_succ, map_sum]
@@ -399,7 +399,7 @@ theorem D₂_D₂ (c : Pr N →₀ ℤ) : D₂ N (D₂ N c) = 0 := by
     · simp [d₂_zero]
     rcases r with _ | r
 
-    · simp [d₂_succ, map_sum, D₂_single, d₂_zero]
+    · simp [d₂_succ, D₂_single, d₂_zero]
     have h := alt_sum_zero (n := r) (fun θ => single (⟨p, r, a, θ ≫ b⟩ : Pr N) (1 : ℤ))
 
     rw [d₂_succ, map_sum]
@@ -430,7 +430,7 @@ theorem D₁_D₂ (c : Pr N →₀ ℤ) : D₁ N (D₂ N c) = D₂ N (D₁ N c) 
 
 theorem d_d (c : Pr N →₀ ℤ) : Pr.d N (Pr.d N c) = 0 := by
   rw [d_eq (Pr.d N c), d_eq c]
-  simp only [map_add (f := _), D₁_E, D₂_E, D₁_D₁, D₂_D₂, D₁_D₂, E_E, map_zero, map_neg]
+  simp only [map_add (f := _), D₁_E, D₂_E, D₁_D₁, D₂_D₂, D₁_D₂, map_zero]
   abel
 
 end GlobalTheory.EtC.PrCx
@@ -556,7 +556,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.prism_chain_complex_boundary_identities : (∀ N (c : Pr N →₀ ℤ), Pr.d N (Pr.d N c) = 0) ∧ (∀ {N M : ℕ} (θ : SimplexCategory.mk N ⟶ SimplexCategory.mk M) c, Pr.d M (Pr.push θ c) = Pr.push θ (Pr.d N c)) ∧ (∀ N k (c : Pr N →₀ ℤ), Pr.Deg (k + 1) c → Pr.Deg k (Pr.d N c)) ∧ (∀ N k (c : Pr N →₀ ℤ), Pr.Deg k c → Pr.Deg k (Pr.bd c)) ∧ (∀ N (c : Pr N →₀ ℤ), Pr.bd (Pr.bd c) = 0) ∧ (∀ N (c : Pr N →₀ ℤ), Pr.d (N + 1) (Pr.bd c) = Pr.bd (Pr.d N c)) ∧ ∀ N, Pr.Deg N (Pr.aw N) ∧ Pr.Deg N (Pr.wa N) := by
-  first | (exact @GlobalTheory.EtC.PrCx.pr_complex) | (exact GlobalTheory.EtC.PrCx.pr_complex) | (intros; apply GlobalTheory.EtC.PrCx.pr_complex  <;> assumption)
+  first | (exact @GlobalTheory.EtC.PrCx.pr_complex)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrismChainComplexBoundaryIdentitiesStatement =====
@@ -684,12 +684,12 @@ theorem key {N : ℕ} (z : Pr N) (hpos : 0 < z.1 + z.2.1) :
     cases r with
     | zero => simp at hpos
     | succ s =>
-      simp only [hz, if_pos rfl, if_true, map_add (f := _), d_single]
+      simp only [hz, if_true, map_add (f := _), d_single]
       rw [d₁_cone_zero, d₂_succ, d₁_zero, d₂_cone_succ, d₁_zero, d₂_succ, map_zero, map_smul, H_sum]
-      simp only [hz, if_true, ↓reduceIte, Finset.sum_add_distrib, smul_add]
+      simp only [hz, ↓reduceIte, Finset.sum_add_distrib, smul_add]
       module
   | succ q =>
-    simp only [hz, Nat.succ_ne_zero, if_false, ↓reduceIte, add_zero, map_add (f := _), d_single, map_smul]
+    simp only [hz, Nat.succ_ne_zero, ↓reduceIte, add_zero, map_add (f := _), d_single, map_smul]
     rw [d₁_cone_succ, d₁_succ, H_sum]
     have hX : ∑ i : Fin (q + 2), ((-1 : ℤ) ^ (i : ℕ)) • hz (⟨q, r, SimplexCategory.δ i ≫ a, b⟩ : Pr N) =
         ∑ i : Fin (q + 2), ((-1 : ℤ) ^ (i : ℕ)) • Finsupp.single (⟨q + 1, r, cone (SimplexCategory.δ i ≫ a), b⟩ : Pr N) 1 := by
@@ -702,7 +702,7 @@ theorem key {N : ℕ} (z : Pr N) (hpos : 0 < z.1 + z.2.1) :
     | zero => rw [d₂_zero, d₂_zero, map_zero]; module
     | succ s =>
       rw [d₂_succ, d₂_succ, H_sum]
-      simp only [hz, Nat.succ_ne_zero, if_false, ↓reduceIte, add_zero]
+      simp only [hz, Nat.succ_ne_zero, ↓reduceIte, add_zero]
       rw [pow_succ]
       module
 
@@ -767,7 +767,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.standardSimplexFacePairs_acyclic_positive_degree : ∀ N k (c : Pr N →₀ ℤ), Pr.Deg (k + 1) c → Pr.d N c = 0 → ∃ e, Pr.Deg (k + 2) e ∧ Pr.d N e = c := by
-  first | (exact @GlobalTheory.PrAcyc.pr_acyclic) | (exact GlobalTheory.PrAcyc.pr_acyclic) | (intros; apply GlobalTheory.PrAcyc.pr_acyclic  <;> assumption)
+  first | (exact @GlobalTheory.PrAcyc.pr_acyclic)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardSimplexFacePairsAcyclicPositiveDegreeStatement =====

@@ -156,7 +156,7 @@ theorem gram_scaleFrame [StarRing K] {d m : ℕ} (t : InfinitePlace K → ℝ) (
     simp only [Matrix.mulVec, dotProduct, Matrix.smul_apply, smul_eq_mul, Finset.mul_sum, mul_assoc]
   ext a c
   simp only [gram, Formalism.HN.gramPl, Formalism.HermitianLatticesTheory.majAt, Formalism.HermitianLatticesTheory.fcoord, Matrix.of_apply,
-    Matrix.smul_apply, smul_eq_mul, hs, hmv, star_mul', map_mul, Complex.star_def,
+    Matrix.smul_apply, smul_eq_mul, hs, hmv, star_mul', Complex.star_def,
     Complex.conj_ofReal, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← sqrt_mul_sqrt_complex (t v) (ht v)]
@@ -335,7 +335,7 @@ noncomputable section
 namespace Formalism.AtG
 
 theorem grid_ell_bound : FinitePlaceLiesOverPrime := by
-  first | exact Bl.PlaneOverMembership.goal1 .. | (apply Bl.PlaneOverMembership.goal1 <;> assumption) | (intros; apply Bl.PlaneOverMembership.goal1 <;> assumption) | (apply @Bl.PlaneOverMembership.goal1 <;> assumption) | (intros; apply @Bl.PlaneOverMembership.goal1 <;> assumption) | (apply @Bl.PlaneOverMembership.goal1 <;> first | assumption | infer_instance)
+  first | (apply Bl.PlaneOverMembership.goal1 <;> assumption)
 
 theorem sum_le_finsum' {α : Type} (f : α → ℝ) (hf : ∀ a, 0 ≤ f a) (hs : (Function.support f).Finite)
     (F : Finset α) : ∑ a ∈ F, f a ≤ ∑ᶠ a, f a := by

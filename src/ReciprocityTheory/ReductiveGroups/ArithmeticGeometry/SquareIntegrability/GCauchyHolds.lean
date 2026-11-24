@@ -753,8 +753,10 @@ theorem char_main (hx : Ext.All) : CharStatement := by
   have hmf : ((P.m : ℝ)) ^ 4 ≤ PT.f E := by exact_mod_cast P.hmf
   have hf2 := P.hf2
   have hdR : (dstar (E := E) P.m : ℝ) = 2 * PT.f E * P.m := by simp [dstar]
-  have hd2 : (2 : ℝ) ≤ dstar (E := E) P.m := by rw [hdR]; nlinarith
-  have hFd : (PT.f E : ℝ) ≤ dstar (E := E) P.m := by rw [hdR]; nlinarith
+  have hd2 : (2 : ℝ) ≤ dstar (E := E) P.m := by
+    rw [hdR]; have := one_le_mul_of_one_le_of_one_le hF1 hm1; linarith
+  have hFd : (PT.f E : ℝ) ≤ dstar (E := E) P.m := by
+    rw [hdR]; have := le_mul_of_one_le_right (by linarith : (0 : ℝ) ≤ PT.f E) hm1; linarith
   have hΩ2 : omStar (E := E) ^ 2 = 4 * (PT.f E : ℝ) ^ 3 * PT.rd E ^ 2 := by
     rw [omStar, mul_pow, mul_pow, ← Real.rpow_natCast ((PT.f E : ℝ) ^ ((3 : ℝ) / 2)),
       ← Real.rpow_mul (by positivity)]
@@ -794,8 +796,11 @@ theorem char_main (hx : Ext.All) : CharStatement := by
   have hcmp : ∀ s : Fin ρ, 30 ≤ 30 * (ρ : ℝ) ^ 2 ∧
       Real.sqrt 2 * (30 * (ρ : ℝ) ^ 2 + 1) + 1 ≤ 3 / 2 * (30 * (ρ : ℝ) ^ 2) := by
     intro s
-    have : (1 : ℝ) ≤ ρ := by exact_mod_cast (show 1 ≤ ρ by have := s.2; omega)
-    constructor <;> nlinarith [Real.sqrt_nonneg 2]
+    have hρ1 : (1 : ℝ) ≤ ρ := by exact_mod_cast (show 1 ≤ ρ by have := s.2; omega)
+    have hρ2 : (1 : ℝ) ≤ (ρ : ℝ) ^ 2 := one_le_pow₀ hρ1
+    refine ⟨by linarith, ?_⟩
+    have := mul_le_mul_of_nonneg_right hs2.le (by positivity : (0 : ℝ) ≤ 30 * (ρ : ℝ) ^ 2 + 1)
+    linarith
   have hχn : ∀ s : Fin ρ, ‖χ s‖ ≤ 3 / 2 * (30 * (ρ : ℝ) ^ 2) * ((dstar (E := E) P.m : ℝ) ^ 2 * PT.rd E) * μ s := by
     intro s
     have h1 := (hRb s s.2).2
@@ -803,7 +808,7 @@ theorem char_main (hx : Ext.All) : CharStatement := by
     have hμ := (hred s s.2).1
     have h3 : 0 ≤ ((dstar (E := E) P.m : ℝ) ^ 2 * PT.rd E) * μ s := by positivity
     have := mul_le_mul_of_nonneg_right h2 h3
-    nlinarith
+    linarith
   refine ⟨fun s => w s, fun s => (hχX s s.2).choose, fun s => χ s, fun s => R s,
     fun s s' => ε s s', ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro s
@@ -843,7 +848,7 @@ theorem char_main (hx : Ext.All) : CharStatement := by
           _ ≤ (ρ : ℝ) * (1 / (30 * (ρ : ℝ) ^ 2)) ^ 2 := mul_le_mul_of_nonneg_left hb (Nat.cast_nonneg _)
           _ = _ := by ring
       have hb0 : 0 ≤ Real.sqrt ρ / (30 * (ρ : ℝ) ^ 2) := by positivity
-      nlinarith
+      exact le_of_pow_le_pow_left₀ two_ne_zero hb0 h1
   · intro s v hv
     have hR : (R s : ℂ) ≠ 0 := by
       have h1 := (hRb s s.2).1
@@ -868,14 +873,18 @@ theorem char_main (hx : Ext.All) : CharStatement := by
     have hμ := (hred s s.2).1
     have hA := (hcmp s).1
     have hn := hχn s
-    have hK1 : 1 ≤ ((dstar (E := E) P.m : ℝ) ^ 2 * PT.rd E) := by nlinarith
-    have h1 : 30 ≤ (30 * (ρ : ℝ) ^ 2) * ((dstar (E := E) P.m : ℝ) ^ 2 * PT.rd E) := by nlinarith
-    have hX : 30 ≤ (30 * (ρ : ℝ) ^ 2) * ((dstar (E := E) P.m : ℝ) ^ 2 * PT.rd E) * μ s := by nlinarith
+    have hK1 : 1 ≤ ((dstar (E := E) P.m : ℝ) ^ 2 * PT.rd E) :=
+      one_le_mul_of_one_le_of_one_le (one_le_pow₀ (by linarith)) (by linarith)
+    have h1 : 30 ≤ (30 * (ρ : ℝ) ^ 2) * ((dstar (E := E) P.m : ℝ) ^ 2 * PT.rd E) :=
+      le_trans hA (le_mul_of_one_le_right (by linarith) hK1)
+    have hX : 30 ≤ (30 * (ρ : ℝ) ^ 2) * ((dstar (E := E) P.m : ℝ) ^ 2 * PT.rd E) * μ s :=
+      le_trans h1 (le_mul_of_one_le_right (by linarith) hμ)
     have e15 : (1.5 : ℝ) = 3 / 2 := by norm_num
     rw [e15]
     constructor
-    · nlinarith
-    · nlinarith [Real.pi_gt_three]
+    · linarith
+    · have := mul_le_mul_of_nonneg_left (le_trans hX hRs) (by linarith [Real.pi_gt_three] : (0 : ℝ) ≤ 2 * Real.pi)
+      linarith [Real.pi_gt_three]
   · intro s y hy uy hU
     show |2 * inner ℝ (χ s) uy| ≤ M1 (E := E) P.m * ‖uy‖ ^ 2
     have huy : uy ∈ Xg X.L I := ⟨y, hy, hU⟩
@@ -884,9 +893,12 @@ theorem char_main (hx : Ext.All) : CharStatement := by
       rw [M1]
       have h1 : (ρ : ℝ) ^ 2 ≤ (P.m : ℝ) ^ 2 := pow_le_pow_left₀ (Nat.cast_nonneg _) hρmR 2
       have h2 := mul_le_mul_of_nonneg_right h1 hK0.le
-      nlinarith
-    have hK1 : 1 ≤ ((dstar (E := E) P.m : ℝ) ^ 2 * PT.rd E) := by nlinarith
-    have hM1 : 1 ≤ M1 (E := E) P.m := by nlinarith
+      linarith
+    have hK1 : 1 ≤ ((dstar (E := E) P.m : ℝ) ^ 2 * PT.rd E) :=
+      one_le_mul_of_one_le_of_one_le (one_le_pow₀ (by linarith)) (by linarith)
+    have hM1 : 1 ≤ M1 (E := E) P.m := by
+      have := le_mul_of_one_le_right (by linarith : (0 : ℝ) ≤ 3 * (30 * (ρ : ℝ) ^ 2)) hK1
+      linarith
     have e1 : |2 * inner ℝ (χ s) uy| ≤ 2 * (‖χ s‖ * ‖uy‖) := by
       rw [abs_mul, abs_two]
       exact mul_le_mul_of_nonneg_left (abs_real_inner_le_norm _ _) (by norm_num)
@@ -898,7 +910,9 @@ theorem char_main (hx : Ext.All) : CharStatement := by
         le_trans hn (mul_le_mul_of_nonneg_left h (by positivity))
       have h3 := mul_le_mul_of_nonneg_right h2 (norm_nonneg uy)
       have h4 := mul_le_mul_of_nonneg_right hM (sq_nonneg ‖uy‖)
-      nlinarith
+      have hsq : 3 / 2 * (30 * (ρ : ℝ) ^ 2) * ((dstar (E := E) P.m : ℝ) ^ 2 * PT.rd E) * ‖uy‖ * ‖uy‖ =
+          3 / 2 * (30 * (ρ : ℝ) ^ 2) * ((dstar (E := E) P.m : ℝ) ^ 2 * PT.rd E) * ‖uy‖ ^ 2 := by ring
+      linarith
   · intro s
     show ‖χ s‖ ^ 2 ≤ Cchi (E := E) P.m * P.ph
     have hn := hχn s
@@ -914,15 +928,18 @@ theorem char_main (hx : Ext.All) : CharStatement := by
       rw [hdR]
       have h5 : 16 * (PT.f E : ℝ) ^ 4 * (P.m : ℝ) ^ 4 ≤ 16 * (PT.f E : ℝ) ^ 5 := by
         have := mul_le_mul_of_nonneg_left hmf (by positivity : (0 : ℝ) ≤ 16 * (PT.f E : ℝ) ^ 4)
-        nlinarith
+        linarith [show 16 * (PT.f E : ℝ) ^ 4 * (PT.f E : ℝ) = 16 * (PT.f E : ℝ) ^ 5 by ring]
       have h6 : (PT.f E : ℝ) ^ 4 ≤ PT.rd E ^ 2 := by
         have := pow_le_pow_left₀ (by positivity) hf2 2
-        nlinarith
-      have h7 : 16 * (PT.f E : ℝ) ^ 4 ≤ PT.rd E * PT.rd E ^ 2 := by nlinarith
+        linarith [show ((PT.f E : ℝ) ^ 2) ^ 2 = (PT.f E : ℝ) ^ 4 by ring]
+      have h7 : 16 * (PT.f E : ℝ) ^ 4 ≤ PT.rd E * PT.rd E ^ 2 :=
+        mul_le_mul (by linarith) h6 (by positivity) (by positivity)
       have h8a := mul_le_mul_of_nonneg_left h7 hFpos.le
       have h8b : 0 ≤ (PT.f E : ℝ) * PT.rd E ^ 3 := by positivity
-      have h8 : 16 * (PT.f E : ℝ) ^ 5 ≤ 8 * (PT.f E : ℝ) * PT.rd E ^ 3 := by nlinarith
-      nlinarith
+      have h8 : 16 * (PT.f E : ℝ) ^ 5 ≤ 8 * (PT.f E : ℝ) * PT.rd E ^ 3 := by
+        linarith [show (PT.f E : ℝ) * (16 * (PT.f E : ℝ) ^ 4) = 16 * (PT.f E : ℝ) ^ 5 by ring,
+          show (PT.f E : ℝ) * (PT.rd E * PT.rd E ^ 2) = (PT.f E : ℝ) * PT.rd E ^ 3 by ring]
+      linarith [show (2 * (PT.f E : ℝ) * (P.m : ℝ)) ^ 4 = 16 * (PT.f E : ℝ) ^ 4 * (P.m : ℝ) ^ 4 by ring]
     have hρ4 : (ρ : ℝ) ^ 4 ≤ (P.m : ℝ) ^ 4 := pow_le_pow_left₀ (Nat.cast_nonneg _) hρmR 4
     have hdF : (dstar (E := E) P.m : ℝ) ^ 4 / (PT.f E : ℝ) ≤ 8 * PT.rd E ^ 3 := by rw [div_le_iff₀ hFpos]; linarith
     have hC : 0 ≤ 2025 / 2 * (dstar (E := E) P.m : ℝ) ^ 4 * PT.rd E ^ 4 * P.ph := mul_nonneg (by positivity) hph

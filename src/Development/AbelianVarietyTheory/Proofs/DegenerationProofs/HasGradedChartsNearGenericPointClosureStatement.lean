@@ -722,7 +722,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 attribute [local instance] SplitExt.free SplitExt.finite MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.exists_pureWeight_section_ne_zero_at : Out.Laws → Out.Laws2 → (∀ (k : Type) [Field k] [IsAlgClosed k] (Φ : FibPre k) (N : ℕ), 4 ≤ N → Φ.Pol N → ∀ (α : Φ.E.X) (x : Φ.Pt), ∃ φ : (Φ.H 1).Sec, Φ.Pure α φ ∧ ⊤ ≤ x.left ⁻¹ᵁ Out.nonzeroLocus φ) := by
-  first | exact @GlobalTheory.ZH.FibPre.exists_pure_ne_zero_at | exact GlobalTheory.ZH.FibPre.exists_pure_ne_zero_at | (intros; apply GlobalTheory.ZH.FibPre.exists_pure_ne_zero_at <;> assumption)
+  first | exact @GlobalTheory.ZH.FibPre.exists_pure_ne_zero_at
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsPureWeightSectionNeZeroAtStatement =====
@@ -1100,7 +1100,7 @@ theorem exists_split : Out.Laws → Out.Laws2 → ∀ (k : Type) [Field k] [IsAl
   let f : Φ.E.X ≃+ (Fin (Module.finrank ℤ Φ.E.X) → ℤ) := b.equivFun.toAddEquiv
   have hf : ∀ n, f.toAddMonoidHom (b n) = Pi.single n 1 := fun n => by
     ext n'
-    simp [f, Pi.single_apply, Finsupp.single_apply, eq_comm]
+    simp [f, Pi.single_apply, eq_comm]
   have := Φ.D.i_hom
   have := SplitTorusPow.isMonHom_torusMap (S := Sp k) f.toAddMonoidHom
   refine ⟨fun n => cl (b n), (isSemiAbelian_of_isGt _ Φ.E Φ.G ⟨Φ.D⟩).geomConnected,
@@ -1146,7 +1146,7 @@ open ReciprocityTheory.ChartRestriction.G.Out GlobalTheory.ZH Classical
 attribute [local instance] SplitExt.free SplitExt.finite MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.exists_torus_action_weighted_charts : Out.Laws → Out.Laws2 → ∀ (k : Type) [Field k] [IsAlgClosed k] (Φ : FibPre k) (g N N' : ℕ) (q : QuadraticMap ℤ Φ.E.X ℝ) (J : Type) [Fintype J] (cls : J → Φ.E.X) (F F' : J → (Φ.H 1).Sec) (π : Φ.Pol N) (m : Matrix J J k) (Ch : GlobalTheory.ZJ.Charts Φ.G.left) (e : Ch.I ≃ J) (cl : Φ.E.X → Ch.Cl), Big g N N' → Φ.Good N q cls F → π.PB.g + Module.finrank ℤ Φ.E.X = g → IsUnit m.det → (∀ i, IsLin Φ.G.hom F (m i) (F' i)) → (∀ α β, cl α = cl β ↔ ∃ n, α = β + N • n) → cl 0 = Ch.c₀ → (∀ i j, m (e i) j ≠ 0 → Ch.wt i = cl (cls j)) → (∀ i, Ch.W i = nonzeroLocus (F' (e i.1)) ∧ ∀ j, IsRatio (F' (e j)) (F' (e i.1)) (Ch.W i) (Ch.r i j)) → ∃ c : Fin (Module.finrank ℤ Φ.E.X) → Ch.Cl, GlobalTheory.ZJ.Charts.Split (H := Φ.G) Ch c := by
-  first | exact @GlobalTheory.ZH.FibTorus.exists_split | exact GlobalTheory.ZH.FibTorus.exists_split | (intros; apply GlobalTheory.ZH.FibTorus.exists_split <;> assumption)
+  first | exact @GlobalTheory.ZH.FibTorus.exists_split
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsTorusActionWeightedChartsStatement =====
@@ -1274,7 +1274,7 @@ open ReciprocityTheory.ChartRestriction.G.Out GlobalTheory.ZH Classical
 attribute [local instance] SplitExt.free SplitExt.finite MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.hasGradedCharts_near_generic_point_closure : GlobalTheory.UT.LL → ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o Ω] (S : ThetaSys o Ω) (ρ : S.Real) (M : RatModel o Ω) (U₀ : M.Z.Opens) (EE : M.Lat S.J), BaseFacts S M U₀ EE → ∀ (Q : Clos ρ M U₀ EE) (ex : Q.Ext), S.Big → ρ.HasGeo → ex.core.Fib → ex.core.HasCharts := by
-  first | exact @GlobalTheory.ZH.GradedCharts.hasCharts | exact GlobalTheory.ZH.GradedCharts.hasCharts | (intros; apply GlobalTheory.ZH.GradedCharts.hasCharts <;> assumption)
+  first | exact @GlobalTheory.ZH.GradedCharts.hasCharts
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DegenerationProofs.HasGradedChartsNearGenericPointClosureStatement =====

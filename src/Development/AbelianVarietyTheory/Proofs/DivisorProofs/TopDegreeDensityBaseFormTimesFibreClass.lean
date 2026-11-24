@@ -313,8 +313,8 @@ theorem det_schur_bilinear_entry (B : Type) [Fintype B] [DecidableEq B]
   have hR : R.det = Q.det := Matrix.det_reindex_self e Q
   let Pz : Matrix (B ⊕ Unit) (B ⊕ Unit) ℂ := Matrix.fromBlocks 1 0 (Matrix.of fun _ b => z b) 1
   let Pz' : Matrix (B ⊕ Unit) (B ⊕ Unit) ℂ := Matrix.fromBlocks 1 0 (Matrix.of fun _ b => z' b) 1
-  have hPz : Pz.det = 1 := by simp [Pz, Matrix.det_fromBlocks_zero₁₂]
-  have hPz' : Pz'.det = 1 := by simp [Pz', Matrix.det_fromBlocks_zero₁₂]
+  have hPz : Pz.det = 1 := by simp [Pz]
+  have hPz' : Pz'.det = 1 := by simp [Pz']
   let u : B → ℂ := fun a => ∑ c, Q (some a) c * Option.elim c 1 z'
   let v : B → ℂ := fun b => ∑ c, Option.elim c 1 z * Q c (some b)
   let D : Matrix Unit Unit ℂ := Matrix.of fun _ _ => q
@@ -325,7 +325,7 @@ theorem det_schur_bilinear_entry (B : Type) [Fintype B] [DecidableEq B]
     ext i j
     rcases i with a | ⟨⟩ <;> rcases j with b | ⟨⟩ <;>
       simp [M, Pz, Pz', R, e, u, v, D, hq, Matrix.mul_apply, Fintype.sum_sum_type, Fintype.sum_option,
-        Matrix.one_apply, Finset.sum_add_distrib, Finset.mul_sum, Finset.sum_mul, mul_comm, mul_left_comm, mul_assoc, add_comm]
+        Matrix.one_apply, Finset.sum_add_distrib, mul_comm, mul_left_comm, mul_assoc, add_comm]
     all_goals
       simp only [mul_add, Finset.mul_sum, Finset.sum_add_distrib]
       congr 1
@@ -343,7 +343,7 @@ theorem det_schur_bilinear_entry (B : Type) [Fintype B] [DecidableEq B]
       q⁻¹ • ((Matrix.of fun a b => Q (some a) (some b)) - (Matrix.of fun a (_ : Unit) => u a) * ⅟D *
         (Matrix.of fun (_ : Unit) b => v b)) := by
     ext a b
-    simp [u, v, D, Matrix.mul_apply, invOf_eq_inv]
+    simp [u, v, D, Matrix.mul_apply]
     field_simp
   rw [hS, Matrix.det_smul, ← hdet, pow_succ, inv_pow]
   field_simp
@@ -667,7 +667,7 @@ theorem leviForm_log_herm : ∀ (n : ℕ) (B : Type) [Fintype B] [DecidableEq B]
   let M : (B → ℂ) →L[ℂ] V n :=
     ∑ a, (ContinuousLinearMap.proj a : (B → ℂ) →L[ℂ] ℂ).smulRight (coordVec (e a))
   have hM : ∀ t, M t = ∑ a, t a • coordVec (e a) := fun t => by
-    simp [M, ContinuousLinearMap.sum_apply]
+    simp [M]
   have hM1 : ∀ a, M (Pi.single a 1) = coordVec (e a) := fun a => by
     rw [hM]; simp [Pi.single_apply, ite_smul]
   have hφ : HasFDerivAt (fun t => z + M t) M 0 := M.hasFDerivAt.const_add z
@@ -737,7 +737,7 @@ noncomputable def rowEquiv {ι : Type} (m : ι → ℕ) (τ : ι) (i : Fin (m τ
 theorem add_sum_coord_apply {n : ℕ} {B : Type} [Fintype B] (e : B → Fin n) (he : Function.Injective e)
     (z : V n) (t : B → ℂ) (k : Fin n) :
     (z + ∑ a, t a • coordVec (e a)) k = z k + ∑ a, if k = e a then t a else 0 := by
-  simp [coordVec, Finset.sum_apply, PiLp.single_apply, Pi.single_apply, mul_ite]
+  simp [coordVec, Finset.sum_apply, Pi.single_apply, mul_ite]
 
 end GlobalTheory.FlagCell2
 
@@ -806,7 +806,7 @@ theorem row_levi_det_of (hR : ∀ (n : ℕ) (B : Type) [Fintype B] [DecidableEq 
         rw [ite_eq_right]
         intro h'
         have := ε.symm.injective h'
-        simp only [e, Sum.inr.injEq, Sigma.mk.inj_iff, heq_eq_eq, true_and] at this
+        simp only [Sum.inr.injEq, Sigma.mk.inj_iff, heq_eq_eq, true_and] at this
         exact h (this ▸ b.2)
     have hfa : ∀ a : Option {j : Low (m τ) // j.1.2 = i}, Option.elim a 1 (fun a => fb ε w' ⟨τ, a.1⟩) = Option.elim a 1 (fun a => w (e a) + t a) := by
       rintro (_ | b)
@@ -1244,7 +1244,7 @@ theorem dens_scale (c : Fin n → ℂ) (β : Alt n) : dens (scale c β) = (∏ a
 theorem scale_dz (c : Fin n → ℂ) (a : Fin n) : scale c (dz a) = c a • dz a ∧ scale c (dzb a) = c a • dzb a := by
   simp only [dz, dzb, ← map_smul]
   constructor <;> refine (ExteriorAlgebra.map_apply_ι _ _).trans (congrArg _ (funext ?_)) <;> rintro (b | b) <;>
-    by_cases h : b = a <;> simp [Matrix.mulVec_diagonal, Pi.single_apply, h]
+    by_cases h : b = a <;> simp [Matrix.mulVec_diagonal, h]
 
 theorem scale_sym (c : Fin n → ℂ) (a b : Fin n) :
     scale c (sym (a, b) : Ev n) = (c a * c b) • ((sym (a, b) : Ev n) : Alt n) := by

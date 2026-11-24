@@ -156,7 +156,7 @@ theorem _root_.GlobalTheory.T.dualPointOverOrigin_lifts_tangentVector_uniformise
     eSec x.P.A ≫ φ = spMap ((algebraMap (FractionRing R) ℂ).comp (algebraMap R (FractionRing R))) ≫ eSec D.P.A →
     ∀ b : TE R ℂ ⟶ D.P.A, redE ℂ ≫ b.left = (DegPre.zeroF D ℂ).left →
       ∃ b' : epsR ℂ ⟶ x.P.A, IsTangent b' ∧ b'.left ≫ φ = b.left := by
-  first | exact @GlobalTheory.MBLow.Cl.tangent_lift_of_pullback | exact GlobalTheory.MBLow.Cl.tangent_lift_of_pullback | (intros; apply GlobalTheory.MBLow.Cl.tangent_lift_of_pullback <;> assumption)
+  first | exact @GlobalTheory.MBLow.Cl.tangent_lift_of_pullback
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualPointOverOriginLiftsTangentVectorUniformisedStatement =====
@@ -254,7 +254,7 @@ theorem _root_.GlobalTheory.T.holomorphic_functionValues_classicalUniformisation
     IsGrpPullback x.P.A D.P.A (spMap ((algebraMap (FractionRing R) ℂ).comp (algebraMap R (FractionRing R)))) φ → (∀ z, (ν.eA (d.ex z)).left = (u.ex z).left ≫ φ) →
     ∀ (U : (DegPre.BF D ℂ).left.Opens) (f : Γ((DegPre.BF D ℂ).left, U)), IsOpen {z | ⊤ ≤ ptB ν d z ⁻¹ᵁ U} ∧
       DifferentiableOn ℂ (fun z => valF (ptB ν d z) U f) {z | ⊤ ≤ ptB ν d z ⁻¹ᵁ U} := by
-  first | exact @GlobalTheory.MBLow.Cl.HolB.hol_ptB | exact GlobalTheory.MBLow.Cl.HolB.hol_ptB | (intros; apply GlobalTheory.MBLow.Cl.HolB.hol_ptB <;> assumption)
+  first | exact @GlobalTheory.MBLow.Cl.HolB.hol_ptB
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HolomorphicFunctionValuesClassicalUniformisationStatement =====
@@ -298,11 +298,7 @@ namespace GlobalTheory.UnifTan
 theorem valR_comp_eq {A : Type} [CommRing A] {X Y : Scheme.{0}} (p : Sp A ⟶ X) (ψ : X ⟶ Y) (U : Y.Opens) (f : Γ(Y, U)) :
     valR (p ≫ ψ) U f = valR p (ψ ⁻¹ᵁ U) ((ψ.app U).hom f) := by
   first
-  | exact @_root_.GlobalTheory.ValuationCompositionDivisor.valR_comp
-  | exact _root_.GlobalTheory.ValuationCompositionDivisor.valR_comp
   | (apply _root_.GlobalTheory.ValuationCompositionDivisor.valR_comp <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ValuationCompositionDivisor.valR_comp <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ValuationCompositionDivisor.valR_comp <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.ValuationCompositionDivisor.valR_comp ..)
 
 theorem valF_eq_valAt' {X : Scheme.{0}} (p : Sp ℂ ⟶ X) (U : X.Opens) (f : Γ(X, U)) :
@@ -449,7 +445,7 @@ theorem _root_.GlobalTheory.T.holomorphic_uniformization_complex_base_change : �
     IsGrpPullback x.P.A D.P.A (spMap ((algebraMap (FractionRing R) ℂ).comp (algebraMap R (FractionRing R)))) φ → (∀ z, (ν.eA (d.ex z)).left = (u.ex z).left ≫ φ) →
     ∀ (b' : epsR ℂ ⟶ x.P.A) (b : TE R ℂ ⟶ D.P.A), IsTangent b' → b'.left ≫ φ = b.left →
       ∀ W' : Fin g → ℂ, (IsD ν d W' b ↔ u.IsDiff W' b') := by
-  first | exact @GlobalTheory.UnifTan.isD_iff_isDiff | exact GlobalTheory.UnifTan.isD_iff_isDiff | (intros; apply GlobalTheory.UnifTan.isD_iff_isDiff <;> assumption)
+  first | exact @GlobalTheory.UnifTan.isD_iff_isDiff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HolomorphicUniformizationComplexBaseChangeStatement =====
@@ -521,7 +517,7 @@ theorem _root_.GlobalTheory.T.uniformisedFibre_frame_at_origin_eq_rigidification
       ⊤ ≤ (u.ex 0).left ⁻¹ᵁ x.P.L.U k → ⊤ ≤ (spMap ((algebraMap (FractionRing R) ℂ).comp (algebraMap R (FractionRing R))) ≫ eSec D.P.A) ⁻¹ᵁ D.P.L.U j →
       valAt' (u.ex 0).left _ (w.s (fun _ => j, k)).val * u.fr k 0 =
         valF (spMap ((algebraMap (FractionRing R) ℂ).comp (algebraMap R (FractionRing R)))) (LB.wchart D.P.L (fun _ : PUnit => eSec D.P.A) (fun _ => j)) (D.rig.s (fun _ => j)).val := by
-  first | exact @GlobalTheory.RigAtOrigin.frame_at_origin | exact GlobalTheory.RigAtOrigin.frame_at_origin | (intros; apply GlobalTheory.RigAtOrigin.frame_at_origin <;> assumption)
+  first | exact @GlobalTheory.RigAtOrigin.frame_at_origin
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UniformisedFibreFrameAtOriginEqRigidificationStatement =====
@@ -794,7 +790,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.MBLow.Cl Matrix
 
 theorem _root_.GlobalTheory.T.exists_classicalThetaNormalForm_keyDatum : ∀ (g : ℕ) (x : KeyIn ℂ) (hg : x.P.g = g), ∃ u τ a b c W, NF x hg u τ a b c W := by
-  first | exact @GlobalTheory.MBLow.Cl.exists_NF | exact GlobalTheory.MBLow.Cl.exists_NF | (intros; apply GlobalTheory.MBLow.Cl.exists_NF <;> assumption)
+  first | exact @GlobalTheory.MBLow.Cl.exists_NF
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsClassicalThetaNormalFormKeyDatumStatement =====
@@ -887,7 +883,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.MBLow.Cl Matrix
 
 theorem _root_.GlobalTheory.T.exists_degenerationThetaSection_nonvanishingFibres : ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [IsLocalRing R] (D : DegPre R) (F : Type) [Field F] [Algebra (FractionRing R) F] (N : NumD F) (ν : NumOf D F N), ∃ th : D.P.L.Sec, (∀ s : Sp R, ∃ x : D.P.A.left, D.P.A.hom x = s ∧ x ∈ Out.nonzeroLocus th) ∧ ∀ i : D.P.L.ι, ∀ h : LB.wchart D.P.L (fun _ : Fin 1 => 𝟙 D.P.A.left) (fun _ => i) ≤ D.P.L.U i, ν.th.f (fun _ => i) = resG _ h (th.f i) := by
-  first | exact @GlobalTheory.DegTheta.exists_sec_nonvanishing | exact GlobalTheory.DegTheta.exists_sec_nonvanishing | (intros; apply GlobalTheory.DegTheta.exists_sec_nonvanishing <;> assumption)
+  first | exact @GlobalTheory.DegTheta.exists_sec_nonvanishing
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDegenerationThetaSectionNonvanishingFibresStatement =====
@@ -968,7 +964,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.MBLow.Cl Matrix
 
 theorem _root_.GlobalTheory.T.exists_keyDatumBaseChange_lieBasisChange_detPow : ∀ κ : Rule, Homog (fun _ => 1) κ → ∀ (R : Type) [CommRing R] (y : KeyIn R) (x : KeyIn ℂ) (f : R →+* ℂ), KeyPB x y f → ∀ (v' : Fin y.P.g → (epsR R ⟶ y.P.A)) (hv' : IsLieBasis v') (M : Matrix (Fin y.P.g) (Fin y.P.g) R), (∀ i, IsLieComb (M i) y.v (v' i)) → ∃ x' : KeyIn ℂ, KeyPB x' ⟨y.P, y.g_pos, y.rig, y.rig_gen, y.th, y.th_ne, v', hv'⟩ f ∧ (κ ℂ x' : ℂ) = (M.map f).det ^ 4 * κ ℂ x := by
-  first | exact @GlobalTheory.KeyLieChg.exists_keyPB_det | exact GlobalTheory.KeyLieChg.exists_keyPB_det | (intros; apply GlobalTheory.KeyLieChg.exists_keyPB_det <;> assumption)
+  first | exact @GlobalTheory.KeyLieChg.exists_keyPB_det
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsKeyDatumBaseChangeLieBasisChangeDetPowStatement =====
@@ -1278,7 +1274,7 @@ theorem dm_scale (c : R) {v u : epsR R ⟶ G} (hu : u.left = spMap (epsScaleR c)
   rw [← Category.assoc, ← Category.assoc, spMap_comp', spMap_comp']
   congr 2
   refine RingHom.ext fun a => ?_
-  ext <;> simp [epsScaleR, GlobalTheory.CompanionTheory.Ar.dualMap, Chart.scaleD, smul_smul, _root_.mul_comm]
+  ext <;> simp [epsScaleR, GlobalTheory.CompanionTheory.Ar.dualMap, Chart.scaleD, smul_smul]
 
 end GlobalTheory.TanLinComb
 
@@ -1356,7 +1352,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.MBLow.Cl Matrix
 
 theorem _root_.GlobalTheory.T.thetaKeyRule_value_classicalNormalForm : ∀ κ : Rule, Homog (fun _ => 1) κ → ThetaOne κ → ∀ (g : ℕ) (x : KeyIn ℂ) (hg : x.P.g = g) (u : HolUnif x.P.A x.P.L g) (τ : Matrix (Fin g) (Fin g) ℂ) (a b : Fin g → ℂ) (c : ℂ) (Mx : Matrix (Fin g) (Fin g) ℂ), NF x hg u τ a b c (fun j => (2 * Real.pi * Complex.I : ℂ)⁻¹ • Mx j) → Mx.det ≠ 0 ∧ (κ ℂ x : ℂ) * c ^ 8 = Mx.det ^ 4 := by
-  first | exact @GlobalTheory.MBLow.Cl.key_value_of_nf | exact GlobalTheory.MBLow.Cl.key_value_of_nf | (intros; apply GlobalTheory.MBLow.Cl.key_value_of_nf <;> assumption)
+  first | exact @GlobalTheory.MBLow.Cl.key_value_of_nf
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaKeyRuleValueClassicalNormalFormStatement =====
@@ -1464,7 +1460,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.MBLow.Cl Matrix
 
 theorem _root_.GlobalTheory.T.exists_classicalThetaDescription_abelianPart : ∀ κ : Rule, Rule4 κ → AllC fun {R} _ _ {D} _ {N} ν => 1 ≤ D.P.g → ∃ (d : AB N.toNumB D.P.g) (_ : Geo ν d), KeyOK κ ν d := by
-  first | exact @GlobalTheory.MBLow.AbCl.exists_ab_keyOK | exact GlobalTheory.MBLow.AbCl.exists_ab_keyOK | (intros; apply GlobalTheory.MBLow.AbCl.exists_ab_keyOK <;> assumption)
+  first | exact @GlobalTheory.MBLow.AbCl.exists_ab_keyOK
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsClassicalThetaDescriptionAbelianPartStatement =====

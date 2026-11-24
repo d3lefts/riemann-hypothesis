@@ -6,7 +6,9 @@ public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.Cent
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 public import Mathlib.RingTheory.RootsOfUnity.Basic
-public import Mathlib
+public import Mathlib.Tactic.Polynomial.Basic
+public import Mathlib.Tactic.ReduceModChar
+public import Mathlib.Algebra.Order.Star.Int
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.StepJumpDirect
 public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InerDecomp
 public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsPotentialPhiSub
@@ -69,8 +71,6 @@ import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Tactic.Linter.Style
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.Lemma
-import Mathlib.Tactic.Polynomial.Basic
-import Mathlib.Tactic.ReduceModChar
 import Mathlib.FieldTheory.Galois.Profinite
 import Mathlib.RingTheory.Coalgebra.IsFrobenius
 import Mathlib.RingTheory.HopfAlgebra.Basic
@@ -407,7 +407,7 @@ end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsExtendCharacterTrivialOnNormal =====
 
 -- ===== clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AevalEqOfMemDpcris =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AevalEqOfMemDpcris", "h": "module\n\npublic import Mathlib\npublic import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.StepJumpDirect\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InertiaThroughOfPolyPow\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InerDecomp\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsRootsOfUnityCharacterHom\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsExtendCharacterTrivialOnNormal\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InertiaThroughOfPoly\npublic import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsPotentialPhiSub\n\n"}
+-- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AevalEqOfMemDpcris", "h": "module\n\npublic import Mathlib.Algebra.Order.Star.Int\npublic import Mathlib.Tactic.Polynomial.Basic\npublic import Mathlib.Tactic.ReduceModChar\npublic import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.StepJumpDirect\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InertiaThroughOfPolyPow\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InerDecomp\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsRootsOfUnityCharacterHom\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsExtendCharacterTrivialOnNormal\npublic import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.InertiaThroughOfPoly\npublic import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.IsPotentialPhiSub\n\n"}
 section -- clump:auto
 @[expose] public section
 
@@ -1380,7 +1380,7 @@ theorem main : ∀ (D : D7), PcrisTensorL D.loc → ∀ (i : D.nd.Loc) (w : Heig
     intro g v
     funext j
     obtain rfl : j = 0 := Subsingleton.elim _ _
-    simp [WeaklyAdmissibleFiltrations.charRep, LocBridge.rep, Br.locChi, Br.chiG, chiGL, Br.ι, Matrix.mulVec, dotProduct, Matrix.toLinAlgEquiv'_apply, Matrix.toLin'_apply, mul_comm]
+    simp [WeaklyAdmissibleFiltrations.charRep, LocBridge.rep, Br.locChi, Br.chiG, chiGL, Br.ι, Matrix.mulVec, dotProduct, Matrix.toLinAlgEquiv'_apply, mul_comm]
   obtain ⟨tr1, tr2⟩ := GlobalTheory.HTW.Rec.potCrysData_transport (pc (D.loc (D.nd.l i)) h hN hF hS) _ _ _ hequiv
   have htw : ∀ x : ↥Xs, (pc (D.loc (D.nd.l i)) h hN hF hS).IsPotCrys (matRep (Br.loc D.nbr i w hw (rTwO D.nd i r x))) ∧
       (pc (D.loc (D.nd.l i)) h hN hF hS).InertiaThrough (matRep (Br.loc D.nbr i w hw (rTwO D.nd i r x)))

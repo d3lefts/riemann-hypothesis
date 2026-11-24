@@ -88,13 +88,13 @@ theorem cre_single {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (f : Pos
   by_cases hA : A = insert f S
   · subst hA
     rw [if_pos (Finset.mem_insert_self f S), Finset.erase_insert h]
-    simp [Pi.single_apply]
+    simp
   · have hr : (CompanionTheory.D.LK.sg f (insert f S) • (Pi.single (insert f S) w : Cn n V)) A = 0 := by
-      simp [Pi.single_apply, hA]
+      simp [hA]
     rw [hr]
     split_ifs with hf
     · have hne : A.erase f ≠ S := fun he => hA (by rw [← he, Finset.insert_erase hf])
-      simp [Pi.single_apply, hne]
+      simp [hne]
     · rfl
 
 theorem sg_ne_zero {n : ℕ} (f : Pos n) (A : Finset (Pos n)) : CompanionTheory.D.LK.sg f A ≠ 0 := by
@@ -749,7 +749,7 @@ theorem finiteDimensional_chainsIn (lev : Fin n → ℕ) (d : ℕ) (S : Submodul
 
 theorem lF_apply (E : Fin n → Fin n → Module.End ℂ V) (p q : Fin n) (x : Cn n V) (A : Finset (Pos n)) :
     lF E p q x A = E p q (x A) + ∑ i : Pos n, ∑ k : Pos n, adC p q i k • cre k (ann i x) A := by
-  simp [lF, adL, LinearMap.add_apply, LinearMap.sum_apply, Finset.sum_apply, Module.End.mul_apply]
+  simp [lF, adL, LinearMap.add_apply, LinearMap.sum_apply, Finset.sum_apply]
 
 theorem cre_ann_mem {S : Submodule ℂ V} {x : Cn n V} (hx : ∀ A, x A ∈ S) (i k : Pos n) (A : Finset (Pos n)) :
     cre k (ann i x) A ∈ S := by

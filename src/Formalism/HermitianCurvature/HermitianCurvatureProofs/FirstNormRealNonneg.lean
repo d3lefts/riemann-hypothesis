@@ -147,11 +147,7 @@ def cj (S : HidaSetting E Wp Wq) : J.CV E ≃ₗᵢ[ℝ] J.CV E :=
 theorem cj_apply (S : HidaSetting E Wp Wq) (c : J.CV E) (v : Fin S.f) :
     (S.σ v = (S.pl v).embedding → cj S c (S.pl v) = c (S.pl v)) ∧
       (S.σ v ≠ (S.pl v).embedding → cj S c (S.pl v) = conj (c (S.pl v))) := by
-  constructor
-  · intro h
-    simp [cj, h]
-  · intro h
-    simp [cj, h]
+  constructor <;> intro h <;> simp [cj, h]
 
 theorem cj_cemb (S : HidaSetting E Wp Wq) (t : E) (v : Fin S.f) : cj S (J.cemb E t) (S.pl v) = S.σ v t := by
   have hc : J.cemb E t (S.pl v) = (S.pl v).embedding t := rfl

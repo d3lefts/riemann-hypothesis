@@ -195,7 +195,7 @@ theorem _root_.GlobalTheory.T.dvr_eigen_tangent_extension : ∀ (V K : Type) [Co
     ∀ w, w ∈ Submodule.span V (Set.range b) ↔
       (∃ a : epsAt (𝟙 (Sp V)) ⟶ T, IsTanAt T (𝟙 _) a ∧ (ML.pt w).left ≫ φ₀ = spMap (dualMap (algebraMap V K)) ≫ a.left) ∧
         ∀ r, ρK r w = algebraMap V K (σV r) • w := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.EigLin.mem_span_iff | exact GlobalTheory.CompanionTheory.Ar.Flat.EigLin.mem_span_iff | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.EigLin.mem_span_iff <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.EigLin.mem_span_iff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.DvrEigenTangentExtensionStatement =====
@@ -259,14 +259,14 @@ theorem fibAt_lat_eq_stdLat : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] (Ω :
         rw [Finset.sum_eq_single i]
         · simp
         · intro b _ hb
-          simp [Pi.single_apply, hb]
+          simp [hb]
         · intro hi
           exact absurd (Finset.mem_univ i) hi
       have hs : (fun j => ψ ((Pi.single i 1 : Fin g → regAt ξ ⟨_, h₁⟩) j)) = (Pi.single i 1 : Fin g → K) := by
         ext j
         by_cases hj : j = i
         · subst hj; simp
-        · simp [Pi.single_apply, hj]
+        · simp [hj]
       rw [hc, hs] at h3
       rw [hMC]
       exact h3
@@ -298,7 +298,7 @@ theorem _root_.GlobalTheory.T.dvr_specialization_lie_lattice : ∀ (X : Scheme.{
     M.lat.IsFrameAt ℓ ⟨_, h₂⟩ →
     (∀ w : Fin g → regAt ξ ⟨_, h₁⟩, M.ValAt x (comb ℓ w) (MX.pt (fun i => ψ (w i)))) →
     M.fibAt M.lat z MC = stdLat V K g := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.fibAt_lat_eq_stdLat | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.fibAt_lat_eq_stdLat | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.fibAt_lat_eq_stdLat <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.fibAt_lat_eq_stdLat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.DvrSpecializationLieLatticeStatement =====
@@ -455,7 +455,7 @@ theorem _root_.GlobalTheory.T.semiabelian_pullback_tangent_map : ∀ (E : Type) 
     ∃ φ₁ : tK.G.left ⟶ Y.t.G.left, IsGrpPullback tK.G Y.t.G (y ≫ Y.j) φ₁ ∧
       ∀ (u : epsAt (𝟙 (Sp K)) ⟶ tK.G) (v : epsAt (under y) ⟶ Xo.univ.t.G) (v' : epsAt (y ≫ Y.j) ⟶ Y.t.G),
         SameVec Y y v v' → u.left ≫ m.φ = v.left → u.left ≫ φ₁ = v'.left := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.exists_cart_to_model | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.exists_cart_to_model | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.exists_cart_to_model <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.exists_cart_to_model
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.SemiabelianPullbackTangentMapStatement =====
@@ -567,7 +567,7 @@ theorem _root_.GlobalTheory.T.dvr_specialization_eigen_frame : ∀ (E : Type) [F
     MU.IsActOf Xo.univ.t.act.act ρK → (∀ a : 𝓞 E, σi a = σ (a : E)) →
     IsIntFrame m m' σi (fun i => MU.pt (b i)) → LinearIndependent K b →
     Submodule.span V (Set.range b) = HT.eigSub ρK σ (stdLat V K g) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.IntFrameSpan.span_eq_eigSub | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.IntFrameSpan.span_eq_eigSub | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.IntFrameSpan.span_eq_eigSub <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.IntFrameSpan.span_eq_eigSub
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.DvrSpecializationEigenFrameStatement =====

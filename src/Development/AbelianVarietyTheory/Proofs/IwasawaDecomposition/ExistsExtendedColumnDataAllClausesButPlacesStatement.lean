@@ -115,7 +115,7 @@ theorem _root_.GlobalTheory.T.exists_adelicCore_transport_enlargedCoefficientBas
       HEq core'.mu z.core.mu ∧ HEq core'.Kf z.core.Kf ∧ HEq core'.cE z.core.cE ∧ HEq core'.chiW z.core.chiW ∧
       HEq core'.x₀ z.core.x₀ ∧ HEq core'.iota z.core.iota ∧
       Formalism.L2.Pj.LawsCore core'.toCore ∧ core'.Q.Canon ∧ (∀ j, 1 ≤ (core'.Q.Dw j).p + (core'.Q.Dw j).q) ∧ core'.pb = f'.P.pb := by
-  first | exact @GlobalTheory.Mem.R3.Rw.exists_adelicCore_transport_enlargedCoefficientBase | exact GlobalTheory.Mem.R3.Rw.exists_adelicCore_transport_enlargedCoefficientBase | (intros; apply GlobalTheory.Mem.R3.Rw.exists_adelicCore_transport_enlargedCoefficientBase <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.Rw.exists_adelicCore_transport_enlargedCoefficientBase
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsAdelicCoreTransportEnlargedCoefficientBaseStatement =====
@@ -434,7 +434,7 @@ theorem _root_.GlobalTheory.T.exists_firstAnalyticData_enlargedColumnChoices : G
         GoodSet (w'.st Z') (px := w'.px) (R₀.eG.trans cG) Xg ∧ MuOf (w'.st Z') w'.I T' {v | B'.places.resChar v ∈ T'.pl} R₀.mu R₀.twPl ∧
         IdemClass (D := (w'.st Z').toD7) (famR (w'.st Z') w'.I hX' (usedOf w'.I T' {v | B'.places.resChar v ∈ T'.pl}) Xg tr₀).A ∧ R₀.toRealDat.Pre0 (face0 (w'.st Z') w'.I hX' (usedOf w'.I T' {v | B'.places.resChar v ∈ T'.pl}) Xg tr₀).lv2 ∧ R₀.IsInert ∧ R₀.IsTup ∧
         R₀.AllPlaces ∧ Keep R₀.toRealDat (face0 (w'.st Z') w'.I hX' (usedOf w'.I T' {v | B'.places.resChar v ∈ T'.pl}) Xg tr₀).lv2 cG ∧ BrgStd (w'.st Z') w'.I hX' (usedOf w'.I T' {v | B'.places.resChar v ∈ T'.pl}) Xg tr₀ R₀.toRealDat) := by
-  first | exact @GlobalTheory.Mem.R3.Rw.seed_at_enl | exact GlobalTheory.Mem.R3.Rw.seed_at_enl | (intros; apply GlobalTheory.Mem.R3.Rw.seed_at_enl <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.Rw.seed_at_enl
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsFirstAnalyticDataEnlargedColumnChoicesStatement =====
@@ -747,7 +747,7 @@ theorem _root_.GlobalTheory.T.definiteFormsReading_reset_baseEnlargement : ∀ {
   (z : Dat (w.st Z) w.I hX T Wt), Enl0 B B' → HEq f' f → HEq w'.px w.px → z.Std → (∀ i, Seed.FrmC.StdLat (Vc (w'.st Z').toD7 i)) → Seed.FrmC.StdLat (w'.st Z').toD7.sp.X' → ValsIn w'.I →
     ∀ {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks (w'.st Z').toD7.what₂.LL] {Xg : Finset (Gc B' w'.px → B'.LL)} {tr : TrI B' w'.px} (R : RealDat3 (w'.st Z').toD7 (famR (w'.st Z') w'.I hX' (usedOf w'.I T' Wt') Xg tr) Ks) (cG : G0 R.Pg (w'.st Z').toD7.R.r ≃* G0g (w'.st Z').toD7.nd), Kept T' w' Z' hX' Wt' R cG →
     ∃ (R₁ : RealDat3 (w'.st Z').toD7 (famR (w'.st Z') w'.I hX' (usedOf w'.I T' Wt') Xg tr) Ks) (cG₁ : G0 R₁.Pg (w'.st Z').toD7.R.r ≃* G0g (w'.st Z').toD7.nd), Kept T' w' Z' hX' Wt' R₁ cG₁ ∧ RSideA z Wt' R₁ := by
-  first | exact @GlobalTheory.Mem.R3.RsA.reset_side | exact GlobalTheory.Mem.R3.RsA.reset_side | (intros; apply GlobalTheory.Mem.R3.RsA.reset_side <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.RsA.reset_side
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DefiniteFormsReadingResetBaseEnlargementStatement =====
@@ -1072,7 +1072,7 @@ theorem _root_.GlobalTheory.T.reset_modelsMeasuresForms_enlargedCoefficientBase 
     HEq core'.Q.H z.core.Q.H → HEq core'.Q.l z.core.Q.l → HEq core'.Q.c z.core.Q.c →
     ∀ {Xg : Finset (Gc B' w'.px → B'.LL)} {tr : TrI B' w'.px} (R : RealDat3 (w'.st Z').toD7 (famR (w'.st Z') w'.I hX' (usedOf w'.I T' Wt') Xg tr) core'.Q.c.F) (cG : G0 R.Pg (w'.st Z').toD7.R.r ≃* G0g (w'.st Z').toD7.nd), Kept T' w' Z' hX' Wt' R cG → RSideA z Wt' R →
     ∃ (R₁ : RealDat3 (w'.st Z').toD7 (famR (w'.st Z') w'.I hX' (usedOf w'.I T' Wt') Xg tr) core'.Q.c.F) (cG₁ : G0 R₁.Pg (w'.st Z').toD7.R.r ≃* G0g (w'.st Z').toD7.nd), Kept T' w' Z' hX' Wt' R₁ cG₁ ∧ RSideW z Wt' R₁ := by
-  first | exact @GlobalTheory.Mem.R3.Rw.resetW | exact GlobalTheory.Mem.R3.Rw.resetW | (intros; apply GlobalTheory.Mem.R3.Rw.resetW <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.Rw.resetW
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ResetModelsMeasuresFormsEnlargedCoefficientBaseStatement =====
@@ -1177,7 +1177,7 @@ theorem _root_.GlobalTheory.T.reset_tuple_free_fields_keeps_clauses_comparison :
         IdemClass (D := (w'.st Z').toD7) (famR (w'.st Z') w'.I hX' (usedOf w'.I T' {v | B'.places.resChar v ∈ T'.pl}) Xg tr₀).A ∧ R₁.toRealDat.Pre0 (face0 (w'.st Z') w'.I hX' (usedOf w'.I T' {v | B'.places.resChar v ∈ T'.pl}) Xg tr₀).lv2 ∧ R₁.IsInert ∧ R₁.IsTup ∧
         R₁.AllPlaces ∧ Keep R₁.toRealDat (face0 (w'.st Z') w'.I hX' (usedOf w'.I T' {v | B'.places.resChar v ∈ T'.pl}) Xg tr₀).lv2 cG₁ ∧ BrgStd (w'.st Z') w'.I hX' (usedOf w'.I T' {v | B'.places.resChar v ∈ T'.pl}) Xg tr₀ R₁.toRealDat ∧
         RSideW z {v | B'.places.resChar v ∈ T'.pl} R₁) := by
-  first | exact @GlobalTheory.Mem.R3.Rw.reset_stepW | exact GlobalTheory.Mem.R3.Rw.reset_stepW | (intros; apply GlobalTheory.Mem.R3.Rw.reset_stepW <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.Rw.reset_stepW
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ResetTupleFreeFieldsKeepsClausesComparisonStatement =====
@@ -1355,7 +1355,7 @@ theorem _root_.GlobalTheory.T.exists_extendedAdelicData_with_intertwiners_over_e
       Formalism.L2.Pj.LawsCore core'.toCore → core'.Q.Canon → (∀ j, 1 ≤ (core'.Q.Dw j).p + (core'.Q.Dw j).q) → core'.pb = f'.P.pb →
       ∃ z' : Dat (w'.st Z') w'.I hX' T' {v | B'.places.resChar v ∈ T'.pl}, z'.core = core' ∧
         z'.R.toRealDat.ExAt ∧ GlobalTheory.RealGeo.InGeo z'.geo ∧ z'.Std ∧ ExtN z z')  := by
-  first | exact @GlobalTheory.Mem.R3.Rw.datExt_rest | exact GlobalTheory.Mem.R3.Rw.datExt_rest | (intros; apply GlobalTheory.Mem.R3.Rw.datExt_rest <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.Rw.datExt_rest
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsExtendedAdelicDataWithIntertwinersOverEnlaStatement =====
@@ -1414,7 +1414,7 @@ theorem _root_.GlobalTheory.T.exists_extendedColumnData_all_clauses_but_places :
     (z : Dat (w.st Z) w.I hX T Wt), GrpTrue Z.N f → GrpAt (w.st Z) w.I → Fine z → HoldsL z.R z.F →
     ∀ (Z' : w'.Lt) (hX' : B'.fields.Ok), GrpTrue Z'.N f' → GrpAt (w'.st Z') w'.I → VolTieG (w'.D Z') →
       ∃ z' : Dat (w'.st Z') w'.I hX' T' {v | B'.places.resChar v ∈ T'.pl}, Fine z' ∧ ExtN z z') := by
-  first | exact @GlobalTheory.Mem.R3.Rw.ExtBuild.exists_ext_build | exact GlobalTheory.Mem.R3.Rw.ExtBuild.exists_ext_build | (intros; apply GlobalTheory.Mem.R3.Rw.ExtBuild.exists_ext_build <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.Rw.ExtBuild.exists_ext_build
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsExtendedColumnDataAllClausesButPlacesStatement =====

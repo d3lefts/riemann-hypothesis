@@ -132,7 +132,7 @@ open GlobalTheory.CompanionTheory.QKAvg
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.absDet_unipotent_radical_eq_one : ∀ (D : D7) (B W : HSp D) (t : ℕ) (d : HypDec B W t), ∀ n ∈ radN d, GlobalTheory.RegSW.absDet d n = 1 := by
-  first | exact @GlobalTheory.CompanionTheory.QKAvg.absDet_radN | exact GlobalTheory.CompanionTheory.QKAvg.absDet_radN | (intros; apply GlobalTheory.CompanionTheory.QKAvg.absDet_radN <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.QKAvg.absDet_radN
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AbsDetUnipotentRadicalEqOneStatement =====
@@ -254,7 +254,7 @@ open GlobalTheory.CompanionTheory.QKAvg
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.haar_skew_matrices_conj_scaling : ∀ (D : D7) (r : ℕ) (κ : Measure (skewA D r)), κ.IsAddHaarMeasure → ∀ a : GL (Fin r) (AE D), κ.map (skewConj a.1) = ((absA D (Matrix.GeneralLinearGroup.det a) ^ r)⁻¹ : ℝ≥0) • κ := by
-  first | exact @GlobalTheory.CompanionTheory.SkewMod.map_skewConj | exact GlobalTheory.CompanionTheory.SkewMod.map_skewConj | (intros; apply GlobalTheory.CompanionTheory.SkewMod.map_skewConj <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SkewMod.map_skewConj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HaarSkewMatricesConjScalingStatement =====
@@ -544,7 +544,7 @@ open GlobalTheory.CompanionTheory.QKAvg
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.unipotent_radical_haar_from_product : ∀ (D : D7) (B W : HSp D) (t : ℕ) (d : HypDec B W t) [LocallyCompactSpace (radN d)] (κ : Measure (skewA D t)) (β : Measure (Mx D t W.rank)), κ.IsAddHaarMeasure → β.IsAddHaarMeasure → ∃ Ψ : (skewA D t × Mx D t W.rank) ≃ₜ radN d, (∀ p, (((Ψ p : GlobalTheory.RegSW.stab d) : GA D B)) = d.nC p.1 * d.nB p.2) ∧ ((κ.prod β).map Ψ).IsHaarMeasure ∧ ((κ.prod β).map Ψ).IsMulRightInvariant := by
-  first | exact @GlobalTheory.CompanionTheory.QKAvg.RadHaar.exists_coord | exact GlobalTheory.CompanionTheory.QKAvg.RadHaar.exists_coord | (intros; apply GlobalTheory.CompanionTheory.QKAvg.RadHaar.exists_coord <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.QKAvg.RadHaar.exists_coord
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnipotentRadicalHaarFromProductStatement =====
@@ -698,7 +698,7 @@ open GlobalTheory.CompanionTheory.QKAvg
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_haar_unipotent_radical_conj_scaling : ∀ (D : D7) (B W : HSp D) (t : ℕ) (d : HypDec B W t) [LocallyCompactSpace (radN d)], ∃ νN : Measure (radN d), νN.IsHaarMeasure ∧ νN.IsMulRightInvariant ∧ ∀ m ∈ levM d, νN.map (fun n : radN d => MulAut.conjNormal m n) = ((GlobalTheory.RegSW.absDet d m ^ (W.rank + t))⁻¹ : ℝ≥0) • νN := by
-  first | exact @GlobalTheory.CompanionTheory.QKAvg.RadMeas.exists_radN_measure | exact GlobalTheory.CompanionTheory.QKAvg.RadMeas.exists_radN_measure | (intros; apply GlobalTheory.CompanionTheory.QKAvg.RadMeas.exists_radN_measure <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.QKAvg.RadMeas.exists_radN_measure
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsHaarUnipotentRadicalConjScalingStatement =====
@@ -1037,8 +1037,8 @@ theorem lintegral_mul_right_of_modular_law : ∀ (G : Type) [Group G] [Topologic
     rw [hMdef, ← lintegral_indicator (hEm.preimage measurable_subtype_coe)]
     refine lintegral_congr fun q => ?_
     by_cases hq : q.1 ∈ E
-    · simp [Set.indicator_apply, hq]
-    · simp [Set.indicator_apply, hq]
+    · simp [hq]
+    · simp [hq]
   have hMtop : M ≠ ⊤ := by
     rw [hMeq]
     exact (setLIntegral_lt_top_of_isCompact hT.measure_lt_top.ne hT hδc).ne
@@ -1370,7 +1370,7 @@ open GlobalTheory.CompanionTheory.QKAvg
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.isClosed_unipotent_radical_stabilizer : ∀ (D : D7) (B W : HSp D) (t : ℕ) (d : HypDec B W t), IsClosed (radN d : Set (GlobalTheory.RegSW.stab d)) := by
-  first | exact @GlobalTheory.CompanionTheory.QKAvg.isClosed_radN | exact GlobalTheory.CompanionTheory.QKAvg.isClosed_radN | (intros; apply GlobalTheory.CompanionTheory.QKAvg.isClosed_radN <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.QKAvg.isClosed_radN
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsClosedUnipotentRadicalStabilizerStatement =====
@@ -1446,7 +1446,7 @@ open GlobalTheory.CompanionTheory.QKAvg
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.unipotent_radical_inf_levi_trivial : ∀ (D : D7) (B W : HSp D) (t : ℕ) (d : HypDec B W t), ∀ x, x ∈ radN d → x ∈ levM d → x = 1 := by
-  first | exact @GlobalTheory.CompanionTheory.QKAvg.radN_disj_levM | exact GlobalTheory.CompanionTheory.QKAvg.radN_disj_levM | (intros; apply GlobalTheory.CompanionTheory.QKAvg.radN_disj_levM <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.QKAvg.radN_disj_levM
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnipotentRadicalInfLeviTrivialStatement =====
@@ -1561,7 +1561,7 @@ open GlobalTheory.CompanionTheory.QKAvg
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.unipotent_radical_stabilizer_property : ∀ (D : D7) (B W : HSp D) (t : ℕ) (d : HypDec B W t), IsClosed (levM d : Set (GlobalTheory.RegSW.stab d)) := by
-  first | exact @GlobalTheory.CompanionTheory.QKAvg.isClosed_levM | exact GlobalTheory.CompanionTheory.QKAvg.isClosed_levM | (intros; apply GlobalTheory.CompanionTheory.QKAvg.isClosed_levM <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.QKAvg.isClosed_levM
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnipotentRadicalStabilizerPropertyStatement =====

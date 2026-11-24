@@ -169,7 +169,7 @@ theorem rdBracketV_of (h : RdExtV) (_hs : RdSmoothV) : RdBracketV := by
   have hev : ∀ᶠ y in 𝓝 g, HasFDerivAt F (fderiv ℝ F y) y :=
     Filter.eventually_of_mem (hU.mem_nhds hgU) fun y hy =>
       ((hF.differentiableOn (by simp) y hy).differentiableAt (hU.mem_nhds hy)).hasFDerivAt
-  have hsymm := second_derivative_symmetric_of_eventually hev hFd2.hasFDerivAt (g * X) (g * Y)
+  have hsymm : fderiv ℝ (fun y => fderiv ℝ F y) g (g * X) (g * Y) = fderiv ℝ (fun y => fderiv ℝ F y) g (g * Y) (g * X) := second_derivative_symmetric_of_eventually hev hFd2.hasFDerivAt (g * X) (g * Y)
   have hhY : HasFDerivAt (fun y => fderiv ℝ F y (y * Y)) _ g :=
     hFd2.hasFDerivAt.clm_apply LY.hasFDerivAt
   have hhX : HasFDerivAt (fun y => fderiv ℝ F y (y * X)) _ g :=
@@ -182,9 +182,7 @@ theorem rdBracketV_of (h : RdExtV) (_hs : RdSmoothV) : RdBracketV := by
       fderiv ℝ F g (g * Y * X) + fderiv ℝ (fun y => fderiv ℝ F y) g (g * Y) (g * X) := by
     rw [hhX.fderiv]
     rfl
-  have hsymm' : fderiv ℝ (fun y => fderiv ℝ F y) g (g * X) (g * Y) =
-      fderiv ℝ (fun y => fderiv ℝ F y) g (g * Y) (g * X) := hsymm
-  rw [eY, eX, eXY, dY, dX, hsymm', Matrix.mul_sub, map_sub, Matrix.mul_assoc g X Y,
+  rw [eY, eX, eXY, dY, dX, hsymm, Matrix.mul_sub, map_sub, Matrix.mul_assoc g X Y,
     Matrix.mul_assoc g Y X]
   abel
 
@@ -195,8 +193,7 @@ variable {n : ℕ} {ε : Fin n → Bool} {E : Type} [NormedAddCommGroup E] [Norm
 lemma vector_right_derivative_neg (hl : RdLinV) {f : Matrix (Fin n) (Fin n) ℂ → E}
     {B g : Matrix (Fin n) (Fin n) ℂ} (hf : SmoothOnGV ε f) (hB : inG ε B) (hg : inUJ ε g) :
     RdV (-B) f g = -RdV B f g := by
-  have h2 := (hl n ε E f f B B (-1) 0 g hf hf hB hB hg).2.1
-  simpa using h2
+  simpa using (hl n ε E f f B B (-1) 0 g hf hf hB hB hg).2.1
 
 lemma vector_right_derivative_add (hl : RdLinV) {f : Matrix (Fin n) (Fin n) ℂ → E}
     {A B g : Matrix (Fin n) (Fin n) ℂ} (hf : SmoothOnGV ε f) (hA : inG ε A) (hB : inG ε B)
@@ -340,7 +337,7 @@ lemma vector_complexified_derivative_commutator (hl : RdLinV) (hb : RdBracketV) 
     Bk _ _ hZ1 hW1, Bk _ _ hZ1 hW2, Bk _ _ hZ2 hW1, Bk _ _ hZ2 hW2, hC, hc1, hc2,
     vector_right_derivative_sub hl hf (inG_commutator' hZ1 hW1) (inG_commutator' hZ2 hW2) hg,
     vector_right_derivative_add hl hf (inG_commutator' hZ1 hW2) (inG_commutator' hZ2 hW1) hg]
-  simp only [smul_add, smul_sub, smul_smul, Complex.I_mul_I, neg_one_smul]
+  simp only [smul_add, smul_smul, Complex.I_mul_I, neg_one_smul]
   abel
 
 end EabGl

@@ -123,7 +123,7 @@ theorem _root_.GlobalTheory.T.flatTensor_moveArguments_lastRow_vertex : ∀ {k :
     valuation k (gdet κ : k) = 1 → ∀ v ∈ symN k (Fin (topRank Γ (j + 1))) (Γ.m - 1 - (j + 1)), toFrame hs hj g = v * embX _ κ →
     ∀ (x : ColArgs Γ) (y : RowArgs Γ),
       flatTensor hs ψ ν (fun z => F (Γ.moveArgs .one (Pi.mulSingle (Γ.m, j + 1) g) z)) x y = flatTensor hs ψ ν F (colMove j κ x) y := by
-  first | exact @GlobalTheory.TopLevelInv.FlatStep.flatTensor_moveArgs_mulSingle | exact GlobalTheory.TopLevelInv.FlatStep.flatTensor_moveArgs_mulSingle | (intros; apply GlobalTheory.TopLevelInv.FlatStep.flatTensor_moveArgs_mulSingle <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.FlatStep.flatTensor_moveArgs_mulSingle
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FlatTensorMoveArgumentsLastRowVertexStatement =====
@@ -141,7 +141,7 @@ open GlobalTheory.TopLevelInv
 theorem _root_.GlobalTheory.T.unfoldingColumnArgs_movedPoint_conj_atPlace : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T} (S : GridChoice W U) {t : T}, t ∈ U → ∀ (j : ℕ) (hj : j + 1 < D.R.m) (k : FinPt G (.top (j + 1))), ∀ w ∈ locPl G t,
     ∀ x : ∀ j' : Fin D.R.m, WO (G.pS (.top t j' : Pair T)) (G.pT (.top t j' : Pair T)),
       S.colAt t w (movedPt t j hj ((S.N.u (.top (j + 1)))⁻¹ * k * S.N.u (.top (j + 1))) x) = colMove j (kapAt S t j hj k w) (S.colAt t w x) := by
-  first | exact @GlobalTheory.TopLevelInv.colAt_movedPt_conj | exact GlobalTheory.TopLevelInv.colAt_movedPt_conj | (intros; apply GlobalTheory.TopLevelInv.colAt_movedPt_conj <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.colAt_movedPt_conj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnfoldingColumnArgsMovedPointConjAtPlaceStatement =====
@@ -244,7 +244,6 @@ theorem GlobalTheory.DetIdeleUnit.valued_eq_one_of_valuation {D : D7} {w : Pl D.
   have e := ValuativeRel.isEquiv (ValuativeRel.valuation (Kw w)) (Valued.v : Valuation (Kw w) (WithZero (Multiplicative ℤ)))
   first
   | exact e.eq_one_iff_eq_one.1 h
-  | exact le_antisymm (e.le_one_iff_le_one.1 h.le) (e.one_le_iff_one_le.1 h.ge)
 
 namespace GlobalTheory.DetIdeleUnit
 
@@ -284,7 +283,7 @@ theorem cpt_det_cutPart {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e 
   congr 1
   ext a b
   simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _),
-    map_mul, map_sub, map_one, hψa, hψe, hψc, one_mul, sub_self, zero_mul, add_zero]
+    map_mul, map_sub, map_one, hψe, hψc, one_mul, sub_self, zero_mul, add_zero]
 
 theorem absFin_detAt_cutPart {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) (hee : e * e = e) (V : HSp D)
     (g : GA D V) (hg : ∀ PP ∈ P, Valued.v (GlobalTheory.StdFrames.cpt PP (toEAf D (Formalism.L2.Theta.mt V g).det)) = 1) :
@@ -329,7 +328,7 @@ theorem _root_.GlobalTheory.T.finiteIdeleModulus_conjLevelDet_eq_one : ∀ {D : 
     finG (G.V (.top (j + 1))) k ∈ S.levTop t Φ β (j + 1) hj → ∀ (e : AE D) (he : IsIdemSum e (locPl G t)),
     GlobalTheory.IndefiniteRowSideFullHecke.SplitLinearModelNorm.absFin D (GlobalTheory.VecInv.detAt e (GlobalTheory.PlaceModelSum.isOrthSum_of_isIdemSum he).idem (G.V (.top (j + 1)))
       (cutPart (e + cA D e) (G.V (.top (j + 1))) ((((S.N.u (.top (j + 1)))⁻¹ * k * S.N.u (.top (j + 1)) : FinPt G (.top (j + 1))) : GA D (G.V (.top (j + 1))))))) = 1 := by
-  first | exact @GlobalTheory.DetIdeleUnit.absFin_detAt_conj_eq_one | exact GlobalTheory.DetIdeleUnit.absFin_detAt_conj_eq_one | (intros; apply GlobalTheory.DetIdeleUnit.absFin_detAt_conj_eq_one <;> assumption)
+  first | exact @GlobalTheory.DetIdeleUnit.absFin_detAt_conj_eq_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FiniteIdeleModulusConjLevelDetEqOneStatement =====
@@ -345,7 +344,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.TopLevelInv
 
 theorem _root_.GlobalTheory.T.det_unitaryConj_atPlace_eq_det_latticeBasisComponent : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T} (S : GridChoice W U) (t : T) (j : ℕ) (hj : j + 1 < D.R.m) (k u : FinPt G (.top (j + 1))) (w : Pl D.host.E), ((Formalism.L2.Theta.mt (G.V (.top (j + 1))) ((u⁻¹ * k * u : FinPt G (.top (j + 1))) : GA D (G.V (.top (j + 1))))).map fun z => GlobalTheory.StdFrames.cpt w (toEAf D z)).det = ((gdet (kapAt S t j hj k w) : (Kw w)ˣ) : Kw w) := by
-  first | exact @GlobalTheory.TopLevelInv.det_mt_conj_eq_gdet_kapAt | exact GlobalTheory.TopLevelInv.det_mt_conj_eq_gdet_kapAt | (intros; apply GlobalTheory.TopLevelInv.det_mt_conj_eq_gdet_kapAt <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.det_mt_conj_eq_gdet_kapAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DetUnitaryConjAtPlaceEqDetLatticeBasisComponentStatement =====
@@ -455,7 +454,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.TopLevelInv
 
 theorem _root_.GlobalTheory.T.determinantIdeleAtIdempotent_idempotentPart_components : ∀ {D : D7} {P : Finset (Pl D.host.E)} {e : AE D} (he : IsIdemSum e P) (V : HSp D) (g : GA D V), infPart D (GlobalTheory.VecInv.detAt e (GlobalTheory.PlaceModelSum.isOrthSum_of_isIdemSum he).idem V (cutPart (e + cA D e) V g) : AE D) = 1 ∧ (∀ Q ∈ P, GlobalTheory.StdFrames.cpt Q (toEAf D (GlobalTheory.VecInv.detAt e (GlobalTheory.PlaceModelSum.isOrthSum_of_isIdemSum he).idem V (cutPart (e + cA D e) V g) : AE D)) = ((Formalism.L2.Theta.mt V g).map fun z => GlobalTheory.StdFrames.cpt Q (toEAf D z)).det) ∧ ∀ Q ∉ P, GlobalTheory.StdFrames.cpt Q (toEAf D (GlobalTheory.VecInv.detAt e (GlobalTheory.PlaceModelSum.isOrthSum_of_isIdemSum he).idem V (cutPart (e + cA D e) V g) : AE D)) = 1 := by
-  first | exact @GlobalTheory.TopLevelInv.detAt_cutPart_parts | exact GlobalTheory.TopLevelInv.detAt_cutPart_parts | (intros; apply GlobalTheory.TopLevelInv.detAt_cutPart_parts <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.detAt_cutPart_parts
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DeterminantIdeleAtIdempotentIdempotentPartComponStatement =====
@@ -589,7 +588,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.TopLevelInv
 
 theorem _root_.GlobalTheory.T.unitaryIdeleChar_eq_prod_loc_of_tameAt : ∀ {D : D7} {c : (AE D)ˣ →* Circle} {χ : Formalism.L2.Host.HChar D.host.E}, ChrEq c χ → ∀ (T : Finset (Pl D.host.E)), (∀ P ∈ T, χ.TameAt P) → ∀ (a : ∀ P : Pl D.host.E, (Kw P)ˣ) (x : (AE D)ˣ), infPart D (x : AE D) = 1 → (∀ P ∈ T, GlobalTheory.StdFrames.cpt P (toEAf D (x : AE D)) = (a P : Kw P)) → (∀ P ∉ T, GlobalTheory.StdFrames.cpt P (toEAf D (x : AE D)) = 1) → ((c x : Circle) : ℂ) = ∏ P ∈ T, ((χ.loc P (a P) : ℂˣ) : ℂ) := by
-  first | exact @GlobalTheory.TameCharProd.char_eq_prod_loc_of_tame | exact GlobalTheory.TameCharProd.char_eq_prod_loc_of_tame | (intros; apply GlobalTheory.TameCharProd.char_eq_prod_loc_of_tame <;> assumption)
+  first | exact @GlobalTheory.TameCharProd.char_eq_prod_loc_of_tame
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnitaryIdeleCharEqProdLocOfTameAtStatement =====
@@ -650,7 +649,7 @@ theorem _root_.GlobalTheory.T.gridTupleHeckeCharacter_detIdele_eq_prod_local : �
     ((L.mu t (j + 1 + 1) (GlobalTheory.VecInv.detAt e (GlobalTheory.PlaceModelSum.isOrthSum_of_isIdemSum he).idem (G.V (.top (j + 1)))
       (cutPart (e + cA D e) (G.V (.top (j + 1))) ((((S.N.u (.top (j + 1)))⁻¹ * k * S.N.u (.top (j + 1)) : FinPt G (.top (j + 1))) : GA D (G.V (.top (j + 1))))))) : Circle) : ℂ) =
       ∏ w : locPl G t, (((locGrid G t w).mu (j + 1 + 1) (gdet (kapAt S t j hj k w)) : ℂˣ) : ℂ) := by
-  first | exact @GlobalTheory.TopLevelInv.mu_detAt_eq_prod_loc | exact GlobalTheory.TopLevelInv.mu_detAt_eq_prod_loc | (intros; apply GlobalTheory.TopLevelInv.mu_detAt_eq_prod_loc <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.mu_detAt_eq_prod_loc
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.GridTupleHeckeCharacterDetIdeleEqProdLocalStatement =====
@@ -841,7 +840,7 @@ open GlobalTheory.TopLevelInv
 theorem _root_.GlobalTheory.T.offPlacePart_fixes_standardVacuum : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T} (S : GridChoice W U) {t : T} {μ₀ : T}, L.Is μ₀ → t ∈ U → ∀ {Φ : G.Datum} {β : CosFam G t} (j : ℕ) (hj : j + 1 < D.R.m) (k : FinPt G (.top (j + 1))),
     finG (G.V (.top (j + 1))) k ∈ S.levTop t Φ β (j + 1) hj → ∀ (e : AE D) (he : IsIdemSum e (locPl G t)),
     W.om (.top t (j + 1)) (cutPart (1 - (e + cA D e)) (G.V (.top (j + 1))) ((((S.N.u (.top (j + 1)))⁻¹ * k * S.N.u (.top (j + 1)) : FinPt G (.top (j + 1))) : GA D (G.V (.top (j + 1))))), 1) (S.Z.vac (.top t (j + 1))) = S.Z.vac (.top t (j + 1)) := by
-  first | exact @GlobalTheory.OffPartVac.offPart_fixes_vac | exact GlobalTheory.OffPartVac.offPart_fixes_vac | (intros; apply GlobalTheory.OffPartVac.offPart_fixes_vac <;> assumption)
+  first | exact @GlobalTheory.OffPartVac.offPart_fixes_vac
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.OffPlacePartFixesStandardVacuumStatement =====
@@ -910,7 +909,7 @@ theorem vac_high_law (hA : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts}
     have h2 := hC1 S hL ht j hj k hk e he
     have h3 := hC2 S hL ht j hj k hk e he
     rw [h1, GlobalTheory.IndefiniteRowSideFullHecke.SplitLinearModelNorm.modFac, h2, hTc]
-    simp only [splitFacO, map_one, mul_one, Real.one_rpow, Complex.ofReal_one, Circle.coe_inv]
+    simp only [splitFacO, map_one, mul_one, Real.one_rpow, Circle.coe_inv]
     have h4 : GlobalTheory.IndefiniteRowSideFullHecke.SplitLinearModelNorm.absFin D 1 = 1 := by simp [GlobalTheory.IndefiniteRowSideFullHecke.SplitLinearModelNorm.absFin, GlobalTheory.IndefiniteRowSideFullHecke.SplitLinearModelNorm.absV]
     simp only [h4, Real.one_rpow, mul_one, Complex.ofReal_one]
     have h5 : ((L.mu t (j + 1 + 1) (GlobalTheory.VecInv.detAt e hee (G.pS (.top t (j + 1) : Pair T)) (cutPart (e + cA D e) _ g)) : Circle) : ℂ) =
@@ -967,7 +966,7 @@ theorem _root_.GlobalTheory.T.weilAction_moves_standardVacuum_topNode_eq_char_sm
       W.om (.top t (j + 1)) ((((S.N.u (.top (j + 1)))⁻¹ * k * S.N.u (.top (j + 1)) : FinPt G (.top (j + 1))) : GA D (G.V (.top (j + 1)))), 1) (S.Z.vac (.top t (j + 1))) =
         (∏ w : locPl G t, ((((locGrid G t w).mu (j + 1 + 1) (gdet (kapAt S t j hj k w)))⁻¹ : ℂˣ) : ℂ)) •
           Tm fun x => halfInd e (stdLatO S (.top t (j + 1))) (actO _ _ (((S.N.u (.top (j + 1)))⁻¹ * k * S.N.u (.top (j + 1)) : FinPt G (.top (j + 1))) : GA D (G.V (.top (j + 1))))⁻¹ 1⁻¹ x) := by
-  first | exact @GlobalTheory.TopLevelInv.vac_move_high_eq | exact GlobalTheory.TopLevelInv.vac_move_high_eq | (intros; apply GlobalTheory.TopLevelInv.vac_move_high_eq <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.vac_move_high_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.WeilActionMovesStandardVacuumTopNodeEqCharSmulStatement =====
@@ -1072,7 +1071,7 @@ theorem _root_.GlobalTheory.T.detIdele_conjugatedTopPoint_eq_prod_local : ∀ {D
     IsIdemSum e (locPl G t) →
     detAt e (G.V (.top (j + 1))) (conjPt S j k) =
       ∏ w : locPl G t, GlobalTheory.LFun.locIdele D.host.F w.1 (gdet (kapAt S t j hj k w)) := by
-  first | exact @GlobalTheory.TopLevelInv.detAt_conjPt_eq_prod | exact GlobalTheory.TopLevelInv.detAt_conjPt_eq_prod | (intros; apply GlobalTheory.TopLevelInv.detAt_conjPt_eq_prod <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.detAt_conjPt_eq_prod
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DetIdeleConjugatedTopPointEqProdLocalStatement =====
@@ -1112,7 +1111,7 @@ open Formalism.IndefR.Fin.LevelGroupLemmas (resG detAt)
 
 theorem _root_.GlobalTheory.T.exists_baseIdempotent_of_splitIdempotentSum : ∀ {D : D7} {P : Finset (Pl D.host.E)} {e : AE D}, IsIdemSum e P →
     ∃ ε : AF D.host.F, IsIdempotentElem ε ∧ algebraMap (AF D.host.F) (AE D) ε = e + cA D e := by
-  first | exact @GlobalTheory.IdemSumF.exists_idem_below | exact GlobalTheory.IdemSumF.exists_idem_below | (intros; apply GlobalTheory.IdemSumF.exists_idem_below <;> assumption)
+  first | exact @GlobalTheory.IdemSumF.exists_idem_below
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsBaseIdempotentOfSplitIdempotentSumStatement =====
@@ -1235,7 +1234,7 @@ open Formalism.IndefR.Fin.LevelGroupLemmas (resG detAt)
 theorem _root_.GlobalTheory.T.finiteIdeleModulus_prod_localUnitIdeles : ∀ {D : D7} (P : Finset (Pl D.host.E)) (y : ∀ w : P, (Kw w.1)ˣ),
     (∀ w, valuation (Kw w.1) (y w : Kw w.1) = 1) →
     GlobalTheory.IndefiniteRowSideFullHecke.SplitLinearModelNorm.absFin D (∏ w : P, GlobalTheory.LFun.locIdele D.host.F w.1 (y w)) = 1 := by
-  first | exact @GlobalTheory.TopLevelInv.absFin_prod_locIdele_unit | exact GlobalTheory.TopLevelInv.absFin_prod_locIdele_unit | (intros; apply GlobalTheory.TopLevelInv.absFin_prod_locIdele_unit <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.absFin_prod_locIdele_unit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FiniteIdeleModulusProdLocalUnitIdelesStatement =====
@@ -1297,7 +1296,7 @@ theorem _root_.GlobalTheory.T.topPairSourceChar_prod_localIdeles : ∀ {D : D7} 
     ∀ (j : ℕ), j + 1 < D.R.m → ∀ y : ∀ w : locPl G t, (Kw w.1)ˣ,
     ((G.chrS (.top t j) (∏ w : locPl G t, GlobalTheory.LFun.locIdele D.host.F w.1 (y w)) : Circle) : ℂ) =
       ∏ w : locPl G t, (((locGrid G t w).mu (j + 1) (y w) : ℂˣ) : ℂ) := by
-  first | exact @GlobalTheory.TopLevelInv.chrS_top_prod_locIdele | exact GlobalTheory.TopLevelInv.chrS_top_prod_locIdele | (intros; apply GlobalTheory.TopLevelInv.chrS_top_prod_locIdele <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.chrS_top_prod_locIdele
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.TopPairSourceCharProdLocalIdelesStatement =====
@@ -1480,7 +1479,7 @@ theorem _root_.GlobalTheory.T.truncatedConjugate_fixes_standardVacuum_topPair : 
     algebraMap (AF D.host.F) (AE D) ε = e + cA D e →
     W.om (.top t j) (1, resG (G.V (.top (j + 1))) (1 - ε) (conjPt S j k)) (S.Z.vac (.top t j)) =
       S.Z.vac (.top t j) := by
-  first | exact @GlobalTheory.TopLevelInv.vacFix_conjPt_off | exact GlobalTheory.TopLevelInv.vacFix_conjPt_off | (intros; apply GlobalTheory.TopLevelInv.vacFix_conjPt_off <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.vacFix_conjPt_off
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.TruncatedConjugateFixesStandardVacuumTopPairStatement =====
@@ -1582,7 +1581,7 @@ theorem _root_.GlobalTheory.T.weil_conj_level_moves_vacuum_by_character : ∀ {D
       W.om (.top t j) (1, (((S.N.u (.top (j + 1)))⁻¹ * k * S.N.u (.top (j + 1)) : FinPt G (.top (j + 1))) : GA D (G.V (.top (j + 1))))) (S.Z.vac (.top t j)) =
         (∏ w : locPl G t, (((locGrid G t w).mu (j + 1) (gdet (kapAt S t j hj k w)) : ℂˣ) : ℂ)) •
           Tm fun x => halfInd e (stdLatO S (.top t j)) (actO _ _ 1⁻¹ (((S.N.u (.top (j + 1)))⁻¹ * k * S.N.u (.top (j + 1)) : FinPt G (.top (j + 1))) : GA D (G.V (.top (j + 1))))⁻¹ x) := by
-  first | exact @GlobalTheory.TopLevelInv.omega_conj_vac_low | exact GlobalTheory.TopLevelInv.omega_conj_vac_low | (intros; apply GlobalTheory.TopLevelInv.omega_conj_vac_low <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.omega_conj_vac_low
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.WeilConjLevelMovesVacuumByCharacterStatement =====

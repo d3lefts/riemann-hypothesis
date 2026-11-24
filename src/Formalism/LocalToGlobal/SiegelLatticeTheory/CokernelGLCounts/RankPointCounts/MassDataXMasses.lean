@@ -294,12 +294,8 @@ theorem gf_eq_one (hb : AdBridgeIso X.B.I) (δ : X.B.I.GA) (hδ : δ ∈ X.B.I.G
       _ = 1 := by rw [← hv, Matrix.mul_one, hP']
   have hg : (g : Matrix (Fin X.B.I.n) (Fin X.B.I.n) X.B.I.E) = 1 := by
     ext i j
-    have := congrFun (congrFun hM i) j
-    rw [Matrix.map_apply, Matrix.one_apply] at this
-    rw [Matrix.one_apply]
     apply (X.B.I.φ v).injective
-    rw [this]
-    split_ifs <;> simp
+    simpa [Matrix.map_apply, Matrix.one_apply] using congrFun (congrFun hM i) j
   refine Prod.ext h1 ?_
   apply Subtype.ext
   apply Units.ext

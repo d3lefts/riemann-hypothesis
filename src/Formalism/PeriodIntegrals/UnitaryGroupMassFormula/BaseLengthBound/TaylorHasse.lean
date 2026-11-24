@@ -75,8 +75,7 @@ theorem section_mul_inverse_completion :
 theorem coe_sfr_Lc (i : Fin (WeightFamilies.dimY D j + 1)) :
     ((sfr X la w i : ↥(Frac0 X la w)) : Lw X la w) =
       algebraMap (Rp X la N) (Lc X la w) (sec X la w i) * w0c X la w := by
-  rw [coe_sfr, frac_apply, pow_one]
-  rfl
+  rw [coe_sfr, frac_apply, pow_one]; rfl
 
 theorem hasse_section_eq_zero {β : Idx D j N →₀ ℕ} (hβ : NoRow0 β) (h0 : β ≠ 0) :
     hasseRp X la N β (sec X la w 0) = 0 := by
@@ -145,7 +144,7 @@ theorem bcol_sub_single {N : ℕ} (jj : Fin N) (α : Fin (WeightFamilies.dimY D 
       by_cases hi : i = l
       · subst hi; simp
       · have : ((l.succ, k) : Idx D j N) ≠ (i.succ, k) := fun e => hi (Fin.succ_injective _ (congrArg Prod.fst e)).symm
-        simp [this, Pi.single_apply, hi]
+        simp [this, hi]
     · have : ((l.succ, jj) : Idx D j N) ≠ (i.succ, k) := fun e => hk (congrArg Prod.snd e).symm
       simp [this, hk]
 
@@ -158,13 +157,13 @@ theorem eq_sub_add_single {d : ℕ} (δ : Fin d → ℕ) (l : Fin d) (h : 1 ≤ 
   funext i
   by_cases hi : i = l
   · subst hi; simp; omega
-  · simp [Pi.single_apply, hi]
+  · simp [hi]
 
 theorem sub_single_of_zero {d : ℕ} (δ : Fin d → ℕ) (l : Fin d) (h : δ l = 0) : δ - Pi.single l 1 = δ := by
   funext i
   by_cases hi : i = l
   · subst hi; simp [h]
-  · simp [Pi.single_apply, hi]
+  · simp [hi]
 
 theorem coe_wfr_Lc (G : GlobalFamilyData X ka wL wF) (la : HeightOneSpectrum (𝓞 B.KO)) (jj : Fin G.N) :
     ((PoleLengthBounds.wfr G la jj : ↥(Frac0 X la G.w)) : Lw X la G.w) =
@@ -176,19 +175,16 @@ theorem hasse_single_sfr (G : GlobalFamilyData X ka wL wF) (la : HeightOneSpectr
     hasse X la G.w (Finsupp.single ((l.succ, jj) : Idx D j G.N) 1)
         ((sfr X la G.w l.succ : ↥(Frac0 X la G.w)) : Lw X la G.w) =
       ((PoleLengthBounds.wfr G la jj : ↥(Frac0 X la G.w)) : Lw X la G.w) := by
-  have hn : NoRow0 (Finsupp.single ((l.succ, jj) : Idx D j G.N) 1) := fun k => by
-    rw [Finsupp.single_apply, if_neg]
-    exact fun e => Fin.succ_ne_zero l (congrArg Prod.fst e)
+  have hn : NoRow0 (Finsupp.single ((l.succ, jj) : Idx D j G.N) 1) := by
+    simp [NoRow0, Fin.succ_ne_zero]
   rw [hasse_sfr X la G.w hn, hasseRp_single, pdRp_sec, if_pos rfl, coe_wfr_Lc]
 
 theorem hasse_sfr_eq_zero (G : GlobalFamilyData X ka wL wF) (la : HeightOneSpectrum (𝓞 B.KO)) (jj : Fin G.N)
     (α : Fin (WeightFamilies.dimY D j) → ℕ) (l : Fin (WeightFamilies.dimY D j)) {c : Idx D j G.N →₀ ℕ}
     (hc : ∀ p, c p ≤ PoleLengthBounds.bcol jj α p) (h0 : c ≠ 0) (he : c ≠ Finsupp.single (l.succ, jj) 1) :
     hasse X la G.w c ((sfr X la G.w l.succ : ↥(Frac0 X la G.w)) : Lw X la G.w) = 0 := by
-  have hn : NoRow0 c := fun k => by
-    have := hc (0, k)
-    rw [bcol_noRow0 jj α k] at this
-    omega
+  have hn : NoRow0 c := fun k =>
+    le_antisymm (by simpa [bcol_noRow0 jj α k] using hc (0, k)) (Nat.zero_le _)
   rw [hasse_sfr X la G.w hn]
   by_cases h1 : ∃ p, c = Finsupp.single p 1
   · obtain ⟨p, rfl⟩ := h1

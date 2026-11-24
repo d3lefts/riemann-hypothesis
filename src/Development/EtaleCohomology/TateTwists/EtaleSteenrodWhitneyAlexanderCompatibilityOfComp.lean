@@ -107,8 +107,8 @@ theorem prism_boundary_map_square_zero_holds : leaf_bdbd := by
     simp only [inv]
     split_ifs with h h2 h2
     · exfalso; simp at h2; omega
-    · simp [Prod.ext_iff, Fin.ext_iff]
-    · simp [Prod.ext_iff, Fin.ext_iff]
+    · simp
+    · simp
     · exfalso; simp at h2; omega
 
 end LateralTheory.EtaleFoundations.SteenPf
@@ -298,21 +298,21 @@ lemma key {N : ℕ} (z : Pr N) (hz : z.1 + z.2.1 ≠ 0) :
     | succ r =>
       rw [H_X, Hg_zero, map_add (f := _), d_X, d_X, d_X, simplex_pair_first_face_cone_vertex_formula, diffOne_zero, diffOne_zero, simplex_pair_second_face_cone_succ_formula, simplex_pair_second_face_succ_alternating_sum, simplex_pair_second_face_succ_alternating_sum]
 
-      simp only [map_add (f := _), map_sub, map_sum, map_zsmul, H_X, Hg_zero, smul_add, Finset.sum_add_distrib, zero_add,
-      pow_zero, pow_one, one_smul, neg_smul, map_zero]
+      simp only [map_sum, map_zsmul, H_X, Hg_zero, smul_add, Finset.sum_add_distrib, zero_add,
+      pow_zero, pow_one, one_smul, neg_smul]
       abel
   | succ p =>
     cases r with
     | zero =>
       rw [H_X, Hg_succ, d_X, d_X, simplex_pair_first_face_cone_succ_formula, simplex_pair_first_face_succ_alternating_sum, simplex_pair_second_face_of_vertex_eq_zero, simplex_pair_second_face_of_vertex_eq_zero]
 
-      simp only [map_add (f := _), map_sub, map_sum, map_zsmul, H_X, smul_zero, add_zero, map_zero]
+      simp only [map_sum, map_zsmul, H_X, smul_zero, add_zero]
       simp only [Hg, smul_add, Finset.sum_add_distrib, alt_const, add_zero]
       abel
     | succ r =>
       rw [H_X, Hg_succ, d_X, d_X, simplex_pair_first_face_cone_succ_formula, simplex_pair_first_face_succ_alternating_sum, simplex_pair_second_face_succ_alternating_sum, simplex_pair_second_face_succ_alternating_sum]
 
-      simp only [map_add (f := _), map_sub, map_sum, map_zsmul, H_X, Hg_succ, map_zero]
+      simp only [map_add (f := _), map_sum, map_zsmul, H_X, Hg_succ]
       simp only [Hg, smul_add, Finset.sum_add_distrib, alt_const, add_zero]
       have e : (-1 : ℤ) ^ (p + 2) = -(-1) ^ (p + 1) := by ring
       rw [e, neg_smul]
@@ -389,16 +389,13 @@ lemma m_last (p r : ℕ) (h1 : 0 + (p + 1) ≤ p + r + 1) (h2 : 0 + p ≤ p + r 
     SimplexCategory.δ (Fin.last (p + 1)) ≫ sb 0 (p + 1) h1 = sb 0 p h2 := by
   ext i : 3
   apply Fin.ext
-  simp [SimplexCategory.δ, Fin.succAbove, Fin.lt_def, sb_apply]
-  try split_ifs
-  all_goals (try simp_all [Fin.lt_def, sb_apply])
-  all_goals omega
+  simp [SimplexCategory.δ, sb_apply]
 
 lemma m_zero (p r : ℕ) (h1 : p + (r + 1) ≤ p + r + 1) (h2 : (p + 1) + r ≤ p + r + 1) :
     SimplexCategory.δ 0 ≫ sb p (r + 1) h1 = sb (p + 1) r h2 := by
   ext i : 3
   apply Fin.ext
-  simp [SimplexCategory.δ, Fin.succAbove, Fin.lt_def, sb_apply]
+  simp [SimplexCategory.δ, sb_apply]
   try split_ifs
   all_goals (try simp_all [Fin.lt_def, sb_apply])
   all_goals omega
@@ -410,8 +407,7 @@ lemma m_lo (p r : ℕ) (k : Fin (p + r + 2)) (hk : (k : ℕ) ≤ p) (h1 : 0 + p 
   apply Fin.ext
   simp [SimplexCategory.δ, Fin.succAbove, Fin.lt_def, sb_apply]
   try split_ifs
-  all_goals (try simp_all [Fin.lt_def, sb_apply])
-  all_goals omega
+  all_goals (try simp_all [sb_apply])
 
 lemma simplex_subinterval_back_comp_face_within_front (p r : ℕ) (k : Fin (p + r + 2)) (hk : (k : ℕ) ≤ p) (h1 : p + r ≤ p + r)
     (h2 : (p + 1) + r ≤ p + r + 1) :
@@ -420,7 +416,7 @@ lemma simplex_subinterval_back_comp_face_within_front (p r : ℕ) (k : Fin (p + 
   apply Fin.ext
   simp [SimplexCategory.δ, Fin.succAbove, Fin.lt_def, sb_apply]
   try split_ifs
-  all_goals (try simp_all [Fin.lt_def, sb_apply])
+  all_goals (try simp_all [sb_apply])
   all_goals omega
 
 lemma m_hi (p r : ℕ) (k : Fin (p + r + 2)) (hk : p < (k : ℕ)) (h1 : 0 + p ≤ p + r)
@@ -430,7 +426,7 @@ lemma m_hi (p r : ℕ) (k : Fin (p + r + 2)) (hk : p < (k : ℕ)) (h1 : 0 + p �
   apply Fin.ext
   simp [SimplexCategory.δ, Fin.succAbove, Fin.lt_def, sb_apply]
   try split_ifs
-  all_goals (try simp_all [Fin.lt_def, sb_apply])
+  all_goals (try simp_all [sb_apply])
   all_goals omega
 
 lemma simplex_subinterval_back_comp_face_above_front (p r : ℕ) (k : Fin (p + r + 2)) (hk : p < (k : ℕ)) (h1 : p + r ≤ p + r)
@@ -440,7 +436,7 @@ lemma simplex_subinterval_back_comp_face_above_front (p r : ℕ) (k : Fin (p + r
   apply Fin.ext
   simp [SimplexCategory.δ, Fin.succAbove, Fin.lt_def, sb_apply]
   try split_ifs
-  all_goals (try simp_all [Fin.lt_def, sb_apply])
+  all_goals (try simp_all [sb_apply])
   all_goals omega
 
 def T (n p r : ℕ) (h : p + r ≤ n) : Pr n := ⟨p, r, sb 0 p (by omega), sb p r h⟩
@@ -619,8 +615,6 @@ lemma d_tau_single {N : ℕ} (z : Pr N) :
         (try exact neg_one_pow_eq_or ℤ _)
       · refine Finset.sum_congr rfl fun i _ => ?_
         congr 1; ring_nf
-        (try simp [pow_mul, mul_comm, mul_left_comm, mul_assoc])
-        (try exact neg_one_pow_eq_or ℤ _)
 
 lemma d_tau {N : ℕ} (c : Pr N →₀ ℤ) : Pr.d N (tau N c) = tau N (Pr.d N c) := by
   have : (Pr.d N).comp (tau N) = (tau N).comp (Pr.d N) := by

@@ -377,7 +377,7 @@ private theorem det_one_sub {n : ℕ} {C A : Type} [CommRing C] [CommRing A] (ψ
   rw [Matrix.charpolyRev, ← coe_eval₂RingHom, RingHom.map_det]
   congr 1
   ext i j
-  by_cases hij : i = j <;> simp [hij, Matrix.one_apply, eval₂_sub, eval₂_mul] <;> ring
+  by_cases hij : i = j <;> simp [hij, eval₂_sub, eval₂_mul] <;> ring
 
 private theorem core2 {n : ℕ} {P A C Γ : Type} [CommRing P] [CommRing A] [CommRing C] [Algebra A C]
     [Group Γ] (φ : P →+* C) (ρ : Γ →* Matrix (Fin n) (Fin n) A)
@@ -478,7 +478,7 @@ private theorem lemA {n : ℕ} {A H G : Type} [CommRing A] [Group H] [Group G] (
     rw [← R.homog]
     congr 1
     ext1
-    simp [Finsupp.mapDomain_smul]
+    simp
   · ext C _ _ x
     change R.D C ((x.mapDomain π).mapDomain s) = _
     rw [dom_dom, h]
@@ -706,7 +706,7 @@ theorem UpperTheory.Reformulated.B.DeterminantIdentities.phiDet :
     change Matrix.det (GDet.repAlg ρ A[X] _) = Matrix.det _
     congr 1
     ext i j : 2
-    by_cases hij : i = j <;> simp [GDet.repAlg, hij, Matrix.charmatrix_apply, Matrix.one_apply]
+    by_cases hij : i = j <;> simp [GDet.repAlg, hij]
   refine ⟨D, ?_, hchi, fun i N U => ?_⟩
   · rw [← hR, ← hD]
     rfl
@@ -759,7 +759,7 @@ theorem UpperTheory.V.Ws.phiFlag :
       (⟨adj (X.P.n (K.e v)), X.P.n (K.e v), h1, h2⟩ : GL (Fin 4) X.A)⁻¹ : GL (Fin 4) X.A) :
         Matrix (Fin 4) (Fin 4) X.A) =
       (algebraMap c'.O X.A (K.sc n s)) • (adj (X.P.n (K.e v)) * X.P.r (resLe T.F_le s) * X.P.n (K.e v)) := by
-    simp [UpperTheory.V.Ws.Link.rho_apply, Matrix.mul_smul, Matrix.smul_mul]
+    simp [UpperTheory.V.Ws.Link.rho_apply]
   refine ⟨fun i j hij => ?_, fun i => ?_⟩
   · rw [hval, Matrix.smul_apply, X.pair.flag (K.e v) _ hs' i j hij, smul_zero]
   · rw [hval, Matrix.smul_apply]
@@ -1252,7 +1252,7 @@ theorem UpperTheory.V.Ws.phiPsiEx :
     have hr := X.ψ_red w i s hs
     have hu := ((((T.fr ∅).χ i s).isUnit.map (inc h)).map (IsLocalRing.residue c'.O))
     rw [← hr] at hu
-    simp only [res, h0] at hu
+    simp only [res] at hu
     simp at hu
     exact hne hu
   have hsc : ∀ g g' : G T.L Ω, K.sc n (g * g') = K.sc n g * K.sc n g' := by

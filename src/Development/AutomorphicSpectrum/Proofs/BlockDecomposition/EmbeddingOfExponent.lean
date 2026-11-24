@@ -757,7 +757,7 @@ theorem leviEmb_zLevi (d : Fin h → ℕ) (hd : ∑ a, d a = N) (w : Fin h → �
     · have hne := stdBlocks_ne d hd i j (fun e => hij (by simpa using e))
       rw [Matrix.diagonal_apply_ne _ hne, coe_zLevi, Matrix.scalar_apply, Matrix.diagonal_apply_ne _ hij]
   · have hne := stdBlocks_ne d hd i j (fun e => hab (congrArg Sigma.fst e))
-    simp [leviEmb, Matrix.blockDiagonal'_apply, hab, Matrix.diagonal_apply_ne _ hne]
+    simp [leviEmb, Matrix.blockDiagonal'_apply, hab]
 
 def lam (d : Fin h → ℕ) (hd : ∑ a, d a = N) : Fin N → ℤ :=
   fun i => -(((blk (stdBlocks d hd) i : Fin h) : ℕ) : ℤ)
@@ -1142,7 +1142,7 @@ section -- clump:auto
 open GlobalTheory.PRep GlobalTheory.SmGL ValuativeRel PositivityTheory.Lbc
 
 theorem _root_.GlobalTheory.T.jacquet_projection_fixed_surjective : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (N h : ℕ) (d : Fin h → ℕ) (hd : ∑ a, d a = N) (J : Subgroup (GL (Fin N) k)), IsOpen (J : Set (GL (Fin N) k)) → IsCompact (J : Set (GL (Fin N) k)) → HasIwahoriFact k N J d hd → (∀ a, 0 < d a) → ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V), IsSmooth π → ∀ v : fixed π J, (Submodule.Quotient.mk (v : V) : Jacquet π (unipRad k (stdBlocks d hd))) ∈ fixed (jac (stdBlocks d hd) π) (KM k N J d hd) := by
-  first | exact @GlobalTheory.CompanionTheory.Casselman.mk_mem_fixed_jac | exact GlobalTheory.CompanionTheory.Casselman.mk_mem_fixed_jac | (intros; apply GlobalTheory.CompanionTheory.Casselman.mk_mem_fixed_jac <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Casselman.mk_mem_fixed_jac
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JacquetProjectionFixedSurjectiveStatement =====

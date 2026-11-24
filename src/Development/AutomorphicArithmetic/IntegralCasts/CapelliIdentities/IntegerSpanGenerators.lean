@@ -89,19 +89,13 @@ theorem UpperTheory.divisibility_filtration :
     | succ n ih =>
       intro a h
       exact ih a (hl _ (by rwa [← mul_assoc, ← pow_succ']))
-  obtain ⟨t, ht_def⟩ : ∃ t : ℕ → A, ∀ y, t y = s y * l ^ (e y - E y) := ⟨_, fun _ => rfl⟩
+  let t : ℕ → A := fun y => s y * l ^ (e y - E y)
   have ht : ∀ y, l ^ E y * t y = l ^ σ * r y := by
     intro y
-    rw [ht_def, ← hs y]
+    rw [← hs y]
     calc l ^ E y * (s y * l ^ (e y - E y))
         = (l ^ E y * l ^ (e y - E y)) * s y := by ring
-      _ = l ^ e y * s y := by rw [← pow_add, Nat.add_sub_cancel' (hEe y)]
-  have hS' : ∀ x ∈ S, ∃ c : ℕ → D, c 0 = 0 ∧ (∀ y, c y ∈ S) ∧
-      l ^ σ • x - ∑ y ∈ Finset.range (R + 1), t y • c y ∈ Z := by
-    intro x hx
-    obtain ⟨c, h0, h1, h2⟩ := hS x hx
-    refine ⟨c, h0, h1, ?_⟩
-    simpa only [ht_def] using h2
+      _ = l ^ e y * s y := by rw [← pow_add, Nat.add_sub_of_le (hEe y)]
   have hbig : ∀ y, R < y → f ∣ t y := by
     intro y hy
     refine hpow (E y) _ ?_
@@ -127,13 +121,19 @@ theorem UpperTheory.divisibility_filtration :
             = l ^ σ * ((l ^ (E y + E z) * l ^ (E (y + z) - (E y + E z))) * t (y + z)) := by
               rw [pow_add l σ]; ring
           _ = l ^ σ * (l ^ E (y + z) * t (y + z)) := by
-              rw [← pow_add, Nat.add_sub_cancel' (hE y z)]
+              rw [← pow_add, Nat.add_sub_of_le (hE y z)]
       rw [mul_sub, e1, e2, hy, hz, hyz]
       refine ⟨l ^ σ * l ^ σ * (c - a * ϖ ^ z - b * ϖ ^ y + f * a * b), ?_⟩
       rw [pow_add ϖ y z]
       ring
     obtain ⟨u, hu⟩ := hd
     exact ⟨u, by rw [← hu]; ring⟩
+  have hsplit : ∀ (a : A) (x : D) (c : ℕ → D),
+      (a * l ^ σ) • x = a • (l ^ σ • x - ∑ z ∈ Finset.range (R + 1), t z • c z)
+        + ∑ z ∈ Finset.range (R + 1), (a * t z) • c z := by
+    intro a x c
+    rw [smul_sub, Finset.smul_sum, smul_smul]
+    simp only [smul_smul, sub_add_cancel]
   have hkey : ∀ (n y : ℕ), R + 1 ≤ y + n → ∀ w ∈ S, (l ^ σ * t y) • w ∈ N := by
     intro n
     induction n with
@@ -146,13 +146,8 @@ theorem UpperTheory.divisibility_filtration :
       exact hfN _ (Submodule.smul_mem _ _ (Submodule.subset_span hw))
     | succ n ih =>
       intro y hy w hw
-      obtain ⟨c, hc0, hcS, hcZ⟩ := hS' w hw
-      have hsplit : (l ^ σ * t y) • w =
-          t y • (l ^ σ • w - ∑ z ∈ Finset.range (R + 1), t z • c z)
-            + ∑ z ∈ Finset.range (R + 1), (t y * t z) • c z := by
-        rw [smul_sub, Finset.smul_sum, smul_smul, mul_comm (t y) (l ^ σ)]
-        simp only [smul_smul, sub_add_cancel]
-      rw [hsplit]
+      obtain ⟨c, hc0, hcS, hcZ⟩ := hS w hw
+      rw [mul_comm (l ^ σ) (t y), hsplit]
       refine N.add_mem (hZN _ (Z.smul_mem _ hcZ)) (N.sum_mem ?_)
       intro z _
       rcases Nat.eq_zero_or_pos z with rfl | hz
@@ -169,13 +164,8 @@ theorem UpperTheory.divisibility_filtration :
           (N.smul_mem _ (ih (y + z) (by omega) _ (hcS z)))
   have hgen : ∀ x ∈ S, l ^ (2 * σ) • x ∈ N := by
     intro x hx
-    obtain ⟨c, _, hcS, hcZ⟩ := hS' x hx
-    have hsplit : l ^ (2 * σ) • x =
-        l ^ σ • (l ^ σ • x - ∑ z ∈ Finset.range (R + 1), t z • c z)
-          + ∑ z ∈ Finset.range (R + 1), (l ^ σ * t z) • c z := by
-      rw [smul_sub, Finset.smul_sum, two_mul, pow_add, smul_smul]
-      simp only [smul_smul, sub_add_cancel]
-    rw [hsplit]
+    obtain ⟨c, _, hcS, hcZ⟩ := hS x hx
+    rw [two_mul, pow_add, hsplit]
     exact N.add_mem (hZN _ (Z.smul_mem _ hcZ))
       (N.sum_mem fun z _ => hkey (R + 1) z (by omega) _ (hcS z))
   have hall : Submodule.span A S ≤ N.comap (LinearMap.lsmul A D (l ^ (2 * σ))) :=
@@ -183,12 +173,9 @@ theorem UpperTheory.divisibility_filtration :
   intro p hp
   obtain ⟨z, hz, v, hv, hzv⟩ := Submodule.mem_sup.1 (hall hp)
   obtain ⟨p', hp', rfl⟩ := Submodule.mem_map.1 hv
-  refine ⟨p', hp', ?_⟩
-  have : l ^ (2 * σ) • p - f • p' = z := by
-    have h2 : l ^ (2 * σ) • p = z + f • p' := hzv.symm
-    rw [h2, add_sub_cancel_right]
-  rw [this]
-  exact hz
+  exact ⟨p', hp', by
+    rw [show l ^ (2 * σ) • p = z + f • p' from hzv.symm, add_sub_cancel_right]
+    exact hz⟩
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DivisibilityFiltration =====
@@ -218,8 +205,7 @@ theorem UpperTheory.filtration_exponent_bound :
     exact ⟨⟨x', h1⟩, h2⟩
   choose f hf using hγ'
   have h0 : γ w - w = ϖ • (f 0 ⟨w, hw⟩ : D) := by
-    have := hf 0 ⟨w, hw⟩
-    simpa [hlam0] using this
+    simpa [hlam0] using hf 0 ⟨w, hw⟩
   let s : ℕ → N := fun K => Nat.rec (l ^ E 0 • f 0 ⟨w, hw⟩)
     (fun k sk => - f (k + 1) (((u k)⁻¹ : Oˣ).val • sk)) K
   have hs0 : s 0 = l ^ E 0 • f 0 ⟨w, hw⟩ := rfl
@@ -246,16 +232,12 @@ theorem UpperTheory.filtration_exponent_bound :
         refine Finset.sum_congr rfl fun y hy => ?_
         have hy' : E y ≤ E K := hE (Nat.lt_succ_iff.mp (Finset.mem_range.mp hy))
         rw [smul_smul, ← pow_add]
-        congr 2
-        omega
+        rw [Nat.sub_add_sub_cancel hK hy']
       have hp : l ^ E (K + 1) = l ^ (E (K + 1) - E K) * l ^ E K := by
-        rw [← pow_add]
-        congr 1
-        omega
+        exact (pow_sub_mul_pow l hK).symm
       have hl : lam (K + 1) • (ϖ ^ (K + 1) • (c (K + 1) : D)) =
           l ^ (E (K + 1) - E K) • (ϖ ^ (K + 1) • (s K : D)) := by
         rw [hcS, Submodule.coe_smul, smul_comm (ϖ ^ (K + 1)), smul_smul, hu]
-        congr 1
         rw [mul_right_comm, Units.mul_inv, one_mul]
       rw [Finset.sum_range_succ _ (K + 1), hsum, hp, mul_smul, ← sub_sub, ← smul_sub, ih, hf, hl,
         hsS, ← hcS]
@@ -269,9 +251,7 @@ theorem UpperTheory.filtration_exponent_bound :
     have hK : E K ≤ e (K + 1) := (hEe K).trans (he (Nat.le_succ K))
     refine ⟨l ^ (e (K + 1) - E K) • (s K : D), N.smul_mem _ (s K).2, ?_⟩
     have hp : l ^ e (K + 1) = l ^ (e (K + 1) - E K) * l ^ E K := by
-      rw [← pow_add]
-      congr 1
-      omega
+      exact (pow_sub_mul_pow l hK).symm
     rw [smul_comm (ϖ ^ (K + 1)), ← key, smul_sub (l ^ (e (K + 1) - E K)), ← mul_smul, ← hp,
       Finset.smul_sum]
     congr 1
@@ -279,10 +259,8 @@ theorem UpperTheory.filtration_exponent_bound :
     have hyK : y ≤ K := Nat.lt_succ_iff.mp (Finset.mem_range.mp hy)
     have h1 : E y ≤ E K := hE hyK
     have h2 : e y ≤ e (K + 1) := he (hyK.trans (Nat.le_succ K))
-    have h3 := hEe y
     rw [smul_comm (ϖ ^ y), map_smul, ← smul_sub, smul_smul, smul_smul, ← pow_add, ← pow_add]
-    congr 2
-    omega
+    rw [Nat.sub_add_sub_cancel h2 (hEe y), Nat.sub_add_sub_cancel hK h1]
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FiltrationExponentBound =====

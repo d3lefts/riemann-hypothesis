@@ -162,9 +162,9 @@ theorem setIntegral_add_left_mem {V : Type} [AddCommGroup V] [TopologicalSpace V
     funext y
     by_cases hy : y ∈ Λ
     · have h2 : w + y ∈ Λ := Λ.add_mem hw hy
-      simp [Set.indicator_apply, hy, h2]
+      simp [hy, h2]
     · have h2 : w + y ∉ Λ := fun h => hy (by simpa using Λ.sub_mem h hw)
-      simp [Set.indicator_apply, hy, h2]
+      simp [hy, h2]
   rw [this, integral_add_left_eq_self (fun y => Set.indicator (Λ : Set V) g y) w]
 
 variable {F E : Type} [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E]
@@ -659,7 +659,7 @@ lemma rho_mul (hn0 : n 0 = 1) (hn : ∀ a b, n (a + b) = n a * n b) (hm : ∀ a 
       change en h i j = en _ i j
       rw [en_mul]
       fin_cases i <;> fin_cases j <;>
-        simp only [a0, a1, a2, a3, b0, b1, b2, b3, Units.val_mk0, Fin.zero_eta, Fin.mk_one, hc] <;> first | ring1 | (field_simp; done) | (field_simp; ring1) | (field_simp; linear_combination hdet) | (field_simp; linear_combination -hdet) | (field_simp; linear_combination (en h 1 0) * hdet) | (field_simp; linear_combination (-en h 1 0) * hdet)
+        simp only [a0, a1, a2, a3, b0, b1, b2, b3, Units.val_mk0, Fin.zero_eta, Fin.mk_one, hc] <;> first | ring1 | (field_simp; done) | (field_simp; ring1) | (field_simp; linear_combination hdet)
     rw [show g * h = g * mS (Units.mk0 (en h 0 0) ha) * nS (en h 0 1 / en h 0 0) from by
       conv_lhs => rw [hh]
       rw [mul_assoc]]
@@ -886,7 +886,7 @@ theorem main : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedF
     exact lt_of_le_of_lt h2 h3
   refine ⟨Λ, ?_, ?_, ?_, ?_, ?_⟩
   · have : (Λ : Set A.L) = ⋂ i, (fun y => Φ y i) ⁻¹' Metric.closedBall 0 R := by
-      ext y; simp [hmem, mem_closedBall_zero_iff]
+      ext y; simp [hmem]
     rw [this]
     exact isOpen_iInter_of_finite fun i =>
       (IsUltrametricDist.isOpen_closedBall 0 hR0.ne').preimage ((continuous_apply i).comp hΦc)

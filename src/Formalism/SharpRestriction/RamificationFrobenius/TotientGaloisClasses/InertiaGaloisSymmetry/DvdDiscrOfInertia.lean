@@ -533,7 +533,10 @@ private theorem log_abs_norm_sub_one_mul_totient_eq {m : ℕ} (hm : 1 < m) {L : 
       |((eval 1 (cyclotomic m ℚ) : ℚ) : ℝ)| ^ Module.finrank ℚ⟮η - 1⟯ L := by
     rw [hnormval]; push_cast; rw [abs_pow, abs_mul, abs_pow]; simp
   haveI : Module.Free ℚ ℚ⟮η - 1⟯ := Module.Free.of_divisionRing _ _
-  rw [habs, Real.log_pow, log_abs_eval_one_cyclotomic_eq_vonMangoldt hm, ← Module.finrank_mul_finrank ℚ ℚ⟮η - 1⟯ L, hdeg]
+  have instST : IsScalarTower ℚ ℚ⟮η - 1⟯ L :=
+    IsScalarTower.of_algebraMap_eq fun _ => rfl
+  rw [habs, Real.log_pow, log_abs_eval_one_cyclotomic_eq_vonMangoldt hm,
+    ← @Module.finrank_mul_finrank ℚ ℚ⟮η - 1⟯ L _ _ _ _ _ _ instST _ _ _ _, hdeg]
   push_cast; ring
 
 private theorem absNorm_map_algebraMap_eq_pow_finrank {L E : Type*} [Field L] [NumberField L] [Field E] [NumberField E]
@@ -579,7 +582,6 @@ theorem minpoly_map : (minpoly E ζ).map (algebraMap E L) = Lagrange.nodal Finse
       rw [adjoin_top hζ E]; exact Algebra.mem_top
     first
     | exact IntermediateField.algebra_adjoin_le_adjoin E ({ζ} : Set L) hx
-    | exact IntermediateField.algebra_adjoin_le_adjoin (F := E) (S := ({ζ} : Set L)) hx
   have hcard : Fintype.card (L ≃ₐ[E] L) = Module.finrank E L := by
     rw [← IsGalois.card_aut_eq_finrank E L, Nat.card_eq_fintype_card]
   have hinj := gal_inj hζ E
@@ -620,15 +622,12 @@ theorem absNorm_diff : ((Ideal.absNorm (differentIdeal (𝓞 E) (𝓞 L)) : ℕ)
   have hc : conductor (𝓞 E) z = ⊤ := by
     first
     | exact conductor_eq_top_of_adjoin_eq_top hadj
-    | exact conductor_eq_top_of_adjoin_eq_top _ hadj
-    | exact conductor_eq_top_of_adjoin_eq_top (𝓞 E) hadj
   rw [hc, Ideal.top_mul] at hD
   have hint_r : IsIntegral (𝓞 E) ζ := (hζ.isIntegral (NeZero.pos N)).tower_top
   have hminE : minpoly E ζ = (minpoly (𝓞 E) z).map (algebraMap (𝓞 E) E) := by
     rw [← minpoly.algebraMap_eq (FaithfulSMul.algebraMap_injective (𝓞 L) L) z, hζL]
     first
     | exact minpoly.isIntegrallyClosed_eq_field_fractions' E hint_r
-    | exact minpoly.isIntegrallyClosed_eq_field_fractions' (K := E) hint_r
   have hmapL : (minpoly (𝓞 E) z).map (algebraMap (𝓞 E) L) =
       Lagrange.nodal Finset.univ (fun σ : L ≃ₐ[E] L => σ ζ) := by
     rw [← minpoly_map hζ E, hminE, Polynomial.map_map, ← IsScalarTower.algebraMap_eq]

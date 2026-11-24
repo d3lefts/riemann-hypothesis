@@ -778,7 +778,7 @@ theorem _root_.GlobalTheory.T.bottom_spanned_by_twistedClassSums : ∀ {D : D7} 
       (∀ h ∈ H, h ∈ GfC WW) ∧ ∀ t, ∀ h ∈ GfC WW, ∀ k, ∃ c : GA D WW → (FVar D WW.rank A'.rank →₀ ℕ) → ℂ, (∀ a b, c a b ∈ M₀) ∧
         X.I' W.ψ W.θ t (MvPolynomial.monomial k 1) h =
           ∑ h' ∈ H, ∑ k' ∈ K, c h' k' * X.I' W.ψ W.θ t (MvPolynomial.monomial k' 1) h' := by
-  first | exact @_root_.GlobalTheory.BotSpanSnd.twistedClassSums_span_bottom | exact _root_.GlobalTheory.BotSpanSnd.twistedClassSums_span_bottom | (intros; apply _root_.GlobalTheory.BotSpanSnd.twistedClassSums_span_bottom <;> assumption)
+  first | exact @_root_.GlobalTheory.BotSpanSnd.twistedClassSums_span_bottom
 end
 end -- clump:auto
 end -- clump:auto
@@ -906,7 +906,7 @@ theorem _root_.GlobalTheory.T.twist_integral_eq_bottom_classSum : ∀ {D : D7} {
       (∀ l, 0 < w l) ∧ κ.IsMulLeftInvariant ∧ IsProbabilityMeasure κ ∧
       ∀ (t : T) (P : PolF D WW.rank A'.rank), ∀ h ∈ GfC WW,
         X.I' W.ψ W.θ t P h = (v : ℂ) * ∑ l, ((w l : ℂ))⁻¹ * ∫ g, X.ker' W.ψ W.θ t P h (z l * (g : GA D A')) ∂κ := by
-  first | exact @_root_.GlobalTheory.RowTest.BottomClassSum.integral_eq_bottom_classSum | exact _root_.GlobalTheory.RowTest.BottomClassSum.integral_eq_bottom_classSum | (intros; apply _root_.GlobalTheory.RowTest.BottomClassSum.integral_eq_bottom_classSum <;> assumption)
+  first | exact @_root_.GlobalTheory.RowTest.BottomClassSum.integral_eq_bottom_classSum
 end
 end -- clump:auto
 end -- clump:auto
@@ -1037,7 +1037,7 @@ theorem lat_eq_inV {D : D7} {V : HSp D} {r : GlobalTheory.IndefiniteRowSideFullH
     (r.Λ : Set (Fin V.rank → D.host.E)) = GlobalTheory.MovedDict.inV 1 (StandardLatticesGL3.stdL D V.rank) := by
   ext y
   rw [SetLike.mem_coe, h.2.1]
-  simp [GlobalTheory.MovedDict.inV, StandardLatticesGL3.stdL, Submodule.mem_pi, Submodule.mem_one]
+  simp [GlobalTheory.MovedDict.inV, StandardLatticesGL3.stdL, Submodule.mem_one]
 
 end GlobalTheory.BottomFieldDict
 
@@ -1392,7 +1392,7 @@ open GlobalTheory.RowEx MeasureTheory
 theorem _root_.GlobalTheory.T.finiteDatum_isAlgebraicCombination_definiteBottom : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil}
     {i j : Fin D.R.m} {A A' WW : HSp D} {X : Tri T A A' WW}, IsBottomTri W i j X →
     ∀ t : T, GlobalTheory.MovedAlg.IsAlgComb W.ψ A' WW X.vac' (X.f' t) := by
-  first | exact @GlobalTheory.BotFourierSnd.finDatum'_isAlgComb | exact GlobalTheory.BotFourierSnd.finDatum'_isAlgComb | (intros; apply GlobalTheory.BotFourierSnd.finDatum'_isAlgComb <;> assumption)
+  first | exact @GlobalTheory.BotFourierSnd.finDatum'_isAlgComb
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FiniteDatumIsAlgebraicCombinationDefiniteBottomStatement =====
@@ -1619,7 +1619,7 @@ theorem _root_.GlobalTheory.T.bottom_field_minor_jet_description : ∀ {D : D7} 
         ∀ U : GlobalTheory.NormSum.Tup D A'.rank WW.rank n, ∃ Q : MvPolynomial (GL3Theta.Idx D A'.rank WW.rank) ℂ,
           (∀ α, IsAlgebraic ℚ (Q.coeff α)) ∧
           X.ker' W.ψ W.θ t (GlobalTheory.NormSum.minorPol D U) h x = Ω * GL3Theta.applyAt0 D Q (StandardLatticesGL3.comb D (TaylorLogMetric.tor0 D cc δ) c s e0) := by
-  first | exact @_root_.GlobalTheory.BottomFieldDict.kernel_minor_polynomial_eq_jet | exact _root_.GlobalTheory.BottomFieldDict.kernel_minor_polynomial_eq_jet | (intros; apply _root_.GlobalTheory.BottomFieldDict.kernel_minor_polynomial_eq_jet <;> assumption)
+  first | exact @_root_.GlobalTheory.BottomFieldDict.kernel_minor_polynomial_eq_jet
 end
 end -- clump:auto
 end -- clump:auto
@@ -1669,7 +1669,7 @@ theorem _root_.GlobalTheory.T.twist_kernel_div_period_isAlgebraic : ∀ {D : D7}
     IsBottomTri W i j X →
     ∀ n : D.what₂.Tau → ℕ, ∃ Ω : ℂ, Ω ≠ 0 ∧ ∀ (t : T), ∀ x ∈ GfC A', ∀ h ∈ GfC WW, ∀ U : GlobalTheory.NormSum.Tup D A'.rank WW.rank n,
       IsAlgebraic ℚ (X.ker' W.ψ W.θ t (GlobalTheory.NormSum.minorPol D U) h x / Ω) := by
-  first | exact @_root_.GlobalTheory.BotDictAlg.kernel_div_period_isAlgebraic_alt | exact _root_.GlobalTheory.BotDictAlg.kernel_div_period_isAlgebraic_alt | (intros; apply _root_.GlobalTheory.BotDictAlg.kernel_div_period_isAlgebraic_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BotDictAlg.kernel_div_period_isAlgebraic_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1743,7 +1743,7 @@ theorem _root_.GlobalTheory.T.bottomClassSum_eq_formula : ∀ {D : D7} {T : Type
       (∀ l, ∃ (δ t0 : ℂ) (Q : ℕ) (P : GlobalTheory.NormSum.Pair D ⊤ δ t0 Q) (h' : Formalism.MainNotions.StandardLatticesGL3.GA D P.d) (U : GlobalTheory.NormSum.Tup D P.a P.d P.n),
         z l = P.coord h' U) ∧
       X.I' W.ψ W.θ t (MvPolynomial.monomial k 1) h = Ω * ∑ l, c l * z l := by
-  first | exact @_root_.GlobalTheory.BotFormulaI'.bottomClassSum_formula | exact _root_.GlobalTheory.BotFormulaI'.bottomClassSum_formula | (intros; apply _root_.GlobalTheory.BotFormulaI'.bottomClassSum_formula <;> assumption)
+  first | exact @_root_.GlobalTheory.BotFormulaI'.bottomClassSum_formula
 end
 end -- clump:auto
 end -- clump:auto
@@ -1846,7 +1846,7 @@ open GlobalTheory.RowEx MeasureTheory
 
 theorem _root_.GlobalTheory.T.normSum_coefficients_isAlgebraic : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → ∀ (D : D7) (δ t0 : ℂ) (Q : ℕ) (P : GlobalTheory.NormSum.Pair D ⊤ δ t0 Q)
     (h : Formalism.MainNotions.StandardLatticesGL3.GA D P.d) (U : GlobalTheory.NormSum.Tup D P.a P.d P.n), IsAlgebraic ℚ (P.coord h U) := by
-  first | exact @_root_.GlobalTheory.NormSum.CoordAlg.normSum_coordinate_isAlgebraic | exact _root_.GlobalTheory.NormSum.CoordAlg.normSum_coordinate_isAlgebraic | (intros; apply _root_.GlobalTheory.NormSum.CoordAlg.normSum_coordinate_isAlgebraic <;> assumption)
+  first | exact @_root_.GlobalTheory.NormSum.CoordAlg.normSum_coordinate_isAlgebraic
 end
 end -- clump:auto
 end -- clump:auto
@@ -1895,7 +1895,7 @@ theorem _root_.GlobalTheory.T.bottom_twistedClassSums_algebraic : ∀ {D : D7} {
     {i j : Fin D.R.m} {A A' WW : HSp D} {X : Tri T A A' WW}, _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → L.Is μ₀ →
     IsBottomTri W i j X →
     ∃ Ω : ℂ, Ω ≠ 0 ∧ ∀ t, ∀ h ∈ GfC WW, ∀ k, IsAlgebraic ℚ (X.I' W.ψ W.θ t (MvPolynomial.monomial k 1) h / Ω) := by
-  first | exact @_root_.GlobalTheory.BotAlgI'.twistedClassSums_isAlgebraic | exact _root_.GlobalTheory.BotAlgI'.twistedClassSums_isAlgebraic | (intros; apply _root_.GlobalTheory.BotAlgI'.twistedClassSums_isAlgebraic <;> assumption)
+  first | exact @_root_.GlobalTheory.BotAlgI'.twistedClassSums_isAlgebraic
 end
 end -- clump:auto
 end -- clump:auto

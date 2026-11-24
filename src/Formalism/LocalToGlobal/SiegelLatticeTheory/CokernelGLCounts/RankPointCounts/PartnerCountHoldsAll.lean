@@ -109,7 +109,7 @@ theorem lift_exists (c : C) : ∃ τ : E, (c, τ) ∈ NF α := by
   refine ⟨τ, (mem_NF α).2 ?_⟩
   show α c + (Rs R).mkQ τ = 0
   rw [hτ]
-  first | exact add_neg_cancel _ | simp
+  first | exact add_neg_cancel _
 
 def liftN (c : C) : NF α := ⟨(c, (lift_exists α c).choose), (lift_exists α c).choose_spec⟩
 
@@ -142,7 +142,7 @@ def lamG (hu : IsUnit u) : CG α β u hb →ₗ[R] Qt R :=
     (by
       rw [Submodule.span_le, Set.singleton_subset_iff, SetLike.mem_coe, LinearMap.mem_ker]
       simp only [LinearMap.coe_comp, Function.comp_apply, Submodule.coe_subtype, bN, LinearMap.snd_apply,
-        LinearMap.mulLeft_apply, Units.inv_mul, IsUnit.unit_spec]
+        LinearMap.mulLeft_apply]
       exact (mkQ_eq_zero_iff _).2 ⟨1, by simp⟩)
 
 theorem lamG_mk (hu : IsUnit u) (x : NF α) :
@@ -191,7 +191,7 @@ theorem exists_rep (x : NF α₁) : ∃ z : NF α₂, (Submodule.Quotient.mk z :
     rw [mul_sub, map_sub, hl, sub_self]
   obtain ⟨s, hs⟩ := (mkQ_eq_zero_iff _).1 h0
   have hinv : ((hu.unit⁻¹ : Eˣ) : E) * u = 1 := by
-    first | exact hu.val_inv_mul | exact hu.unit.inv_mul | simp
+    first | exact hu.val_inv_mul
   refine ⟨w + s • bN α₂ β₂ u hb₂, ?_, ?_⟩
   · have hp : (Submodule.Quotient.mk (bN α₂ β₂ u hb₂) : CG α₂ β₂ u hb₂) = 0 :=
       (Submodule.Quotient.mk_eq_zero _).2 (Submodule.mem_span_singleton_self _)
@@ -716,7 +716,7 @@ theorem Theta_ker : LinearMap.ker (Theta M Y Z be al hY hbe hal u hsch) = Linear
       have h4 : toE M (fun a => v a.castSucc) = Y.Z.map M.R.subtype *ᵥ toE M (-y) + (t : E) • toE M be := by
         rw [hvh, ← toE_mulVec]
         funext a
-        simp [toE, Subring.smul_def]
+        simp [toE]
       have h5 : Y.Z.map M.R.subtype *ᵥ ((fun b => W b.castSucc) - toE M (-y)) = 0 := by
         rw [mulVec_sub]
         have h6 : (fun a => toE M v a.castSucc) = toE M (fun a => v a.castSucc) := rfl
@@ -754,7 +754,7 @@ theorem Theta_ker : LinearMap.ker (Theta M Y Z be al hY hbe hal u hsch) = Linear
       have e1 : toE M (x (Fin.last m) • be - fun a => (Z.Z *ᵥ x) a.castSucc) =
           (x (Fin.last m) : E) • toE M be - toE M (fun a => (Z.Z *ᵥ x) a.castSucc) := by
         funext a
-        simp [toE, Subring.smul_def]
+        simp [toE]
       have e2 : toE M (-(fun a => x a.castSucc)) = -toE M (fun a => x a.castSucc) := by
         funext a
         simp [toE]

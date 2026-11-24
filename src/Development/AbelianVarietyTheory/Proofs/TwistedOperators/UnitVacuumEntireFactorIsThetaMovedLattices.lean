@@ -146,11 +146,7 @@ theorem star_mem_range (a : 𝓞 E) : star (a : E) ∈ (algebraMap (𝓞 E) E).r
 theorem exists_den {N : ℕ} (L : Submodule (𝓞 E) (Fin N → E)) (hfg : L.FG) :
     ∃ b : 𝓞 E, b ≠ 0 ∧ ∀ x ∈ L, ∀ i, ∃ u : 𝓞 E, (u : E) = (b : E) * x i := by
   first
-  | exact @_root_.GlobalTheory.CommonDenominatorLemma.exists_common_denominator
-  | exact _root_.GlobalTheory.CommonDenominatorLemma.exists_common_denominator
   | (apply _root_.GlobalTheory.CommonDenominatorLemma.exists_common_denominator <;> assumption)
-  | (intros; apply _root_.GlobalTheory.CommonDenominatorLemma.exists_common_denominator <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.CommonDenominatorLemma.exists_common_denominator <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.CommonDenominatorLemma.exists_common_denominator ..)
 
 theorem exists_extension {N : ℕ} (L : Submodule (𝓞 E) (Fin N → E)) (hL : IsSDLat E N L)
@@ -264,7 +260,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.Glob
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.self_dual_lattice_resolution_of_identity : ∀ {D : D7} {N : ℕ} (L : Submodule (𝓞 D.host.E) (Fin N → D.host.E)), Formalism.MainNotions.StandardLatticesGL3.SD D L → ∃ (r : ℕ) (s u : Fin r → Fin N → D.host.E), (∀ k, s k ∈ L) ∧ (∀ k, u k ∈ L) ∧ ∑ k, Matrix.vecMulVec (s k) (star (u k)) = 1 := by
-  first | exact @GlobalTheory.SelfDualIdDecomp.iddecomp | exact GlobalTheory.SelfDualIdDecomp.iddecomp | (intros; apply GlobalTheory.SelfDualIdDecomp.iddecomp <;> assumption)
+  first | exact @GlobalTheory.SelfDualIdDecomp.iddecomp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SelfDualLatticeResolutionOfIdentityStatement =====

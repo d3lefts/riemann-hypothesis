@@ -214,8 +214,7 @@ theorem UpperTheory.two_pow_dvd_sub_or_add_one_of_odd_addOrderOf_hP :
     ∀ (D : D7) (p : ℕ), p.Prime → IsResidueClassZero D p → Odd (addOrderOf (hP D p)) →
     ((2 ^ (D.R.e + 2) : ℤ) ∣ (p : ℤ) - 1 ∨ (2 ^ (D.R.e + 2) : ℤ) ∣ (p : ℤ) + 1) ∧ 2 ^ (D.R.e + 2) ≤ p + 1 := by
   intro D p hp hc ho
-  have hcl : primeClass D.host.toHostRaw p = PrimeClass.inertClass := hc
-  obtain ⟨hN, -, -⟩ := (primeClass_eq_inert_iff_symbols hp).1 hcl
+  obtain ⟨hN, -, -⟩ := (primeClass_eq_inert_iff_symbols hp).1 hc
   haveI : Fact p.Prime := ⟨hp⟩
   haveI : (Ideal.span {(p : ℤ)}).IsPrime :=
     (Ideal.span_singleton_prime (by exact_mod_cast hp.ne_zero)).2 (Nat.prime_iff_prime_int.1 hp)

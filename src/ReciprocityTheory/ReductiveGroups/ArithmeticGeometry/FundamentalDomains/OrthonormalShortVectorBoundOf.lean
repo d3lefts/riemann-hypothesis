@@ -380,7 +380,7 @@ theorem Q_exists (X : DataX E r) (ξ : Fin r → E) (z0 : Frame X.Ψ r)
     ext a b
     have h := hSQ τ (Pi.single a 1) (Pi.single b 1)
     have hh : (Sform X β).h (Pi.single a 1) (Pi.single b 1) = (Sform X β).G a b := by
-      simp [ReciprocityTheory.MultiplicativeHeights.HermForm.h, Pi.single_apply, apply_ite, ite_mul, mul_ite]
+      simp [ReciprocityTheory.MultiplicativeHeights.HermForm.h, Pi.single_apply, apply_ite, ite_mul]
     have hs : ∀ a : Fin (r - 2), ReciprocityTheory.MultiplicativeHeights.embVec τ.1 (Pi.single a (1 : E)) = Pi.single a 1 := by
       intro a
       funext i
@@ -540,7 +540,7 @@ theorem hf_eps (k l : Fin n) : hermC τ G (f k) (f l) = if k = l then eps p k el
 theorem Mmat_f (l : Fin n) : Mmat τ G p f g *ᵥ f l = g l := by
   rw [Mmat_mulVec]
   simp only [hf_eps τ G p f hG hf, mul_ite, mul_zero, ite_smul, zero_smul, Finset.sum_ite_eq,
-    Finset.sum_ite_eq', Finset.mem_univ, if_true, eps_sq, one_smul]
+    Finset.mem_univ, if_true, eps_sq, one_smul]
   abel
 
 theorem Mmat_fix (v : Fin r → ℂ) (hv : ∀ k, hermC τ G v (f k) = 0) : Mmat τ G p f g *ᵥ v = v := by
@@ -575,7 +575,7 @@ theorem Mmat_unitary (hgf : ∀ k, g k ∈ Submodule.span ℂ (Set.range f))
     · simp only [neg_smul, Finset.sum_neg_distrib]
       abel
     · rw [hermC_add_left', hermC_sum_smul_left]
-      simp only [hf_eps τ G p f hG hf, mul_ite, mul_zero, Finset.sum_ite_eq, Finset.sum_ite_eq',
+      simp only [hf_eps τ G p f hG hf, mul_ite, mul_zero, Finset.sum_ite_eq',
         Finset.mem_univ, if_true]
       linear_combination (-hermC τ G u (f l)) * eps_sq p l
   have hperp : ∀ x : Fin r → ℂ, (∀ l, hermC τ G x (f l) = 0) → ∀ k, hermC τ G x (g k) = 0 := by
@@ -731,7 +731,7 @@ theorem gramSchmidt_eigenframe (r : ℕ) (X : DataX E r) (ξ : Fin r → E) (z0 
       (fun k => ?_)
     simp only [Pi.add_apply, Data.lineV, Data.Jz]
     simp only [hermC_add_left, hermC_smul_left, hermC_sub_left_eq_sub, ppos_self_adjoint_hermC, e0, eP,
-      mul_zero, sub_zero, add_zero, zero_add]
+      mul_zero, sub_zero, add_zero]
   · intro u hu
     obtain ⟨hu1, hu2⟩ := hu
     have hmem : ∀ τ : X.Ψ, EigenframeMatrices.Mmat (τ := τ.1) (G := X.Gm) (p := X.p0 - 1) (f := f τ)
@@ -849,13 +849,13 @@ theorem reducedLattice_short_bound (hD5 : CoveringRadiusStatement) (r : ℕ) (X 
   classical
   obtain ⟨hξΛ, hξξ, hξ0⟩ := hξ
   have hcardpos : 0 < Fintype.card X.Ψ := by
-    apply QuadraticCoefficientForms.card_Psi_pos <;> assumption
+    apply QuadraticCoefficientForms.card_Psi_pos
   have hcard : Fintype.card X.Ψ = fdeg E := by
-    apply QuadraticCoefficientForms.card_Psi <;> assumption
+    apply QuadraticCoefficientForms.card_Psi
   haveI : Nonempty X.Ψ := Fintype.card_pos_iff.mp hcardpos
   obtain ⟨τ0⟩ := (inferInstance : Nonempty X.Ψ)
   have hpb : 1 ≤ X.p0 ∧ X.p0 < r := by
-    apply IsotropicIndexSums.isotropicIndex_bounds (hξ := hξξ) (hne := hξ0) (τ := τ0) <;> assumption
+    apply IsotropicIndexSums.isotropicIndex_bounds (hξ := hξξ) (hne := hξ0) (τ := τ0)
   obtain ⟨hp1, hpr0⟩ := hpb
   have hON : ∀ τ : X.Ψ, ∀ k l, hermC τ.1 X.Gm (f τ k) (f τ l) =
       if k = l then (if (k : ℕ) < X.p0 - 1 then 1 else -1) else 0 := fun τ => (hf τ).2.2.1
@@ -871,7 +871,7 @@ theorem reducedLattice_short_bound (hD5 : CoveringRadiusStatement) (r : ℕ) (X 
       fun j => isEmptyElim j, fun _ => linearIndependent_empty_type, fun _ j => isEmptyElim j,
       fun _ j => isEmptyElim j, fun _ w _ hw => absurd (Subsingleton.elim w 0) hw,
       fun _ w _ hw => absurd (Subsingleton.elim w 0) hw, fun _ c _ => by simp⟩
-    apply IsotropicCombinations.cons_li (hli := hβind) (hla := linearIndependent_empty_type) <;> assumption
+    apply IsotropicCombinations.cons_li (hli := hβind) (hla := linearIndependent_empty_type)
   have hlamξ : ∀ (c : Fin (r - 2) → E) (e : E), herm X.Gm (∑ k, c k • β k + e • ξ) ξ = 0 := by
     intro c e
     apply IsotropicCombinations.herm_lam_ξ <;> assumption
@@ -894,7 +894,7 @@ theorem reducedLattice_short_bound (hD5 : CoveringRadiusStatement) (r : ℕ) (X 
     obtain ⟨e, he⟩ := (hLB v).mp hv
     have hne : ∀ e' : E, ∑ k, v k • β k + e • ξ ≠ e' • ξ := by
       intro e'
-      apply IsotropicCombinations.ne_smul_ξ (hli := hβind) (hc := hv0) <;> assumption
+      apply IsotropicCombinations.ne_smul_ξ (hli := hβind) (hc := hv0)
     obtain ⟨τ, hτ⟩ := hD4 _ he (hlamξ v e) hne
     refine ⟨τ, ?_⟩
     rw [IsotropicIndexSums.ucomp_drop (hx := hz) (hne := hξ0), hQf, (hf τ).2.2.2.1] at hτ
@@ -973,7 +973,7 @@ theorem reducedLattice_short_bound (hD5 : CoveringRadiusStatement) (r : ℕ) (X 
   have hM : ∀ τ : X.Ψ, LinearIndependent ℂ (fun j => Q τ *ᵥ ReciprocityTheory.MultiplicativeHeights.embVec τ.1 (la j)) :=
     fun τ => linearIndependent_mulVec_embVec τ.1 la (Q τ) hlali (hQ τ)
   have F2 : LinearIndependent E (Fin.cons ξ (fun j => (∑ i, la j i • β i + ec j • ξ)) : Fin (r - 2 + 1) → Fin r → E) := by
-    apply IsotropicCombinations.cons_li (hli := hβind) (hla := hlali) <;> assumption
+    apply IsotropicCombinations.cons_li (hli := hβind) (hla := hlali)
   have F3 : ∀ j k : Fin (r - 2), (j : ℕ) < X.p0 - 1 → X.p0 - 1 ≤ (k : ℕ) →
       herm X.Gm (∑ i, la j i • β i + ec j • ξ) (∑ i, la k i • β i + ec k • ξ) = 0 := by
     intro j k hj hk
@@ -1109,8 +1109,7 @@ lemma f_gram_re (X : Data E r) (ξ : Fin r → E) (z0 : Frame X.Ψ r) (f : X.Ψ 
       ∑ k : Fin (r - 2), if (k : ℕ) < X.p0 - 1 then ‖a k‖ ^ 2 else -‖a k‖ ^ 2 := by
   obtain ⟨-, -, hgr, -, -⟩ := hf τ
   rw [hermC_sum_left_lemma]
-  simp only [hermC_sum_right_lemma_2, hgr, mul_ite, mul_zero, mul_one, Finset.sum_ite_eq, Finset.sum_ite_eq',
-    Finset.mem_univ, if_true, Complex.re_sum]
+  simp only [hermC_sum_right_lemma_2, hgr, mul_ite, mul_zero, mul_one, Finset.sum_ite_eq, Finset.mem_univ, if_true, Complex.re_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   split_ifs <;> simp [Complex.mul_conj, Complex.normSq_eq_norm_sq] <;>
     rw [← Complex.ofReal_pow, Complex.ofReal_re]
@@ -1256,7 +1255,6 @@ theorem key (X : DataX E r) (ξ : Fin r → E) (z0 x0 : Frame X.Ψ r)
       hermC_smul_left_fundamental_domains, hermC_smul_right_fundamental_domains, Data.ppos_selfadj (X := X.toData) hz τ u q, Complex.conj_I]
     first
       | (simp only [map_ofNat]; ring)
-      | (simp; ring)
 
   let Lq : (Fin r → ℂ) → (Fin r → ℂ) →ₗ[ℂ] ℂ := fun q =>
     { toFun := fun u => hermC τ.1 X.Gm u q
@@ -1279,7 +1277,7 @@ theorem key (X : DataX E r) (ξ : Fin r → E) (z0 x0 : Frame X.Ψ r)
     intro u
     have h := LinearMap.congr_fun hc u
     simp only [Fin.sum_univ_two, LinearMap.add_apply, LinearMap.smul_apply, Matrix.cons_val_zero,
-      Matrix.cons_val_one, Matrix.head_cons, smul_eq_mul] at h
+      Matrix.cons_val_one, smul_eq_mul] at h
     rw [hermC_add_right_fundamental_domains, hermC_smul_right_fundamental_domains, hermC_smul_right_fundamental_domains, Complex.conj_conj,
       Complex.conj_conj]
     exact h.symm
@@ -1300,11 +1298,9 @@ theorem key (X : DataX E r) (ξ : Fin r → E) (z0 x0 : Frame X.Ψ r)
       rw [hJt, ppos_smul_fundamental_domains]
       first
         | module
-        | (simp only [smul_sub, smul_smul]; ring_nf)
     rw [hpq, he]
     first
       | exact h
-      | simpa using h
 
   have hwe : hermC τ.1 X.Gm w (Data.emb τ.1 ξ) = 0 := by
     rw [hw, hermC_sum_left_lemma]
@@ -1502,7 +1498,7 @@ lemma colW_expand (h1 : X.Ψ → Matrix (Fin r) (Fin r) ℂ) (z0 : Frame X.Ψ r)
   have hh : ∀ d, hermC τ.1 X.Gm y (col (mat x0 τ) d) = α d * ((sgn X.p0 (d : ℕ) : ℝ) : ℂ) := by
     intro d
     rw [hyα, hermC_sum_smul_left']
-    simp only [hcd, mul_ite, mul_zero, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ,
+    simp only [hcd, mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
       if_true]
   rw [hyα, sum_split X.p0_le]
   congr 1
@@ -1540,7 +1536,7 @@ lemma colZ (x0 : Frame X.Ψ r) (Z : X.Coord) (τ : X.Ψ) (b : Fin X.p0) :
   have hc : ∀ c k, col (X.lowBlock Z τ) c k = X.lowBlock Z τ k c := fun _ _ ↦ rfl
   rw [hm, col_mul', mulVec_eq_sum_col, sum_split X.p0_le]
   simp only [hc, lowBlock_castLE, lowBlock_kap, ite_smul, one_smul, zero_smul,
-    Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    Finset.sum_ite_eq', Finset.mem_univ, if_true]
 
 end
 

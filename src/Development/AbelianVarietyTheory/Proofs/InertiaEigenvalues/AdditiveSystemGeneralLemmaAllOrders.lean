@@ -307,7 +307,6 @@ theorem preparation : ∀ (F : Type) [NontriviallyNormedField F] [IsUltrametricD
       simp [this, prepV_zero]
   · refine prep_identity p e (k + 1) M _ A (by simp [prepV_zero]) (fun n hn => ?_) h0
     have : k + 1 - n = (k + 1 - (n + 1)) + 1 := by omega
-    beta_reduce
     rw [this, prepV_succ]
 
 end GlobalTheory.PMonE
@@ -940,7 +939,7 @@ theorem lin_normal (K : ℕ) (M : ℕ → Matrix m m F) (h : Normal (K + 1) M) :
       by_cases hj : j = Fin.last K
       · subst hj
         simp [lin, h1, Matrix.one_apply]
-      · simp [lin, hj, Matrix.one_apply, Ne.symm hj]
+      · simp [lin, hj, Ne.symm hj]
     · simp [lin, hi, Matrix.one_apply]
   · intro n hn r c
     have h0 : n ≠ 0 := by omega
@@ -1217,7 +1216,7 @@ section -- clump:auto
 open GlobalTheory.PMonE
 
 theorem _root_.GlobalTheory.T.additiveSystemIntegralSurjectivity_of_one : ∀ N : ℕ, 1 ≤ N → GLOnto 1 → GLOnto N := by
-  first | exact @GlobalTheory.PMonE.glOnto_of_one | exact GlobalTheory.PMonE.glOnto_of_one | (intros; apply GlobalTheory.PMonE.glOnto_of_one <;> assumption)
+  first | exact @GlobalTheory.PMonE.glOnto_of_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AdditiveSystemIntegralSurjectivityOfOneStatement =====

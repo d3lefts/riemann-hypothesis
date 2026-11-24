@@ -100,7 +100,7 @@ section -- clump:auto
 open NumberField Matrix GlobalTheory.UCls GlobalTheory.SUVol ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.LieDisc
 
 theorem _root_.GlobalTheory.T.end_lattice_trace_integral : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (G : Matrix (Fin r) (Fin r) E) (Λ : Submodule (𝓞 E) (Fin r → E)) (Y : Matrix (Fin r) (Fin r) E), SelfDualLat G Λ → Y ∈ endLat Λ → IsIntegral ℤ Y.trace := by
-  first | exact @GlobalTheory.LieDisc.trace_integral_main | exact GlobalTheory.LieDisc.trace_integral_main | (intros; apply GlobalTheory.LieDisc.trace_integral_main <;> assumption)
+  first | exact @GlobalTheory.LieDisc.trace_integral_main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EndLatticeTraceIntegralStatement =====
@@ -909,7 +909,7 @@ theorem cm_type_normSq_prod_eq_abs_norm (E : Type) [Field E] [NumberField E] (Ψ
     ‖∏ τ : Ψ, τ.1 d‖ ^ 2 = |((Algebra.norm ℚ d : ℚ) : ℝ)| := by
   classical
   have hcc : ∀ τ : E →+* ℂ, ComplexEmbedding.conjugate (ComplexEmbedding.conjugate τ) = τ := by
-    intro τ; ext x; simp [ComplexEmbedding.conjugate_coe_eq]
+    intro τ; ext x; simp
   have h1 : ((Algebra.norm ℚ d : ℚ) : ℂ) = ∏ τ : E →+* ℂ, τ d := by
     have := Algebra.norm_eq_prod_embeddings ℚ ℂ d
     rw [eq_ratCast] at this
@@ -918,10 +918,10 @@ theorem cm_type_normSq_prod_eq_abs_norm (E : Type) [Field E] [NumberField E] (Ψ
   have hcompl : ∏ τ ∈ Ψᶜ, τ d = ∏ τ ∈ Ψ, (starRingEnd ℂ) (τ d) := by
     refine Finset.prod_nbij' ComplexEmbedding.conjugate ComplexEmbedding.conjugate ?_ ?_ ?_ ?_ ?_
     · intro τ hτ
-      simp only [Finset.mem_compl, Finset.coe_compl, Set.mem_compl_iff, Finset.mem_coe] at hτ ⊢
+      simp only [Finset.mem_compl] at hτ ⊢
       rw [hΨ, hcc]; exact hτ
     · intro τ hτ
-      simp only [Finset.mem_compl, Finset.coe_compl, Set.mem_compl_iff, Finset.mem_coe] at hτ ⊢
+      simp only [Finset.mem_compl] at hτ ⊢
       exact (hΨ τ).mp hτ
     · intro τ _; exact hcc τ
     · intro τ _; exact hcc τ
@@ -1168,7 +1168,7 @@ theorem mem_span_of_linearIndependent {r : ℕ} (A : Matrix (Fin r) (Fin r) ℂ)
     rw [mem_skewSub]
     have hc : (Complex.I • (1 : Matrix (Fin r) (Fin r) ℂ)).map (starRingEnd ℂ)
         = (-Complex.I) • (1 : Matrix (Fin r) (Fin r) ℂ) := by
-      ext i j; by_cases h : i = j <;> simp [Matrix.one_apply, h]
+      ext i j; by_cases h : i = j <;> simp [h]
     rw [hc, transpose_smul, transpose_one, Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul,
       Matrix.mul_one, neg_smul, add_neg_cancel]
   have hIsu : Complex.I • (1 : Matrix (Fin r) (Fin r) ℂ) ∉ su := by
@@ -1255,7 +1255,7 @@ theorem volume_eq_sqrt_gram_map {ι κ W : Type} [Fintype ι] [DecidableEq ι] [
     obtain ⟨j, s⟩ := p
     by_cases h : t = s
     · subst h; simp [Pi.single_apply]
-    · simp [Pi.single_apply, h]
+    · simp [h]
   have hcont : Continuous f := f.toLinearMap.continuous_of_finiteDimensional
   have : (Measure.map f volume).IsAddHaarMeasure := f.toContinuousLinearEquiv.isAddHaarMeasure_map volume
   have hm : b.addHaar = Measure.map f volume := by

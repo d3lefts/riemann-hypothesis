@@ -137,14 +137,13 @@ theorem quotNormSq_eq_of_blockFrame : ∀ (N j : ℕ) (hj : j ≤ N) (G G' T : M
     obtain ⟨z, rfl⟩ := e.surjective y
     rcases z with a | k
     · simp [hel, hT1, Matrix.one_apply, hhinj.eq_iff]
-    · simp [her, hT2, Matrix.one_apply, (hht a' k).symm]
+    · simp [her, hT2, (hht a' k).symm]
   have key : ∀ M : Matrix (Fin N) (Fin N) ℂ,
       (Mᴴ * G * M).submatrix (headIdx hj) (headIdx hj) =
         (M.submatrix id (headIdx hj))ᴴ * G * M.submatrix id (headIdx hj) := by
     intro M
     first
       | rfl
-      | (ext a a'; simp [Matrix.mul_apply, Matrix.conjTranspose_apply])
   have hhh : G'.submatrix (headIdx hj) (headIdx hj) = G.submatrix (headIdx hj) (headIdx hj) := by
     rw [hG', key T, hcol, ← key 1]
     simp
@@ -221,7 +220,7 @@ theorem blk_tt (k k' : Fin (N - j)) : blk hj C (tailIdx hj k) (tailIdx hj k') = 
   simp [blk, ← blockEquiv_inr, Matrix.one_apply]
 
 theorem det_blk : (blk hj C).det = 1 := by
-  simp [blk, Matrix.det_reindex_self, Matrix.det_fromBlocks_zero₂₁]
+  simp [blk]
 
 end GlobalTheory
 

@@ -279,7 +279,7 @@ theorem prod_edgeFactor_last (hm : 1 ≤ Γ.m) (g : GL (Fin (Γ.rank (Γ.m, Γ.m
   rw [oppositePath, List.map_append, List.prod_append, List.map_map, List.map_map, List.map_reverse, List.prod_reverse,
     ← List.prod_toFinset _ List.nodup_range, ← List.prod_toFinset _ List.nodup_range, List.toFinset_range,
     Finset.prod_eq_single (Γ.m - 1), Finset.prod_eq_single (Γ.m - 1)]
-  · simp only [Function.comp, hf, Edge.src, Edge.tgt, e1, and_self, if_true, Prod.mk.injEq, show Γ.m - 1 ≠ Γ.m by omega, false_and, and_false, if_false,
+  · simp only [Function.comp, hf, Edge.src, Edge.tgt, e1, if_true, Prod.mk.injEq, show Γ.m - 1 ≠ Γ.m by omega, false_and, and_false, if_false,
       map_one, Grid.kappa, Grid.blockChar, MonoidHom.div_apply, e2]
     simp only [Units.val_div_eq_div_val, Units.val_inv_eq_inv_val, Units.val_one]
     field_simp
@@ -837,7 +837,7 @@ theorem _root_.GlobalTheory.T.expansion_sumProd_lastVertex_moved_eq : ∀ {D : D
         (cc • moveFn (colPt S t (finEmb G.sp.topDec k)) (d.1 (lastIx D)).fn) j (x j)) *
       ∏ i, Function.update (fun i => (d.2 i).fn) (lastIx D) (cr • moveFn (rowPt S k) (d.2 (lastIx D)).fn) i (y i)) =
     τ.sum fun d a => a * (∏ j, (d.1 j).fn (x j)) * ∏ i, (d.2 i).fn (y i) := by
-  first | exact @GlobalTheory.LastVertexLoc.sum_prod_moved_eq | exact GlobalTheory.LastVertexLoc.sum_prod_moved_eq | (intros; apply GlobalTheory.LastVertexLoc.sum_prod_moved_eq <;> assumption)
+  first | exact @GlobalTheory.LastVertexLoc.sum_prod_moved_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExpansionSumProdLastVertexMovedEqStatement =====

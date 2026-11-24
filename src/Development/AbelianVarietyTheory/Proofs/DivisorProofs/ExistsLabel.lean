@@ -479,7 +479,7 @@ theorem coeff_prod_one_add (s : Multiset ℂ) (n : ℕ) :
   | cons a s ih =>
     rw [Multiset.map_cons, Multiset.prod_cons, add_mul, one_mul, mul_assoc, coeff_add, coeff_C_mul]
     cases n with
-    | zero => simp [ih, esymm_zero']
+    | zero => simp [ih]
     | succ n => rw [coeff_X_mul, ih, ih, esymm_cons_succ]
 
 theorem esymm_add (s t : Multiset ℂ) (n : ℕ) :
@@ -1088,11 +1088,7 @@ theorem eq_top_of_nilpotent {F V : Type} [Field F] [AddCommGroup V] [Module F V]
 theorem aeval_mem {F V : Type} [Field F] [AddCommGroup V] [Module F V] (g : Module.End F V)
     (W : Submodule F V) (hW : ∀ x ∈ W, g x ∈ W) (p : F[X]) : ∀ x ∈ W, aeval g p x ∈ W := by
   first
-  | exact @_root_.GlobalTheory.PolynomialEvaluationMembership.aeval_apply_mem
-  | exact _root_.GlobalTheory.PolynomialEvaluationMembership.aeval_apply_mem
   | (apply _root_.GlobalTheory.PolynomialEvaluationMembership.aeval_apply_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.PolynomialEvaluationMembership.aeval_apply_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.PolynomialEvaluationMembership.aeval_apply_mem <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.PolynomialEvaluationMembership.aeval_apply_mem ..)
 
 theorem mem_image_of_mem_span {F V : Type} [Field F] [AddCommGroup V] [Module F V] (g : Module.End F V)

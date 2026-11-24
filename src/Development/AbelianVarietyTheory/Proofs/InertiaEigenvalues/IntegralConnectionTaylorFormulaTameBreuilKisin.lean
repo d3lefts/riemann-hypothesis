@@ -230,7 +230,7 @@ open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.Weakl
 open scoped Formalism.Per
 
 theorem _root_.GlobalTheory.T.factorial_mul_crystalCoord_coeff_mem : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O K : Type) [CommRing O] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [NormedField K] [IsUltrametricDist K] [Algebra O K] [IsUnitBall O K] [NormedAlgebra ℚ_[l] K] (t : Wq l a →ₐ[ℤ_[l]] O) (ϖ : PiSys l e) (ι : Type) [Fintype ι] [DecidableEq ι] (P : PhiMod O K l e a ι) (EE : FCrys l ↥(OL (ϖ.field a))) (c : EE.M (ϖ.prism a) →+ Vec K a ι), (∀ x, c x ∈ P.M) → ∀ (PP : Obj l ↥(OL (ϖ.field a))) (p : GlobalTheory.Prism.Hom (ϖ.prism a) PP) (J : ZMod a → PP.A →+* K⟦X⟧⟦X⟧), (∀ τ y (i : ℕ), (i.factorial : K⟦X⟧) * coeff i (J τ y) ∈ S O K e) → ∀ lam : EE.M PP →+ (ZMod a → ι → K⟦X⟧⟦X⟧), (∀ (r : PP.A) (y : EE.M PP) τ i, lam (r • y) τ i = J τ r * lam y τ i) → (∀ x τ i, lam (EE.tr p x) τ i = PowerSeries.C (frob K l (c x (τ - 1) i))) → ∀ y τ i (k : ℕ), (k.factorial : K⟦X⟧) * coeff k (lam y τ i) ∈ S O K e := by
-  first | exact @GlobalTheory.BKGal.CrysInteg.factorial_mul_coeff_mem | exact GlobalTheory.BKGal.CrysInteg.factorial_mul_coeff_mem | (intros; apply GlobalTheory.BKGal.CrysInteg.factorial_mul_coeff_mem <;> assumption)
+  first | exact @GlobalTheory.BKGal.CrysInteg.factorial_mul_coeff_mem
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FactorialMulCrystalCoordCoeffMemStatement =====
@@ -322,8 +322,7 @@ theorem exists_stratification : GlobalTheory.Published.BhattScholzeCrystallineLa
         · subst h; simp
         · simp [Pi.single_eq_of_ne h]
       simp only [h1] at hE
-      simp only [Pi.single_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.sum_ite_eq,
-        Finset.mem_univ, if_true] at hE
+      simp only [Pi.single_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] at hE
       simp only [Matrix.map_apply] at hE ⊢
       rw [hE, Finset.mul_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
@@ -415,7 +414,7 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O
     choose s hs' using hf
     refine ⟨Module.finrank ℤ_[l] O, fun _ q => o q, s, hci ?_⟩
 
-    simp only [map_sum, hsm, hom, hb]
+    simp only [map_sum]
     funext τ i
     have h6 := congrArg (fun f : ZMod a → A O K => (f τ : K⟦X⟧)) (hs' i)
     simp only [Finset.sum_apply, Pi.smul_apply, AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at h6
@@ -550,7 +549,7 @@ theorem eps_frob_compat : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [N
       rw [(oE o).u_tr, ht₀, hU, hcb]
       rcases eq_or_ne i i' with rfl | h
       · simp [bas]
-      · simp [bas, Pi.single_eq_of_ne h, h]
+      · simp [bas, h]
 
     rw [hy j, map_sum, Finset.sum_apply, Finset.sum_apply, Finset.sum_eq_single i]
 
@@ -595,7 +594,7 @@ theorem eps_frob_compat : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [N
   refine mul_left_cancel₀ hlk ?_
   have hC := congrFun (hε' n τ) i
   rw [hA] at hC
-  simp only [Matrix.mulVec, dotProduct, hB, hε'col, hEps, Matrix.map_apply, Matrix.of_apply] at hC
+  simp only [Matrix.mulVec, dotProduct, hB, hε'col, hEps, Matrix.map_apply] at hC
   simp only [Matrix.mul_apply, Matrix.map_apply, Matrix.of_apply]
   rw [hC, Finset.mul_sum]
   exact Finset.sum_congr rfl fun _ _ => by ring

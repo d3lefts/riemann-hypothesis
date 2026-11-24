@@ -565,7 +565,7 @@ theorem hankel_integral : ∀ (O F : Type) [CommRing O] [Field F] (ι : O →+* 
       have hij' : i < j := hij
       have h1 : ¬ j ≤ i := not_le.mpr hij'
       have h2 : ¬ ((j : ℕ) ≤ i) := h1
-      simp [T, h1, h2]
+      simp [T, h1]
   refine ⟨N.det, ?_⟩
   rw [RingHom.map_det, RingHom.mapMatrix_apply, hent, Matrix.det_mul, Matrix.det_mul, Matrix.det_transpose, hT]
   show _ = _ * H.det
@@ -1051,7 +1051,7 @@ theorem isRatPath_map {F Ω : Type} [Field F] [Field Ω] (φ : F →+* Ω) {Y : 
         algebraMap (PowerSeries Ω) (LaurentSeries Ω) (PowerSeries.map φ (p : PowerSeries F)) :=
       congrArg (fun f => f (p : PowerSeries F)) hψ
     have h3 : PowerSeries.map φ (p : PowerSeries F) = ((p.map φ : Polynomial Ω) : PowerSeries Ω) := by
-      ext n; simp [Polynomial.coeff_map]
+      ext n; simp
     have hc : ∀ (K : Type) [Field K] (q : Polynomial K),
         algebraMap (RatFunc K) (LaurentSeries K) (algebraMap (Polynomial K) (RatFunc K) q) =
           algebraMap (PowerSeries K) (LaurentSeries K) (q : PowerSeries K) :=
@@ -1113,7 +1113,7 @@ theorem polyScale_polyScale (c d : F) (p : F[X]) :
   have : (polyScale d).comp (polyScale c) = polyScale (c * d) := by
     apply Polynomial.algHom_ext
     simp only [polyScale, AlgHom.comp_apply, Polynomial.aeval_X, map_mul, Polynomial.aeval_C,
-      Polynomial.algebraMap_eq, Polynomial.C_mul]
+      Polynomial.algebraMap_eq]
     ring
   exact congrArg (fun φ : F[X] →ₐ[F] F[X] => φ p) this
 
@@ -1222,8 +1222,7 @@ theorem lsScale_rat (c : F) (hc : c ≠ 0) :
   apply ext_rat
   · intro a
     simp only [RingHom.comp_apply, ratScale_C, alg_C, hl, rescale_C']
-  · simp only [RingHom.comp_apply, ratScale_X, map_mul, alg_C, alg_X, hl, PowerSeries.rescale_X,
-      rescale_C']
+  · simp only [RingHom.comp_apply, ratScale_X, map_mul, alg_C, alg_X, hl, PowerSeries.rescale_X]
 
 theorem ratInv_ratScale (c : F) (hc : c ≠ 0) :
     ratInv.comp (ratScale c hc) = (ratScale c⁻¹ (inv_ne_zero hc)).comp ratInv := by
@@ -1832,7 +1831,7 @@ theorem tan_triv_eq_zero : ∀ (k K E : Type) [Field k] [IsAlgClosed k] [CharZer
     exact fun h => hσ (hφ (h.trans (map_zero φ).symm))
   refine Matrix.eq_zero_of_vecMul_eq_zero hA ?_
   funext a
-  simp only [Matrix.vecMul, dotProduct, Matrix.map_apply, Matrix.submatrix_apply, id, Pi.zero_apply, N, φ,
+  simp only [Matrix.vecMul, dotProduct, Matrix.map_apply, Pi.zero_apply, N, φ,
     RingHom.comp_apply]
   exact key2 _
 

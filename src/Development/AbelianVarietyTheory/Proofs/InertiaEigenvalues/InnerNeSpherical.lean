@@ -99,7 +99,7 @@ open GlobalTheory.RawLift
 open Classical
 
 theorem _root_.GlobalTheory.T.exists_covolumeOne_measure_homSpace_of_laws : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Laws R F → ∀ i, ∃ (μ : Measure (WO (Vc D i) (Wc D i))) (𝓕 : Set (WO (Vc D i) (Wc D i))), IsCovolOne (ratL (Wc D i) (Vc D i)) μ 𝓕 := by
-  first | exact @GlobalTheory.RawLift.Covol.exists_isCovolOne_of_laws | exact GlobalTheory.RawLift.Covol.exists_isCovolOne_of_laws | (intros; apply GlobalTheory.RawLift.Covol.exists_isCovolOne_of_laws <;> assumption)
+  first | exact @GlobalTheory.RawLift.Covol.exists_isCovolOne_of_laws
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsCovolumeOneMeasureHomSpaceOfLawsStatement =====
@@ -287,7 +287,7 @@ open GlobalTheory.RawLift
 open Classical
 
 theorem _root_.GlobalTheory.T.fixedVectorCoefficient_left_invariant_levelGroup : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Laws R F → ∀ i t, LevFix R i t → ∀ (μ : Measure (WO (Vc D i) (Wc D i))) (𝓕 : Set (WO (Vc D i) (Wc D i))), IsCovolOne (ratL (Wc D i) (Vc D i)) μ 𝓕 → ∀ k ∈ levW R i, ∀ g, coef R i t μ 𝓕 (k * g) = coef R i t μ 𝓕 g := by
-  first | exact @GlobalTheory.RawLift.CoefLeft.coef_lev_mul | exact GlobalTheory.RawLift.CoefLeft.coef_lev_mul | (intros; apply GlobalTheory.RawLift.CoefLeft.coef_lev_mul <;> assumption)
+  first | exact @GlobalTheory.RawLift.CoefLeft.coef_lev_mul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FixedVectorCoefficientLeftInvariantLevelGroupStatement =====
@@ -561,7 +561,7 @@ open GlobalTheory.RawLift
 open Classical
 
 theorem _root_.GlobalTheory.T.hasSum_innerProduct_finsupp_localCosetFamilies : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks), ∀ i t, LevProd R i → TransLaws R i → FinMult R i t → LevFix R i t → VecNe R i t → FinSum R i t → ∀ th, IsRaw R i t th → ∀ (μ : Measure (WO (Vc D i) (Wc D i))) (𝓕 : Set (WO (Vc D i) (Wc D i))), IsCovolOne (ratL (Wc D i) (Vc D i)) μ 𝓕 → ∃ a : ℝ, 0 < a ∧ ∀ x y, HasSum (fun F : {F : ∀ v, Eu.LX R i v // {w | F w ≠ Eu.lx0 R i w}.Finite} => (a : ℂ) * ((∏ᶠ v, Eu.acoef R i t μ 𝓕 v (F.1 v)) * ⟪x, Eu.Bfam R i F.1 y⟫_ℂ)) ⟪LinearMap.adjoint th x, LinearMap.adjoint th y⟫_ℂ := by
-  first | exact @GlobalTheory.RawLift.FamSum.hasSum_families | exact GlobalTheory.RawLift.FamSum.hasSum_families | (intros; apply GlobalTheory.RawLift.FamSum.hasSum_families <;> assumption)
+  first | exact @GlobalTheory.RawLift.FamSum.hasSum_families
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HasSumInnerProductFinsuppLocalCosetFamiliesStatement =====
@@ -669,7 +669,7 @@ open GlobalTheory.RawLift
 open Classical
 
 theorem _root_.GlobalTheory.T.localCoefficient_nontrivialCosets_summable_bound : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks), ∀ i t, LocSmall R i t → ∀ (μ : Measure (WO (Vc D i) (Wc D i))) (𝓕 : Set (WO (Vc D i) (Wc D i))), IsCovolOne (ratL (Wc D i) (Vc D i)) μ 𝓕 → ∃ s : HeightOneSpectrum (𝓞 D.host.F) → ℝ, Summable s ∧ (∀ v, s v < 1) ∧ ∀ v (C : Finset (Eu.LX R i v)), Eu.lx0 R i v ∉ C → ∑ x ∈ C, ‖Eu.acoef R i t μ 𝓕 v x‖ ≤ s v := by
-  first | exact @GlobalTheory.RawLift.Eu.acoef_small | exact GlobalTheory.RawLift.Eu.acoef_small | (intros; apply GlobalTheory.RawLift.Eu.acoef_small <;> assumption)
+  first | exact @GlobalTheory.RawLift.Eu.acoef_small
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalCoefficientNontrivialCosetsSummableBoundStatement =====
@@ -913,7 +913,7 @@ open GlobalTheory.RawLift
 open Classical
 
 theorem _root_.GlobalTheory.T.localOperator_scalar_on_sphericalEigenspace : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Laws R F → ∀ i t, BadSupp R i t → LevFix R i t → LocSmall R i t → LevProd R i → TransLaws R i → ∀ (μ : Measure (WO (Vc D i) (Wc D i))) (𝓕 : Set (WO (Vc D i) (Wc D i))), IsCovolOne (ratL (Wc D i) (Vc D i)) μ 𝓕 → (∀ k ∈ levW R i, ∀ g, coef R i t μ 𝓕 (k * g) = coef R i t μ 𝓕 g) → ∀ c, ∀ y ∈ part R i ∅ c, ∀ v, ∃ z : ℂ, Eu.Zop R i t μ 𝓕 v y = z • y := by
-  first | exact @GlobalTheory.RawLift.Eig.zop_eigen | exact GlobalTheory.RawLift.Eig.zop_eigen | (intros; apply GlobalTheory.RawLift.Eig.zop_eigen <;> assumption)
+  first | exact @GlobalTheory.RawLift.Eig.zop_eigen
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalOperatorScalarOnSphericalEigenspaceStatement =====
@@ -1049,7 +1049,7 @@ open GlobalTheory.RawLift
 open Classical
 
 theorem _root_.GlobalTheory.T.rightTranslateOperator_familyProd_update : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks), ∀ i, TransLaws R i → ∀ (F : ∀ v, Eu.LX R i v), {w | F w ≠ Eu.lx0 R i w}.Finite → ∀ v, F v = Eu.lx0 R i v → Eu.famProd R i F ∈ GfC (Wc D i) ∧ ∀ x : Eu.LX R i v, Eu.Bop R i (Eu.famProd R i (Function.update F v x)) = Eu.Bop R i (Eu.famProd R i F * Eu.rep x) := by
-  first | exact @GlobalTheory.RawLift.Eu.bop_famProd_update | exact GlobalTheory.RawLift.Eu.bop_famProd_update | (intros; apply GlobalTheory.RawLift.Eu.bop_famProd_update <;> assumption)
+  first | exact @GlobalTheory.RawLift.Eu.bop_famProd_update
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RightTranslateOperatorFamilyProdUpdateStatement =====
@@ -1415,7 +1415,7 @@ open GlobalTheory.RawLift
 open Classical
 
 theorem _root_.GlobalTheory.T.rightTranslateOperator_mul_localOperator_hasSum : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks), ∀ i t, LocSmall R i t → TransLaws R i → LevFix R i t → ∀ (μ : Measure (WO (Vc D i) (Wc D i))) (𝓕 : Set (WO (Vc D i) (Wc D i))), IsCovolOne (ratL (Wc D i) (Vc D i)) μ 𝓕 → (∀ k ∈ levW R i, ∀ g, coef R i t μ 𝓕 (k * g) = coef R i t μ 𝓕 g) → ∀ v, ∀ γ ∈ GfC (Wc D i), HasSum (fun x : Eu.LX R i v => Eu.acoef R i t μ 𝓕 v x • Eu.Bop R i (γ * Eu.rep x)) (Eu.Bop R i γ * Eu.Zop R i t μ 𝓕 v) := by
-  first | exact @GlobalTheory.RawLift.Eu.bop_mul_zop_hasSum | exact GlobalTheory.RawLift.Eu.bop_mul_zop_hasSum | (intros; apply GlobalTheory.RawLift.Eu.bop_mul_zop_hasSum <;> assumption)
+  first | exact @GlobalTheory.RawLift.Eu.bop_mul_zop_hasSum
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RightTranslateOperatorMulLocalOperatorHasSumStatement =====

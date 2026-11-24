@@ -115,7 +115,7 @@ theorem algebraMap_comp_single {m : ℕ} :
   funext j
   by_cases h : j = Fin.last m
   · subst h; simp
-  · simp [Pi.single_apply, h]
+  · simp [h]
 
 theorem lastRow_eq {m : ℕ} (g : GA E (m + 1)) :
     GlobalTheory.ZEul.lastRow g = Matrix.vecMul (algebraMap E (Ad E) ∘ (Pi.single (Fin.last m) 1 : Fin (m + 1) → E)) g.val := by
@@ -164,7 +164,7 @@ theorem rows_main : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField
     rw [this]
     by_cases h : k = Fin.last m
     · subst h; simp
-    · simp [Matrix.one_apply, Pi.single_apply, h, Ne.symm h]
+    · simp [h, Ne.symm h]
   · intro r l y g
     have hp : ∀ t : UnipotentBlockColumnIndex (m + 1) r l, t.1.1 < t.1.2 := fun t => by
       have := t.2; exact Fin.lt_def.2 (by omega)
@@ -214,7 +214,7 @@ theorem _root_.GlobalTheory.T.adelicGLLastRow_and_detModule_under_left_multiplic
       GlobalTheory.RSnm.detAbs (blkU y * g) = GlobalTheory.RSnm.detAbs g) ∧
     (∀ (X : GroundTheory.Automorphic.FourierWhittaker.Pos (m + 1) → Ad E) (g : GA E (m + 1)),
       GlobalTheory.RSnm.detAbs (uGL X * g) = GlobalTheory.RSnm.detAbs g) := by
-  first | (exact @GlobalTheory.UnfoldRows.rows_main) | (exact GlobalTheory.UnfoldRows.rows_main) | (intros; apply GlobalTheory.UnfoldRows.rows_main  <;> assumption)
+  first | (exact @GlobalTheory.UnfoldRows.rows_main)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AdelicGLLastRowAndDetModuleUnderLeftMultiplicatiStatement =====
@@ -536,7 +536,7 @@ theorem _root_.GlobalTheory.T.fundamental_domain_poisson_cuspidal : ∀ (E : Typ
         GroundTheory.Automorphic.GJMatrix.adelicFourierPi E F (Matrix.vecMul (algebraMap E (Ad E) ∘ ξ.1) h.val) *
           partialCoeff φ (m + 1) (blockGL (by omega : m + 1 ≤ k + 1) (ratGL E (m + 1) (γ ξ) * h)))
       (partialCoeff (GlobalTheory.RSnm.colSmooth (m + 1) F φ) (m + 1 + 1) (blockGL (by omega : m + 1 ≤ k + 1) h)) := by
-  first | (exact @GlobalTheory.ColFourier.hasSum_colSmooth) | (exact GlobalTheory.ColFourier.hasSum_colSmooth) | (intros; apply GlobalTheory.ColFourier.hasSum_colSmooth  <;> assumption)
+  first | (exact @GlobalTheory.ColFourier.hasSum_colSmooth)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FundamentalDomainPoissonCuspidal =====
@@ -586,7 +586,7 @@ open GroundTheory.Automorphic.FourierWhittaker (partialCoeff blockGL uGL)
 theorem _root_.GlobalTheory.T.isMirabolicWhittakerStage_mul_invariant_continuous : ∀ (E : Type) [Field E] [NumberField E] (a m : ℕ) (ψ : AddChar (Ad E) ℂ) (f c : GA E a → ℂ),
     Good ψ m f → Continuous c → (∀ γ : GL (Fin a) E, IsMir m γ → ∀ g, c (ratGL E a γ * g) = c g) →
     (∀ (r l : ℕ) (y : UnipotentBlockColumnIndex a r l → Ad E) (g : GA E a), c (blkU y * g) = c g) → Good ψ m (fun g => c g * f g) := by
-  first | (exact @GlobalTheory.GoodMul.good_mul_invariant) | (exact GlobalTheory.GoodMul.good_mul_invariant) | (intros; apply GlobalTheory.GoodMul.good_mul_invariant  <;> assumption)
+  first | (exact @GlobalTheory.GoodMul.good_mul_invariant)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsMirabolicWhittakerStageMulInvariantContinuousStatement =====
@@ -604,7 +604,7 @@ open GroundTheory.Automorphic.FourierWhittaker (partialCoeff blockGL uGL)
 theorem _root_.GlobalTheory.T.isMirabolicWhittakerStage_top_of_vanishing_blockAverages : ∀ (E : Type) [Field E] [NumberField E] (m : ℕ) (ψ : AddChar (Ad E) ℂ) (f : GA E (m + 1) → ℂ),
     Continuous f → (∀ γ g, f (ratGL E (m + 1) γ * g) = f g) →
     (∀ r, 0 < r → r ≤ m → ∀ g, avg (ratV E (UnipotentBlockColumnIndex (m + 1) r m)) (fun x => f (blkU x * g)) = 0) → Good ψ m f := by
-  first | (exact @GlobalTheory.CuspGeneric.good_top) | (exact GlobalTheory.CuspGeneric.good_top) | (intros; apply GlobalTheory.CuspGeneric.good_top  <;> assumption)
+  first | (exact @GlobalTheory.CuspGeneric.good_top)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsMirabolicWhittakerStageTopOfVanishingBlockAverStatement =====
@@ -755,7 +755,7 @@ theorem _root_.GlobalTheory.T.partial_coeff_good_of_cuspidal : ∀ (E : Type) [F
     Continuous φ → (∀ γ g, φ (ratGL E (k + 1) γ * g) = φ g) →
     (∀ r, 0 < r → r ≤ k → ∀ g, avg (ratV E (UnipotentBlockColumnIndex (k + 1) r k)) (fun x => φ (blkU x * g)) = 0) →
     Good (GlobalTheory.StdCharConductor.psi E) m (fun h => partialCoeff φ (m + 1) (blockGL (by omega : m + 1 ≤ k + 1) h)) := by
-  first | (exact @GlobalTheory.PartialBlock.good_partialCoeff_blockGL) | (exact GlobalTheory.PartialBlock.good_partialCoeff_blockGL) | (intros; apply GlobalTheory.PartialBlock.good_partialCoeff_blockGL  <;> assumption)
+  first | (exact @GlobalTheory.PartialBlock.good_partialCoeff_blockGL)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PartialCoeffGoodOfCuspidal =====
@@ -830,7 +830,7 @@ theorem continuous_mul_norm_rpow_neg_half :
         = fun z => ‖z‖ ^ (1 / 2 : ℝ) := by
       funext z
       rcases eq_or_ne z 0 with rfl | hz
-      · simp [Real.zero_rpow (show (1 / 2 : ℝ) ≠ 0 by norm_num)]
+      · simp
       · have hp : 0 < ‖z‖ := norm_pos_iff.mpr hz
         rw [norm_mul, Complex.norm_real, Real.norm_eq_abs,
           abs_of_nonneg (Real.rpow_nonneg (norm_nonneg _) _)]
@@ -862,7 +862,7 @@ open GlobalTheory.MirTower GlobalTheory.CuspGeneric
 open GroundTheory.Automorphic.FourierWhittaker (partialCoeff blockGL uGL)
 
 theorem _root_.GlobalTheory.T.continuous_mul_norm_rpow_neg_half' : Continuous fun z : ℂ => z * ((‖z‖ ^ (-(1 / 2 : ℝ)) : ℝ) : ℂ) := by
-  first | (exact @GlobalTheory.continuous_mul_norm_rpow_neg_half) | (exact GlobalTheory.continuous_mul_norm_rpow_neg_half) | (intros; apply GlobalTheory.continuous_mul_norm_rpow_neg_half  <;> assumption)
+  first | (exact @GlobalTheory.continuous_mul_norm_rpow_neg_half)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.VerticalStatementHoldsStatement =====
@@ -933,7 +933,7 @@ theorem _root_.GlobalTheory.T.whittaker_partial_coeff_block : ∀ (E : Type) [Fi
     Continuous φ → ∀ h : GA E (m + 1),
     GlobalTheory.JSW.whit (fun h => partialCoeff φ (m + 1) (blockGL (by omega : m + 1 ≤ k + 1) h)) h =
       GlobalTheory.JSW.whit φ (blockGL (by omega : m + 1 ≤ k + 1) h) := by
-  first | (exact @GlobalTheory.RSnm.whit_partialCoeff_comp_blockGL) | (exact GlobalTheory.RSnm.whit_partialCoeff_comp_blockGL) | (intros; apply GlobalTheory.RSnm.whit_partialCoeff_comp_blockGL  <;> assumption)
+  first | (exact @GlobalTheory.RSnm.whit_partialCoeff_comp_blockGL)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WhittakerPartialCoeffBlock =====
@@ -1193,7 +1193,7 @@ theorem _root_.GlobalTheory.T.rankinSelbergGLnGLm_unfolding_to_mirabolic : ∀ (
       IntegrableOn (GlobalTheory.RSnmUnf.uIntNM (by omega : m + 1 ≤ m + r + 1 + 1) F φ φ' x) 𝓕₀ μ ∧
       ∫ h in 𝓕, GlobalTheory.RSnm.rsIntegrand (m + 1) (by omega : m + 1 ≤ m + r + 1 + 1) F φ φ' (x : ℂ) h ∂μ =
         (c : ℂ) * ∫ h in 𝓕₀, GlobalTheory.RSnmUnf.uIntNM (by omega : m + 1 ≤ m + r + 1 + 1) F φ φ' x h ∂μ := by
-  first | (exact @GlobalTheory.RSnmUnfold.rs_unfold) | (exact GlobalTheory.RSnmUnfold.rs_unfold) | (intros; apply GlobalTheory.RSnmUnfold.rs_unfold  <;> assumption)
+  first | (exact @GlobalTheory.RSnmUnfold.rs_unfold)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RankinSelbergGLnGLmUnfoldingToMirabolicStatement =====

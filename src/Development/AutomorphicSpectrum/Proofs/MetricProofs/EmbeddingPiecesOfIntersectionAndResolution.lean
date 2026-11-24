@@ -195,7 +195,7 @@ theorem cxHessian_zero {D : ℕ} (z : Fin D → ℂ) : cxHessian (fun _ => (0 : 
     rw [h1]
     exact fderiv_const_apply 0
   ext a b
-  simp [cxHessian, h]
+  simp [cxHessian]
 
 theorem sheetDensity_update_zero {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
     (P : Ideal (MRing ι)) {e : ℕ} (φ : Fin e → ((Σ k, ι k) → ℂ) → ℝ) (j : Fin e)
@@ -477,7 +477,7 @@ theorem star_mem_mcPts {P : Ideal (MRing ι)} {z : (Σ k, ι k) → ℂ} (hz : z
 
 theorem segre_star (z : (Σ k, ι k) → ℂ) : segre (star z) = star (segre z) := by
   funext i
-  simp [segre, map_prod]
+  simp [segre]
 
 theorem cons_star {e : ℕ} (y : Fin e → ℂ) :
     (Fin.cons 1 (star y) : Fin (e + 1) → ℂ) = star (Fin.cons 1 y) := by

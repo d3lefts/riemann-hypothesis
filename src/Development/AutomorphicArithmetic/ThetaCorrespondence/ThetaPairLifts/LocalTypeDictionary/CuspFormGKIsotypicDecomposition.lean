@@ -145,7 +145,7 @@ theorem _root_.GlobalTheory.T.realPlaces_distinct_translations_derivatives_commu
       Rder θ V τ' X (rTr V (atTau θ V τ g) f) = rTr V (atTau θ V τ g) (Rder θ V τ' X f)) ∧
     (∀ X ∈ lieAt V τ, ∀ Y ∈ lieAt V τ', ∀ f : GA D V → ℂ, IsAutFunSm θ V f →
       Rder θ V τ X (Rder θ V τ' Y f) = Rder θ V τ' Y (Rder θ V τ X f)) := by
-  first | exact @GlobalTheory.PlaceComm.place_comm | exact GlobalTheory.PlaceComm.place_comm | (intros; apply GlobalTheory.PlaceComm.place_comm <;> assumption)
+  first | exact @GlobalTheory.PlaceComm.place_comm
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RealPlacesDistinctTranslationsDerivativesCommuteStatement =====
@@ -944,7 +944,7 @@ theorem _root_.GlobalTheory.T.gKModule_map_finite_sum : _root_.GlobalTheory.FunP
     ∃ (m : ℕ) (T : Fin m → (GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ) →ₗ[ℂ] (GA D V → ℂ)))
       (p : Fin m → GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ)),
       (∀ j, GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.IsGKMap θ V τ (M.ε τ) (M.σ τ) (M.fr τ) (T j)) ∧ φ = ∑ j, T j (p j) := by
-  first | exact @_root_.GlobalTheory.FiniteGKSum.finite_sum_of_gKModule_maps | exact _root_.GlobalTheory.FiniteGKSum.finite_sum_of_gKModule_maps | (intros; apply _root_.GlobalTheory.FiniteGKSum.finite_sum_of_gKModule_maps <;> assumption)
+  first | exact @_root_.GlobalTheory.FiniteGKSum.finite_sum_of_gKModule_maps
 end
 end -- clump:auto
 end -- clump:auto
@@ -1089,7 +1089,7 @@ theorem _root_.GlobalTheory.T.structure_of_kFinite_vectors : _root_.GlobalTheory
     ∀ B : Submodule ℂ (GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ)), B ≠ ⊥ →
       (∀ X ∈ lieAt V τ, ∀ v w : GlobalTheory.IndefiniteRowSideFullHecke.FinitePartTypes.kFin (M.ε τ) (M.σ τ), v ∈ B →
         HasDerivAt (fun t : ℝ => M.rep τ (NormedSpace.exp (t • X)) (v : M.H τ)) (w : M.H τ) 0 → w ∈ B) → B = ⊤ := by
-  first | exact @_root_.GlobalTheory.KFinStruct.kFinite_vector_structure | exact _root_.GlobalTheory.KFinStruct.kFinite_vector_structure | (intros; apply _root_.GlobalTheory.KFinStruct.kFinite_vector_structure <;> assumption)
+  first | exact @_root_.GlobalTheory.KFinStruct.kFinite_vector_structure
 end
 end -- clump:auto
 end -- clump:auto
@@ -1399,7 +1399,7 @@ theorem _root_.GlobalTheory.T.cuspForm_gK_isotypic_decomposition : _root_.Global
     (S : D.what₂.Tau → SPar) (M : Formalism.IndefR.Mult.DSModel V S), IsInfFam (D := D) θ →
     ∀ A : Submodule ℂ (GA D V → ℂ), GlobalTheory.CuspGK.IsIrrGKSub θ M A → (∀ f ∈ A, GlobalTheory.CuspGK.IsKFinCuspOfType θ M f) →
     A ≤ GlobalTheory.CuspGK.multSpan θ M := by
-  first | exact @_root_.GlobalTheory.CuspGKId.le_multiplicitySpan_cuspForm | exact _root_.GlobalTheory.CuspGKId.le_multiplicitySpan_cuspForm | (intros; apply _root_.GlobalTheory.CuspGKId.le_multiplicitySpan_cuspForm <;> assumption)
+  first | exact @_root_.GlobalTheory.CuspGKId.le_multiplicitySpan_cuspForm
 end
 end -- clump:auto
 end -- clump:auto

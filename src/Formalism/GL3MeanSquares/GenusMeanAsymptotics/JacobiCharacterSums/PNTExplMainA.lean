@@ -90,16 +90,18 @@ theorem exm_log_le (M T u : ℝ) (hM : 3 ≤ M) (hT : 2 ≤ T) (hu0 : 0 ≤ u) (
   have hM0 : 0 ≤ M := by linarith
   have hpos : 0 < M * (u + 2) := mul_pos (by linarith) (by linarith)
   have h3 : T + 3 ≤ M * T ^ 2 := by
-    nlinarith [mul_le_mul_of_nonneg_right hM (sq_nonneg T),
+    linarith [mul_le_mul_of_nonneg_right hM (sq_nonneg T),
       mul_nonneg (sub_nonneg.2 hT) (by linarith : (0:ℝ) ≤ T)]
   have h4 : M * (u + 2) ≤ M * (T + 3) := mul_le_mul_of_nonneg_left (by linarith) hM0
   have h5 : M * (T + 3) ≤ M * (M * T ^ 2) := mul_le_mul_of_nonneg_left h3 hM0
-  have h2 : M * (u + 2) ≤ (M * T) ^ 2 := by nlinarith
+  have h2 : M * (u + 2) ≤ (M * T) ^ 2 := by linarith
   calc Real.log (M * (u + 2)) ≤ Real.log ((M * T) ^ 2) := Real.log_le_log hpos h2
     _ = 2 * Real.log (M * T) := by rw [Real.log_pow]; push_cast; ring
 
 theorem exm_log_ge_one (M T : ℝ) (hM : 3 ≤ M) (hT : 2 ≤ T) : 1 ≤ Real.log (M * T) := by
-  have h6 : 6 ≤ M * T := by nlinarith
+  have h6 : 6 ≤ M * T := by
+    have := mul_le_mul hM hT (by norm_num) (by linarith)
+    linarith
   calc (1 : ℝ) = Real.log (Real.exp 1) := (Real.log_exp 1).symm
     _ ≤ Real.log (M * T) := Real.log_le_log (Real.exp_pos 1) (by linarith [Real.exp_one_lt_d9])
 
@@ -119,7 +121,7 @@ theorem exm_N_le (κ C₁ C₂ M T δ : ℝ) (hκ : 0 < κ) (hC₁ : 0 < C₁) (
   have e1 : (T + 1) * Real.log (M * (T + 2)) ≤ (T + 1) * (2 * Real.log (M * T)) :=
     mul_le_mul_of_nonneg_left hL' (by linarith)
   have e2 : (T + 1) * (2 * Real.log (M * T)) ≤ 3 * T * Real.log (M * T) := by
-    nlinarith [mul_le_mul_of_nonneg_right hT (by linarith : (0:ℝ) ≤ Real.log (M * T))]
+    linarith [mul_le_mul_of_nonneg_right hT (by linarith : (0:ℝ) ≤ Real.log (M * T))]
   have hnum : 2 * (C₁ * C₂ * Real.log (M * T)) * ((T + 1) * Real.log (M * (T + 2))) ≤
       2 * (C₁ * C₂ * Real.log (M * T)) * (3 * T * Real.log (M * T)) :=
     mul_le_mul_of_nonneg_left (e1.trans e2) (by linarith)
@@ -153,10 +155,10 @@ theorem exm_tail_num (C₃ T T' y l : ℝ) (hC₃ : 0 ≤ C₃) (hT : 2 ≤ T) (
     rw [one_mul]; exact mul_le_mul hepi hT' hT0.le Real.pi_pos.le
   have h1 : Real.exp 1 / (Real.pi * T') ≤ 1 / T := by
     rw [div_le_div_iff₀ (mul_pos Real.pi_pos hT'0) hT0]; exact hprod
-  have hl2 : 1 ≤ l ^ 2 := by nlinarith
+  have hl2 : 1 ≤ l ^ 2 := one_le_pow₀ hl
   have hA : 0 ≤ (1 + 2 * C₃) * Real.log y := mul_nonneg (by linarith) (by linarith)
   have hnum : Real.log y + C₃ ≤ (1 + 2 * C₃) * Real.log y * l ^ 2 := by
-    nlinarith [mul_le_mul_of_nonneg_left hl2 hA, mul_le_mul_of_nonneg_left hLy hC₃]
+    linarith [mul_le_mul_of_nonneg_left hl2 hA, mul_le_mul_of_nonneg_left hLy hC₃]
   rw [key]
   calc (Real.log y + C₃) * (Real.exp 1 / (Real.pi * T')) ≤ (Real.log y + C₃) * (1 / T) :=
         mul_le_mul_of_nonneg_left h1 (by linarith)
@@ -180,17 +182,19 @@ theorem exm_horiz_num (G N T T' y l : ℝ) (hG : 0 ≤ G) (hN0 : 0 ≤ N) (hN : 
       3 * (N + 1) * (Real.exp 1 / (2 * Real.pi * T' ^ 2)) := by
     field_simp
   have hX : 0 ≤ Real.exp 1 / (2 * Real.pi * T' ^ 2) := by positivity
-  have hl2 : 1 ≤ l ^ 2 := by nlinarith
-  have hTl : 1 ≤ T * l ^ 2 := by nlinarith
-  have hN1 : 3 * (N + 1) ≤ 3 * (G + 1) * (T * l ^ 2) := by nlinarith
+  have hl2 : 1 ≤ l ^ 2 := one_le_pow₀ hl
+  have hTl : 1 ≤ T * l ^ 2 := one_le_mul_of_one_le_of_one_le (by linarith) hl2
+  have hN1 : 3 * (N + 1) ≤ 3 * (G + 1) * (T * l ^ 2) := by linarith
   have hA : Real.exp 1 ≤ 2 * Real.pi * Real.log y := by
-    nlinarith [Real.exp_one_lt_d9, Real.pi_gt_three, mul_le_mul_of_nonneg_left hLy Real.pi_pos.le]
-  have hTT : T ^ 2 ≤ T' ^ 2 := by nlinarith
+    linarith [Real.exp_one_lt_d9, Real.pi_gt_three, mul_le_mul_of_nonneg_left hLy Real.pi_pos.le]
+  have hTT : T ^ 2 ≤ T' ^ 2 := pow_le_pow_left₀ hT0.le hT' 2
   have hprod : Real.exp 1 * T ^ 2 ≤ Real.log y * (2 * Real.pi * T' ^ 2) := by
-    nlinarith [mul_le_mul hA hTT (sq_nonneg T) (by nlinarith [Real.pi_pos] : (0:ℝ) ≤ 2 * Real.pi * Real.log y)]
+    linarith [mul_le_mul hA hTT (sq_nonneg T)
+      (mul_nonneg (by positivity) (by linarith) : (0:ℝ) ≤ 2 * Real.pi * Real.log y)]
   have h1 : Real.exp 1 / (2 * Real.pi * T' ^ 2) ≤ Real.log y / T ^ 2 := by
     rw [div_le_div_iff₀ (mul_pos (mul_pos two_pos Real.pi_pos) (pow_pos hT'0 2)) (pow_pos hT0 2)]; exact hprod
-  have hB : 0 ≤ 3 * (G + 1) * (T * l ^ 2) := by nlinarith
+  have hB : 0 ≤ 3 * (G + 1) * (T * l ^ 2) :=
+    mul_nonneg (mul_nonneg (by norm_num) (by linarith)) (by linarith)
   rw [key]
   calc 3 * (N + 1) * (Real.exp 1 / (2 * Real.pi * T' ^ 2))
         ≤ 3 * (G + 1) * (T * l ^ 2) * (Real.exp 1 / (2 * Real.pi * T' ^ 2)) :=
@@ -219,24 +223,25 @@ theorem exm_left_num (κ G N M T T' σ₁ y : ℝ) (hκ : 0 < κ) (hκ' : κ ≤
   have hκne : κ ≠ 0 := hκ.ne'
   have hpine : Real.pi ≠ 0 := Real.pi_ne_zero
   have hP : 57 * κ / 80 ≤ σ₁ * (1 - σ₁) := by
-    nlinarith [mul_le_mul hs1 hs2 (by linarith) hs0.le]
+    linarith [mul_le_mul hs1 hs2 (by linarith) hs0.le]
   have hD : 2 * κ ≤ Real.pi * (σ₁ * (1 - σ₁)) := by
-    nlinarith [mul_le_mul Real.pi_gt_three.le hP (by linarith) Real.pi_pos.le]
+    linarith [mul_le_mul Real.pi_gt_three.le hP (by linarith) Real.pi_pos.le]
   have hDpos : 0 < Real.pi * (σ₁ * (1 - σ₁)) := by linarith
   have hc0 : 0 ≤ 4 / (3 * κ) := div_nonneg (by norm_num) (by linarith)
   have hL1 : 1 ≤ Real.log (M * T) := exm_log_ge_one M T hM hT
   have hLle : Real.log (M * T) ≤ M * T := by
     have := Real.log_le_sub_one_of_pos hMT
     linarith
-  have hTL : 1 ≤ T * Real.log (M * T) ^ 2 := by nlinarith
+  have hTL : 1 ≤ T * Real.log (M * T) ^ 2 :=
+    one_le_mul_of_one_le_of_one_le (by linarith) (one_le_pow₀ hL1)
   have hNc : N + 4 / (3 * κ) ≤ (G + 4 / (3 * κ)) * (T * Real.log (M * T) ^ 2) := by
-    nlinarith [mul_le_mul_of_nonneg_left hTL hc0]
+    linarith [mul_le_mul_of_nonneg_left hTL hc0]
   have hT'le : T' ≤ 3 * T / 2 := by linarith
   have hnum1 : T' * (N + 4 / (3 * κ)) ≤
       (3 * T / 2) * ((G + 4 / (3 * κ)) * (T * Real.log (M * T) ^ 2)) :=
     mul_le_mul hT'le hNc (by linarith) (by linarith)
   have hGc : 0 ≤ G + 4 / (3 * κ) := by linarith
-  have hTMT : T ≤ M * T := by nlinarith
+  have hTMT : T ≤ M * T := le_mul_of_one_le_left hT0.le (by linarith)
   have hTL2 : T * Real.log (M * T) ≤ (M * T) * (M * T) :=
     mul_le_mul hTMT hLle (by linarith) hMT.le
   have hQ : (T * Real.log (M * T)) * (T * Real.log (M * T)) ≤
@@ -295,6 +300,6 @@ theorem sum_le_mul_rpow_add (AL AW C X Y W : ℝ) (hC4 : 4 ≤ C) (hCL : AL ≤ 
   have h1 := mul_le_mul_of_nonneg_right hCL (mul_nonneg (pow_nonneg hX0 4) hY)
   have h2 := mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_right h4 hY) hC0
   have h3 := mul_le_mul_of_nonneg_right hCW hW
-  nlinarith
+  linarith
 
 end Formalism.HermitianLattices.Ext.PrimesInProgressions

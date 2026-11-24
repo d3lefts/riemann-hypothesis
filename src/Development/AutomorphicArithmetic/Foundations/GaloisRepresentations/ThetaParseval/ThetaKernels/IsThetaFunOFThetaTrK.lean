@@ -102,7 +102,7 @@ theorem _root_.GlobalTheory.T.doubled_theta_lift_automorphy : ∀ (F E : Type) [
             co.e (incM F x) = (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i))) →
           ∀ φ ∈ schA F κ,
           Continuous (GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ φ) := by
-  first | exact @_root_.GlobalTheory.ThetaTrContCM.continuous_thetaTr_cm_k | exact _root_.GlobalTheory.ThetaTrContCM.continuous_thetaTr_cm_k | (intros; apply _root_.GlobalTheory.ThetaTrContCM.continuous_thetaTr_cm_k <;> assumption)
+  first | exact @_root_.GlobalTheory.ThetaTrContCM.continuous_thetaTr_cm_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -168,7 +168,7 @@ theorem _root_.GlobalTheory.T.doubled_theta_lift_convergence : ∀ (F E : Type) 
             ∀ u ∈ U, u.map (Formalism.IndefR.DatumF.infPartF F E) = 0 →
               Formalism.IndefR.DatumF.heisOF σ JS JT ξ₀ B.ψ u (GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ φ) =
                 GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ φ := by
-  first | exact @_root_.GlobalTheory.ThetaLevelCM.thetaTr_level_k | exact _root_.GlobalTheory.ThetaLevelCM.thetaTr_level_k | (intros; apply _root_.GlobalTheory.ThetaLevelCM.thetaTr_level_k <;> assumption)
+  first | exact @_root_.GlobalTheory.ThetaLevelCM.thetaTr_level_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -234,7 +234,7 @@ theorem _root_.GlobalTheory.T.doubled_theta_lift_identity : ∀ (F E : Type) [Fi
             GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ φ (Formalism.IndefR.DatumF.ratWF γ + w) =
               B.ψ (-(Formalism.IndefR.DatumF.symplOHF σ JS JT ξ₀ (Formalism.IndefR.DatumF.ratWF γ) w)) *
                 GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ φ w := by
-  first | exact @_root_.GlobalTheory.ThetaQuasiRatCM.thetaTr_ratWF_add_quasi_k | exact _root_.GlobalTheory.ThetaQuasiRatCM.thetaTr_ratWF_add_quasi_k | (intros; apply _root_.GlobalTheory.ThetaQuasiRatCM.thetaTr_ratWF_add_quasi_k <;> assumption)
+  first | exact @_root_.GlobalTheory.ThetaQuasiRatCM.thetaTr_ratWF_add_quasi_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -300,7 +300,7 @@ theorem _root_.GlobalTheory.T.doubled_theta_lift_nonvanishing : ∀ (F E : Type)
           ∀ (k : ℕ) (L : (Fin k → ℝ) →+ Formalism.IndefR.DatumF.WOF F E nS nT), Continuous L →
             (∀ t, (L t).map (Formalism.IndefR.DatumF.finPartF F E) = 0) →
             ∀ w, ContDiff ℝ ∞ fun t => GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ φ (w + L t) := by
-  first | exact @_root_.GlobalTheory.ThetaSmoothCM.contDiff_thetaTr_real_CM_k | exact _root_.GlobalTheory.ThetaSmoothCM.contDiff_thetaTr_real_CM_k | (intros; apply _root_.GlobalTheory.ThetaSmoothCM.contDiff_thetaTr_real_CM_k <;> assumption)
+  first | exact @_root_.GlobalTheory.ThetaSmoothCM.contDiff_thetaTr_real_CM_k
 end
 end -- clump:auto
 end -- clump:auto

@@ -733,7 +733,7 @@ theorem exists_surjective_valuation_isIntegral_iff (K : UQ) (L : Type) [Field L]
     (Units.map (P.valuation L).toMonoidWithZeroHom.toMonoidHom)
   have hu : ∀ x : Lˣ, ((u x : Multiplicative ℤ) : WithZero (Multiplicative ℤ)) = P.valuation L x := by
     intro x
-    simp [u, WithZero.coe_unitsWithZeroEquiv_eq_units_val]
+    simp [u]
   have key : ∀ x : L, x ≠ 0 → (IsIntegral K.O x ↔ P.valuation L x ≤ 1) := by
     intro x hx
     rw [← mem_integralClosure_iff]
@@ -992,12 +992,12 @@ theorem torus_integral_iff : ∀ (G : Type) [CommGroup G] (τ : G →* G) (T : S
   have val1 : ∀ i, Multiplicative.toAdd (w i ((t : G)⁻¹ * α ^ k))
       = - Multiplicative.toAdd (w i t) + k * Multiplicative.toAdd (w i α) := by
     intro i
-    simp [map_mul, map_inv, map_pow, toAdd_mul, toAdd_inv, toAdd_pow, nsmul_eq_mul]
+    simp [map_mul, map_inv, map_pow, toAdd_mul, toAdd_inv, toAdd_pow]
   have val2 : ∀ i, Multiplicative.toAdd (w i (τ ((t : G)⁻¹ * α ^ k)))
       = Multiplicative.toAdd (w i t) + k * Multiplicative.toAdd (w i α) := by
     intro i
     rw [map_mul, map_inv, map_pow, hτt, hα, inv_inv]
-    simp [map_mul, map_pow, toAdd_mul, toAdd_pow, nsmul_eq_mul]
+    simp [map_mul, map_pow, toAdd_mul, toAdd_pow]
   have rhs : ∀ j, ((k * (Multiplicative.toAdd (w (e j) α)).toNat : ℕ) : ℤ)
       = k * Multiplicative.toAdd (w (e j) α) := by
     intro j
@@ -1127,7 +1127,7 @@ theorem valsAt_torus_eq_one_iff (G : Type) [CommGroup G] (τ : G →* G) (T : Su
     apply Multiplicative.toAdd.injective
     funext j
     simp only [MonoidHom.comp_apply, Subgroup.coe_subtype]
-    simp only [MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom,
+    simp only [MulEquiv.coe_toMonoidHom,
       MulEquiv.piMultiplicative_symm_apply, toAdd_ofAdd, MonoidHom.pi_apply, Function.comp_apply]
     rw [h]
     rfl
@@ -1166,7 +1166,7 @@ theorem valsAt_torus_surjective : ∀ (G : Type) [CommGroup G] (τ : G →* G), 
   simp only [MonoidHom.comp_apply, Subgroup.coe_subtype]
   apply Multiplicative.toAdd.injective
   funext i
-  simp only [MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom,
+  simp only [MulEquiv.coe_toMonoidHom,
     MulEquiv.piMultiplicative_symm_apply, toAdd_ofAdd, MonoidHom.pi_apply, Function.comp_apply]
   rw [map_prod, toAdd_prod]
   have hc : ∀ j, Multiplicative.toAdd (w (e i) (y j * (τ (y j))⁻¹)) = if i = j then Multiplicative.toAdd n i else 0 := by
@@ -1279,7 +1279,6 @@ theorem torus_mod_intUnits_structure : ∀ (K : UQ) (B : InvAlg K), B.LieReg →
       linarith [ha1 m]
   · exact Int.lt_toNat.mpr (hαpos (e j))
   · rw [← _root_.GlobalTheory.TorusInteg.torus_integral_iff B.Aˣ τ B.T hT _ s w hswap r e he3 α hτα hαpos, ← hP]
-    congr 2
     rw [Units.val_mul, Units.val_pow_eq_pow_val, hαv]
 
 end GlobalTheory.UnitLemma

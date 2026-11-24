@@ -248,8 +248,6 @@ theorem csCovol_int_mult {K : Type} [Field K] [NumberField K] (e : 𝓞 K) (he :
   refine ⟨Algebra.intNorm ℤ (𝓞 K) e, ?_, c, by rw [hc, mul_comm]⟩
   first
   | exact Algebra.intNorm_ne_zero.mpr he
-  | exact (Algebra.intNorm_eq_zero.not).mpr he
-  | simpa using he
 
 theorem csCovol_discr_mul {K : Type} [Field K] [NumberField K] (z : K)
     (hz : ∀ a : 𝓞 K, Algebra.trace ℚ K ((a : K) * z) ∈ Set.range (algebraMap ℤ ℚ)) :
@@ -281,8 +279,6 @@ theorem csCovol_mem_zmap (M : Submodule (𝓞 K) V) (v : EuclideanSpace ℝ (Fin
     v ∈ Formalism.HermitianLatticesTheory.zmap ι M ↔ ∃ y ∈ M, ι y = v := by
   first
   | exact Iff.rfl
-  | simp [Formalism.HermitianLatticesTheory.zmap, AddSubgroup.mem_map]
-  | (unfold Formalism.HermitianLatticesTheory.zmap; rw [AddSubgroup.mem_toIntSubmodule, AddSubgroup.mem_map]; rfl)
 
 theorem csCovol_expand
     (hι : ∀ x y : V, inner ℝ (ι x) (ι y) = ((Algebra.trace ℚ K (h x y) : ℚ) : ℝ))
@@ -302,7 +298,7 @@ theorem csCovol_expand
     have e2 : ((Algebra.trace ℚ K (h w z) : ℚ) : ℝ) =
         ((∑ j, ((b.repr ⟨ι z, hz'⟩ j : ℤ) : ℚ) * Algebra.trace ℚ K (h w (m j)) : ℚ) : ℝ) := by
       push_cast
-      first | exact e1 | exact e1.symm
+      first | exact e1.symm
     exact_mod_cast e2
   · have e1 := hι z w
     rw [h2, sum_inner] at e1
@@ -310,7 +306,7 @@ theorem csCovol_expand
     have e2 : ((Algebra.trace ℚ K (h z w) : ℚ) : ℝ) =
         ((∑ j, ((b.repr ⟨ι z, hz'⟩ j : ℤ) : ℚ) * Algebra.trace ℚ K (h (m j) w) : ℚ) : ℝ) := by
       push_cast
-      first | exact e1 | exact e1.symm
+      first | exact e1.symm
     exact_mod_cast e2
 
 theorem csCovol_column
@@ -376,8 +372,6 @@ theorem csCovol_column
     congr 1
     push_cast
     rw [hcK]
-    try simp only [algebraMap_smul, RingOfIntegers.coe_eq_algebraMap]
-    try ring
   obtain ⟨aa, haa, -⟩ := csCovol_expand h ι hι M b m hm _ hy
   refine ⟨aa, ?_⟩
   funext i
@@ -429,7 +423,7 @@ theorem covolume_of_dual_holds : Formalism.UG.CS.CovolOfDual := by
     simp only [Matrix.mul_apply, Matrix.map_apply, P, Matrix.of_apply, Matrix.smul_apply,
       Matrix.one_apply, smul_eq_mul]
     rw [this, hD]
-    simp [Pi.single_apply, eq_comm]
+    simp [Pi.single_apply]
   have hle := csCovol_det_le G hGpos D hD0 P hP
   have hleR : ZLattice.covolume (Formalism.HermitianLatticesTheory.zmap ι M) ^ 2 ≤ |(D : ℝ)| ^ N := by
     rw [hsq]
@@ -910,7 +904,6 @@ private theorem quotient_out_mem_iff_eq_one {G : Type} [Group G] (K : Subgroup G
   have hx : (QuotientGroup.mk x.out : G ⧸ K) = x := by
     first
       | exact QuotientGroup.out_eq' x
-      | exact Quotient.out_eq x
   constructor
   · intro h
     rw [← hx]
@@ -943,7 +936,6 @@ theorem GlEquivApply : Formalism.UG.GlEquivApply := by
   intro K _ n _ _ g x
   first
     | rfl
-    | simp [glEquiv, Matrix.GeneralLinearGroup.coe_toLin, Matrix.toLin'_apply]
 theorem HformGram : Formalism.UG.HformGram := by
   intro K _ _ n _ _ h x y
   have hx : x = ∑ i, x i • Pi.single i 1 := by
@@ -1023,7 +1015,7 @@ theorem DosetIndMem : Formalism.UG.DosetIndMem := by
         obtain ⟨h, hh, c, hc, rfl⟩ := DoubleCoset.mem_doubleCoset.mp hx
         exact DoubleCoset.mem_doubleCoset.mpr
           ⟨(a : G) * h, K.mul_mem a.2 hh, c * b, K.mul_mem hc b.2, by simp only [mul_assoc]⟩
-      simp [dosetInd, Set.indicator_apply, hx, hm]
+      simp [dosetInd, hx, hm]
     · have hm : (a : G) * x * b ∉ DoubleCoset.doubleCoset g (K : Set G) (K : Set G) := by
         intro hm
         apply hx
@@ -1033,11 +1025,11 @@ theorem DosetIndMem : Formalism.UG.DosetIndMem := by
         have hx' : x = (a : G)⁻¹ * ((a : G) * x * b) * (b : G)⁻¹ := by group
         rw [hx', he]
         simp only [mul_assoc]
-      simp [dosetInd, Set.indicator_apply, hx, hm]
+      simp [dosetInd, hx, hm]
   · have hm : x ∈ DoubleCoset.doubleCoset g (K : Set G) (K : Set G) := by
       by_contra h
       apply hx
-      simp [dosetInd, Set.indicator_apply, h]
+      simp [dosetInd, h]
     obtain ⟨h, hh, c, hc, rfl⟩ := DoubleCoset.mem_doubleCoset.mp hm
     exact ⟨g, Finset.mem_singleton_self g, ⟨h, hh⟩, ⟨c, hc⟩, rfl⟩
 theorem HeckeUnit : Formalism.UG.HeckeUnit := by
@@ -1049,14 +1041,14 @@ theorem HeckeUnit : Formalism.UG.HeckeUnit := by
     rw [finsum_eq_single _ (QuotientGroup.mk 1 : G ⧸ K)]
     · have hmem : (QuotientGroup.mk 1 : G ⧸ K).out ∈ K := (quotient_out_mem_iff_eq_one K _).mpr rfl
       have h1 : dosetInd k K 1 (QuotientGroup.mk 1 : G ⧸ K).out = 1 := by
-        simp [dosetInd, Set.indicator_apply, (mem_doubleCoset_one_iff_mem K _).mpr hmem]
+        simp [dosetInd, (mem_doubleCoset_one_iff_mem K _).mpr hmem]
       simp only [h1, one_mul]
       have h2 := hbi ⟨_, K.inv_mem hmem⟩ 1 g
       simpa using h2
     · intro x hx
       have hn : x.out ∉ K := fun h => hx ((quotient_out_mem_iff_eq_one K x).mp h)
       have h0 : dosetInd k K 1 x.out = 0 := by
-        simp [dosetInd, Set.indicator_apply, (mem_doubleCoset_one_iff_mem K _).not.mpr hn]
+        simp [dosetInd, (mem_doubleCoset_one_iff_mem K _).not.mpr hn]
       simp only [h0, zero_mul]
   · funext g
     unfold conv
@@ -1064,10 +1056,9 @@ theorem HeckeUnit : Formalism.UG.HeckeUnit := by
     · have hq : (QuotientGroup.mk ((QuotientGroup.mk g : G ⧸ K).out) : G ⧸ K) = QuotientGroup.mk g := by
         first
           | exact QuotientGroup.out_eq' _
-          | exact Quotient.out_eq _
       have hk : ((QuotientGroup.mk g : G ⧸ K).out)⁻¹ * g ∈ K := QuotientGroup.eq.mp hq
       have h1 : dosetInd k K 1 (((QuotientGroup.mk g : G ⧸ K).out)⁻¹ * g) = 1 := by
-        simp [dosetInd, Set.indicator_apply, (mem_doubleCoset_one_iff_mem K _).mpr hk]
+        simp [dosetInd, (mem_doubleCoset_one_iff_mem K _).mpr hk]
       simp only [h1, mul_one]
       have h2 := hbi 1 ⟨_, K.inv_mem hk⟩ g
       simpa using h2
@@ -1079,9 +1070,8 @@ theorem HeckeUnit : Formalism.UG.HeckeUnit := by
         rw [← hq]
         first
           | exact (QuotientGroup.out_eq' x).symm
-          | exact (Quotient.out_eq x).symm
       have h0 : dosetInd k K 1 (x.out⁻¹ * g) = 0 := by
-        simp [dosetInd, Set.indicator_apply, (mem_doubleCoset_one_iff_mem K _).not.mpr hn]
+        simp [dosetInd, (mem_doubleCoset_one_iff_mem K _).not.mpr hn]
       simp only [h0, mul_zero]
 theorem HeckeActOne : Formalism.UG.HeckeActOne := by
   intro G _ Γ K k _ W _ _ ρ φ hφ
@@ -1094,13 +1084,13 @@ theorem HeckeActOne : Formalism.UG.HeckeActOne := by
   rw [finsum_eq_single _ (QuotientGroup.mk 1 : G ⧸ K)]
   · have hmem : (QuotientGroup.mk 1 : G ⧸ K).out ∈ K := (quotient_out_mem_iff_eq_one K _).mpr rfl
     have h1 : dosetInd k K 1 (QuotientGroup.mk 1 : G ⧸ K).out = 1 := by
-      simp [dosetInd, Set.indicator_apply, (mem_doubleCoset_one_iff_mem K _).mpr hmem]
+      simp [dosetInd, (mem_doubleCoset_one_iff_mem K _).mpr hmem]
     simp only [h1, one_smul]
     exact hright ⟨_, hmem⟩
   · intro x hx
     have hn : x.out ∉ K := fun h => hx ((quotient_out_mem_iff_eq_one K x).mp h)
     have h0 : dosetInd k K 1 x.out = 0 := by
-      simp [dosetInd, Set.indicator_apply, (mem_doubleCoset_one_iff_mem K _).not.mpr hn]
+      simp [dosetInd, (mem_doubleCoset_one_iff_mem K _).not.mpr hn]
     simp only [h0, zero_smul]
 theorem HeckeBasis : Formalism.UG.HeckeBasis := by
   intro G _ K k _
@@ -1186,7 +1176,6 @@ theorem InclInj : Formalism.UG.InclInj := by
   have hinj : Function.Injective (inclE (F := F) (E := E) R) := by
     first
       | exact Algebra.TensorProduct.includeLeft_injective (S := F) (algebraMap F R).injective
-      | exact Algebra.TensorProduct.includeLeft_injective (R := F) (A := E) (B := R) (algebraMap F R).injective
   intro g h hgh
   apply Units.ext
   ext i j

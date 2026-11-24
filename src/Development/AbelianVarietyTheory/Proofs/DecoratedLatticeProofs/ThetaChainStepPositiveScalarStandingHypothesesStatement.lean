@@ -344,7 +344,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection (Blocks parahoric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.chainLevelIntegralRealZeta_of_twisted_transform_laws : ∀ D : D7, LevelLawQ D → LevInt D := by
-  first | exact @GlobalTheory.ChainTw.LevIntProof.levInt | exact GlobalTheory.ChainTw.LevIntProof.levInt | (intros; apply GlobalTheory.ChainTw.LevIntProof.levInt <;> assumption)
+  first | exact @GlobalTheory.ChainTw.LevIntProof.levInt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ChainLevelIntegralRealZetaOfTwistedTransformLawsStatement =====
@@ -411,7 +411,7 @@ theorem upVal_of_span_adj : ∀ D : D7, SoftQ D → UpSpanQ D → UpAdjQ D → U
           rw [h] at this
           simp at this
         subst hx0
-        first | rfl | simp [PiLocalization₂.val]
+        first | rfl
       · have hw0 : w₀ = 0 := by
           by_contra hne
           have := hM'.posD w₀ hne
@@ -449,7 +449,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection (Blocks parahoric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.chain_theta_lift_up_eq_adjoint_value : ∀ D : D7, SoftQ D → UpSpanQ D → UpAdjQ D → UpVal D := by
-  first | exact @GlobalTheory.ChainTw.upVal_of_span_adj | exact GlobalTheory.ChainTw.upVal_of_span_adj | (intros; apply GlobalTheory.ChainTw.upVal_of_span_adj <;> assumption)
+  first | exact @GlobalTheory.ChainTw.upVal_of_span_adj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ChainThetaLiftUpEqAdjointValueStatement =====
@@ -527,7 +527,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection (Blocks parahoric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.chainThetaLiftUp_parameter_of_transfer : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Hk3.HoweUnram → ∀ D : D7, UpParQ D := by
-  first | exact @GlobalTheory.ChainTw.upParQ_of_transfer | exact GlobalTheory.ChainTw.upParQ_of_transfer | (intros; apply GlobalTheory.ChainTw.upParQ_of_transfer <;> assumption)
+  first | exact @GlobalTheory.ChainTw.upParQ_of_transfer
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ChainThetaLiftUpParameterOfTransferStatement =====
@@ -591,7 +591,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection (Blocks parahoric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.chainThetaLiftsAdjoint_of_cuspRapidDecay : GlobalTheory.Published.CuspRapidDecay → ∀ D : D7, UpAdjQ D := by
-  first | exact @GlobalTheory.ChainTw.upAdjQ_of_cuspRapidDecay | exact GlobalTheory.ChainTw.upAdjQ_of_cuspRapidDecay | (intros; apply GlobalTheory.ChainTw.upAdjQ_of_cuspRapidDecay <;> assumption)
+  first | exact @GlobalTheory.ChainTw.upAdjQ_of_cuspRapidDecay
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ChainThetaLiftsAdjointOfCuspRapidDecayStatement =====
@@ -637,7 +637,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.LiftRows (Given)
 
 theorem _root_.GlobalTheory.T.realFormsRangeMultiplicity_of_scalarHypotheses : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Given R F → RangeX R := by
-  first | exact @GlobalTheory.ChainTw.rangeX_of_given | exact GlobalTheory.ChainTw.rangeX_of_given | (intros; apply GlobalTheory.ChainTw.rangeX_of_given <;> assumption)
+  first | exact @GlobalTheory.ChainTw.rangeX_of_given
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.RealFormsRangeMultiplicityOfScalarHypothesesStatement =====
@@ -767,7 +767,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.LiftRows (Given)
 
 theorem _root_.GlobalTheory.T.realLastStageNormalized_of_scalarHypotheses : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Given R F → ∀ h : RangeX R, NormX R h := by
-  first | exact @GlobalTheory.ChainTwNorm.normX | exact GlobalTheory.ChainTwNorm.normX | (intros; apply GlobalTheory.ChainTwNorm.normX <;> assumption)
+  first | exact @GlobalTheory.ChainTwNorm.normX
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.RealLastStageNormalizedOfScalarHypothesesStatement =====
@@ -787,7 +787,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.LiftRows (Given)
 
 theorem _root_.GlobalTheory.T.realMeasureUniformInTuple_of_thetaLiftScalar : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Given R F → (∀ h : RangeX R, RChain R h) → RangeX R → RMeas R := by
-  first | exact @GlobalTheory.RealMeasOne.one_real_measure | exact GlobalTheory.RealMeasOne.one_real_measure | (intros; apply GlobalTheory.RealMeasOne.one_real_measure <;> assumption)
+  first | exact @GlobalTheory.RealMeasOne.one_real_measure
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.RealMeasureUniformInTupleOfThetaLiftScalarStatement =====
@@ -807,7 +807,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.LiftRows (Given)
 
 theorem _root_.GlobalTheory.T.realQuotientVolumeGrowth_of_scalarHypotheses : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Given R F → (∀ h : RangeX R, RChain R h) → RangeX R → RVol R := by
-  first | exact @GlobalTheory.ChainTw.VolScale.rVol_of_given | exact GlobalTheory.ChainTw.VolScale.rVol_of_given | (intros; apply GlobalTheory.ChainTw.VolScale.rVol_of_given <;> assumption)
+  first | exact @GlobalTheory.ChainTw.VolScale.rVol_of_given
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.RealQuotientVolumeGrowthOfScalarHypothesesStatement =====
@@ -848,7 +848,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.LiftRows (Given)
 
 theorem _root_.GlobalTheory.T.realTupleTwistedChain_of_scalarHypotheses : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Given R F → ∀ h : RangeX R, RChain R h := by
-  first | exact @GlobalTheory.ChainTw.rChain_of_given | exact GlobalTheory.ChainTw.rChain_of_given | (intros; apply GlobalTheory.ChainTw.rChain_of_given <;> assumption)
+  first | exact @GlobalTheory.ChainTw.rChain_of_given
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.RealTupleTwistedChainOfScalarHypothesesStatement =====
@@ -943,7 +943,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.LiftRows (Given)
 
 theorem _root_.GlobalTheory.T.schurProduct_typings_agree_thetaChain : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Given R F → IPDict R := by
-  first | exact @GlobalTheory.ChainTw.IPDictPf.main | exact GlobalTheory.ChainTw.IPDictPf.main | (intros; apply GlobalTheory.ChainTw.IPDictPf.main <;> assumption)
+  first | exact @GlobalTheory.ChainTw.IPDictPf.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SchurProductTypingsAgreeThetaChainStatement =====
@@ -1024,7 +1024,7 @@ theorem stepExactNS : ∀ D : D7, GlobalTheory.Core.Rk.SW.HeckeFormNS D → Soft
   · have hz : ∀ g, zReal p m X φ v g = 0 := by
       intro g
       have hp0 := hMet.pure v v
-      simp only [h0, map_zero, LinearMap.zero_apply] at hp0
+      simp only [h0, map_zero] at hp0
       obtain ⟨τ, -, hτ⟩ := Finset.prod_eq_zero_iff.1 hp0.symm
       have h0τ : ((v τ : s.M.sm τ) : s.M.H τ) = 0 := inner_self_eq_zero.1 hτ
       simp only [zReal]
@@ -1129,7 +1129,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.LiftRows (Given)
 
 theorem _root_.GlobalTheory.T.thetaLiftChainStep_exact_innerProduct : ∀ D : D7, GlobalTheory.Core.Rk.SW.HeckeFormNS D → SoftQ D → QPeel D → LevInt D → StepExactNS D := by
-  first | exact @GlobalTheory.ChainTw.ExactNS.stepExactNS | exact GlobalTheory.ChainTw.ExactNS.stepExactNS | (intros; apply GlobalTheory.ChainTw.ExactNS.stepExactNS <;> assumption)
+  first | exact @GlobalTheory.ChainTw.ExactNS.stepExactNS
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ThetaLiftChainStepExactInnerProductStatement =====
@@ -1158,7 +1158,7 @@ theorem levChi_flag (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (r t j : ℕ)
       Lev.levChi V β (Lev.datY V.rank r t j hr Pg Q (LevelP.triv Pg r ℂ) χ ξ Lev.Frm.B) κ := by
   unfold Lev.levChi levFn
   congr 3
-  simp only [Lev.flagL, Lev.withP, Lev.datY, LevelP.full, LevelP.triv, if_true]
+  simp only [Lev.flagL, Lev.withP, Lev.datY, LevelP.full, LevelP.triv]
   exact (Lev.subgroupCharExtension_one_apply _ _).trans (Lev.subgroupCharExtension_one_apply _ _).symm
 
 theorem lift_one_of_mem (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (r t j : ℕ) (hr : r ≤ V.rank)
@@ -1249,7 +1249,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection (Blocks parahoric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.twistedChain_datum_laws_under_levels : ∀ D : D7, LevelLawQ D := by
-  first | exact @GlobalTheory.ChainTw.TwLaw.levelLawQ | exact GlobalTheory.ChainTw.TwLaw.levelLawQ | (intros; apply GlobalTheory.ChainTw.TwLaw.levelLawQ <;> assumption)
+  first | exact @GlobalTheory.ChainTw.TwLaw.levelLawQ
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.TwistedChainDatumLawsUnderLevelsStatement =====
@@ -1413,7 +1413,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection (Blocks parahoric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.twistedChain_realZeta_nonvanishing : GlobalTheory.Published.HarishChandraModules → ∀ D : D7, GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.ArchOnRecord D → RealZetaQ D := by
-  first | exact @GlobalTheory.RealZetaTw.realZetaTw | exact GlobalTheory.RealZetaTw.realZetaTw | (intros; apply GlobalTheory.RealZetaTw.realZetaTw <;> assumption)
+  first | exact @GlobalTheory.RealZetaTw.realZetaTw
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.TwistedChainRealZetaNonvanishingStatement =====
@@ -1498,7 +1498,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection (Blocks parahoric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.twistedChain_stage_soft_properties : GlobalTheory.Published.HarishChandraFinite → GlobalTheory.Published.CuspRapidDecay → ∀ D : D7, SoftQ D := by
-  first | exact @GlobalTheory.ChainTw.softQ_all | exact GlobalTheory.ChainTw.softQ_all | (intros; apply GlobalTheory.ChainTw.softQ_all <;> assumption)
+  first | exact @GlobalTheory.ChainTw.softQ_all
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.TwistedChainStageSoftPropertiesStatement =====
@@ -1602,7 +1602,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection (Blocks parahoric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.twistedChain_thetaLiftUpSpan : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.CasselmanWallach → ∀ D : D7, LevelLawQ D → UpSpanQ D := by
-  first | exact @GlobalTheory.ChainTw.UpSpanTw.upSpanQ_of | exact GlobalTheory.ChainTw.UpSpanTw.upSpanQ_of | (intros; apply GlobalTheory.ChainTw.UpSpanTw.upSpanQ_of <;> assumption)
+  first | exact @GlobalTheory.ChainTw.UpSpanTw.upSpanQ_of
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.TwistedChainThetaLiftUpSpanStatement =====
@@ -1689,16 +1689,16 @@ theorem lFull_holds : ∀ D : D7, LFull D := by
     intro i
     refine Finset.prod_nbij' (fun l => D.R.t - l) (fun n => D.R.t - n) ?_ ?_ ?_ ?_ ?_
     · intro l hl
-      simp only [Finset.mem_range, Finset.mem_Icc, Finset.mem_coe] at hl ⊢
+      simp only [Finset.mem_range, Finset.mem_Icc] at hl ⊢
       omega
     · intro n hn
-      simp only [Finset.mem_range, Finset.mem_Icc, Finset.mem_coe] at hn ⊢
+      simp only [Finset.mem_range, Finset.mem_Icc] at hn ⊢
       omega
     · intro l hl
-      simp only [Finset.mem_range, Finset.mem_Icc, Finset.mem_coe] at hl
+      simp only [Finset.mem_range] at hl
       omega
     · intro n hn
-      simp only [Finset.mem_range, Finset.mem_Icc, Finset.mem_coe] at hn
+      simp only [Finset.mem_Icc] at hn
       omega
     · intro l hl
       have hl' := Finset.mem_range.1 hl
@@ -1741,7 +1741,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection (Blocks parahoric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.twistedThetaChain_LValue_quotientFactorization : ∀ D : D7, LFull D := by
-  first | exact @GlobalTheory.ChainTw.lFull_holds | exact GlobalTheory.ChainTw.lFull_holds | (intros; apply GlobalTheory.ChainTw.lFull_holds <;> assumption)
+  first | exact @GlobalTheory.ChainTw.lFull_holds
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.TwistedThetaChainLValueQuotientFactorizationStatement =====
@@ -1803,7 +1803,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.LiftRows (Given)
 
 theorem _root_.GlobalTheory.T.thetaChain_steps_positive_multiple_of_LValue : GlobalTheory.Published.HarishChandraFinite → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CasselmanWallach → GlobalTheory.Hk3.HoweUnram → GlobalTheory.Published.UnramifiedDoublingGL → ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Given R F → GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.NodeGap D → GlobalTheory.Core.Rk.SW.HeckeFormNS D → GlobalTheory.IndefiniteRowSideFullHecke.LabelSettingScalars.Scalars R := by
-  first | exact @GlobalTheory.ChainTw.scalars_of_given_all | exact GlobalTheory.ChainTw.scalars_of_given_all | (intros; apply GlobalTheory.ChainTw.scalars_of_given_all <;> assumption)
+  first | exact @GlobalTheory.ChainTw.scalars_of_given_all
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ScalarsOfGivenDataStatement =====
@@ -1854,7 +1854,7 @@ open GlobalTheory.LiftRows
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.thetaChainStep_positive_scalar_standingHypotheses : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraFinite → GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CasselmanWallach → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Hk3.HoweUnram → GlobalTheory.Published.WeilSiegelFormulaUnitary → (∀ D' : Formalism.BasicNotions.D7, GlobalTheory.Core.Rk.SW.HeckeFormNS D') → GlobalTheory.Published.SiegelEisensteinContinuation → GlobalTheory.Published.UnramifiedDoublingGL → ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Given R F → D.host.ccK = ⊤ → GlobalTheory.IndefiniteRowSideFullHecke.LabelSettingScalars.Scalars R := by
-  first | exact @GlobalTheory.Core.Rk.ScalarsRow.scalars | exact GlobalTheory.Core.Rk.ScalarsRow.scalars | (intros; apply GlobalTheory.Core.Rk.ScalarsRow.scalars <;> assumption)
+  first | exact @GlobalTheory.Core.Rk.ScalarsRow.scalars
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ThetaChainStepPositiveScalarStandingHypothesesStatement =====

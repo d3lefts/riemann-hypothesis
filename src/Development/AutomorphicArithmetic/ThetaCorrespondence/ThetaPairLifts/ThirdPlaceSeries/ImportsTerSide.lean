@@ -388,7 +388,7 @@ variable {Γ : Type} [Group Γ] [Fintype Γ]
 theorem eq_sum_single (e : MonoidAlgebra ℂ Γ) : e = ∑ q : Γ, MonoidAlgebra.single q (e.coeff q) := by
   classical
   ext x
-  simp [MonoidAlgebra.coeff_sum, Finset.sum_apply', Finsupp.single_apply]
+  simp [MonoidAlgebra.coeff_sum]
 
 theorem coeff_mul_fin (a b : MonoidAlgebra ℂ Γ) (x : Γ) :
     (a * b).coeff x = ∑ q, a.coeff q * b.coeff (q⁻¹ * x) := by
@@ -933,8 +933,7 @@ theorem charpoly_eq_of_gen {n : ℕ} (ρ : Ine (F := E) A →* GL (Fin n) ℂ)
   have hχm : ∀ x ∈ s, χ x γ ^ m = χ x σ := by
     intro x hx
     have := congrArg (fun p : GL (Fin n) ℂ × (T → ℂˣ) => ((p.2 ⟨x, Multiset.mem_toFinset.2 hx⟩ : ℂˣ) : ℂ)) hm
-    simp only [Φ, MonoidHom.prod_apply, Prod.pow_snd, Pi.pow_apply, Units.val_pow_eq_pow_val,
-      Pi.monoidHom_apply] at this
+    simp only [Φ, MonoidHom.prod_apply, Prod.pow_snd, Pi.pow_apply, Units.val_pow_eq_pow_val] at this
     exact this
   rw [hρm, Units.val_pow_eq_pow_val, charpoly_pow_of_prod _ s (fun x => χ x γ) hργ m]
   exact congrArg Multiset.prod (Multiset.map_congr rfl fun x hx => by rw [hχm x hx])
@@ -1075,7 +1074,7 @@ section -- clump:auto
 open Formalism Formalism.MainNotions Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations Formalism.L2 NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Module Polynomial GlobalTheory.Pass GlobalTheory.PendOf
 
 theorem _root_.GlobalTheory.T.labelTwistMultipliesRoots_of_tame_labels : ∀ D : D7, SumRepresentations.tie0 D → IneRep D → LabDepth D → LabGen D → LabChar D := by
-  first | exact @main | exact main | (intros; apply main <;> assumption)
+  first | exact @main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LabelTwistMultipliesRootsOfTameLabelsStatement =====
@@ -1270,7 +1269,7 @@ theorem main : ∀ (D : D7) (M : MtFam D) (i : D.nd.Loc), HeckeTied D M → Heck
       rw [hπ, Module.Basis.repr_self, Pi.basisFun_apply]
       by_cases hk : k' = k
       · subst hk; simp
-      · simp [Finsupp.single_apply, Pi.single_apply, hk, Ne.symm hk]
+      · simp [hk]
     rw [← this]
     exact hπr _
   let q := p ∘ₗ G.subtype
@@ -1616,7 +1615,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.groupAlgebraCentre_keeps_typeSpaces_at_localisations : ∀ (D : D7) (M : MtFam D), AVTied D M → GlobalTheory.HeightCounting.Up.CenLoc D M → OnMtPreservesTypeV D := by
-  first | exact @GlobalTheory.CenKeepsTypeLoc.main | exact GlobalTheory.CenKeepsTypeLoc.main | (intros; apply GlobalTheory.CenKeepsTypeLoc.main <;> assumption)
+  first | exact @GlobalTheory.CenKeepsTypeLoc.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GroupAlgebraCentreKeepsTypeSpacesAtLocalisationsStatement =====
@@ -1805,7 +1804,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.depthZ_of_rowMod_labAll_chiTOk : _root_.GlobalTheory.NRows.ThetaLocalInputsAlt → GlobalTheory.Published.DepthZeroSupport → ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (D : D7) (P : _root_.GlobalTheory.NPin.CharacterChoiceData hL D), (∀ i : D.nd.Loc, Nonempty (RowMod D P.rep (D.nd.j i))) → LabAll D P.T → ChiTOk D P.cf → DepthZ D := by
-  first | exact @_root_.GlobalTheory.DepthZeroTame.depthZero_tame_alt | exact _root_.GlobalTheory.DepthZeroTame.depthZero_tame_alt | (intros; apply _root_.GlobalTheory.DepthZeroTame.depthZero_tame_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.DepthZeroTame.depthZero_tame_alt
 end
 end
 end -- clump:auto

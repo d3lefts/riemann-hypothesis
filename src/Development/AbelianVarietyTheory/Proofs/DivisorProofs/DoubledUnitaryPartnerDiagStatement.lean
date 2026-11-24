@@ -64,7 +64,7 @@ theorem _root_.GlobalTheory.T.adelicSchwartz_determined_by_schrodingerThetaValue
     ∀ φ ∈ GlobalTheory.WeilM.schA D.host.F κ, ∀ φ' ∈ GlobalTheory.WeilM.schA D.host.F κ,
       (∀ w : (κ → AF D.host.F) × (κ → AF D.host.F), GlobalTheory.WeilM.thetaSum D.host.F (GlobalTheory.WeilM.schr ψ w φ) =
         GlobalTheory.WeilM.thetaSum D.host.F (GlobalTheory.WeilM.schr ψ w φ')) → φ = φ' := by
-  first | exact @GlobalTheory.SchrodingerUniq.main | exact GlobalTheory.SchrodingerUniq.main | (intros; apply GlobalTheory.SchrodingerUniq.main <;> assumption)
+  first | exact @GlobalTheory.SchrodingerUniq.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicSchwartzDeterminedBySchrodingerThetaValuesStatement =====
@@ -85,7 +85,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem _root_.GlobalTheory.T.schrodingerOperator_mem_adelicSchwartz_stdChar : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (κ : Type) [Fintype κ]
     (w : (κ → AF D.host.F) × (κ → AF D.host.F)), ∀ φ ∈ GlobalTheory.WeilM.schA D.host.F κ,
       GlobalTheory.WeilM.schr ψ w φ ∈ GlobalTheory.WeilM.schA D.host.F κ := by
-  first | exact @GlobalTheory.SchrSchA.schr_mem_schA_of_isStdChar | exact GlobalTheory.SchrSchA.schr_mem_schA_of_isStdChar | (intros; apply GlobalTheory.SchrSchA.schr_mem_schA_of_isStdChar <;> assumption)
+  first | exact @GlobalTheory.SchrSchA.schr_mem_schA_of_isStdChar
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchrodingerOperatorMemAdelicSchwartzStdCharStatement =====
@@ -109,7 +109,7 @@ theorem _root_.GlobalTheory.T.traceSymplecticForm_eq_orientedHomSymplecticForm :
     ∀ x y : Formalism.IndefR.Datum.WO S T,
       GlobalTheory.WeilM.symp (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) ξ (incM D.host.F JA) (incM D.host.F JB) x y =
         Formalism.IndefR.Datum.symplO S T x y := by
-  first | exact @GlobalTheory.WeilSchrodinger.symp_eq_symplO | exact GlobalTheory.WeilSchrodinger.symp_eq_symplO | (intros; apply GlobalTheory.WeilSchrodinger.symp_eq_symplO <;> assumption)
+  first | exact @GlobalTheory.WeilSchrodinger.symp_eq_symplO
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TraceSymplecticFormEqOrientedHomSymplecticFormStatement =====
@@ -133,7 +133,7 @@ theorem _root_.GlobalTheory.T.unitaryPair_of_transposedGram_inverseGram : ∀ (D
     ∀ (a : GlobalTheory.WeilM.UG (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (incM D.host.F JA))
       (b : GlobalTheory.WeilM.UG (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (incM D.host.F JB)),
       ∃ (g : GA D S) (h : GA D T), mt T h = a.1.1 ∧ mt S g = (b⁻¹).1.1ᵀ := by
-  first | exact @GlobalTheory.WeilSchrodinger.match_pair | exact GlobalTheory.WeilSchrodinger.match_pair | (intros; apply GlobalTheory.WeilSchrodinger.match_pair <;> assumption)
+  first | exact @GlobalTheory.WeilSchrodinger.match_pair
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryPairOfTransposedGramInverseGramStatement =====
@@ -292,7 +292,7 @@ theorem _root_.GlobalTheory.T.transportedWeil_preserves_schwartz_heisenberg_equi
                        (∀ p, ∀ φ ∈ GlobalTheory.WeilM.schA D.host.F κ, om p φ ∈ GlobalTheory.WeilM.schA D.host.F κ) ∧
                        ∀ p w, ∀ φ ∈ GlobalTheory.WeilM.schA D.host.F κ,
                          om p (co.rho ψ w φ) = co.rho ψ (GlobalTheory.WeilM.actAB (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) p w) (om p φ) := by
-  first | exact @GlobalTheory.WeilSchrodinger.PresImpl.pres_impl | exact GlobalTheory.WeilSchrodinger.PresImpl.pres_impl | (intros; apply GlobalTheory.WeilSchrodinger.PresImpl.pres_impl <;> assumption)
+  first | exact @GlobalTheory.WeilSchrodinger.PresImpl.pres_impl
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DoubledUnitaryPartnerDiagStatement =====

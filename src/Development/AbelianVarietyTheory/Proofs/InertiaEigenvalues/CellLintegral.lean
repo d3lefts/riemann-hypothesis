@@ -276,7 +276,7 @@ theorem row_exists (w : Matrix (Fin n) (Fin n) (Ad E))
   intro m
   induction m with
   | zero =>
-    exact ⟨Pi.single i 1, fun k hk => by simp [Pi.single_apply, hk.ne], by simp,
+    exact ⟨Pi.single i 1, fun k hk => by simp [hk.ne], by simp,
       fun j _ hj => absurd hj (Nat.not_lt_zero _)⟩
   | succ m ih =>
     obtain ⟨r, h0, h1, h2⟩ := ih
@@ -285,15 +285,15 @@ theorem row_exists (w : Matrix (Fin n) (Fin n) (Ad E))
       obtain ⟨c, hc, -⟩ := GroundTheory.Global.existsUnique_sub_mem_fundamentalSet E
         (∑ k, algebraMap E (Ad E) (r k) * w k jm)
       refine ⟨r - Pi.single jm c, fun k hk => ?_, ?_, fun j hij hj => ?_⟩
-      · simp [h0 k hk, Pi.single_apply, (hk.trans hijm).ne]
-      · simp [h1, Pi.single_apply, hijm.ne]
+      · simp [h0 k hk, (hk.trans hijm).ne]
+      · simp [h1, hijm.ne]
       · have hsum : ∑ k, algebraMap E (Ad E) ((r - Pi.single jm c : Fin n → E) k) * w k j =
             ∑ k, algebraMap E (Ad E) (r k) * w k j - algebraMap E (Ad E) c * w jm j := by
           simp only [Pi.sub_apply, map_sub, sub_mul, Finset.sum_sub_distrib]
           congr 1
           rw [Finset.sum_eq_single jm]
           · simp
-          · intro k _ hk; simp [Pi.single_apply, hk]
+          · intro k _ hk; simp [hk]
           · simp
         rw [hsum]
         rcases Nat.lt_succ_iff_lt_or_eq.1 hj with hj | hj
@@ -574,7 +574,7 @@ def wt (c : Rˣ) (i : Fin n) : Rˣ := c⁻¹ ^ (i : ℕ)
 
 theorem wt_mul_inv (c : Rˣ) {i j : Fin n} {k : ℕ} (h : (j : ℕ) = i + k) :
     (wt c i * (wt c j)⁻¹ : Rˣ) = c ^ k := by
-  simp only [wt, h, pow_add, mul_inv, ← mul_assoc, mul_inv_cancel, inv_mul_cancel, one_mul, inv_pow, inv_inv]
+  simp only [wt, h, pow_add, mul_inv, ← mul_assoc, inv_mul_cancel, one_mul, inv_pow, inv_inv]
 
 theorem fil_conj (c : Rˣ) {k : ℕ} {X : Matrix (Fin n) (Fin n) R} (hX : Fil k X) :
     Fil (k + 1) (diagonal (fun i => (wt c i : R)) * X * diagonal (fun i => (((wt c i)⁻¹ : Rˣ) : R))
@@ -937,10 +937,10 @@ theorem mat_mul_apply_row (x y : Pos n → R) (a b : Fin n) (hab : a < b) :
     rcases lt_trichotomy k a with h1 | rfl | h1
     · have : ¬ (a < k ∧ k < b) := fun h => (lt_asymm h1 h.1)
       simp [mat_gt x h1, h1.ne, (h1.trans hab).ne, this]
-    · simp [mat_self, mat_lt y hab, hab.ne, lt_irrefl]
+    · simp [mat_self, mat_lt y hab, hab.ne]
     · rcases lt_trichotomy k b with h2 | rfl | h2
       · simp [mat_lt x h1, mat_lt y h2, h1.ne', h2.ne, h1, h2]
-      · simp [mat_lt x h1, mat_self, h1.ne', lt_irrefl]
+      · simp [mat_lt x h1, mat_self, h1.ne']
       · have : ¬ (a < k ∧ k < b) := fun h => (lt_asymm h2 h.2)
         simp [mat_gt y h2, h1.ne', h2.ne', this]
   rw [Matrix.mul_apply, Finset.sum_congr rfl fun k _ => key k, Finset.sum_add_distrib,
@@ -1150,7 +1150,7 @@ theorem det_one_add_strictUpper (x : {p : Fin n × Fin n // p.1 < p.2} → R) :
   · intro i j hij
     have h1 : ¬ i < j := not_lt.2 (le_of_lt hij)
     have h2 : i ≠ j := ne_of_gt hij
-    simp [strictUpper, h1, h2, Matrix.one_apply_ne h2]
+    simp [strictUpper, h1, Matrix.one_apply_ne h2]
 
 def unitOf (x : {p : Fin n × Fin n // p.1 < p.2} → R) : GL (Fin n) R where
   val := 1 + strictUpper R n x
@@ -1413,7 +1413,7 @@ open scoped ENNReal Pointwise
 
 
 theorem _root_.GlobalTheory.T.ae_measure_smul_preimage_fundamentalDomain_eq : ∀ (S X : Type) [Group S] [MeasurableSpace S] [MeasurableSpace X] [MulAction S X] [MeasurableSMul₂ S X] [MeasurableMul₂ S] [MeasurableInv S] (ν : Measure S) [SFinite ν] [ν.IsMulLeftInvariant] (μ : Measure X) [SFinite μ] [SMulInvariantMeasure S X μ] (Γ : Subgroup S) [Countable Γ] (D : Set X), MeasurableSet D → IsFundamentalDomain Γ D μ → ∀ (E : Set S), IsFundamentalDomain Γ E ν → ∀ᵐ y ∂μ, ν {s | s • y ∈ D} = ν E := by
-  first | exact @GlobalTheory.CovolIndep.ae_measure_slice_eq | exact GlobalTheory.CovolIndep.ae_measure_slice_eq | (intros; apply GlobalTheory.CovolIndep.ae_measure_slice_eq <;> assumption)
+  first | exact @GlobalTheory.CovolIndep.ae_measure_slice_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AeMeasureSmulPreimageFundamentalDomainEqStatement =====
@@ -1912,7 +1912,6 @@ theorem cell_lintegral [MeasurableSpace (GA E n)] [BorelSpace (GA E n)] (μ : Me
     show (C0 E n S).indicator (fun h => B (t * h)) (u * g) = (C0 E n S).indicator (fun h => B (t * h)) g
     by_cases hg : g ∈ C0 E n S
     · rw [Set.indicator_of_mem (adelicUnitriangular_mul_mem_unipotentTimesIntegral hu hg), Set.indicator_of_mem hg]
-      change B (t * (u * g)) = B (t * g)
       rw [show t * (u * g) = (t * u * t⁻¹) * (t * g) by group]
       exact hinv _ (tl_conj_mem ϖ l.1 hu) _
     · have : u * g ∉ C0 E n S := fun h => hg (by simpa using adelicUnitriangular_mul_mem_unipotentTimesIntegral (inv_mem hu) h)

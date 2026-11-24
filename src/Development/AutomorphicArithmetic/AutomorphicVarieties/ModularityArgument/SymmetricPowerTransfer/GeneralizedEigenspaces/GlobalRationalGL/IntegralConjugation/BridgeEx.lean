@@ -1256,7 +1256,7 @@ private theorem mem_range (g : GL (Fin 2) (Lsq K Δ)) (h1 : ∀ i j, IsIntegral 
 private theorem conj_two {A : Type} [CommRing A] (m : Matrix (Fin 2) (Fin 2) A) :
     !![0, -1; 1, 0] * m * !![0, 1; -1, 0] = !![m 1 1, -m 1 0; -m 0 1, m 0 0] := by
   rw [Matrix.eta_fin_two m]
-  simp [Matrix.mul_fin_two]
+  simp
 
 end H90
 
@@ -1603,7 +1603,7 @@ theorem UpperTheory.V.Z.Sym.Dict.Br.rhoGlob :
   intro L _ _ _ P v w h x
   have hx : x = algebraMap (Lp L) (Lsq (Lp L) P.Δ) x.re
       + algebraMap (Lp L) (Lsq (Lp L) P.Δ) x.im * QuadraticAlgebra.omega := by
-    ext <;> simp [QuadraticAlgebra.omega_re, QuadraticAlgebra.omega_im]
+    ext <;> simp
   have lhs : P.rho v w h (lmap (cv v) P.Δ x)
       = P.φ v w h (cv v x.re) + P.φ v w h (cv v x.im) * P.rt w := rfl
   rw [lhs, P.φ_alg, P.φ_alg, Pre.rt]

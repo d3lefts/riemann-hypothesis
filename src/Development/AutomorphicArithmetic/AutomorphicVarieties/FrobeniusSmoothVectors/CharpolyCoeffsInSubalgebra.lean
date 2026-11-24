@@ -381,7 +381,7 @@ theorem UpperTheory.V.Fr.finrank_structMapY_range :
         rw [key]
         simp only [xf, Frame.loc2, if_true, MonoidHom.comp_apply]
         rw [hcv, ← hc, hβ' s⁻¹]
-        simp only [map_inv, inv_inv, Units.val_inv_eq_inv_val, smul_eq_mul]
+        simp only [map_inv, inv_inv, smul_eq_mul]
         field_simp
         ring
   let φ : F.strY k →ₗ[k] Z1C F.loc2 ρ (fun _ => ⊥) :=
@@ -543,7 +543,7 @@ theorem UpperTheory.V.Fr.framePoint_alg_coord_eq :
     have y01 := hz (F.loc0 v s) 0 1 (by decide)
     have y02 := hz (F.loc0 v s) 0 2 (by decide)
     have y12 := hz (F.loc0 v s) 1 2 (by decide)
-    simp (config := {decide := true}) only [ordProd, List.ofFn_succ, List.ofFn_zero, List.prod_cons, List.prod_nil, mul_one, Matrix.mul_apply, Fin.sum_univ_three, Matrix.sub_apply, Matrix.smul_apply, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, Fin.succ_zero_eq_one, Fin.succ_one_eq_two, Matrix.one_apply, Matrix.zero_apply, smul_eq_mul, z01, z02, z12, y01, y02, y12, hd, hb.2, hl, w0, w1, w2, zpow_one, zpow_zero, _root_.zpow_neg_one, Units.val_one, map_one, if_true, if_false, mul_zero, zero_mul, sub_zero, zero_sub, add_zero, zero_add] at e
+    simp (config := {decide := true}) only [ordProd, List.ofFn_succ, List.ofFn_zero, List.prod_cons, List.prod_nil, mul_one, Matrix.mul_apply, Fin.sum_univ_three, Matrix.sub_apply, Matrix.smul_apply, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, Fin.succ_zero_eq_one, Fin.succ_one_eq_two, Matrix.one_apply, Matrix.zero_apply, smul_eq_mul, z01, z02, z12, hd, hb.2, hl, w0, w1, w2, zpow_one, zpow_zero, _root_.zpow_neg_one, Units.val_one, map_one, if_true, if_false, mul_zero, zero_mul, sub_zero, add_zero] at e
     set x : k := ↑(F.Ψ (F.loc v t)) with hx
     set xi : k := ↑(F.Ψ (F.loc v t))⁻¹ with hxi
     set y : k := ↑(F.Ψ (F.loc v s)) with hy
@@ -690,7 +690,7 @@ theorem UpperTheory.V.Fr.framePoint_y_coord_eq :
       exact hf (by rw [← inv_eq_one.mp h.symm, sub_self])
     refine ⟨algebraMap k Q (1 - ((F.Ψ (F.loc v t) : k))⁻¹)⁻¹ * ρ.r (F.loc0 v t) 2 1, fun s => ?_⟩
     have h21 := congrFun (congrFun (ρ.ord v ![t, s, t]) 2) 1
-    simp [ordProd, Matrix.mul_apply, Fin.sum_univ_three, Matrix.one_apply, hd0, hd1, hd2, h01, h02, h12,
+    simp [ordProd, Matrix.mul_apply, Fin.sum_univ_three, Matrix.one_apply, hd1, hd2, h01, h02, h12,
       hψ0, hψ1, hψ2, hl] at h21
     simp only [Algebra.smul_def, mul_one] at h21
     have hD : (algebraMap k Q ((F.Ψ (F.loc v t) : k))⁻¹ - algebraMap k Q ((F.Ψ (F.loc v t) : k))) * algebraMap k Q (((F.Ψ (F.loc v t) : k))⁻¹ - ((F.Ψ (F.loc v t) : k)))⁻¹ = 1 := by

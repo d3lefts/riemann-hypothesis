@@ -369,9 +369,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] (σ : E 
 
 theorem splitA_cont {ι : Type} [Fintype ι] [DecidableEq ι] (b : Module.Basis ι F E) :
     Continuous (splitA (F := F) σ J) := by
-  have h1 : Continuous (fstA F) := continuous_fst
-  have h2 : Continuous (sndA F) := continuous_snd
-  exact (haMap_cont σ J _ (tensMap_cont b _ h1)).prodMk (haMap_cont σ J _ (tensMap_cont b _ h2))
+  exact (haMap_cont σ J _ (tensMap_cont b _ continuous_fst)).prodMk
+    (haMap_cont σ J _ (tensMap_cont b _ continuous_snd))
 
 theorem grp_facts (hE : Module.finrank F E = 2) :
     (IsTopologicalGroup (HA (AF F) σ J) ∧ T2Space (HA (AF F) σ J) ∧ LocallyCompactSpace (HA (AF F) σ J) ∧
@@ -414,8 +413,7 @@ open Formalism.L2.SG.Measures Formalism.L2.SG.AdBridge Formalism.MainNotions.S
 variable (I : AutInst)
 
 theorem finrank_two : Module.finrank I.F I.E = 2 := by
-  rw [Module.finrank_eq_card_basis (Formalism.L2.SG.Pf.bas I)]
-  simp
+  simpa using Module.finrank_eq_card_basis (Formalism.L2.SG.Pf.bas I)
 
 theorem tauF_eq (y : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF I.F ⊗[I.F] I.E) :
     tauF I y = Algebra.TensorProduct.comm I.F (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af I.F) I.E (tensMap (E := I.E) (sndA I.F) y) := by

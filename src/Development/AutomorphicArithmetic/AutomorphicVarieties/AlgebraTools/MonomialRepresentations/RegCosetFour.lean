@@ -146,7 +146,7 @@ private theorem dsc_ne_zero_of_valuation_strict_chain {F : Type} [Field F] (v : 
   have hL : v (b ^ 2 * c ^ 2 * d ^ 2) = WithZero.exp (2 * w0 + 2 * (w0 + w1) + 2 * (w0 + w1 + w2)) := by
     rw [map_mul, map_mul, map_pow, map_pow, map_pow, hb, hc, hd]
     simp only [← WithZero.exp_nsmul, ← WithZero.exp_add, nsmul_eq_mul]
-    congr 1 <;> ring
+    congr 1
   rw [key] at h0
   have hR : v (tm b c d e 256 0 0 0 3 + tm b c d e (-192) 1 0 1 2
       + tm b c d e (-128) 0 2 0 2 + tm b c d e 144 0 1 2 1 + tm b c d e (-27) 0 0 4 0
@@ -182,7 +182,7 @@ private theorem dsc_ne_zero_of_valuation_c_le {F : Type} [Field F] (v : Valuatio
   have hL : v (-(4 * (b ^ 3 * d ^ 3))) = WithZero.exp (3 * w0 + 3 * (w0 + w1 + w2)) := by
     rw [Valuation.map_neg, map_mul, map_mul, map_pow, map_pow, h4, hb, hd, one_mul]
     simp only [← WithZero.exp_nsmul, ← WithZero.exp_add, nsmul_eq_mul]
-    congr 1 <;> ring
+    congr 1
   rw [key] at h0
   have hR : v (tm b c d e 256 0 0 0 3 + tm b c d e (-192) 1 0 1 2
       + tm b c d e (-128) 0 2 0 2 + tm b c d e 144 0 1 2 1 + tm b c d e (-27) 0 0 4 0
@@ -245,7 +245,7 @@ private theorem charpoly_fin_four_eq {R : Type} [CommRing R] (A : Matrix (Fin 4)
       + C (-(m3 A 0 1 2 + m3 A 0 1 3 + m3 A 0 2 3 + m3 A 1 2 3)) * X + C A.det := by
   simp only [Matrix.charpoly, Matrix.det_succ_row_zero, Fin.sum_univ_succ, Fin.sum_univ_zero,
     Matrix.det_fin_zero, charmatrix_apply, Matrix.submatrix_apply, m2, m3]
-  simp [Fin.succAbove, Fin.lt_def, Matrix.one_apply, Matrix.diagonal_apply, Fin.ext_iff]
+  simp [Fin.succAbove, Fin.lt_def, Fin.ext_iff]
   ring
 
 private theorem valuation_add_eq_of_valuation_lt {F : Type} [Field F] (v : Valuation F (WithZero (Multiplicative ℤ)))
@@ -313,7 +313,6 @@ theorem UpperTheory.V.AlgebraTools.disc4 :
   have hdet : A.det = φ x.det * RatFunc.X ^ (w 0 + w 1 + w 2 + w 3) := by
     rw [hAdef, Matrix.det_mul, hdm, Matrix.det_diagonal, Fin.prod_univ_four]
     simp only [zpow_add₀ hX0]
-    all_goals ring
   have hadj' : m3 x 0 1 2 ≠ 0 := by
     have hh : x.adjugate 3 3 = m3 x 0 1 2 := by
       rw [Matrix.adjugate_fin_succ_eq_det_submatrix, Matrix.det_fin_three]
@@ -368,7 +367,7 @@ private theorem charpoly_fromBlocks_antidiagonal_fin_two {F : Type} [Field F] (P
   have hcz : charmatrix (0 : Matrix (Fin 2) (Fin 2) F) = diagonal (fun _ : Fin 2 => (X : F[X])) := by
     ext i j
     by_cases h : i = j
-    · subst h; simp [charmatrix_apply]
+    · subst h; simp
     · simp [charmatrix_apply, diagonal_apply_ne _ h]
   rw [hcz]
   generalize hS : (diagonal (fun _ : Fin 2 => (X : F[X])) : Matrix (Fin 2) (Fin 2) F[X]) = S
@@ -390,7 +389,7 @@ private theorem charpoly_fromBlocks_antidiagonal_fin_two {F : Type} [Field F] (P
   rw [det_mul, det_fromBlocks_zero₂₁, det_fromBlocks_zero₁₂] at hdet
   have hSd : det S = X ^ 2 := by
     subst hS
-    simp [det_diagonal, Fin.prod_univ_two, sq]
+    simp [det_diagonal, sq]
   rw [det_mul, hSd] at hdet
   have hX : (X ^ 2 * X ^ 2 : F[X]) ≠ 0 := by
     exact mul_ne_zero (pow_ne_zero _ X_ne_zero) (pow_ne_zero _ X_ne_zero)
@@ -454,16 +453,16 @@ private theorem discSwap_lemma_3 {K : Type} [Field K] (b c : Matrix (Fin 2) (Fin
   have hv : Y ^ w₂ 1 ≠ 0 := zpow_ne_zero _ hY0
   have e00 : N 0 0 = f (c 0 0) * Y ^ w₁ 0 * (f (b 0 0) * Y ^ w₂ 0)
       + f (c 0 1) * Y ^ w₁ 1 * (f (b 1 0) * Y ^ w₂ 0) := by
-    simp [N, Matrix.mul_apply, Fin.sum_univ_two, Matrix.diagonal_apply, hf, hY] <;> ring
+    simp [N, Matrix.mul_apply, Fin.sum_univ_two, Matrix.diagonal_apply, hf, hY]
   have e01 : N 0 1 = f (c 0 0) * Y ^ w₁ 0 * (f (b 0 1) * Y ^ w₂ 1)
       + f (c 0 1) * Y ^ w₁ 1 * (f (b 1 1) * Y ^ w₂ 1) := by
-    simp [N, Matrix.mul_apply, Fin.sum_univ_two, Matrix.diagonal_apply, hf, hY] <;> ring
+    simp [N, Matrix.mul_apply, Fin.sum_univ_two, Matrix.diagonal_apply, hf, hY]
   have e10 : N 1 0 = f (c 1 0) * Y ^ w₁ 0 * (f (b 0 0) * Y ^ w₂ 0)
       + f (c 1 1) * Y ^ w₁ 1 * (f (b 1 0) * Y ^ w₂ 0) := by
-    simp [N, Matrix.mul_apply, Fin.sum_univ_two, Matrix.diagonal_apply, hf, hY] <;> ring
+    simp [N, Matrix.mul_apply, Fin.sum_univ_two, Matrix.diagonal_apply, hf, hY]
   have e11 : N 1 1 = f (c 1 0) * Y ^ w₁ 0 * (f (b 0 1) * Y ^ w₂ 1)
       + f (c 1 1) * Y ^ w₁ 1 * (f (b 1 1) * Y ^ w₂ 1) := by
-    simp [N, Matrix.mul_apply, Fin.sum_univ_two, Matrix.diagonal_apply, hf, hY] <;> ring
+    simp [N, Matrix.mul_apply, Fin.sum_univ_two, Matrix.diagonal_apply, hf, hY]
   have hdet : N 0 0 * N 1 1 - N 0 1 * N 1 0
       = f (c.det * b.det) * (Y ^ w₁ 1) ^ 2 * (Y ^ w₂ 1) ^ 2 * Y ^ (n + m) := by
     rw [e00, e01, e10, e11, hA, hB, det_fin_two, det_fin_two]
@@ -827,26 +826,18 @@ theorem UpperTheory.V.AlgebraTools.relWeight :
   classical
   obtain ⟨P, hP⟩ : ∃ P : (ι → ℤ) → A, ∀ m, P m = ∏ i, a i ^ m i := ⟨_, fun _ => rfl⟩
   have hPadd : ∀ m n, P (m + n) = P m * P n := by
-    intro m n
-    rw [hP, hP, hP, ← Finset.prod_mul_distrib]
-    refine Finset.prod_congr rfl fun i _ => ?_
-    rw [Pi.add_apply, _root_.zpow_add]
+    simp [hP, Finset.prod_mul_distrib, Pi.add_apply, _root_.zpow_add]
   have hPsmul : ∀ (c : ℤ) m, P (c • m) = P m ^ c := by
     intro c m
-    rw [hP, hP, ← Finset.prod_zpow]
-    refine Finset.prod_congr rfl fun i _ => ?_
-    rw [Pi.smul_apply, smul_eq_mul, mul_comm, _root_.zpow_mul]
+    simp only [hP, Pi.smul_apply, smul_eq_mul]
+    rw [← Finset.prod_zpow]
+    exact Finset.prod_congr rfl fun i _ => by rw [mul_comm, _root_.zpow_mul]
   have hPsub : ∀ m n, P (m - n) = P m / P n := by
     intro m n
     rw [eq_div_iff_mul_eq', ← hPadd, sub_add_cancel]
   have hPe : ∀ i, P (Pi.single i 1) = a i := by
     intro i
-    rw [hP]
-    rw [Finset.prod_eq_single i]
-    · simp
-    · intro j _ hj
-      simp [Pi.single_eq_of_ne hj]
-    · simp
+    simp [hP, Pi.single_apply]
   let L : Submodule ℤ (ι → ℤ) :=
     { carrier := {m | ∃ k : ℤ, k ≠ 0 ∧ P (k • m) = 1}
       add_mem' := by
@@ -864,21 +855,17 @@ theorem UpperTheory.V.AlgebraTools.relWeight :
       obtain ⟨m, rfl⟩ := Submodule.Quotient.mk_surjective L x
       rw [← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero] at hx
       obtain ⟨k, hk, h⟩ := hx
-      by_cases hr : r = 0
+      rcases eq_or_ne r 0 with hr | hr
       · exact Or.inl hr
-      · right
-        rw [Submodule.Quotient.mk_eq_zero]
-        exact ⟨k * r, mul_ne_zero hk hr, by rw [mul_smul]; exact h⟩
+      · rw [Submodule.Quotient.mk_eq_zero]
+        exact Or.inr ⟨k * r, mul_ne_zero hk hr, by rw [mul_smul]; exact h⟩
   let q : ι → (ι → ℤ) ⧸ L := fun i => L.mkQ (Pi.single i 1)
   have hq : ∀ i j, i ≠ j → q i - q j ≠ 0 := by
     intro i j hij h
     rw [← map_sub, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at h
     obtain ⟨k, hk, hk1⟩ := h
-    apply ha i j hij
-    rw [isOfFinOrder_iff_zpow_eq_one]
-    refine ⟨k, hk, ?_⟩
-    rw [hPsmul, hPsub, hPe, hPe] at hk1
-    exact hk1
+    refine ha i j hij (isOfFinOrder_iff_zpow_eq_one.mpr ⟨k, hk, ?_⟩)
+    simpa only [hPsmul, hPsub, hPe] using hk1
   have hex : ∃ f : Module.Dual ℤ ((ι → ℤ) ⧸ L), ∀ i j, i ≠ j → f (q i) ≠ f (q j) := by
     by_contra hno
     push_neg at hno
@@ -886,38 +873,29 @@ theorem UpperTheory.V.AlgebraTools.relWeight :
     let p : ι × ι → Submodule ℤ (Module.Dual ℤ ((ι → ℤ) ⧸ L)) :=
       fun x => LinearMap.ker (Module.Dual.eval ℤ _ (q x.1 - q x.2))
     have hc : ⋃ x ∈ s, (p x : Set (Module.Dual ℤ ((ι → ℤ) ⧸ L))) = Set.univ := by
-      apply Set.eq_univ_of_forall
-      intro f
+      refine Set.eq_univ_of_forall fun f => ?_
       obtain ⟨i, j, hij, h⟩ := hno f
-      simp only [Set.mem_iUnion]
-      refine ⟨(i, j), by simp [s, hij], ?_⟩
-      simp [p, h]
+      exact Set.mem_iUnion₂.mpr ⟨(i, j), by simp [s, hij], by simp [p, h]⟩
     obtain ⟨⟨i, j⟩, hx, hfi⟩ := Submodule.exists_finiteIndex_of_cover hc
     have hij : i ≠ j := by simpa [s] using hx
     apply hq i j hij
     rw [← Module.forall_dual_apply_eq_zero_iff ℤ]
     intro f
-    have h1 := AddSubgroup.nsmul_index_mem (p (i, j)).toAddSubgroup f
-    have h2 : ((p (i, j)).toAddSubgroup.index • f) (q i - q j) = 0 := h1
+    have h2 : ((p (i, j)).toAddSubgroup.index • f) (q i - q j) = 0 :=
+      AddSubgroup.nsmul_index_mem (p (i, j)).toAddSubgroup f
     rw [LinearMap.smul_apply, smul_eq_zero] at h2
     exact h2.resolve_left hfi.index_ne_zero
   obtain ⟨f, hf⟩ := hex
-  refine ⟨fun i => f (q i), fun i j h => ?_, fun m hm => ?_⟩
-  · by_contra hij
-    exact hf i j hij h
-  · have hm0 : L.mkQ m = 0 := by
-      rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
-      exact ⟨1, one_ne_zero, by rw [one_smul, hP]; exact hm⟩
-    have hsum : m = ∑ i, m i • (Pi.single i 1 : ι → ℤ) := by
-      ext l
-      simp [Finset.sum_apply, Pi.single_apply]
-    have h3 : ∑ i, m i • q i = 0 := by
-      rw [← hm0]
-      conv_rhs => rw [hsum]
-
-      simp only [q, map_sum, LinearMap.map_smul]
-    calc ∑ i, m i * f (q i) = f (∑ i, m i • q i) := by simp [map_sum]
-      _ = 0 := by rw [h3, map_zero]
+  refine ⟨fun i => f (q i), fun i j h => by_contra fun hij => hf i j hij h, fun m hm => ?_⟩
+  have hsum : ∑ i, m i • (Pi.single i 1 : ι → ℤ) = m := by
+    ext l
+    simp [Finset.sum_apply, Pi.single_apply]
+  have hq0 : ∑ i, m i • q i = 0 := by
+    have h : ∑ i, m i • q i = L.mkQ m := by simp only [q, ← map_smul, ← map_sum, hsum]
+    rw [h, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
+    exact ⟨1, one_ne_zero, by simpa [hP] using hm⟩
+  calc ∑ i, m i * f (q i) = f (∑ i, m i • q i) := by simp [map_sum]
+    _ = 0 := by rw [hq0, map_zero]
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.MonomialRepresentations.RelWeight =====

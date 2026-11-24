@@ -310,7 +310,7 @@ theorem _root_.GlobalTheory.T.jet_of_moved_vacuum_nonvanishing : ∀ {D : D7} {T
     IsBottomTri W i j X → ∀ (t : T), ∀ γ ∈ Formalism.L2.Theta.GQ A, ∀ a ∈ GinfC A, ∀ γ' ∈ Formalism.L2.Theta.GQ WW, ∀ a' ∈ GinfC WW,
       γ * a ∈ GfC A → γ' * a' ∈ GfC WW →
       ∃ k : FVar D WW.rank A.rank →₀ ℕ, pureTensorO W.ψ W.θ (GlobalTheory.Grid.neg A) WW (fun τ => -X.rA.s τ) X.rW.s X.rA.B X.rW.B (X.ω t (γ, γ') X.vac) (MvPolynomial.monomial k 1) 0 ≠ 0 := by
-  first | exact @_root_.GlobalTheory.MovedJetNZ.moved_vacuum_jet_ne_zero | exact _root_.GlobalTheory.MovedJetNZ.moved_vacuum_jet_ne_zero | (intros; apply _root_.GlobalTheory.MovedJetNZ.moved_vacuum_jet_ne_zero <;> assumption)
+  first | exact @_root_.GlobalTheory.MovedJetNZ.moved_vacuum_jet_ne_zero
 end
 end -- clump:auto
 end -- clump:auto
@@ -443,14 +443,10 @@ theorem isAlgebraic_compAt_of_mem_GQ {D : D7} {θ : InfFam D} (hθ : IsInfFam θ
   have h0 : IsAlgebraic ℚ (γ₀.1 a b) := Algebra.IsAlgebraic.isAlgebraic (R := ℚ) (γ₀.1 a b)
   first
     | exact h0.algHom (tauE D τ).toRatAlgHom
-    | exact IsAlgebraic.map (tauE D τ).toRatAlgHom h0
-    | exact (isAlgebraic_algHom_iff (tauE D τ).toRatAlgHom (tauE D τ).injective).2 h0
 
 theorem isAlgebraic_conj {z : ℂ} (h : IsAlgebraic ℚ z) : IsAlgebraic ℚ (starRingEnd ℂ z) := by
   first
     | exact h.algHom (starRingEnd ℂ).toRatAlgHom
-    | exact IsAlgebraic.map (starRingEnd ℂ).toRatAlgHom h
-    | exact (isAlgebraic_algHom_iff (starRingEnd ℂ).toRatAlgHom (starRingEnd ℂ).injective).2 h
 
 end GlobalTheory.MovedJet
 
@@ -564,7 +560,7 @@ theorem _root_.GlobalTheory.T.moved_vacuum_jet_algebraic_combination : ∀ {D : 
       ∀ k : FVar D WW.rank A.rank →₀ ℕ, ∃ (n : ℕ) (c : Fin n → ℂ) (k' : Fin n → FVar D WW.rank A.rank →₀ ℕ),
         (∀ p, IsAlgebraic ℚ (c p)) ∧ (∀ p, Finsupp.mapDomain Prod.fst (k' p) = Finsupp.mapDomain Prod.fst k) ∧
         pureTensorO W.ψ W.θ (GlobalTheory.Grid.neg A) WW (fun τ => -X.rA.s τ) X.rW.s X.rA.B X.rW.B (X.ω t (γ, γ') X.vac) (MvPolynomial.monomial k 1) 0 = ∑ p, c p * pureTensorO W.ψ W.θ (GlobalTheory.Grid.neg A) WW (fun τ => -X.rA.s τ) X.rW.s X.rA.B X.rW.B (X.vac) (MvPolynomial.monomial (k' p) 1) 0 := by
-  first | exact @_root_.GlobalTheory.MovedJet.jet_moved_vacuum_algebraic | exact _root_.GlobalTheory.MovedJet.jet_moved_vacuum_algebraic | (intros; apply _root_.GlobalTheory.MovedJet.jet_moved_vacuum_algebraic <;> assumption)
+  first | exact @_root_.GlobalTheory.MovedJet.jet_moved_vacuum_algebraic
 end
 end -- clump:auto
 end -- clump:auto
@@ -638,7 +634,7 @@ theorem _root_.GlobalTheory.T.rational_vacuum_algebraic_combination : ∀ {D : D
       γ * a ∈ GfC A → γ' * a' ∈ GfC WW →
       ∃ (κ : ℂ) (F : WO (GlobalTheory.Grid.neg A) WW → ℂ), GlobalTheory.MovedAlg.IsAlgComb W.ψ (GlobalTheory.Grid.neg A) WW X.vac F ∧
         X.ω t (γ, γ') X.vac = κ • F := by
-  first | exact @_root_.GlobalTheory.RatVacAlg.rational_vacuum_eq_smul_algebraic_combination | exact _root_.GlobalTheory.RatVacAlg.rational_vacuum_eq_smul_algebraic_combination | (intros; apply _root_.GlobalTheory.RatVacAlg.rational_vacuum_eq_smul_algebraic_combination <;> assumption)
+  first | exact @_root_.GlobalTheory.RatVacAlg.rational_vacuum_eq_smul_algebraic_combination
 end
 end -- clump:auto
 end -- clump:auto
@@ -731,7 +727,7 @@ theorem _root_.GlobalTheory.T.rationally_moved_vector_algebraic : ∀ {D : D7} {
       ∃ (n : ℕ) (c : Fin n → ℂ) (w : Fin n → WO (GlobalTheory.Grid.neg A) WW), (∀ p, IsAlgebraic ℚ (c p)) ∧
         (∀ p, (w p).map (infPart D) = 0) ∧
         X.ω t (γ, γ') X.vac = ∑ p, c p • heisO W.ψ (GlobalTheory.Grid.neg A) WW (w p) X.vac := by
-  first | exact @_root_.GlobalTheory.RatMovedAlg.rational_translate_algebraic_combination | exact _root_.GlobalTheory.RatMovedAlg.rational_translate_algebraic_combination | (intros; apply _root_.GlobalTheory.RatMovedAlg.rational_translate_algebraic_combination <;> assumption)
+  first | exact @_root_.GlobalTheory.RatMovedAlg.rational_translate_algebraic_combination
 end
 end -- clump:auto
 end -- clump:auto
@@ -784,7 +780,7 @@ theorem _root_.GlobalTheory.T.exists_rat_real_algebraic_combination_twist : ∀ 
       ∃ (n : ℕ) (c : Fin n → ℂ) (w : Fin n → WO (GlobalTheory.Grid.neg A) WW), (∀ p, IsAlgebraic ℚ (c p)) ∧
         (∀ p, (w p).map (infPart D) = 0) ∧
         X.ω t (γ * a, γ' * a') X.vac = ∑ p, c p • heisO W.ψ (GlobalTheory.Grid.neg A) WW (w p) X.vac := by
-  first | exact @_root_.GlobalTheory.MovedAlgRat.rat_real_algebraic_combination_of_moved | exact _root_.GlobalTheory.MovedAlgRat.rat_real_algebraic_combination_of_moved | (intros; apply _root_.GlobalTheory.MovedAlgRat.rat_real_algebraic_combination_of_moved <;> assumption)
+  first | exact @_root_.GlobalTheory.MovedAlgRat.rat_real_algebraic_combination_of_moved
 end
 end -- clump:auto
 end -- clump:auto
@@ -914,7 +910,7 @@ theorem _root_.GlobalTheory.T.unitary_induction_on_splitPlaceSupport : ∀ {D : 
     (∀ (e : AE D) (P : Pl D.host.E), Formalism.L2.NTheta.IsIdemAt e P → ((N : ℕ) : 𝓞 D.host.E) ∉ P.asIdeal →
       ∀ x ∈ GfC V, Formalism.L2.Theta.SuppAt e V x → Q x) →
     ∀ g ∈ GfC V, GlobalTheory.UnRep.SuppSplit (GlobalTheory.Member.cF D) N ((finHom V) g : Matrix (Fin V.rank) (Fin V.rank) _) → Q g := by
-  first | exact @GlobalTheory.SplitInduct.induct_suppSplit | exact GlobalTheory.SplitInduct.induct_suppSplit | (intros; apply GlobalTheory.SplitInduct.induct_suppSplit <;> assumption)
+  first | exact @GlobalTheory.SplitInduct.induct_suppSplit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnitaryInductionOnSplitPlaceSupportStatement =====
@@ -961,7 +957,7 @@ theorem _root_.GlobalTheory.T.split_source_vector_algebraic : ∀ {D : D7} {T : 
     IsBottomTri W i j X → ∀ (t : T) (N : ℕ) (e : AE D) (P : Pl D.host.E), Formalism.L2.NTheta.IsIdemAt e P → ((N : ℕ) : 𝓞 D.host.E) ∉ P.asIdeal →
     ∀ g ∈ GfC A, Formalism.L2.Theta.SuppAt e A g →
       GlobalTheory.MovedAlg.IsAlgComb W.ψ (GlobalTheory.Grid.neg A) WW X.vac (X.ω t (g, 1) X.vac) := by
-  first | exact @_root_.GlobalTheory.SplitSourceAlg.split_source_algebraic_combination | exact _root_.GlobalTheory.SplitSourceAlg.split_source_algebraic_combination | (intros; apply _root_.GlobalTheory.SplitSourceAlg.split_source_algebraic_combination <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitSourceAlg.split_source_algebraic_combination
 end
 end -- clump:auto
 end -- clump:auto
@@ -1052,7 +1048,7 @@ theorem _root_.GlobalTheory.T.definiteBottom_splitHecke_vacuum : ∀ {D : D7} {T
         X.ω t (1, α) X.vac =
           ((((G.ch.chi (D.R.m - i) * L.eta ^ (rankV D i j % 2)) (GlobalTheory.VecInv.detAt e he.1 WW α) : Circle) : ℂ) *
             ((Real.sqrt (Δ.card : ℝ) : ℝ) : ℂ)⁻¹) • ∑ u ∈ Δ, heisO W.ψ (GlobalTheory.Grid.neg A) WW u X.vac := by
-  first | exact @GlobalTheory.RowEx.BottomHecke.vacuum_hecke | exact GlobalTheory.RowEx.BottomHecke.vacuum_hecke | (intros; apply GlobalTheory.RowEx.BottomHecke.vacuum_hecke <;> assumption)
+  first | exact @GlobalTheory.RowEx.BottomHecke.vacuum_hecke
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DefiniteBottomSplitHeckeVacuumStatement =====
@@ -1143,7 +1139,7 @@ theorem _root_.GlobalTheory.T.definiteBottom_splitPlace_stabiliser_vacuum : ∀ 
     (k : GA D WW), k ∈ KsphC (GlobalTheory.SplitVacAlg.stdLatSp WW hX.stdW.1) ∅ → Formalism.L2.Theta.SuppAt e WW k →
       X.ω t (1, k) X.vac =
         (((G.ch.chi (D.R.m - i) * L.eta ^ (rankV D i j % 2)) (GlobalTheory.VecInv.detAt e he.1 WW k) : Circle) : ℂ) • X.vac := by
-  first | exact @GlobalTheory.StabVacSplit.stab_vac_split | exact GlobalTheory.StabVacSplit.stab_vac_split | (intros; apply GlobalTheory.StabVacSplit.stab_vac_split <;> assumption)
+  first | exact @GlobalTheory.StabVacSplit.stab_vac_split
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DefiniteBottomSplitPlaceStabiliserVacuumStatement =====
@@ -1316,7 +1312,7 @@ theorem _root_.GlobalTheory.T.splitPlace_unitaryPoint_mem_heckeClosure : ∀ {D 
       h ∈ Submonoid.closure ({g | g ∈ KsphC V ∅ ∧ Formalism.L2.Theta.SuppAt e V g} ∪
         {α | ∃ k, Formalism.L2.NTheta.IsHeckeElt V e (ϖ : D.host.E) k α} ∪
         {α | ∃ k, Formalism.L2.NTheta.IsHeckeElt V e (ϖ : D.host.E) k α⁻¹}) := by
-  first | exact @GlobalTheory.SplitCartanGen.supp_mem_closure | exact GlobalTheory.SplitCartanGen.supp_mem_closure | (intros; apply GlobalTheory.SplitCartanGen.supp_mem_closure <;> assumption)
+  first | exact @GlobalTheory.SplitCartanGen.supp_mem_closure
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SplitPlaceUnitaryPointMemHeckeClosureStatement =====
@@ -1610,7 +1606,7 @@ theorem _root_.GlobalTheory.T.isAlgebraic_splitCharacter_twist : ∀ {D : D7} {T
     {i j : Fin D.R.m} {A A' WW : HSp D} {X : Tri T A A' WW}, _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → L.Is μ₀ →
     IsBottomTri W i j X → ∀ e : AE D, IsSplitIdem D e → ∀ x : (AE D)ˣ, (x : AE D) = e * x + (1 - e) →
       IsAlgebraic ℚ (((G.ch.chi (D.R.m - i) * L.eta ^ (rankV D i j % 2)) x : Circle) : ℂ) := by
-  first | exact @_root_.GlobalTheory.SplitCharAlg.splitCharacter_value_isAlgebraic | exact _root_.GlobalTheory.SplitCharAlg.splitCharacter_value_isAlgebraic | (intros; apply _root_.GlobalTheory.SplitCharAlg.splitCharacter_value_isAlgebraic <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitCharAlg.splitCharacter_value_isAlgebraic
 end
 end -- clump:auto
 end -- clump:auto
@@ -1700,7 +1696,7 @@ theorem _root_.GlobalTheory.T.split_place_vacuum_algebraic : ∀ {D : D7} {T : T
     IsBottomTri W i j X → ∀ (t : T) (N : ℕ) (e : AE D) (P : Pl D.host.E), Formalism.L2.NTheta.IsIdemAt e P → ((N : ℕ) : 𝓞 D.host.E) ∉ P.asIdeal →
     ∀ h ∈ GfC WW, Formalism.L2.Theta.SuppAt e WW h →
       GlobalTheory.MovedAlg.IsAlgComb W.ψ (GlobalTheory.Grid.neg A) WW X.vac (X.ω t (1, h) X.vac) := by
-  first | exact @_root_.GlobalTheory.SplitVacAlg.split_vacuum_algebraic_combination | exact _root_.GlobalTheory.SplitVacAlg.split_vacuum_algebraic_combination | (intros; apply _root_.GlobalTheory.SplitVacAlg.split_vacuum_algebraic_combination <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitVacAlg.split_vacuum_algebraic_combination
 end
 end -- clump:auto
 end -- clump:auto
@@ -1773,7 +1769,7 @@ theorem _root_.GlobalTheory.T.moved_support_theta_algebraic : ∀ {D : D7} {T : 
       ∃ (n : ℕ) (c : Fin n → ℂ) (w : Fin n → WO (GlobalTheory.Grid.neg A) WW), (∀ p, IsAlgebraic ℚ (c p)) ∧
         (∀ p, (w p).map (infPart D) = 0) ∧
         X.ω t (g, g') X.vac = ∑ p, c p • heisO W.ψ (GlobalTheory.Grid.neg A) WW (w p) X.vac := by
-  first | exact @_root_.GlobalTheory.MovedAlg.support_split_algebraic_combination | exact _root_.GlobalTheory.MovedAlg.support_split_algebraic_combination | (intros; apply _root_.GlobalTheory.MovedAlg.support_split_algebraic_combination <;> assumption)
+  first | exact @_root_.GlobalTheory.MovedAlg.support_split_algebraic_combination
 end
 end -- clump:auto
 end -- clump:auto
@@ -1824,7 +1820,7 @@ theorem _root_.GlobalTheory.T.vacuum_vector_at_level_mem_fockAlgebraic : ∀ {D 
     {i j : Fin D.R.m} {A A' WW : HSp D} {X : Tri T A A' WW}, _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → L.Is μ₀ →
     IsBottomTri W i j X → ∀ (t : T), ∃ N : ℕ, 0 < N ∧ ∀ k ∈ GfC A, ∀ k' ∈ GfC WW, GlobalTheory.Member.FinCong A N k →
       GlobalTheory.Member.FinCong WW N k' → ∃ ζ : ℂ, IsAlgebraic ℚ ζ ∧ X.ω t (k, k') X.vac = ζ • X.vac := by
-  first | exact @_root_.GlobalTheory.LevelVac.level_vacuum_vector_algebraic | exact _root_.GlobalTheory.LevelVac.level_vacuum_vector_algebraic | (intros; apply _root_.GlobalTheory.LevelVac.level_vacuum_vector_algebraic <;> assumption)
+  first | exact @_root_.GlobalTheory.LevelVac.level_vacuum_vector_algebraic
 end
 end -- clump:auto
 end -- clump:auto
@@ -1902,7 +1898,7 @@ theorem _root_.GlobalTheory.T.twisted_moved_translate_algebraic : ∀ {D : D7} {
       ∃ (n : ℕ) (c : Fin n → ℂ) (w : Fin n → WO (GlobalTheory.Grid.neg A) WW), (∀ p, IsAlgebraic ℚ (c p)) ∧
         (∀ p, (w p).map (infPart D) = 0) ∧
         X.ω t (x, h) (heisO W.ψ (GlobalTheory.Grid.neg A) WW u X.vac) = ∑ p, c p • heisO W.ψ (GlobalTheory.Grid.neg A) WW (w p) X.vac := by
-  first | exact @_root_.GlobalTheory.MovedAlg.moved_translate_eq_algebraic_combination | exact _root_.GlobalTheory.MovedAlg.moved_translate_eq_algebraic_combination | (intros; apply _root_.GlobalTheory.MovedAlg.moved_translate_eq_algebraic_combination <;> assumption)
+  first | exact @_root_.GlobalTheory.MovedAlg.moved_translate_eq_algebraic_combination
 end
 end -- clump:auto
 end -- clump:auto

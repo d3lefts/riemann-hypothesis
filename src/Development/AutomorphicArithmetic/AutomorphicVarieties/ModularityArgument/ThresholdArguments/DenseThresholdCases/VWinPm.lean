@@ -122,7 +122,7 @@ private theorem frob_back {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Al
     rw [valuation_lt_one_iff', valuation_lt_one_iff',
       ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem,
       ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem]
-    simp [AlgEquiv.smul_def, map_inv₀]
+    simp [AlgEquiv.smul_def]
   refine ⟨?_, fun x hx => ?_⟩
   · have hs : σ • g • A = g • A := hσ.1
     show (g⁻¹ * σ * g) • A = A
@@ -277,7 +277,7 @@ private theorem chi_ofRep_eq_charpoly_lift {n : ℕ} {K Γ : Type} [CommRing K] 
     | single g b =>
       simp only [W.GDet.repAlg, MonoidAlgebra.mapRingHom_single, MonoidAlgebra.lift_single]
       ext i j
-      simp [Polynomial.smul_eq_C_mul, Polynomial.algebraMap_apply]
+      simp
   have e1 : W.GDet.repAlg σ K[X] (MonoidAlgebra.single 1 X) = Matrix.scalar (Fin n) (X : K[X]) := by
     simp only [W.GDet.repAlg, MonoidAlgebra.lift_single, map_one]
     ext i j
@@ -496,9 +496,9 @@ theorem UpperTheory.V.Ws.Pu.sepEl :
     obtain ⟨r, hr⟩ := IsLocalRing.residue_surjective (ψ b γ : ResidueField O)
     obtain ⟨s, hs⟩ := IsLocalRing.residue_surjective ((χ a γ : ResidueField O) - (ψ b γ : ResidueField O))⁻¹
     refine ⟨MonoidAlgebra.single γ s - MonoidAlgebra.single 1 (s * r), ?_, ?_⟩
-    · simp only [map_sub, MonoidAlgebra.lift_single, MonoidHom.comp_apply, Units.coeHom_apply, map_one, Units.val_one, Algebra.smul_def, IsLocalRing.ResidueField.algebraMap_eq, map_mul, hr, hs, mul_one]
+    · simp only [map_sub, MonoidAlgebra.lift_single, MonoidHom.comp_apply, Units.coeHom_apply, map_one, Algebra.smul_def, IsLocalRing.ResidueField.algebraMap_eq, map_mul, hr, hs, mul_one]
       rw [← mul_sub, inv_mul_cancel₀ hu]
-    · simp only [map_sub, MonoidAlgebra.lift_single, MonoidHom.comp_apply, Units.coeHom_apply, map_one, Units.val_one, Algebra.smul_def, IsLocalRing.ResidueField.algebraMap_eq, map_mul, hr, hs, mul_one, sub_self]
+    · simp only [map_sub, MonoidAlgebra.lift_single, MonoidHom.comp_apply, Units.coeHom_apply, map_one, Algebra.smul_def, IsLocalRing.ResidueField.algebraMap_eq, map_mul, hr, hs, mul_one, sub_self]
   choose e he using key
   exact UpperTheory.V.Ws.Pu.exists_separating_element (fun a => MonoidAlgebra.lift O (ResidueField O) Γ ((Units.coeHom _).comp (χ a))) (fun b => MonoidAlgebra.lift O (ResidueField O) Γ ((Units.coeHom _).comp (ψ b))) e (fun a b => (he a b).1) (fun a b => (he a b).2)
 end -- clump:auto
@@ -901,7 +901,7 @@ theorem UpperTheory.V.Ws.Pu.frobAbs_w :
   have h3 := hI _ (inv_mul_mem_Ine_of_isFrob h1 h2)
   have h4 : ρ σ ^ e = ρ φ ^ f := by
     rw [map_mul, map_inv, inv_mul_eq_one, map_pow, map_pow] at h3
-    first | exact h3 | exact h3.symm
+    first | exact h3
   have key : ∀ x ∈ (W.mat ρ σ).charpoly.roots, ∃ c ∈ b, ‖ι x‖ ^ e = ‖c‖⁻¹ ^ f := by
     intro x hx
     obtain ⟨z, hz, hzx⟩ := frobAbs_eig (ρ σ) (ρ φ) hf h4 (isRoot_of_mem_roots hx)

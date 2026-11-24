@@ -1,6 +1,5 @@
 module
 
-public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsHeckeQuotientTriple
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HomExtNormalSt
 public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.ForallGeometricallyIntegralOfSmoothOfGeometrical
@@ -8,6 +7,7 @@ public import Mathlib.AlgebraicGeometry.Geometrically.Integral
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsGrpPullback
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ThickTransComp
 public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LineBundleIsoOfGenericIsoNormalLocalBase
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -80,7 +80,7 @@ theorem pull_inv (L : RigLB G) (s : LB.Gen (LB.LinComb L.L (K := Fin 2) ![(ι[G]
     pull x⁻¹.left (cls L.L L.isLB) = pull x.left (cls L.L L.isLB) := by
   have e := (cls_eq_zero_iff (LB.isLB_linComb L.isLB _ _)).2 ⟨s, hs⟩
   rw [cls_linComb L.isLB, Fin.sum_univ_two] at e
-  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, pull_id, one_smul, neg_smul] at e
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, pull_id, one_smul, neg_smul] at e
   have e' : pull (ι[G]).left (cls L.L L.isLB) = cls L.L L.isLB := by
     rw [← sub_eq_zero, sub_eq_add_neg]; exact e
   rw [Hom.inv_def, Over.comp_left, pull_comp, e']

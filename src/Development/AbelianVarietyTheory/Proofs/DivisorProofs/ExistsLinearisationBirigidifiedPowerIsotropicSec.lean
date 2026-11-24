@@ -88,26 +88,26 @@ theorem iso_transl_fst : ∀ (S : Scheme.{0}) (A : Over S) [GrpObj A] [IsCommMon
   have e := (cls_linComb hL _ _ (LB.isLB_linComb hL _ _)).symm.trans ((cls_eq_zero_iff _).2 cube)
   have habc : (lift (fst A A) 1 : G2 A ⟶ G2 A) * (toUnit _ ≫ lift h 1) * lift 1 (snd A A) =
       GlobalTheory.UPel.HT.Hecke.transl (lift h 1 : 𝟙_ (Over S) ⟶ G2 A) := by
-    ext <;> simp [GlobalTheory.UPel.HT.Hecke.transl, MonObj.mul_comp, MonObj.comp_mul]
+    ext <;> simp [GlobalTheory.UPel.HT.Hecke.transl, MonObj.mul_comp]
   have hac : (lift (fst A A) 1 : G2 A ⟶ G2 A) * lift 1 (snd A A) = 𝟙 _ := by
-    ext <;> simp [MonObj.mul_comp, MonObj.comp_mul]
+    ext <;> simp [MonObj.mul_comp]
   have hbc : (toUnit _ ≫ lift h 1 : G2 A ⟶ G2 A) * lift 1 (snd A A) = snd A A ≫ lift (toUnit A ≫ h) (𝟙 A) := by
-    ext <;> simp [MonObj.mul_comp, MonObj.comp_mul]
+    ext <;> simp [MonObj.mul_comp]
   have hab : (lift (fst A A) 1 : G2 A ⟶ G2 A) * (toUnit _ ≫ lift h 1) = (fst A A * (toUnit _ ≫ h)) ≫ lift (𝟙 A) 1 := by
-    ext <;> simp [MonObj.mul_comp, MonObj.comp_mul]
+    ext <;> simp [MonObj.mul_comp]
   have ha : (lift (fst A A) 1 : G2 A ⟶ G2 A) = fst A A ≫ lift (𝟙 A) 1 := by
-    ext <;> simp [MonObj.mul_comp, MonObj.comp_mul]
+    ext <;> simp
   have hb : (toUnit _ ≫ lift h 1 : G2 A ⟶ G2 A) = (toUnit _ ≫ h) ≫ lift (𝟙 A) 1 := by
-    ext <;> simp [MonObj.mul_comp, MonObj.comp_mul]
+    ext <;> simp
   have hc : (lift 1 (snd A A) : G2 A ⟶ G2 A) = snd A A ≫ lift 1 (𝟙 A) := by
-    ext <;> simp [MonObj.mul_comp, MonObj.comp_mul]
+    ext <;> simp
   have h1' : (1 : G2 A ⟶ G2 A) = (1 : G2 A ⟶ A) ≫ lift (𝟙 A) 1 := by
-    ext <;> simp [MonObj.mul_comp, MonObj.comp_mul]
+    ext <;> simp
   simp only [Fin.sum_univ_eight, Matrix.cons_val] at e
   rw [habc, hac, hbc, hab, ha, hb, hc, h1', Over.id_left, pull_id] at e
   simp only [fun g => fac g _ (z _ h1), fun g => fac g _ (z _ h2), fun g => fac g _ (z _ hh)] at e
   have key : pull (GlobalTheory.UPel.HT.Hecke.transl (lift h 1 : 𝟙_ (Over S) ⟶ G2 A)).left (cls L hL) = cls L hL := by
-    simp only [one_smul, neg_smul, smul_zero, neg_zero, add_zero, zero_add] at e
+    simp only [one_smul, neg_smul, smul_zero, add_zero] at e
     exact eq_of_sub_eq_zero ((sub_eq_add_neg _ _).trans e)
   refine (cls_eq_iff hL (pull_isLB hL _)).1 ?_
   rw [cls_pull hL, key]
@@ -143,14 +143,14 @@ theorem translSnd : ∀ (S : Scheme.{0}) (A : Over S) [GrpObj A] [IsCommMonObj A
     (GlobalTheory.CechPic.cls_pull hL ψ (pull_isLB hL ψ)).symm.trans ((GlobalTheory.CechPic.cls_eq_zero_iff _).2 hψ)
   have e_abc : lift (1 : G2 A ⟶ A) (snd A A) * (toUnit _ ≫ lift 1 h) * lift (fst A A) 1 =
       GlobalTheory.UPel.HT.Hecke.transl (lift 1 h : 𝟙_ (Over S) ⟶ G2 A) := by
-    apply CartesianMonoidalCategory.hom_ext <;> simp [GlobalTheory.UPel.HT.Hecke.transl, MonObj.mul_comp, MonObj.comp_mul]
+    apply CartesianMonoidalCategory.hom_ext <;> simp [GlobalTheory.UPel.HT.Hecke.transl, MonObj.mul_comp]
   have e_ab : lift (1 : G2 A ⟶ A) (snd A A) * (toUnit _ ≫ lift 1 h) =
       (snd A A * (toUnit _ ≫ h)) ≫ lift (1 : A ⟶ A) (𝟙 A) := by
-    apply CartesianMonoidalCategory.hom_ext <;> simp [MonObj.mul_comp, MonObj.comp_mul]
+    apply CartesianMonoidalCategory.hom_ext <;> simp [MonObj.mul_comp]
   have e_ac : lift (1 : G2 A ⟶ A) (snd A A) * lift (fst A A) 1 = 𝟙 _ := by
-    apply CartesianMonoidalCategory.hom_ext <;> simp [MonObj.mul_comp, MonObj.comp_mul]
+    apply CartesianMonoidalCategory.hom_ext <;> simp [MonObj.mul_comp]
   have e_bc : (toUnit _ ≫ lift 1 h) * lift (fst A A) 1 = fst A A ≫ lift (𝟙 A) (toUnit A ≫ h) := by
-    apply CartesianMonoidalCategory.hom_ext <;> simp [MonObj.mul_comp, MonObj.comp_mul]
+    apply CartesianMonoidalCategory.hom_ext <;> simp [MonObj.mul_comp]
   have e_a : lift (1 : G2 A ⟶ A) (snd A A) = snd A A ≫ lift (1 : A ⟶ A) (𝟙 A) := by
     apply CartesianMonoidalCategory.hom_ext <;> simp
   have e_b : (toUnit _ ≫ lift 1 h : G2 A ⟶ G2 A) = (toUnit _ ≫ h) ≫ lift (1 : A ⟶ A) (𝟙 A) := by
@@ -206,13 +206,13 @@ theorem exists_linearisation_prod : ∀ (X : Scheme.{0}) (L : LB X), L.IsLB → 
   have f1 := val_corr hJ (hc₁ a c) (𝟙 X)
   have f2 := val_corr hJ (hc₂ b d) (ρ₁ (a * c))
   have g := val_corr hJ (hc c b) (ρ₁ a)
-  try simp only [val_mul hJ, val_pull hJ, Prod.mk_mul_mk, Category.id_comp, Category.assoc, hρ, hρ₁] at e0
-  try simp only [val_mul hJ, val_pull hJ, Prod.mk_mul_mk, Category.id_comp, Category.assoc, hρ, hρ₁] at e1
-  try simp only [val_mul hJ, val_pull hJ, Prod.mk_mul_mk, Category.id_comp, Category.assoc, hρ, hρ₁] at e2
-  try simp only [val_mul hJ, val_pull hJ, Prod.mk_mul_mk, Category.id_comp, Category.assoc, hρ, hρ₁] at f1
-  try simp only [val_mul hJ, val_pull hJ, Prod.mk_mul_mk, Category.id_comp, Category.assoc, hρ, hρ₁] at f2
-  try simp only [val_mul hJ, val_pull hJ, Prod.mk_mul_mk, Category.id_comp, Category.assoc, hρ, hρ₁] at g
-  try simp only [val_mul hJ, val_pull hJ, Prod.mk_mul_mk, Category.id_comp, Category.assoc, hρ, hρ₁]
+  try simp only [val_mul hJ, val_pull hJ, Category.id_comp, hρ₁] at e0
+  try simp only [val_mul hJ, val_pull hJ, Category.id_comp] at e1
+  try simp only [val_mul hJ, val_pull hJ, Category.id_comp, Category.assoc, hρ] at e2
+  try simp only [val_mul hJ, val_pull hJ, Category.id_comp] at f1
+  try simp only [val_mul hJ, val_pull hJ, Category.assoc, hρ₁] at f2
+  try simp only [val_mul hJ, val_pull hJ] at g
+  try simp only [val_mul hJ, val_pull hJ, Prod.mk_mul_mk, Category.id_comp, hρ]
   rw [e0, e1, e2, f1, f2, ← hcomm c b, _root_.mul_assoc, _root_.mul_assoc, ← _root_.mul_assoc (val (v₁ c) (ρ₁ a) y J), g]
   simp only [_root_.mul_assoc]
 end GlobalTheory.ProdLin
@@ -299,7 +299,7 @@ variable {S : Scheme.{0}}
 
 theorem transl_mul' {G : Over S} [GrpObj G] (x y : 𝟙_ (Over S) ⟶ G) :
     Hecke.transl (x * y) = Hecke.transl x ≫ Hecke.transl y := by
-  simp only [Hecke.transl, comp_mul, Category.comp_id, Category.id_comp]
+  simp only [Hecke.transl, comp_mul, Category.comp_id]
   rw [← Category.assoc _ (toUnit G) y, toUnit_unique (_ ≫ toUnit G) (toUnit G), _root_.mul_assoc]
 
 theorem transl_comm {G : Over S} [GrpObj G] [IsCommMonObj G] (x y : 𝟙_ (Over S) ⟶ G) :

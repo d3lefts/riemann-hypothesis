@@ -149,7 +149,7 @@ theorem intg_of_entries {m n : Type*} {Z : Matrix m n E} (h : ∀ i j, ∃ o : �
     Intg 1 Z := by
   refine ⟨fun i j => Classical.choose (h i j), ?_⟩
   ext i j
-  simp only [Matrix.map_apply, map_one, one_smul]
+  simp only [map_one, one_smul]
   exact Classical.choose_spec (h i j)
 
 theorem exists_den (x : E) :
@@ -504,7 +504,7 @@ theorem bd_step {s n : ℕ} (t : E) (ht : t ≠ 0) (W' : Matrix (Fin n) (Fin n) 
   have hU1 : IsUpUni U1 := by
     have : U1 = (revJ E s * liftZP_unit * revJ E s) * U11 := by
       rw [hU1def, hP, hW1i, hW1]
-      simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, inv_mul_cancel₀ ht, mul_inv_cancel₀ ht, one_smul,
+      simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, mul_inv_cancel₀ ht, one_smul,
         Matrix.mul_assoc]
     rw [this]
     exact up_mul (revJ_conj_up (lo_11 hL0)) (up_11 hU0)
@@ -958,7 +958,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E} {r : �
 def piL (e f : Fin r → S.V) : S.V →ₗ[E] S.V := LinearMap.id - ∑ c, (S.hT (f c)).smulRight (e c)
 
 theorem piL_apply (e f : Fin r → S.V) (x : S.V) : piL e f x = x - ∑ c, S.hT (f c) x • e c := by
-  simp [piL, LinearMap.smulRight_apply]
+  simp [piL]
 
 theorem herm_star (x y : S.V) : star (S.hT x y) = S.hT y x := by
   exact S.herm.eq x y
@@ -1046,7 +1046,7 @@ theorem related_gen (hH : HeisOp) (hSk : SkewSolve) {T T' : E} (Λ : Submodule (
       have hh : star (S.hT (a c) (a c)) = S.hT (a c) (a c) := herm_star _ _
       simp only [s, lt_irrefl, if_false, if_true, star_neg, star_mul', hh]
       linear_combination (-(S.hT (a c) (a c))) * hθ
-    · simp [s, h, not_lt.2 h.le, h.ne, h.ne', herm_star]
+    · simp [s, h, not_lt.2 h.le, h.ne', herm_star]
   have haa : ∀ c d, S.hT (a c) (a d) = (((nd * nQ) ^ 2 : ℕ) : E) * S.hT (a' c) (a' d) := by
     intro c d
     rw [haa', haa', map_smul, LinearMap.map_smulₛₗ, LinearMap.smul_apply]
@@ -1218,9 +1218,8 @@ theorem gram_frame {T' : E} (F : LFlag S r T') (a b : Fin (r + 1)) :
     S.hT (frame F a) (frame F b) = if a = Fin.last r ∧ b = Fin.last r then -T' else 0 := by
   refine Fin.lastCases ?_ (fun i => ?_) a <;> refine Fin.lastCases ?_ (fun j => ?_) b
   · simpa [frame, FlagG.fvec] using F.fl.z_norm
-  · have h := F.fl.z_orth j
-    have : S.hT F.fl.z (F.fl.e j) = 0 := by rw [← herm_star, h]; simp
-    simpa [frame, FlagG.fvec, Fin.castSucc_ne_last] using this
+  · simpa [frame, FlagG.fvec, Fin.castSucc_ne_last] using
+      (show S.hT F.fl.z (F.fl.e j) = 0 by rw [← herm_star, F.fl.z_orth j]; simp)
   · simpa [frame, FlagG.fvec, Fin.castSucc_ne_last] using F.fl.z_orth i
   · simpa [frame, FlagG.fvec, Fin.castSucc_ne_last] using F.fl.e_iso i j
 
@@ -1230,14 +1229,11 @@ theorem mem_orth_Xplus {T : E} (F : LFlag S r T) (x : S.V) (he : ∀ a, S.hT (F.
     refine sup_le (Submodule.span_le.2 ?_) (Submodule.span_le.2 ?_)
     · rintro _ ⟨a, rfl⟩
       simp [he a]
-    · intro w hw
-      rw [Set.mem_singleton_iff] at hw
-      subst hw
+    · rintro _ rfl
       simp [hz]
   simp only [orth, Submodule.mem_iInf]
   intro w hw
-  have := hle hw
-  simpa using this
+  simpa using hle hw
 
 end Gen
 
@@ -1248,12 +1244,12 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem zhat_cs (D : D7) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T')
     (c : Fin D.R.rS) (b : Fin (D.R.rS + 1)) :
     ZhatL (lf D F0) F' (Fin.castSucc c) b = (VS D).hT (F0.e c) (frame F' b) := by
-  simp [ZhatL, Zhat, brS, frame, FlagG.fvec, lf]
+  simp [ZhatL, Zhat, brS, frame, FlagG.fvec]
 
 theorem zhat_last (D : D7) {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (D.sp.Y 0) D.R.rS T')
     (b : Fin (D.R.rS + 1)) :
     ZhatL (lf D F0) F' (Fin.last D.R.rS) b = (VS D).hT F0.z (frame F' b) := by
-  simp [ZhatL, Zhat, brS, frame, FlagG.fvec, lf]
+  simp [ZhatL, Zhat, brS, frame, FlagG.fvec]
 
 theorem fixedZhat_of (hH : HeisOp) (hSk : SkewSolve) (hS : ShortFin) (hRD : RowsDep) (hRI : RightInv)
     (hFI : FInt) (hRF : ResFin) : FixedZhatFinite := by
@@ -1489,10 +1485,6 @@ theorem resFin_holds : ResFin := by
   have hZ : (Λ.restrictScalars ℤ).FG := by
     first
       | exact Submodule.FG.restrictScalars hΛ
-      | (obtain ⟨t, ht⟩ := hΛ
-         obtain ⟨s0, hs0⟩ := (Module.Finite.fg_top : (⊤ : Submodule ℤ (𝓞 E)).FG)
-         rw [← ht, ← Submodule.span_smul_of_span_eq_top hs0]
-         exact Submodule.fg_def.2 ⟨_, s0.finite_toSet.smul t.finite_toSet, rfl⟩)
   obtain ⟨n, g, hg⟩ := Submodule.fg_iff_exists_fin_generating_family.1 hZ
   have hmem : ∀ x ∈ Λ, ∃ a : Fin n → ℤ, ∑ i, a i • g i = x := by
     intro x hx

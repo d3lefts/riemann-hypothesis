@@ -114,8 +114,8 @@ theorem diam_exists : ∀ (N l d : ℕ), 0 < N → Nat.Coprime N l → Nat.Copri
   · rw [hγ]; simp [M]
   · rw [hγ]; simp [M]
   · simp only [en, hγ, M]
-    simp only [Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_one, Matrix.head_cons, Matrix.empty_val',
-      Matrix.cons_val_fin_one, Matrix.cons_val_zero]
+    simp only [Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_one, Matrix.empty_val',
+      Matrix.cons_val_fin_one]
     push_cast
     exact (ZMod.natCast_eq_natCast_iff _ _ _).2 hd'N
 
@@ -381,10 +381,10 @@ theorem galB_act_upper : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosu
   fin_cases i
   · have h := Ideal.mul_mem_left _ (-((j : ℤ_[l]) * u 1)) hdχ
     convert h using 1
-    simp [hv, hv', mZl, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+    simp [hv, hv', mZl]
     ring
   · convert Ideal.zero_mem _
-    simp [hv, hv', mZl, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+    simp [hv, hv', mZl]
     ring
 
 end GlobalTheory.KZ.GalUpper

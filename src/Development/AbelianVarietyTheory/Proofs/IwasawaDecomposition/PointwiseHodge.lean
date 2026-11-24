@@ -357,12 +357,12 @@ theorem curv_modelGram_lie (w ξ η : ReciprocityTheory.L2DbarEstimates.V n) (hw
     apply Matrix.inv_eq_right_inv
     have e : (1 - (Z w)ᴴ * Z w) * (1 + (Z w)ᴴ * (1 - Z w * (Z w)ᴴ)⁻¹ * Z w) =
         1 - (Z w)ᴴ * Z w + (Z w)ᴴ * ((1 - Z w * (Z w)ᴴ) * (1 - Z w * (Z w)ᴴ)⁻¹) * Z w := by
-      simp only [Matrix.sub_mul, Matrix.mul_add, Matrix.add_mul, Matrix.mul_sub, Matrix.one_mul,
+      simp only [Matrix.sub_mul, Matrix.mul_add, Matrix.mul_sub, Matrix.one_mul,
         Matrix.mul_one, Matrix.mul_assoc]
     rw [e, hP, Matrix.mul_one, sub_add_cancel]
   rw [hQ]
-  simp only [Matrix.mul_add, Matrix.add_mul, Matrix.mul_one, Matrix.one_mul, Matrix.mul_neg,
-    Matrix.neg_mul, neg_neg, Matrix.zero_mul, add_zero, zero_add, Matrix.mul_assoc, neg_add]
+  simp only [Matrix.mul_add, Matrix.add_mul, Matrix.mul_one, Matrix.mul_neg,
+    Matrix.neg_mul, neg_neg, Matrix.zero_mul, add_zero, Matrix.mul_assoc, neg_add]
   abel
 
 end LinearModel
@@ -386,7 +386,7 @@ open scoped ComplexOrder
 
 
 theorem _root_.GlobalTheory.T.chernCurvature_modelGram_conjMulTranspose_inv : ∀ {n p q : ℕ} (Z : ReciprocityTheory.L2DbarEstimates.V n →ₗ[ℂ] Matrix (Fin p) (Fin q) ℂ) (w ξ η : ReciprocityTheory.L2DbarEstimates.V n), (1 - (Z w)ᴴ * Z w).PosDef → curv (fun u => (1 - (Z u).map (starRingEnd ℂ) * (Z u)ᵀ)⁻¹) w ξ η = -(Z ξ * (1 - (Z w)ᴴ * Z w)⁻¹ * (Z η)ᴴ * (1 - Z w * (Z w)ᴴ)⁻¹) := by
-  first | exact @GlobalTheory.PointChern.curv_modelGram_lie | exact GlobalTheory.PointChern.curv_modelGram_lie | (intros; apply GlobalTheory.PointChern.curv_modelGram_lie <;> assumption)
+  first | exact @GlobalTheory.PointChern.curv_modelGram_lie
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ChernCurvatureModelGramConjMulTransposeInvStatement =====

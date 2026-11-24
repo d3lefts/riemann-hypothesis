@@ -766,7 +766,7 @@ theorem row_exact (pr : P →* Q) {a b : ℕ} (F : Bi P Q (a + 2) (b + 1)) (hF :
         Fin.cons c (fun j => u (k.succAbove j)) := by
     intro c u k
     funext j
-    cases j using Fin.cases <;> simp [Fin.succ_succAbove_zero, Fin.succ_succAbove_succ]
+    cases j using Fin.cases <;> simp [Fin.succ_succAbove_succ]
   refine ⟨fun x y => F (Fin.cons (pr (y 0)) x) y, ?_, ?_⟩
   · intro g x y
     show F (Fin.cons (pr (g * y 0)) (fun i => pr g * x i)) (fun j => g * y j) = F (Fin.cons (pr (y 0)) x) y
@@ -1020,9 +1020,8 @@ theorem cat_fc_hi {Q : Type} [Group Q] {a c m : ℕ} (h : a + c = m) (x : Fin (a
   have hl := l.isLt
   simp only [cat]
   split_ifs with h1 h2 h3 h4 h5 h6 <;> first
-    | (congr 1; ext; simp only [fc_val, Fin.val_mk]; split_ifs <;> omega)
+    | (congr 1; ext; simp only [fc_val]; split_ifs <;> omega)
     | (exfalso; split_ifs at hv <;> omega)
-    | rfl
 
 private theorem fin_succAbove_eq_fc {n : ℕ} (i : Fin (n + 1)) (l : Fin n) : i.succAbove l = fc (i : ℕ) l := by
   ext

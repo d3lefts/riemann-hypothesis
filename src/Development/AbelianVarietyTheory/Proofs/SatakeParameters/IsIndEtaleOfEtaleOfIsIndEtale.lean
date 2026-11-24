@@ -70,7 +70,7 @@ section -- clump:auto
 
 
 theorem _root_.GlobalTheory.T.isIndEtale_over_etale_of_isIndEtale : ∀ (A W O : Type) [CommRing A] [CommRing W] [CommRing O] [Algebra A W] [Algebra A O] [Algebra W O] [IsScalarTower A W O] [Algebra.Etale A W], GlobalTheory.IndefiniteRowSideFullHecke.ProjectiveSpaceOverSpec.IsIndEtale (algebraMap A O) → GlobalTheory.IndefiniteRowSideFullHecke.ProjectiveSpaceOverSpec.IsIndEtale (algebraMap W O) := by
-  first | (exact @GlobalTheory.IndEtaleCancel.isIndEtale_of_etale_of_isIndEtale) | (exact GlobalTheory.IndEtaleCancel.isIndEtale_of_etale_of_isIndEtale) | (intros; apply GlobalTheory.IndEtaleCancel.isIndEtale_of_etale_of_isIndEtale  <;> assumption)
+  first | (exact @GlobalTheory.IndEtaleCancel.isIndEtale_of_etale_of_isIndEtale)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsIndEtaleOverEtaleOfIsIndEtaleStatement =====
@@ -139,7 +139,7 @@ theorem mem_sup_pow_of_algebraMap_mem (K : Ideal S) (x : S)
   have hc : (AdicCompletion.evalₐ (maximalIdeal S) n).toRingHom.comp
       (algebraMap S (AdicCompletion (maximalIdeal S) S)) = Ideal.Quotient.mk _ := by
     ext y
-    simp [AlgHom.commutes, Ideal.Quotient.algebraMap_eq]
+    simp [Ideal.Quotient.algebraMap_eq]
   rw [hc] at h
   have h' : Ideal.Quotient.mk (maximalIdeal S ^ n) x ∈ K.map (Ideal.Quotient.mk _) := by
     have e : (AdicCompletion.evalₐ (maximalIdeal S) n).toRingHom
@@ -235,7 +235,7 @@ section -- clump:auto
 open IsLocalRing
 
 theorem _root_.GlobalTheory.T.isNoetherianRing_of_directed_pure_union' : ∀ (S : Type) [CommRing S] [IsLocalRing S] (ι : Type) [Preorder ι] [IsDirected ι (· ≤ ·)] [Nonempty ι] (R : ι → Subring S), Monotone R → (∀ x : S, ∃ i, x ∈ R i) → (∀ i, IsNoetherianRing (R i)) → (∀ i, ((maximalIdeal S).comap (R i).subtype).map (R i).subtype = maximalIdeal S) → (∀ i (J : Ideal (R i)), (J.map (R i).subtype).comap (R i).subtype = J) → IsNoetherianRing S := by
-  first | (exact @GlobalTheory.isNoetherianRing_of_directed_pure_union) | (exact GlobalTheory.isNoetherianRing_of_directed_pure_union) | (intros; apply GlobalTheory.isNoetherianRing_of_directed_pure_union  <;> assumption)
+  first | (exact @GlobalTheory.isNoetherianRing_of_directed_pure_union)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsNoetherianRingOfDirectedPureUnionStatement =====

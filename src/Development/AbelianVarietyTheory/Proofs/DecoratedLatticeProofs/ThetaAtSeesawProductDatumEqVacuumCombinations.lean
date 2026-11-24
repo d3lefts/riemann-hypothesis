@@ -95,7 +95,7 @@ open GlobalTheory.LocMod GlobalTheory.SplitWeil ValuativeRel
 
 
 theorem _root_.GlobalTheory.T.exists_splitPoint_weilChar_conductor_one_of_units : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (q : SplitPt D k) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → q.UnitAA → ∃ ψk : AddChar k Circle, (ofSplit q).IsChar ψ ψk ∧ HasConductor ψk 1 := by
-  first | exact @GlobalTheory.SplitWeilChar.weil_char_conductor_one | exact GlobalTheory.SplitWeilChar.weil_char_conductor_one | (intros; apply GlobalTheory.SplitWeilChar.weil_char_conductor_one <;> assumption)
+  first | exact @GlobalTheory.SplitWeilChar.weil_char_conductor_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsSplitPointWeilCharConductorOneOfUnitsStatement =====
@@ -278,7 +278,7 @@ open GlobalTheory.LocMod GlobalTheory.SplitWeil ValuativeRel
 
 
 theorem _root_.GlobalTheory.T.isPlaceModel_tensor_splitPlaceLatticeIndicator : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (M : Lat S) (M' : Lat T), IsSelfDualC S M → IsSelfDualC T M' → ∀ (P : LocPl ψ S T M M') (e : AE D), e * P.q.e = 0 → ∀ (f₀ : WO S T → ℂ) (T' : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ)), IsPlaceModel ψ (symplO S T) (heisO ψ S T) (e + P.q.e) (latO S T (M : Set _) (M' : Set _) fun _ => True) 1 f₀ T' → ∃ T'' : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ), IsPlaceModel ψ (symplO S T) (heisO ψ S T) e (latO S T (M : Set _) (M' : Set _) fun _ => True) 1 f₀ T'' ∧ ∀ Φ, T'' Φ = T' ((ofSplit P.q).tensorAt P.FS P.FT Φ (Set.indicator {x | (ofSplit P.q).up P.FS P.FT x ∈ latO S T (M : Set _) (M' : Set _) (· = P.q.v)} fun _ => 1)) := by
-  first | exact @GlobalTheory.LatIdemVac.isPlaceModel_tensorLat | exact GlobalTheory.LatIdemVac.isPlaceModel_tensorLat | (intros; apply GlobalTheory.LatIdemVac.isPlaceModel_tensorLat <;> assumption)
+  first | exact @GlobalTheory.LatIdemVac.isPlaceModel_tensorLat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsPlaceModelTensorSplitPlaceLatticeIndicatorStatement =====
@@ -474,7 +474,7 @@ open GlobalTheory.LocMod GlobalTheory.SplitWeil ValuativeRel
 
 
 theorem _root_.GlobalTheory.T.isThetaFunO_splitPlaces_schrodingerModel_sum : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S T : HSp D) (M : Lat S) (M' : Lat T), IsSelfDualC S M → IsSelfDualC T M' → ∀ (n : ℕ) (L : Fin n → LocPl ψ S T M M'), (Function.Injective fun i => (L i).q.v) → ∀ (f₀ : WO S T → ℂ) (T' : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ)), Vac ψ S T M M' (fun _ => True) f₀ → IsPlaceModel ψ (symplO S T) (heisO ψ S T) (∑ i, (L i).q.e) (latO S T (M : Set _) (M' : Set _) fun _ => True) 1 f₀ T' → ∀ Φ, IsSBHalf (∑ i, (L i).q.e) (latO S T (M : Set _) (M' : Set _) fun _ => True) Φ → IsThetaFunO ψ S T (T' Φ) := by
-  first | exact @GlobalTheory.PlaceSumTheta.isThetaFunO_sum_placeModel | exact GlobalTheory.PlaceSumTheta.isThetaFunO_sum_placeModel | (intros; apply GlobalTheory.PlaceSumTheta.isThetaFunO_sum_placeModel <;> assumption)
+  first | exact @GlobalTheory.PlaceSumTheta.isThetaFunO_sum_placeModel
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsThetaFunOSplitPlacesSchrodingerModelSumStatement =====
@@ -492,7 +492,7 @@ open GlobalTheory.LocMod GlobalTheory.SplitWeil ValuativeRel
 
 
 theorem _root_.GlobalTheory.T.matrixSupported_splitPlace_of_isHalf_conjSum : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (q : SplitPt D k) {m n : ℕ} (x : Mx D m n), IsHalf (q.e + cA D q.e) x → MxAt (· = q.v) x := by
-  first | exact @GlobalTheory.FinPl.SplitHalfSuppImp.mxAt_of_isHalf | exact GlobalTheory.FinPl.SplitHalfSuppImp.mxAt_of_isHalf | (intros; apply GlobalTheory.FinPl.SplitHalfSuppImp.mxAt_of_isHalf <;> assumption)
+  first | exact @GlobalTheory.FinPl.SplitHalfSuppImp.mxAt_of_isHalf
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MatrixSupportedSplitPlaceOfIsHalfConjSumStatement =====
@@ -551,7 +551,7 @@ open GlobalTheory.LocMod GlobalTheory.SplitWeil ValuativeRel
 
 
 theorem _root_.GlobalTheory.T.splitPlaceIdempotent_mul_eq_zero_of_ne_place : ∀ (D : D7) (k k' : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Field k'] [ValuativeRel k'] [TopologicalSpace k'] [IsNonarchimedeanLocalField k'] (q : SplitPt D k) (q' : SplitPt D k'), q.v ≠ q'.v → q.e * q'.e = 0 := by
-  first | exact @GlobalTheory.SplitOrth.split_mul_split | exact GlobalTheory.SplitOrth.split_mul_split | (intros; apply GlobalTheory.SplitOrth.split_mul_split <;> assumption)
+  first | exact @GlobalTheory.SplitOrth.split_mul_split
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SplitPlaceIdempotentMulEqZeroOfNePlaceStatement =====

@@ -249,7 +249,7 @@ theorem coeff_subst_elim_zero {R : Type} [CommRing R] {d : ℕ}
   rw [if_pos]
   rintro (i | i) hi
   · simp at hi
-  · simp [Finsupp.embDomain_apply]
+  · simp
 
 theorem exists_isLift : ∀ (B O : Type) [CommRing B] [CommRing O] (θ : B →+* O), Function.Surjective θ → ∀ (d : ℕ) (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) O), IsLaw μ → ∃ μ' : Fin d → MvPowerSeries (Fin d ⊕ Fin d) B, IsLift θ μ' ∧ ∀ i, map θ (μ' i) = μ i := by
   intro B O _ _ θ hθ d μ hμ
@@ -646,7 +646,7 @@ theorem exists_lift_isAdapted : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C
       rw [(hA j).2]
       by_cases hij : i = j
       · subst hij; simp
-      · simp [Pi.single_apply, hij]
+      · simp [hij]
     | inr j =>
       refine ⟨fun i => Classical.choose (hF.surj (Classical.choose ((hB.1 (Sum.inr j)).2.1 i))),
         fun i => ?_, fun j' h => by cases h⟩
@@ -681,7 +681,7 @@ theorem exists_lift_isAdapted : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C
       rw [he3, hw2 _ i rfl]
       by_cases hij : j = i
       · subst hij; simp
-      · simp [Pi.single_apply, hij]
+      · simp [hij]
 
 end GlobalTheory.QLog.LiftBasis
 end -- clump:auto
@@ -1010,7 +1010,7 @@ private theorem dIn_univ_of_QL_of_isLaw {B Q : Type} [CommRing B] [CommRing Q] [
     have hleft : pderiv (R := Q) (Sum.inr i) (_root_.GlobalTheory.Katz.inL f) = 0 := by
       unfold _root_.GlobalTheory.Katz.inL
       rw [_root_.GlobalTheory.PSChain.pderiv_subst_chain _ (fun k => by simp) f (Sum.inr i)]
-      simp [pderiv_X]
+      simp
     have hright : pderiv (R := Q) (Sum.inr i) (_root_.GlobalTheory.Katz.inR f) =
         subst (fun k => (X (Sum.inr k) : MvPowerSeries (Fin d ⊕ Fin d) Q)) (pderiv (R := Q) i f) := by
       unfold _root_.GlobalTheory.Katz.inR
@@ -1047,7 +1047,7 @@ private theorem dIn_univ_of_QL_of_isLaw {B Q : Type} [CommRing B] [CommRing Q] [
       ext k
       by_cases hk : k = i
       · subst hk; simp; omega
-      · simp [Finsupp.single_apply, Ne.symm hk]
+      · simp [Ne.symm hk]
     have hαi : (((α - Finsupp.single i 1 : Fin d →₀ ℕ) i : ℕ) : Q) + 1 = (α i : Q) := by
       have : (α - Finsupp.single i 1 : Fin d →₀ ℕ) i + 1 = α i := by simp; omega
       rw [← this]
@@ -1256,7 +1256,7 @@ private lemma subst_inr_zero_pderiv_coboundary_eq {Q : Type} [CommRing Q] {d : �
   rw [map_sub, map_sub, _root_.GlobalTheory.PSChain.pderiv_subst_chain _ hν0, _root_.GlobalTheory.PSChain.pderiv_subst_chain _ (by simp),
     _root_.GlobalTheory.PSChain.pderiv_subst_chain _ (by simp)]
   simp only [pderiv_X, Pi.single_apply, Sum.inr.injEq, reduceCtorEq, if_false, mul_zero,
-    Finset.sum_const_zero, sub_zero, mul_ite, mul_one, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    Finset.sum_const_zero, sub_zero, mul_ite, mul_one, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   rw [← coe_substAlgHom he0]
 
   simp only [map_sub, map_sum, map_mul]
@@ -1675,10 +1675,6 @@ theorem window_matrices : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsA
     rw [hχ m' (tb m)] at h1
     have h2 : epsPairing hε G (tb m) (χ m') = tb.equivFun (tb m) m' := (epsEquiv hε).injective h1
     rw [h2, Module.Basis.equivFun_self]
-    all_goals
-      by_cases h : m = m'
-      · subst h; simp
-      · simp [Pi.single_apply, h, Ne.symm h]
   have hQLe : ∀ l, QL μ' ⊤ (e l) := hB.1
   have hDe : ∀ l, DIn (⊤ : Ideal F.B) (e l) := fun l =>
     GlobalTheory.QLogDiff.dIn_of_QL p F.B O F.Q F.θ F.frame d μ' hL ⊤ (e l) (hQLe l)

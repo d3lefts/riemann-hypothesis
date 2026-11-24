@@ -69,41 +69,50 @@ theorem core (f r k m PP TO T : ℝ) (hf : 2 ≤ f) (hr : 6 ≤ r) (hm : 0 < m) 
       f * (r * (r - 1) / 2) + 1 ≤ PP ^ 2 * (f * (r * (r - 1) / 2)) ^ 2 * k / m := by
   set d := f * (r * (r - 1) / 2) with hd
   have hr1 : 5 ≤ r - 1 := by linarith
-  have hrr : 5 * r ≤ r * (r - 1) := by nlinarith
-  have hd5 : 5 * r ≤ d := by rw [hd]; nlinarith
+  have hrr : 5 * r ≤ r * (r - 1) := by
+    linarith [mul_le_mul_of_nonneg_left hr1 (by linarith : (0 : ℝ) ≤ r)]
+  have hd5 : 5 * r ≤ d := by
+    rw [hd]; linarith [mul_le_mul_of_nonneg_right hf (by linarith : (0 : ℝ) ≤ r * (r - 1))]
   have hd30 : 30 ≤ d := by linarith
-  have hdr2 : d ≤ f * r ^ 2 / 2 := by rw [hd]; nlinarith
-  have hPP1 : 1 ≤ PP := by nlinarith
+  have hd0 : 0 ≤ d := by linarith
+  have hdr2 : d ≤ f * r ^ 2 / 2 := by
+    rw [hd]; linarith [mul_nonneg (by linarith : (0 : ℝ) ≤ f) (by linarith : (0 : ℝ) ≤ r)]
+  have hPP1 : 1 ≤ PP := by linarith
   have hkm' : 1 ≤ k / m := (one_le_div hm).2 hkm
   set A := PP ^ 2 * d ^ 2 * k / m with hA
   have hA' : A = PP ^ 2 * d ^ 2 * (k / m) := by rw [hA]; ring
-  have hPP2 : 1 ≤ PP ^ 2 := by nlinarith
+  have hPP2 : 1 ≤ PP ^ 2 := one_le_pow₀ hPP1
   have hAd : d ^ 2 ≤ A := by
     rw [hA']
     have h0 : 0 ≤ d ^ 2 := by positivity
-    have : d ^ 2 ≤ PP ^ 2 * d ^ 2 := by nlinarith
+    have : d ^ 2 ≤ PP ^ 2 * d ^ 2 := le_mul_of_one_le_left h0 hPP2
     calc d ^ 2 ≤ PP ^ 2 * d ^ 2 := this
       _ = PP ^ 2 * d ^ 2 * 1 := by ring
       _ ≤ PP ^ 2 * d ^ 2 * (k / m) := by gcongr
   have hTO' : PP ^ 2 * d * A ≤ TO := by
     have : PP ^ 4 * d ^ 3 * k / m = PP ^ 2 * d * A := by rw [hA]; ring
     linarith
-  have hG : (d + 3) * ((d + 1) * d / 2 + 4 * r + d + 3) ≤ d ^ 3 := by nlinarith
-  have hT2 : T + d + 1 ≤ 2 * A := by nlinarith
+  have hG : (d + 3) * ((d + 1) * d / 2 + 4 * r + d + 3) ≤ d ^ 3 := by
+    linarith [mul_le_mul_of_nonneg_right hd30 (sq_nonneg d), mul_le_mul_of_nonneg_right hd30 hd0,
+      mul_le_mul_of_nonneg_right hd5 hd0]
+  have hT2 : T + d + 1 ≤ 2 * A := by linarith [mul_le_mul_of_nonneg_right hd30 hd0]
   have hGnn : 0 ≤ (d + 3) * ((d + 1) * d / 2 + 4 * r + d + 3) := by
     have : 0 ≤ r := by linarith
     positivity
-  have h3d : 3 * d ^ 2 ≤ PP ^ 2 := by nlinarith
-  have hA0 : 0 ≤ A := by nlinarith
-  have hd1 : d + 1 ≤ d ^ 2 := by nlinarith
+  have h3d : 3 * d ^ 2 ≤ PP ^ 2 := by
+    linarith [pow_le_pow_left₀ (by linarith) (show 2 * d ≤ PP by linarith) 2]
+  have hA0 : 0 ≤ A := (sq_nonneg d).trans hAd
+  have hd1 : d + 1 ≤ d ^ 2 := by linarith [mul_le_mul_of_nonneg_right hd30 hd0]
   refine ⟨?_, ?_, by linarith⟩
   · have h1 : (d + 3) * ((d + 1) * d / 2 + 4 * r + d + 3) * (T + d + 1) ≤ d ^ 3 * (2 * A) :=
       mul_le_mul hG hT2 (by linarith) (by positivity)
-    have h4 : 4 ≤ d ^ 3 * A := by nlinarith
+    have h4 : 4 ≤ d ^ 3 * A := by
+      linarith [mul_le_mul (pow_le_pow_left₀ (by norm_num) hd30 3) (show (1 : ℝ) ≤ A by linarith)
+        (by norm_num) (pow_nonneg hd0 3)]
     have h2 : d ^ 3 * (2 * A) + 4 ≤ PP ^ 2 * d * A := by
       have : 3 * d ^ 2 * (d * A) ≤ PP ^ 2 * (d * A) := by
         apply mul_le_mul_of_nonneg_right h3d; positivity
-      nlinarith
+      linarith
     linarith
   · have hP2 : (f * r ^ 2) ^ 2 ≤ PP ^ 2 := by
       apply pow_le_pow_left₀ (by positivity) hPP
@@ -168,15 +177,17 @@ theorem at_point {D : D7} {L : SizeData₂ D} {P : ParameterChoice' D L} (Tp : P
   have hL : 1 ≤ L.sc.L := by unfold Scale.L; exact Real.one_le_rpow hx1 L.sc.eps_pos.le
   have hZ : 1 ≤ zBase L := by
     unfold zBase
-    have : (12 : ℝ) ≤ (D.R.f : ℝ) * D.R.r := by nlinarith
-    nlinarith
+    have : (12 : ℝ) ≤ (D.R.f : ℝ) * D.R.r := by
+      linarith [mul_le_mul hfR hrR (by norm_num) (by linarith)]
+    exact one_le_mul_of_one_le_of_one_le (by linarith) hL
   have hPP : (D.R.f : ℝ) * (D.R.r : ℝ) ^ 2 ≤ Tp.PP := by
     rw [Tp.PP_eq]
     have h1 : zBase L ^ (2 : ℝ) ≤ zBase L ^ Tp.eP :=
       Real.rpow_le_rpow_of_exponent_le hZ (by linarith [Tp.eP_ge])
     rw [Real.rpow_two] at h1
     have hL2 : 1 ≤ L.sc.L ^ 2 := one_le_pow₀ hL
-    have hff : (D.R.f : ℝ) ≤ (D.R.f : ℝ) ^ 2 * L.sc.L ^ 2 := by nlinarith
+    have hff : (D.R.f : ℝ) ≤ (D.R.f : ℝ) ^ 2 * L.sc.L ^ 2 :=
+      (le_self_pow₀ (by linarith) two_ne_zero).trans (le_mul_of_one_le_right (sq_nonneg _) hL2)
     have h3 : (D.R.f : ℝ) * (D.R.r : ℝ) ^ 2 ≤ zBase L ^ 2 := by
       unfold zBase
       calc (D.R.f : ℝ) * (D.R.r : ℝ) ^ 2 ≤ ((D.R.f : ℝ) ^ 2 * L.sc.L ^ 2) * (D.R.r : ℝ) ^ 2 :=
@@ -184,7 +195,7 @@ theorem at_point {D : D7} {L : SizeData₂ D} {P : ParameterChoice' D L} (Tp : P
         _ = ((D.R.f : ℝ) * D.R.r * L.sc.L) ^ 2 := by ring
     have hCP := Tp.one_le_CP
     have h4 : 0 ≤ zBase L ^ Tp.eP := Real.rpow_nonneg (by linarith) _
-    nlinarith
+    exact (h3.trans h1).trans (le_mul_of_one_le_left h4 hCP)
 
   have hTO : Tp.PP ^ 4 * ((D.R.f : ℝ) * ((D.R.r : ℝ) * ((D.R.r : ℝ) - 1) / 2)) ^ 3 * D.R.k / D.R.m ≤ (Tp.TO : ℝ) := by
     have hTOg := Tp.TO_ge
@@ -197,9 +208,10 @@ theorem at_point {D : D7} {L : SizeData₂ D} {P : ParameterChoice' D L} (Tp : P
     have hB : 0 ≤ Tp.PP ^ 4 * ((D.R.f : ℝ) * ((D.R.r : ℝ) * ((D.R.r : ℝ) - 1) / 2)) ^ 3 * D.R.k := by
       have : (0 : ℝ) ≤ D.R.k := by positivity
       positivity
-    have hfx : L.de2 ≤ (D.R.f : ℝ) * L.sc.x ^ Tp.Cp := by nlinarith
+    have hfx : L.de2 ≤ (D.R.f : ℝ) * L.sc.x ^ Tp.Cp :=
+      hde1.trans (one_le_mul_of_one_le_of_one_le (by linarith) hxc)
     have := mul_le_mul_of_nonneg_left hfx (mul_nonneg hB hmR.le)
-    nlinarith
+    linarith
   have hPPnn : 0 ≤ Tp.PP := le_trans (by positivity) hPP
   have hA0 : 0 ≤ Tp.PP ^ 2 * ((D.R.f * D.R.r.choose 2 : ℕ) : ℝ) ^ 2 * (D.R.k : ℝ) / (D.R.m : ℝ) := by positivity
   have hT0 := Nat.ceil_lt_add_one hA0
@@ -217,7 +229,8 @@ theorem at_point {D : D7} {L : SizeData₂ D} {P : ParameterChoice' D L} (Tp : P
     omega
   have hTON : Tp.TO ≤ D.R.N D.R.m := by
     unfold Ranks.N
-    have : D.R.t ≤ D.R.m * (D.R.t + 1) := by nlinarith
+    have : D.R.t ≤ D.R.m * (D.R.t + 1) :=
+      (Nat.le_succ _).trans (Nat.le_mul_of_pos_left _ (by omega))
     omega
   have hgap : (Tp.TO : ℝ) ≤ LevelStarExponents.gapS D P.Cgap := by
     unfold LevelStarExponents.gapS
@@ -228,7 +241,7 @@ theorem at_point {D : D7} {L : SizeData₂ D} {P : ParameterChoice' D L} (Tp : P
       positivity
     have h4 : (D.R.N D.R.m : ℝ) ≤ (D.R.N D.R.m : ℝ) * (D.R.m : ℝ) ^ 10 := by
       have : (0 : ℝ) ≤ D.R.N D.R.m := by positivity
-      nlinarith
+      exact le_mul_of_one_le_right this h2
     linarith
   have hTO1 : (1 : ℝ) ≤ Tp.TO := by
     have := Tp.TO_40
@@ -237,7 +250,7 @@ theorem at_point {D : D7} {L : SizeData₂ D} {P : ParameterChoice' D L} (Tp : P
   have hh0 : 2 * (Tp.TO : ℝ) ≤ LevelStarExponents.h0 L := by
     have := Tp.heightBound_ge_order_sq
     have : (0 : ℝ) ≤ D.R.t := by positivity
-    nlinarith
+    linarith [le_self_pow₀ hTO1 two_ne_zero]
   refine ⟨Nat.mul_pos (by omega) (Nat.choose_pos (by omega)), ?_, ?_⟩
   · have h : ((D.R.f * D.R.r.choose 2 + 1 : ℕ) : ℝ) ≤
         Tp.PP ^ 2 * ((D.R.f * D.R.r.choose 2 : ℕ) : ℝ) ^ 2 * (D.R.k : ℝ) / (D.R.m : ℝ) := by

@@ -237,8 +237,8 @@ theorem UpperTheory.formally_smooth_surjective_derivation :
     · intro x y
       ext
       · simp
-      · simp [hmul, -Derivation.leibniz, add_mul, Finset.sum_add_distrib, Finset.mul_sum,
-          Finset.sum_mul, mul_assoc, mul_comm, mul_left_comm, mul_add, add_comm]
+      · simp [hmul, -Derivation.leibniz, Finset.sum_add_distrib, Finset.mul_sum,
+          mul_comm, mul_left_comm, mul_add, add_comm]
     · ext <;> simp
     · intro x y
       ext <;> simp [add_mul, Finset.sum_add_distrib]
@@ -543,7 +543,7 @@ private theorem ValueChart.rep_smul (C : ValueChart G p) (r : R) {φ : X.preshea
   obtain ⟨g, h1, h2, h3⟩ := h
   refine ⟨(epsMul r).comp g, fun b => ?_, fun b => ?_, ?_⟩
   · simp [epsMul, h1]
-  · simp [epsMul, h2, Finset.mul_sum, mul_left_comm]
+  · simp [epsMul, h2, mul_left_comm]
   · rw [h3, CommRingCat.ofHom_comp, Spec.map_comp, Category.assoc]
 
 private theorem ValueChart.rep_exists (C : ValueChart G p) (φ : X.presheaf.stalk p ⟶ CommRingCat.of R) (x : Spec (CommRingCat.of R) ⟶ X)
@@ -847,7 +847,7 @@ theorem isDerivAt0_all (e : Flat.FamExp G M B ψ) {b : Fin n → ℂ} (hb : b �
       funext c
       by_cases h : c = a
       · subst h; simp
-      · simp [Pi.single_apply, h]
+      · simp [h]
     have := hpt (Pi.single a 1)
     rwa [h3] at this
   have hsm : ∀ (c : ℂ) (w : Fin g → ℂ), IsDerivAt0 (fun z => (e.ex b z).left) w (N.pt w).left →
@@ -935,7 +935,6 @@ theorem eig_of_value (hξ : IsCptGen ξ) (M : LieModel G ξ Li) (z : Sp ℂ ⟶ 
   rw [hs, ← mem_eig he a] at e2
   have e3 := e1.unique (hξ.inj _) e2
   apply Over.OverMorphism.ext
-  change (Mz.pt (Bz a y)).left = (Mz.pt (c a • y)).left
   rw [hB, Mz.pt_smul, Over.comp_left, hw]
   have e3' := congrArg (fun q => q.left) e3
   change v.left ≫ (act.act a).left = _ at e3'

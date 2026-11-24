@@ -121,7 +121,7 @@ theorem _root_.GlobalTheory.T.downwardVertexMap_lastVertex_mul_of_frame : ∀ {k
     (g : GL (Fin (Γ.rank (Γ.m, j + 1))) k) (κ : GL (Fin (topRank Γ (j + 1))) k),
     toFrame hs hj g = embX (Γ.m - 1 - (j + 1)) κ → ∀ (x x' : ColArgs Γ) (e e' : Vars Γ), x' (j + 1) = x (j + 1) * κ.val →
     downMap hs x' e' (j + 1) = downMap hs x e (j + 1) * g.val := by
-  first | exact @GlobalTheory.TopLevelInv.downMap_last_mul_of_toFrame_eq | exact GlobalTheory.TopLevelInv.downMap_last_mul_of_toFrame_eq | (intros; apply GlobalTheory.TopLevelInv.downMap_last_mul_of_toFrame_eq <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.downMap_last_mul_of_toFrame_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DownwardVertexMapLastVertexMulOfFrameStatement =====
@@ -175,7 +175,7 @@ theorem phase_eq_of_two_steps : ∀ {k : Type} [Field k] [ValuativeRel k] [Topol
     rw [hP1]
     linear_combination -h0
   · rintro ⟨i, hi⟩ ⟨h1, h2⟩
-    simp only [ne_eq, Fin.ext_iff, Fin.val_mk] at h1 h2
+    simp only [ne_eq, Fin.ext_iff] at h1 h2
     rw [sub_eq_zero, hch ⟨i, hi⟩ h1 h2]
     congr 1
     by_cases hij : i + 1 = j
@@ -216,7 +216,7 @@ theorem _root_.GlobalTheory.T.fourierJacobiPhase_adjacentInnerSteps_invariant : 
     (Odd (Γ.m - 2 - j) → ∀ s : Fin (topRank Γ j), rowVar x' e' j s = rowVar x e j s) →
     (Odd (Γ.m - 2 - j) → ∀ r : Fin (topRank Γ (j + 1 + 1)), colVar x' e' ⟨j + 1, by omega⟩ r = colVar x e ⟨j + 1, by omega⟩ r) →
     phase x e = phase x' e' := by
-  first | exact @GlobalTheory.TopLevelInv.phase_eq_of_two_steps | exact GlobalTheory.TopLevelInv.phase_eq_of_two_steps | (intros; apply GlobalTheory.TopLevelInv.phase_eq_of_two_steps <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.phase_eq_of_two_steps
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FourierJacobiPhaseAdjacentInnerStepsInvariantStatement =====
@@ -290,7 +290,7 @@ theorem phase_eq_of_lastMove {k : Type} [Field k] [ValuativeRel k] [TopologicalS
       intro z f s
       simp only [rowVar]
       rw [dite_eq_right (by omega)]
-    simp only [hrow, hx1, colVar, Fin.val_mk, hst, map_inv]
+    simp only [hrow, hx1, colVar, Fin.val_mk, hst]
     rw [← map_inv]
     have hv : ∀ (g : GL (Fin (topRank Γ (i + 1))) k) a b,
         (embX (Γ.m - 2 - i) g).val (Sum.inl a) (Sum.inl b) = g.val a b := fun _ _ _ => rfl
@@ -321,7 +321,7 @@ theorem _root_.GlobalTheory.T.fourierJacobiPhase_lastInnerVertex_invariant : ∀
     (∀ i : Fin (Γ.m - 1), i.val ≠ j → e' i = e i) →
     stepPt (x' j) (e' ⟨j, by omega⟩) = ((embX (Γ.m - 2 - j) κ)⁻¹).val * stepPt (x j) (e ⟨j, by omega⟩) →
     phase x e = phase x' e' := by
-  first | exact @GlobalTheory.TopLevelInv.phase_eq_of_lastMove | exact GlobalTheory.TopLevelInv.phase_eq_of_lastMove | (intros; apply GlobalTheory.TopLevelInv.phase_eq_of_lastMove <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.phase_eq_of_lastMove
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FourierJacobiPhaseLastInnerVertexInvariantStatement =====
@@ -778,7 +778,7 @@ theorem _root_.GlobalTheory.T.fourierJacobiPhase_adjacentSteps_invariant_vertex 
             stepPt x₀ e₀ (.inl r) (.inr ⟨(c + 1) / 2, by omega⟩) else 0)) ∧
       (Odd (c + 1) → (∀ s : n₀, d₀ (.inr ⟨(c + 1) / 2, by omega⟩) (.inl s) = stepPt x₀ e₀ (.inr ⟨(c + 1) / 2, by omega⟩) (.inl s)) ∧
         ∀ r : n₂, d₁ (.inl r) (.inr ⟨c / 2, by omega⟩) = stepPt x₁ e₁ (.inl r) (.inr ⟨c / 2, by omega⟩)) := by
-  first | exact @GlobalTheory.PhaseStep.phase_step_inv | exact GlobalTheory.PhaseStep.phase_step_inv | (intros; apply GlobalTheory.PhaseStep.phase_step_inv <;> assumption)
+  first | exact @GlobalTheory.PhaseStep.phase_step_inv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FourierJacobiPhaseAdjacentStepsInvariantVertexStatement =====
@@ -797,7 +797,7 @@ theorem _root_.GlobalTheory.T.stepPoint_mul_periodUnipotent_GL_measurePreserving
     ∀ v ∈ symN k n' (c + 1), ∀ κ : GL n' k, valuation k (gdet κ : k) = 1 → ∀ x₀ : Matrix n n' k,
       ∃ φ : (StepVar n c n' → k) ≃ᵐ (StepVar n c n' → k), MeasurePreserving φ (stepVol ν n c n') (stepVol ν n c n') ∧
         ∀ e, stepPt x₀ e * (v * embX (c + 1) κ).val = stepPt (x₀ * κ.val) (φ e) := by
-  first | exact @GlobalTheory.TopLevelInv.stepPt_mul_symN_embX | exact GlobalTheory.TopLevelInv.stepPt_mul_symN_embX | (intros; apply GlobalTheory.TopLevelInv.stepPt_mul_symN_embX <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.stepPt_mul_symN_embX
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.StepPointMulPeriodUnipotentGLMeasurePreservingStatement =====
@@ -908,7 +908,7 @@ theorem _root_.GlobalTheory.T.lastRowVertex_adjacentSteps_translate_frames : ∀
         stepPt ((κ⁻¹).val * x₀) (φ₀ e₀) (.inr l) (.inl s) = stepPt x₀ e₀ (.inr l) (.inl s)) ∧
       (Odd c₀ → ∀ (r : Fin a₂) (i : Fin (c + 1)), i.val = c / 2 →
         stepPt (x₁ * κ.val) (φ₁ e₁) (.inl r) (.inr i) = stepPt x₁ e₁ (.inl r) (.inr i)) := by
-  first | exact @GlobalTheory.flatStep_vertex | exact GlobalTheory.flatStep_vertex | (intros; apply GlobalTheory.flatStep_vertex <;> assumption)
+  first | exact @GlobalTheory.flatStep_vertex
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.LastRowVertexAdjacentStepsTranslateFramesStatement =====
@@ -991,7 +991,7 @@ theorem _root_.GlobalTheory.T.unfoldingFilledArgs_moveInnerLastColumnVertex : �
     downMap hs x' e' j = (g⁻¹).val * downMap hs x e j →
     downMap hs x' e' (j + 1) = downMap hs x e (j + 1) * g.val →
     Γ.moveArgs .one (Pi.mulSingle (Γ.m, j + 1) g) (fill hs x y e) = fill hs x' y e' := by
-  first | exact @GlobalTheory.TopLevelInv.fill_moveVertex | exact GlobalTheory.TopLevelInv.fill_moveVertex | (intros; apply GlobalTheory.TopLevelInv.fill_moveVertex <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.fill_moveVertex
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnfoldingFilledArgsMoveInnerLastColumnVertexStatement =====

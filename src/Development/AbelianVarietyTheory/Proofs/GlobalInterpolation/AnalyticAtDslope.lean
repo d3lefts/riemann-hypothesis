@@ -3,6 +3,7 @@ module
 public import Mathlib.Analysis.Analytic.Order
 public import Mathlib.Analysis.CStarAlgebra.Classes
 public import Mathlib.NumberTheory.LSeries.DirichletContinuation
+import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LogDerivEqOrderDivAddAnalytic
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.BdIntEqZeroOfPrimitive
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.CompletedLFunctionNeZeroOfReNonpos
 import Mathlib.Algebra.Order.Floor.Extended
@@ -61,39 +62,17 @@ open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology
 namespace GlobalTheory.ExplicitRect
 
 theorem analyticAt_dslope {f : ℂ → ℂ} {p : ℂ} (hf : AnalyticAt ℂ f p) :
-    AnalyticAt ℂ (dslope f p) p := by
-  obtain ⟨q, hq⟩ := hf
-  exact ⟨_, hq.has_fpower_series_dslope_fslope⟩
+    AnalyticAt ℂ (dslope f p) p := hf.dslope p
 
 theorem eq_add_dslope (f : ℂ → ℂ) (p s : ℂ) : f s = f p + (s - p) * dslope f p s := by
-  have h := sub_smul_dslope f p s
-  rw [smul_eq_mul] at h
-  linear_combination -h
+  simpa only [smul_eq_mul, add_comm] using (eq_add_of_sub_eq (sub_smul_dslope f p s).symm)
 
 theorem logDeriv_pole {f : ℂ → ℂ} {p : ℂ} (hf : AnalyticAt ℂ f p)
     (hn : analyticOrderAt f p ≠ ⊤) : ∃ g : ℂ → ℂ, AnalyticAt ℂ g p ∧ ∀ᶠ s in 𝓝[≠] p,
       deriv f s / f s = ((analyticOrderNatAt f p : ℕ) : ℂ) / (s - p) + g s := by
-  obtain ⟨g0, hg0, hg0p, hfg⟩ :=
-    (hf.analyticOrderAt_eq_natCast (n := analyticOrderNatAt f p)).mp (Nat.cast_analyticOrderNatAt hn).symm
-  generalize analyticOrderNatAt f p = n at hfg ⊢
-  refine ⟨fun s => deriv g0 s / g0 s, hg0.deriv.div hg0 hg0p, ?_⟩
-  have hne : ∀ᶠ s in 𝓝 p, g0 s ≠ 0 := hg0.continuousAt.eventually_ne hg0p
-  have hdiff : ∀ᶠ s in 𝓝 p, DifferentiableAt ℂ g0 s :=
-    hg0.eventually_analyticAt.mono fun s hs => hs.differentiableAt
-  filter_upwards [nhdsWithin_le_nhds hne, nhdsWithin_le_nhds hfg.eventually_nhds,
-    nhdsWithin_le_nhds hdiff, nhdsWithin_le_nhds hfg, self_mem_nhdsWithin] with s h1 h2 h3 h4 h5
-  have hsp : s - p ≠ 0 := sub_ne_zero.mpr h5
-  have hd : HasDerivAt (fun z => (z - p) ^ n • g0 z)
-      ((n : ℂ) * (s - p) ^ (n - 1) * 1 * g0 s + (s - p) ^ n * deriv g0 s) s := by
-    have := (((hasDerivAt_id' s).sub_const p).pow n).mul h3.hasDerivAt
-    convert this using 1
-    all_goals rfl
-  have h2' : f =ᶠ[𝓝 s] fun z => (z - p) ^ n • g0 z := h2
-  rw [h2'.deriv_eq, h4, hd.deriv, smul_eq_mul]
-  rcases n with _ | k
-  · simp
-  · rw [Nat.add_sub_cancel, pow_succ]
-    field_simp
+  obtain ⟨g, hg, he⟩ := GlobalTheory.logDeriv_eq_order_div_add_analytic f p hf
+    (fun h => hn (analyticOrderAt_eq_top.mpr h))
+  exact ⟨g, hg, he.mono fun s hs => hs.2⟩
 
 theorem analyticAt_cpow {u : ℝ} (hu : 0 < u) (p : ℂ) :
     AnalyticAt ℂ (fun s : ℂ => (u : ℂ) ^ s) p := analyticAt_const.cpow analyticAt_id (Complex.ofReal_mem_slitPlane.2 hu)
@@ -104,15 +83,9 @@ theorem expand_simple {φ g : ℂ → ℂ} {p k : ℂ} {u : ℝ} (hu : 0 < u) (h
       -(φ s) * (u : ℂ) ^ s / s = a / (s - p) ^ 2 + (-(k * ((u : ℂ) ^ p / p))) / (s - p) + G s := by
   have hW : AnalyticAt ℂ (fun s : ℂ => (u : ℂ) ^ s / s) p :=
     (analyticAt_cpow hu p).div analyticAt_id hp
-  refine ⟨0, fun s => -(k * dslope (fun s : ℂ => (u : ℂ) ^ s / s) p s) - g s * ((u : ℂ) ^ s / s),
-    ((analyticAt_const.mul (analyticAt_dslope hW)).neg).sub (hg.mul hW), ?_⟩
-  filter_upwards [hφ, self_mem_nhdsWithin] with s hs hsp
-  have hsp' : s - p ≠ 0 := sub_ne_zero.mpr hsp
-  have hexp : (u : ℂ) ^ s / s = (u : ℂ) ^ p / p + (s - p) * dslope (fun s : ℂ => (u : ℂ) ^ s / s) p s :=
-    eq_add_dslope (fun s : ℂ => (u : ℂ) ^ s / s) p s
-  rw [hs, mul_div_assoc, hexp]
-  field_simp
-  ring
+  obtain ⟨G, hG, he⟩ := GlobalTheory.neg_mul_eq_residue_div_add_analytic hg hW hφ
+  refine ⟨0, G, hG, ?_⟩
+  simpa only [zero_div, zero_add, mul_div_assoc] using he
 
 theorem expand_zero {φ h : ℂ → ℂ} {m : ℂ} {u : ℝ} (hu : 0 < u)
     (hh : AnalyticAt ℂ h 0) (hφ : ∀ᶠ s in 𝓝[≠] (0 : ℂ), φ s = m / s + h s) :
@@ -120,29 +93,18 @@ theorem expand_zero {φ h : ℂ → ℂ} {m : ℂ} {u : ℝ} (hu : 0 < u)
       -(φ s) * (u : ℂ) ^ s / s =
         a / (s - 0) ^ 2 + (-(m * (Real.log u : ℂ) + h 0)) / (s - 0) + G s := by
   have hE : AnalyticAt ℂ (fun s : ℂ => (u : ℂ) ^ s) 0 := analyticAt_cpow hu 0
-  have hD1 := analyticAt_dslope hE
-  have hD2 := analyticAt_dslope hD1
-  have hDh := analyticAt_dslope hh
   have hD10 : dslope (fun s : ℂ => (u : ℂ) ^ s) 0 0 = (Real.log u : ℂ) := by
     rw [dslope_same]
     have hu0 : (u : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hu.ne'
     rw [(hasStrictDerivAt_const_cpow (x := (u : ℂ)) (y := 0) (.inl hu0)).hasDerivAt.deriv,
       Complex.cpow_zero, one_mul, Complex.ofReal_log hu.le]
-  refine ⟨-m, fun s => -(m * dslope (dslope (fun s : ℂ => (u : ℂ) ^ s) 0) 0 s + dslope h 0 s +
-      h s * (Real.log u : ℂ) + h s * s * dslope (dslope (fun s : ℂ => (u : ℂ) ^ s) 0) 0 s),
-    ((((analyticAt_const.mul hD2).add hDh).add (hh.mul analyticAt_const)).add
-      ((hh.mul analyticAt_id).mul hD2)).neg, ?_⟩
+  refine ⟨-m, fun s => -(m * dslope (dslope (fun s : ℂ => (u : ℂ) ^ s) 0) 0 s +
+      dslope (fun s : ℂ => h s * (u : ℂ) ^ s) 0 s),
+    ((analyticAt_const.mul ((hE.dslope 0).dslope 0)).add ((hh.mul hE).dslope 0)).neg, ?_⟩
   filter_upwards [hφ, self_mem_nhdsWithin] with s hs hs0
-  have hs0' : s ≠ 0 := hs0
-  have e1 := eq_add_dslope (fun s : ℂ => (u : ℂ) ^ s) 0 s
-  have e2 := eq_add_dslope (dslope (fun s : ℂ => (u : ℂ) ^ s) 0) 0 s
-  have eh := eq_add_dslope h 0 s
-  simp only [Complex.cpow_zero, sub_zero] at e1 e2 eh
-  rw [hD10] at e2
-  rw [hs, e1, e2]
-  simp only [sub_zero]
-  rw [eh]
-  field_simp
+  rw [hs]
+  simp only [dslope_of_ne _ hs0, slope_def_field, sub_zero, Complex.cpow_zero, hD10, mul_one]
+  field_simp [show s ≠ 0 from hs0]
   ring
 
 theorem analyticOff {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) :

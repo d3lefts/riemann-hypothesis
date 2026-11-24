@@ -106,7 +106,7 @@ open GlobalTheory.StdUnn PositivityTheory.GramSchwartzFunctions PositivityTheory
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.centre_character_commutator : ∀ {D : D7} {ρ p : ℕ} (ψ : AddChar (AF D.host.F) ℂ) (b₀ : HermE D ρ) (y x : Mx D ρ p), chz ψ b₀ (GlobalTheory.CompanionTheory.FJE.jc y x) = GlobalTheory.CompanionTheory.FJE.chv ψ b₀ x y := by
-  first | exact @GlobalTheory.CompanionTheory.FJE.chz_jc | exact GlobalTheory.CompanionTheory.FJE.chz_jc | (intros; apply GlobalTheory.CompanionTheory.FJE.chz_jc <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.FJE.chz_jc
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CentreCharacterCommutatorStatement =====

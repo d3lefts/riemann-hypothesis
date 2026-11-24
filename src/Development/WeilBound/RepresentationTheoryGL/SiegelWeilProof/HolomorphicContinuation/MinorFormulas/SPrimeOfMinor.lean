@@ -249,7 +249,7 @@ theorem line_fQ (s : ℂ) (hs : s = 1 ∨ s = -1) (z : ℂ) (m : ℕ) (Q : Fm n)
   simp only [fQ, opD, LinearMap.add_apply, opH_eq, evQ_add, evQ_multPart, evQ_derPart, trace_eU, sum_bool_fin, gD,
     Bool.false_eq_true, if_false, if_true, Matrix.smul_apply, sandwich_eU, smul_eq_mul, cB, alB, vals,
     Polynomial.eval_add, Polynomial.eval_C, Polynomial.eval_X, zero_smul, add_zero]
-  simp only [Finset.mul_sum, Finset.sum_add_distrib, mul_add]
+  simp only [Finset.mul_sum, mul_add]
   ring_nf
   congr 1
   · congr 1
@@ -789,7 +789,7 @@ theorem sum_eq (s : ℂ) (b : Bool) (k l : Fin n) (p : Fm n) :
     · rw [if_neg hb]
       apply Finset.sum_eq_zero; intro a _; apply Finset.sum_eq_zero; intro d _
       have : ¬ ((b0, a0, d0) = (b, a, d)) := fun h => hb (congrArg Prod.fst h)
-      simp only [Pi.single_apply, this, if_false, mul_zero]
+      simp only [this, if_false, mul_zero]
   rw [← hD, hDl]
 
 theorem opH_apply (s : ℂ) (m : ℕ) (b : Bool) (k l : Fin n) (p : Fm n) :
@@ -815,7 +815,7 @@ theorem dl_yv (s : ℂ) (b : Bool) (k l a d : Fin n) : dl s b k l (yv b a d) = k
 
 theorem key1 (s : ℂ) (m : ℕ) (b b' : Bool) (k l k' l' : Fin n) :
     dl s b k l (mm s m b' k' l') = dl s b' k' l' (mm s m b k l) := by
-  simp only [mm, Derivation.leibniz, derivation_constant_vanishes, dl_C, smul_zero, add_zero, smul_eq_mul]
+  simp only [mm, Derivation.leibniz, derivation_constant_vanishes, dl_C, smul_eq_mul]
   by_cases h : b = b'
   · subst h
     rw [dl_yv, dl_yv]; ring
@@ -828,15 +828,15 @@ theorem key2 (s : ℂ) (b b' : Bool) (k l k' l' : Fin n) : ⁅dl s b k l, dl s b
   obtain ⟨b0, a0, d0⟩ := v
   by_cases h1 : b0 = b' <;> by_cases h2 : b0 = b
   · subst h1; subst h2
-    simp only [if_true, Derivation.leibniz, derivation_constant_vanishes, dl_yv, smul_zero, add_zero, smul_eq_mul]
+    simp only [if_true, Derivation.leibniz, derivation_constant_vanishes, dl_yv, smul_eq_mul]
     simp
     ring
   · subst h1
-    simp only [if_true, if_neg h2, Derivation.map_zero, Derivation.leibniz, derivation_constant_vanishes, smul_zero, add_zero, smul_eq_mul,
+    simp only [if_true, if_neg h2, Derivation.map_zero, Derivation.leibniz, derivation_constant_vanishes, smul_eq_mul,
       dl_other s b b0 (Ne.symm h2)]
     simp
   · subst h2
-    simp only [if_true, if_neg h1, Derivation.map_zero, Derivation.leibniz, derivation_constant_vanishes, smul_zero, add_zero, smul_eq_mul,
+    simp only [if_true, if_neg h1, Derivation.map_zero, Derivation.leibniz, derivation_constant_vanishes, smul_eq_mul,
       dl_other s b' b0 (Ne.symm h1)]
     simp
   · simp [if_neg h1, if_neg h2]
@@ -1014,7 +1014,7 @@ theorem null : Null := by
         refine h.trans ?_
         congr 1
         ext p q
-        simp [A, B, Matrix.add_apply]
+        simp [A, B]
         rfl
     _ = 0 := hdet
 
@@ -1536,7 +1536,7 @@ theorem wrOrd_of (hS : SPrime) : PositivityTheory.SiegelWeilFormula.Gen.WROrd :=
   have hc0 : c ≠ 0 := hc.ne'
   have hs1 : (if b then ((t / c : ℝ) : ℂ) else -((t / c : ℝ) : ℂ)) = 1 ∨
       (if b then ((t / c : ℝ) : ℂ) else -((t / c : ℝ) : ℂ)) = -1 := by
-    rcases ht with rfl | rfl <;> cases b <;> simp [hc0, neg_div]
+    rcases ht with rfl | rfl <;> cases b <;> simp [hc0]
   have ht0 : t ≠ 0 := by
     rcases ht with rfl | rfl
     · exact hc0

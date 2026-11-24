@@ -198,7 +198,7 @@ theorem _root_.GlobalTheory.T.theta_preserving_endomorphism_scalar : ∀ (F E : 
         MeasureTheory.IsAddFundamentalDomain (ratLF F E nS nT) 𝓕 μ → ∀ f, IsThetaFunOF σ JS JT ξ₀ B.ψ f →
           ∫⁻ w in 𝓕, ‖M f w‖ₑ ^ 2 ∂μ = ∫⁻ w in 𝓕, ‖f w‖ₑ ^ 2 ∂μ) →
       ∃ c : ℂ, ∀ f, IsThetaFunOF σ JS JT ξ₀ B.ψ f → M f = c • f := by
-  first | exact @_root_.GlobalTheory.ThetaSchurF.schur_k | exact _root_.GlobalTheory.ThetaSchurF.schur_k | (intros; apply _root_.GlobalTheory.ThetaSchurF.schur_k <;> assumption)
+  first | exact @_root_.GlobalTheory.ThetaSchurF.schur_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -503,7 +503,7 @@ open Classical
 theorem _root_.GlobalTheory.T.exists_chart_archimedean_family : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (B : Base F E), _root_.UpperTheory.TP.W.GoodK σ B → ∀ θ : InfinitePlace F → (Ainf F ⊗[F] E →+* ℂ),
       IsInfFamF (fun w : InfinitePlace F => (B.emb w).1) θ → ∃ ι : (InfinitePlace F → ℂ) →+ AEF F E, IsChartF θ ι := by
-  first | exact @_root_.GlobalTheory.RealWeilF.CMChart.exists_chartF_k | exact _root_.GlobalTheory.RealWeilF.CMChart.exists_chartF_k | (intros; apply _root_.GlobalTheory.RealWeilF.CMChart.exists_chartF_k <;> assumption)
+  first | exact @_root_.GlobalTheory.RealWeilF.CMChart.exists_chartF_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -578,7 +578,7 @@ theorem _root_.GlobalTheory.T.finite_lattice_theta_invariant : ∀ (F E : Type) 
         (lam : ℕ →* ℂ) (Om : GAF σ JS × GAF σ JT →* Module.End ℂ (GlobalTheory.WeilPartsF.thetaSubF σ JS JT ξ₀ B.ψ)),
         _root_.UpperTheory.TP.W.IsLatRepL σ JS JT ξ₀ B.ψ hc Λ w lam Om →
         ∀ g ∈ GlobalTheory.WeilPartsF.GinfCF σ JS, ∀ h ∈ GlobalTheory.WeilPartsF.GinfCF σ JT, ∀ f, Om (g, h) f = f := by
-  first | exact @_root_.UpperTheory.TP.W.IsLatRepL.real_triv | exact _root_.UpperTheory.TP.W.IsLatRepL.real_triv | (intros; apply _root_.UpperTheory.TP.W.IsLatRepL.real_triv <;> assumption)
+  first | exact @_root_.UpperTheory.TP.W.IsLatRepL.real_triv
 end
 end -- clump:auto
 end -- clump:auto
@@ -664,7 +664,7 @@ theorem _root_.GlobalTheory.T.finite_lattice_theta_level : ∀ (F E : Type) [Fie
         (lam : ℕ →* ℂ) (Om : GAF σ JS × GAF σ JT →* Module.End ℂ (GlobalTheory.WeilPartsF.thetaSubF σ JS JT ξ₀ B.ψ)),
         _root_.UpperTheory.TP.W.IsLatRepL σ JS JT ξ₀ B.ψ hc Λ w lam Om →
         ∀ f (w : WOF F E nS nT), Continuous fun p : GAF σ JS × GAF σ JT => (Om p f : WOF F E nS nT → ℂ) w := by
-  first | exact @_root_.GlobalTheory.FinLatF.latRepF_cont_k | exact _root_.GlobalTheory.FinLatF.latRepF_cont_k | (intros; apply _root_.GlobalTheory.FinLatF.latRepF_cont_k <;> assumption)
+  first | exact @_root_.GlobalTheory.FinLatF.latRepF_cont_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -781,7 +781,7 @@ theorem _root_.GlobalTheory.T.finite_lattice_theta_support : ∀ (F E : Type) [F
           (f f' : GlobalTheory.WeilPartsF.thetaSubF σ JS JT ξ₀ B.ψ),
           (f' : WOF F E nS nT → ℂ) = heisOF σ JS JT ξ₀ B.ψ w₀ f →
           (Om (g, h) f' : WOF F E nS nT → ℂ) = heisOF σ JS JT ξ₀ B.ψ (actOF σ JS JT g h w₀) (Om (g, h) f) := by
-  first | exact @_root_.GlobalTheory.FinLatHeis.isLatRepF_heis_k | exact _root_.GlobalTheory.FinLatHeis.isLatRepF_heis_k | (intros; apply _root_.GlobalTheory.FinLatHeis.isLatRepF_heis_k <;> assumption)
+  first | exact @_root_.GlobalTheory.FinLatHeis.isLatRepF_heis_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -877,7 +877,7 @@ theorem _root_.GlobalTheory.T.theta_subspace_haar_integral : ∀ (F E : Type) [F
           (f' : WOF F E nS nT → ℂ) = heisOF σ JS JT ξ₀ B.ψ u f → (g' : WOF F E nS nT → ℂ) = heisOF σ JS JT ξ₀ B.ψ u g →
             Bf f' g' = Bf f g) ∧
           ∀ f : M, ∫⁻ w in 𝓕, ‖(f : WOF F E nS nT → ℂ) w‖ₑ ^ 2 ∂μ = ENNReal.ofReal (Bf f f).re := by
-  first | exact @_root_.GlobalTheory.ThetaMeanSquareF.exists_invariant_form_k | exact _root_.GlobalTheory.ThetaMeanSquareF.exists_invariant_form_k | (intros; apply _root_.GlobalTheory.ThetaMeanSquareF.exists_invariant_form_k <;> assumption)
+  first | exact @_root_.GlobalTheory.ThetaMeanSquareF.exists_invariant_form_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -953,7 +953,7 @@ theorem _root_.GlobalTheory.T.lintegral_enorm_sq_latRep_apply_eq : ∀ (F E : Ty
         ∀ (μ : Measure (WOF F E nS nT)) (𝓕 : Set (WOF F E nS nT)), μ.IsAddHaarMeasure →
           IsAddFundamentalDomain (ratLF F E nS nT) 𝓕 μ → ∀ p f,
             ∫⁻ w in 𝓕, ‖(Om p f : WOF F E nS nT → ℂ) w‖ₑ ^ 2 ∂μ = ∫⁻ w in 𝓕, ‖(f : WOF F E nS nT → ℂ) w‖ₑ ^ 2 ∂μ := by
-  first | exact @_root_.GlobalTheory.FinLatUnitF.lintegral_sq_Om_k | exact _root_.GlobalTheory.FinLatUnitF.lintegral_sq_Om_k | (intros; apply _root_.GlobalTheory.FinLatUnitF.lintegral_sq_Om_k <;> assumption)
+  first | exact @_root_.GlobalTheory.FinLatUnitF.lintegral_sq_Om_k
 end
 end -- clump:auto
 end -- clump:auto

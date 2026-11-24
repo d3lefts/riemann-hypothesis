@@ -238,7 +238,7 @@ theorem unitary_diag (W : Matrix (Fin n) (Fin n) ℂ) (hW : Wᴴ * W = 1) :
     intro h0; rw [norm_eq_zero] at h0; exact hdI j (by rw [add_comm]; exact h0)
   · have : W = lam • V' := by rw [hV', smul_smul, mul_inv_cancel₀ hlam0, one_smul]
     have hd2 : diagonal (fun j => lam * E j) = lam • diagonal E := by
-      ext i j; by_cases h : i = j <;> simp [diagonal_apply, h]
+      ext i j; by_cases h : i = j <;> simp [h]
     rw [this, hV'eq, hd2, Matrix.mul_smul, Matrix.smul_mul]
 
 end PositivityTheory.Rg.Sw.Glob.VacU
@@ -424,7 +424,7 @@ theorem kak (k : M2 n) (hk : InK k) :
     rw [mM_unitary P hP, mM_unitary u' hu', kth_eq, fromBlocks_multiply, fromBlocks_multiply]
     simp only [Matrix.zero_mul, Matrix.mul_zero, add_zero, zero_add, Matrix.mul_neg, Matrix.neg_mul]
     rw [← hC0, ← hS0]
-    simp only [Matrix.mul_neg, Matrix.neg_mul, neg_zero, add_zero, hXA, hYB]
+    simp only [neg_zero, add_zero, hXA, hYB]
 
 end PositivityTheory.Rg.Sw.Glob.VacG
 end -- clump:auto

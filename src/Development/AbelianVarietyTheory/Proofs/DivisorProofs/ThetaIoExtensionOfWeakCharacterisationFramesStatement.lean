@@ -167,7 +167,7 @@ open scoped TensorProduct Classical ComplexConjugate
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.minorProduct_fockVector_extremalTorusWeight : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A : Formalism.L2.DIV.FamIn D.what₂.LL G Pl0 T0 D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.Hk3.Core R F → ∀ (i : Fin D.R.m), VStd D i → ∀ (τ : D.what₂.Tau) (a : Fin (Wc D i).rank → ℝ) (t : T0), R.ωP i t (1, atTau R.θ (Wc D i) τ (((R.MW i (sg0 D A)).fr τ)⁻¹ * diagonal (fun j => cexp ((a j : ℂ) * I)) * (R.MW i (sg0 D A)).fr τ)) (R.ptP i t (RealDat.Delta i)) = cexp (((∑ j, extWt (R.MW i (sg0 D A)) τ j * a j : ℝ) : ℂ) * I) • R.ptP i t (RealDat.Delta i) := by
-  first | exact @GlobalTheory.AdTh.MinorWeightCore.delta_extremal_weight_core | exact GlobalTheory.AdTh.MinorWeightCore.delta_extremal_weight_core | (intros; apply GlobalTheory.AdTh.MinorWeightCore.delta_extremal_weight_core <;> assumption)
+  first | exact @GlobalTheory.AdTh.MinorWeightCore.delta_extremal_weight_core
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MinorProductFockVectorExtremalTorusWeightStatement =====
@@ -258,7 +258,7 @@ open Formalism.BasicNotions Formalism.MainNotions NumberField IsDedekindDomain F
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.ioExt_of_weakCharacterisation_of_orthonormal_frames : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0 T0 : Type) (A3 : FamIn3 D.what₂.LL G Pl0 I0 (List ℕ) T0 D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat3 D A3 Ks) (F : Face3 D A3), R.WeakCharacterisation F → R.toRealDat.ExAt → (∀ i, (∀ a b, (Vc D i).hT ((Vc D i).frame a) ((Vc D i).frame b) = if a = b then 1 else 0) ∧ (Vc D i).L0 = Submodule.span (𝓞 D.host.E) (Set.range (Vc D i).frame)) → IoExt R.toRealDat := by
-  first | exact @GlobalTheory.IoExtStd.thetaIoExtension_of_weakCharacterisation_frames | exact GlobalTheory.IoExtStd.thetaIoExtension_of_weakCharacterisation_frames | (intros; apply GlobalTheory.IoExtStd.thetaIoExtension_of_weakCharacterisation_frames <;> assumption)
+  first | exact @GlobalTheory.IoExtStd.thetaIoExtension_of_weakCharacterisation_frames
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaIoExtensionOfWeakCharacterisationFramesStatement =====

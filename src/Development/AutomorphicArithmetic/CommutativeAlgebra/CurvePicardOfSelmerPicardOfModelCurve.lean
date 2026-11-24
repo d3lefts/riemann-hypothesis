@@ -115,19 +115,15 @@ theorem UpperTheory.Reformulated.B.ZariskiNoetherianInduction.noetherian_inducti
           Q {c : Fin n → k | (∀ p ∈ I, MvPolynomial.eval c p = 0) ∧
             MvPolynomial.eval c g = 0} := by
         intro g hg
-        have hlt : I < I ⊔ Ideal.span {g} := by
-          refine lt_of_le_of_ne le_sup_left ?_
-          intro h
-          apply hg
-          rw [h]
-          exact Ideal.mem_sup_right (Ideal.mem_span_singleton_self g)
+        have hlt : I < I ⊔ Ideal.span {g} :=
+          lt_of_le_of_ne le_sup_left fun h =>
+            hg (h ▸ Ideal.mem_sup_right (Ideal.mem_span_singleton_self g))
         refine hmono _ _ ?_ (ih _ hlt)
         rintro c ⟨hc, hcg⟩
-        have hle : I ⊔ Ideal.span {g} ≤ RingHom.ker (MvPolynomial.eval c) := by
-          refine sup_le (fun p hp => (RingHom.mem_ker).2 (hc p hp)) ?_
-          rw [Ideal.span_singleton_le_iff_mem]
-          exact (RingHom.mem_ker).2 hcg
-        exact fun p hp => (RingHom.mem_ker).1 (hle hp)
+        have hle : I ⊔ Ideal.span {g} ≤ RingHom.ker (MvPolynomial.eval c) :=
+          sup_le (fun p hp => RingHom.mem_ker.2 (hc p hp))
+            ((Ideal.span_singleton_le_iff_mem _).2 (RingHom.mem_ker.2 hcg))
+        exact hle
       by_cases hP : Ideal.IsPrime I
       · obtain ⟨g, hg, hQ⟩ := hprime I hP
         refine hmono _ _ ?_ (hunion _ _ hQ (step g hg))
@@ -138,18 +134,13 @@ theorem UpperTheory.Reformulated.B.ZariskiNoetherianInduction.noetherian_inducti
       · rcases Ideal.not_isPrime_iff.1 hP with htop | ⟨x, hx, y, hy, hxy⟩
         · refine hmono _ _ ?_ h0
           intro c hc
-          have h1 := hc 1 (htop ▸ Submodule.mem_top)
-          simp at h1
+          simpa using hc 1 (htop ▸ Submodule.mem_top)
         · refine hmono _ _ ?_ (hunion _ _ (step x hx) (step y hy))
           intro c hc
-          have h1 := hc _ hxy
-          rw [map_mul] at h1
-          rcases mul_eq_zero.1 h1 with h | h
+          obtain h | h := mul_eq_zero.1 (map_mul (MvPolynomial.eval c) x y ▸ hc _ hxy)
           · exact Or.inl ⟨hc, h⟩
           · exact Or.inr ⟨hc, h⟩
-  refine hmono _ _ ?_ (key ⊥)
-  intro c _ p hp
-  rw [(Ideal.mem_bot).1 hp, map_zero]
+  simpa using key (⊥ : Ideal (MvPolynomial (Fin n) k))
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ZariskiNoetherianInduction =====
@@ -259,7 +250,7 @@ theorem UpperTheory.exists_specialization_of_eval_ne_zero :
   refine ⟨g, fun h0 => ha (Ideal.Quotient.eq_zero_iff_mem.2 h0), fun c hc hg => ?_⟩
   let e : MvPolynomial (Fin n) k →ₐ[k] k := MvPolynomial.aeval c
   have he : ∀ p, e p = MvPolynomial.eval c p := fun p => by
-    simp [e, MvPolynomial.coe_aeval_eq_eval]
+    simp [e]
   let φ : (MvPolynomial (Fin n) k ⧸ J) →ₐ[k] k :=
     Ideal.Quotient.liftₐ J e (fun p hp => by
       rw [he]

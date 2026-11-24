@@ -188,7 +188,7 @@ theorem sum_neg_mul_rootCoef [Fintype Ψ] (lam : Ψ × Fin N → ℝ) (p : Ψ ×
   have h3 : GlobalTheory.CompanionTheory.Ar.PB.gap lam (τ, l) =
       lam (τ, l) - if h : (l : ℕ) + 1 < N then lam (τ, ⟨(l : ℕ) + 1, h⟩) else 0 := by
     unfold GlobalTheory.CompanionTheory.Ar.PB.gap gapX
-    split_ifs with h <;> simp [h]
+    split_ifs with h <;> simp
   rw [h3, ← h1, ← h2, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun r _ => ?_
   simp only [rootCoef]
@@ -415,31 +415,6 @@ open GlobalTheory.CompanionTheory.Ar.PB
 
 variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 
-private theorem local_isSmoothHerm_combLine {σ : Type} [Fintype σ] {A : σ → HermLine ι} (hA : ∀ a, IsSmoothHerm (A a))
-    (n : σ → ℤ) : IsSmoothHerm (GlobalTheory.CompanionTheory.Ar.PB.combLine A n) := by
-  refine contDiffOn_prod fun a _ => ?_
-  intro z hz
-  have h0 : (A a).h z ≠ 0 := ((A a).pos z hz).ne'
-  have hf := hA a z hz
-  have key : ∀ m : ℤ, ContDiffWithinAt ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z => (A a).h z ^ m)
-      {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} z := by
-    intro m
-    cases m with
-    | ofNat k => simpa only [Int.ofNat_eq_natCast, zpow_natCast] using hf.pow k
-    | negSucc k =>
-      simp only [zpow_negSucc]
-      exact (hf.pow (k + 1)).inv (pow_ne_zero _ h0)
-  exact key _
-
-private theorem local_isC2At_of_isPotential {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e X) {P : LocPot X}
-    (hP : IsPotential A P) (x : X) : IsTwiceDifferentiableAt A P x := by
-  intro j hj
-  have hm : A.chart j x ∈ (A.chart j).target ∩ (A.chart j).symm ⁻¹' P.U x :=
-    ⟨(A.chart j).map_source hj, by
-      rw [Set.mem_preimage, (A.chart j).left_inv hj]; exact P.mem_U x⟩
-  exact (contDiffAt_of_isPotential A P hP x j hm).of_le (by
-    exact WithTop.coe_le_coe.mpr (le_top : (2 : ℕ∞) ≤ ⊤))
-
 private theorem local_mInt_potOf_eq_of_deg {P J : Ideal (MRing ι)} {e : ℕ} (R : AnLogRes P J e) {L L' : Fin e → HermLine ι}
     (hL : ∀ j, IsSmoothHerm (L j)) (hL' : ∀ j, IsSmoothHerm (L' j)) (ha : ∀ j, (L j).a = (L' j).a) :
     mInt R.A (fun j => potOf R (L j)) (fun _ => 1) = mInt R.A (fun j => potOf R (L' j)) (fun _ => 1) := by
@@ -447,7 +422,7 @@ private theorem local_mInt_potOf_eq_of_deg {P J : Ideal (MRing ι)} {e : ℕ} (R
   have hB0 : ∀ j, (B j).a = 0 := fun j => by
     rw [(combLine_div (L j) (L' j)).1, ha j, sub_self]
   have hBs : ∀ j, IsSmoothHerm (B j) := fun j =>
-    RealGeo.local_isSmoothHerm_combLine (fun a => by
+    Cmp.isSmoothHerm_combLine (fun a => by
       fin_cases a
       · exact hL j
       · exact hL' j) _
@@ -472,7 +447,7 @@ private theorem local_mInt_ref_eq {D : ℕ} {σ : Type} {S : AnSys D σ} {P : Id
     isPotentialPullback S.A Re.R.A Re.π Re.holo (S.th a) (hth a)
   have h1 := (_root_.GlobalTheory.CompanionTheory.Ar.PB.mInt_congr_samePot D Re.R.X Re.R.A Set.univ (fun j => potOf Re.R (Re.ref (w j)))
     (fun j => (S.th (w j)).pullback Re.π Re.holo.1) (fun _ => 1) (fun _ => 1)
-    (fun j => by simp) (fun i => Re.ref_pot (w i)) (fun i x _ => local_isC2At_of_isPotential _ (hpb _) x)
+    (fun j => by simp) (fun i => Re.ref_pot (w i)) (fun i x _ => Cmp.isC2At_of_isPotential _ (hpb _) x)
     (fun _ _ => rfl)).1
   rw [h1]
   exact (degreeFormulaInt S.A Re.R.A Re.π Re.holo Re.deg Re.br Re.degree (fun j => S.th (w j)) (fun i => hth _)
@@ -494,7 +469,7 @@ private theorem local_mInt_combLine_eq {D : ℕ} {σ : Type} [Fintype σ] {S : A
     rw [Real.log_prod fun a _ => (zpow_pos ((Re.ref a).pos _ hm) _).ne']
     exact Finset.sum_congr rfl fun a _ => Real.log_zpow _ _
   rw [h1, (_root_.GlobalTheory.CompanionTheory.Ar.PB.mInt_sumPot_expand D Re.R.X Re.R.A σ Set.univ (fun a => potOf Re.R (Re.ref a)) (fun j a => (n j a : ℝ))
-    (fun _ => 1) (fun j => by simp) (fun a x _ => local_isC2At_of_isPotential _ (hP a) x)
+    (fun _ => 1) (fun j => by simp) (fun a x _ => Cmp.isC2At_of_isPotential _ (hP a) x)
     (fun w => mIntegrableCont _ _ (fun i => hP _) _ continuous_const)).2]
   exact Finset.sum_congr rfl fun w _ => by rw [local_mInt_ref_eq Re w]
 
@@ -522,7 +497,7 @@ theorem geoFun_linA_pow_of_realTie : PB.Inputs → ∀ II : IntersectionSystem, 
     rw [RealGeo.geoMono_word hI M R.Re.R w, ← RealGeo.local_mInt_combLine_eq R.Re fun j => RealGeo.lineCoef (w j)]
     congr 1
     exact RealGeo.local_mInt_potOf_eq_of_deg R.Re.R (fun j => RealGeo.line_smooth M _)
-      (fun j => RealGeo.local_isSmoothHerm_combLine R.Re.ref_smooth _) fun j => RealGeo.line_deg R _
+      (fun j => Cmp.isSmoothHerm_combLine R.Re.ref_smooth _) fun j => RealGeo.line_deg R _
   have heval : eval (PB.gapS (fun x => lam x.1 x.2) (s / M.kA)) S.degPoly =
       ∑ v, S.degNum v * ∏ j, PB.gapS (fun x => lam x.1 x.2) (s / M.kA) (v j) := by
     simp [PB.AnSys.degPoly, PB.formPoly]

@@ -140,7 +140,7 @@ set_option backward.isDefEq.respectTransparency false
 open CategoryTheory AlgebraicGeometry Polynomial DividedPowers GlobalTheory.LogCris GlobalTheory.PDA CrystallineSemistableComparison CrystallineSemistableComparison.CH CrystallineSemistableComparison.B
 
 theorem _root_.GlobalTheory.T.exists_lift_to_thickening : ∀ {O : Type} [CommRing O] {F : Fn O} {d : ℕ} (s : F.Small d) {b : Base} (ht : b.t = 1) {κ : O →+* b.R ⧸ b.I} (𝓛 : Lift s.a (fun k => (s.T k : s.R)) b.R b.I κ) (δ : DividedPowers (b.I.map 𝓛.i)) (hδ : IsDPMorphism b.γ δ 𝓛.i) (hp : b.p ≠ 0) (hn : IsNilpotent (b.p : b.R)) (T : Thick (F.cr b ht κ)), ∃ g : s.R →+* T.B ⧸ T.J, (∀ (c : liftObj s ht 𝓛 δ hδ hp hn ⟶ T) (r : s.R) (z : 𝓛.D), Ideal.Quotient.mk _ z = 𝓛.j r → Ideal.Quotient.mk T.J (c.φ z) = g r) ∧ F.Pt.map (CommRingCat.ofHom g) s.y₀ = T.y.1.2 ∧ ∀ u : Fin d → T.B, (∀ k, Ideal.Quotient.mk T.J (u k) = g (s.T k)) → ∃! c : liftObj s ht 𝓛 δ hδ hp hn ⟶ T, ∀ k, c.φ (𝓛.t k) = u k := by
-  first | exact @GlobalTheory.CompanionTheory.ThickHom.main | exact GlobalTheory.CompanionTheory.ThickHom.main | (intros; apply GlobalTheory.CompanionTheory.ThickHom.main <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ThickHom.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsLiftToThickeningStatement =====
@@ -290,7 +290,7 @@ lemma smul_mem_grade (e : Module.Basis ℕ B M) (I : ℕ → Ideal B) (r j : ℕ
   by_cases h : j = k
   · subst h
     simpa using ha
-  · simp [Finsupp.single_apply, h]
+  · simp [h]
 
 noncomputable def shift (e : Module.Basis ℕ B M) : Module.End B M :=
   e.constr B (fun k => e (k + 1))
@@ -499,7 +499,7 @@ theorem ker_and_surjective : ∀ {B M : Type} [CommRing B] [AddCommGroup M] [Mod
     have hD0 : D (e 0) = 0 := by simpa using hD 0
     have hTz : T z' = 0 := by
       have : D (c • e 0 + shift e z') = T z' := by
-        simp [hTdef, Module.End.mul_apply, hD0]
+        simp [hTdef, hD0]
       rwa [this] at hz
     have hz' : z' = 0 := by
       have : (R * T) z' = z' := by rw [hRT]; rfl
@@ -579,7 +579,7 @@ theorem not_dvd_choose {p : ℕ} (hp : p.Prime) (a c : ℕ) (hc : c < p) :
   haveI : Fact p.Prime := ⟨hp⟩
   have h := Choose.choose_modEq_choose_mod_mul_choose_div_nat (p := p) (n := a * p + c) (k := c)
   have h1 : (a * p + c) % p = c := by
-    rw [Nat.mul_add_mod_of_lt hc] <;> simp
+    rw [Nat.mul_add_mod_of_lt hc]
   have h2 : c % p = c := Nat.mod_eq_of_lt hc
   have h3 : c / p = 0 := Nat.div_eq_of_lt hc
   rw [h1, h2, h3] at h

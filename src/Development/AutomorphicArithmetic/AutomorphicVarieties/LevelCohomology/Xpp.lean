@@ -97,7 +97,7 @@ private theorem UpperTheory.V.X.xiSq_ft {R : Type} [CommRing R] {n d : ℕ} [NeZ
     rw [MonoidHom.mem_ker] at hx ⊢
     set a : ℤ := ((x : ZMod n).val : ℤ) with ha_def
     have hax : ((a : ℤ) : ZMod n) = (x : ZMod n) := by
-      simp [ha_def, ZMod.natCast_zmod_val]
+      simp [ha_def]
     have hcop : IsCoprime a n := by
       have hu : IsUnit ((a : ℤ) : ZMod n) := by rw [hax]; exact x.isUnit
       rw [ZMod.coe_int_isUnit_iff_isCoprime] at hu
@@ -229,7 +229,6 @@ private theorem sq_neg_one {O : Type} [CommRing O] {N : ℕ} (χ : DirichletChar
     exact neg_one_sq
   first
     | rw [← map_pow, h, map_one]
-    | rw [sq, ← χ.map_mul, ← sq, h, χ.map_one]
 
 private theorem pow_app {O : Type} [CommRing O] {N : ℕ} (χ : DirichletCharacter O N) (k : ℕ) (a : ℤ)
     (ha : IsCoprime a (N : ℤ)) : (χ ^ k) (a : ZMod N) = χ a ^ k := by
@@ -297,8 +296,6 @@ theorem UpperTheory.V.X.dirData :
       have h4 : ZMod.χ₄ ((-1 : ℤ) : ZMod 4) = -1 := by
         first
           | decide
-          | rfl
-          | simp
       have n1 : (-1 : ZMod f) = ((-1 : ℤ) : ZMod f) := by simp
       have n2 : (-1 : ZMod (2 ^ (c2 ψ - 1))) = ((-1 : ℤ) : ZMod (2 ^ (c2 ψ - 1))) := by simp
       rw [n1, n2, e1, e2, h4]

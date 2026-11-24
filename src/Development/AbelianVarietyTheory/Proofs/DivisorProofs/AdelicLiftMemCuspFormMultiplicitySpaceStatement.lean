@@ -430,7 +430,7 @@ open GlobalTheory.DefLift
 open GlobalTheory.IndefiniteRowSideFullHecke.TwistedLevelValues GlobalTheory.AdelicScalar GlobalTheory.LiftRows GlobalTheory.LowRow
 
 theorem _root_.GlobalTheory.T.levelFockVector_heisenbergAverage_isotropic_eq_zero : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), ∀ i t σ s P cμ cη m om BW f₀ f c io, IsLiftDataC R F i t σ s P cμ cη m om BW f₀ f c io → ∀ Q h g ξ, IsoVec (Wc D i) ξ → ∃ n : ℕ, 0 < n ∧ ∃ a : Fin n → Fin (Vc D i).rank → AE D, ∑ k, heisO R.ψ (Vc D i) (Wc D i) (along (Vc D i) (Wc D i) ξ (a k)) (om (h, g) (GlobalTheory.IndefiniteRowSideFullHecke.TwistedLevelValues.ptAt R i σ BW f Q)) = 0 := by
-  first | exact @GlobalTheory.LevelSupport.sum_heisO_along_eq_zero_level | exact GlobalTheory.LevelSupport.sum_heisO_along_eq_zero_level | (intros; apply GlobalTheory.LevelSupport.sum_heisO_along_eq_zero_level <;> assumption)
+  first | exact @GlobalTheory.LevelSupport.sum_heisO_along_eq_zero_level
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelFockVectorHeisenbergAverageIsotropicEqZeroStatement =====
@@ -524,7 +524,7 @@ open GlobalTheory.DefLift
 open GlobalTheory.IndefiniteRowSideFullHecke.TwistedLevelValues GlobalTheory.AdelicScalar GlobalTheory.LiftRows GlobalTheory.LowRow
 
 theorem _root_.GlobalTheory.T.liftModel_holomorphic_overReflexField : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.Core5 R F → ∀ i σ s, IsEmbOverK D σ s → HolShape (R.MW i σ) ∧ ∃ w, WtIs (R.MW i σ) w := by
-  first | exact @GlobalTheory.LowRow.holShape_overK | exact GlobalTheory.LowRow.holShape_overK | (intros; apply GlobalTheory.LowRow.holShape_overK <;> assumption)
+  first | exact @GlobalTheory.LowRow.holShape_overK
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LiftModelHolomorphicOverReflexFieldStatement =====
@@ -764,7 +764,7 @@ open GlobalTheory.DefLift
 open GlobalTheory.IndefiniteRowSideFullHecke.TwistedLevelValues GlobalTheory.AdelicScalar GlobalTheory.LiftRows GlobalTheory.LowRow
 
 theorem _root_.GlobalTheory.T.lowering_part_kills_fock_product_minors : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), ∀ i t σ s P cμ cη m om BW f₀ f c io, IsLiftDataC R F i t σ s P cμ cη m om BW f₀ f c io → ∀ τ, ∀ Z ∈ GlobalTheory.IndefiniteRowSideFullHecke.HolomorphicParabolicSmoothFunctions.pMinus (R.MW i σ) τ, ∀ h, RderC R.θ (Wc D i) τ Z (fun g => thetaKO om h g (GlobalTheory.IndefiniteRowSideFullHecke.TwistedLevelValues.ptAt R i σ BW f (deltaAtEmb D i σ))) = 0 := by
-  first | exact @GlobalTheory.LowKillDelta.rderC_ptAt_delta_eq_zero | exact GlobalTheory.LowKillDelta.rderC_ptAt_delta_eq_zero | (intros; apply GlobalTheory.LowKillDelta.rderC_ptAt_delta_eq_zero <;> assumption)
+  first | exact @GlobalTheory.LowKillDelta.rderC_ptAt_delta_eq_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LoweringPartKillsFockProductMinorsStatement =====
@@ -832,7 +832,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.IndefiniteRowSideFullHecke.TwistedLevelValues GlobalTheory.AdelicScalar GlobalTheory.LiftRows GlobalTheory.LowRow
 
 theorem _root_.GlobalTheory.T.adelicLift_mem_cuspForm_multiplicitySpace : GlobalTheory.Published.CuspRapidDecay → ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), LiftIsCuspC R F := by
-  first | exact @GlobalTheory.LowRow.CuspLift.liftIsCuspC | exact GlobalTheory.LowRow.CuspLift.liftIsCuspC | (intros; apply GlobalTheory.LowRow.CuspLift.liftIsCuspC <;> assumption)
+  first | exact @GlobalTheory.LowRow.CuspLift.liftIsCuspC
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicLiftMemCuspFormMultiplicitySpaceStatement =====

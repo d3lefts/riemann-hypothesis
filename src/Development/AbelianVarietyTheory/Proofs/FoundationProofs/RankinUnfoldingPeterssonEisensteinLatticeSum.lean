@@ -555,7 +555,7 @@ theorem qs_bdd_above_one : ∀ (b : ℕ → ℂ), PolyB b → ∃ M : ℝ, ∀ �
     intro n
     rw [norm_mul, norm_mul, norm_cexp_qterm, norm_cexp_qterm]
     gcongr
-    simp only [UpperHalfPlane.I_im, mul_one]
+    simp only [UpperHalfPlane.I_im]
     have h0 : (0 : ℝ) ≤ 2 * π * n := by positivity
     nlinarith
   calc ‖qs b τ‖ ≤ ∑' n : ℕ, ‖b n * cexp (2 * π * Complex.I * n * τ)‖ := by
@@ -902,7 +902,7 @@ theorem rankin_transf (e L N : ℕ) (ε : DirichletCharacter ℂ N) (φ : Dirich
       rw [hm, hn] at hdet; push_cast at hdet
       have : γ 1 1 * γ 0 0 + (-(γ 0 1 * m * n)) * (N : ℤ) = 1 := by linear_combination hdet
       rw [this]; simp
-    push_cast at h1; simp only [mul_neg, neg_mul, ZMod.natCast_self, mul_zero, neg_zero, add_zero] at h1
+    push_cast at h1; simp only [ZMod.natCast_self, mul_zero, add_zero] at h1
     exact ⟨⟨_, ((γ 0 0 : ℤ) : ZMod N), h1, by rw [mul_comm]; exact h1⟩, rfl⟩
   have hεε : conj (ch ε (γ 1 1)) * ch ε (γ 1 1) = 1 := by
     have hn : ‖ch ε (γ 1 1)‖ = 1 := by
@@ -1031,7 +1031,7 @@ theorem rankin_unfold : ∀ (e L N : ℕ) (ε : DirichletCharacter ℂ N) (φ : 
     exact _root_.GlobalTheory.EisM.strip_integrable_rankin (2 * e + 1) e L N ε h b s rfl he hs hL hNL hh hb.1 hbsq
   have hmeas : AEStronglyMeasurable Ψ := by
     refine Continuous.aestronglyMeasurable ?_
-    simp only [hΨ, rkPsi]
+    simp only [hΨ]
     refine ((Complex.continuous_conj.comp (hcont h hh.1.1)).mul (hcont b hb.1)).mul (Complex.continuous_ofReal.comp ?_)
     exact (UpperHalfPlane.continuous_im).rpow_const (fun τ => Or.inl τ.im_pos.ne')
   have hunf := _root_.GlobalTheory.EisM.unfold_strip L ρ Ψ W hρ hint hmeas (fun γ hγ τ => by

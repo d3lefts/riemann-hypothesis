@@ -131,7 +131,7 @@ theorem UpperTheory.RealTr.spnRel :
   · simp [hbg, hha, Ne.symm hha]
   · simp [hbg, hha, Ne.symm hbg]
     abel
-  · simp [hbg, hha, Ne.symm hbg, Ne.symm hha]
+  · simp [hbg, hha]
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -198,7 +198,7 @@ private theorem spn_adj {n : ℕ} (c : Fin n → Fin n → Matrix J J ℂ) (hc :
     Algebra.algebraMap_eq_smul_one]
   congr 1
   split_ifs with h1 h2 h2
-  · simp [Matrix.conjTranspose_smul, Complex.star_def]
+  · simp [Matrix.conjTranspose_smul]
   · exact absurd h1.symm h2
   · exact absurd h2.symm h1
   · simp

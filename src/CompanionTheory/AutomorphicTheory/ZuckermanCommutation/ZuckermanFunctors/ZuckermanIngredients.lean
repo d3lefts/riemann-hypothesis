@@ -147,12 +147,12 @@ def uR (ι : Type) [DecidableEq ι] : Matrix (ι × Unit) ι ℂ := fun p d => i
 theorem uR_int (F : FRep k r) (g : Mx k r) : uR F.ι * F.ρ g = (F.tens (triv k r)).ρ g * uR F.ι := by
   ext ⟨i, u⟩ d
   cases u
-  simp [Matrix.mul_apply, uR, FRep.tens, triv, Matrix.kroneckerMap_apply, Fintype.sum_prod_type, Matrix.one_apply]
+  simp [Matrix.mul_apply, uR, FRep.tens, triv, Matrix.kroneckerMap_apply, Fintype.sum_prod_type]
 
 theorem uMT_int (F : FRep k r) (g : Mx k r) : (uM F.ι)ᵀ * ((triv k r).tens F).ρ g = F.ρ g * (uM F.ι)ᵀ := by
   ext d ⟨u, e⟩
   cases u
-  simp [Matrix.mul_apply, uM, FRep.tens, triv, Matrix.kroneckerMap_apply, Fintype.sum_prod_type, Matrix.one_apply]
+  simp [Matrix.mul_apply, uM, FRep.tens, triv, Matrix.kroneckerMap_apply, Fintype.sum_prod_type]
 
 section
 
@@ -166,7 +166,7 @@ def adjFrom (i : (Unit → V) →ₗ[ℂ] (Fin n → V')) : (Fin n → V) →ₗ
 
 theorem adjTo_apply (p : (Fin n → V) →ₗ[ℂ] (Unit → V')) (x : Unit → V) (d : Fin n) :
     adjTo p x d = p (Pi.single d (x ())) () := by
-  simp [adjTo, mAct_apply, uM, cM, on1, Fintype.sum_prod_type]
+  simp [adjTo, mAct_apply, uM, on1, Fintype.sum_prod_type]
   have e : (LinearMap.funLeft ℂ V fun c => (c, d)) ((mAct (cM n)ᵀ) x) = Pi.single d (x ()) := by
     funext c
     simp [LinearMap.funLeft_apply, mAct_apply, cM, Matrix.transpose_apply, Pi.single_apply]
@@ -174,7 +174,7 @@ theorem adjTo_apply (p : (Fin n → V) →ₗ[ℂ] (Unit → V')) (x : Unit → 
 
 theorem adjFrom_apply (i : (Unit → V) →ₗ[ℂ] (Fin n → V')) (y : Fin n → V) (u : Unit) :
     adjFrom i y u = ∑ c, i (fun _ => y c) c := by
-  simp [adjFrom, mAct_apply, uR, cM, on2, Fintype.sum_prod_type]
+  simp [adjFrom, mAct_apply, cM, on2, Fintype.sum_prod_type]
   apply Finset.sum_congr rfl
   intro c _
   have e : (LinearMap.funLeft ℂ V fun d => (c, d)) ((mAct (uR (Fin n))) y) = fun _ => y c := by
@@ -1304,7 +1304,7 @@ theorem sum_list_comm {α β : Type} [Fintype β] (l : List α) (a : α → β �
 theorem act_apply (X : Obj k r) (g : Formalism.FourierDecayAlt.ThreeDimData.Mx k r) (x : M X) (c : X.1.ι) :
     CompanionTheory.Zuck.act X g x c = ∑ d, X.1.ρ g c d • X.2.sig g (x d) := by
   simp only [CompanionTheory.Zuck.act, CompanionTheory.Zuck.mAct, CompanionTheory.Zuck.dOp, LinearMap.comp_apply, LinearMap.pi_apply,
-    LinearMap.sum_apply, Finset.sum_apply, LinearMap.smul_apply, LinearMap.proj_apply,
+    LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.proj_apply,
     LinearMap.compLeft_apply, Function.comp_apply]
 
 theorem act_tens1 (F E : FRep k r) (U : URep k r) (g : Formalism.FourierDecayAlt.ThreeDimData.Mx k r) (x : M (F.tens E, U)) (e : E.ι) :
@@ -1316,7 +1316,7 @@ theorem act_tens1 (F E : FRep k r) (U : URep k r) (g : Formalism.FourierDecayAlt
   show ∑ d : F.ι × E.ι, _ = _
   rw [Fintype.sum_prod_type, Finset.sum_comm]
   refine Finset.sum_congr rfl fun e' _ => Finset.sum_congr rfl fun c' _ => ?_
-  simp [CompanionTheory.Zuck.FRep.tens, mul_comm]
+  simp [mul_comm]
 
 theorem act_tens2 (F E : FRep k r) (U : URep k r) (g : Formalism.FourierDecayAlt.ThreeDimData.Mx k r) (x : M (E.tens F, U)) (e : E.ι) :
     (fun c => CompanionTheory.Zuck.act (E.tens F, U) g x (e, c) : M (F, U)) =
@@ -1327,7 +1327,7 @@ theorem act_tens2 (F E : FRep k r) (U : URep k r) (g : Formalism.FourierDecayAlt
   show ∑ d : E.ι × F.ι, _ = _
   rw [Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun e' _ => Finset.sum_congr rfl fun c' _ => ?_
-  simp [CompanionTheory.Zuck.FRep.tens]
+  simp
 
 theorem sn_tens1 (F E : FRep k r) (U : URep k r) (W : List (Formalism.FourierDecayAlt.ThreeDimData.Mx k r)) (x : M (F.tens E, U)) :
     sn (F.tens E, U) W x = ∑ e, sn (F, U) W (fun c => x (c, e)) := by

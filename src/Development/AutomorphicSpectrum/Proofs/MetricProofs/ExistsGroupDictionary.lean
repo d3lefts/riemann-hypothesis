@@ -314,7 +314,7 @@ theorem posDef_cj {P : Matrix ι ι ℂ} (h : P.PosDef) : (cj P).PosDef := by
   exact h.transpose
 
 theorem cj_mulVec (A : Matrix ι ι ℂ) (v : ι → ℂ) : cj A *ᵥ star v = star (A *ᵥ v) := by
-  ext i; simp [cj, mulVec, dotProduct, map_sum]
+  ext i; simp [cj, mulVec, dotProduct]
 
 theorem re_term_cj (P G : Matrix ι ι ℂ) (v : ι → ℂ) :
     (star (G *ᵥ star v) ⬝ᵥ (cj P *ᵥ (G *ᵥ star v))).re = (star (cj G *ᵥ v) ⬝ᵥ (P *ᵥ (cj G *ᵥ v))).re := by
@@ -592,7 +592,7 @@ theorem eq_zero_of_trace {xi u : E} (hxi : xi ≠ 0)
     IsIntegralClosure.algebraMap_mk' (𝓞 E) _ hint] at h1
   have h2 : xi * (m • (z / (xi * u)) * u) = (m : ℚ) • z := by
     rw [zsmul_eq_mul, Algebra.smul_def]
-    simp only [eq_intCast, map_intCast]
+    simp only [map_intCast]
     field_simp
   rw [h2, map_smul, hz] at h1
   simp at h1

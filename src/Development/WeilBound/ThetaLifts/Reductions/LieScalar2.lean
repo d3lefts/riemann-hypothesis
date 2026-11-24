@@ -1051,7 +1051,7 @@ theorem real_form_trace {β : Type} [Fintype β] [DecidableEq β] (τ : Matrix �
     simp only [ξ0, P, smul_comm I r, smul_add, map_add (f := _), map_smul, real_smul]
     ring
   have is : ∀ A, ξ0 (I • A) = I * ξ0 A := fun A => by
-    simp only [ξ0, P, smul_smul, I_mul_I, neg_smul, one_smul, smul_add, map_add (f := _), map_smul, map_neg, real_smul, smul_neg]
+    simp only [ξ0, P, smul_smul, I_mul_I, neg_smul, one_smul, smul_add, map_add (f := _), map_smul, map_neg, real_smul]
     linear_combination ((((1 / 2 : ℝ) : ℂ) * ζ (I • A) + ((1 / 2 : ℝ) : ℂ) * ζ (τ (I • A)))) * I_mul_I
   let ξ : Matrix β β ℂ →ₗ[ℂ] ℂ :=
     { toFun := ξ0
@@ -1169,7 +1169,7 @@ theorem scalar_lie {𝔸 : Type} [NormedRing 𝔸] [NormedAlgebra ℝ 𝔸] [Com
     have h2 := h1.scomp (0 : ℝ) (hasDerivAt_mul_const r)
     refine (h2.congr_deriv ?_).congr_of_eventuallyEq (.of_forall fun t => by simp only [smul_smul]; rfl)
     rw [Submodule.coe_smul, map_smul ρ, quad_smul]
-    simp [mul_add, mul_assoc])
+    simp [mul_assoc])
   have hst : ∀ (Z : 𝔤) f, HasDerivAt (fun t : ℝ => schwartzToL2 l (A (ex (t • Z)) f))
       (schwartzToL2 l ((quad (ρ Z) + z Z • 1 : Sch l →L[ℂ] Sch l) f)) 0 := fun Z =>
     strong (fun t => A (ex (t • Z))) _ (A0 Z) (Am Z) (hz Z)
@@ -1673,7 +1673,6 @@ theorem lieSecond2 (hM : LocalLift) : GlobalTheory.RealLift.DerEx → GlobalTheo
             cexp (t * (Y w).trace) := hdet t w
         rw [he, n1, ofReal_one, div_one, ← Complex.exp_int_mul]
         congr 1
-        push_cast
         ring
       change HasDerivAt (fun t => l (omd (δ (Multiplicative.ofAdd t)) (pureA F B G))) _ 0 at h1
       rw [show (fun t => l (omd (δ (Multiplicative.ofAdd t)) (pureA F B G))) =
@@ -1695,7 +1694,7 @@ theorem lieSecond2 (hM : LocalLift) : GlobalTheory.RealLift.DerEx → GlobalTheo
       rw [hT0] at hne
 
       simp only [hT0, map_add (f := _), map_smul, map_sum, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, kill _ (hh _),
-      kill _ (hv _), t1, t2, zero_add, add_zero, Finset.sum_neg_distrib, add_neg_cancel, smul_zero, smul_eq_mul,
+      kill _ (hv _), t1, t2, zero_add, add_zero, Finset.sum_neg_distrib, add_neg_cancel, smul_eq_mul,
       trace_blocks, tr, id, ofReal_zero, zero_mul, Complex.exp_zero, one_mul, ofReal_one, mul_zero] at h3
       have h4 := mul_right_cancel₀ hne h3
       simp only [mul_add, Finset.sum_add_distrib] at h4

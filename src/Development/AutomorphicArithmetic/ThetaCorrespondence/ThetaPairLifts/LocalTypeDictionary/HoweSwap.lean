@@ -625,7 +625,7 @@ theorem _root_.GlobalTheory.T.global_howe_tensor_product_transfer : _root_.Globa
       (∀ v : T, ∀ g ∈ GlobalTheory.HoweGlobal.opFin G om v.1, ∀ t, L t ∈ N →
         L (TensorProduct.map LinearMap.id (PiTensorProduct.map (Function.update
           (fun w : T => (LinearMap.id : ↥(GlobalTheory.WeilM.SB (Fin a × Fin (a + a') → Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F w.1)) →ₗ[ℂ] _)) v g)) t) ∈ N) := by
-  first | exact @_root_.GlobalTheory.HoweGlobal.howe_tensor_transfer | exact _root_.GlobalTheory.HoweGlobal.howe_tensor_transfer | (intros; apply _root_.GlobalTheory.HoweGlobal.howe_tensor_transfer <;> assumption)
+  first | exact @_root_.GlobalTheory.HoweGlobal.howe_tensor_transfer
 end
 end -- clump:auto
 end -- clump:auto
@@ -744,7 +744,7 @@ theorem _root_.GlobalTheory.T.global_howe_transfer_real_place : _root_.GlobalThe
     GlobalTheory.HoweGlobal.relInf Bs G om ≤ LinearMap.ker (R.p ∘ₗ (G.M.Pol Bs.ψ Bs.emb).subtype) ∧
     ∀ g ∈ GlobalTheory.HoweGlobal.opInf Bs G om, ∀ x ∈ LinearMap.ker (R.p ∘ₗ (G.M.Pol Bs.ψ Bs.emb).subtype),
       g x ∈ LinearMap.ker (R.p ∘ₗ (G.M.Pol Bs.ψ Bs.emb).subtype) := by
-  first | exact @_root_.GlobalTheory.HoweGlobal.RealTransfer.howe_real_place_transfer | exact _root_.GlobalTheory.HoweGlobal.RealTransfer.howe_real_place_transfer | (intros; apply _root_.GlobalTheory.HoweGlobal.RealTransfer.howe_real_place_transfer <;> assumption)
+  first | exact @_root_.GlobalTheory.HoweGlobal.RealTransfer.howe_real_place_transfer
 end
 end -- clump:auto
 end -- clump:auto

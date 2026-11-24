@@ -100,7 +100,7 @@ theorem localLift (R A : Type) [CommRing R] [CommRing A] [Algebra R A] (g : R)
   have hnil : IsNilpotent (RingHom.ker (Ideal.Quotient.mkₐ R J : C →+* C ⧸ J)) := by
     refine ⟨2, ?_⟩
     have : RingHom.ker (Ideal.Quotient.mkₐ R J : C →+* C ⧸ J) = J := by
-      ext x; simp [Ideal.Quotient.eq_zero_iff_mem]
+      ext x; simp
     rw [this, hJ]; rfl
   refine ⟨(Algebra.FormallySmooth.liftOfSurjective F _ hsurj hnil).comp
     Algebra.TensorProduct.includeRight, ?_, ?_⟩
@@ -382,11 +382,11 @@ theorem squareZeroLift : ∀ (R : Type) [CommRing R] [IsLocalRing R] (A : Type) 
     constructor
     · intro t ht
       apply hx.pow n
-      simp only [Algebra.smul_def, map_pow, smul_zero]
+      simp only [Algebra.smul_def, map_pow]
       simpa [mul_comm] using ht
     · intro t ht
       apply hx.pow n
-      simp only [Algebra.smul_def, map_pow, smul_zero]
+      simp only [Algebra.smul_def, map_pow]
       simpa [mul_comm] using ht
   let ψ : A →ₐ[R] S := ((AlgEquiv.ofInjective (toAway S x) hinj).symm : _ →ₐ[R] S).comp
     (αx.codRestrict (toAway S x).range (fun a => by
@@ -456,7 +456,7 @@ theorem squareZeroLift : ∀ (R : Type) [CommRing R] [IsLocalRing R] (A : Type) 
   rw [← hj, ← hk, map_mul, map_mul, map_pow, map_pow, AlgHom.commutes, map_sub, hs] at hker
   have : π (ψ a) - φ a = 0 := by
     apply hz.pow (j + k)
-    simp only [Algebra.smul_def, map_pow, smul_zero]
+    simp only [Algebra.smul_def, map_pow]
     linear_combination hker
   rw [AlgHom.comp_apply]
   exact sub_eq_zero.1 this
@@ -624,7 +624,7 @@ section -- clump:auto
 open IsLocalRing
 
 theorem _root_.GlobalTheory.T.modDepthGE_two_quotient_pow_free_over_regularLocalRing : ∀ (R : Type) [CommRing R] [IsRegularLocalRing R], 3 ≤ ringKrullDim R → ∀ f ∈ maximalIdeal R, f ≠ 0 → ∀ (B : Type) [CommRing B] [Algebra R B] [Module.Finite R B] [Module.Free R B] [Nontrivial B] (k : ℕ), 1 ≤ k → ReciprocityTheory.CA.ModDepthGE R (B ⧸ (Ideal.span {f}).map (algebraMap R B) ^ k) 2 := by
-  first | (exact @GlobalTheory.modDepthGE_two_quotient_pow_of_free_of_isRegularLocalRing) | (exact GlobalTheory.modDepthGE_two_quotient_pow_of_free_of_isRegularLocalRing) | (intros; apply GlobalTheory.modDepthGE_two_quotient_pow_of_free_of_isRegularLocalRing  <;> assumption)
+  first | (exact @GlobalTheory.modDepthGE_two_quotient_pow_of_free_of_isRegularLocalRing)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModDepthGETwoQuotientPowFreeOverRegularLocalRingStatement =====

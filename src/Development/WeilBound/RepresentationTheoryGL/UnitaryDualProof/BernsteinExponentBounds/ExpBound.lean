@@ -228,7 +228,7 @@ theorem thetaW_scalar (N : ℕ) (z : kˣ) :
   by_cases hij : i = j
   · subst hij
     simp
-  · simp [Matrix.diagonal_apply, hij, Ne.symm hij]
+  · simp [hij, Ne.symm hij]
 
 theorem hasCentralChar_comp_thetaW {N : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (π : Representation ℂ (GL (Fin N) k) V) (ω : kˣ →* ℂˣ) (h : HasCentralChar π ω) :
@@ -574,7 +574,7 @@ theorem pair_irr (hF : FactorIrr k) {h N : ℕ} (y : Fin h → IrrGL (k := k)) (
         fin_cases c
         · simp only [Function.comp_apply]
           show y i = _
-          congr 1 <;> ext <;> simp
+          congr 1 <;> ext
         · simp only [Function.comp_apply]
           show y j = _
           congr 1 <;> ext <;> simp [hij]
@@ -771,7 +771,7 @@ theorem moveFirst : FactorIrr k → Comm2Irr k → MoveFirst k := by
       · rw [Fin.append_right]
         have e1 : Fin.cast (Nat.add_comm 1 r) (Fin.natAdd 1 b) = b.succ := by
           ext
-          simp [Nat.add_comm]
+          simp
         simp only [Function.comp_apply, e1, Fin.cons_succ]
     have hy : ∑ _a : Fin 1, (x j).1 = (x j).1 := by simp
     have hApp : ∑ a, (Fin.append (fun _ : Fin 1 => x j) (x ∘ j.succAbove) a).1 =

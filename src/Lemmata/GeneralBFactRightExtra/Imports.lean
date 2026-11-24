@@ -63,14 +63,9 @@ theorem goal1 :
     rw [e]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ?_ ?_)
     · rw [norm_mul, norm_pow]
-      calc ‖a‖ ^ n * ‖a - b‖ ≤ 1 * ‖a - b‖ := by
-            gcongr
-            exact pow_le_one₀ (norm_nonneg _) ha
-        _ = ‖a - b‖ := one_mul _
-        _ ≤ _ := hab
+      exact (mul_le_of_le_one_left (norm_nonneg _)
+        (pow_le_one₀ (norm_nonneg _) ha)).trans hab
     · rw [norm_mul]
-      calc ‖a ^ n - b ^ n‖ * ‖b‖ ≤ ‖a ^ n - b ^ n‖ * 1 := by gcongr
-        _ = ‖a ^ n - b ^ n‖ := mul_one _
-        _ ≤ _ := ih
+      exact (mul_le_of_le_one_right (norm_nonneg _) hb).trans ih
 
 end Bl.general_b_fact_right'''

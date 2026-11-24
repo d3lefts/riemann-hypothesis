@@ -218,7 +218,7 @@ theorem exists_poly_approx_PPSet : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZ
     · exact Finset.sum_ite_eq' _ _ _
     · intro x _
       obtain ⟨x1, x2⟩ := x
-      by_cases h1 : x1 = i <;> by_cases h2 : x2 = n <;> simp [h1, h2, Polynomial.coeff_monomial, Prod.ext_iff] <;> first | done | (subst h1; simp_all) | (split_ifs <;> simp_all)
+      by_cases h1 : x1 = i <;> by_cases h2 : x2 = n <;> simp [h1, h2, Polynomial.coeff_monomial, Prod.ext_iff]
   refine ⟨nn, b, ser w₁, ser c, Finset.prod_ne_zero_iff.2 fun x _ => hNpos x, ser_mem _ hw₁, ser_mem _ hc, ?_, ?_⟩
   · funext τ
     refine PowerSeries.ext fun i => PowerSeries.ext fun n => ?_
@@ -947,7 +947,7 @@ open scoped Formalism.Per
 
 
 theorem _root_.GlobalTheory.T.frobenius_maps_dividedPowerSeriesGeneratorSet : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O K : Type) [CommRing O] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [NormedField K] [IsUltrametricDist K] [Algebra O K] [IsUnitBall O K] [NormedAlgebra ℚ_[l] K] (t : Wq l a →ₐ[ℤ_[l]] O), ∀ F ∈ SdSet t K e, frobTot K a l F ∈ SdSet t K e := by
-  first | exact @GlobalTheory.CrysPrism.frobTot_mem_SdSet | exact GlobalTheory.CrysPrism.frobTot_mem_SdSet | (intros; apply GlobalTheory.CrysPrism.frobTot_mem_SdSet <;> assumption)
+  first | exact @GlobalTheory.CrysPrism.frobTot_mem_SdSet
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FrobeniusMapsDividedPowerSeriesGeneratorSetStatement =====
@@ -1107,7 +1107,7 @@ theorem frobS_eis_mem : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZ
       · subst h1
         have hfac : (l : K)⁻¹ * (l.factorial : K) = ((l - 1).factorial : K) := by
           rw [← Nat.mul_factorial_pred hlp.ne_zero, Nat.cast_mul, ← mul_assoc, inv_mul_cancel₀ hl0, one_mul]
-        simp only [h0, hle, if_false, if_true, zero_add, mul_one, map_natCast]
+        simp only [h0, if_false, if_true, zero_add, mul_one, map_natCast]
         rw [Nat.mul_div_cancel _ (Nat.pos_of_ne_zero (NeZero.ne e)), mul_comm, hfac]
       · simp [h0, h1]
   · funext τ

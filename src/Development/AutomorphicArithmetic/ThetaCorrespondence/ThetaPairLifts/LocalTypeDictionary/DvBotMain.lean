@@ -401,7 +401,7 @@ theorem _root_.GlobalTheory.T.seesawCharacter_conductor_at_ramified_place : ∀ 
       chrW X.ν (B.τ v) = chrW X.α (B.τ v) / chrW X.β (B.τ v) ∧
       (∃ m, GlobalTheory.SplitFlip.CondLE (unifAt v.1) m (chrW X.α (B.τ v)) ∧ GlobalTheory.SplitFlip.CondLE (unifAt v.1) m (chrW X.β (B.τ v))) ∧
       (∀ x, ‖(chrW X.α (B.τ v) x : ℂ)‖ = 1) ∧ ∀ x, ‖(chrW X.β (B.τ v) x : ℂ)‖ = 1 := by
-  first | exact @GlobalTheory.StdPairConeChars.nu_cond_at_ram | exact GlobalTheory.StdPairConeChars.nu_cond_at_ram | (intros; apply GlobalTheory.StdPairConeChars.nu_cond_at_ram <;> assumption)
+  first | exact @GlobalTheory.StdPairConeChars.nu_cond_at_ram
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SeesawCharacterConductorAtRamifiedPlaceStatement =====
@@ -603,7 +603,7 @@ theorem bigF_stdA {ν : kˣ →* ℂˣ} {ϖ : kˣ} (hϖ : IsUnif ϖ) (c : ℕ) {
     obtain ⟨x, hx, y, hy, e⟩ := mem_shellSet.1 hmem
     refine mem_shellSet.2 ⟨g * g₀⁻¹⁻¹ * x, mul_mem hg hx, y, hy, ?_⟩
     calc g = g * g₀⁻¹⁻¹ * g₀⁻¹ := by group
-      _ = _ := by rw [e]; simp only [mul_assoc]; try rfl
+      _ = _ := by rw [e]; simp only [mul_assoc]
   rw [bigF, shellSum, finsum_eq_single _ ⟨m₀, hm₀⟩]
   · rw [hshell, Set.inter_eq_right.2 hsub, hS1, one_smul]
   · intro m hm
@@ -613,7 +613,7 @@ theorem bigF_stdA {ν : kˣ →* ℂˣ} {ϖ : kˣ} (hϖ : IsUnif ϖ) (c : ℕ) {
       obtain ⟨x, hx, y, hy, e⟩ := mem_shellSet.1 hg1
       refine mem_shellSet.2 ⟨(g * g₀⁻¹⁻¹)⁻¹ * x, mul_mem (inv_mem hg2) hx, y, hy, ?_⟩
       calc g₀⁻¹ = (g * g₀⁻¹⁻¹)⁻¹ * g := by group
-        _ = _ := by rw [e]; simp only [mul_assoc]; try rfl
+        _ = _ := by rw [e]; simp only [mul_assoc]
     simp [this]
 
 theorem bigF_stdA_of_det_eq_zero (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c : ℕ) {a a' : ℕ} {X : Matrix (Fin a) (Fin (a + a')) k}
@@ -815,7 +815,7 @@ theorem _root_.GlobalTheory.T.standardPair_localZetaMatch_ne_zero : ∀ {k : Typ
       GlobalTheory.SplitFlip.bigP (GlobalTheory.SplitFlip.haarVol (GlobalTheory.SplitWeil.KO k (Fin a))) ϖ finSumFinEquiv ν β (stdA ν ϖ c a a') =
         GlobalTheory.SplitFlip.smallP (GlobalTheory.SplitFlip.haarVol (GlobalTheory.SplitWeil.KO k (Fin a'))) finSumFinEquiv ν α (stdB ν ϖ c a a') ∧
       GlobalTheory.SplitFlip.bigP (GlobalTheory.SplitFlip.haarVol (GlobalTheory.SplitWeil.KO k (Fin a))) ϖ finSumFinEquiv ν β (stdA ν ϖ c a a') ≠ 0 := by
-  first | exact @GlobalTheory.StdPairMatch.bigZetaIntegral_stdA_eq_smallZetaIntegral_stdB | exact GlobalTheory.StdPairMatch.bigZetaIntegral_stdA_eq_smallZetaIntegral_stdB | (intros; apply GlobalTheory.StdPairMatch.bigZetaIntegral_stdA_eq_smallZetaIntegral_stdB <;> assumption)
+  first | exact @GlobalTheory.StdPairMatch.bigZetaIntegral_stdA_eq_smallZetaIntegral_stdB
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardPairLocalZetaMatchNeZeroStatement =====
@@ -836,7 +836,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 theorem _root_.GlobalTheory.T.standardPair_members_mem_schwartzBruhat : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ν : kˣ →* ℂˣ) (ϖ : kˣ)
     (c a a' : ℕ), GlobalTheory.SplitFlip.IsUnif ϖ → GlobalTheory.SplitFlip.CondLE ϖ c ν →
       stdA ν ϖ c a a' ∈ SB (Matrix (Fin a) (Fin (a + a')) k) ∧ stdB ν ϖ c a a' ∈ SB (Matrix (Fin a') (Fin (a + a')) k) := by
-  first | exact @GlobalTheory.StdPairSB.stdPair_mem_SB | exact GlobalTheory.StdPairSB.stdPair_mem_SB | (intros; apply GlobalTheory.StdPairSB.stdPair_mem_SB <;> assumption)
+  first | exact @GlobalTheory.StdPairSB.stdPair_mem_SB
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardPairMembersMemSchwartzBruhatStatement =====
@@ -1838,7 +1838,6 @@ theorem bottom_matching_of_triangle (hH : GlobalTheory.Published.HoweDualityReal
     (fun i z => by
       obtain ⟨u, hu⟩ := exists_map_piW (Bs.τ i) ((Γ.V.bas i).1 * z * (Γ.W.bas i).1ᵀ)
       refine ⟨u, ?_⟩
-      beta_reduce
       rw [hu, ← Matrix.mul_assoc, ← Matrix.mul_assoc, Units.inv_mul, Matrix.one_mul, Matrix.mul_assoc, ← transpose_mul,
         Units.inv_mul, transpose_one, Matrix.mul_one])
     I (fun i => GlobalTheory.BigNZ.isLagrModel_of_isLin (hI i)) (hX.fst t)
@@ -1881,7 +1880,6 @@ theorem bottom_matching_of_triangle (hH : GlobalTheory.Published.HoweDualityReal
       obtain ⟨g₂, h₂⟩ := dW i
       obtain ⟨u, hu⟩ := exists_map_piW ((Bs.τ i).comp D.sp.cm.sig) ((g₁⁻¹).1 * (-z) * (g₂⁻¹).1)
       refine ⟨u, ?_⟩
-      beta_reduce
       rw [hu, Matrix.mul_assoc _ _ (Γ.W.bas i).1, ← h₁, ← h₂, ← Matrix.mul_assoc, ← Matrix.mul_assoc, Units.mul_inv,
         Matrix.one_mul, Matrix.mul_assoc, Units.inv_mul, Matrix.mul_one, neg_neg])
     I' (fun i => GlobalTheory.BigNZ.isLagrModel_of_isLin (hI' i)) (hX.snd t)
@@ -1893,7 +1891,6 @@ theorem bottom_matching_of_triangle (hH : GlobalTheory.Published.HoweDualityReal
     (fun x hx => by
       refine Eq.trans ?_ (congrArg (_ * ·) (UpperTheory.stdSectionSecond_eq_prod_local D _ _ (hX.idem t) Bs.P Subtype.val Bs.τ hPw hinj (X.c t) (α t / β t)
         A.rank A' WW X.rA'.β X.rW.β hT.rank.symm x hx).symm)
-      beta_reduce
       rw [← Finset.prod_mul_distrib]
       exact Finset.prod_congr rfl fun i _ => by rw [e1' i]; exact eφ' i x)
   obtain ⟨L, rL, eL⟩ := UpperTheory.theta_transform_fock_model_eq_of_standard_char D Bs.ψ θ hψ hθ true A WW _ hT.rank.symm Γ.V Γ.W Γ.M h.JW h.JX hg.hM FA FW Bs.emb

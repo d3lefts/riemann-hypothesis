@@ -375,7 +375,7 @@ def clearDen {S : Type} [DecidableEq S] {r : ℕ}
           (⟨c, hc⟩ : w.valuationSubring) • (Pi.single τ (b • v) : S → Fin r → C) := by
         funext s i
         by_cases e : s = τ
-        · subst e; simp only [Pi.single_eq_same, smul_pi_apply, smul_vec_apply, Pi.smul_apply,
+        · subst e; simp only [Pi.single_eq_same, smul_pi_apply, Pi.smul_apply,
             smul_eq_mul, smul_C]
           ring
         · simp [e]
@@ -387,7 +387,7 @@ def clearDen {S : Type} [DecidableEq S] {r : ℕ}
       refine ⟨b * ⟨c⁻¹, hc⟩, mul_ne_zero hb hne, ?_⟩
       have : (b * ⟨c⁻¹, hc⟩ : w.valuationSubring) • c • v = b • v := by
         funext i
-        simp only [smul_vec_apply, Pi.smul_apply, smul_eq_mul, smul_C]
+        simp only [Pi.smul_apply, smul_eq_mul, smul_C]
         push_cast
         field_simp
       rw [this]
@@ -429,7 +429,7 @@ theorem mem_of_components : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (
     · simp only [smul_pi_apply, Pi.single_eq_same, smul_vec_apply]
       rw [← mul_assoc, ← Subring.coe_mul, Finset.prod_erase_mul _ _ (Finset.mem_univ s')]
     · intro s _ e
-      simp [smul_pi_apply, Pi.single_apply, Ne.symm e]
+      simp [smul_pi_apply, Ne.symm e]
     · simp
   rw [key]
   exact sum_mem fun s _ => F.smul_mem _ (hbx s)

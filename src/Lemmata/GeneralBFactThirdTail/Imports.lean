@@ -72,9 +72,7 @@ theorem goal1 :
     obtain ⟨⟨b, m⟩, hm⟩ := IsLocalization.surj (nonZeroDivisors (NumberField.RingOfIntegers E)) a
     refine ⟨(m : NumberField.RingOfIntegers E) * d, mul_ne_zero (nonZeroDivisors.ne_zero m.2) hd, ?_⟩
     have key : (m : NumberField.RingOfIntegers E) • (a • y) = b • y := by
-      rw [← algebraMap_smul E (m : NumberField.RingOfIntegers E), smul_smul, mul_comm]
-      rw [show a * algebraMap (NumberField.RingOfIntegers E) E (m : NumberField.RingOfIntegers E) = algebraMap (NumberField.RingOfIntegers E) E b from hm]
-      rw [algebraMap_smul]
+      rw [← algebraMap_smul E (m : NumberField.RingOfIntegers E), smul_smul, mul_comm, hm, algebraMap_smul]
     rw [mul_comm, mul_smul, key, smul_smul, mul_comm, ← smul_smul]
     exact Λ.smul_mem b h
 

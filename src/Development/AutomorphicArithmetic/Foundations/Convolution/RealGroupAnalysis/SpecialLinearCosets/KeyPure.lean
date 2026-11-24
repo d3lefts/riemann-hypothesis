@@ -270,7 +270,7 @@ private theorem exists_I (h2 : (2 : K) ≠ 0) :
     rw [hI, ha]
     unfold ind
     rw [integral_indicator_const _ hU.measurableSet]
-    simp only [Measure.real, smul_eq_mul, Complex.real_smul, mul_one]
+    simp only [Measure.real, Complex.real_smul, mul_one]
     exact_mod_cast (ENNReal.toReal_ne_zero.2 ⟨hpos, hfin⟩)
 
 end
@@ -684,15 +684,15 @@ private theorem indicator_mem_SB {X : Type} [TopologicalSpace X] {f : X → ℂ}
       · exact absurd (h1.trans h0.symm) one_ne_zero
       · have : (U.indicator fun _ : X => (1 : ℂ)) ⁻¹' {c} = U := by
           ext x
-          by_cases hx : x ∈ U <;> simp [hx, h1, Ne.symm h0, h0]
+          by_cases hx : x ∈ U <;> simp [hx, h1, h0]
         rw [this]; exact hU.isOpen
       · have : (U.indicator fun _ : X => (1 : ℂ)) ⁻¹' {c} = Uᶜ := by
           ext x
-          by_cases hx : x ∈ U <;> simp [hx, Ne.symm h1, h1, h0]
+          by_cases hx : x ∈ U <;> simp [hx, h1, h0]
         rw [this]; exact hU.compl.isOpen
       · have : (U.indicator fun _ : X => (1 : ℂ)) ⁻¹' {c} = ∅ := by
           ext x
-          by_cases hx : x ∈ U <;> simp [hx, Ne.symm h1, Ne.symm h0, h1, h0]
+          by_cases hx : x ∈ U <;> simp [hx, h1, h0]
         rw [this]; exact isOpen_empty
     have h2 : U.indicator f = (U.indicator fun _ : X => (1 : ℂ)) * f := by
       ext x
@@ -761,7 +761,7 @@ theorem UpperTheory.ConvolutionTheory.R2.I.loc :
       have e : b = ⟨C.indicator b.1, indicator_mem_SB b.2 hC⟩ + ⟨Cᶜ.indicator b.1, indicator_mem_SB b.2 hC.compl⟩ := by
         apply Subtype.ext
         funext x
-        by_cases hx : x ∈ C <;> simp [hx]
+        by_cases hx : x ∈ C <;> simp
       rw [e, map_add (f := _), hb _ (fun x hx => by by_contra hc; exact hx (by simp [hc])), hb', add_zero]
       intro x hx
       have hxC : x ∉ C := by
@@ -891,7 +891,7 @@ private theorem diagonal_mul_gl_conj {F : Type} [Field F] [NumberField F] (t : (
   ext i j
   have h1 : (t : A F) * ((t⁻¹ : (A F)ˣ) : A F) = 1 := Units.mul_inv t
   fin_cases i <;> fin_cases j <;>
-    simp [dM, cD, gl, Matrix.mul_apply, Fin.sum_univ_two, Matrix.SpecialLinearGroup.toGL, mul_assoc, h1, mul_comm]
+    simp [dM, cD, gl, Matrix.mul_apply, Fin.sum_univ_two, Matrix.SpecialLinearGroup.toGL, mul_comm]
 
 private theorem Wf_tr {F : Type} [Field F] [NumberField F] (f : GL (Fin 2) (A F) → ℂ) (x g₀ : G1 F) (t : (A F)ˣ) :
     Wf (fun g => f (g * gl g₀)) (gl x * dM t) = Wf f (gl (x * cD t g₀) * dM t) := by
@@ -1055,7 +1055,7 @@ private theorem mk_sE (hq : θ ^ 2 = algebraMap F (Kv v) D.δ) (h0 : θ ≠ 0) (
   have h2 := two_ne (F := F) v
   unfold sE
   rw [mk_mul]
-  simp only [sg_mul', ← sg_add', map_mul, cp_sg', cp_rt']
+  simp only [sg_mul', ← sg_add', cp_rt']
   rw [← hq]
   congr 2
   · congr 1; field_simp
@@ -1066,7 +1066,7 @@ private theorem mk_sB (hq : θ ^ 2 = algebraMap F (Kv v) D.δ) (h0 : θ ≠ 0) (
   have h2 := two_ne (F := F) v
   unfold sB
   rw [mk_mul]
-  simp only [sg_mul', ← sg_add', map_mul, cp_sg', cp_rt']
+  simp only [sg_mul', ← sg_add', cp_rt']
   rw [← hq]
   congr 2
   · congr 1; field_simp; ring
@@ -1091,7 +1091,7 @@ private theorem sE_sB (hq : θ ^ 2 = algebraMap F (Kv v) D.δ) (h0 : θ ≠ 0) (
   rw [mul_comm]
   refine h.trans ?_
   unfold sE
-  simp [sg_zero', mk_zero]
+  simp [sg_zero']
 
 private theorem bar_sE (k : Kv v) : D.bar (sE D v θ k) = sB D v θ k := by
   unfold sE sB
@@ -1375,7 +1375,7 @@ theorem UpperTheory.ConvolutionTheory.R2.I.actN :
   refine ⟨?_, fun X => ?_⟩
   · have : Matrix.GeneralLinearGroup.det (nbar D v θ s) = 1 := by
       apply Units.ext
-      simp [nbar, Matrix.det_fin_two]
+      simp [nbar]
     rw [nu, this, map_one]
   set a := sg v (s / 2) with ha
   set b := sg v (-(s / (2 * θ))) with hb

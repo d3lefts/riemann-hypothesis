@@ -10,7 +10,6 @@ public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.Inj
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsLogCanonicalMultipleCanonical
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsMultiHomogeneousFixFirstBlock
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.KawamataViehweg
-public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.L2ExtensionLogCanonical
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ResidueDegreeOfIsClosedImmersion
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.SerreHolomorphicSections
 public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.SmallSecTensTriv
@@ -73,7 +72,6 @@ structure PublishedHodgeBundleTheorems : Prop where
   q4 : GlobalTheory.Published.PrismaticDieudonneHodge
   q6 : GlobalTheory.Published.KawamataViehweg
   q7 : GlobalTheory.Published.NefNumerics
-  q8 : GlobalTheory.Published.L2ExtensionLogCanonical
   q9 : GlobalTheory.Published.ArithHilbertSamuel
   q10 : GlobalTheory.Published.ChowFormExists
   q11 : GlobalTheory.Published.CycleHeights
@@ -89,7 +87,6 @@ theorem PublishedHodgeBundleTheorems.toClassicalTheoremsOf (h : _root_.GlobalThe
   refine ⟨h.p1, h.p2, h.p3, h.p4, h.p5, h.p8, h.p12, h.p13, h.p14, ?_,
     h.p18, h.p19, h.p20, h.p22, h.p23, h.p25, h.p26⟩
   first
-    | exact h.p16
     | exact hM'
 end GlobalTheory.CovTop
 end

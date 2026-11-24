@@ -101,7 +101,7 @@ theorem UpperTheory.V.AlgebraTools.indSymp :
       Matrix.fromBlocks_multiply, Matrix.fromBlocks_smul]
     simp only [Matrix.transpose_zero, Matrix.transpose_one, Matrix.mul_zero, Matrix.zero_mul,
       add_zero, zero_add, Matrix.mul_one, Matrix.one_mul,
-      smul_zero, Matrix.mul_smul, Matrix.smul_mul, h2, d, smul_smul]
+      smul_zero, Matrix.mul_smul, h2, d, smul_smul]
   intro g
   by_cases hg : g ∈ H
   · exact key1 g hg
@@ -229,7 +229,7 @@ private lemma Qmix {a b : kˣ} (h2 : (2 : k) ≠ 0) (A B : Matrix (Fin 2) (Fin 2
   have ha := a.ne_zero
   have hb := b.ne_zero
   ext i j
-  simp only [Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two, Fin.sum_univ_four]
+  simp only [Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two]
   delta mix
   fin_cases i <;> fin_cases j <;>
     simp [Pm, Qm] <;> field_simp <;> ring
@@ -238,7 +238,7 @@ private lemma Qoff {a b : k} (h2 : (2 : k) ≠ 0) (ha : a ≠ 0) (hb : b ≠ 0) 
     Qm a b * Matrix.fromBlocks (0 : Matrix (Fin 2) (Fin 2) k) (Matrix.diagonal ![a ^ 2, b ^ 2]) (1 : Matrix (Fin 2) (Fin 2) k)
       (0 : Matrix (Fin 2) (Fin 2) k) * Pm a b = Matrix.diagonal ![b, -a, -b, a] := by
   ext i j
-  simp only [Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two, Fin.sum_univ_four]
+  simp only [Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two]
   fin_cases i <;> fin_cases j <;>
     simp [Pm, Qm] <;> field_simp <;> ring
 
@@ -246,7 +246,7 @@ private lemma gram (a b : k) :
     (Pm a b)ᵀ * Matrix.fromBlocks (!![0, 1; -1, 0] : Matrix (Fin 2) (Fin 2) k) (0 : Matrix (Fin 2) (Fin 2) k) (0 : Matrix (Fin 2) (Fin 2) k)
       ((a * b) • (!![0, 1; -1, 0] : Matrix (Fin 2) (Fin 2) k)) * Pm a b = (-2 * (a * b)) • J4 k := by
   ext i j
-  simp only [Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two, Fin.sum_univ_four]
+  simp only [Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two]
   fin_cases i <;> fin_cases j <;>
     simp [Pm, J4] <;> ring
 

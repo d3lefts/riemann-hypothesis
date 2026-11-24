@@ -63,7 +63,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.Unf
 
 theorem _root_.GlobalTheory.T.stableRangeOne_adeles_cmField : ∀ (D : D7) (a b : AE D), IsCoprime a b → ∃ t : AE D, IsUnit (a + t * b) := by
-  first | exact @GlobalTheory.StableRange.adeles_stableRange_one | exact GlobalTheory.StableRange.adeles_stableRange_one | (intros; apply GlobalTheory.StableRange.adeles_stableRange_one <;> assumption)
+  first | exact @GlobalTheory.StableRange.adeles_stableRange_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.StableRangeOneAdelesCmFieldStatement =====
@@ -104,9 +104,8 @@ theorem glChar_transvection {R : Type} [CommRing R] (h2 : IsUnit (2 : R)) {n : �
     change Matrix.diagonal f * u.1 = u.1 * u.1 * Matrix.diagonal f
     rw [hu, Matrix.transvection_mul_transvection_same _ _ hij]
     ext a b
-    simp only [Matrix.transvection, Matrix.add_mul, Matrix.mul_add, Matrix.mul_one, Matrix.one_mul,
-      Matrix.add_apply, Matrix.diagonal_mul, Matrix.mul_diagonal, Matrix.single_apply,
-      Matrix.diagonal_apply, Matrix.one_apply]
+    simp only [Matrix.transvection, Matrix.add_apply, Matrix.diagonal_mul, Matrix.mul_diagonal, Matrix.single_apply,
+      Matrix.one_apply]
     clear_value f g d
     clear hfg hgf
     split_ifs <;> subst_vars <;> simp_all <;> ring

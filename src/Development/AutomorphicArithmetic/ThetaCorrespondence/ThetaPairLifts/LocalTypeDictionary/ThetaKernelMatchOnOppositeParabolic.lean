@@ -184,7 +184,7 @@ theorem _root_.GlobalTheory.T.exists_oneParamSubgroup_transposeGram_lieAt : ∀ 
     IsInfFam θ → Y ∈ lieAt X τ → ∀ {d : ℕ} (e : Fin X.rank ≃ Fin d) (Wd : Spc D.host.F D.host.E d)
     (hJ : Wd.J = D.host.xi0 • reindex e e X.gramᵀ),
     ∃ γ ∈ Lines D.sp.cm.sig Wd, ∀ t : ℝ, γ (Multiplicative.ofAdd t) = kapX X e hJ (oneP θ X τ Y t) := by
-  first | exact @GlobalTheory.KapXLine.exists_line | exact GlobalTheory.KapXLine.exists_line | (intros; apply GlobalTheory.KapXLine.exists_line <;> assumption)
+  first | exact @GlobalTheory.KapXLine.exists_line
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsOneParamSubgroupTransposeGramLieAtStatement =====
@@ -257,7 +257,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.SquareComm GlobalTheory.SquareAgree
 
 theorem _root_.GlobalTheory.T.schwartzDatum_eq_of_thetaFunction_eq : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ} {Y : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E n} {Wd : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc F E d} (M : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model σ Y Wd) (ψ : AddChar (AF F) ℂ), GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsStd ψ → ∀ {Z : Type} (crd : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → Z), ∀ (Φ₁ Φ₂ : (Fin n × Fin d → AF F) → ℂ) (f : Z → ℂ), IsDatum M ψ crd Φ₁ f → IsDatum M ψ crd Φ₂ f → Φ₁ = Φ₂ := by
-  first | exact @GlobalTheory.ThetaInj.theta_inj | exact GlobalTheory.ThetaInj.theta_inj | (intros; apply GlobalTheory.ThetaInj.theta_inj <;> assumption)
+  first | exact @GlobalTheory.ThetaInj.theta_inj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SchwartzDatumEqOfThetaFunctionEqStatement =====
@@ -347,7 +347,7 @@ theorem _root_.GlobalTheory.T.twist_polarization_datum_derivative_second : _root
     (∀ i, ActsD (evI D.host.F) (fun t => om' (1, γ (Multiplicative.ofAdd t))) (f i) (f₁ i)) →
     IsDatum Γ.M' ψ cB (∑ i, pure (f i) (φ i)) Φ →
     ∀ Φ'D, IsDatum Γ.M' ψ cB Φ'D Φ' → Φ'D = ∑ i, pure (f₁ i) (φ i) := by
-  first | exact @_root_.GlobalTheory.SquareAgree.LieDat.isDatum_derivative_second_factor_eq_sum_pure | exact _root_.GlobalTheory.SquareAgree.LieDat.isDatum_derivative_second_factor_eq_sum_pure | (intros; apply _root_.GlobalTheory.SquareAgree.LieDat.isDatum_derivative_second_factor_eq_sum_pure <;> assumption)
+  first | exact @_root_.GlobalTheory.SquareAgree.LieDat.isDatum_derivative_second_factor_eq_sum_pure
 end
 end -- clump:auto
 end -- clump:auto
@@ -422,7 +422,7 @@ open GlobalTheory.SquareComm GlobalTheory.SquareAgree
 theorem _root_.GlobalTheory.T.archimedeanSupported_smul_transposeGram_finite_sub_one : ∀ (D : D7) (X : HSp D) {d : ℕ} (e : Fin X.rank ≃ Fin d) {J : Matrix (Fin d) (Fin d) D.host.E}
     (hJ : J = D.host.xi0 • reindex e e X.gramᵀ), ∀ g ∈ GfC X, ∀ u : AF D.host.F,
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F) u → u • (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.mat (kapX X e hJ g) - 1) = 0 := by
-  first | exact @GlobalTheory.InfKill.smul_mat_kapX_sub_one | exact GlobalTheory.InfKill.smul_mat_kapX_sub_one | (intros; apply GlobalTheory.InfKill.smul_mat_kapX_sub_one <;> assumption)
+  first | exact @GlobalTheory.InfKill.smul_mat_kapX_sub_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ArchimedeanSupportedSmulTransposeGramFiniteSubOnStatement =====
@@ -734,7 +734,7 @@ theorem _root_.GlobalTheory.T.twisted_theta_kernels_agree_up_to_scalar : GlobalT
     ∃ s : ℂ, s ≠ 0 ∧ ∀ Φ ∈ algF ψ θ true A B, ∀ Φ₀ ∈ algF ψ θ false A₁ B, ∀ ΦD Φ₀D,
       IsDatum Γ.M ψ cA ΦD Φ → IsDatum Γ.M' ψ cB Φ₀D Φ₀ → Φ₀D ∈ Γ.M'.So Bs.ψ Bs.τ₁ → p Φ = p' Φ₀ →
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Match Bs Γ Xc R Rf ΦD (s • Φ₀D) := by
-  first | exact @_root_.GlobalTheory.SquareAgree.theta_kernels_agree_up_to_scalar | exact _root_.GlobalTheory.SquareAgree.theta_kernels_agree_up_to_scalar | (intros; apply _root_.GlobalTheory.SquareAgree.theta_kernels_agree_up_to_scalar <;> assumption)
+  first | exact @_root_.GlobalTheory.SquareAgree.theta_kernels_agree_up_to_scalar
 end
 end -- clump:auto
 end -- clump:auto

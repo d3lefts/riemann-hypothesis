@@ -369,7 +369,7 @@ theorem det_idem {R : Type} [CommRing R] {e : R} (he : e * e = e) {m : Type} [Fi
   rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [prod_idem he]
-  rcases Int.units_eq_one_or (Equiv.Perm.sign τ) with h | h <;> simp [h] <;> ring
+  rcases Int.units_eq_one_or (Equiv.Perm.sign τ) with h | h <;> simp [h]
 
 theorem isUnit_mix {R : Type} [CommRing R] {e : R} (he : e * e = e) {a b : R} (ha : IsUnit (e * a + (1 - e)))
     (hb : IsUnit b) : IsUnit (e * a + (1 - e) * b) := by
@@ -389,7 +389,7 @@ theorem mix_corner {R : Type} [CommRing R] {n : ℕ} (e : R) (he : e * e = e) (A
     A * (e • G + (1 - e) • 1) * B + A * (e • G + (1 - e) • 1) * D' * (e • y) =
       e • (A * G * B + A * G * D' * y) + (1 - e) • ((2 : R) • (1 : Matrix (Fin n) (Fin n) R)) := by
   simp only [Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_one, hAB, hAD,
-    Matrix.zero_mul, smul_zero, add_zero, smul_smul, he, smul_add]
+    smul_zero, add_zero, smul_smul, he, smul_add]
   simp only [Matrix.mul_assoc]
   abel
 
@@ -622,7 +622,7 @@ open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.Genus
 open scoped Matrix TensorProduct
 
 theorem _root_.GlobalTheory.T.doubledUnitary_character_trivial_of_siegel : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E) (ε : ℤˣ), (∀ i j, σ (J j i) = ((ε : ℤ) : E) * J i j) → J.det ≠ 0 → ∀ c : UG (cA σ) (dbl (incM F J)) →* ℂˣ, Continuous c → (∀ (p : UG (cA σ) (dbl (incM F J))) (t : GL (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))), (p.1.1 : Matrix _ _ (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) * diagCols (Fin n) = diagCols (Fin n) * t.1 → c p = 1) → c = 1 := by
-  first | exact @GlobalTheory.SiegelChar.eq_one_of_siegel | exact GlobalTheory.SiegelChar.eq_one_of_siegel | (intros; apply GlobalTheory.SiegelChar.eq_one_of_siegel <;> assumption)
+  first | exact @GlobalTheory.SiegelChar.eq_one_of_siegel
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DoubledUnitaryCharacterTrivialOfSiegelStatement =====

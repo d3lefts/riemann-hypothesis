@@ -89,7 +89,7 @@ theorem hT_self_of_on {E : Type} [Field E] [NumberField E] [StarRing E] (S : HSp
 
   simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, map_smul, hb,
   smul_eq_mul, starRingEnd_apply]
-  simp [mul_ite, Finset.sum_ite_eq]
+  simp [mul_ite]
   exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
 
 theorem posFrame_of_std (D : D7) (h : Formalism.L2.Herm.IsStd (D.sp.X 0)) : PosFrame D := by
@@ -162,7 +162,7 @@ theorem weight_level_zero_eq_one (hst : ∀ c, Subsingleton ((D.mem u).C.stab 0 
   have : Nat.card ((D.mem u).C.stab 0 c) = 1 := by
     haveI := hst c
     exact Nat.card_eq_one_iff_unique.2 ⟨hst c, ⟨1⟩⟩
-  simp [Formalism.BasicNotions.ColumnChain.wt, this]
+  simp [Formalism.BasicNotions.ColumnChain.wt]
 
 def oc (v : InfinitePlace D.what₂.LL) (c : (D.mem u).C.cls 0) :
     Frames (gramC (gramN D 0 (Nat.zero_le _)) (embS D v.embedding)) :=
@@ -714,7 +714,7 @@ theorem locBasis_gamma (hB : B.rho = rhoC D) (w : D.what₂.places.Pl) (c : (D.m
         by_cases hb : b = a
         · subst hb
           exact ⟨1, by simp⟩
-        · exact ⟨0, by simp [Pi.single_apply, hb]⟩⟩
+        · exact ⟨0, by simp [hb]⟩⟩
       rw [SetLike.mem_coe, mem_clsCrd_iff, LinearEquiv.map_smul] at hsm
       have hQ : B.bc c τ ((s : D.host.E) • vcol (Y : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) a) ∈
           (B.Q c τ).L := by
@@ -776,7 +776,6 @@ theorem gramN_sig (i j : Fin (D.R.N 0)) :
   letI := D.host.cmStar
   simp only [Formalism.L2.Forms.gramN, Matrix.reindex_apply, Matrix.submatrix_apply, Formalism.BasicNotions.HSpace.gram]
   first
-  | exact ((D.sp.X 0).herm _ _).symm
   | exact ((D.sp.X 0).herm.eq _ _).symm
 
 def BaseBlockInverse (Y : GL (Fin (D.R.N 0)) D.host.E) : GL (Fin (D.R.N 0)) D.host.E :=

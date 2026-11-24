@@ -148,10 +148,8 @@ def toFv : k ≃+* Fv D.host.F v where
     change comp he (p.ι (p.π (sec D v p.e b))) = b
     rw [p.ι_π, map_mul, comp_self, one_mul, GlobalTheory.LocMod.SplitCompl.comp_sec]
   map_mul' x y := by
-    change comp he (p.ι (x * y)) = comp he (p.ι x) * comp he (p.ι y)
     rw [ι_mul, map_mul]
   map_add' x y := by
-    change comp he (p.ι (x + y)) = comp he (p.ι x) + comp he (p.ι y)
     rw [map_add (f := _), map_add (f := _)]
 
 theorem continuous_toFv : Continuous (toFv p he) := (continuous_comp he).comp p.cont_ι
@@ -234,7 +232,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 
 theorem _root_.GlobalTheory.T.exists_cmSplitPoint_at_place_over_split : ∀ (D : D7) (w : Formalism.L2.DIV.Pl D.host.E) (e : AE D), Formalism.L2.NTheta.IsIdemAt e w → D.host.F = maximalRealSubfield D.host.E → ∃ p : GlobalTheory.FinPl.SplitPt D (Kw w), p.e = e ∧ p.v = w.under (𝓞 D.host.F) ∧ ∀ a : AE D, p.pr a = cpt w (Lev.swapAE D (finPart D a)) := by
-  first | exact @GlobalTheory.SplitPtAtPlace.exists_splitPt_cpt | exact GlobalTheory.SplitPtAtPlace.exists_splitPt_cpt | (intros; apply GlobalTheory.SplitPtAtPlace.exists_splitPt_cpt <;> assumption)
+  first | exact @GlobalTheory.SplitPtAtPlace.exists_splitPt_cpt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsCmSplitPointAtPlaceOverSplitStatement =====

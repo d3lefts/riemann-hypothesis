@@ -552,8 +552,6 @@ theorem comb {M : Type*} [AddCommGroup M] (P Q R S T Y : M) (g1 : P - Q + R - S 
   rw [← sub_eq_zero]
   exact Eq.trans (by abel) (neg_eq_zero.2 h)
 
-theorem neg1 : Int.negOnePow 1 = -1 := by decide
-
 theorem mv_core {D : Spc} (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw q 1)) 2)
     (hZ : IsC q (fun _ x => lineUnit (pr q) x) Z.1)
     (Θ : Cochain ((chains (ZMod q)).obj (EG q)) (res _ (tw q 1)) 1)
@@ -615,7 +613,7 @@ theorem mv_core {D : Spc} (Z : Cocycle ((chains (ZMod q)).obj (EG q)) (res _ (tw
     have g1 := F3 hq Z hZ ((y.map V₁).1 0) ((y.map V₁).1 1) ((y.map V₂).1 1) 1
     have g2 := F3 hq Z hZ ((y.map V₁).1 0) ((y.map V₂).1 0) ((y.map V₂).1 1) 1
     rw [← F5 hq Z hZ _ _ _ rs rr] at g2
-    rw [e1, e2, e3, e4, Subsingleton.elim (ev τ (0 + 1) (-1) _ U y) 0, sec_map_zero, neg1, Fin.sum_univ_two, t0, t1,
+    rw [e1, e2, e3, e4, Subsingleton.elim (ev τ (0 + 1) (-1) _ U y) 0, sec_map_zero, Int.negOnePow_one, Fin.sum_univ_two, t0, t1,
       comb _ _ _ _ _ _ g1 g2]
     simp
     abel

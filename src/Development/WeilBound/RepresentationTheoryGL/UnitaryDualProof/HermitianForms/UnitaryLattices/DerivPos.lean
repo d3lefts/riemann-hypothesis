@@ -242,14 +242,14 @@ theorem bessel (v : V) : ∫⁻ ξ, ENNReal.ofReal (Df gl s C ξ v v).re ∂ν �
       have hf0 : f 0 = 0 := by simp [f, Df_zero]
       rw [hf0]
       symm
-      exact ENNReal.iSup_eq_zero.mpr fun n => by simp [g, Set.indicator_apply, h0K n]
+      exact ENNReal.iSup_eq_zero.mpr fun n => by simp [g, h0K n]
     · obtain ⟨n₁, hn₁⟩ := E.exists_mem ξ
       obtain ⟨i, -, hi⟩ := hW.toHasBasis.mem_iff.mp (isOpen_compl_singleton.mem_nhds (Ne.symm hξ))
       have hmem : ξ ∈ K (max n₁ i) := by
         refine ⟨E.subset (le_max_left _ _) hn₁, fun h => ?_⟩
         exact hi (hW.antitone (le_max_right _ _) h) rfl
       refine le_antisymm (le_iSup_of_le (max n₁ i) ?_) (iSup_le fun n => Set.indicator_le_self _ _ ξ)
-      simp [g, Set.indicator_apply, hmem]
+      simp [g, hmem]
   show ∫⁻ ξ, f ξ ∂ν ≤ _
   calc ∫⁻ ξ, f ξ ∂ν = ∫⁻ ξ, ⨆ n, g n ξ ∂ν := lintegral_congr hsup
     _ = ⨆ n, ∫⁻ ξ, g n ξ ∂ν := lintegral_iSup hgm hgmono
@@ -332,7 +332,7 @@ private theorem addHaar_singleton_zero_eq_zero {m : ℕ} {ψ : AddChar k Circle}
       (by simp [Matrix.det_smul])
   have hdet : Matrix.GeneralLinearGroup.det g = x⁻¹ ^ (m + 1) := by
     ext
-    simp [g, Matrix.GeneralLinearGroup.val_det_apply, Matrix.det_smul]
+    simp [g, Matrix.GeneralLinearGroup.val_det_apply]
   have hg : md g = (nabs k x)⁻¹ ^ (m + 1) := by
     show nabs k (Matrix.GeneralLinearGroup.det g) = _
     rw [hdet]
@@ -750,7 +750,6 @@ theorem sum_translate {A H : AddSubgroup (Fin (m + 1) → k)} {T : Finset (Fin (
     ∑ t ∈ T, π (colEl k m N h (t + a)) v = ∑ t ∈ T, π (colEl k m N h t) v := by
   apply sum_transversal_add_eq_sum_of_periodic A H T hT.2.2.1 hT.2.2.2 (fun x => π (colEl k m N h x) v) _ a ha
   intro x y hy
-  beta_reduce
   rw [pi_colEl_add, hv y hy]
 
 theorem avgL_colEl {A H : AddSubgroup (Fin (m + 1) → k)} {T : Finset (Fin (m + 1) → k)} (hT : IsTr A H T) {v : V}

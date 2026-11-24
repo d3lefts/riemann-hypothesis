@@ -273,7 +273,7 @@ theorem _root_.GlobalTheory.T.bijective_baseChange_descends_filteredColimit : �
     ∃ (k₀ : J) (f₀ : j ⟶ k₀), ∀ (k : J) (f : k₀ ⟶ k),
       letI : Algebra (F.obj j) (F.obj k) := (F.map (f₀ ≫ f)).hom.toAlgebra;
       Function.Bijective (Algebra.TensorProduct.map (AlgHom.id (F.obj k) (F.obj k)) φ) := by
-  first | (exact @GlobalTheory.BijDescent.bijective_of_isColimit) | (exact GlobalTheory.BijDescent.bijective_of_isColimit) | (intros; apply GlobalTheory.BijDescent.bijective_of_isColimit  <;> assumption)
+  first | (exact @GlobalTheory.BijDescent.bijective_of_isColimit)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BijectiveBaseChangeDescendsFilteredColimitStatement =====
@@ -383,7 +383,7 @@ theorem _root_.GlobalTheory.T.eventually_zmodTorsorGaloisProductMap_bijective_co
       letI : Algebra (F.obj j) (F.obj k) := (F.map (f₀ ≫ f)).hom.toAlgebra;
       Function.Bijective (GlobalTheory.TorsorColim.prodMapOf (F.obj k) (F.obj k ⊗[F.obj j] A) q
         (GlobalTheory.TorsorColim.bcAct (F.obj k) actA)) := by
-  first | (exact @GlobalTheory.TorsorColim.eventually_prodMapOf_bijective) | (exact GlobalTheory.TorsorColim.eventually_prodMapOf_bijective) | (intros; apply GlobalTheory.TorsorColim.eventually_prodMapOf_bijective  <;> assumption)
+  first | (exact @GlobalTheory.TorsorColim.eventually_prodMapOf_bijective)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyZmodTorsorGaloisProductMapBijectiveColStatement =====
@@ -741,7 +741,7 @@ theorem _root_.GlobalTheory.T.exists_late_split_of_filteredColimit : ∀ (J : Ty
     ∃ (k₀ : J) (f₀ : j ⟶ k₀), ∀ (k : J) (f : k₀ ⟶ k),
       letI : Algebra (F.obj j) (F.obj k) := (F.map (f₀ ≫ f)).hom.toAlgebra;
       ∃ τ : (F.obj k ⊗[F.obj j] A) →ₗ[F.obj k] F.obj k, τ 1 = 1 := by
-  first | (exact @GlobalTheory.SplitColim.exists_late_split_of_isColimit) | (exact GlobalTheory.SplitColim.exists_late_split_of_isColimit) | (intros; apply GlobalTheory.SplitColim.exists_late_split_of_isColimit <;> assumption)
+  first | (exact @GlobalTheory.SplitColim.exists_late_split_of_isColimit)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLateSplitOfFilteredColimitStatement =====
@@ -799,7 +799,7 @@ open CategoryTheory Limits TensorProduct
 
 theorem _root_.GlobalTheory.T.exists_linear_splitting_unit_faithfullyFlat : ∀ (R D : Type) [CommRing R] [CommRing D] [Algebra R D], Module.Finite R D →
     Module.Projective R D → Module.FaithfullyFlat R D → ∃ τ : D →ₗ[R] R, τ 1 = 1 := by
-  first | (exact @GlobalTheory.unit_splits_of_projective_faithfullyFlat) | (exact GlobalTheory.unit_splits_of_projective_faithfullyFlat) | (intros; apply GlobalTheory.unit_splits_of_projective_faithfullyFlat  <;> assumption)
+  first | (exact @GlobalTheory.unit_splits_of_projective_faithfullyFlat)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLinearSplittingUnitFaithfullyFlatStatement =====
@@ -823,7 +823,7 @@ theorem _root_.GlobalTheory.T.exists_zmod_action_model_of_isColimit_filtered : �
       letI : Algebra (F.obj k) c.pt := (c.ι.app k).hom.toAlgebra;
       ∃ e : c.pt ⊗[F.obj k] B ≃ₐ[c.pt] D, ∀ (g : Multiplicative (ZMod q)) (x : c.pt ⊗[F.obj k] B),
         e (GlobalTheory.TorsorColim.bcAct c.pt actB g x) = act g (e x) := by
-  first | (exact @GlobalTheory.TorsorColim.exists_action_model_of_isColimit) | (exact GlobalTheory.TorsorColim.exists_action_model_of_isColimit) | (intros; apply GlobalTheory.TorsorColim.exists_action_model_of_isColimit  <;> assumption)
+  first | (exact @GlobalTheory.TorsorColim.exists_action_model_of_isColimit)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsZmodActionModelOfIsColimitFilteredStatement =====
@@ -871,7 +871,7 @@ theorem projective_baseChange_presentation_matrix : ∀ (R B M : Type) [CommRing
         have : e ((f.lTensor B) (x ⊗ₜ c)) = ∑ b, (x * algebraMap R B (c b)) • (fun l => algebraMap R B (r b l)) := by
           ext l
           simp [e, f, Fintype.linearCombination_apply, Finset.sum_apply, Algebra.smul_def, Finset.mul_sum,
-            Finset.sum_mul, mul_comm, mul_left_comm]
+            mul_comm, mul_left_comm]
         rw [this]
         exact Submodule.sum_mem _ fun b _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨b, rfl⟩)
     | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact N.add_mem ha hb
@@ -927,7 +927,7 @@ theorem _root_.GlobalTheory.T.exists_presentation_matrix_of_projective_baseChang
     ∃ (v : Fin n → Fin n → B) (w : Fin n → Fin m → B),
     (∀ b l, ∑ a, algebraMap R B (r b a) * v a l = 0) ∧
     (∀ a l, v a l = (if a = l then 1 else 0) + ∑ b, w a b * algebraMap R B (r b l)) := by
-  first | (exact @GlobalTheory.projective_baseChange_presentation_matrix) | (exact GlobalTheory.projective_baseChange_presentation_matrix) | (intros; apply GlobalTheory.projective_baseChange_presentation_matrix <;> assumption)
+  first | (exact @GlobalTheory.projective_baseChange_presentation_matrix)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPresentationMatrixOfProjectiveBaseChangeStatement =====
@@ -1022,7 +1022,7 @@ theorem _root_.GlobalTheory.T.polynomial_system_eventually_solvable_colimit : �
     (∀ i, MvPolynomial.eval₂ (c.ι.app j).hom x (p i) = 0) →
     ∃ (k₀ : J) (f₀ : j ⟶ k₀), ∀ (k : J) (f : k₀ ⟶ k), ∃ y : σ → F.obj k,
       ∀ i, MvPolynomial.eval₂ (F.map (f₀ ≫ f)).hom y (p i) = 0 := by
-  first | (exact @GlobalTheory.TorsorColim.poly_eventually_solvable) | (exact GlobalTheory.TorsorColim.poly_eventually_solvable) | (intros; apply GlobalTheory.TorsorColim.poly_eventually_solvable  <;> assumption)
+  first | (exact @GlobalTheory.TorsorColim.poly_eventually_solvable)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolynomialSystemEventuallySolvableColimitStatement =====
@@ -1126,7 +1126,7 @@ theorem _root_.GlobalTheory.T.projective_baseChange_of_presentation_matrix_split
     (∀ b l, ∑ a, algebraMap R B (r b a) * v a l = 0) →
     (∀ a l, v a l = (if a = l then 1 else 0) + ∑ b, w a b * algebraMap R B (r b l)) →
     Module.Projective B (B ⊗[R] M) := by
-  first | (exact @GlobalTheory.projective_baseChange_of_presentation_split) | (exact GlobalTheory.projective_baseChange_of_presentation_split) | (intros; apply GlobalTheory.projective_baseChange_of_presentation_split <;> assumption)
+  first | (exact @GlobalTheory.projective_baseChange_of_presentation_split)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProjectiveBaseChangeOfPresentationMatrixSplitStatement =====
@@ -1254,7 +1254,7 @@ theorem _root_.GlobalTheory.T.projective_eventually_filteredColimit_algebra : �
     ∃ (k₀ : J) (f₀ : j ⟶ k₀), ∀ (k : J) (f : k₀ ⟶ k),
       letI : Algebra (F.obj j) (F.obj k) := (F.map (f₀ ≫ f)).hom.toAlgebra;
       Module.Projective (F.obj k) (F.obj k ⊗[F.obj j] A) := by
-  first | (exact @GlobalTheory.ProjColim.projective_eventually) | (exact GlobalTheory.ProjColim.projective_eventually) | (intros; apply GlobalTheory.ProjColim.projective_eventually  <;> assumption)
+  first | (exact @GlobalTheory.ProjColim.projective_eventually)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProjectiveEventuallyFilteredColimitAlgebraStatement =====
@@ -1371,7 +1371,7 @@ theorem _root_.GlobalTheory.T.exists_zmodTorsor_model_of_filtered_colimit : ∀ 
       (actj : Multiplicative (ZMod q) →* (Dj ≃ₐ[F.obj j] Dj)),
       GlobalTheory.LocAcyc.IsZModTorsor (F.obj j) Dj q actj ∧
       Nonempty (TensorProduct (F.obj j) c.pt Dj ≃ₐ[c.pt] D) := by
-  first | (exact @GlobalTheory.TorsorColim.exists_torsor_model_of_isColimit) | (exact GlobalTheory.TorsorColim.exists_torsor_model_of_isColimit) | (intros; apply GlobalTheory.TorsorColim.exists_torsor_model_of_isColimit  <;> assumption)
+  first | (exact @GlobalTheory.TorsorColim.exists_torsor_model_of_isColimit)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsZmodTorsorModelOfFilteredColimitStatement =====

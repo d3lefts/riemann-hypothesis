@@ -206,8 +206,7 @@ theorem linInd' (s : Bool) {ι : Type} {v : ι → E} (h : LinearIndependent ℂ
   rw [linearIndependent_iff'] at h ⊢
   intro u g hg i hi
   have h1 : ∑ i ∈ u, cj s (g i) • v i = 0 := hg
-  have := congrArg (cj s) (h u (fun i => cj s (g i)) h1 i hi)
-  rwa [cj_cj, map_zero] at this
+  simpa [cj_cj] using congrArg (cj s) (h u (fun i => cj s (g i)) h1 i hi)
 
 theorem mk_smul (s : Bool) (c : ℂ) (y : E) : mk s (c • y) = cj s c • mk s y := by
   show c • y = cj s (cj s c) • y
@@ -270,14 +269,12 @@ theorem kForm_semi {H X : Type} [AddCommGroup H] [Module ℂ H] [AddCommGroup X]
     (hrange : LinearMap.range e = Submodule.span ℂ (Set.range f)) {ι ι' : Type} [Finite ι] (b : Module.Basis ι K V) (b' : Module.Basis ι' K V)
     (h : LinearIndependent ℂ fun i => f (b i)) :
     LinearIndependent ℂ (fun i => g (b' i)) ∧ Submodule.span ℂ (Set.range fun i => g (b' i)) = ⊤ := by
+  have e1 : (e ∘ fun i => g (b' i)) = fun i => f (b' i) := funext fun i => hj _
   refine ⟨LinearIndependent.of_comp e ?_, ?_⟩
-  · have e1 : (e ∘ fun i => g (b' i)) = fun i => f (b' i) := funext fun i => hj _
-    rw [e1]
+  · rw [e1]
     exact linInd_semi f b b' h
   · apply Submodule.map_injective_of_injective hinj
-    rw [Submodule.map_span, ← Set.range_comp, Submodule.map_top, hrange]
-    have e1 : (e ∘ fun i => g (b' i)) = fun i => f (b' i) := funext fun i => hj _
-    rw [e1, span_semi f b']
+    rw [Submodule.map_span, ← Set.range_comp, Submodule.map_top, hrange, e1, span_semi f b']
 
 end Semi
 

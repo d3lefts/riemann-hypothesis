@@ -223,7 +223,7 @@ private theorem existsUnique_sec {U P : Scheme.{0}} (p' : P ⟶ U) {m : ℕ} (s'
     intro j₁ j₂ h
     rw [← hι j₁, ← hι j₂, ← Category.assoc, ← Category.assoc, cancel_mono] at h
     have h2 := congrArg (fun f : gp Ω ⟶ ∐ (fun _ : Fin m => U) => f (IsLocalRing.closedPoint Ω)) h
-    simp only [Scheme.Hom.comp_apply] at h2
+    simp only at h2
     have h3 := (sigmaι_eq_iff (fun _ : Fin m => U) j₁ j₂ _ _).mp h2
     exact (Sigma.mk.inj_iff.mp h3).1
   obtain ⟨⟨j, u⟩, hju⟩ :=
@@ -1245,8 +1245,6 @@ theorem UpperTheory.Gal.Mod.opCover :
   rw [← hf, ← hp, hw, hw', hpull, ← LinearMap.comp_assoc, hpush, hcomp, LinearMap.smul_comp]
   first
     | rfl
-    | simp only [Int.cast_natCast, Nat.cast_smul_eq_nsmul]
-    | (norm_cast; simp [Nat.cast_smul_eq_nsmul])
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.BasicOpenSections.POpCover =====

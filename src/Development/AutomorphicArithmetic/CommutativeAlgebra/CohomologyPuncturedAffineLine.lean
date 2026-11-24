@@ -122,14 +122,14 @@ theorem UpperTheory.closed_fiber_affine_surjective_ker_maximalIdeal :
       rw [← cancel_epi (Scheme.ΓSpecIso (CommRingCat.of A)).inv,
         ← cancel_mono (Scheme.ΓSpecIso (CommRingCat.of (Γ(X, ⊤) ⧸ I))).hom]
       simp only [z, cpt, Scheme.Hom.comp_appTop, Category.assoc, Scheme.ΓSpecIso_naturality,
-        Scheme.ΓSpecIso_naturality_assoc, reassoc_of% hinv, Iso.inv_hom_id_assoc, Category.id_comp]
+        Scheme.ΓSpecIso_naturality_assoc, reassoc_of% hinv, Iso.inv_hom_id_assoc]
       ext a
       rfl
     let u := h.lift z (Spec.map χ) hz
     have hu : u ≫ r = z := h.lift_fst _ _ _
     have hzt : z.appTop ≫ (Scheme.ΓSpecIso (CommRingCat.of (Γ(X, ⊤) ⧸ I))).hom = π := by
       simp only [z, Scheme.Hom.comp_appTop, Category.assoc, Scheme.ΓSpecIso_naturality,
-        reassoc_of% hinv, Category.id_comp]
+        reassoc_of% hinv]
     have e1 : z.appTop = r.appTop ≫ u.appTop := by
       rw [← Scheme.Hom.comp_appTop, hu]
     have e2 := congrArg (fun f => f.hom b) hzt
@@ -284,8 +284,7 @@ theorem UpperTheory.exists_goodRoot_of_henselian_sepClosed_residue :
       simp [hz.pow_eq_one])
     (by
       simp only [Polynomial.derivative_sub, Polynomial.derivative_one, sub_zero,
-        Polynomial.derivative_X_pow, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_natCast,
-        Polynomial.eval_pow, Polynomial.eval_X]
+        Polynomial.derivative_X_pow, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X]
       exact hqu.mul (ha0.pow _))
   have hζq : ζ ^ q = 1 := by
     have h := hroot.eq_zero
@@ -524,8 +523,6 @@ theorem UpperTheory.isIntegral_sections_of_integralHom_over_affine_chart :
     rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
     first
       | rfl
-      | (congr 1; simp)
-      | simp [Scheme.Hom.appLE]
   have c2 : ∀ y, φ.hom ((l.appLE ⊤ (f ⁻¹ᵁ O) (by simp)).hom y) ∈ S := by
     intro y
     have hy : φ.hom ((l.appLE ⊤ (f ⁻¹ᵁ O) (by simp)).hom y) =
@@ -898,7 +895,7 @@ theorem UpperTheory.roots_of_unity_eq_locallyConstant_powers_spectrum :
     have hset : g0 ⁻¹' {a} = ⋂ b : ZMod q, ⋂ (_ : b ≠ a),
         (PrimeSpectrum.basicOpen (w - ζ ^ b.val) : Set (PrimeSpectrum S)) := by
       ext p
-      simp [hiff, PrimeSpectrum.mem_basicOpen]
+      simp [hiff]
     rw [hset]
     exact isOpen_iInter_of_finite fun b => isOpen_iInter_of_finite fun _ =>
       (PrimeSpectrum.basicOpen _).isOpen

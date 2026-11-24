@@ -462,7 +462,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.coord_dim_eq_relative_dim : ∀ {K : Type} [Field K] {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of K)) (n : ℕ) [SmoothOfRelativeDimension n q] {V : X.Opens}, (V : Set X).Nonempty → ∀ {m : ℕ} (c : Coord q V m), m = n := by
-  first | exact @GlobalTheory.CompanionTheory.CoordCard.main | exact GlobalTheory.CompanionTheory.CoordCard.main | (intros; apply GlobalTheory.CompanionTheory.CoordCard.main <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.CoordCard.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CoordDimEqRelativeDimStatement =====
@@ -523,7 +523,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.coords_of_etale_basic_open : ∀ {K : Type} [Field K] {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of K)) {W : X.Opens}, IsAffineOpen W → ∀ (g : Γ(X, W)) {d : ℕ} (s : Fin d → Γ(X, W)), letI := (strV q W).toAlgebra; (MvPolynomial.eval₂Hom (algebraMap K (Localization.Away g)) (fun k => algebraMap Γ(X, W) (Localization.Away g) (s k)) : MvPolynomial (Fin d) K →+* Localization.Away g).Etale → ∃ c : Coord q (X.basicOpen g) d, ∀ k, c.t k = resO (X.basicOpen_le g) (s k) := by
-  first | exact @GlobalTheory.CompanionTheory.GeoCoord.exists_coord_basicOpen | exact GlobalTheory.CompanionTheory.GeoCoord.exists_coord_basicOpen | (intros; apply GlobalTheory.CompanionTheory.GeoCoord.exists_coord_basicOpen <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.GeoCoord.exists_coord_basicOpen
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CoordsOfEtaleBasicOpenStatement =====
@@ -801,8 +801,6 @@ open CategoryTheory AlgebraicGeometry
 namespace CrystallineSemistableComparison.Pb.EtaleIntegralityFacts
 
 
-set_option backward.defeqAttrib.useBackward true in
-set_option backward.isDefEq.respectTransparency false in
 theorem exists_integral_nbhd {K : Type} [Field K] {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of K))
     [Smooth q]
     (hE : ∀ (A : Type) [CommRing A] [Algebra K A] [Algebra.Smooth K A] (p : Ideal A) [p.IsPrime],
@@ -821,9 +819,11 @@ theorem exists_integral_nbhd {K : Type} [Field K] {X : Scheme.{0}} (q : X ⟶ Sp
   have : Algebra.Smooth K Γ(X, V) := hφ
   obtain ⟨r, hr, hdom⟩ := hE Γ(X, V) (hV.primeIdealOf ⟨x, hxV⟩).asIdeal
   have hxW : x ∈ X.basicOpen r := by
-    rwa [← PrimeSpectrum.mem_basicOpen, IsAffineOpen.primeIdealOf,
-      ← hV.fromSpec_preimage_basicOpen, Scheme.Hom.mem_preimage, ← Scheme.Hom.comp_apply,
-      IsAffineOpen.isoSpec_hom, IsAffineOpen.toSpecΓ_fromSpec] at hr
+    have hr' : hV.primeIdealOf ⟨x, hxV⟩ ∈ hV.fromSpec ⁻¹ᵁ X.basicOpen r := by
+      rw [hV.fromSpec_preimage_basicOpen]
+      exact hr
+    have hfx : hV.fromSpec (hV.primeIdealOf ⟨x, hxV⟩) = x := hV.fromSpec_primeIdealOf ⟨x, hxV⟩
+    exact hfx ▸ (hr' : hV.fromSpec (hV.primeIdealOf ⟨x, hxV⟩) ∈ X.basicOpen r)
   refine ⟨X.basicOpen r, hxW, ?_⟩
   have hW : IsAffineOpen (X.basicOpen r) := hV.basicOpen r
   have : IsAffine (X.basicOpen r) := hW
@@ -1022,7 +1022,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.affine_open_finiteType : ∀ {K : Type} [Field K] {X : Scheme.{0}} (q : X ⟶ Spec (CommRingCat.of K)) [LocallyOfFiniteType q] {W : X.Opens}, IsAffineOpen W → letI := (strV q W).toAlgebra; Algebra.FiniteType K Γ(X, W) := by
-  first | exact @GlobalTheory.CompanionTheory.GeoFT.finiteType_affine | exact GlobalTheory.CompanionTheory.GeoFT.finiteType_affine | (intros; apply GlobalTheory.CompanionTheory.GeoFT.finiteType_affine <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.GeoFT.finiteType_affine
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AffineOpenFiniteTypeStatement =====
@@ -1064,7 +1064,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.basic_open_eval_surjective : ∀ {K : Type} [Field K] {X : Scheme.{0}} {N : ℕ} (i : X ⟶ PSpace K N), IsClosedImmersion i → ∀ {g : MvPolynomial (Fin (N + 1)) K} {e : ℕ} (hg : g ∈ grK K N e), 0 < e → Function.Surjective (evV i g (i ⁻¹ᵁ Proj.basicOpen (grK K N) g) le_rfl) := by
-  first | exact @GlobalTheory.CompanionTheory.Geo.evV_surjective | exact GlobalTheory.CompanionTheory.Geo.evV_surjective | (intros; apply GlobalTheory.CompanionTheory.Geo.evV_surjective <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Geo.evV_surjective
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BasicOpenEvalSurjectiveStatement =====
@@ -1230,7 +1230,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.basic_opens_cover_of_finite : ∀ {K : Type} [Field K] {X : Scheme.{0}} {N : ℕ} (i : X ⟶ PSpace K N), ∀ {m e : ℕ}, 0 < e → ∀ (y : Fin m → MvPolynomial (Fin (N + 1)) K), (∀ k, (y k).IsHomogeneous e) → Module.Finite (Algebra.adjoin K (Set.range fun k => Ideal.Quotient.mk (homIdeal i) (y k))) (MvPolynomial (Fin (N + 1)) K ⧸ homIdeal i) → ⨆ k, i ⁻¹ᵁ Proj.basicOpen (grK K N) (y k) = ⊤ := by
-  first | exact @GlobalTheory.CompanionTheory.GeoCover.iSup_preimage_eq_top | exact GlobalTheory.CompanionTheory.GeoCover.iSup_preimage_eq_top | (intros; apply GlobalTheory.CompanionTheory.GeoCover.iSup_preimage_eq_top <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.GeoCover.iSup_preimage_eq_top
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BasicOpensCoverOfFiniteStatement =====
@@ -1275,7 +1275,6 @@ theorem evV_surjective (hci : IsClosedImmersion i) {g : MvPolynomial (Fin (N + 1
     (hg : g ∈ grK K N e) (he : 0 < e) :
     Function.Surjective (evV i g (i ⁻¹ᵁ Proj.basicOpen (grK K N) g) le_rfl) := by
   first
-    | exact GlobalTheory.T.basic_open_eval_surjective ..
     | (intros; apply GlobalTheory.T.basic_open_eval_surjective <;> assumption)
 
 theorem range_resO_eq (hci : IsClosedImmersion i) {g : MvPolynomial (Fin (N + 1)) K} {e : ℕ}
@@ -1296,13 +1295,11 @@ theorem iSup_preimage_eq_top {m e : ℕ} (he : 0 < e) (y : Fin m → MvPolynomia
       (MvPolynomial (Fin (N + 1)) K ⧸ homIdeal i)) :
     ⨆ k, i ⁻¹ᵁ Proj.basicOpen (grK K N) (y k) = ⊤ := by
   first
-    | exact GlobalTheory.T.basic_opens_cover_of_finite ..
     | (intros; apply GlobalTheory.T.basic_opens_cover_of_finite <;> assumption)
 
 theorem finiteType_affine (q : X ⟶ Spec (CommRingCat.of K)) [LocallyOfFiniteType q] {W : X.Opens}
     (hW : IsAffineOpen W) : letI := (strV q W).toAlgebra; Algebra.FiniteType K Γ(X, W) := by
   first
-    | exact GlobalTheory.T.affine_open_finiteType ..
     | (intros; apply GlobalTheory.T.affine_open_finiteType <;> assumption)
 
 end CrystallineSemistableComparison.Pb
@@ -1367,7 +1364,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.basic_open_nonempty_of_ne_zero : ∀ {K : Type} [Field K] {X : Scheme.{0}} {N : ℕ} (i : X ⟶ PSpace K N), IsIntegral X → ∀ {g : MvPolynomial (Fin (N + 1)) K} {e : ℕ}, 0 < e → ∀ (hg : g ∈ grK K N e), Ideal.Quotient.mk (homIdeal i) g ≠ 0 → ((i ⁻¹ᵁ Proj.basicOpen (grK K N) g : X.Opens) : Set X).Nonempty := by
-  first | exact @GlobalTheory.CompanionTheory.Geo.preimage_basicOpen_nonempty_of_mk_ne_zero | exact GlobalTheory.CompanionTheory.Geo.preimage_basicOpen_nonempty_of_mk_ne_zero | (intros; apply GlobalTheory.CompanionTheory.Geo.preimage_basicOpen_nonempty_of_mk_ne_zero <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Geo.preimage_basicOpen_nonempty_of_mk_ne_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BasicOpenNonemptyOfNeZeroStatement =====
@@ -1382,7 +1379,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.homogeneous_ideal_component_mem : ∀ {K : Type} [Field K] {X : Scheme.{0}} {N : ℕ} (i : X ⟶ PSpace K N), ∀ f ∈ homIdeal i, ∀ n : ℕ, MvPolynomial.homogeneousComponent n f ∈ homIdeal i := by
-  first | exact @GlobalTheory.CompanionTheory.Geo.homIdeal_homog | exact GlobalTheory.CompanionTheory.Geo.homIdeal_homog | (intros; apply GlobalTheory.CompanionTheory.Geo.homIdeal_homog <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Geo.homIdeal_homog
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HomogeneousIdealComponentMemStatement =====
@@ -1486,7 +1483,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.homogeneous_ideal_ne_top : ∀ {K : Type} [Field K] {X : Scheme.{0}} {N : ℕ} (i : X ⟶ PSpace K N), Nonempty X → homIdeal i ≠ ⊤ := by
-  first | exact @GlobalTheory.CompanionTheory.GeoNetop.homIdeal_ne_top | exact GlobalTheory.CompanionTheory.GeoNetop.homIdeal_ne_top | (intros; apply GlobalTheory.CompanionTheory.GeoNetop.homIdeal_ne_top <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.GeoNetop.homIdeal_ne_top
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HomogeneousIdealNeTopStatement =====
@@ -1511,19 +1508,16 @@ variable {K : Type} [Field K] {X : Scheme.{0}} {N : ℕ} (i : X ⟶ PSpace K N)
 
 theorem homIdeal_homog : ∀ f ∈ homIdeal i, ∀ n : ℕ, MvPolynomial.homogeneousComponent n f ∈ homIdeal i := by
   first
-    | exact GlobalTheory.T.homogeneous_ideal_component_mem ..
     | (intros; apply GlobalTheory.T.homogeneous_ideal_component_mem <;> assumption)
 
 theorem homIdeal_ne_top [Nonempty X] : homIdeal i ≠ ⊤ := by
   first
-    | exact GlobalTheory.T.homogeneous_ideal_ne_top ..
     | (intros; apply GlobalTheory.T.homogeneous_ideal_ne_top <;> assumption)
 
 theorem preimage_basicOpen_nonempty [IsIntegral X] {g : MvPolynomial (Fin (N + 1)) K} {e : ℕ} (he : 0 < e)
     (hg : g ∈ grK K N e) (hg0 : Ideal.Quotient.mk (homIdeal i) g ≠ 0) :
     ((i ⁻¹ᵁ Proj.basicOpen (grK K N) g : X.Opens) : Set X).Nonempty := by
   first
-    | exact GlobalTheory.T.basic_open_nonempty_of_ne_zero ..
     | (intros; apply GlobalTheory.T.basic_open_nonempty_of_ne_zero <;> assumption)
 
 end CrystallineSemistableComparison.Pb
@@ -1620,9 +1614,7 @@ theorem geo_setup {K : Type} [Field K] [CharZero K] {X : Scheme.{0}} (q : X ⟶ 
     isAlgebraic_of_integral_torusS (fun k => (htW k).unit) hintW
   haveI hlft : LocallyOfFiniteType q := by
     first
-      | infer_instance
       | (haveI : Smooth q := SmoothOfRelativeDimension.smooth (n + 1) q; infer_instance)
-      | (haveI : Smooth q := inferInstance; haveI : LocallyOfFinitePresentation q := inferInstance; infer_instance)
   haveI : Algebra.FiniteType K Γ(X, W) := finiteType_affine q hWaff
   obtain ⟨g, hg0, het⟩ := exists_etale_away (tV i y hy W hWV) hindW halgW
   obtain ⟨c, hc⟩ := exists_coord_basicOpen q hWaff g (tV i y hy W hWV) het

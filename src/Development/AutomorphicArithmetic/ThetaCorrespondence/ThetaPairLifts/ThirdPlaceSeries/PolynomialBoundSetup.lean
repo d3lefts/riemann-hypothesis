@@ -1576,7 +1576,7 @@ theorem typeU_of_emb (i : D.nd.Loc) {w : HeightOneSpectrum (𝓞 D.host.E)}
     have hd : (0 : ℝ) < Real.sqrt (D.host.d : ℝ) := by
       have := D.host.qd_big.2
       exact Real.sqrt_pos.2 (by exact_mod_cast (by omega : 0 < D.host.d))
-    simp only [Formalism.HC.HostRaw.cmType, Set.mem_ofPred_eq, Set.mem_setOf_eq] at hm hφ
+    simp only [Formalism.HC.HostRaw.cmType, Set.mem_ofPred_eq] at hm hφ
     rw [hm, hφ] at hv
     have him := congrArg Complex.im hv
     simp at him
@@ -1766,7 +1766,7 @@ section
 open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink
 
 theorem _root_.GlobalTheory.T.hodgeJumpParameters_of_setup : Hypotheses₂ → ∀ (D : D7) (L : SizeData₂ D) (P : ParameterChoice' D L) (nch : NChoice D) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (Cm : CmpOf D.loc D.locA HW F) (X : KillingConditions.HubData D) (C₂ : ℝ), _root_.GlobalTheory.NLink.SetupAlt L nch HW X C₂ → ∀ ep, AdmissibleParameterJ.hodgeTateJumpsAtModulesForSign D ep → EmbeddingTypeJumps.HodgeJumpWindowsAtDistinguishedPrimes X.r ep L := by
-  first | exact @_root_.GlobalTheory.HostJumpWin.main_alt_alt | exact _root_.GlobalTheory.HostJumpWin.main_alt_alt | (intros; apply _root_.GlobalTheory.HostJumpWin.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HostJumpWin.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1841,7 +1841,7 @@ section
 open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink
 
 theorem _root_.GlobalTheory.T.embedding_jumps_aux2_of_setup : ∃ (constantFirstHub : ℝ) (Q : MvPolynomial (Fin 3) ℕ), Hypotheses₂ → ∀ (D : D7) (L : SizeData₂ D) (P : ParameterChoice' D L) (nch : NChoice D) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (Cm : CmpOf D.loc D.locA HW F) (X : KillingConditions.HubData D) (C₂ : ℝ), _root_.GlobalTheory.NLink.SetupAlt L nch HW X C₂ → EmbeddingTypeJumps.Conclusion2 X.ρ L constantFirstHub Q := by
-  first | exact @_root_.GlobalTheory.TheoremBQD.main_alt_alt | exact _root_.GlobalTheory.TheoremBQD.main_alt_alt | (intros; apply _root_.GlobalTheory.TheoremBQD.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.TheoremBQD.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto

@@ -112,7 +112,7 @@ lemma eval_pow_map (p : (ZMod g)[X]) (x : Fbar g) :
 
 lemma mem_range_of_pow_eq (c : Fbar g) (hc : c ^ g = c) :
     c ∈ Set.range (algebraMap (ZMod g) (Fbar g)) := by
-  first | exact Bl.general_b_fact_second_bis.goal1 .. | (apply Bl.general_b_fact_second_bis.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_second_bis.goal1 <;> assumption) | (apply @Bl.general_b_fact_second_bis.goal1 <;> assumption) | (intros; apply @Bl.general_b_fact_second_bis.goal1 <;> assumption) | (apply @Bl.general_b_fact_second_bis.goal1 <;> first | assumption | infer_instance)
+  first | (apply Bl.general_b_fact_second_bis.goal1 <;> assumption)
 
 end Frob
 
@@ -355,9 +355,7 @@ lemma isOrbit_of_mem {q : ℕ} (hL : ∀ i, L (σ i) = L i ^ q) {S : Finset K} (
 lemma cyc_eq_of_mem {i j k : α} (hj : k ∈ cyc σ i) (hk : k ∈ cyc σ j) : cyc σ i = cyc σ j := by
   ext x
   simp only [mem_cyc] at *
-  constructor
-  · intro h; exact hk.trans (hj.symm.trans h)
-  · intro h; exact hj.trans (hk.symm.trans h)
+  exact ⟨fun h => hk.trans (hj.symm.trans h), fun h => hj.trans (hk.symm.trans h)⟩
 
 lemma blocks_disjoint (hLi : Function.Injective L) {S T : Finset K} (hS : S ∈ blocks σ L)
     (hT : T ∈ blocks σ L) (hST : S ≠ T) : Disjoint S T := by
@@ -469,9 +467,7 @@ lemma repGL_apply (A : GL (Fin N) K) (x : Fin N → K) :
 
 lemma repGL_injective : Function.Injective (repGL (K := K) (N := N)) := by
   intro A B h
-  apply Units.ext
-  rw [repGL_eq, repGL_eq] at h
-  exact Matrix.toLin'.injective h
+  exact Units.ext (Matrix.toLin'.injective (by simpa [repGL_eq] using h))
 
 lemma charpoly_repGL (A : GL (Fin N) K) :
     LinearMap.charpoly (repGL A) = (A : Matrix (Fin N) (Fin N) K).charpoly := by

@@ -308,7 +308,7 @@ namespace PI.UnitaryApproxFinWork
 theorem exists_common {F : Type} [Field F] [NumberField F] {ι : Type} (s : Finset ι)
     (Q : ι → 𝓞 F → Prop) (hQ : ∀ i c r, Q i c → Q i (c * r)) (h : ∀ i ∈ s, ∃ c, c ≠ 0 ∧ Q i c) :
     ∃ c : 𝓞 F, c ≠ 0 ∧ ∀ i ∈ s, Q i c := by
-  first | exact Bl.general_b_fact_right_ter.goal1 .. | (apply Bl.general_b_fact_right_ter.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_right_ter.goal1 <;> assumption) | (apply @Bl.general_b_fact_right_ter.goal1 <;> assumption) | (intros; apply @Bl.general_b_fact_right_ter.goal1 <;> assumption) | (apply @Bl.general_b_fact_right_ter.goal1 <;> first | assumption | infer_instance)
+  first | (apply Bl.general_b_fact_right_ter.goal1 <;> assumption)
 
 theorem local_err {R : Type} [CommRing R] {n : Type} [Fintype n] [DecidableEq n]
     (h2 : IsUnit (2 : R)) (g X XR W N γR : Matrix n n R)
@@ -535,13 +535,9 @@ theorem bd_local (v : HeightOneSpectrum (𝓞 F)) (a : v.adicCompletion F) :
   · have hab' : a * algebraMap F (v.adicCompletion F) (b : F) ∈ v.adicCompletionIntegers F := by
       first
       | exact hab
-      | (convert hab using 2)
-      | simpa using hab
     have hc' : algebraMap F (v.adicCompletion F) (c : F) ∈ v.adicCompletionIntegers F := by
       first
       | exact IsDedekindDomain.HeightOneSpectrum.coe_mem_adicCompletionIntegers v c
-      | (convert IsDedekindDomain.HeightOneSpectrum.coe_mem_adicCompletionIntegers (K := F) v c using 1)
-      | simpa using IsDedekindDomain.HeightOneSpectrum.coe_mem_adicCompletionIntegers (K := F) v c
     have hcast : algebraMap F (v.adicCompletion F) (c : F) * algebraMap F (v.adicCompletion F) (b : F) =
         ((Ideal.absNorm (Ideal.span {b}) : ℤ) : v.adicCompletion F) := by
       rw [← map_mul, show (c : F) * (b : F) = ((c * b : 𝓞 F) : F) from rfl, hc]
@@ -633,7 +629,7 @@ theorem ea_finite_bad {E R : Type*} [Field E] [CommRing R] (ι : E →+* R)
     rw [h]
     congr 1
     ext i j
-    by_cases hij : i = j <;> simp [Matrix.one_apply, hij] <;> ring
+    by_cases hij : i = j <;> simp [hij] <;> ring
   have hP0 : P ≠ 0 := by
     intro h
     have h0 := hev 0
@@ -652,7 +648,7 @@ theorem ea_finite_bad {E R : Type*} [Field E] [CommRing R] (ι : E →+* R)
   rw [RingHom.map_det] at h1
   convert h1 using 2
   ext i j
-  by_cases hij : i = j <;> simp [f, gb, Matrix.one_apply, hij]
+  by_cases hij : i = j <;> simp [f, gb, hij]
 
 theorem ea_artinian {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (v : HeightOneSpectrum (𝓞 F)) : IsArtinianRing (E ⊗[F] v.adicCompletion F) := by
@@ -662,8 +658,6 @@ theorem ea_artinian {F E : Type} [Field F] [NumberField F] [Field E] [NumberFiel
     (Algebra.TensorProduct.comm F (v.adicCompletion F) E).surjective
   first
     | exact hs.isArtinianRing
-    | exact IsArtinianRing.of_surjective _ hs
-    | exact Function.Surjective.isArtinianRing hs
 
 theorem eigenvalue_avoidance : EigAvoid := by
   intro F E _ _ _ _ _ n _ _ σ hσ hθ T g

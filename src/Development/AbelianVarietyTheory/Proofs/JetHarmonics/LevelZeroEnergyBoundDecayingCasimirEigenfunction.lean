@@ -169,12 +169,12 @@ theorem eh_inv_entry : ∀ (k r : ℕ) (a b c i : Fin (2 * r + k + 1)), ∀ g �
   have h := Formalism.FourierDecayAlt.P.Qx5.eh_inv (k := k) (r := r) (LinearMap.proj c) (Pi.single i 1) g a b
   have e : (fun y : B.Mat k r => y⁻¹ c i) = fun y : B.Mat k r => (LinearMap.proj c : (Fin (2 * r + k + 1) → ℂ) →ₗ[ℂ] ℂ) (y⁻¹ *ᵥ Pi.single i 1) := by
     funext y
-    simp [Matrix.mulVec_single_one]
+    simp
   rw [e]
   refine h.trans ?_
   by_cases hac : a = c
   · subst hac
-    simp [Matrix.mulVec, dotProduct, Matrix.single, Pi.single_apply]
+    simp [Matrix.mulVec, dotProduct, Matrix.single]
   · simp [Matrix.mulVec, dotProduct, Matrix.single, hac]
 end GlobalTheory
 end -- clump:auto
@@ -400,7 +400,6 @@ theorem conj_entry_smul_eigenSum : ∀ (k r : ℕ) (Wp Wq : Type) [NormedAddComm
       push_cast
       split_ifs <;> ring
   · intro g hg
-    beta_reduce
     rw [hco g hg, hsum g hg, Fintype.sum_prod_type, Finset.smul_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [Fintype.sum_prod_type, Finset.sum_smul]

@@ -150,7 +150,7 @@ open GlobalTheory.Unf GlobalTheory.Unf.FB
 
 
 theorem _root_.GlobalTheory.T.exists_unitaryEmbedding_preimage_of_fixes_anisotropicLine : ∀ (D : D7) (S A L : HSp D) (o : OrthDec S A L) (ζ : Fin L.rank → D.host.E), IsLineVec L ζ → ∀ k : GA D S, mt S k *ᵥ ratV (o.iB *ᵥ ζ) = ratV (o.iB *ᵥ ζ) → ∃ h : GA D A, k = o.emb (h, 1) := by
-  first | exact @GlobalTheory.exists_emb_of_fixes_lineVec | exact GlobalTheory.exists_emb_of_fixes_lineVec | (intros; apply GlobalTheory.exists_emb_of_fixes_lineVec <;> assumption)
+  first | exact @GlobalTheory.exists_emb_of_fixes_lineVec
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsUnitaryEmbeddingPreimageOfFixesAnisotropicStatement =====
@@ -255,7 +255,7 @@ open GlobalTheory.Unf GlobalTheory.Unf.FB
 
 
 theorem _root_.GlobalTheory.T.x0_mem_ratMx_and_exists_rat_leftInverse : ∀ (D : D7) (σ : ℕ) (B : BesLev D σ), (∃ P ∈ ratMx D (σ + 1) B.V.rank, P ⬝ x0 B = 1) ∧ x0 B ∈ ratMx D B.V.rank (σ + 1) := by
-  first | exact @GlobalTheory.Unf.FB.fourierBesselBasePoint_rational_with_rational_leftInverse | exact GlobalTheory.Unf.FB.fourierBesselBasePoint_rational_with_rational_leftInverse | (intros; apply GlobalTheory.Unf.FB.fourierBesselBasePoint_rational_with_rational_leftInverse <;> assumption)
+  first | exact @GlobalTheory.Unf.FB.fourierBesselBasePoint_rational_with_rational_leftInverse
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.FourierBesselBasePointRationalWithRationalLeftInStatement =====
@@ -366,7 +366,7 @@ open GlobalTheory.Unf GlobalTheory.Unf.FB
 
 
 theorem _root_.GlobalTheory.T.snocColumns_moved_by_upperUnitriangular_iff : ∀ (R : Type) [CommRing R] (n σ : ℕ) (M : Matrix (Fin n) (Fin σ) R) (w : Fin n → R) (Y : Matrix (Fin n) (Fin n) R), (∃ U ∈ GlobalTheory.UniIndexPrime.uniSub (σ + 1) R, Y * Matrix.of (fun k => Fin.snoc (α := fun _ => R) (M k) (w k)) = Matrix.of (fun k => Fin.snoc (α := fun _ => R) (M k) (w k)) * (U : Matrix (Fin (σ + 1)) (Fin (σ + 1)) R)) ↔ ∃ u ∈ GlobalTheory.UniIndexPrime.uniSub σ R, ∃ v : Fin σ → R, Y * M = M * (u : Matrix (Fin σ) (Fin σ) R) ∧ Y *ᵥ w = w + M *ᵥ v := by
-  first | exact @GlobalTheory.BlockUni.snoc_uni_iff | exact GlobalTheory.BlockUni.snoc_uni_iff | (intros; apply GlobalTheory.BlockUni.snoc_uni_iff <;> assumption)
+  first | exact @GlobalTheory.BlockUni.snoc_uni_iff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SnocColumnsMovedByUpperUnitriangularIffStatement =====

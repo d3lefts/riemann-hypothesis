@@ -299,7 +299,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.tateTwistCohomology_subsingleton_etale_over_polynomial_algClosed : ∀ (q : ℕ) [NeZero q] (K E : Type) [Field K] [IsAlgClosed K] [CommRing E] [Algebra (Polynomial K) E] [Algebra.Etale (Polynomial K) E], IsUnit (q : K) → ∀ n i : ℤ, 2 ≤ n → Subsingleton (Ht q (sp E) n i) := by
-  first | (exact @GlobalTheory.EtAlgCD.etale_polynomial_cd_le_one) | (exact GlobalTheory.EtAlgCD.etale_polynomial_cd_le_one) | (intros; apply GlobalTheory.EtAlgCD.etale_polynomial_cd_le_one <;> assumption)
+  first | (exact @GlobalTheory.EtAlgCD.etale_polynomial_cd_le_one)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateTwistCohomologySubsingletonEtaleOverPolynomiStatement =====
@@ -358,7 +358,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.subsingleton_etaleCohomology_genericFibre_henselianLine : ∀ (q : ℕ) [NeZero q] (T : Type) [CommRing T] [IsDomain T] [IsLocalRing T], AIC T → IsUnit (q : T) → ∀ (A : Type) [CommRing A] [Algebra (Polynomial T) A] [Algebra T A] [IsScalarTower T (Polynomial T) A], SH A → GlobalTheory.IndefiniteRowSideFullHecke.ProjectiveSpaceOverSpec.IsIndEtale (algebraMap (Polynomial T) A) → ∀ n i : ℤ, 2 ≤ n → Subsingleton (Ht q (sp (TensorProduct T (FractionRing T) A)) n i) := by
-  first | (exact @GlobalTheory.EtC.GenFibreLine.genericFibre_subsingleton) | (exact GlobalTheory.EtC.GenFibreLine.genericFibre_subsingleton) | (intros; apply GlobalTheory.EtC.GenFibreLine.genericFibre_subsingleton  <;> assumption)
+  first | (exact @GlobalTheory.EtC.GenFibreLine.genericFibre_subsingleton)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SubsingletonEtaleCohomologyGenericFibreHenselianStatement =====

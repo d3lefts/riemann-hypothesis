@@ -336,7 +336,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.Dict GlobalTheory.Phase GlobalTheory.IndefiniteRowSideFullHecke.UnitaryAdjointCongruence
 
 theorem _root_.GlobalTheory.T.exists_rational_symplectic_unitary_columns : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : Data E r) (g : ℕ) (bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ) (idx : Fin g ≃ X.Ψ × Fin r) (n : ℕ), IsSympl X bas → Even n → ∀ h : Matrix (Fin n) (Fin n) E, ccT h * h = 1 → ∃ s ∈ Matrix.symplecticGroup (Fin n × Fin g) ℚ, ∀ x ∈ X.dom, tauMat X bas idx x ∈ Siegel (Fin g) ∧ spAct s (blk n (tauMat X bas idx x)) = blk n (tauMat X bas idx x) ∧ (spDen s (blk n (tauMat X bas idx x))).det * ∏ i : Fin g, rowType X (idx i) h.det = 1 ∧ ∀ z : Fin n → Fin g → ℂ, (fun p : Fin n × Fin g => (hMat X bas idx x *ᵥ z p.1) p.2) ᵥ* (spDen s (blk n (tauMat X bas idx x)))⁻¹ = fun p : Fin n × Fin g => (hMat X bas idx x *ᵥ Dict.hAct X idx h z p.1) p.2 := by
-  first | exact @GlobalTheory.ColumnSymplectic.exists_symplectic_columns | exact GlobalTheory.ColumnSymplectic.exists_symplectic_columns | (intros; apply GlobalTheory.ColumnSymplectic.exists_symplectic_columns <;> assumption)
+  first | exact @GlobalTheory.ColumnSymplectic.exists_symplectic_columns
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.ExistsRationalSymplecticUnitaryColumnsStatement =====
@@ -412,7 +412,7 @@ theorem trans_explicit (κ ι : Type) [Fintype κ] [Fintype ι] [DecidableEq ι]
     have hC' : qm σ.toBlocks₂₁ = 0 := by rw [hC]; ext i j; simp [qm]
     unfold spAct
     rw [hden, hinv, hC', hdetD]
-    simp only [Matrix.mul_zero, Matrix.zero_mulVec, dotProduct_zero, Finset.sum_const_zero,
+    simp only [Matrix.zero_mulVec, dotProduct_zero, Finset.sum_const_zero,
       mul_zero, Complex.exp_zero, mul_one]
     let e : Matrix κ ι ℚ ≃ Matrix κ ι ℚ :=
       { toFun := fun x => x * A
@@ -522,7 +522,7 @@ private lemma inverse_block_combination_eq_fst (A B C D : Matrix ι ι ℚ) (a b
     (b * Dᵀ - a * Cᵀ) * B + (a * Aᵀ - b * Bᵀ) * D = a := by
   have e : (b * Dᵀ - a * Cᵀ) * B + (a * Aᵀ - b * Bᵀ) * D =
       b * (Dᵀ * B + -(Bᵀ * D)) - a * (Cᵀ * B + -(Aᵀ * D)) := by
-    simp only [Matrix.mul_add, Matrix.add_mul, Matrix.sub_mul, Matrix.mul_sub, Matrix.mul_neg,
+    simp only [Matrix.mul_add, Matrix.sub_mul, Matrix.mul_neg,
       Matrix.mul_assoc]; abel
   rw [e, h, h']; simp
 
@@ -534,7 +534,7 @@ private lemma inverse_block_combination_eq_snd (A B C D : Matrix ι ι ℚ) (a b
     (b * Dᵀ - a * Cᵀ) * A + (a * Aᵀ - b * Bᵀ) * C = b := by
   have e : (b * Dᵀ - a * Cᵀ) * A + (a * Aᵀ - b * Bᵀ) * C =
       b * (Dᵀ * A + -(Bᵀ * C)) - a * (Cᵀ * A + -(Aᵀ * C)) := by
-    simp only [Matrix.mul_add, Matrix.add_mul, Matrix.sub_mul, Matrix.mul_sub, Matrix.mul_neg,
+    simp only [Matrix.mul_add, Matrix.sub_mul, Matrix.mul_neg,
       Matrix.mul_assoc]; abel
   rw [e, h, h']; simp
 
@@ -546,7 +546,7 @@ private lemma block_combination_mul_transpose_sub_eq_fst (A B C D : Matrix ι ι
     (b * B + a * D) * Aᵀ - (b * A + a * C) * Bᵀ = a := by
   have e : (b * B + a * D) * Aᵀ - (b * A + a * C) * Bᵀ =
       b * (B * Aᵀ + -(A * Bᵀ)) + a * (D * Aᵀ + -(C * Bᵀ)) := by
-    simp only [Matrix.mul_add, Matrix.add_mul, Matrix.sub_mul, Matrix.mul_sub, Matrix.mul_neg,
+    simp only [Matrix.mul_add, Matrix.add_mul, Matrix.mul_neg,
       Matrix.mul_assoc]; abel
   rw [e, h, h']; simp
 
@@ -558,7 +558,7 @@ private lemma block_combination_mul_transpose_sub_eq_snd (A B C D : Matrix ι ι
     (b * A + a * C) * Dᵀ - (b * B + a * D) * Cᵀ = b := by
   have e : (b * A + a * C) * Dᵀ - (b * B + a * D) * Cᵀ =
       -(b * (B * Cᵀ + -(A * Dᵀ))) - a * (D * Cᵀ + -(C * Dᵀ)) := by
-    simp only [Matrix.mul_add, Matrix.add_mul, Matrix.sub_mul, Matrix.mul_sub, Matrix.mul_neg,
+    simp only [Matrix.mul_add, Matrix.add_mul, Matrix.mul_neg,
       Matrix.mul_assoc]; abel
   rw [e, h, h']; simp
 
@@ -669,7 +669,7 @@ private lemma isUnit_det_spDen_of_mem_siegel {σ : Matrix (ι ⊕ ι) (ι ⊕ ι
     simp only [hτc, Matrix.transpose_apply, Matrix.map_apply, h]
   have hs : ∀ (M : Matrix ι ι ℂ) (w : ι → ℂ),
       M.map (starRingEnd ℂ) *ᵥ star w = star (M *ᵥ w) := fun M w ↦ by
-    ext i; simp [mulVec, dotProduct, map_sum, Complex.star_def]
+    ext i; simp [mulVec, dotProduct]
   have e : _root_.GlobalTheory.SW.qm σ.toBlocks₂₁ * τc + _root_.GlobalTheory.SW.qm σ.toBlocks₂₂ =
       (_root_.GlobalTheory.SW.qm σ.toBlocks₂₁ * τ + _root_.GlobalTheory.SW.qm σ.toBlocks₂₂).map
         (starRingEnd ℂ) := by
@@ -841,7 +841,6 @@ private lemma transS_heisS_rowAct {σ : Matrix (ι ⊕ ι) (ι ⊕ ι) ℚ}
   rw [hJ, hτ'] at hT' ⊢
   rw [hJ] at hu
   simp only [← hC] at hT' ⊢
-  beta_reduce at hT'
   have hJ1 : J⁻¹ * J = 1 := Matrix.nonsing_inv_mul J hu
   have hJ2 : J * J⁻¹ = 1 := Matrix.mul_nonsing_inv J hu
   have hNJ : Nᵀ * J = Jᵀ * N := by
@@ -909,7 +908,6 @@ private lemma transS_heisS_rowAct {σ : Matrix (ι ⊕ ι) (ι ⊕ ι) ℚ}
       rw [mulVec_add, hJdef, add_mulVec, ← mulVec_mulVec, ← hpq]; abel
     rw [← mulVec_mulVec, hx, mulVec_sub, mulVec_mulVec, hJ1, one_mulVec]
   rw [thS_heisenberg_translate _ _ _ hτ'sym, thS_heisenberg_translate _ _ _ hτs]
-  beta_reduce
   have harg : (fun k ↦ ζ k ᵥ* J⁻¹ + _root_.GlobalTheory.SW.qv (a' k)
       + (N * J⁻¹) *ᵥ _root_.GlobalTheory.SW.qv (b' k)) =
       fun k ↦ (ζ k + _root_.GlobalTheory.SW.qv ((b' * σ.toBlocks₁₂ + a' * σ.toBlocks₂₂) k)
@@ -1414,7 +1412,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.Dict GlobalTheory.Phase GlobalTheory.IndefiniteRowSideFullHecke.UnitaryAdjointCongruence
 
 theorem _root_.GlobalTheory.T.multiplier_sq_mul_det_unitary_column_change : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : Data E r) (g : ℕ) (bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ) (idx : Fin g ≃ X.Ψ × Fin r) (n : ℕ), IsSympl X bas → Even n → ∀ w : E, IsIntegral ℤ w → w + cc w = 1 → ∀ h : Matrix (Fin n) (Fin n) E, ccT h * h = 1 → ∀ Λ ∈ Vset E n 1, ∀ Λ' ∈ Vset E n 1, ∀ L : Lt E r, SelfD X L → ∀ v : TF n g, IsVac X bas w (tens (stdL E n) L) v → ∀ x ∈ X.dom, ∀ t : ℂ, ‖t‖ = 1 → (∀ z : Fin n → Fin g → ℂ, thA X bas idx (unitv (projA X bas w (tens Λ' L) v)) x (Dict.hAct X idx h z) = t * thA X bas idx (unitv (projA X bas w (tens Λ L) v)) x z) → IsMu (t ^ 2 * ∏ i : Fin g, rowType X (idx i) h.det) := by
-  first | exact @GlobalTheory.Phase.Mult.isMu_multiplier_sq_mul_det | exact GlobalTheory.Phase.Mult.isMu_multiplier_sq_mul_det | (intros; apply GlobalTheory.Phase.Mult.isMu_multiplier_sq_mul_det <;> assumption)
+  first | exact @GlobalTheory.Phase.Mult.isMu_multiplier_sq_mul_det
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.MultiplierSqMulDetUnitaryColumnChangeStatement =====

@@ -249,8 +249,7 @@ lemma rowOp_eq {K : Type u} [Field K] {d N0 N1 : ℕ} (TT : Finset (ZMod d))
     · simp
     · intro k _ hk
       simp [hk]
-    · intro hi
-      exact absurd (Finset.mem_univ i) hi
+    · simp
   · refine Finset.sum_congr rfl fun k _ => ?_
     split_ifs <;> simp
 
@@ -267,13 +266,11 @@ lemma opA_top {K : Type u} [Field K] {d N0 : ℕ} (TT : Finset (ZMod d))
   by_cases hi : i.val = 0
   · rw [if_pos ⟨hs, hi⟩] at h
     by_cases hk : k = i
-    · rw [hk]
-    · rw [if_neg hk] at h
-      exact absurd rfl h
+    · simp [hi, hk]
+    · simp [hk] at h
   · rw [if_neg (fun hh => hi hh.2)] at h
     by_cases hk : k.val = 0
-    · rw [if_pos ⟨hs, hk⟩] at h
-      exact absurd rfl h
+    · simp [hs, hk] at h
     · exact ⟨fun hh => absurd hh hi, fun hh => absurd hh hk⟩
 
 lemma rowOp_mem_opInt {K : Type u} [NormedField K] [IsUltrametricDist K] {d N0 N1 : ℕ}
@@ -285,8 +282,7 @@ lemma rowOp_mem_opInt {K : Type u} [NormedField K] [IsUltrametricDist K] {d N0 N
   refine Subring.sum_mem _ fun k _ => ?_
   intro κ
   rw [coeff_C_mul, coeff_X, norm_mul]
-  refine mul_le_one₀ (opA_norm_le TT T hT s i k) (norm_nonneg _) ?_
-  split_ifs <;> simp
+  exact mul_le_one₀ (opA_norm_le TT T hT s i k) (norm_nonneg _) (by split_ifs <;> simp)
 
 lemma minorProd_mem_opInt {K : Type u} [NormedField K] [IsUltrametricDist K] {σ : Type}
     {N0 N1 Cn : ℕ} (row : Fin N0 → Fin N1 → MvPolynomial σ K)
@@ -297,9 +293,7 @@ lemma minorProd_mem_opInt {K : Type u} [NormedField K] [IsUltrametricDist K] {σ
   rw [Matrix.det_apply]
   refine Subring.sum_mem _ fun π _ => ?_
   rw [Units.smul_def]
-  refine zsmul_mem ?_ _
-  refine Subring.prod_mem _ fun r _ => ?_
-  exact hrow _ _
+  exact zsmul_mem (Subring.prod_mem _ fun r _ => hrow _ _) _
 
 def rowDeg {d N0 N1 : ℕ} (s : ZMod d) (k : Fin N0) (κ : ZV d N0 N1 →₀ ℕ) : ℕ :=
   ∑ b : Fin N1, κ (s, k, b)
@@ -323,14 +317,9 @@ lemma rowDeg_shape {d N0 N1 p : ℕ} (s s' : ZMod d) (k : Fin N0) (τ : Fin p �
   · subst hs
     rw [if_pos rfl, Finset.card_filter]
     refine Finset.sum_congr rfl fun i _ => ?_
-    by_cases h : τ i = k
-    · simp [h]
-    · simp [h]
+    by_cases h : τ i = k <;> simp [h]
   · rw [if_neg hs]
-    refine Finset.sum_eq_zero fun i _ => Finset.sum_eq_zero fun b _ => ?_
-    rw [if_neg]
-    intro hh
-    exact hs hh.1.symm
+    simp [Ne.symm hs]
 
 lemma op_minor_mem {K : Type u} [Field K] {d N0 N1 p : ℕ} (s : ZMod d) (A : Fin p → Fin N0 → K)
     (I : Fin p → Fin N1) (mono : ZV d N0 N1 →₀ ℕ)
@@ -340,9 +329,8 @@ lemma op_minor_mem {K : Type u} [Field K] {d N0 N1 p : ℕ} (s : ZMod d) (A : Fi
       (∃ π : Equiv.Perm (Fin p), ∀ i, A (π i) (τ i) ≠ 0) ∧
       mono = ∑ i, Finsupp.single ((s, τ i, I i) : ZV d N0 N1) 1 := by
   classical
-  have hinj : Function.Injective (fun y : Fin N0 × Fin N1 => ((s, y.1, y.2) : ZV d N0 N1)) := by
-    intro a b h
-    simpa [Prod.ext_iff] using h
+  have hinj : Function.Injective (fun y : Fin N0 × Fin N1 => ((s, y.1, y.2) : ZV d N0 N1)) :=
+    fun _ _ h => by simpa [Prod.ext_iff] using h
   have hdet : (Matrix.of fun (r r' : Fin p) =>
       (∑ j, C (A r j) * X (s, j, I r') : MvPolynomial (ZV d N0 N1) K)).det =
       rename (fun y : Fin N0 × Fin N1 => ((s, y.1, y.2) : ZV d N0 N1))
@@ -377,12 +365,7 @@ lemma op_minor_shape {K : Type u} [Field K] {d N0 N1 p : ℕ} (TT : Finset (ZMod
   intro hs hp1 k0 hk0
   have hiff : ∀ i, (π i).val = 0 ↔ τ i = k0 := by
     intro i
-    rw [opA_top TT T s hs _ _ (hπ i)]
-    constructor
-    · intro h
-      exact Fin.ext (h.trans hk0.symm)
-    · intro h
-      rw [h, hk0]
+    rw [opA_top TT T s hs _ _ (hπ i), Fin.ext_iff, hk0]
   set i0 : Fin p := π.symm ⟨0, hp1⟩ with hi0
   have hnone : (Finset.univ.filter (fun i => τ i = k0)).card = 1 := by
     rw [Finset.card_eq_one]
@@ -502,9 +485,7 @@ lemma sum_filter_rows {d N0 N1 : ℕ} [NeZero d] (Pr : ZMod d × Fin N0 → Prop
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun k _ => ?_
-  by_cases h : Pr (s, k)
-  · simp [h, rowDeg]
-  · simp [h]
+  by_cases h : Pr (s, k) <;> simp [h, rowDeg]
 
 theorem thmAOp : ThmAOp.{u} := by
   intro K _ _ _ l d N0 N1 _ hl hl3 hd hde hnl h0 K0 hK0 ζ hζ be hbe x hx g hg0 hg U hU ε hε

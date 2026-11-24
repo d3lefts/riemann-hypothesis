@@ -108,7 +108,7 @@ open GlobalTheory.SquareComm GlobalTheory.SquareAgree
 theorem _root_.GlobalTheory.T.exists_addEquiv_symplecticCoords_orientedModel : ∀ (D : D7) (S X : HSp D) {d : ℕ} (e : Fin X.rank ≃ Fin d) (c : D.host.E), c ≠ 0 →
     ∃ f : Matrix (Fin S.rank) (Fin d) (AE D) ≃+ WO S X,
       ∀ u, f u = (HMul.hMul (uᵀ.submatrix e id) (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM (c • S.gram)) : Matrix (Fin X.rank) (Fin S.rank) (AE D)) := by
-  first | exact @GlobalTheory.Twist.exists_addEquiv_symplecticCoords_orientedModel.coords | exact GlobalTheory.Twist.exists_addEquiv_symplecticCoords_orientedModel.coords | (intros; apply GlobalTheory.Twist.exists_addEquiv_symplecticCoords_orientedModel.coords <;> assumption)
+  first | exact @GlobalTheory.Twist.exists_addEquiv_symplecticCoords_orientedModel.coords
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsAddEquivSymplecticCoordsOrientedModelStatement =====
@@ -141,10 +141,10 @@ theorem hasSig_map_conj {n r s : ℕ} {M : Matrix (Fin n) (Fin n) ℂ} (h : Glob
   simp only [Matrix.map_mul] at this
   have e1 : (A.map star)ᵀ * M.map (starRingEnd ℂ) * (A.map star).map star =
       (Aᵀ).map (starRingEnd ℂ) * M.map (starRingEnd ℂ) * (A.map star).map (starRingEnd ℂ) := by
-    congr 2 <;> ext i j <;> simp
+    congr 2 <;> ext i j
   have e2 : (Matrix.fromBlocks 1 0 0 (-1) : Matrix (Fin r ⊕ Fin s) (Fin r ⊕ Fin s) ℂ).map (starRingEnd ℂ) =
       Matrix.fromBlocks 1 0 0 (-1) := by
-    ext (i | i) (j | j) <;> simp [Matrix.fromBlocks, Matrix.one_apply] <;> split_ifs <;> simp
+    ext (i | i) (j | j) <;> simp [Matrix.fromBlocks, Matrix.one_apply] <;> split_ifs
   rw [e1, this, e2]
 
 theorem hasSig_neg {n r s : ℕ} {M : Matrix (Fin n) (Fin n) ℂ} (h : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.HasSig M r s) :
@@ -571,7 +571,7 @@ theorem _root_.GlobalTheory.T.exists_placewise_triple_spaces_of_seesaw : ∀ (D 
       Ws.IsSkew D.sp.cm.sig Bs (W.rank + W₁.rank - (p + q)) (p + q) ∧
       ∀ w, ∃ τ, (∀ x, (Bs.emb w).1 x = starRingEnd ℂ (tauE D τ x)) ∧ V.θ w = A.cart τ ∧ V'.θ w = -A₁.cart τ ∧
         Ws.θ w = (reindex e e (B.cart τ)).map (starRingEnd ℂ) := by
-  first | exact @GlobalTheory.PlaceSpaces.spaces_of_triple | exact GlobalTheory.PlaceSpaces.spaces_of_triple | (intros; apply GlobalTheory.PlaceSpaces.spaces_of_triple <;> assumption)
+  first | exact @GlobalTheory.PlaceSpaces.spaces_of_triple
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsPlacewiseTripleSpacesOfSeesawStatement =====
@@ -588,7 +588,7 @@ open scoped TensorProduct ComplexConjugate
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.heckeChar_unramified_above_place_of_trivial_units : ∀ (D : D7) (χ : (AE D)ˣ →* Circle) (v : HeightOneSpectrum (𝓞 D.host.F)) (ε : AF D.host.F), IsPlaceIdem D v ε → GlobalTheory.WeilParts.UnramAt ε χ → ∀ w : HeightOneSpectrum (𝓞 D.host.E), w.under (𝓞 D.host.F) = v → GlobalTheory.LFun.UnrAt χ w := by
-  first | exact @GlobalTheory.UnrOverPlace.unrAt_of_unramAt | exact GlobalTheory.UnrOverPlace.unrAt_of_unramAt | (intros; apply GlobalTheory.UnrOverPlace.unrAt_of_unramAt <;> assumption)
+  first | exact @GlobalTheory.UnrOverPlace.unrAt_of_unramAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.HeckeCharUnramifiedAbovePlaceOfTrivialUnitsStatement =====
@@ -771,7 +771,7 @@ theorem _root_.GlobalTheory.T.exists_thetaTriple_baseData_characters : ∀ (D : 
       Bs.ψ = ψ ∧ Xc.α = α ∧ Xc.β = β ∧ Bs.IsGood D.sp.cm.sig ∧ Xc.IsGood Bs W.rank W₁.rank ∧
       (∀ w, ∃ τ, ∀ x, (Bs.emb w).1 x = starRingEnd ℂ (tauE D τ x)) ∧
       ∀ w, ((W.rank + W₁.rank : ℕ) : ℤ) < Bs.mα w - Bs.mβ w := by
-  first | exact @GlobalTheory.TripleBaseChars.exists_base_chars | exact GlobalTheory.TripleBaseChars.exists_base_chars | (intros; apply GlobalTheory.TripleBaseChars.exists_base_chars <;> assumption)
+  first | exact @GlobalTheory.TripleBaseChars.exists_base_chars
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsThetaTripleBaseDataCharactersStatement =====
@@ -901,7 +901,7 @@ theorem _root_.GlobalTheory.T.exists_placewise_seesaw_triple_over_hermitian : �
       (cA : Matrix (Fin W.rank) (Fin (W.rank + W₁.rank)) (AE D) ≃+ WO W X)
       (cB : Matrix (Fin W₁.rank) (Fin (W.rank + W₁.rank)) (AE D) ≃+ WO W₁ X),
       IsOver ψ θ A A₁ B α β ν 𝓕 ν₁ 𝓕₁ ωA ωB e Bs Γ Xc om om' cA cB ∧ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsTriple Bs Γ Xc om om' := by
-  first | exact @GlobalTheory.SquareAgree.exists_isOver | exact GlobalTheory.SquareAgree.exists_isOver | (intros; apply GlobalTheory.SquareAgree.exists_isOver <;> assumption)
+  first | exact @GlobalTheory.SquareAgree.exists_isOver
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsPlacewiseSeesawTripleOverHermitianStatement =====

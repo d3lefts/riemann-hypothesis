@@ -172,7 +172,7 @@ theorem _root_.GlobalTheory.T.archimedean_chart_gaussian_invariant : ∀ (F E : 
         (∃ U : AddSubgroup (WOF F E nS nT), IsOpen (U : Set (WOF F E nS nT)) ∧
           ∀ u ∈ U, u.map (infPartF F E) = 0 → heisOF σ JS JT ξ₀ B.ψ u f.1 = f.1) →
         IsThetaFunOF σ JS JT ξ₀ B.ψ f.1 := by
-  first | exact @_root_.GlobalTheory.ThetaOfSmF.theta_of_smF_k | exact _root_.GlobalTheory.ThetaOfSmF.theta_of_smF_k | (intros; apply _root_.GlobalTheory.ThetaOfSmF.theta_of_smF_k <;> assumption)
+  first | exact @_root_.GlobalTheory.ThetaOfSmF.theta_of_smF_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -303,7 +303,7 @@ theorem _root_.GlobalTheory.T.archimedean_chart_gaussian_norm : ∀ (F E : Type)
       IsInfFamF (fun w : InfinitePlace F => (B.emb w).1) θ → ∀ ι : (InfinitePlace F → ℂ) →+ AEF F E, IsChartF θ ι →
       ∀ (hψ : IsCharAF F B.ψ) (f : BBF σ JS JT ξ₀ B.ψ), IsThetaFunOF σ JS JT ξ₀ B.ψ f.1 →
         Sm (rhoVF σ JS JT ξ₀ B.ψ hψ ι) f := by
-  first | exact @_root_.GlobalTheory.ThetaSmoothF.sm_of_thetaF_k | exact _root_.GlobalTheory.ThetaSmoothF.sm_of_thetaF_k | (intros; apply _root_.GlobalTheory.ThetaSmoothF.sm_of_thetaF_k <;> assumption)
+  first | exact @_root_.GlobalTheory.ThetaSmoothF.sm_of_thetaF_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -366,7 +366,7 @@ theorem _root_.GlobalTheory.T.continuous_moment_map : ∀ (F E : Type) [Field F]
     (B : Base F E), _root_.UpperTheory.TP.W.GoodK σ B → ∀ (nS nT : ℕ) (JS : Matrix (Fin nS) (Fin nS) E) (JT : Matrix (Fin nT) (Fin nT) E)
       (θ : InfinitePlace F → (Ainf F ⊗[F] E →+* ℂ)),
       IsInfFamF (fun w : InfinitePlace F => (B.emb w).1) θ → Continuous (mMF σ JS JT θ) := by
-  first | exact @_root_.GlobalTheory.RealWeilF.MCont.continuous_mMF_k | exact _root_.GlobalTheory.RealWeilF.MCont.continuous_mMF_k | (intros; apply _root_.GlobalTheory.RealWeilF.MCont.continuous_mMF_k <;> assumption)
+  first | exact @_root_.GlobalTheory.RealWeilF.MCont.continuous_mMF_k
 end
 end -- clump:auto
 end -- clump:auto

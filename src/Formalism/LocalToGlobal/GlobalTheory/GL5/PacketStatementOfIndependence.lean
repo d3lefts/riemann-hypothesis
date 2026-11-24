@@ -324,7 +324,7 @@ end Lin
 theorem gmap_one {E V : Type} [Field E] [NumberField E] [AddCommGroup V] [Module E V] [Module (𝓞 E) V]
     [IsScalarTower (𝓞 E) E V] (X : Submodule (𝓞 E) V) : gmap (1 : V ≃ₗ[E] V) X = X := by
   ext v
-  simp [gmap, Submodule.mem_map]
+  simp [gmap]
 
 theorem lattices_close_locally : LatClose := by
   intro F E _ _ _ _ _ σ V _ _ _ _ _ M J b L0 hσσ hH hdet hL0 g hg
@@ -459,11 +459,6 @@ theorem local_integral_of_substitution : LocInt := by
       intro x
       first
       | exact HeightOneSpectrum.valuedAdicCompletion_eq_valuation' t x
-      | exact HeightOneSpectrum.valuedAdicCompletion_eq_valuation' x
-      | exact HeightOneSpectrum.valuedAdicCompletion_eq_valuation t x
-      | exact HeightOneSpectrum.valuedAdicCompletion_eq_valuation x
-      | simp [HeightOneSpectrum.valuedAdicCompletion_eq_valuation']
-      | rfl
     have hv : t.valuation F (z / (c : F)) ≤ 1 := by
       rw [HeightOneSpectrum.mem_adicCompletionIntegers] at hu'
       rw [← e]
@@ -603,7 +598,6 @@ theorem local_switching_lattice : LocSw := by
     intro c
     first
     | rfl
-    | rw [← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
   have hSw : Sw F E t ≤ hcompl (K := E) p := by
     intro s hs
     obtain ⟨c, hc, rfl⟩ := Submonoid.mem_map.1 hs
@@ -730,12 +724,6 @@ theorem intInt (t : HeightOneSpectrum (𝓞 F)) {z : F} (hz : IsIntegral ℤ z) 
   obtain ⟨r, rfl⟩ : ∃ r : 𝓞 F, algebraMap (𝓞 F) F r = z := ⟨⟨z, hz⟩, rfl⟩
   first
   | exact HeightOneSpectrum.coe_mem_adicCompletionIntegers t r
-  | (rw [HeightOneSpectrum.mem_adicCompletionIntegers, HeightOneSpectrum.valuedAdicCompletion_eq_valuation',
-      HeightOneSpectrum.valuation_of_algebraMap]
-     exact HeightOneSpectrum.intValuation_le_one t r)
-  | (rw [HeightOneSpectrum.mem_adicCompletionIntegers]
-     simp [HeightOneSpectrum.valuedAdicCompletion_eq_valuation', HeightOneSpectrum.valuation_of_algebraMap,
-       HeightOneSpectrum.intValuation_le_one])
 
 theorem tcoord_bound {ι : Type} (B : Module.Basis ι F E) (m : ℤ)
     (hm : ∀ x ∈ PI.UnitaryApproxDefs.intOE E, ∀ k, IsIntegral ℤ ((m : F) * B.coord k x)) (t : HeightOneSpectrum (𝓞 F))
@@ -784,7 +772,6 @@ private theorem exists_int_mul_isIntegral' {E : Type} [Field E] [NumberField E] 
   have hw : algebraMap (𝓞 E) E (k * n) = (m : E) * e := by
     rw [← hnd, hmE, map_mul]
     field_simp
-    try ring
   refine ⟨m, hm0, ?_⟩
   rw [← hw]
   exact NumberField.RingOfIntegers.isIntegral_coe (k * n)
@@ -864,7 +851,6 @@ theorem tensLocX_of (hI : LocInt) : TensLoc := by
     intro x
     first
     | rfl
-    | rw [← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
   have key : ∀ k, ((D : 𝓞 F) : F) * ((m : F) * B.coord k e) = (c : F) * ((a k * q k : 𝓞 F) : F) := by
     intro k
     have h1 : ((D : 𝓞 F) : F) = ((d k * q k : 𝓞 F) : F) := congrArg (fun x : 𝓞 F => (x : F)) (hq k)
@@ -888,7 +874,7 @@ theorem tensLocX_of (hI : LocInt) : TensLoc := by
   rw [Algebra.smul_def, ← Module.Basis.coord_apply]
   have hk2 := congrArg (algebraMap F E) (key k)
   push_cast at hk2 ⊢
-  simp only [map_mul, map_intCast] at hk2 ⊢
+  simp only [map_intCast] at hk2 ⊢
   linear_combination ((n : E) * B k) * hk2
 
 end PI.UnitaryGroupMassFormula.UJClassMass

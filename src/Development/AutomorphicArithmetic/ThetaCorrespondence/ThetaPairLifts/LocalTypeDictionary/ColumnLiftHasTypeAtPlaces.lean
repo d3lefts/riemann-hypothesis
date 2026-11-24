@@ -154,7 +154,7 @@ open Formalism.IndefR.Mult Matrix GlobalTheory.Grid
 theorem _root_.GlobalTheory.T.discreteSeriesModel_adjoint_eq_inv_finiteDimensional : ∀ {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (τ : D.what₂.Tau)
     [FiniteDimensional ℂ (M.H τ)] {g : Matrix (Fin V.rank) (Fin V.rank) ℂ} (hg : g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ)), g⁻¹ ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ) ∧
       LinearMap.adjoint (M.rep τ g : M.H τ →ₗ[ℂ] M.H τ) = (M.rep τ g⁻¹ : M.H τ →ₗ[ℂ] M.H τ) := by
-  first | exact @GlobalTheory.RepAdj.rep_adjoint_eq_inv | exact GlobalTheory.RepAdj.rep_adjoint_eq_inv | (intros; apply GlobalTheory.RepAdj.rep_adjoint_eq_inv <;> assumption)
+  first | exact @GlobalTheory.RepAdj.rep_adjoint_eq_inv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DiscreteSeriesModelAdjointEqInvFiniteDimensionalStatement =====
@@ -186,7 +186,7 @@ lemma eq_zero_of_trace_adjoint_comp_self (B : H →ₗ[ℂ] H)
       = ((‖B (b i)‖ ^ 2 : ℝ) : ℂ) := by
     intro i
     rw [LinearMap.comp_apply, LinearMap.adjoint_inner_right, inner_self_eq_norm_sq_to_K]
-    push_cast; first | rfl | simp | norm_cast
+    push_cast; first | rfl
   simp_rw [h'] at h
   have h2 : (∑ i, ‖B (b i)‖ ^ 2 : ℝ) = 0 := by exact_mod_cast h
   have h3 := (Finset.sum_eq_zero_iff_of_nonneg (fun i _ => by positivity)).1 h2
@@ -371,7 +371,7 @@ theorem expand_pi_of_expand_each {ι : Type} [Fintype ι] [DecidableEq ι] {X : 
           by_cases hia : i = a
           · subst hia
             simp [H]
-          · simp [H, Function.update_of_ne hia, Finset.mem_insert, hia]
+          · simp [H, Finset.mem_insert, hia]
         have e2 : H s J g a = g a := by simp [H, ha]
         rw [e1, e2, Finset.prod_insert ha, Function.update_self]
         have e3 : ∏ i ∈ s, c i (Function.update J a j i) (g i) = ∏ i ∈ s, c i (J i) (g i) := by
@@ -384,15 +384,15 @@ theorem expand_pi_of_expand_each {ι : Type} [Fintype ι] [DecidableEq ι] {X : 
       refine Finset.sum_nbij' (fun p => Function.update p.1 a p.2)
         (fun J' => (Function.update J' a (j0 a), J' a)) ?_ ?_ ?_ ?_ ?_
       · rintro ⟨J, j⟩ hp
-        simp only [Finset.coe_product, Set.mem_prod, Finset.mem_coe, Finset.mem_product, hmem] at hp
-        simp only [Finset.mem_coe, hmem]
+        simp only [Finset.mem_product, hmem] at hp
+        simp only [hmem]
         intro i hi
         rw [Finset.mem_insert, not_or] at hi
         rw [Function.update_of_ne hi.1]
         exact hp.1 i hi.2
       · intro J' hJ'
-        simp only [Finset.mem_coe, hmem] at hJ'
-        simp only [Finset.coe_product, Set.mem_prod, Finset.mem_coe, Finset.mem_product,
+        simp only [hmem] at hJ'
+        simp only [Finset.mem_product,
           Finset.mem_univ, and_true, hmem]
         intro i hi
         by_cases hia : i = a
@@ -401,7 +401,7 @@ theorem expand_pi_of_expand_each {ι : Type} [Fintype ι] [DecidableEq ι] {X : 
         · rw [Function.update_of_ne hia]
           exact hJ' i (by simp [hia, hi])
       · rintro ⟨J, j⟩ hp
-        simp only [Finset.coe_product, Set.mem_prod, Finset.mem_coe, Finset.mem_product, hmem] at hp
+        simp only [Finset.mem_product, hmem] at hp
         simp only [Function.update_idem, Function.update_self, Prod.mk.injEq, and_true]
         funext i
         by_cases hia : i = a
@@ -663,7 +663,7 @@ theorem _root_.GlobalTheory.T.modelType_form_expands_along_dualFrame : ∀ (hU :
     {φ : GA D V → ℂ} (hφ : IsTypeAt θ V τ (S τ) φ) (x : GA D V) {g : Matrix (Fin V.rank) (Fin V.rank) ℂ}
     (hg : g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ)), φ (x * atTau θ V τ g) = ∑ j, φ (x * atTau θ V τ (k j)) *
       LinearMap.trace ℂ (M.H τ) ((M.rep τ g : M.H τ →ₗ[ℂ] M.H τ) ∘ₗ B j) := by
-  first | exact @GlobalTheory.TypeExpand.typeAt_expand | exact GlobalTheory.TypeExpand.typeAt_expand | (intros; apply GlobalTheory.TypeExpand.typeAt_expand <;> assumption)
+  first | exact @GlobalTheory.TypeExpand.typeAt_expand
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ModelTypeFormExpandsAlongDualFrameStatement =====
@@ -897,7 +897,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 theorem _root_.GlobalTheory.T.definite_unitary_cuspidal_decomposition : _root_.GlobalTheory.FunPr.ThetaLocalInputs → ∀ {D : D7} (θ : InfFam D) (N : GlobalTheory.Grid.Node D), IsInfFam θ → N.V.SigOK → N.V.IsDefinite →
     ∀ φ, GlobalTheory.IndefiniteRowSideFullHecke.CuspAlongSmoothLifts.IsCuspOfType θ N φ →
       ∃ (n : ℕ) (F : Fin n → N.Cusp θ) (w : Fin n → SmT N.M), φ = ∑ i, (F i).1 (w i) := by
-  first | exact @_root_.GlobalTheory.DefiniteDecomp.cusp_forms_decompose_definite_unitary | exact _root_.GlobalTheory.DefiniteDecomp.cusp_forms_decompose_definite_unitary | (intros; apply _root_.GlobalTheory.DefiniteDecomp.cusp_forms_decompose_definite_unitary <;> assumption)
+  first | exact @_root_.GlobalTheory.DefiniteDecomp.cusp_forms_decompose_definite_unitary
 end
 end -- clump:auto
 end -- clump:auto
@@ -932,7 +932,7 @@ open IsDedekindDomain NumberField MeasureTheory GlobalTheory.ChiGrid GlobalTheor
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField borelKw borelSpaceKw
 
 theorem _root_.GlobalTheory.T.columnLift_hasTypeAtPlaces : GlobalTheory.IndefiniteRowSideFullHecke.CuspAlongSmoothLifts.LiftsCuspidal → _root_.GlobalTheory.FunPr.ThetaLocalInputs → ∀ (D : D7), GlobalTheory.IndefiniteRowSideFullHecke.CuspAlongSmoothLifts.Sizes D → ∀ (G₀ : Type) [Group G₀] [Fintype G₀] (Pl0 T : Type) (A : FamIn D.what₂.LL G₀ Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (G : GlobalTheory.Grid.GridPre R), GlobalTheory.IndefiniteRowSideFullHecke.CuspAlongSmoothLifts.RowBase R → G.Is → ∀ t j, j < D.R.m → ∀ Φ, IsThetaFunO R.ψ (G.Xp j).V (G.Xp (j + 1)).V Φ → ∀ φ, GlobalTheory.IndefiniteRowSideFullHecke.CuspAlongSmoothLifts.IsCuspOfType R.θ (G.Xp j) φ → (∀ h, IntegrableOn (fun g => thetaKO (G.col t j).ω g h Φ * φ g) (G.measX j).fd (G.measX j).ν) → ∀ τ, IsTypeAt R.θ (G.Xp (j + 1)).V τ ((G.Xp (j + 1)).S τ) (fun h => ∫ g in (G.measX j).fd, thetaKO (G.col t j).ω g h Φ * φ g ∂(G.measX j).ν) := by
-  first | exact @_root_.GlobalTheory.ColTypeLift.columnLift_isTypeAt_place | exact _root_.GlobalTheory.ColTypeLift.columnLift_isTypeAt_place | (intros; apply _root_.GlobalTheory.ColTypeLift.columnLift_isTypeAt_place <;> assumption)
+  first | exact @_root_.GlobalTheory.ColTypeLift.columnLift_isTypeAt_place
 end
 end -- clump:auto
 end -- clump:auto

@@ -460,7 +460,7 @@ theorem hasDerivAt_eval {σ : Type*} [Fintype σ] (x : ℂ → σ → ℂ) (x' :
       intro k
       by_cases h : k = i
       · subst h
-        simp [MvPolynomial.pderiv_X_self]
+        simp
       · rw [MvPolynomial.pderiv_X_of_ne (Ne.symm h), map_zero, if_neg h]
     have hf : (fun w => MvPolynomial.eval (x w) (p * MvPolynomial.X i)) =
         fun w => MvPolynomial.eval (x w) p * x w i := by
@@ -476,7 +476,7 @@ theorem hasDerivAt_eval {σ : Type*} [Fintype σ] (x : ℂ → σ → ℂ) (x' :
       rw [MvPolynomial.pderiv_mul, map_add (f := _), map_mul, map_mul, MvPolynomial.eval_X, hX k]
       split_ifs <;> ring
     rw [Finset.sum_congr rfl (fun k _ => hs k), Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul]
-    simp only [Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true]
     ring
 
 theorem pt_mul (X : Fin n → ℝ) (v : Fin m → Fin n → ℂ) (z : ℂ) (a : Fin m) (j : Fin n) :
@@ -514,7 +514,7 @@ theorem eval_dil (X : Fin n → ℝ) (v : Fin m → Fin n → ℂ) (z : ℂ) (P 
           2 * ((2 * Real.pi : ℝ) : ℂ) * (GlobalTheory.CompanionTheory.DilFam.pt X v z (a, j, false) *
             GlobalTheory.CompanionTheory.DilFam.pt X v z (a, j, true) * MvPolynomial.eval (GlobalTheory.CompanionTheory.DilFam.pt X v z) P))) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [PositivityTheory.Rg.Sw.dil, Finset.sum_apply, LinearMap.sum_apply,
+      simp only [PositivityTheory.Rg.Sw.dil, LinearMap.sum_apply,
       LinearMap.smul_apply, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.comp_apply,
       LinearMap.mulLeft_apply, LinearMap.id_apply, Derivation.coeFn_coe, map_sum, map_add, map_sub,
       MvPolynomial.smul_eval, map_mul, MvPolynomial.eval_X]
@@ -637,7 +637,7 @@ lemma integrable_gauss_complex :
   have hb : 0 < ((Real.pi : ℂ)).re := by simpa using Real.pi_pos
   have h := (GaussianFourier.integrable_cexp_neg_mul_sq_norm_add (V := ℂ) hb 0 0).norm
   refine h.congr (Filter.Eventually.of_forall fun w => ?_)
-  simp only [inner_zero_left, Complex.ofReal_zero, mul_zero, zero_mul, add_zero, Complex.norm_exp]
+  simp only [inner_zero_left, Complex.ofReal_zero, mul_zero, add_zero, Complex.norm_exp]
   rw [← Complex.ofReal_pow, ← Complex.ofReal_neg, ← Complex.ofReal_mul, Complex.ofReal_re]
 
 lemma integrable_gauss (m n : ℕ) :
@@ -666,9 +666,6 @@ lemma continuous_dilated (m n : ℕ) (X : Fin n → ℝ) (z : ℂ) :
   unfold dilated
   first
   | fun_prop
-  | exact continuous_const.mul (Continuous.cexp (continuous_const.mul
-      (continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun j _ => continuous_const.mul
-        (Complex.continuous_ofReal.comp ((continuous_norm.comp ((continuous_apply j).comp (continuous_apply a))).pow 2)))))
 
 lemma eventually_small (m n : ℕ) (X : Fin n → ℝ) :
     ∀ᶠ z : ℂ in 𝓝 0, (∀ j, 1 / 2 ≤ (Complex.exp (2 * z * X j)).re) ∧
@@ -774,8 +771,7 @@ theorem block_relations (A B D : Matrix (Fin n) (Fin n) ℂ)
   unfold InG JJ at h
   rw [fromBlocks_conjTranspose, fromBlocks_multiply, fromBlocks_multiply] at h
   obtain ⟨-, h12, -, h22⟩ := fromBlocks_inj.mp h
-  simp only [conjTranspose_zero, Matrix.mul_zero, Matrix.zero_mul, Matrix.mul_one, Matrix.one_mul,
-    Matrix.mul_neg, Matrix.neg_mul, add_zero, zero_add, neg_zero] at h12 h22
+  simp only [conjTranspose_zero, Matrix.mul_zero, Matrix.zero_mul, Matrix.mul_one, Matrix.mul_neg, Matrix.neg_mul, add_zero, zero_add, neg_zero] at h12 h22
   exact ⟨h12, (neg_add_eq_zero.mp h22).symm⟩
 
 theorem levi_inG (a D : Matrix (Fin n) (Fin n) ℂ) (h : aᴴ * D = 1) :
@@ -785,8 +781,7 @@ theorem levi_inG (a D : Matrix (Fin n) (Fin n) ℂ) (h : aᴴ * D = 1) :
     rwa [conjTranspose_mul, conjTranspose_conjTranspose, conjTranspose_one] at h2
   unfold InG JJ
   rw [fromBlocks_conjTranspose, fromBlocks_multiply, fromBlocks_multiply]
-  simp only [conjTranspose_zero, Matrix.mul_zero, Matrix.zero_mul, Matrix.mul_one, Matrix.one_mul,
-    Matrix.mul_neg, Matrix.neg_mul, add_zero, zero_add, h, h', neg_zero]
+  simp only [conjTranspose_zero, Matrix.mul_zero, Matrix.zero_mul, Matrix.mul_one, Matrix.mul_neg, Matrix.neg_mul, add_zero, zero_add, h, h', neg_zero]
 
 theorem siegel_point :
     ∀ (n : ℕ) (p : PositivityTheory.Rg.Sw.GR n), (PositivityTheory.Rg.Sw.mR p).toBlocks₂₁ = 0 →

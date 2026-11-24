@@ -240,8 +240,6 @@ theorem jf_hasDerivAt (D : B.RealPlaceData k r Wp Wq) (G G' : ℂ → B.Mat k r 
     convert h3 using 1
     all_goals first
       | rfl
-      | (funext s'; simp [B.rho, B.sgs])
-      | simp [B.rho, B.sgs]
 
 end core
 
@@ -406,7 +404,6 @@ theorem family_orbital_derivative : CutSH.FamJFDeriv := by
   have hJ := jf_hasDerivAt (T.bs (j + 1)) G (famP j G v) t v hδ hγ hGcc hG'cc hd Φ hΦcc c hdom
   first
     | exact ((hasDerivAt_const (0 : ℝ) (_ : ℂ)).smul hJ).congr_deriv (by simp)
-    | exact ((hasDerivAt_const (0 : ℝ) (_ : ℝ)).smul hJ).congr_deriv (by simp)
 
 end Formalism.FourierDecayAlt.P.CutSHD
 
@@ -448,9 +445,9 @@ theorem opc_cc_line (j : ℕ) (hj : j + 1 ≤ P.r) (t v : ℂ) (s : ℝ) (c : Fi
   unfold cc consC
   by_cases hl : (l : ℕ) = 0
   · have e : l = ⟨0, by omega⟩ := Fin.ext hl
-    simp [hl, Pi.single_apply, e, Complex.real_smul]
+    simp [e, Complex.real_smul]
   · have hne : l ≠ ⟨0, by omega⟩ := fun h => hl (by rw [h])
-    simp [hl, Pi.single_apply, hne]
+    simp [hl, hne]
 
 theorem opc_mul (h2 : FamAlg) (h4 : RepLin) {T : D.LevTower P.k P.r Wp Wq}
     (hP : IsPlace P T.base.z T.base.z' T.base.π T.base.π') (hT : D.TowerNormalised T) {j : ℕ} {hj : j + 1 ≤ P.r}

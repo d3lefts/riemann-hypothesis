@@ -856,7 +856,7 @@ theorem local_frame_second_factor : ∀ (F E : Type) [Field F] [NumberField F] [
     intro i j
     show algebraMap (v.adicCompletionIntegers F) (v.adicCompletion F) _ = _
 
-    simp only [rr, map_sum, map_mul]
+    simp only [map_sum, map_mul]
     rfl
   have hterm : ∀ i j, (sp (hR cm.sig J (v.adicCompletion F) (bd i) (y.1 *ᵥ b j))).2 =
       A i j + (g : v.adicCompletion F) * (rr i j : v.adicCompletion F) := by
@@ -1110,7 +1110,7 @@ private lemma inJ_diagonal_conj_iff {k : Type} [Field k] {n t : ℕ} (d : Fin n 
     split_ifs with hxy
     · subst hxy
       rw [h1, one_mul]
-    · simp [hc]
+    · simp
 
 private lemma inv_pow_mul_pow_succ_eq {k : Type} [Field k] (u : kˣ) (x y : ℕ) (h : x + 1 = y) :
     (((u ^ x)⁻¹ * u ^ y : kˣ) : k) = u := by

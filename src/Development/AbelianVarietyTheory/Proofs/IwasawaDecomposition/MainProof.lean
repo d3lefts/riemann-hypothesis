@@ -238,8 +238,7 @@ theorem coeff_unique (p : ℕ) [Fact p.Prime] (Lt T : Type) [Fintype Lt] [Decida
   have h1 := congrArg (fockB (ten fun s => map (algebraMap ℚ ℂ_[p]) (b s (κ' s)))) h0
 
   rw [← fockBL_apply, ← fockBL_apply, map_sum, map_zero] at h1
-  simp only [map_smul, fockBL_apply, hP, fockB_ten_dual ι b g Nc hbg, smul_eq_mul, mul_ite, mul_zero,
-    Finset.sum_ite_eq', Finset.mem_univ, if_true] at h1
+  simp only [map_smul, fockBL_apply, hP, fockB_ten_dual ι b g Nc hbg, smul_eq_mul, mul_ite, mul_zero] at h1
   have hne : ∏ s, (Nc s : ℂ_[p]) ≠ 0 :=
     Finset.prod_ne_zero_iff.mpr fun s _ => by exact_mod_cast hNc s
   simpa [hne] using h1
@@ -456,7 +455,7 @@ theorem dual_bases_colProd : (∀ (N : ℕ) (Y : YoungDiagram) (hY : Y.colLen 0 
       intro i
       rw [(Formalism.GradedWeylDivisibility.fockQPos _ _ _).1, ← fockQRight_apply, map_sub, fockQRight_apply, fockQRight_apply, key,
         ← (Formalism.GradedWeylDivisibility.fockQPos _ _ _).1, hdb]
-      split_ifs with h1 h2 h2 <;> first | rfl | simp | (exact absurd h1.symm h2) | (exact absurd h2.symm h1)
+      split_ifs with h1 h2 h2 <;> first | rfl | simp
     have h0 : Formalism.GradedWeylDivisibility.fockQ (g k - d k) (g k - d k) = 0 := by
       rw [← fockQRight_apply]
       nth_rewrite 2 [← ha]

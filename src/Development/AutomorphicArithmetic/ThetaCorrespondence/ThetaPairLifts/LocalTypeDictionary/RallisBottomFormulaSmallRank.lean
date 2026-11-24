@@ -161,7 +161,7 @@ theorem _root_.GlobalTheory.T.standardLattice_doubleCosetClasses_stabilisers : �
       (∀ g : GA D A', ∃! x, ∃ γ ∈ GQ A', ∃ k ∈ (Formalism.L2.DIV.St r.β).comap (Lev.finE A'), g = γ * gx x * k) ∧
       ∀ x, {γ : GA D A' | γ ∈ GQ A' ∧ (gx x)⁻¹ * γ * gx x ∈ (Formalism.L2.DIV.St r.β).comap (Lev.finE A')}.ncard =
         GlobalTheory.NormSum.gam D (GlobalTheory.NormSum.intG D n) x.out := by
-  first | exact @GlobalTheory.BotClassDict.classes_and_stabilisers | exact GlobalTheory.BotClassDict.classes_and_stabilisers | (intros; apply GlobalTheory.BotClassDict.classes_and_stabilisers <;> assumption)
+  first | exact @GlobalTheory.BotClassDict.classes_and_stabilisers
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardLatticeDoubleCosetClassesStabilisersStatement =====
@@ -213,7 +213,7 @@ theorem _root_.GlobalTheory.T.bottom_layer_finite_level : _root_.GlobalTheory.Fu
     (∀ D, GlobalTheory.NormSum.Inp D) → GlobalTheory.SqTop.BotSmall →
     GlobalTheory.SqTop.GBig fun {D} T _ _ G _ _ _ _ => ∀ (W : G.Weil), IsStdChar D W.ψ (-1) → ∀ (i j : Fin D.R.m) (A A' WW : HSp D)
       (X : Tri T A A' WW), IsBottomTri W i j X → ∀ (s : T), ∀ k ∈ Lev.levA A' (Formalism.L2.DIV.St X.rA'.β), X.ω' s (k, 1) (X.f' s) = X.f' s := by
-  first | exact @_root_.GlobalTheory.BotFinLevel.bottom_finite_level_fixed | exact _root_.GlobalTheory.BotFinLevel.bottom_finite_level_fixed | (intros; apply _root_.GlobalTheory.BotFinLevel.bottom_finite_level_fixed <;> assumption)
+  first | exact @_root_.GlobalTheory.BotFinLevel.bottom_finite_level_fixed
 end
 end -- clump:auto
 end -- clump:auto
@@ -347,7 +347,7 @@ theorem ker_minor_mul_real_of_real_invariant : _root_.GlobalTheory.FunPr.ThetaLo
     rw [GlobalTheory.RealColAct.gramAt_of_gram_one hVW]; simp
   have key := GlobalTheory.RealFockPos.om_pureTensorO_pos D W.ψ W.θ A' WW _ _ (X.ω' t) hW hθ (fun _ => 1) (fun _ => 1) hBS hBT
     a _ ha hb e₁ (fun τ => (P'.n τ : ℤ)) he₁ he₂ (X.f' t) hf hv g hg 1 (one_mem _) (GlobalTheory.BotFormula.minorF ea ed T')
-  simp only [inv_one, Matrix.one_mul, Matrix.mul_one, GlobalTheory.StdUnn.CartanMove.compAt_mt_one, Matrix.det_one, one_zpow, mul_one]
+  simp only [inv_one, Matrix.one_mul, GlobalTheory.StdUnn.CartanMove.compAt_mt_one, Matrix.det_one, one_zpow, mul_one]
     at key
   have hc : (∏ τ, (compAt W.θ τ (Formalism.L2.Theta.mt A' g)).det ^ (P'.n τ : ℤ)) *
       ∏ τ, ((compAt W.θ τ (Formalism.L2.Theta.mt A' g))⁻¹).det ^ P'.n τ = 1 := by
@@ -381,7 +381,7 @@ theorem _root_.GlobalTheory.T.minor_kernel_real_invariant : _root_.GlobalTheory.
         IsBottom G s i j (GlobalTheory.SqTop.modT G s) P P' → ∀ (ea : P'.a = A'.rank) (ed : P'.d = WW.rank) (T' : Tup D P'.a P'.d P'.n)
           (h : GA D WW), ∀ k ∈ GinfC A', ∀ g : GA D A',
             X.ker' W.ψ W.θ s (GlobalTheory.BotFormula.minorF ea ed T') h (g * k) = X.ker' W.ψ W.θ s (GlobalTheory.BotFormula.minorF ea ed T') h g := by
-  first | exact @_root_.GlobalTheory.BotRealInv.ker_minor_mul_real_of_real_invariant | exact _root_.GlobalTheory.BotRealInv.ker_minor_mul_real_of_real_invariant | (intros; apply _root_.GlobalTheory.BotRealInv.ker_minor_mul_real_of_real_invariant <;> assumption)
+  first | exact @_root_.GlobalTheory.BotRealInv.ker_minor_mul_real_of_real_invariant
 end
 end -- clump:auto
 end -- clump:auto
@@ -495,7 +495,7 @@ theorem _root_.GlobalTheory.T.bottom_classSum_smallStage_eq : _root_.GlobalTheor
               X.I' W.ψ W.θ s (GlobalTheory.BotFormula.minorF ea ed T') g =
                 Ω₁ * ∑ᶠ x, ((GlobalTheory.NormSum.gam D (GlobalTheory.NormSum.intG D P'.a) x.out : ℂ))⁻¹ *
                   X.ker' W.ψ W.θ s (GlobalTheory.BotFormula.minorF ea ed T') g (gx x) := by
-  first | exact @_root_.GlobalTheory.BotClassSumSmall.classSum_smallStage | exact _root_.GlobalTheory.BotClassSumSmall.classSum_smallStage | (intros; apply _root_.GlobalTheory.BotClassSumSmall.classSum_smallStage <;> assumption)
+  first | exact @_root_.GlobalTheory.BotClassSumSmall.classSum_smallStage
 end
 end -- clump:auto
 end -- clump:auto
@@ -572,7 +572,7 @@ theorem _root_.GlobalTheory.T.theta_bottom_formula_small : _root_.GlobalTheory.F
         ∃ u : ℂ, u ≠ 0 ∧ u ∈ Qbar ∧ (∀ (p : ℕ) [Fact p.Prime], ¬ p ∣ GlobalTheory.SqTop.Qn G s → ∀ lam : Qbar →+* ℂ_[p], ‖lamC lam u‖ = 1) ∧
           ∀ (ea : P'.a = A'.rank) (ed : P'.d = WW.rank) (h : GA D P'.d) (g : GA D WW), GlobalTheory.BotFormula.IsFinPt WW g h →
             ∀ T', X.I' W.ψ W.θ s (GlobalTheory.BotFormula.minorF ea ed T') g = Ω' * u * P'.coord h T' := by
-  first | exact @_root_.GlobalTheory.BotFormula.rallis_bottom_formula_small_rank | exact _root_.GlobalTheory.BotFormula.rallis_bottom_formula_small_rank | (intros; apply _root_.GlobalTheory.BotFormula.rallis_bottom_formula_small_rank <;> assumption)
+  first | exact @_root_.GlobalTheory.BotFormula.rallis_bottom_formula_small_rank
 end
 end -- clump:auto
 end -- clump:auto

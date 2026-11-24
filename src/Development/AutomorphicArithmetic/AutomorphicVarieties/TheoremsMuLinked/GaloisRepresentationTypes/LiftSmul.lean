@@ -259,7 +259,7 @@ theorem UpperTheory.V.Th.Coc.flagC :
       bar X (d • (1 : Matrix (Fin n) (Fin n) O)) = algebraMap O X d • (1 : Matrix (Fin n) (Fin n) X) := by
     intro X _ _
     ext i j
-    by_cases h : i = j <;> simp [Matrix.one_apply, h]
+    by_cases h : i = j <;> simp [h]
   have hbar : ∀ (X : Type) [CommRing X] [Algebra O X] (P : Matrix (Fin n) (Fin n) O), (∀ i j, j < i → P i j = 0) →
       ∀ i j, j < i → bar X P i j = 0 := fun X _ _ P hP i j h => by simp [hP i j h]
   refine ⟨d * d, mul_ne_zero hd hd, fun X _ _ S₁ T₁ hL =>
@@ -543,12 +543,12 @@ theorem UpperTheory.V.Th.Coc.rel :
     simp [repR, GDet.repAlg]
   have hs : ∀ r : R, MonoidAlgebra.single (1 : G) r = r • (1 : MonoidAlgebra R G) := by
     intro r
-    simp [MonoidAlgebra.one_def, MonoidAlgebra.smul_single']
+    simp [MonoidAlgebra.one_def]
   let Φ : MonoidAlgebra R G →* Matrix (Fin n) (Fin n) (DualNumber X) :=
     { toFun := fun a => dualM (bar X (repR x ρ a)) (d a)
       map_one' := by
         ext i j
-        · by_cases hij : i = j <;> simp [dualM, hbar1, Matrix.one_apply, hij]
+        · by_cases hij : i = j <;> simp [dualM, Matrix.one_apply, hij]
         · by_cases hij : i = j <;> simp [dualM, hd1, Matrix.one_apply, hij]
       map_mul' := by
         intro a b
@@ -604,7 +604,7 @@ private theorem conj_id {O A : Type} [CommRing O] [Ring A] [Algebra O A] (c : O)
   have e1 : ∀ Z : A, W * (Wi * Z) = Z := fun Z => by rw [← mul_assoc, h2, one_mul]
   have e2 : ∀ Z : A, Wi * (W * Z) = Z := fun Z => by rw [← mul_assoc, h1, one_mul]
   have e3 : ∀ Z : A, P * (Pi * Z) = Z := fun Z => by rw [← mul_assoc, h3, one_mul]
-  simp only [mul_sub, sub_mul, mul_smul_comm, smul_mul_assoc, mul_assoc, e1, e2, e3, h1, h2, h3, mul_one]
+  simp only [mul_sub, sub_mul, mul_smul_comm, smul_mul_assoc, mul_assoc, e1, e2, e3, h1, mul_one]
 
 theorem UpperTheory.V.Th.Coc.locAt :
     ∀ {l : ℕ} [Fact l.Prime] {L : Loc} {G0 : Glob l L} {n : ℕ} {O : Type} [CommRing O] [IsDomain O] [IsLocalRing O] [Algebra ℤ_[l] O] (y : Pt G0.frame O n) (v : L.Vl), ∃ c₁ : O, c₁ ≠ 0 ∧ ∀ (G : Glob l L) (h : G.Hom G0) (R : Type) [CommRing R] [Algebra O R] (x : R →ₐ[O] O) (m : ℕ) (δ : R →ₗ[O] Om O m) (τ : MonoidAlgebra R G.G₀ → R) (c : O) (d : MonoidAlgebra R G.G₀ →+ Matrix (Fin n) (Fin n) (Om O m)) (ψ : Fin n → L.Gv v →* Rˣ), IsLift x δ (repR x (mat (y.ρ.comp h.p₀))) τ c d → (∀ i g, x (ψ i g : Rˣ) = (y.ψ v i g : Oˣ)) → (∀ g, repR x (mat (y.ρ.comp h.p₀)) (G.frame.oEl v ψ g) = 0 ∧ d (G.frame.oEl v ψ g) = 0) → (∀ i, ∀ g ∈ G.frame.mu v, δ (ψ i g : Rˣ) = 0) → ∃ Y, LocAt G.frame (y.ρm h m) (fun v => red m (y.w v)) (fun v => red m ((y.w v)⁻¹ : GL (Fin n) O)) (fun g => c₁ • (d (MonoidAlgebra.single g 1) * y.ρm h m g⁻¹)) v Y := by
@@ -928,7 +928,7 @@ private theorem corner_eq {R : Type} [CommRing R] {n : ℕ} {E : Type} [Ring E] 
 private theorem tr_single {O : Type} [CommRing O] {n : ℕ} (o i j : Fin n) (c : O) (A : Matrix (Fin n) (Fin n) O) :
     ((c • Matrix.single o i (1 : O)) * A * (c • Matrix.single j o (1 : O))).trace = c ^ 2 * A i j := by
   rw [Matrix.smul_mul, Matrix.mul_smul, Matrix.smul_mul, Matrix.single_mul_mul_single]
-  simp [Matrix.trace_smul, pow_two, mul_assoc]
+  simp [pow_two, mul_assoc]
 
 theorem UpperTheory.V.Th.Coc.smat :
     ∀ {O R : Type} [CommRing O] [CommRing R] [Algebra O R] {n : ℕ} {E : Type} [Ring E] [Algebra R E] (x : R →ₐ[O] O) (ρ : E →+* Matrix (Fin n) (Fin n) O) (τ : E →ₗ[R] R) (e : Fin n → E) (c : O), 1 ≤ n → IsTrGMA τ e → (∀ i, ρ (e i) = Matrix.single i i 1) → (∀ a, (ρ a).trace = x (τ a)) → (∀ Z, ∃ a, ρ a = c • Z) → ∃ (s : E →ₗ[R] Matrix (Fin n) (Fin n) R) (β : R), x β = c ^ (2 * n) ∧ (∀ a b, s a * s b = β • s (a * b)) ∧ (∀ a, (s a).map x = c ^ (2 * n) • ρ a) ∧ ∀ a, (s a).trace = β * τ a := by
@@ -1339,7 +1339,7 @@ theorem UpperTheory.V.Th.Coc.polar :
   · intro a
     simp only [AddMonoidHom.add_apply, heD, hss, Matrix.transpose_add, Matrix.transpose_mul,
       Matrix.transpose_transpose, hPbt, hQt, Matrix.mul_add, Matrix.add_mul, Matrix.smul_mul,
-      Matrix.mul_smul, smul_smul, hee, one_smul, Matrix.mul_assoc, hPQ', hPQ, hQP, hQP', Matrix.mul_one]
+      Matrix.mul_smul, smul_smul, hee, one_smul, Matrix.mul_assoc, hPQ', hQP, Matrix.mul_one]
     abel
 end -- clump:auto
 end -- clump:auto
@@ -1543,10 +1543,10 @@ theorem UpperTheory.V.Th.coc :
     simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.smul_apply]
     refine ⟨fun i j hij => ?_, fun hg i => ?_⟩
     · have := (hY g).1 i j hij
-      simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.smul_apply] at this
+      simp only at this
       rw [this, smul_zero]
     · have := (hY g).2 hg i
-      simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.smul_apply] at this
+      simp only at this
       rw [this, smul_zero]
 end -- clump:auto
 end -- clump:auto

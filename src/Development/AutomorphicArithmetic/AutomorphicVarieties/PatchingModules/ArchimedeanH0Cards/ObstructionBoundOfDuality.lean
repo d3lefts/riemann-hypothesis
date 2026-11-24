@@ -177,7 +177,7 @@ private theorem defect_sub {k : D0.Hom D} {r : D.Hom D'} {p p' : D'.C2} {c c' : 
     by rw [map_sub, hq3, hq3'], fun w g h => ?_⟩
   have e1 := hq4 w g h
   have e2 := hq4' w g h
-  simp only [Pi.sub_apply, Submodule.coe_sub, AddSubgroupClass.coe_sub, Prod.fst_sub,
+  simp only [Pi.sub_apply, AddSubgroupClass.coe_sub, Prod.fst_sub,
     Prod.snd_sub, map_sub] at e1 e2 ⊢
   rw [e1, e2]
   abel
@@ -655,7 +655,7 @@ theorem UpperTheory.V.Pa.B2.dualBound :
         Nat.card_le_card_of_injective Φ hinj
     _ = (Nat.card {y : ZMod l // Nat.card x.K • y = 0} ^ Nat.card x.K) ^ (n * n * s) := by
         rw [Nat.card_fun, Nat.card_fun]
-        simp [Nat.card_prod, mul_assoc]
+        simp [mul_assoc]
     _ ≤ (Nat.card x.K ^ Nat.card x.K) ^ (n * n * s) :=
         Nat.pow_le_pow_left (Nat.pow_le_pow_left (card_zmod_nsmul_eq_zero_le l _ hK) _) _
     _ = Nat.card x.K ^ (Nat.card x.K * (n * n * s)) := by rw [← pow_mul]

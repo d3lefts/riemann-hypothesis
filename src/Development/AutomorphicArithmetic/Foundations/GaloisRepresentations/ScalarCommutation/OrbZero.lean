@@ -79,7 +79,7 @@ open scoped Classical
 
 theorem _root_.GlobalTheory.T.centralizer_separable_commutative : ∀ (K : Type) [Field K] (ι : Type) [Fintype ι] [DecidableEq ι] (γ g h : GL ι K),
   (γ : Matrix ι ι K).charpoly.Separable → g * γ = γ * g → h * γ = γ * h → g * h = h * g := by
-  first | (exact @GlobalTheory.CentSep.centraliser_comm_of_separable) | (exact GlobalTheory.CentSep.centraliser_comm_of_separable) | (intros; apply GlobalTheory.CentSep.centraliser_comm_of_separable  <;> assumption)
+  first | (exact @GlobalTheory.CentSep.centraliser_comm_of_separable)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentralizerSeparableCommutative =====
@@ -132,8 +132,7 @@ theorem blockUni_conj_mem (K : Type) [Field K] (ι : Type) [Fintype ι] [Decidab
   rw [hP21, hQ21] at hPQ ⊢
   rw [Matrix.fromBlocks_multiply, ← Matrix.fromBlocks_one, Matrix.fromBlocks_inj] at hPQ
   obtain ⟨h11, h12, -, h22⟩ := hPQ
-  simp only [Matrix.fromBlocks_multiply, Matrix.zero_mul, Matrix.mul_zero, Matrix.mul_one, Matrix.one_mul,
-    add_zero, zero_add] at h11 h12 h22 ⊢
+  simp only [Matrix.fromBlocks_multiply, Matrix.zero_mul, Matrix.mul_zero, Matrix.mul_one, add_zero, zero_add] at h11 h12 h22 ⊢
   rw [h11, h22]
   congr 1
   have key : P.toBlocks₁₁ * Q.toBlocks₁₂ + (P.toBlocks₁₁ * Matrix.of x.toAdd + P.toBlocks₁₂) * Q.toBlocks₂₂
@@ -361,11 +360,7 @@ theorem volRat_of_le (U : Subgroup H) {W S : Subgroup H} (hWS : W ≤ S) (h : W.
 theorem mem_locPart {T L : Subgroup H} {x g : H} :
     g ∈ GlobalTheory.LKLoc.locPart T L x ↔ g ∈ T ∧ x⁻¹ * g * x ∈ L := by
   first
-  | exact @_root_.GlobalTheory.ConjugateIntersectionMembership.mem_inter_conj_iff
   | exact _root_.GlobalTheory.ConjugateIntersectionMembership.mem_inter_conj_iff
-  | (apply _root_.GlobalTheory.ConjugateIntersectionMembership.mem_inter_conj_iff <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ConjugateIntersectionMembership.mem_inter_conj_iff <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ConjugateIntersectionMembership.mem_inter_conj_iff <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.ConjugateIntersectionMembership.mem_inter_conj_iff ..)
 
 theorem exists_mul_of_mem_sup {L N : Subgroup H} (hLN : ∀ l ∈ L, ∀ n ∈ N, l * n * l⁻¹ ∈ N) {k : H}
@@ -536,7 +531,7 @@ theorem _root_.GlobalTheory.T.dsum_eq_zero_of_fibre_sums' : ∀ (H : Type) [Grou
   (∀ x ∈ P, (T ⊓ L.map (MulAut.conj x).toMonoidHom).relIndex (T ⊓ (L ⊔ N).map (MulAut.conj x).toMonoidHom) ≠ 0) →
   (∀ m ∈ P, ∑ᶠ q : H ⧸ (N ⊓ L), (if Quotient.out q ∈ N then Ψ (m * Quotient.out q) else 0) = 0) →
   GlobalTheory.OrbDesc.dsum T L U Ψ = 0 := by
-  first | (exact @GlobalTheory.OrbDesc.dsum_eq_zero_of_fibre_sums) | (exact GlobalTheory.OrbDesc.dsum_eq_zero_of_fibre_sums) | (intros; apply GlobalTheory.OrbDesc.dsum_eq_zero_of_fibre_sums  <;> assumption)
+  first | (exact @GlobalTheory.OrbDesc.dsum_eq_zero_of_fibre_sums)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DsumEqZeroOfFibreSumsStatement =====
@@ -636,7 +631,7 @@ theorem exists_conj_cent_le_blockLevi : ∀ (K : Type) [Field K] (ι : Type) [Fi
   have hbb : ∀ i, bb i = b0 (e i) := fun i => by
     simp [bb, Module.Basis.reindex_apply]
   have hbbr : ∀ v i, bb.repr v i = b0.repr v (e i) := fun v i => by
-    simp [bb, Module.Basis.repr_reindex_apply]
+    simp [bb]
   have hmem1 : ∀ k, b0 (Sum.inl k) ∈ V₁ := fun k => by
     simp [b0, φ, Submodule.coe_prodEquivOfIsCompl']
   have hmem2 : ∀ k, b0 (Sum.inr k) ∈ V₂ := fun k => by
@@ -726,7 +721,7 @@ theorem _root_.GlobalTheory.T.exists_conj_centralizer_le_blockDiagonalLevi : ∀
   (γ : Matrix ι ι K).charpoly.Separable → ¬ Irreducible (γ : Matrix ι ι K).charpoly →
   ∃ (a b : ℕ) (e : ι ≃ Fin a ⊕ Fin b), 0 < a ∧ 0 < b ∧ ∃ c : GL ι K,
     GlobalTheory.BCT.twCent (MonoidHom.id (GL ι K)) (c⁻¹ * γ * c) ≤ GlobalTheory.OrbDesc.blockLevi e := by
-  first | (exact @GlobalTheory.OrbDesc.exists_conj_cent_le_blockLevi) | (exact GlobalTheory.OrbDesc.exists_conj_cent_le_blockLevi) | (intros; apply GlobalTheory.OrbDesc.exists_conj_cent_le_blockLevi  <;> assumption)
+  first | (exact @GlobalTheory.OrbDesc.exists_conj_cent_le_blockLevi)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsConjCentralizerLeBlockDiagonalLeviStatement =====
@@ -1068,7 +1063,7 @@ theorem _root_.GlobalTheory.T.finsum_unipotentConj_eq_zero_of_constantTerm_zero 
   ∀ γ ∈ GlobalTheory.OrbDesc.blockPar e, (γ : Matrix ι ι K).charpoly.Separable →
   ∑ᶠ q : GL ι K ⧸ (GlobalTheory.OrbDesc.blockUni e ⊓ (GlobalTheory.OrbDesc.blockPar e ⊓ K')),
     (if Quotient.out q ∈ GlobalTheory.OrbDesc.blockUni e then f ((Quotient.out q)⁻¹ * γ * Quotient.out q) else 0) = 0 := by
-  first | (exact @GlobalTheory.OrbDesc.NSum.finsum_conj_eq_zero) | (exact GlobalTheory.OrbDesc.NSum.finsum_conj_eq_zero) | (intros; apply GlobalTheory.OrbDesc.NSum.finsum_conj_eq_zero  <;> assumption)
+  first | (exact @GlobalTheory.OrbDesc.NSum.finsum_conj_eq_zero)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinsumUnipotentConjEqZeroOfConstantTermZeroStatement =====
@@ -1186,7 +1181,7 @@ theorem dsum_eq_zero_of_par (H : Type) [Group H] (T P L U : Subgroup H) (Ψ : H 
     ← finsum_mem_image hinj, himg]
   refine (finsum_mem_eq_sum_of_inter_support_eq F ?_).symm
   ext q
-  simp [Finset.mem_filter, Set.Finite.mem_toFinset]
+  simp [Set.Finite.mem_toFinset]
   tauto
 
 end GlobalTheory.OrbDesc
@@ -1207,7 +1202,7 @@ theorem _root_.GlobalTheory.T.orbit_sum_vanishes_of_parabolic_sums : ∀ (H : Ty
   (∀ s ∈ T, ∀ t ∈ T, s * t = t * s) → (∀ t ∈ T, ∀ x, Ψ (t * x) = Ψ x) → (∀ l ∈ L, ∀ x, Ψ (x * l) = Ψ x) →
   (∀ y : H, GlobalTheory.OrbDesc.dsum T (P ⊓ L.map (MulAut.conj y).toMonoidHom) U (fun x => if x ∈ P then Ψ (x * y) else 0) = 0) →
   GlobalTheory.OrbDesc.dsum T L U Ψ = 0 := by
-  first | (exact @GlobalTheory.OrbDesc.dsum_eq_zero_of_par) | (exact GlobalTheory.OrbDesc.dsum_eq_zero_of_par) | (intros; apply GlobalTheory.OrbDesc.dsum_eq_zero_of_par  <;> assumption)
+  first | (exact @GlobalTheory.OrbDesc.dsum_eq_zero_of_par)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrbitSumVanishesOfParabolicSums =====
@@ -1462,7 +1457,7 @@ theorem _root_.GlobalTheory.T.relIndex_ne_zero_centralizer_parabolicCosetStabili
     (GlobalTheory.BCT.twCent (MonoidHom.id (GL ι K)) γ ⊓ (GlobalTheory.OrbDesc.blockPar e ⊓ K').map (MulAut.conj x).toMonoidHom).relIndex
       (GlobalTheory.BCT.twCent (MonoidHom.id (GL ι K)) γ ⊓
         ((GlobalTheory.OrbDesc.blockPar e ⊓ K') ⊔ GlobalTheory.OrbDesc.blockUni e).map (MulAut.conj x).toMonoidHom) ≠ 0 := by
-  first | (exact @GlobalTheory.OrbDesc.StabIndex.relIndex_twCent_inf_ne_zero) | (exact GlobalTheory.OrbDesc.StabIndex.relIndex_twCent_inf_ne_zero) | (intros; apply GlobalTheory.OrbDesc.StabIndex.relIndex_twCent_inf_ne_zero  <;> assumption)
+  first | (exact @GlobalTheory.OrbDesc.StabIndex.relIndex_twCent_inf_ne_zero)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RelIndexNeZeroCentralizerParabolicCosetStabilizeStatement =====

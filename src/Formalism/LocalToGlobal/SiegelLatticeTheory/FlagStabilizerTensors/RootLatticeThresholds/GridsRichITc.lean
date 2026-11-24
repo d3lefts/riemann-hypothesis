@@ -67,7 +67,9 @@ theorem chebPt_mem (α β : ℝ) (h : α ≤ β) (n : ℕ) (j : Fin (n + 1)) :
   unfold Formalism.SA.C.chebPt
   have h1 := Real.neg_one_le_cos (Real.pi * (j : ℕ) / n)
   have h2 := Real.cos_le_one (Real.pi * (j : ℕ) / n)
-  constructor <;> nlinarith
+  have hc1 := mul_le_mul_of_nonneg_left h1 (show 0 ≤ (β - α) / 2 by linarith)
+  have hc2 := mul_le_mul_of_nonneg_left h2 (show 0 ≤ (β - α) / 2 by linarith)
+  constructor <;> linarith
 
 def gridCh (c : Cfg) (l N R : ℕ) (a : ℕ) : Finset ℝ :=
   if 1 ≤ a ∧ a ≤ N then
@@ -88,26 +90,27 @@ theorem P_ne_cut (c : Cfg) (hDel : 0 < c.Del) (hv0 : 0 ≤ c.vlast) (hb : ∀ j,
   split_ifs at h0 with hsk
   · unfold Cfg.v at h0 hY1 hY2
     by_cases hsl : s ≤ l
-    · have : (s : ℝ) ≤ l := by exact_mod_cast hsl
-      nlinarith
-    · have : (l : ℝ) + 1 ≤ s := by exact_mod_cast (by omega : l + 1 ≤ s)
-      nlinarith
+    · have hs' : (s : ℝ) ≤ l := by exact_mod_cast hsl
+      linarith [mul_nonneg hDel.le (show (0 : ℝ) ≤ (l : ℝ) - s by linarith)]
+    · have hs' : (l : ℝ) + 1 ≤ s := by exact_mod_cast (by omega : l + 1 ≤ s)
+      linarith [mul_le_mul_of_nonneg_left (show (1 : ℝ) ≤ (s : ℝ) - l by linarith) hDel.le]
   · have hbj := hb (s + 1 - c.k) (by omega) (by omega)
     unfold Cfg.v at hY2
-    nlinarith
+    linarith [mul_le_mul_of_nonneg_left (show (1 : ℝ) ≤ (c.k : ℝ) - 1 - l by linarith) hDel.le]
 
 theorem gridCh_len (c : Cfg) (l N : ℕ) (hN : 3 ≤ N) (hlen : 6 * (N : ℝ) ^ 3 + 6 * N ≤ c.Del / 2 - 5 / 2) :
     ((c.Del / 2 - c.v l) - (5 / 2 - c.v l)) / (7 * N) ≤ ((c.Del / 2 - c.v l) - (5 / 2 - c.v l)) / (6 * N) - 1 := by
   have hN' : (3 : ℝ) ≤ N := by exact_mod_cast hN
   have hI : (c.Del / 2 - c.v l) - (5 / 2 - c.v l) = c.Del / 2 - 5 / 2 := by ring
   rw [hI]
-  have h9 : (9 : ℝ) ≤ (N : ℝ) ^ 2 := by nlinarith
+  have h9 : (9 : ℝ) ≤ (N : ℝ) ^ 2 := by linarith [pow_le_pow_left₀ (by norm_num) hN' 2]
   have h42 : 42 * (N : ℝ) ≤ c.Del / 2 - 5 / 2 := by
-    nlinarith [mul_le_mul_of_nonneg_left h9 (by positivity : (0 : ℝ) ≤ 6 * (N : ℝ))]
+    have := mul_le_mul_of_nonneg_left h9 (by positivity : (0 : ℝ) ≤ 6 * (N : ℝ))
+    linarith 
   rw [div_le_iff₀ (by positivity)]
   have : (c.Del / 2 - 5 / 2) / (6 * N) * (7 * N) = (7 / 6) * (c.Del / 2 - 5 / 2) := by field_simp
   rw [sub_mul, this]
-  nlinarith
+  linarith
 
 def RichAt (c : Cfg) (l N R : ℕ) (grid : ℕ → Finset ℝ) (grid1 : Finset ℝ) : Prop :=
   N ≤ grid1.card ∧ ∀ a, 1 ≤ a → a ≤ N → ∀ n ≤ R, ∃ y : Fin (n + 1) → ℝ, Function.Injective y ∧
@@ -163,10 +166,11 @@ theorem gridsAtCh (c : Cfg) (l N R : ℕ) (hN : 2 ≤ N) (hlen : 6 * (N : ℝ) ^
   have hlenab : β - α = c.Del / 2 - 5 / 2 := by rw [hα, hβ]; ring
   set q : ℝ := (β - α) / (6 * N) with hq
   have hq6 : β - α = 6 * N * q := by rw [hq]; field_simp
+  have hN2 : (4 : ℝ) ≤ (N : ℝ) ^ 2 := by linarith [pow_le_pow_left₀ (by norm_num) hN' 2]
   have hq1 : (N : ℝ) ^ 2 + 1 ≤ q := by
-    rw [hq, le_div_iff₀ (by positivity)]
-    nlinarith
-  have hq2 : (1 : ℝ) < q := by nlinarith
+    rw [hq, le_div_iff₀ (by positivity), hlenab]
+    linarith 
+  have hq2 : (1 : ℝ) < q := by linarith
   have hgL : ∀ a : ℕ, C.gridL α β N a = α + 2 * N * q + (2 * (a : ℝ) - 2) * q := by
     intro a
     unfold C.gridL
@@ -191,8 +195,12 @@ theorem gridsAtCh (c : Cfg) (l N R : ℕ) (hN : 2 ≤ N) (hlen : 6 * (N : ℝ) ^
     rw [hgL] at hlo hhi
     have ha1' : (1 : ℝ) ≤ a := by exact_mod_cast ha1
     have haN' : (a : ℝ) ≤ N := by exact_mod_cast haN
-    have hq0 : 0 ≤ q := by nlinarith
-    constructor <;> nlinarith
+    have hq0 : 0 ≤ q := by linarith
+    have hlo' : 0 ≤ (2 * (a : ℝ) - 2) * q := mul_nonneg (by linarith) hq0
+    have hhi' : (2 * (a : ℝ) - 2) * q + q ≤ 2 * (N : ℝ) * q := by
+      have := mul_le_mul_of_nonneg_right (show 2 * (a : ℝ) - 1 ≤ 2 * N by linarith) hq0
+      linarith
+    constructor <;> linarith
 
   have hg1 : ∀ y ∈ grid1Of c l N, α ≤ y ∧ y + 1 ≤ α + (N : ℝ) ^ 3 - 5 / 2 ∧ c.P y ≠ 0 ∧ c.P (y + 1) ≠ 0 := by
     intro y hy
@@ -203,13 +211,13 @@ theorem gridsAtCh (c : Cfg) (l N R : ℕ) (hN : 2 ≤ N) (hlen : 6 * (N : ℝ) ^
       have := Finset.mem_range.mp hj
       exact_mod_cast this
     have hj0 : (0 : ℝ) ≤ j := by positivity
-    refine ⟨by nlinarith [hs.1], ?_, hs.2.2.1, hs.2.2.2⟩
+    refine ⟨by linarith [hs.1, mul_nonneg hj0 (sq_nonneg (N : ℝ))], ?_, hs.2.2.1, hs.2.2.2⟩
     have : (j : ℝ) * (N : ℝ) ^ 2 ≤ ((N : ℝ) - 1) * (N : ℝ) ^ 2 := by
       apply mul_le_mul_of_nonneg_right (by linarith) (by positivity)
-    nlinarith [hs.2.1]
+    linarith [hs.2.1, hN2]
   have hlen' : 6 * (N : ℝ) ^ 3 + 6 * N ≤ 6 * N * q := by rw [← hq6, hlenab]; exact hlen
   have hq3 : (N : ℝ) ^ 2 + 1 ≤ q := hq1
-  have hqpos : 0 < q := by nlinarith
+  have hqpos : 0 < q := by linarith
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
   · rw [hlenab]; exact hlen
   · intro a y hy
@@ -226,7 +234,7 @@ theorem gridsAtCh (c : Cfg) (l N R : ℕ) (hN : 2 ≤ N) (hlen : 6 * (N : ℝ) ^
     have hjj : j ≠ j' := fun h => hne (by rw [h])
     have he1 : e = 0 ∨ e = 1 := by simpa using he
     have he1' : e' = 0 ∨ e' = 1 := by simpa using he'
-    have hN8 : (N : ℝ) ^ 2 / 8 + 1 ≤ (N : ℝ) ^ 2 - 1 / 2 := by nlinarith
+    have hN8 : (N : ℝ) ^ 2 / 8 + 1 ≤ (N : ℝ) ^ 2 - 1 / 2 := by linarith
     rcases Nat.lt_or_gt_of_ne hjj with h | h
     · have := first_level_nodes_separated c l N h
       rw [abs_sub_comm]
@@ -240,8 +248,10 @@ theorem gridsAtCh (c : Cfg) (l N R : ℕ) (hN : 2 ≤ N) (hlen : 6 * (N : ℝ) ^
     obtain ⟨h3, -⟩ := hgridB a y' hy'
     have he1 : e = 0 ∨ e = 1 := by simpa using he
     have he1' : e' = 0 ∨ e' = 1 := by simpa using he'
-    have hN3 : (N : ℝ) ^ 2 + 1 + 1 ≤ (N : ℝ) ^ 3 := by nlinarith
-    have hgap : (N : ℝ) ^ 3 + 5 / 2 ≤ 2 * N * q - (N : ℝ) ^ 3 := by nlinarith
+    have hN3 : (N : ℝ) ^ 2 + 1 + 1 ≤ (N : ℝ) ^ 3 := by
+      have := mul_le_mul_of_nonneg_right hN' (sq_nonneg (N : ℝ))
+      linarith [hN2]
+    have hgap : (N : ℝ) ^ 3 + 5 / 2 ≤ 2 * N * q - (N : ℝ) ^ 3 := by linarith
     rw [abs_sub_comm]
     rcases he1 with rfl | rfl <;> rcases he1' with rfl | rfl <;>
       · rw [abs_of_nonneg (by linarith)]; linarith
@@ -252,11 +262,11 @@ theorem gridsAtCh (c : Cfg) (l N R : ℕ) (hN : 2 ≤ N) (hlen : 6 * (N : ℝ) ^
     · obtain ⟨h1, h2⟩ := hgridB a y ha
       rw [hα] at h1 h2
       rw [hβ] at hβq
-      have hc1 : y ∈ c.cutI l := ⟨by linarith, by nlinarith⟩
-      have hc2 : y + 1 ∈ c.cutI l := ⟨by linarith, by nlinarith⟩
+      have hc1 : y ∈ c.cutI l := ⟨by linarith, by linarith [mul_pos hN0 hqpos]⟩
+      have hc2 : y + 1 ∈ c.cutI l := ⟨by linarith, by linarith [mul_pos hN0 hqpos]⟩
       exact ⟨hc1, hc2, hP _ hc1, hP _ hc2⟩
     · obtain ⟨h1, h2, hP1, hP2⟩ := hg1 y hy
-      have hN6 : (N : ℝ) ^ 3 ≤ 6 * N * q := by nlinarith
+      have hN6 : (N : ℝ) ^ 3 ≤ 6 * N * q := by linarith
       rw [hα] at h1 h2
       rw [hβ] at hβq
       refine ⟨⟨by linarith, by linarith⟩, ⟨by linarith, by linarith⟩, hP1, hP2⟩

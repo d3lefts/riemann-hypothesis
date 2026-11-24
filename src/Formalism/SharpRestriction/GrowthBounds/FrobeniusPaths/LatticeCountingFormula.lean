@@ -86,7 +86,7 @@ lemma Iop_apply (y : Fin k → A) (K : Finset (Fin k) → A) : Iop y K = contrR 
 
 lemma exterior_wedge_sq_zero (a : Fin k) : exteriorWedge A a * exteriorWedge A a = 0 := by
   refine LinearMap.ext fun K => funext fun J => ?_
-  simp [Module.End.mul_apply, exterior_wedge_apply]
+  simp [exterior_wedge_apply]
 
 lemma Wop_mul (x y : Fin k → A) : Wop x * Wop y = ∑ a, ∑ b, (x a * y b) • (exteriorWedge A a * exteriorWedge A b) := by
   unfold Wop
@@ -254,7 +254,7 @@ lemma w_single (a : Fin k) (I : Finset (Fin k)) (c : A) :
       by_cases hJ : J = insert a I
       · subst hJ
         rw [Finset.erase_insert haI]
-        simp [Pi.single_apply]
+        simp
       · have hne : J.erase a ≠ I := fun h => hJ (by rw [← h, Finset.insert_erase haJ])
         rw [Pi.single_apply, if_neg hne, Pi.single_apply, if_neg hJ, mul_zero]
     · rw [if_neg haJ, Pi.single_apply, if_neg (fun (h : J = insert a I) => haJ (h ▸ Finset.mem_insert_self a I))]
@@ -916,7 +916,7 @@ lemma lift_substitution_letter (w : O) (LL : LiftLetters (Fin N)) (g g' : Matrix
         algebraMap O (KK O) (psiO p f O (LL.pos i) ((g⁻¹ * g') b c)) := by
       intro c; rw [← Matrix.mul_apply, ← sigMat_mul, sigMat_apply]
 
-    simp only [← e, Finset.sum_mul, map_sum, Finset.mul_sum, C_mul]
+    simp only [← e, Finset.sum_mul, map_sum, C_mul]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun a _ => by
       rw [MvPolynomial.algebraMap_eq]; ring

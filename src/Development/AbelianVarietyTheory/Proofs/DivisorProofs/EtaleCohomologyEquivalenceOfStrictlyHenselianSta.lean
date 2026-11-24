@@ -110,7 +110,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.etaleSpaceCohomology_baseChange_coprod_bijective : ∀ (R : Type) [CommRing R] (F : Shv R) (S : Scheme.{0}) (E : Spc) (p : E ⟶ sch.obj S) (U : Over S) (ι : Type) (V : ι → Over S) (j : ∀ i, V i ⟶ U), IsColimit (Cofan.mk U.left (fun i => (j i).left)) → ∀ n : ℤ, Function.Bijective (fun (x : H R ((bc p).obj U) F n) (i : ι) => pull R ((bc p).map (j i)) F n x) := by
-  first | (exact @GlobalTheory.EtC.BcCoprod.main) | (exact GlobalTheory.EtC.BcCoprod.main) | (intros; apply GlobalTheory.EtC.BcCoprod.main  <;> assumption)
+  first | (exact @GlobalTheory.EtC.BcCoprod.main)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleSpaceCohomologyBaseChangeCoprodBijectiveStatement =====
@@ -191,7 +191,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.etaleSpaceCohomology_stalk_local_classes : ∀ (R : Type) [CommRing R] (F : Shv R) (S : Scheme.{0}) (Θ Θ' : Over S ⥤ Spc) (α : Θ ⟶ Θ'), (∀ (I : Type) [SmallCategory I] [IsCofiltered I] (G : I ⥤ Over S) (c : Cone G), IsLimit c → (∀ i, IsAffine (G.obj i).left) → ContCone R F ((Θ).mapCone c)) → (∀ (I : Type) [SmallCategory I] [IsCofiltered I] (G : I ⥤ Over S) (c : Cone G), IsLimit c → (∀ i, IsAffine (G.obj i).left) → ContCone R F ((Θ').mapCone c)) → ∀ (O : Type) [CommRing O] (s : Spec (CommRingCat.of O) ⟶ S), IsStalk O s → Eqv R (α.app (Over.mk s)) F → ∀ (U : Over S), Etale U.hom → ∀ (g : Over.mk s ⟶ U) (n : ℤ), (∀ x : H R (Θ.obj U) F n, ∃ (V : Over S) (g' : Over.mk s ⟶ V) (h : V ⟶ U) (y : H R (Θ'.obj V) F n), Etale V.hom ∧ g' ≫ h = g ∧ pull R (α.app V) F n y = pull R (Θ.map h) F n x) ∧ ∀ y : H R (Θ'.obj U) F n, pull R (α.app U) F n y = 0 → ∃ (V : Over S) (g' : Over.mk s ⟶ V) (h : V ⟶ U), Etale V.hom ∧ g' ≫ h = g ∧ pull R (Θ'.map h) F n y = 0 := by
-  first | (exact @GlobalTheory.EtC.stalk_local_classes) | (exact GlobalTheory.EtC.stalk_local_classes) | (intros; apply GlobalTheory.EtC.stalk_local_classes  <;> assumption)
+  first | (exact @GlobalTheory.EtC.stalk_local_classes)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleSpaceCohomologyStalkLocalClassesStatement =====

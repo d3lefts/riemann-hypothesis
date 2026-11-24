@@ -255,6 +255,10 @@ namespace PI.RhsWLim.W
 
 open PI.RhsWLim
 
+theorem hb_sq (k : ℕ) : Hb k * Hb k = 1 := by
+  rw [Hb, Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
+  congr 1; funext j; split_ifs <;> norm_num
+
 theorem mBaseMem : MBaseMem := by
   intro k r z z' μW μW' a a' μsec hD
   have hT := hD.T_pos

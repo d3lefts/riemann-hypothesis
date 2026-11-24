@@ -749,7 +749,7 @@ theorem szRow_TO_lower : SzRow (fun C D L => ((C.T.CP * zBase L ^ C.T.eP) ^ 4 * 
   have hx0 : 0 < x := by linarith
   have cast : ∀ n : ℕ, x ^ ((n : ℕ) : ℝ) = x ^ n := fun n => Real.rpow_natCast x n
   have hPe : zBase L ^ C.T.eP = zBase L ^ (12 : ℕ) := by
-    rw [heP]; first | rfl | exact_mod_cast Real.rpow_natCast _ 12
+    rw [heP]; first | exact_mod_cast Real.rpow_natCast _ 12
   have hd' : 1 / x ≤ L.de2 := by
     refine le_trans ?_ hd
     rw [one_div, ← Real.rpow_neg_one]
@@ -772,7 +772,6 @@ theorem szRow_TO_lower : SzRow (fun C D L => ((C.T.CP * zBase L ^ C.T.eP) ^ 4 * 
   rw [hPe, hCp]
   first
     | (rw [Real.rpow_one]; exact a.trans hT')
-    | (rw [pow_one]; exact a.trans hT')
 
 end GlobalTheory.EX
 end -- clump:auto
@@ -1009,7 +1008,7 @@ theorem szRow_nodeGap_blockLength : SzRow (fun C D L => (4 * ((TOv L.sc : ℕ) :
     rw [← cast]
     exact hZ.trans (Real.rpow_le_rpow_of_exponent_le hx1' (by norm_num))
   have hPe : zBase L ^ C.T.eP = zBase L ^ (12 : ℕ) := by
-    rw [heP]; first | rfl | exact_mod_cast Real.rpow_natCast _ 12
+    rw [heP]; first | exact_mod_cast Real.rpow_natCast _ 12
   refine nodeGap_blockLength_poly x _ _ _ _ _ _ _ _ _ _ hx6 (Nat.cast_nonneg _) ?_ ?_ ?_ ?_ (Nat.cast_nonneg _) ?_
     (Nat.cast_nonneg _) ?_ hm1' hm (Nat.cast_nonneg _) ?_ (Nat.cast_nonneg _) ?_ hxC ?_
   · have h1 : x ^ (377 : ℝ) = x ^ 377 := by exact_mod_cast cast 377

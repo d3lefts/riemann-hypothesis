@@ -115,7 +115,7 @@ private theorem mem_val {K : Type} [Field K] (d : K) (u : Kˣ) :
   constructor
   · rintro ⟨w, rfl⟩
     refine ⟨(w : QuadraticAlgebra K d 0).re, (w : QuadraticAlgebra K d 0).im, ?_⟩
-    simp only [Units.coe_map, MonoidHom.coe_coe, QuadraticAlgebra.norm_def]
+    simp only [Units.coe_map, QuadraticAlgebra.norm_def]
     ring
   · rintro ⟨a, b, h⟩
     have hn : QuadraticAlgebra.norm (⟨a, b⟩ : QuadraticAlgebra K d 0) = u := by
@@ -171,7 +171,7 @@ private theorem index_val {K : Type} [Field K] [CharZero K] [ValuativeRel K] [To
       map_mul' := by
         intro z w
         simp only [QuadraticAlgebra.re_mul, QuadraticAlgebra.im_mul, map_add (f := _), map_mul,
-          map_zero, zero_mul, add_zero]
+          zero_mul, add_zero]
         linear_combination (-(algebraMap K L z.im * algebraMap K L w.im)) * hβ
       map_zero' := by simp
       map_add' := by
@@ -670,7 +670,7 @@ private theorem mem_NE {K : Type} [Field K] [CharZero K] (τ : K) (t : Kˣ) : t 
   · rintro ⟨z, rfl⟩
     refine ⟨(z : QuadraticAlgebra K (-1) τ).re + τ * (z : QuadraticAlgebra K (-1) τ).im / 2,
       (z : QuadraticAlgebra K (-1) τ).im / 2, ?_⟩
-    simp only [Units.coe_map, MonoidHom.coe_coe, QuadraticAlgebra.norm_def]
+    simp only [Units.coe_map, QuadraticAlgebra.norm_def]
     field_simp
     ring
   · rintro ⟨a, b, hab⟩
@@ -682,7 +682,7 @@ private theorem mem_NE {K : Type} [Field K] [CharZero K] (τ : K) (t : Kˣ) : t 
       simpa only [e] using t.ne_zero
     refine ⟨hz.unit, ?_⟩
     ext
-    simp only [Units.coe_map, MonoidHom.coe_coe, IsUnit.unit_spec, QuadraticAlgebra.norm_def]
+    simp only [Units.coe_map, IsUnit.unit_spec, QuadraticAlgebra.norm_def]
     rw [← hab]
     ring
 
@@ -1445,7 +1445,7 @@ private noncomputable def scaleEq (Δ : K) (s : Kˣ) (z : (Etau K τ)ˣ) : Sp Δ
       rw [← mul_assoc, ofE_inv, one_mul]
 
 private theorem sigL_ofE (z : Etau K τ) (x : EL Δ τ) : sigL (ofE Δ z * x) = ofE Δ z * sigL x := by
-  ext <;> simp [ofE, sigL] <;> ring
+  ext <;> simp [ofE, sigL]
 
 private theorem ofE_norm (z : Etau K τ) (m : EL Δ τ) : QuadraticAlgebra.norm z • m = m * (ofE Δ z * star (ofE Δ z)) := by
   ext <;> simp [ofE, QuadraticAlgebra.norm_def] <;> ring

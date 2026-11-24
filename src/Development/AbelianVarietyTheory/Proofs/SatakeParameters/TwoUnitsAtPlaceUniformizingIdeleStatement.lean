@@ -234,7 +234,7 @@ open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.MainNotions F
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.kernelSite_normalisingCharPow_values_in_coeffField : Sites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S => ∀ j (hj : j ≤ D.R.m), (sysS H X std).Lv.comp j → ∀ x ∈ U1 (sigD D), ∃ r : D.what₂.LL, D.what₂.embLL r = chiI J x ^ (((j * ((sysS H X std).t + 1) / 2 : ℕ) : ℤ))) := by
-  first | exact @GlobalTheory.TwV.Xc.chiI_pow_rat | exact GlobalTheory.TwV.Xc.chiI_pow_rat | (intros; apply GlobalTheory.TwV.Xc.chiI_pow_rat <;> assumption)
+  first | exact @GlobalTheory.TwV.Xc.chiI_pow_rat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteNormalisingCharPowValuesInCoeffFieldStatement =====
@@ -275,7 +275,7 @@ theorem exists_h90_eq_oneOff_of_normOne_at_split_place : ∀ {F E : Type} [Field
   have hval : ((h90 σ (oneAtU w c) : (AfE F E)ˣ) : AfE F E) =
       oneAt w (c : E ⊗[F] w.adicCompletion F) *
         sigR σ (FiniteAdeleRing (𝓞 F) F) (oneAt w ((c⁻¹ : (E ⊗[F] w.adicCompletion F)ˣ) : E ⊗[F] w.adicCompletion F)) := by
-    simp only [h90, MonoidHom.div_apply, MonoidHom.id_apply, div_eq_mul_inv, Units.val_mul, conjId, map_inv]
+    simp only [h90, div_eq_mul_inv, conjId]
     rfl
   rw [hval, sigR_oneAt, oneAt_mul, hπe]
   congr 1
@@ -581,7 +581,7 @@ theorem exists_unitaryOneFiniteAdelic_of_det_normOne (D : D7) (π : (AfE D.host.
   · show cT _ _ * _ * _ = _
     ext a b
     fin_cases a; fin_cases b
-    simp [cT, Matrix.mul_apply, sigD]
+    simp [cT, Matrix.mul_apply]
     rw [mul_comm]
     exact hd'
   · ext
@@ -705,7 +705,7 @@ open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.MainNotions F
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.stepCharacter_uniformizingIdele_mem_coeffField : Sites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S => KIn t → ∀ v π, IsUnifAt J v π → ∀ j < D.R.m, ∃ r : D.what₂.LL, D.what₂.embLL r = S.muT (j + 1) π) := by
-  first | exact @GlobalTheory.TwV.Xc.MuLL.mu_mem_LL | exact GlobalTheory.TwV.Xc.MuLL.mu_mem_LL | (intros; apply GlobalTheory.TwV.Xc.MuLL.mu_mem_LL <;> assumption)
+  first | exact @GlobalTheory.TwV.Xc.MuLL.mu_mem_LL
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.StepCharacterUniformizingIdeleMemCoeffFieldStatement =====
@@ -800,7 +800,7 @@ open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.MainNotions F
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.two_units_at_place_uniformizing_idele : Sites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S => KIn t → S.Pos → ∀ v π, IsUnifAt J v π → ∀ j < D.R.m, (sysS H X std).Lv.comp j → (sysS H X std).Lv.comp (j + 1) → ∃ a b : (sysS H X std).G.Kf, (sysS H X std).vEqK a 0 ∧ (sysS H X std).vEqK b 0 ∧ S.E.iK a = ((D.what₂.places.resChar w : ℕ) : ℂ_[D.what₂.places.resChar w]) ^ (-((sysS H X std).vm v (j + 1))) * TaylorLogMetric.lamC S.lam (S.muT (j + 1) π * chiI J π ^ (((j * ((sysS H X std).t + 1) / 2 : ℕ) : ℤ))) ∧ S.E.iK b = ((D.what₂.places.resChar w : ℕ) : ℂ_[D.what₂.places.resChar w]) ^ ((sysS H X std).vm v (j + 1)) * TaylorLogMetric.lamC S.lam ((S.muT (j + 1) π)⁻¹ * chiI J π ^ (-((((j + 1) * ((sysS H X std).t + 1) / 2 : ℕ) : ℤ))))) := by
-  first | exact @GlobalTheory.TwV.Xc.two_units | exact GlobalTheory.TwV.Xc.two_units | (intros; apply GlobalTheory.TwV.Xc.two_units <;> assumption)
+  first | exact @GlobalTheory.TwV.Xc.two_units
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.TwoUnitsAtPlaceUniformizingIdeleStatement =====

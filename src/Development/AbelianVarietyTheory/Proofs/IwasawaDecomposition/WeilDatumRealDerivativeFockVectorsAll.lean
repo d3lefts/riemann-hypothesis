@@ -99,7 +99,7 @@ theorem pderiv_comm' {σ : Type} (i j : σ) (p : MvPolynomial σ ℂ) :
   | mul_X p s hp =>
     simp only [Derivation.leibniz, pderiv_X, map_add (f := _), smul_eq_mul, hp]
     simp only [Pi.single_apply]
-    split_ifs <;> simp [Derivation.leibniz] <;> ring
+    split_ifs <;> simp <;> ring
 
 variable {κ σ : Type} [Fintype κ] [DecidableEq κ] [DecidableEq σ]
 
@@ -134,7 +134,7 @@ theorem pair_eq (e : κ → σ) (he : Function.Injective e) (p : κ → Prop) [D
     rw [Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_mul]
     simp only [Pi.single_apply, he.eq_iff]
     by_cases h : a = b
-    · simp [h, mul_comm]
+    · simp [h]
     · simp [h, Ne.symm h]
   have hkl := hA k l
   have hlk := hA l k
@@ -156,7 +156,7 @@ theorem pair_eq (e : κ → σ) (he : Function.Injective e) (p : κ → Prop) [D
   · have hn : ¬ (k = l ∧ ¬ p k) := fun h => h.2 hk
     have e1 : (p k ↔ p l) := by simp [hk, hl]
     rw [if_neg hn, wp k hk, wp l hl, vp k hk, vp l hl]
-    simp only [gT, ms k l e1, ms l k e1.symm, ns k l e1, ns l k e1.symm, fp k hk, fp l hl, zero_div, map_zero, C_0]
+    simp only [gT, ms k l e1, ms l k e1.symm, ns k l e1, ns l k e1.symm, fp k hk, fp l hl, zero_div, map_zero]
     ring
   · have hne : k ≠ l := fun h => hl (h ▸ hk)
     have hn : ¬ (k = l ∧ ¬ p k) := fun h => hne h.1
@@ -165,7 +165,7 @@ theorem pair_eq (e : κ → σ) (he : Function.Injective e) (p : κ → Prop) [D
     rw [if_neg e1] at hkl
     rw [if_neg e2] at hlk
     rw [if_neg hn, wp k hk, wn l hl, vp k hk, vn l hl]
-    simp only [gT, md k l e1, md l k e2, nd k l e1, nd l k e2, fp k hk, fn l hl, hlk, hkl, map_zero, C_0, zero_div]
+    simp only [gT, md k l e1, md l k e2, nd k l e1, nd l k e2, fp k hk, fn l hl, hlk, hkl, map_zero]
     rw [h2 (A k l), h2 (A l k), hd l k]
     ring
   · have hne : k ≠ l := fun h => hk (h ▸ hl)
@@ -175,7 +175,7 @@ theorem pair_eq (e : κ → σ) (he : Function.Injective e) (p : κ → Prop) [D
     rw [if_neg e1] at hkl
     rw [if_neg e2] at hlk
     rw [if_neg hn, wn k hk, wp l hl, vn k hk, vp l hl]
-    simp only [gT, md k l e1, md l k e2, nd k l e1, nd l k e2, fn k hk, fp l hl, hlk, hkl, map_zero, C_0, zero_div]
+    simp only [gT, md k l e1, md l k e2, nd k l e1, nd l k e2, fn k hk, fp l hl, hlk, hkl, map_zero]
     rw [h2 (A k l), h2 (A l k), hd l k]
     ring
   · have e1 : (p k ↔ p l) := by simp [hk, hl]
@@ -183,11 +183,11 @@ theorem pair_eq (e : κ → σ) (he : Function.Injective e) (p : κ → Prop) [D
     rw [if_pos e1] at hkl
     rw [if_pos e2] at hlk
     rw [wn k hk, wn l hl, vn k hk, vn l hl, hx, hx]
-    simp only [gT, ms k l e1, ms l k e2, ns k l e1, ns l k e2, fn k hk, fn l hl, hlk, hkl, map_zero, C_0, zero_div,
+    simp only [gT, ms k l e1, ms l k e2, ns k l e1, ns l k e2, fn k hk, fn l hl, hlk, hkl, map_zero, zero_div,
       map_neg]
     by_cases h : k = l
     · subst h
-      simp only [if_true, true_and, if_pos hk, not_false_eq_true, if_pos (show ¬ p k from hk)]
+      simp only [if_true, true_and, if_pos hk]
       rw [h2' (A k k)]
       ring
     · have h' : l ≠ k := Ne.symm h
@@ -318,7 +318,7 @@ theorem aK_conj {X : Matrix (Fin n) (Fin n) ℂ} {Y : Matrix (Fin m) (Fin m) ℂ
       linear_combination (sgn (sgB pT i) * sgn (sgB pT i') * Y i' i) * hb j
     · subst h2
       have h1' : j' ≠ j := Ne.symm h1
-      simp only [if_true, if_neg h1, if_neg h1', map_zero, zero_sub, hX, map_neg]
+      simp only [if_true, if_neg h1, if_neg h1', map_zero, zero_sub, hX]
       linear_combination (-(sgn (sgB pS j) * sgn (sgB pS j') * X j j')) * ha i
     · have h1' : j' ≠ j := Ne.symm h1
       have h2' : i' ≠ i := Ne.symm h2
@@ -604,7 +604,7 @@ open scoped TensorProduct InnerProductSpace
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_nonzero_fockVacuum_of_nonzero_thetaFunction : ∀ (D : D7) (V W : HSp D) (A : GlobalTheory.ChainFr.Fr V) (B : GlobalTheory.ChainFr.Fr W) (θ : InfFam D) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → IsInfFam θ → ∀ f, IsThetaFunO ψ V W f → f ≠ 0 → ∃ f₀, GlobalTheory.ChainFr.IsVacF ψ θ A B f₀ ∧ f₀ ≠ 0 := by
-  first | exact @GlobalTheory.Mem.VacReal.exists_isVacF_ne_zero | exact GlobalTheory.Mem.VacReal.exists_isVacF_ne_zero | (intros; apply GlobalTheory.Mem.VacReal.exists_isVacF_ne_zero <;> assumption)
+  first | exact @GlobalTheory.Mem.VacReal.exists_isVacF_ne_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsNonzeroFockVacuumOfNonzeroThetaFunctionStatement =====
@@ -895,7 +895,7 @@ open scoped TensorProduct InnerProductSpace
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.realLieAlgebra_acts_by_fockOperators_upToScalars : ∀ (D : D7) (V W : HSp D) (A : GlobalTheory.ChainFr.Fr V) (B : GlobalTheory.ChainFr.Fr W) (θ : InfFam D) (ψ : AddChar (AF D.host.F) ℂ) (χS χT : (AE D)ˣ →* Circle) (ω : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)) (τ : D.what₂.Tau), IsInfFam θ → IsWeilDatumO ψ V W χS χT ω → ∃ (κS : Matrix (Fin V.rank) (Fin V.rank) ℂ → ℂ) (κT : Matrix (Fin W.rank) (Fin W.rank) ℂ → ℂ), ∀ f, IsThetaFunO ψ V W f → IsFockVacAt (heisO ψ V W) θ τ (cplxO (A.cart τ) (B.cart τ)) f → GlobalTheory.ChainFr.LieFockWith ψ θ A B ω f τ κS κT := by
-  first | exact @GlobalTheory.LieFock.lieFockUpTo_at | exact GlobalTheory.LieFock.lieFockUpTo_at | (intros; apply GlobalTheory.LieFock.lieFockUpTo_at <;> assumption)
+  first | exact @GlobalTheory.LieFock.lieFockUpTo_at
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RealLieAlgebraActsByFockOperatorsUpToScalarsStatement =====
@@ -1130,7 +1130,7 @@ open scoped TensorProduct InnerProductSpace
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.weilDatum_realPlaceDerivatives_add : ∀ (D : D7) (V W : HSp D) (θ : InfFam D) (ψ : AddChar (AF D.host.F) ℂ) (χS χT : (AE D)ˣ →* Circle) (ω : GA D V × GA D W →* Module.End ℂ (WO V W → ℂ)) (τ : D.what₂.Tau), IsInfFam θ → IsWeilDatumO ψ V W χS χT ω → ∀ X ∈ lieAt V τ, ∀ Y ∈ lieAt W τ, ∀ F F₁ F₂ : WO V W → ℂ, IsThetaFunO ψ V W F → (∀ z, HasDerivAt (fun t : ℝ => ω (oneP θ V τ X t, 1) F z) (F₁ z) 0) → (∀ z, HasDerivAt (fun t : ℝ => ω (1, oneP θ W τ Y t) F z) (F₂ z) 0) → ∀ z, HasDerivAt (fun t : ℝ => ω (oneP θ V τ X t, oneP θ W τ Y t) F z) (F₁ z + F₂ z) 0 := by
-  first | exact @GlobalTheory.Mem.LieSum.hasDerivAt_add | exact GlobalTheory.Mem.LieSum.hasDerivAt_add | (intros; apply GlobalTheory.Mem.LieSum.hasDerivAt_add <;> assumption)
+  first | exact @GlobalTheory.Mem.LieSum.hasDerivAt_add
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.WeilDatumRealPlaceDerivativesAddStatement =====

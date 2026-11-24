@@ -139,7 +139,7 @@ section -- clump:auto
 
 
 theorem _root_.GlobalTheory.T.ind_etale_prime_comparison : ∀ (B O : Type) [CommRing B] [CommRing O] [Algebra B O], (∃ (ι : Type) (_ : Preorder ι) (_ : IsDirected ι (· ≤ ·)) (_ : Nonempty ι) (Si : ι → Subalgebra B O), Monotone Si ∧ (∀ s : O, ∃ i, s ∈ Si i) ∧ ∀ i, ∃ (E : Type) (_ : CommRing E) (_ : Algebra B E) (_ : Algebra.Etale B E) (P : Ideal E) (_ : P.IsPrime), Nonempty (Localization.AtPrime P ≃ₐ[B] Si i)) → ∀ p p' : Ideal O, p.IsPrime → p'.IsPrime → p ≤ p' → p.comap (algebraMap B O) = p'.comap (algebraMap B O) → p = p' := by
-  first | (exact @GlobalTheory.eq_of_le_of_comap_eq_of_indEtale) | (exact GlobalTheory.eq_of_le_of_comap_eq_of_indEtale) | (intros; apply GlobalTheory.eq_of_le_of_comap_eq_of_indEtale  <;> assumption)
+  first | (exact @GlobalTheory.eq_of_le_of_comap_eq_of_indEtale)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IndEtalePrimeComparison =====
@@ -151,7 +151,7 @@ section -- clump:auto
 
 
 theorem _root_.GlobalTheory.T.pic_eq_one_of_forall_prime_maximal : ∀ (R : Type) [CommRing R], (∀ P : Ideal R, P.IsPrime → P.IsMaximal) → ∀ c : CommRing.Pic R, c = 1 := by
-  first | (exact @GlobalTheory.pic_eq_one_of_forall_isMaximal) | (exact GlobalTheory.pic_eq_one_of_forall_isMaximal) | (intros; apply GlobalTheory.pic_eq_one_of_forall_isMaximal  <;> assumption)
+  first | (exact @GlobalTheory.pic_eq_one_of_forall_isMaximal)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PicEqOneOfForallPrimeMaximalStatement =====
@@ -363,14 +363,11 @@ def liftRoot [Module.Invertible B L] (φ : MultilinearMap (RingHom.id B) (fun _ 
     · exact hle ha
     refine Ideal.span_le.2 ?_
     rintro r ((⟨⟨a, b⟩, rfl⟩ | ⟨⟨c, a⟩, rfl⟩) | ⟨ℓ, rfl⟩)
-    · simp only [SetLike.mem_coe, RingHom.mem_ker, AlgHom.toRingHom_eq_coe, RingHom.coe_coe,
-        map_sub, aeval_X, map_add]
+    · simp only [SetLike.mem_coe, RingHom.mem_ker, map_sub, aeval_X, map_add]
       ring
-    · simp only [SetLike.mem_coe, RingHom.mem_ker, AlgHom.toRingHom_eq_coe, RingHom.coe_coe,
-        map_sub, map_mul, aeval_X, aeval_C, map_smul, smul_eq_mul]
+    · simp only [SetLike.mem_coe, RingHom.mem_ker, map_sub, map_mul, aeval_X, aeval_C, map_smul, smul_eq_mul]
       ring
-    · simp only [SetLike.mem_coe, RingHom.mem_ker, AlgHom.toRingHom_eq_coe, RingHom.coe_coe,
-        map_sub, map_prod, aeval_X, aeval_C]
+    · simp only [SetLike.mem_coe, RingHom.mem_ker, map_sub, map_prod, aeval_X, aeval_C]
       rw [sub_eq_zero, Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_const,
         Finset.prod_const, Finset.card_univ, Fintype.card_fin, hx]
       have key := congrArg (algebraMap B R) (pow_mul_eq_mul_prod_position φ e ℓ)
@@ -942,7 +939,7 @@ theorem _root_.GlobalTheory.T.picard_torsion_trivial_of_torsors_have_sections : 
         (Pi.algHom B (fun _ : Multiplicative (ZMod q) => D) (fun _ => AlgHom.id B D))
         (Pi.algHom B (fun _ : Multiplicative (ZMod q) => D) (fun g => (act g).toAlgHom))) → Nonempty (D →ₐ[B] B)) →
     ∀ c : CommRing.Pic B, c ^ q = 1 → c = 1 := by
-  first | (exact @GlobalTheory.KummerStep.kummer_step) | (exact GlobalTheory.KummerStep.kummer_step) | (intros; apply GlobalTheory.KummerStep.kummer_step  <;> assumption)
+  first | (exact @GlobalTheory.KummerStep.kummer_step)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PicardTorsionTrivialOfTorsorsHaveSectionsStatement =====
@@ -1028,7 +1025,7 @@ theorem _root_.GlobalTheory.T.exists_maximal_over_closedPoint_closedFibre : ∀ 
         (IsLocalRing.maximalIdeal T).map (Polynomial.C : T →+* Polynomial T) ∧
       (y.comap (algebraMap (Polynomial T) E)).comap (Polynomial.C : T →+* Polynomial T) =
         IsLocalRing.maximalIdeal T := by
-  first | (exact @GlobalTheory.exists_maximal_over_closedPt) | (exact GlobalTheory.exists_maximal_over_closedPt) | (intros; apply GlobalTheory.exists_maximal_over_closedPt  <;> assumption)
+  first | (exact @GlobalTheory.exists_maximal_over_closedPt)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMaximalOverClosedPointClosedFibreStatement =====
@@ -1047,7 +1044,7 @@ theorem _root_.GlobalTheory.T.isZModTorsorFiniteProjective_baseChange : ∀ (B B
     ∃ act' : Multiplicative (ZMod q) →* ((B' ⊗[B] D) ≃ₐ[B'] (B' ⊗[B] D)),
       (∀ (g : Multiplicative (ZMod q)) (b : B') (x : D), act' g (b ⊗ₜ[B] x) = b ⊗ₜ[B] act g x) ∧
       GlobalTheory.LocAcyc.IsZModTorsor B' (B' ⊗[B] D) q act' := by
-  first | (exact @GlobalTheory.LocAcyc.isZModTorsor_baseChange) | (exact GlobalTheory.LocAcyc.isZModTorsor_baseChange) | (intros; apply GlobalTheory.LocAcyc.isZModTorsor_baseChange  <;> assumption)
+  first | (exact @GlobalTheory.LocAcyc.isZModTorsor_baseChange)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsZModTorsorFiniteProjectiveBaseChangeStatement =====
@@ -1071,7 +1068,7 @@ theorem _root_.GlobalTheory.T.strictHenselisation_etale_over_polynomial_alt : �
       ∃ φ : Localization.AtPrime (y.comap (algebraMap (Polynomial T) E)) →+* S,
         φ.comp (algebraMap (Polynomial T) _) = algebraMap (Polynomial T) S ∧
         GlobalTheory.IndefiniteRowSideFullHecke.ProjectiveSpaceOverSpec.IsStrictHenselisation φ := by
-  first | (exact @GlobalTheory.strictHenselisation_etale_over_polynomial) | (exact GlobalTheory.strictHenselisation_etale_over_polynomial) | (intros; apply GlobalTheory.strictHenselisation_etale_over_polynomial  <;> assumption)
+  first | (exact @GlobalTheory.strictHenselisation_etale_over_polynomial)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StrictHenselisationEtaleOverPolynomialStatement =====
@@ -1267,7 +1264,7 @@ section -- clump:auto
 open IsLocalRing Polynomial
 
 theorem _root_.GlobalTheory.T.keyGeneric_of_keyClosedPts' : GlobalTheory.LocAcyc.KeyClosedPts → GlobalTheory.LocAcyc.KeyGeneric := by
-  first | (exact @GlobalTheory.LocAcyc.keyGeneric_of_keyClosedPts) | (exact GlobalTheory.LocAcyc.keyGeneric_of_keyClosedPts) | (intros; apply GlobalTheory.LocAcyc.keyGeneric_of_keyClosedPts  <;> assumption)
+  first | (exact @GlobalTheory.LocAcyc.keyGeneric_of_keyClosedPts)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.KeyGenericOfKeyClosedPtsStatement =====
@@ -1280,7 +1277,7 @@ section -- clump:auto
 open IsLocalRing Polynomial
 
 theorem _root_.GlobalTheory.T.torsorTrivialClosedPoints_of_origin_closedFibre : GlobalTheory.LocAcyc.KeyOrigin → GlobalTheory.LocAcyc.KeyClosedPts := by
-  first | (exact @GlobalTheory.LocAcyc.Translate.keyClosedPts_of_keyOrigin) | (exact GlobalTheory.LocAcyc.Translate.keyClosedPts_of_keyOrigin) | (intros; apply GlobalTheory.LocAcyc.Translate.keyClosedPts_of_keyOrigin  <;> assumption)
+  first | (exact @GlobalTheory.LocAcyc.Translate.keyClosedPts_of_keyOrigin)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorsorTrivialClosedPointsOfOriginClosedFibreStatement =====
@@ -1498,7 +1495,7 @@ section -- clump:auto
 open IsLocalRing Polynomial
 
 theorem _root_.GlobalTheory.T.torsorTrivialGenericFibre_of_strictHenselClosedFibre : GlobalTheory.LocAcyc.KeyLocal → GlobalTheory.LocAcyc.KeyAll := by
-  first | (exact @GlobalTheory.LocAcyc.keyAll_of_keyLocal) | (exact GlobalTheory.LocAcyc.keyAll_of_keyLocal) | (intros; apply GlobalTheory.LocAcyc.keyAll_of_keyLocal  <;> assumption)
+  first | (exact @GlobalTheory.LocAcyc.keyAll_of_keyLocal)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorsorTrivialGenericFibreOfStrictHenselClosedFibStatement =====
@@ -1710,7 +1707,7 @@ section -- clump:auto
 open GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.pic_generic_fibre_quotient_strictHenselisation_no_torsion_alt : ∀ (q : ℕ) [NeZero q] (T : Type) [CommRing T] [IsDomain T] [IsLocalRing T], AIC T → IsUnit (q : T) → ∀ (O : Type) [CommRing O] [Algebra T O] [Algebra (Polynomial T) O] [IsScalarTower T (Polynomial T) O] [HenselianLocalRing O] [IsSepClosed (IsLocalRing.ResidueField O)], (∃ (ι : Type) (_ : Preorder ι) (_ : IsDirected ι (· ≤ ·)) (_ : Nonempty ι) (Si : ι → Subalgebra (Polynomial T) O), Monotone Si ∧ (∀ s : O, ∃ i, s ∈ Si i) ∧ ∀ i, ∃ (E : Type) (_ : CommRing E) (_ : Algebra (Polynomial T) E) (_ : Algebra.Etale (Polynomial T) E) (P : Ideal E) (_ : P.IsPrime), Nonempty (Localization.AtPrime P ≃ₐ[(Polynomial T)] Si i)) → ∀ (A : Type) [CommRing A] [Algebra (Polynomial T) A] [Algebra T A] [IsScalarTower T (Polynomial T) A] (π : O →ₐ[Polynomial T] A), Function.Surjective π → ∀ c : CommRing.Pic (TensorProduct T (FractionRing T) A), c ^ q = 1 → c = 1 := by
-  first | (exact @GlobalTheory.pic_generic_fibre_quotient_strictHenselisation_no_torsion) | (exact GlobalTheory.pic_generic_fibre_quotient_strictHenselisation_no_torsion) | (intros; apply GlobalTheory.pic_generic_fibre_quotient_strictHenselisation_no_torsion  <;> assumption)
+  first | (exact @GlobalTheory.pic_generic_fibre_quotient_strictHenselisation_no_torsion)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PicGenericFibreQuotientStrictHenselisationNoTorsStatement =====

@@ -1336,8 +1336,6 @@ namespace GlobalTheory.MomOne.FormalMul
 section General
 variable {K : Type*} [CommRing K]
 
-theorem hs {f : K⟦X⟧} (hf : constantCoeff f = 0) : HasSubst f := HasSubst.of_constantCoeff_zero' hf
-
 theorem cc_subst {f g : K⟦X⟧} (hf : constantCoeff f = 0) (hg : constantCoeff g = 0) :
     constantCoeff (f.subst g : K⟦X⟧) = 0 :=
   PowerSeries.constantCoeff_subst_eq_zero (τ := Unit) hg f hf
@@ -1360,9 +1358,18 @@ theorem taylor_dvd (U f h : K⟦X⟧) (N : ℕ) (hf : constantCoeff f = 0) (hh0 
   rw [Polynomial.derivative_map, Polynomial.eval_map_algebraMap, Polynomial.eval_map_algebraMap,
     Polynomial.eval_map_algebraMap] at hk
   rw [hD]
-  rw [hU, subst_add (hs hfh), subst_add (hs hf), subst_add (hs hf), subst_mul (hs hfh), subst_mul (hs hf),
-    subst_mul (hs hf), subst_pow (hs hfh), subst_pow (hs hf), subst_pow (hs hf), subst_X (hs hfh), subst_X (hs hf),
-    subst_coe (hs hfh), subst_coe (hs hf), subst_coe (hs hf)]
+  rw [hU, subst_add (HasSubst.of_constantCoeff_zero' hfh),
+      subst_add (HasSubst.of_constantCoeff_zero' hf),
+      subst_add (HasSubst.of_constantCoeff_zero' hf),
+      subst_mul (HasSubst.of_constantCoeff_zero' hfh),
+      subst_mul (HasSubst.of_constantCoeff_zero' hf),
+      subst_mul (HasSubst.of_constantCoeff_zero' hf),
+      subst_pow (HasSubst.of_constantCoeff_zero' hfh),
+      subst_pow (HasSubst.of_constantCoeff_zero' hf),
+      subst_pow (HasSubst.of_constantCoeff_zero' hf), subst_X (HasSubst.of_constantCoeff_zero' hfh),
+      subst_X (HasSubst.of_constantCoeff_zero' hf), subst_coe (HasSubst.of_constantCoeff_zero' hfh),
+      subst_coe (HasSubst.of_constantCoeff_zero' hf),
+      subst_coe (HasSubst.of_constantCoeff_zero' hf)]
   have d1 : (X : K⟦X⟧) ^ M ∣ f ^ M := pow_dvd_pow_of_dvd (X_dvd_iff.2 hf) _
   have d2 : (X : K⟦X⟧) ^ M ∣ (f + h) ^ M := pow_dvd_pow_of_dvd (X_dvd_iff.2 hfh) _
   have d3 : (X : K⟦X⟧) ^ M ∣ h ^ 2 := by
@@ -1410,7 +1417,7 @@ theorem add_law (G : MvPowerSeries (Fin 2) K) (U : K⟦X⟧) (hU : constantCoeff
 
 theorem deriv_mul_eq_one {U ℓ : K⟦X⟧} (hℓ : constantCoeff ℓ = 0) (h : U.subst ℓ = (X : K⟦X⟧)) :
     ((d⁄dX U).subst ℓ : K⟦X⟧) * d⁄dX ℓ = 1 := by
-  rw [← derivative_subst (hs hℓ), h, derivative_X]
+  rw [← derivative_subst (HasSubst.of_constantCoeff_zero' hℓ), h, derivative_X]
 
 theorem subst_inv {U ℓ : K⟦X⟧} (hℓ : constantCoeff ℓ = 0) (h : U.subst ℓ = (X : K⟦X⟧)) :
     ℓ.subst U = (X : K⟦X⟧) := by
@@ -1419,16 +1426,17 @@ theorem subst_inv {U ℓ : K⟦X⟧} (hℓ : constantCoeff ℓ = 0) (h : U.subst
   simp only [zero_add, Nat.cast_zero, mul_one] at h1
   have : Invertible (coeff 1 ℓ) := ⟨_, h1, by rw [mul_comm]; exact h1⟩
   have h2 := subst_substInv_right ℓ hℓ
-  have hV : HasSubst ℓ.substInv := hs (by simp)
+  have hV : HasSubst ℓ.substInv := HasSubst.of_constantCoeff_zero' (by simp)
   have : U = ℓ.substInv := by
-    have := subst_comp_subst_apply (hs hℓ) hV U
+    have := subst_comp_subst_apply (HasSubst.of_constantCoeff_zero' hℓ) hV U
     rw [h, h2, subst_X hV] at this
     rw [this, ← PowerSeries.map_algebraMap_eq_subst_X]; simp
   rw [this, h2]
 
 theorem coeff_subst_C_mul (U ℓ : K⟦X⟧) (hℓ : constantCoeff ℓ = 0) (n : ℕ) (a : K) :
     coeff n (U.subst (C a * ℓ) : K⟦X⟧) = ∑ d ∈ Finset.range (n + 1), coeff d U * (a ^ d * coeff n (ℓ ^ d)) := by
-  rw [coeff_subst' (hs (by simp [hℓ])), finsum_eq_sum_of_support_subset (s := Finset.range (n + 1))]
+  rw [coeff_subst' (HasSubst.of_constantCoeff_zero' (by simp [hℓ])),
+      finsum_eq_sum_of_support_subset (s := Finset.range (n + 1))]
   · refine Finset.sum_congr rfl fun d _ => ?_
     rw [mul_pow, ← map_pow, coeff_C_mul, smul_eq_mul]
   · intro d hd
@@ -1505,7 +1513,7 @@ theorem van_pow {g : ℂ_[q]⟦X⟧} {r : ℕ} (hg : Bd 1 g) (hr : Van r g) (d :
 theorem van_subst {f g : ℂ_[q]⟦X⟧} {m r : ℕ} (hf : Bd 1 f) (hg : Bd 1 g) (h0 : constantCoeff g = 0)
     (hm : Van m f) (hr : Van r g) : Van (m * r) (f.subst g) := by
   intro n hn
-  rw [coeff_subst' (hs h0)]
+  rw [coeff_subst' (HasSubst.of_constantCoeff_zero' h0)]
   refine finsum_induction (fun x => ‖x‖ < 1) (by simp) (fun _ _ => norm_add_lt) fun d => ?_
   rw [smul_eq_mul]
   by_cases h : d < m
@@ -1532,10 +1540,12 @@ theorem padic_multiplications : ∀ (q : ℕ) [Fact q.Prime] (F : FormalGroup �
   have hc : ∀ a : ℂ_[q], constantCoeff (C a * ℓ) = 0 := fun a => by simp [hℓ]
   have hB0 : ∀ a : ℂ_[q], constantCoeff (U.subst (C a * ℓ) : ℂ_[q]⟦X⟧) = 0 := fun a => cc_subst hU (hc a)
   have hℓB : ∀ a : ℂ_[q], (ℓ.subst (U.subst (C a * ℓ) : ℂ_[q]⟦X⟧) : ℂ_[q]⟦X⟧) = C a * ℓ := fun a => by
-    rw [← subst_comp_subst_apply (hs hU) (hs (hc a)), hinv, subst_X (hs (hc a))]
+    rw [← subst_comp_subst_apply (HasSubst.of_constantCoeff_zero' hU) (HasSubst.of_constantCoeff_zero' (hc a)),
+        hinv, subst_X (HasSubst.of_constantCoeff_zero' (hc a))]
   have hcomp : ∀ a b : ℂ_[q], (PowerSeries.subst (U.subst (C b * ℓ) : ℂ_[q]⟦X⟧) (U.subst (C a * ℓ) : ℂ_[q]⟦X⟧) : ℂ_[q]⟦X⟧)
       = U.subst (C (a * b) * ℓ) := fun a b => by
-    rw [subst_comp_subst_apply (hs (hc a)) (hs (hB0 b)), subst_mul (hs (hB0 b)), subst_C', hℓB, map_mul, mul_assoc]
+    rw [subst_comp_subst_apply (HasSubst.of_constantCoeff_zero' (hc a)) (HasSubst.of_constantCoeff_zero' (hB0 b)),
+        subst_mul (HasSubst.of_constantCoeff_zero' (hB0 b)), subst_C', hℓB, map_mul, mul_assoc]
 
   have hnat : ∀ n : ℕ, (U.subst (C (n : ℂ_[q]) * ℓ) : ℂ_[q]⟦X⟧)
       = PowerSeries.map (algebraMap 𝓞_ℂ_[q] ℂ_[q]) (GlobalTheory.ConvSer.nMul F n) := by
@@ -1584,7 +1594,9 @@ theorem padic_multiplications : ∀ (q : ℕ) [Fact q.Prime] (F : FormalGroup �
     set h : ℂ_[q]⟦X⟧ := ℓ.subst (X ^ N : ℂ_[q]⟦X⟧) with hh
     have hh0 : constantCoeff h = 0 := cc_subst hℓ hXN
     have hUh : (U.subst h : ℂ_[q]⟦X⟧) = X ^ N := by
-      rw [hh, ← subst_comp_subst_apply (hs hℓ) (hs hXN), hUℓ, subst_X (hs hXN)]
+      rw [hh,
+          ← subst_comp_subst_apply (HasSubst.of_constantCoeff_zero' hℓ) (HasSubst.of_constantCoeff_zero' hXN),
+          hUℓ, subst_X (HasSubst.of_constantCoeff_zero' hXN)]
     obtain ⟨V, hV⟩ : ∃ V : ℂ_[q]⟦X⟧, ℓ = C (coeff 1 ℓ) * X + X ^ 2 * V := by
       have : (X : ℂ_[q]⟦X⟧) ^ 2 ∣ ℓ - C (coeff 1 ℓ) * X := by
         rw [X_pow_dvd_iff]
@@ -1597,8 +1609,11 @@ theorem padic_multiplications : ∀ (q : ℕ) [Fact q.Prime] (F : FormalGroup �
     have hh' : h = C (coeff 1 ℓ) * X ^ N + X ^ (2 * N) * V.subst (X ^ N : ℂ_[q]⟦X⟧) := by
       rw [hh]
       conv_lhs => rw [hV]
-      rw [subst_add (hs hXN), subst_mul (hs hXN), subst_mul (hs hXN), subst_pow (hs hXN), subst_C', subst_X (hs hXN),
-        ← pow_mul, mul_comm N 2]
+      rw [subst_add (HasSubst.of_constantCoeff_zero' hXN),
+          subst_mul (HasSubst.of_constantCoeff_zero' hXN),
+          subst_mul (HasSubst.of_constantCoeff_zero' hXN),
+          subst_pow (HasSubst.of_constantCoeff_zero' hXN), subst_C',
+          subst_X (HasSubst.of_constantCoeff_zero' hXN), ← pow_mul, mul_comm N 2]
     have hd : (X : ℂ_[q]⟦X⟧) ^ N ∣ h := by
       rw [hh']
       exact dvd_add (dvd_mul_left _ _) ((pow_dvd_pow _ (by omega)).mul_right _)
@@ -1623,8 +1638,10 @@ theorem padic_multiplications : ∀ (q : ℕ) [Fact q.Prime] (F : FormalGroup �
     refine (sup_norm_laws q).2.2.2.2.2 _ W 0 _ hWint (by rw [hW0, norm_one]) ?_
     have e : X ^ 0 * W * d⁄dX (U.subst (C (q : ℂ_[q]) * ℓ))
         = C (q : ℂ_[q]) * W.subst (U.subst (C (q : ℂ_[q]) * ℓ) : ℂ_[q]⟦X⟧) := by
-      rw [derivative_subst (hs (hc q)), hW, subst_mul (hs (hB0 q)), subst_C',
-        subst_comp_subst_apply (hs hℓ) (hs (hB0 q)), hℓB, Derivation.leibniz, derivative_C]
+      rw [derivative_subst (HasSubst.of_constantCoeff_zero' (hc q)), hW,
+          subst_mul (HasSubst.of_constantCoeff_zero' (hB0 q)), subst_C',
+          subst_comp_subst_apply (HasSubst.of_constantCoeff_zero' hℓ) (HasSubst.of_constantCoeff_zero' (hB0 q)),
+          hℓB, Derivation.leibniz, derivative_C]
       simp only [smul_eq_mul]
       linear_combination (C (coeff 1 ℓ) * C (q : ℂ_[q]) *
         ((d⁄dX U).subst (C (q : ℂ_[q]) * ℓ) : ℂ_[q]⟦X⟧)) * hone

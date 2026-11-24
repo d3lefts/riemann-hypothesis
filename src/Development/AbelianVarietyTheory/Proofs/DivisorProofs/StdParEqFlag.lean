@@ -191,11 +191,7 @@ theorem exists_coeff_of_mem_colSpan {F E : Type} [Field F] [NumberField F] [Fiel
     (hy : y ∈ GlobalTheory.StdPar.colSpan F X I) :
     ∃ a : Fin s → AF F ⊗[F] E, (∀ j, ¬ P j → a j = 0) ∧ adMat F (X.submatrix id (Fin.castLE hs)) *ᵥ a = y := by
   first
-  | exact @_root_.GlobalTheory.ColumnSpanCoefficients.exists_coeff_of_mem_colSpan
-  | exact _root_.GlobalTheory.ColumnSpanCoefficients.exists_coeff_of_mem_colSpan
   | (apply _root_.GlobalTheory.ColumnSpanCoefficients.exists_coeff_of_mem_colSpan <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ColumnSpanCoefficients.exists_coeff_of_mem_colSpan <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ColumnSpanCoefficients.exists_coeff_of_mem_colSpan <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.ColumnSpanCoefficients.exists_coeff_of_mem_colSpan ..)
 
 theorem unip_le_unipFlag : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J → ∀ (r : ℕ) (X Y : Matrix (Fin n) (Fin r) E), IsWittFrame σ J X Y → ∀ (S : Finset (Fin r)) (s : ℕ) (hs : s ≤ r), (∀ i : Fin r, i.val < s ↔ ∃ k ∈ S, i ≤ k) → ∀ d : Fin s → ℕ, (∀ i, d i = (S.filter (· < Fin.castLE hs i)).card) → GlobalTheory.StdPar.unip σ J X S ≤ GlobalTheory.UAut.unipFlag σ J (X.submatrix id (Fin.castLE hs)) d := by
@@ -273,7 +269,7 @@ theorem flag_mat {R : Type} [CommRing R] {n r : ℕ} (A : Matrix (Fin n) (Fin r)
       refine Finset.sum_eq_zero fun l' _ => ?_
       have hne : l ≠ Fin.castLE k.2 l' := by
         intro h; have := congrArg Fin.val h; simp at this; have := l'.2; have := Fin.lt_def.1 hl; omega
-      simp [Matrix.one_apply, hne]
+      simp [hne]
     · have e1 : M * A.submatrix id (Fin.castLE k.2) = (A * (A' * M * A)).submatrix id (Fin.castLE k.2) := by
         rw [hB, submatrix_mul_right', hTk, ← Matrix.mul_assoc, ← submatrix_eq_mul_one]
       have := congrFun (congrFun e1 a) ⟨j.val, hjk⟩
@@ -376,7 +372,7 @@ theorem unipFlag_castLE_le_unip : ∀ (F E : Type) [Field F] [NumberField F] [Fi
       funext l
       by_cases hl : l = j
       · subst hl; simp
-      · simp [Pi.single_apply, hl]
+      · simp [hl]
     rw [h0, hv, sub_mulVec, one_mulVec, sub_eq_zero, mulVec_single_one] at ha
     exact (congrFun ha i).trans (Pi.single_apply _ _ _)
   · obtain ⟨m, hmS, hmax⟩ : ∃ m ∈ S, ∀ k ∈ S, k ≤ m := ⟨S.max' hne, S.max'_mem hne, fun k hk => S.le_max' k hk⟩

@@ -230,7 +230,7 @@ namespace RedC
 
 theorem index_eq_card {G T : Type*} [Group G] (N : Subgroup G) (f : G → T) (hs : Function.Surjective f)
     (hf : ∀ a b, f a = f b ↔ a⁻¹ * b ∈ N) : N.index = Nat.card T := by
-  first | exact Bl.general_b_fact_left_rest.goal1 .. | (apply Bl.general_b_fact_left_rest.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_left_rest.goal1 <;> assumption)
+  first | (apply Bl.general_b_fact_left_rest.goal1 <;> assumption)
 
 def redEnd (A : Submodule (𝓞 K) V) (𝔭 : Ideal (𝓞 F)) (k : ℕ) (X : V ≃ₗ[K] V) (hX : X ∈ glSub A) :
     Module.End (𝓞 K) (↥A ⧸ ((extP K 𝔭) ^ k • ⊤ : Submodule (𝓞 K) ↥A)) :=
@@ -388,7 +388,7 @@ theorem exists_redEnd_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (h
       Submodule.Quotient.mk y' = Y (Submodule.Quotient.mk y) →
       CongrP 𝔭 k (h (x' : V) (y' : V)) (h (x : V) (y : V))) :
     ∃ (X : V ≃ₗ[K] V) (hX : X ∈ sSub h (locF 𝔭 A₀) 𝔭 k), redEnd (locF 𝔭 A₀) 𝔭 k X hX.1 = Y := by
-  obtain ⟨g, hg, hgY⟩ := exists_isom_lift hK hF hs hd (by first | exact hA₀ | exact hA₀.toIsLattice) hA₀i h𝔭 hk Y hY
+  obtain ⟨g, hg, hgY⟩ := exists_isom_lift hK hF hs hd (by first | exact hA₀) hA₀i h𝔭 hk Y hY
   have hgA : g ∈ glSub (locF 𝔭 A₀) := hg.2
   obtain ⟨D, hD⟩ := exists_lift hA₀ h𝔭 k Y
   have hle : extP K 𝔭 ^ (k - eA h (locF 𝔭 A₀) 𝔭) • locF 𝔭 A₀ ≤ extP K 𝔭 • locF 𝔭 A₀ :=
@@ -1060,7 +1060,7 @@ theorem relIndex_eq_of_map {G M : Type*} [Group G] [AddCommGroup M] (H G' : Subg
       (-(⟨φ a, h1 a a.2⟩ : P) + ⟨φ b, h1 b b.2⟩ ∈ N.addSubgroupOf P) := by
     intro a b
     rw [Subgroup.mem_subgroupOf, AddSubgroup.mem_addSubgroupOf]
-    simp only [Subgroup.coe_mul, Subgroup.coe_inv, AddSubgroup.coe_add, AddSubgroup.coe_neg, neg_add_eq_sub]
+    simp only [Subgroup.coe_mul, Subgroup.coe_inv, neg_add_eq_sub]
     exact h3 a a.2 b b.2
   let f : G' ⧸ H.subgroupOf G' → P ⧸ N.addSubgroupOf P :=
     Quotient.map' (fun x : G' => (⟨φ x, h1 x x.2⟩ : P)) (fun a b hab => by
@@ -1155,7 +1155,7 @@ theorem relIndex_nSub_eq {A₀ B₀ : Submodule (𝓞 K) V}
       have e2 : x⁻¹ ((((y : V →ₗ[K] V) - LinearMap.id) - ((x : V →ₗ[K] V) - LinearMap.id) :
           V →ₗ[K] V) v) =
           (x⁻¹ * y) v - v := by
-        simp only [LinearMap.sub_apply, LinearEquiv.coe_coe, LinearMap.id_apply, sub_sub_sub_cancel_right,
+        simp only [LinearMap.sub_apply, LinearEquiv.coe_coe, sub_sub_sub_cancel_right,
           map_sub, LinearEquiv.mul_apply]
         rw [← LinearEquiv.mul_apply x⁻¹ x, inv_mul_cancel]
         rfl
@@ -1195,7 +1195,7 @@ theorem relIndex_endL (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
     rw [LinearMap.toMatrix_apply b b, hba j, map_smul, h2, map_smul, Finsupp.smul_apply, map_sum,
     Finsupp.finsetSum_apply]
     simp only [map_smul, Basis.repr_self, Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul, mul_ite,
-      mul_one, mul_zero, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+      mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     field_simp [heK i, hc0K]
   let φA : (V →ₗ[K] V) →+ Matrix (Fin (finrank K V)) (Fin (finrank K V)) K :=
     (LinearMap.toMatrix a a).toLinearMap.toAddMonoidHom
@@ -1491,7 +1491,7 @@ theorem mul_inv_mem_iff {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) {A B 
   · intro hX
     have hX' := (Subgroup.mem_inf.mp hX).1.2
     refine ⟨fun x y => ?_, fun x hx y hy => ?_⟩
-    · simp only [AddSubgroupClass.coe_sub, LinearMap.sub_apply, star_sub, IA.star_phi hs]
+    · simp only [LinearMap.sub_apply, star_sub, IA.star_phi hs]
     · have := hX' (W x) (apply_mem hWB hx) (W y) (apply_mem hWB hy)
       simp only [LinearEquiv.mul_apply, eW'] at this
       simpa only [LinearMap.sub_apply, IA.phi_apply, sub_sub_sub_cancel_right] using this
@@ -1688,8 +1688,8 @@ theorem relIndex_sSub_inf (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
   obtain ⟨h1, h2, h3⟩ := hk₀ k hk
   refine ⟨h1, ?_⟩
   rw [h3]
-  exact relIndex_hermL hK hF hs hd (by first | exact hA₀ | exact hA₀.toIsLattice) hA₀i
-    (by first | exact hB₀ | exact hB₀.toIsLattice) hB₀i h𝔭 h2
+  exact relIndex_hermL hK hF hs hd (by first | exact hA₀) hA₀i
+    (by first | exact hB₀) hB₀i h𝔭 h2
 
 end Formalism.HermitianLattices.Ext.L3.D2
 
@@ -1716,15 +1716,15 @@ theorem local_density_ratio_holds :
   set c := c₁ + c₂ with hc
   obtain ⟨k₁, hk₁⟩ := hc₁ c (by omega)
   obtain ⟨k₂, hk₂⟩ := hc₂ c (by omega)
-  obtain ⟨k₃, hk₃⟩ := D2.akCount_eq_relIndex hK hF hs hd (by first | exact hA₀ | exact hA₀.toIsLattice) hA₀i h𝔭
-  obtain ⟨k₄, hk₄⟩ := D2.akCount_eq_relIndex hK hF hs hd (by first | exact hB₀ | exact hB₀.toIsLattice) hB₀i h𝔭
+  obtain ⟨k₃, hk₃⟩ := D2.akCount_eq_relIndex hK hF hs hd (by first | exact hA₀) hA₀i h𝔭
+  obtain ⟨k₄, hk₄⟩ := D2.akCount_eq_relIndex hK hF hs hd (by first | exact hB₀) hB₀i h𝔭
   obtain ⟨k₅, hk₅⟩ := D2.relIndex_inf_glSub hK hF hs hd hA₀ hA₀i hB₀ h𝔭
   obtain ⟨k₆, hk₆⟩ := D2.relIndex_inf_glSub hK hF hs hd hB₀ hB₀i hA₀ h𝔭
   obtain ⟨k₇, hk₇⟩ := D2.nSub_le_glSub hB₀ hA₀ h𝔭
   obtain ⟨k₈, hk₈⟩ := D2.alphaL_eq hK hF hs hd
-    (by first | exact hA₀ | exact hA₀.toIsLattice) hA₀i h𝔭
+    (by first | exact hA₀) hA₀i h𝔭
   obtain ⟨k₉, hk₉⟩ := D2.alphaL_eq hK hF hs hd
-    (by first | exact hB₀ | exact hB₀.toIsLattice) hB₀i h𝔭
+    (by first | exact hB₀) hB₀i h𝔭
   set k := k₁ + k₂ + k₃ + k₄ + k₅ + k₆ + k₇ + k₈ + k₉ with hk
   obtain ⟨hJI, hIJ⟩ := hk₁ k (by omega)
   obtain ⟨hNN, hNNi⟩ := hk₂ k (by omega)

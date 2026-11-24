@@ -393,7 +393,7 @@ theorem exists_two_pow_smul_of_covers2 {X : Type} [AddCommGroup X] {ι : Type} {
     obtain ⟨z, hz⟩ := ih x
     refine ⟨z, ?_⟩
     rw [map_add (f := _), map_add (f := _), hd, hz, zero_add, pow_succ, mul_smul, two_smul]
-    simp only [two_smul, smul_add]
+    simp only [smul_add]
 
 theorem addHom_eq_zero_of_covers2 {X : Type} [AddCommGroup X] [Module.Finite ℤ X] [Module.Free ℤ X]
     {ι : Type} {a : ι → X} (ha : Covers2 a) (d : X →+ X) (hd : ∀ i, d (a i) = 0) : d = 0 := by
@@ -1004,7 +1004,7 @@ section -- clump:auto
 open NumberField ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.Toroidal GlobalTheory.LocM GlobalTheory.TorRef GlobalTheory.PolFan GlobalTheory.PolCell GlobalTheory.CompanionTheory.Ar.Fan
 
 theorem _root_.GlobalTheory.T.psd_cone_add_mem : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [CharZero O] [Module.Finite ℤ O] (bar : O → O) (X : Type) [AddCommGroup X] [Module O X] [Module.Finite O X] (B B' : X →ₗ[ℤ] X →ₗ[ℤ] ℝ), B ∈ psdCone (bar := bar) (X := X) → B' ∈ psdCone (bar := bar) (X := X) → B + B' ∈ psdCone (bar := bar) (X := X) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Fan.add_mem_psdCone | exact GlobalTheory.CompanionTheory.Ar.Fan.add_mem_psdCone | (intros; apply GlobalTheory.CompanionTheory.Ar.Fan.add_mem_psdCone <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Fan.add_mem_psdCone
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: CompanionTheory.SpectralGeometry.LocalGlobalProofs.ConvexCones.PsdConeAddMemStatement =====
@@ -1306,7 +1306,6 @@ theorem exists_nat_comb_of_toReal_mem_rcone (X : Type) [AddCommGroup X] (m : ℕ
   have h' : ∑ i, γ i y z * (v k i.castSucc : ℤ) + -(β y z) * (v k (Fin.last m) : ℤ) = 0 := by
     exact_mod_cast h
   simp only [LinearMap.smul_apply, LinearMap.sum_apply, nsmul_eq_mul]
-  push_cast
   have h2 : ∑ i, (v k i.castSucc : ℤ) * γ i y z = ∑ i, γ i y z * (v k i.castSucc : ℤ) :=
     Finset.sum_congr rfl fun i _ => mul_comm _ _
   rw [h2]

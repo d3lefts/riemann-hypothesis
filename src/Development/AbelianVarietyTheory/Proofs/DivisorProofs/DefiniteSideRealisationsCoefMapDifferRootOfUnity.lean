@@ -86,7 +86,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem _root_.GlobalTheory.T.coefficientSpace_endomorphism_scalar_schur : ∀ (K : Type) [Field K] [CharZero K] {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeight n)
     (g : Module.End K (VV K lam)),
     (∀ (h : ι → GL (Fin n) K) v, g (rhoK lam h v) = rhoK lam h (g v)) → ∃ a : K, ∀ v, g v = a • v := by
-  first | exact @GlobalTheory.CoefSchur.endo_scalar | exact GlobalTheory.CoefSchur.endo_scalar | (intros; apply GlobalTheory.CoefSchur.endo_scalar <;> assumption)
+  first | exact @GlobalTheory.CoefSchur.endo_scalar
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -671,7 +671,7 @@ theorem _root_.GlobalTheory.T.commutes_all_of_commutes_rationalUnitaryPoints : �
     (∀ (γ : GQ V) (γE : GL (Fin V.rank) D.host.E), Bridge.IsRatMat V γ γE →
       ∀ v, g (rhoVr tauL lam γE v) = rhoVr tauL lam γE (g v)) →
     ∀ (h : D.what₂.Tau → GL (Fin V.rank) D.what₂.LL) v, g (rhoK lam h v) = rhoK lam h (g v) := by
-  first | exact @GlobalTheory.RatDenseEnd.comm_all | exact GlobalTheory.RatDenseEnd.comm_all | (intros; apply GlobalTheory.RatDenseEnd.comm_all <;> assumption)
+  first | exact @GlobalTheory.RatDenseEnd.comm_all
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto

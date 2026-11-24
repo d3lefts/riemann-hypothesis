@@ -539,7 +539,7 @@ theorem chartMon_join {Ω : Type} [Field Ω] {K K' : Type} [Fintype K] [Fintype 
   rw [Finset.prod_eq_single j]
   · simp
   · intro b _ hb
-    simp [Pi.single_apply, hb]
+    simp [hb]
   · intro h
     exact absurd (Finset.mem_univ j) h
 
@@ -1777,7 +1777,7 @@ noncomputable def allOne (q : ℕ) : Fin q →₀ ℕ := ∑ j, Finsupp.single j
 
 theorem toMultiset_allOne (q : ℕ) : (allOne q).toMultiset = Finset.univ.val := by
   ext j
-  simp [allOne, Finsupp.count_toMultiset, Finsupp.finsetSum_apply, Finsupp.single_apply]
+  simp [allOne]
 
 theorem degree_allOne (q : ℕ) : (allOne q).degree = q := by
 

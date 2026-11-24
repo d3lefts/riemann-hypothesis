@@ -67,8 +67,7 @@ theorem conjSource_conjAdjoint_apply {S A' : HSp D} (omb : Om S A') (g : GA D S)
     conjSource (conjAdjoint omb) (negGA A' h, g) (fun y' => f (dagger A' S y')) y = omb (g, h) f (dagger A' S y) := by
   have e1 : conjSource (conjAdjoint omb) (negGA A' h, g) =
       cjEnd (Equiv.refl (WO A' S)) (cjEnd (daggerEquiv S A') (omb (g, h))) := by
-    simp only [conjSource, conjAdjoint, MonoidHom.comp_apply, MonoidHom.prodMap, MonoidHom.coe_mk, OneHom.coe_mk,
-      MulEquiv.coe_toMonoidHom, MulEquiv.symm_apply_apply, MonoidHom.id_apply, Prod.map]
+    simp only [conjSource, conjAdjoint, MonoidHom.comp_apply, MonoidHom.prodMap, MulEquiv.coe_toMonoidHom]
     rfl
   have e2 : (fun y' => f (dagger A' S y')) =
       GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj (Equiv.refl (WO A' S)) (GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj (daggerEquiv S A') f) := by
@@ -118,7 +117,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.isBiTheta_weilRep_second_variable : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (A S A' : HSp D) (χS' χA' : (AE D)ˣ →* Circle) (omb : Om S A'), IsWeilDatumO ψ S A' χS' χA' omb → ∀ C, IsBiTheta ψ A S A' C → ∀ q, IsBiTheta ψ A S A' fun u v => omb q (C u) v := by
-  first | exact @GlobalTheory.BiActRight.isBiTheta_act_right | exact GlobalTheory.BiActRight.isBiTheta_act_right | (intros; apply GlobalTheory.BiActRight.isBiTheta_act_right <;> assumption)
+  first | exact @GlobalTheory.BiActRight.isBiTheta_act_right
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsJointlySmoothBiThetaWeilRepSecondVariableStatement =====

@@ -855,7 +855,7 @@ theorem exists_dual_integral_of_saturated_free_part :
   have hφt : ∀ i, φ (t i) = 0 := fun i => by
     have h := hgs (Sum.inr i)
     simp only [Sum.elim_inr] at h
-    simp [φ, h, Finsupp.single_apply]
+    simp [φ, h]
   let R : Submodule V C := LinearMap.range (Algebra.linearMap V C)
   have hone : (1 : C) ∈ R := ⟨1, by simp⟩
   have hzero : (0 : C) ∈ R := R.zero_mem
@@ -958,7 +958,7 @@ theorem sep_poly (E : Type) [Field E] [NumberField E] (P : Ideal (𝓞 E)) (hP :
         map_sub, map_pow, FiniteField.pow_card, sub_self]
     · rw [← Ideal.Quotient.eq_zero_iff_mem, Polynomial.derivative_sub,
         Polynomial.derivative_X_pow, Polynomial.derivative_X]
-      simp only [map_sub, map_mul, map_pow, Polynomial.aeval_C, Polynomial.aeval_X, map_one,
+      simp only [map_sub, map_mul, map_pow, Polynomial.aeval_X, map_one,
         map_natCast]
       rw [FiniteField.cast_card_eq_zero, zero_mul, zero_sub, neg_eq_zero]
       exact one_ne_zero

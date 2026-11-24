@@ -320,8 +320,6 @@ theorem gramH_eqU {r : ℕ} {t : Term V M r} (hg : GoodU H t) :
     · exact h0 a b (not_and_or.mp h)
   · first
       | exact H.h_herm _ _
-      | exact (H.h_herm _ _).symm
-      | simp [H.h_herm]
   · split_ifs with h
     · obtain ⟨rfl, rfl⟩ := h
       exact hT'
@@ -884,7 +882,7 @@ theorem pair_eG (hcj : ∀ x, cj (cj x) = x) (hO : ∀ x ∈ O, cj x ∈ O)
       rw [Finset.sum_eq_single a]
       · simp
       · intro b _ hb
-        simp [Pi.single_apply, hb]
+        simp [hb]
       · intro h
         exact absurd (Finset.mem_univ a) h
     rw [hs] at hB
@@ -985,7 +983,7 @@ private theorem linearEquiv_mk_eq_mk_of_eCl_eq_of_head_zero {E : Type} [CommRing
     funext j
     refine Fin.lastCases ?_ (fun a => ?_) j
     · simp
-    · simp [hy a, Pi.single_apply, Fin.castSucc_ne_last]
+    · simp [hy a, Fin.castSucc_ne_last]
   rw [hy', Submodule.Quotient.mk_smul, map_smul]
   unfold LocCntCommon.eCl at he
   rw [he, ← Submodule.Quotient.mk_smul]
@@ -1303,7 +1301,7 @@ theorem thetaP_mem (ht : cj (t : E) = t) (ht' : cj (t' : E) = t')
       simp only [GamC, Set.mem_setOf_eq]
       refine ⟨Sum.elim (Y (Sum.inl (Fin.last r)) • Pi.single (Fin.last r) 1)
         (liftOf O p.1.2.toLinearMap fun j => Y (Sum.inr j)), fun a => ?_, ?_⟩
-      · simp [Pi.single_apply, Fin.castSucc_ne_last]
+      · simp [Fin.castSucc_ne_last]
       · refine Prod.ext ?_ (Prod.ext ?_ ?_)
         · show thetaP O cj hcj hO t t' hu₁ hu₂ hκ₁ hκ₂ p (Submodule.Quotient.mk Y) = _
           rw [thetaP_mk_eq_mk_sum_elim_liftOf, supp_inl O Y hY0]
@@ -1320,7 +1318,7 @@ theorem thetaP_mem (ht : cj (t : E) = t) (ht' : cj (t' : E) = t')
             (liftOf O p.1.2.symm.toLinearMap fun j => Y₂ (Sum.inr j)) : Ix r → O) (Sum.inr b) : O) : E)), ?_, ?_⟩
       · simp only [GamC, Set.mem_setOf_eq]
         refine ⟨_, fun a => ?_, rfl⟩
-        simp [Pi.single_apply, Fin.castSucc_ne_last]
+        simp [Fin.castSucc_ne_last]
       · have hY₂ : Y₂ = Sum.elim (Y₂ (Sum.inl (Fin.last r)) • Pi.single (Fin.last r) 1) (fun j => Y₂ (Sum.inr j)) := by
           rw [← supp_inl O Y₂ hY0]
           exact elim_eta O Y₂
@@ -1337,7 +1335,7 @@ theorem thetaP_mem (ht : cj (t : E) = t) (ht' : cj (t' : E) = t')
       simp only [GamC', Set.mem_setOf_eq]
       refine ⟨Sum.elim (liftOf O p.1.1.toLinearMap fun j => Y (Sum.inl j))
         (Y (Sum.inr (Fin.last r)) • Pi.single (Fin.last r) 1), fun a => ?_, ?_⟩
-      · simp [Pi.single_apply, Fin.castSucc_ne_last]
+      · simp [Fin.castSucc_ne_last]
       · refine Prod.ext ?_ (Prod.ext ?_ ?_)
         · show thetaP O cj hcj hO t t' hu₁ hu₂ hκ₁ hκ₂ p (Submodule.Quotient.mk Y) = _
           rw [thetaP_mk_eq_mk_sum_elim_liftOf, supp_inr O Y hY0]
@@ -1355,7 +1353,7 @@ theorem thetaP_mem (ht : cj (t : E) = t) (ht' : cj (t' : E) = t')
           ?_, ?_⟩
       · simp only [GamC', Set.mem_setOf_eq]
         refine ⟨_, fun a => ?_, rfl⟩
-        simp [Pi.single_apply, Fin.castSucc_ne_last]
+        simp [Fin.castSucc_ne_last]
       · have hY₂ : Y₂ = Sum.elim (fun j => Y₂ (Sum.inl j)) (Y₂ (Sum.inr (Fin.last r)) • Pi.single (Fin.last r) 1) := by
           rw [← supp_inr O Y₂ hY0]
           exact elim_eta O Y₂

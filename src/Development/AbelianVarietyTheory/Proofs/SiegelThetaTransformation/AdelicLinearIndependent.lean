@@ -72,7 +72,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.discreteTopology_rationalPoints_hermitianSpace : ∀ (D : D7) (V : HSp D), DiscreteTopology (GQ V) := by
-  first | exact @GlobalTheory.RationalDiscrete.discreteTopology_GQ | exact GlobalTheory.RationalDiscrete.discreteTopology_GQ | (intros; apply GlobalTheory.RationalDiscrete.discreteTopology_GQ <;> assumption)
+  first | exact @GlobalTheory.RationalDiscrete.discreteTopology_GQ
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.DiscreteTopologyRationalPointsHermitianSpaceStatement =====
@@ -87,7 +87,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_compact_lattice_stabilizer_bounded_real : ∀ (D : D7) (V : HSp D) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)), IsInfFam θ → ∀ R : ℝ, ∃ K : Set (GA D V), IsCompact K ∧ ∀ h : GA D V, (∀ y, y ∈ Formalism.MainNotions.StandardLattice.latHat D.host.F D.host.E (L0c D V) ↔ (finMat D.sp.cm.sig V.gram h).mulVec y ∈ Formalism.MainNotions.StandardLattice.latHat D.host.F D.host.E (L0c D V)) → (∀ ρ i j, ‖infMat D.sp.cm.sig V.gram (θ ρ) h i j‖ ≤ R) → h ∈ K := by
-  first | exact @GlobalTheory.StabCompact.exists_compact_stab | exact GlobalTheory.StabCompact.exists_compact_stab | (intros; apply GlobalTheory.StabCompact.exists_compact_stab <;> assumption)
+  first | exact @GlobalTheory.StabCompact.exists_compact_stab
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.ExistsCompactLatticeStabilizerBoundedRealStatement =====
@@ -102,7 +102,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.isOpen_stabilizer_completedLattice_adelicUnitary : ∀ (D : D7) (V : HSp D), IsOpen {h : GA D V | ∀ y, y ∈ Formalism.MainNotions.StandardLattice.latHat D.host.F D.host.E (L0c D V) ↔ (finMat D.sp.cm.sig V.gram h).mulVec y ∈ Formalism.MainNotions.StandardLattice.latHat D.host.F D.host.E (L0c D V)} := by
-  first | exact @GlobalTheory.StabOpen.isOpen_stab_latHat | exact GlobalTheory.StabOpen.isOpen_stab_latHat | (intros; apply GlobalTheory.StabOpen.isOpen_stab_latHat <;> assumption)
+  first | exact @GlobalTheory.StabOpen.isOpen_stab_latHat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.IsOpenStabilizerCompletedLatticeAdelicUnitaryStatement =====

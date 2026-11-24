@@ -82,8 +82,7 @@ theorem genusCovol_locS_mono (S : Submonoid R) {L M : Submodule R W} (h : L ≤ 
 theorem genusCovol_locS_idem (S : Submonoid R) (L : Submodule R W) :
     locS S (locS S L) ≤ locS S L := by
   rintro x ⟨s, hs, t, ht, hx⟩
-  refine ⟨t * s, S.mul_mem ht hs, ?_⟩
-  rwa [mul_smul]
+  exact ⟨t * s, S.mul_mem ht hs, by rwa [mul_smul]⟩
 
 theorem genusCovol_le_of_loc {Y X : Submodule R W}
     (h : ∀ (P : Ideal R) [P.IsMaximal], Y ≤ locS P.primeCompl X) : Y ≤ X := by
@@ -108,18 +107,14 @@ theorem genusCovol_pigeon {X Y : Submodule R W}
   obtain ⟨a, b, hab, hf⟩ := Finite.exists_ne_map_eq_of_infinite f
   have key : ∀ a b : ℕ, f a = f b → r ^ a • z - r ^ b • z ∈ X := by
     intro a b e
-    have := (QuotientAddGroup.eq).mp e
-    rw [AddSubgroup.mem_addSubgroupOf] at this
-    have h2 : -(r ^ a • z) + r ^ b • z ∈ X := this
-    have h3 := X.neg_mem h2
-    simpa [sub_eq_add_neg, add_comm] using h3
+    have h2 := (QuotientAddGroup.eq).mp e
+    rw [AddSubgroup.mem_addSubgroupOf] at h2
+    simpa [sub_eq_add_neg, add_comm] using X.neg_mem h2
   rcases lt_or_gt_of_ne hab with h | h
   · refine ⟨a, b - a, Nat.sub_pos_of_lt h, ?_⟩
-    rw [Nat.add_sub_cancel' h.le]
-    exact key a b hf
+    simpa [Nat.add_sub_cancel' h.le] using key a b hf
   · refine ⟨b, a - b, Nat.sub_pos_of_lt h, ?_⟩
-    rw [Nat.add_sub_cancel' h.le]
-    exact key b a hf.symm
+    simpa [Nat.add_sub_cancel' h.le] using key b a hf.symm
 
 theorem genusCovol_claimA (S : Submonoid R) {X Y : Submodule R W}
     (hfin : X.toAddSubgroup.relIndex Y.toAddSubgroup ≠ 0) :
@@ -128,8 +123,7 @@ theorem genusCovol_claimA (S : Submonoid R) {X Y : Submodule R W}
   obtain ⟨m, k, hk, hmk⟩ := genusCovol_pigeon hfin s hsy
   have hb : s ^ k • y ∈ Y := by
     obtain ⟨j, rfl⟩ : ∃ j, k = j + 1 := ⟨k - 1, by omega⟩
-    rw [pow_succ, mul_smul]
-    exact Y.smul_mem _ hsy
+    simpa only [pow_succ, mul_smul] using Y.smul_mem (s ^ j) hsy
   have hr : y - s ^ k • y ∈ locS S X := by
     refine ⟨s ^ (m + 1), S.pow_mem hs _, ?_⟩
     have e : s ^ (m + 1) • (y - s ^ k • y) = s ^ m • (s • y) - s ^ (m + k) • (s • y) := by
@@ -311,8 +305,7 @@ theorem genusCovol_gmap_inf (g : V ≃ₗ[K] V) (A B : Submodule (𝓞 K) V) :
 
 theorem genusCovol_gmap_gmap_inv (g : V ≃ₗ[K] V) (Z : Submodule (𝓞 K) V) :
     gmap g (gmap g⁻¹ Z) = Z := by
-  have := genusBasic_gmap_inv g⁻¹ Z
-  rwa [inv_inv] at this
+  simpa using genusBasic_gmap_inv g⁻¹ Z
 
 theorem genus_covolume_local_dual_le (h : V →ₗ⋆[K] V →ₗ[K] K) (g : V ≃ₗ[K] V) (hg : g ∈ isom h)
     (P : Ideal (𝓞 K)) [P.IsPrime] (L M : Submodule (𝓞 K) V) (hM : M.FG)
@@ -437,7 +430,7 @@ theorem genusCovol_dualBasis (h : V →ₗ⋆[K] V →ₗ[K] K) (N : ℕ)
       rw [hb, hsum, sum_inner]
       simp_rw [real_inner_smul_left, bR, Basis.ofZLatticeBasis_apply, ← hmι, ← hb, hdelta]
       rw [Finset.sum_eq_single i (fun k _ hk => by simp [Matrix.one_apply, hk]) (by simp)]
-      simp [Matrix.one_apply]
+      simp
     exact_mod_cast e
   have hyy : ∀ i j, b (y i) (y j) = Gi j i := by
     intro i j
@@ -506,9 +499,8 @@ theorem genusCovol_ri_zmap (N : ℕ) (ι : V →+ EuclideanSpace ℝ (Fin N)) (h
     (A B : Submodule (𝓞 K) V) :
     (zmap ι A).toAddSubgroup.relIndex (zmap ι B).toAddSubgroup =
       A.toAddSubgroup.relIndex B.toAddSubgroup := by
-  unfold zmap
-  rw [AddSubgroup.toIntSubmodule_toAddSubgroup, AddSubgroup.toIntSubmodule_toAddSubgroup]
-  exact AddSubgroup.relIndex_map_map_of_injective _ _ hinj
+  simpa [zmap, AddSubgroup.toIntSubmodule_toAddSubgroup] using
+    AddSubgroup.relIndex_map_map_of_injective _ _ hinj
 
 theorem genusCovol_sq (h : V →ₗ⋆[K] V →ₗ[K] K)
     (hpos : ∀ x : V, x ≠ 0 → 0 < Algebra.trace ℚ K (h x x)) (N : ℕ)

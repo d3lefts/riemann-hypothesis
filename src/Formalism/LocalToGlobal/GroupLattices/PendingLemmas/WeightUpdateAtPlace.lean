@@ -92,8 +92,7 @@ theorem can_rel (L : P.Tup) : ∃ γ : C.Γ, L = C.smul γ (can C L) := by
   exact Quotient.mk_out (s := orbS C) L
 
 theorem can_eq {L L' : P.Tup} (h : ∃ γ : C.Γ, L' = C.smul γ L) : can C L = can C L' := by
-  unfold can
-  rw [Quotient.sound (s := orbS C) h]
+  simpa [can] using congrArg Quotient.out (Quotient.sound (s := orbS C) h)
 
 theorem can_can (L : P.Tup) : can C (can C L) = can C L := by
   exact can_eq C (can_rel C L)
@@ -123,8 +122,7 @@ def repC (h : C.FinClasses) : Finset P.Tup := by
 
 theorem mem_repC (h : C.FinClasses) (L0 : P.Tup) : L0 ∈ repC C h ↔ ∃ L ∈ Classical.choose h, can C L = L0 := by
   classical
-  unfold repC
-  exact Finset.mem_image
+  simp [repC]
 
 theorem repC_lat (h : C.FinClasses) {L0 : P.Tup} (h0 : L0 ∈ repC C h) : P.IsLatTup L0 := by
   obtain ⟨L, hL, rfl⟩ := (mem_repC C h L0).mp h0
@@ -179,12 +177,7 @@ def repOf (h : ∀ j c, (Lv.lev j c).FinClasses) (j : ℕ) : Finset (Lv.comp j �
 theorem mem_repOf (h : ∀ j c, (Lv.lev j c).FinClasses) (j : ℕ) (c : Lv.comp j) (L : (Fl.Pj j).Tup) :
     (c, L) ∈ repOf Lv h j ↔ L ∈ repC (Lv.lev j c) (h j c) := by
   classical
-  simp only [repOf, Finset.mem_biUnion, Finset.mem_univ, true_and, Finset.mem_image, Prod.mk.injEq]
-  constructor
-  · rintro ⟨c', L', hL', rfl, rfl⟩
-    exact hL'
-  · intro hL
-    exact ⟨c, L, hL, rfl, rfl⟩
+  simp [repOf]
 
 theorem repOf_lat (h : ∀ j c, (Lv.lev j c).FinClasses) :
     ∀ j (La : Lv.comp j × (Fl.Pj j).Tup), La ∈ repOf Lv h j → (Fl.Pj j).IsLatTup La.2 := by
@@ -212,8 +205,7 @@ theorem dG_spec (h : ∀ j c, (Lv.lev j c).FinClasses) :
       padicValNat p (Nat.card {γ : (Lv.lev j c).Γ // (Lv.lev j c).smul γ L = L}) ≤ dGOf Lv h j := by
   intro j c L hL
   obtain ⟨L0, ⟨h1, γ0, hγ0⟩, _⟩ := repOf_ex Lv h j c L hL
-  have hc := card_stab_smul (Lv.lev j c) γ0 L0
-  rw [hγ0, hc]
+  rw [hγ0, card_stab_smul (Lv.lev j c) γ0 L0]
   exact Finset.le_sup (f := fun La : Lv.comp j × (Fl.Pj j).Tup =>
     padicValNat p (Nat.card {γ : (Lv.lev j La.1).Γ // (Lv.lev j La.1).smul γ La.2 = La.2})) h1
 
@@ -238,13 +230,12 @@ theorem p_ne_zero_of_place (v : Fin G.P.nV) : (p : G.O) ≠ 0 := by
   have hS := G.P.setting v
   haveI := hS.frac_alt
   intro h
-  have hW : (p : G.P.W v) ≠ 0 := hS.p_unif.ne_zero
-  apply hW
+  apply hS.p_unif.ne_zero
   have h1 : G.P.ι v (algebraMap (G.P.W v) (G.P.Qq v) (p : G.P.W v)) =
       algebraMap G.O G.Kf (G.P.j v (p : G.P.W v)) := hS.ι_comp _
-  rw [map_natCast (G.P.j v), h, map_zero] at h1
-  have h2 : algebraMap (G.P.W v) (G.P.Qq v) (p : G.P.W v) = 0 := (map_eq_zero_iff _ (G.P.ι v).injective).mp h1
-  exact (map_eq_zero_iff _ (IsFractionRing.injective _ _)).mp h2
+  exact (map_eq_zero_iff _ (IsFractionRing.injective _ _)).mp
+    ((map_eq_zero_iff _ (G.P.ι v).injective).mp
+      (by simpa [map_natCast (G.P.j v), h] using h1))
 
 end Unif
 
@@ -283,9 +274,7 @@ variable {p : ℕ} [Fact p.Prime] (X : Sys p)
 
 theorem stab_fin (h : FinStab X.Lv) : ∀ j (La : X.Lt j), (X.Pj j).IsLatTup La.2 → 0 < X.stab j La := by
   intro j La hLa
-  haveI := h j La.1 La.2 hLa
-  haveI : Nonempty {γ : (X.Lv.lev j La.1).Γ // (X.Lv.lev j La.1).smul γ La.2 = La.2} := ⟨⟨1, lsmul_one _ _⟩⟩
-  exact Nat.card_pos
+  exact Nat.card_pos_iff.2 ⟨Nonempty.intro ⟨1, lsmul_one _ _⟩, h j La.1 La.2 hLa⟩
 
 def Aw (_v : X.Pl) (j : ℕ) : Type := X.Lt j × X.Lt (j + 1)
 

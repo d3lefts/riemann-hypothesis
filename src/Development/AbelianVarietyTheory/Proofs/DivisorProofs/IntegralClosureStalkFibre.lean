@@ -75,7 +75,7 @@ open GlobalTheory.Points RatModel
 
 
 theorem _root_.GlobalTheory.T.model_affine_point_eq_of_inverse_mem_iff : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] (M : RatModel o Ω) (U : M.Z.Opens), IsAffineOpen U → ∀ z z' : M.Z, z ∈ U → z' ∈ U → (∀ a ∈ M.ringOn (U : Set M.Z), a ≠ 0 → (a⁻¹ ∈ M.O z ↔ a⁻¹ ∈ M.O z')) → z = z' := by
-  first | exact @GlobalTheory.Points.point_eq_of_inv_mem_iff | exact GlobalTheory.Points.point_eq_of_inv_mem_iff | (intros; apply GlobalTheory.Points.point_eq_of_inv_mem_iff <;> assumption)
+  first | exact @GlobalTheory.Points.point_eq_of_inv_mem_iff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModelAffinePointEqOfInverseMemIffStatement =====
@@ -139,7 +139,7 @@ open GlobalTheory.Points RatModel
 
 
 theorem _root_.GlobalTheory.T.prime_of_ringOn_eq_nonunits_at_point : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] (M : RatModel o Ω) (U : M.Z.Opens), IsAffineOpen U → (U : Set M.Z).Nonempty → ∀ P : Ideal (M.ringOn (U : Set M.Z)), P.IsPrime → ∃ z ∈ U, ∀ a : M.ringOn (U : Set M.Z), a ∈ P ↔ ((a : Ω) = 0 ∨ (a : Ω)⁻¹ ∉ M.O z) := by
-  first | exact @GlobalTheory.Poinc.prime_eq_nonunits_at_point | exact GlobalTheory.Poinc.prime_eq_nonunits_at_point | (intros; apply GlobalTheory.Poinc.prime_eq_nonunits_at_point <;> assumption)
+  first | exact @GlobalTheory.Poinc.prime_eq_nonunits_at_point
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrimeOfRingOnEqNonunitsAtPointStatement =====
@@ -199,7 +199,7 @@ open GlobalTheory.Points RatModel
 
 
 theorem _root_.GlobalTheory.T.ringOn_preimage_integral_of_finite_model_map : ∀ (o₁ Ω₁ o₂ Ω₂ : Type) [CommRing o₁] [Field Ω₁] [Algebra o₁ Ω₁] [CommRing o₂] [Field Ω₂] [Algebra o₂ Ω₂] [Algebra Ω₁ Ω₂] (M₁ : RatModel o₁ Ω₁) (M₂ : RatModel o₂ Ω₂) (q : M₂.Z ⟶ M₁.Z), IsFinite q → M₂.pt ≫ q = spMap (algebraMap Ω₁ Ω₂) ≫ M₁.pt → ∀ U : M₁.Z.Opens, IsAffineOpen U → (U : Set M₁.Z).Nonempty → ∀ b ∈ M₂.ringOn ((q ⁻¹ᵁ U : M₂.Z.Opens) : Set M₂.Z), ∃ f : Polynomial Ω₁, f.Monic ∧ (∀ i, f.coeff i ∈ M₁.ringOn (U : Set M₁.Z)) ∧ Polynomial.eval₂ (algebraMap Ω₁ Ω₂) b f = 0 := by
-  first | exact @GlobalTheory.Poinc.finite_preimage_integral | exact GlobalTheory.Poinc.finite_preimage_integral | (intros; apply GlobalTheory.Poinc.finite_preimage_integral <;> assumption)
+  first | exact @GlobalTheory.Poinc.finite_preimage_integral
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RingOnPreimageIntegralOfFiniteModelMapStatement =====

@@ -108,8 +108,7 @@ theorem eval_eq_sum_coeff_mul_monomial {g : ℕ} (p : MvPolynomial (Fin g) ℂ) 
     MvPolynomial.eval (fun i => z i) p = ∑ α ∈ p.support, AddMonoidAlgebra.coeff p α * monomialOfMultiindex α z := by
   first
   | (simp [MvPolynomial.eval_eq', monomialOfMultiindex]; done)
-  | (simp [MvPolynomial.eval_eq, monomialOfMultiindex, Finsupp.prod]; done)
-  | (rw [MvPolynomial.eval_eq']; unfold monomialOfMultiindex; done)
+  | (simp [MvPolynomial.eval_eq, monomialOfMultiindex]; done)
 
 theorem norm_eval_sq_le {g : ℕ} (p : MvPolynomial (Fin g) ℂ) (z : EuclideanSpace ℂ (Fin g)) :
     ‖MvPolynomial.eval (fun i => z i) p‖ ^ 2 ≤ fa1N p * fa1K p z := by
@@ -123,7 +122,6 @@ theorem norm_eval_sq_le {g : ℕ} (p : MvPolynomial (Fin g) ℂ) (z : EuclideanS
     rw [norm_mul]
     first
     | (field_simp; done)
-    | (field_simp; ring)
   have h2 := Finset.sum_mul_sq_le_sq_mul_sq p.support
     (fun α => ‖AddMonoidAlgebra.coeff p α‖ * Real.sqrt (fa1M α)) (fun α => ‖monomialOfMultiindex α z‖ / Real.sqrt (fa1M α))
   have h3 : ∀ α, (‖AddMonoidAlgebra.coeff p α‖ * Real.sqrt (fa1M α)) ^ 2 = ‖AddMonoidAlgebra.coeff p α‖ ^ 2 * fa1M α :=
@@ -353,7 +351,7 @@ theorem fockU_coeff_le {g c : ℕ} (a : EuclideanSpace ℂ (Fin g)) (F G : Eucli
       (‖z‖ ^ 2 + ‖a‖ ^ 2 - ‖z - a‖ ^ 2) / 2 := by
     intro z
     have h1 : (∑ i, z i * (starRingEnd ℂ) (a i)) = inner ℂ a z := by
-      simp [PiLp.inner_apply, RCLike.inner_apply, mul_comm]
+      simp [PiLp.inner_apply, RCLike.inner_apply]
     have h2 := norm_sub_sq (𝕜 := ℂ) z a
     have h3 := inner_re_symm (𝕜 := ℂ) z a
     simp only [RCLike.re_to_complex] at h2 h3
@@ -565,14 +563,11 @@ theorem expN_hasDerivAt (N : ℕ) (z : ℂ) : HasDerivAt (expN (N + 1)) (expN N 
     simp only [expN, Finset.sum_range_succ _ (N + 1), Nat.factorial_succ (N + 1), Nat.add_sub_cancel]
     first
       | (congr 1; rw [Nat.cast_mul]; exact mul_div_mul_left _ _ hne)
-      | (push_cast; field_simp; ring)
-      | (push_cast; field_simp)
 
 theorem contDiff_expN (N : ℕ) : ContDiff ℂ (⊤ : ℕ∞) (expN N) := by
   unfold expN
   first
     | exact ContDiff.sum fun n _ => (contDiff_id.pow n).div_const _
-    | fun_prop
 
 theorem contDiff_gN (N : ℕ) : ContDiff ℂ (⊤ : ℕ∞) (gN N) := by
   unfold gN
@@ -607,8 +602,6 @@ theorem ellL_apply (q : ℕ) (a v : EuclideanSpace ℂ ι) : ellL q a v = q * Re
   left
   first
     | (rw [PiLp.inner_apply]; exact Finset.sum_congr rfl fun x _ => by simp [mul_comm])
-    | (simp [PiLp.inner_apply, mul_comm]; done)
-    | (simp [EuclideanSpace.inner_eq_star_dotProduct, dotProduct, mul_comm]; done)
 
 theorem iteratedFDeriv_tail_zero (q : ℕ) (a : EuclideanSpace ℂ ι) (N : ℕ) {P : EuclideanSpace ℂ ι → ℂ}
     (hP : ContDiff ℂ (⊤ : ℕ∞) P) {k : ℕ} (hk : k ≤ N) :
@@ -617,7 +610,7 @@ theorem iteratedFDeriv_tail_zero (q : ℕ) (a : EuclideanSpace ℂ ι) (N : ℕ)
   have hz : ∀ i, i ≤ N → ‖iteratedFDeriv ℂ i (fun v => gN N (ellL q a v)) 0‖ = 0 := by
     intro i hi
     have h1 := (ellL q a).iteratedFDeriv_comp_right (contDiff_gN N) (0 : EuclideanSpace ℂ ι)
-      (i := i) (by first | exact le_top | exact WithTop.coe_le_coe.mpr le_top | exact_mod_cast (le_top : (i : ℕ∞) ≤ ⊤) | simp)
+      (i := i) (by first | exact WithTop.coe_le_coe.mpr le_top)
     have h2 : iteratedFDeriv ℂ i (gN N) 0 = 0 := by
       rw [← norm_eq_zero, norm_iteratedFDeriv_eq_norm_iteratedDeriv, iteratedDeriv_gN i N hi, norm_zero]
     rw [map_zero, h2] at h1
@@ -625,7 +618,7 @@ theorem iteratedFDeriv_tail_zero (q : ℕ) (a : EuclideanSpace ℂ ι) (N : ℕ)
     ext m
     simp
   refine norm_le_zero_iff.mp ((norm_iteratedFDeriv_mul_le hg hP 0
-    (by first | exact le_top | simp | exact_mod_cast (le_top : (k : ℕ∞) ≤ ⊤))).trans_eq ?_)
+    (by first | simp)).trans_eq ?_)
   refine Finset.sum_eq_zero fun i hi => ?_
   rw [hz i (by have := Finset.mem_range.mp hi; omega)]
   simp
@@ -638,15 +631,11 @@ theorem paD_tail_zero (q : ℕ) (a : EuclideanSpace ℂ ι) (N : ℕ) {P : Eucli
   have hmα : m = α := by
     first
       | (simp [MvPolynomial.support_monomial] at hm; exact hm)
-      | (rw [MvPolynomial.support_monomial] at hm; split_ifs at hm with h
-         · simp at hm
-         · simpa using hm)
   subst hmα
   have hk : Multiset.card (Finsupp.toMultiset m) ≤ N := by
     rw [Finsupp.card_toMultiset]
     first
       | exact hα
-      | simpa [Finsupp.degree, Finsupp.sum] using hα
   rw [iteratedFDeriv_tail_zero q a N hP hk]
   simp
 
@@ -903,7 +892,6 @@ theorem vol_eq (Y : GT ι) : volume (ZSpan.fundamentalDomain Y.b) = 1 := by
     first
       | (rw [← Module.finrank_mul_finrank ℝ ℂ (EuclideanSpace ℂ ι), Complex.finrank_real_complex,
           finrank_euclideanSpace])
-      | simp [← Module.finrank_mul_finrank ℝ ℂ (EuclideanSpace ℂ ι)]
   let b₀ : OrthonormalBasis (Fin (2 * Fintype.card ι)) ℝ (EuclideanSpace ℂ ι) :=
     (stdOrthonormalBasis ℝ (EuclideanSpace ℂ ι)).reindex (finCongr hfr)
   rw [ZSpan.measure_fundamentalDomain Y.b volume b₀.toBasis, detM_eq Y b₀,
@@ -1067,8 +1055,6 @@ theorem key2 (q : ℕ) (γ x : EuclideanSpace ℂ ι) :
     push_cast
     first
     | rfl
-    | simp
-    | norm_cast
   have hexp : ∀ r : ℝ, ((Real.exp r : ℝ) : ℂ) = cexp (r : ℂ) := fun r => Complex.ofReal_exp r
   simp only [paW, hH, hexp]
   rw [← Complex.exp_conj, ← Complex.exp_add, ← Complex.exp_add]
@@ -1191,7 +1177,6 @@ theorem unfold_pt {Y : GT ι} {q : ℕ} (hC : Coc Y q) (F : EuclideanSpace ℂ �
   have hmc : paTh Y q F x * (starRingEnd ℂ) (paTh Y q F x) = ((‖paTh Y q F x‖ ^ 2 : ℝ) : ℂ) := by
     first
     | rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
-    | (rw [Complex.mul_conj']; push_cast; ring)
   push_cast at hmc ⊢
   linear_combination (paW q x : ℂ) * hmc
 
@@ -1256,7 +1241,6 @@ theorem paT_apply (z : EuclideanSpace ℂ (Fin (Fintype.card ι))) (i : ι) :
     paT z i = z (Fintype.equivFin ι i) := by
   first
   | rfl
-  | simp [paT, LinearIsometryEquiv.piLpCongrLeft_apply, Equiv.piCongrLeft'_apply]
 
 theorem Hf_eq_inner (v w : EuclideanSpace ℂ ι) : Hf v w = inner ℂ w v := by
   exact FPw.Hf_eq_inner v w
@@ -1373,7 +1357,6 @@ theorem polynomial_translate_innerProduct_bound {q c : ℕ} (hq : 1 ≤ q) (a : 
       field_simp
       first
       | rfl
-      | ring
     · congr 1
       rw [map_sub, hT, smul_sub, smul_smul, inv_mul_cancel₀ hs0.ne', one_smul]
   have hF' := paIsPoly s⁻¹ hF

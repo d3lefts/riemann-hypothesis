@@ -87,7 +87,7 @@ theorem expand_of_tail (z : Fin (2 * r + k + 1) → ℂ) (hz : inWb k r z) (b : 
   ext i
   simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   rw [← Finset.add_sum_erase _ _ (Finset.mem_univ b)]
-  simp only [coefOf, if_pos rfl, one_mul]
+  simp only [coefOf]
   have hrest : ∀ a ∈ Finset.univ.erase b, (if a = b then (1 : ℂ) else
       if h : a.val < b.val then y (eI k r ⟨a.val, by omega⟩) else 0) * fvec k r z a i =
       if h : a.val < b.val ∧ i.val = a.val then y i else 0 := by
@@ -106,7 +106,7 @@ theorem expand_of_tail (z : Fin (2 * r + k + 1) → ℂ) (hz : inWb k r z) (b : 
         simp [bvec]
       · rw [dite_eq_right (fun h => hia h.2)]
         have hi : i ≠ eI k r ⟨a.val, har⟩ := fun h => hia (by rw [h]; simp [eI])
-        simp [bvec, Pi.single_apply, hi]
+        simp [bvec, hi]
     · rw [dite_eq_right hlt, dite_eq_right (fun h => hlt h.1), zero_mul]
   rw [Finset.sum_congr rfl hrest]
   by_cases hib : b.val ≤ i.val
@@ -123,7 +123,7 @@ theorem expand_of_tail (z : Fin (2 * r + k + 1) → ℂ) (hz : inWb k r z) (b : 
           have := congrArg Fin.val h
           simp [eI] at this
           omega
-        simp [bvec, Pi.single_apply, hne]
+        simp [bvec, hne]
       · exact hz i (Or.inl hir)
     rw [hfb, mul_zero, zero_add]
     rw [Finset.sum_eq_single ⟨i.val, by omega⟩]
@@ -766,14 +766,12 @@ theorem converseStep_of (hG : GramInv) : ConverseStep := by
   have hγ : γ ∈ B.GV k r := hP.1
   have hγu : IsUnit γ.det := isUnit_det_of_mem_GV hγ
   have hZ : IsUnit (Zhat k r z z' γ).det := isUnit_iff_ne_zero.mpr (det_Zhat_ne z z' hS γ hP)
-  have hZh : IsUnit (Zhat k r z z' γ)ᴴ.det := by
-    rw [Matrix.det_conjTranspose]; exact hZ.star
+  have hZh : IsUnit (Zhat k r z z' γ)ᴴ.det := by simpa [Matrix.det_conjTranspose] using hZ.star
   have hZp' : u'ᴴ * (Zhat k r z z' γ)ᴴ * u = (Zhat k r z z' γ)ᴴ := by
-    have := congrArg Matrix.conjTranspose hZp
-    simpa only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc] using this
+    simpa only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
+      using congrArg Matrix.conjTranspose hZp
   have hGi' : IsUnit ((Fm k r z z' γ)ᴴ * Hpk k r * Fm k r z z' γ).det := by rwa [← gramM_eq]
-  obtain ⟨ρ, hρ⟩ : ∃ ρ, ρ = PI.StabPairsW.rhoOf k r z z' γ u u' := ⟨_, rfl⟩
-  rw [← hρ]
+  set ρ := PI.StabPairsW.rhoOf k r z z' γ u u' with hρ
 
   have hρF : ρ * Fm k r z z' γ = Fm k r z z' γ * Wm u u' := by
     rw [hρ, rho_eq]; exact PI.StabPairs.ConvAlg.rhoOf_mul _ _ _ hGi'

@@ -114,7 +114,7 @@ theorem symPair_entry {R : Type} [CommRing R] {n : ℕ} (e : (Σ τ : E →+* �
         rfl
       · intro h4
         have h5 := (Sigma.mk.inj_iff.1 h4).2
-        simp only [heq_iff_eq, Prod.mk.injEq] at h5
+        simp only [heq_iff_eq] at h5
         obtain ⟨rfl, rfl⟩ := h5
         exact ⟨rfl, rfl⟩
     exact if_congr key rfl rfl
@@ -172,9 +172,9 @@ theorem ksChg_single_eq_blockDiagonal' {E : Type} [Field E] [NumberField E] [IsC
   by_cases h : τ = τ'
   · subst h
     rw [Matrix.blockDiagonal'_apply_eq]
-    simp [Matrix.kroneckerMap_apply, Pi.single_apply, Sigma.mk.inj_iff, ite_and]
+    simp [Matrix.kroneckerMap_apply, Pi.single_apply, ite_and]
   · rw [Matrix.blockDiagonal'_apply_ne _ _ _ h]
-    simp [Pi.single_apply, Sigma.mk.inj_iff, h]
+    simp [h]
 
 theorem det_ksChg_eq_one : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
     {Dw : Datum H} (K : Type) [Field K] (g : ∀ σ : E →+* ℂ, Matrix (Fin (Dw.mult σ)) (Fin (Dw.mult σ)) K),
@@ -402,7 +402,7 @@ theorem logDet_eq_hor : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     rw [hev j] at h1
     simp only [TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_inl, TrivSqZeroExt.snd_inr, zero_add] at h1
     rw [h1]
-    simp [Pi.single_apply, mul_comm, mul_left_comm]
+    simp [Pi.single_apply, mul_comm]
   have hx : P.x = P₀.x := hP.1
   have hR : ∀ i j, (ev (frX (w (o j)) ≫ TF.Y.j) U.1 (hw _) (x i)).snd =
       ∑ k, FlagTan.ksChg (psiSet H) g (Pi.single (o j) 1 : HIx Dw (psiSet H) → K) k * δ k (x i) := by

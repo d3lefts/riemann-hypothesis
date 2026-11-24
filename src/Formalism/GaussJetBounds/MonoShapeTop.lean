@@ -287,10 +287,9 @@ theorem asmA_top (l d : ℕ) [NeZero d] (hl : 2 ≤ l) (TT : Finset (ZMod d))
       topTerm l d TT nu1 nu2 s + ((nu1 s : ℝ) * ε +
         ∑ j ∈ R, (capL d TT nu1 nu2 (s + (j : ZMod d)) : ℝ) * max (1 - (l : ℝ) ^ j * ε) 0) ≤
         (nu1 s : ℝ) * gam l := by
-  obtain ⟨ε, h0, h1, h2⟩ := asmA_top_gen l hl (nu1 s : ℝ) (Nat.cast_nonneg _)
+  exact asmA_top_gen l hl (nu1 s : ℝ) (Nat.cast_nonneg _)
     (fun e => (capL d TT nu1 nu2 (s + (e : ZMod d)) : ℝ)) (fun _ => Nat.cast_nonneg _)
     (dTop d TT s) (fun e he => asmA_dTop_odd TT s e he) R hR
-  exact ⟨ε, h0, h1, h2⟩
 
 theorem capacity_le_reachCapacity (l d : ℕ) [NeZero d] (TT : Finset (ZMod d)) (nu1 nu2 size : ZMod d → ℕ)
     (s : ZMod d) (j : ℤ) (hj : j < 0) (hodd : Odd j)
@@ -298,20 +297,17 @@ theorem capacity_le_reachCapacity (l d : ℕ) [NeZero d] (TT : Finset (ZMod d)) 
     capL d TT nu1 nu2 (s + (j : ZMod d)) ≤ Wcap l d TT nu1 nu2 size s := by
   have hnn : ((-j).toNat : ℤ) = -j := Int.toNat_of_nonneg (by omega)
   have hi : Odd (-j).toNat := by
-    have ho : Odd (((-j).toNat : ℕ) : ℤ) := by rw [hnn]; exact hodd.neg
-    exact (Int.odd_coe_nat _).mp ho
+    rw [← Int.odd_coe_nat, hnn]
+    exact hodd.neg
   have hsj : s - (((-j).toNat : ℕ) : ZMod d) = s + (j : ZMod d) := by
-    rw [show (((-j).toNat : ℕ) : ZMod d) = ((((-j).toNat : ℕ) : ℤ) : ZMod d) from
-      (Int.cast_natCast _).symm, hnn, Int.cast_neg, sub_neg_eq_add]
+    rw [← Int.cast_natCast, hnn, Int.cast_neg, sub_neg_eq_add]
   unfold Wcap
   apply le_csSup
   · refine (Set.finite_range (fun t : ZMod d => capL d TT nu1 nu2 t)).bddAbove.mono ?_
     rintro _ ⟨i, _, rfl⟩
     exact ⟨_, rfl⟩
   · refine ⟨(-j).toNat, ⟨hi, ?_⟩, ?_⟩
-    · show l ^ (-j).toNat ≤ size (s - (((-j).toNat : ℕ) : ZMod d))
-      rw [hsj]
-      exact hsz
+    · simpa [hsj] using hsz
     · simp only [hsj]
 
 def asmA_cost (l : ℕ) {d : ℕ} (eps : ZMod d → ℝ) : Option (ZMod d × ℤ) → ℝ

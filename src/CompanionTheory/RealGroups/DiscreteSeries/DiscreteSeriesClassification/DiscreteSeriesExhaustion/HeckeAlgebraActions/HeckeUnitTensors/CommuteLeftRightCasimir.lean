@@ -166,7 +166,7 @@ theorem prod_ofFn_sub : ∀ (m : ℕ) (f g : Fin (m + 1) → A) (d : Fin (m + 1)
       rw [ht, hd, add_mul, one_mul, add_sub_cancel_left]
       congr 2
       funext i
-      simp [ht, congrFun ht i]
+      simp [congrFun ht i]
     | succ e =>
       have h0 : f 0 = g 0 := h 0 (Fin.succ_ne_zero e).symm
       have key := ih (fun i => f i.succ) (fun i => g i.succ) e
@@ -202,7 +202,7 @@ theorem ins_succAbove {m : ℕ} (d : Fin (m + 1)) (τ : Equiv.Perm (Fin m)) (i :
 
 theorem sign_ins {m : ℕ} (d : Fin (m + 1)) (τ : Equiv.Perm (Fin m)) :
     Equiv.Perm.sign (ins d τ) = Equiv.Perm.sign τ := by
-  simp [ins, Equiv.Perm.decomposeOption_symm_sign]
+  simp [ins]
 
 theorem ins_injective {m : ℕ} (d : Fin (m + 1)) : Function.Injective (ins d) := by
   intro τ τ' h
@@ -577,7 +577,7 @@ theorem right_casimir_add_eta_psi (H : Fin (m + 1) → Fin (m + 1) → X.V) (a d
   rw [Finset.sum_add_distrib]
   by_cases h : d = a
   · subst h; simp [Pi.single_eq_same]
-  · simp [h, Pi.single_eq_of_ne h]
+  · simp [h]
 
 def liftL (T : Module.End ℂ (Fin (m + 1) → X.V)) : Module.End ℂ (Fin (m + 1) → Fin (m + 1) → X.V) where
   toFun H := fun a d => T (fun c => H c d) a

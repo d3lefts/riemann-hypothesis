@@ -1316,7 +1316,7 @@ theorem _root_.GlobalTheory.T.places_over_real_subfield_split_alt : GlobalTheory
       ∃ L : LevT D T i k, LevLawsT D T Pq In.θ i j b k Q ψ L ∧
         FiniteDimensional (FractionRing (T.Ok i k))
           ↥(NX.TypeSpF D.host.E D.R.nV (FractionRing (T.Ok i k)) (rhoKT D T wt i j b k) L.J L.χ) := by
-  first | exact @_root_.GlobalTheory.LevForms.levDatum_forms_alt | exact _root_.GlobalTheory.LevForms.levDatum_forms_alt | (intros; apply _root_.GlobalTheory.LevForms.levDatum_forms_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.LevForms.levDatum_forms_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1558,7 +1558,7 @@ theorem _root_.GlobalTheory.T.lattice_in_isotypic_sup_alt : ∀ (D : D7) (cf : C
             ⨅ (k : ℕ) (P : PlE D.host) (_ : 1 ≤ k ∧ k ≤ D.R.r ∧ IsSplitPl D.host P ∧ P ∉ T.S0 i),
               Module.End.eigenspace (hkT D T S In i j b k P)
                 (algebraMap (T.O i) (FractionRing (T.O i)) (cHkT D T i b P : T.O i) ^ k * readT D T i b (In.eig j σ k P)) := by
-  first | exact @_root_.GlobalTheory.HeightCounting.FormsStep.goodPart_le_iSup_eigen_alt | exact _root_.GlobalTheory.HeightCounting.FormsStep.goodPart_le_iSup_eigen_alt | (intros; apply _root_.GlobalTheory.HeightCounting.FormsStep.goodPart_le_iSup_eigen_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.FormsStep.goodPart_le_iSup_eigen_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1748,7 +1748,7 @@ theorem _root_.GlobalTheory.T.exists_signature_data_span_alt : ∀ (D : D7) (cf 
           algebraMap (T.O i) (FractionRing (T.O i)) (cHkT D T i (sd.side i s) P : T.O i) ^ k *
             readT D T i (sd.side i s) (In.eig (sd.jS i s) (sd.rowS i s) k P)) ∧
       ∀ i s P, sd.hEig i s 0 P = 1 := by
-  first | exact @_root_.GlobalTheory.HeightCounting.FormsStep.sigData_exists_alt | exact _root_.GlobalTheory.HeightCounting.FormsStep.sigData_exists_alt | (intros; apply _root_.GlobalTheory.HeightCounting.FormsStep.sigData_exists_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.FormsStep.sigData_exists_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1947,7 +1947,7 @@ section
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting NumberField IsDedekindDomain Polynomial
 
 theorem _root_.GlobalTheory.T.row_cusp_multiplicity_input_alt : GlobalTheory.Published.GlobalArtinReciprocity → ∀ (D : D7) (cf : CharFrame D) (jE : D.host.E →+* Qb) (A : _root_.GlobalTheory.HeightCounting.CharFrameHostEmbedding D cf jE) (S : RatDat D.ntw) (In : RatIn D S) (low : Finset ℕ) (Pq : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E)) → PlE D.host) (M : MtFam D) (tup : D.what₂.Tup → Fin D.R.m → HChar D.host.E) (Q : D.what₂.places.Pl → Finset (PlE D.host)), MtInput D M tup Q → (∀ v, NG.OverPl (Pq v) v) → GalEx D → RowCusp D A.row → GlobalTheory.RowTie.ChebSplit D.nd → (∀ x : D.LL0, star (x : D.what₂.LL) ∈ D.LL0) → (∀ j g, ∃ z : ℤ, eExp D j g = z) → (∀ v, v ∈ placesOver D.host.E D.host.pde ∨ v ∈ placesOver D.host.E D.host.pde' → IsSplitPl D.host v) → ∃ c0 : Big D, ∀ (b0 b1 : Big D) (Sx : Finset (PlE D.host)) (T : TwR D.LL0 D.nd) (Sp : RingSpec D cf b0 b1 Sx T), (∀ (l : ℕ) [Fact l.Prime] j, (c0 l j).1 ≤ (b0 l j).1) → In.Sb ⊆ Sx → (∀ P P', P ∈ Sx → IsConjPl D.host P P' → P' ∈ Sx) → (∀ p ∈ low, placesOver D.host.E p ⊆ ↑Sx) → ∃ (F : TwF T) (ex : NExp D.R D.host D.what₂ D.LL0 D.nd (T.ntw A.bare F (TwL.empty T))) (h0 : _), (∀ i j b, (ex.Bsup i j b).FG ∧ Submodule.span (FractionRing ((T.ntw A.bare F (TwL.empty T)).O i)) (ex.Bsup i j b : Set (ex.Fm i j b)) = ⊤) ∧ ∀ th, Nonempty (SideB (⟨T.ntw A.bare F (TwL.empty T), ex, h0, th, Sp.br, Sp.br_ind⟩ : TwNew D).toD7 ((⟨T.ntw A.bare F (TwL.empty T), ex, h0, th, Sp.br, Sp.br_ind⟩ : TwNew D).cf cf) ((⟨T.ntw A.bare F (TwL.empty T), ex, h0, th, Sp.br, Sp.br_ind⟩ : TwNew D).row A.row) low Pq ((⟨T.ntw A.bare F (TwL.empty T), ex, h0, th, Sp.br, Sp.br_ind⟩ : TwNew D).rat S) In.hL In.eig In.θ) := by
-  first | exact @_root_.GlobalTheory.HeightCounting.FormsStep.second_step_alt | exact _root_.GlobalTheory.HeightCounting.FormsStep.second_step_alt | (intros; apply _root_.GlobalTheory.HeightCounting.FormsStep.second_step_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.FormsStep.second_step_alt
 end
 end -- clump:auto
 end -- clump:auto

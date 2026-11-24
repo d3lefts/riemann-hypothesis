@@ -130,8 +130,6 @@ theorem op_isFractionRing :
       congr 1
       first
         | (field_simp; done)
-        | (rw [mul_div_assoc', mul_div_cancel_left₀ _ hy'])
-        | (field_simp; ring)
     next p q hp hq =>
       obtain ⟨s1, hs1, p1, hp1⟩ := hp
       obtain ⟨s2, hs2, q1, hq1⟩ := hq
@@ -183,8 +181,6 @@ theorem op_isFractionRing :
     have h2 := hCne sp hsp
     first
       | (field_simp; done)
-      | (field_simp; ring)
-      | (rw [div_mul_eq_mul_div, div_eq_iff hq0]; ring)
   · intro x y hxy
     exact ⟨1, by rw [hinj hxy]⟩
 
@@ -630,8 +626,6 @@ theorem algK_eq (k : K) : algebraMap K (KTf K d.D d.N) k =
     algebraMap (KTp K d.D d.N) (KTf K d.D d.N) (C k) := by
   first
   | rfl
-  | exact IsScalarTower.algebraMap_apply K (KTp K d.D d.N) (KTf K d.D d.N) k
-  | simp [IsScalarTower.algebraMap_apply K (KTp K d.D d.N) (KTf K d.D d.N) k]
 
 theorem pf_fin (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (y : OmS (Ω c) d.D d.N) (hy : y ≠ 0)
     (PA PB : KTp K d.D d.N) (hA : PA ≠ 0) (hB : PB ≠ 0)

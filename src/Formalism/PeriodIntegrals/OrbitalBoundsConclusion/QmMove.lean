@@ -223,14 +223,7 @@ theorem rho_sum {A : Type*} [Ring A] (m : ℕ) (z : ℤ) (x D : A) :
 theorem sum_perms_sign_squared {A : Type*} [Ring A] (m : ℕ) (z : ℤ) (x D : A) :
     ∑ ρ : Equiv.Perm (Fin m), (((z * (Equiv.Perm.sign ρ : ℤ)) : ℤ) : A) *
       ((((Equiv.Perm.sign ρ : ℤ) : A) * D) * x) = (m.factorial : A) * ((z : A) * (D * x)) := by
-  have h : ∀ ρ : Equiv.Perm (Fin m), (((z * (Equiv.Perm.sign ρ : ℤ)) : ℤ) : A) *
-      ((((Equiv.Perm.sign ρ : ℤ) : A) * D) * x) = (z : A) * (D * x) := by
-    intro ρ
-    rw [Int.cast_mul, mul_assoc, ← mul_assoc ((Equiv.Perm.sign ρ : ℤ) : A) _ x,
-      ← mul_assoc ((Equiv.Perm.sign ρ : ℤ) : A) ((Equiv.Perm.sign ρ : ℤ) : A) D, ← Int.cast_mul,
-      ← Units.val_mul, Int.units_mul_self, Units.val_one, Int.cast_one, one_mul]
-  rw [Finset.sum_congr rfl (fun ρ _ => h ρ), Finset.sum_const, Finset.card_univ, Fintype.card_perm,
-    Fintype.card_fin, nsmul_eq_mul]
+  simpa only [mul_assoc, one_mul] using rho_sum (A := A) m z 1 (D * x)
 
 section Vec
 variable {A : Type} [Ring A] [Algebra ℂ A] {n m : ℕ} (E : Fin n → Fin n → A) (y : Fin n → A)

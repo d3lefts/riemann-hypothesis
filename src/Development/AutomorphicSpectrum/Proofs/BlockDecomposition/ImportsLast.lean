@@ -95,7 +95,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.abscissa_convergence_identity : AcEq := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.GramAct.acEq | exact GlobalTheory.CompanionTheory.ColumnSplitting.GramAct.acEq | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.GramAct.acEq <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.GramAct.acEq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AbscissaConvergenceIdentityStatement =====
@@ -208,7 +208,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.continuous_orbital_integral_unipotent : IkSch → Dom → OrbFin → Shift → JnBl → Ext0 → ∀ (D : D7) (n t : ℕ) (B W : HSp D) (d : HypDec B W t) (hn : W.rank + t = n) (I : IkD d n) θ, IsInfFam θ → ∀ (x₀ : Matrix (Fin W.rank) (Fin W.rank) D.host.E), x₀.det ≠ 0 → ∀ Φ ∈ schwartzA θ B.rank n, Continuous (fun y : Mx D W.rank t => orb W I.m (ikp I fun X => Φ (mm X (bl hn 1 y 0 1))) (ext0 hn x₀)) := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.continuous_orb_shear | exact GlobalTheory.CompanionTheory.ColumnSplitting.continuous_orb_shear | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.continuous_orb_shear <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.continuous_orb_shear
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousOrbitalIntegralUnipotentStatement =====
@@ -261,7 +261,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.det_ne_zero_of_gram_nondegenerate : ∀ (D : D7) (W : HSp D) (b₀ : HermE D W.rank), b₀.1.det ≠ 0 → ∀ x₀, gramQ W x₀ = b₀.1 → x₀.det ≠ 0 := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.Frame.det_ne_zero_of_gramQ | exact GlobalTheory.CompanionTheory.ColumnSplitting.Frame.det_ne_zero_of_gramQ | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.Frame.det_ne_zero_of_gramQ <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.Frame.det_ne_zero_of_gramQ
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DetNeZeroOfGramNondegenerateStatement =====
@@ -340,7 +340,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.extension_by_zero_orbit_formula : Ext0 := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.extension_by_zero_orbit_action | exact GlobalTheory.CompanionTheory.ColumnSplitting.extension_by_zero_orbit_action | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.extension_by_zero_orbit_action <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.extension_by_zero_orbit_action
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExtensionByZeroOrbitFormulaStatement =====
@@ -557,7 +557,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.finite_on_compacts_orbit_measure : ∀ (D : D7) (n t : ℕ) (B W : HSp D) (d : HypDec B W t) (hn : W.rank + t = n) (I : IkD d n) (μ : Measure (Mx D W.rank t)), μ.IsAddHaarMeasure → ∀ (b₀ : HermE D W.rank), b₀.1.det ≠ 0 → ∀ x₀, gramQ W x₀ = b₀.1 → IsFiniteMeasureOnCompacts (nuT hn I μ x₀) := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.isFiniteMeasureOnCompacts_nuT | exact GlobalTheory.CompanionTheory.ColumnSplitting.isFiniteMeasureOnCompacts_nuT | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.isFiniteMeasureOnCompacts_nuT <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.isFiniteMeasureOnCompacts_nuT
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiniteOnCompactsOrbitMeasureStatement =====
@@ -673,7 +673,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.zeta_polynomial_identity : ZpEq := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.zp_eq | exact GlobalTheory.CompanionTheory.ColumnSplitting.zp_eq | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.zp_eq <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.zp_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GramFrameIdentitiesStatement =====
@@ -791,7 +791,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.induced_section_local_integrability : IkLint := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.ikLint | exact GlobalTheory.CompanionTheory.ColumnSplitting.ikLint | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.ikLint <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.ikLint
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InducedSectionLocalIntegrabilityStatement =====
@@ -912,7 +912,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.integrable_theta_kernel_fibers : ZpEq → AcEq → JnPi → Ext0 → Fub4 → ∀ (D : D7) (n t : ℕ) (B W : HSp D) (d : HypDec B W t) (hn : W.rank + t = n) (I : IkD d n) θ, IsInfFam θ → ∀ (μ : Measure (Mx D W.rank t)), μ.IsAddHaarMeasure → ∀ (b₀ : HermE D W.rank), b₀.1.det ≠ 0 → ∀ x₀, gramQ W x₀ = b₀.1 → ∀ Φ ∈ schwartzA θ B.rank n, ∀ η ∈ schwartzA θ W.rank t, Integrable (core hn I x₀ Φ η) (I.νK.prod (Q0 I μ)) → Integrable (fun z => Φ (jn hn z.1 z.2) * conj (η (yv B b₀ z))) (nuT hn I μ x₀) ∧ ∫ z, Φ (jn hn z.1 z.2) * conj (η (yv B b₀ z)) ∂(nuT hn I μ x₀) = ∫ y, orb W I.m (ikp I fun X => Φ (mm X (bl hn 1 y 0 1))) (ext0 hn x₀) * conj (η y) ∂μ := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.Form.nuT_form | exact GlobalTheory.CompanionTheory.ColumnSplitting.Form.nuT_form | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.Form.nuT_form <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.Form.nuT_form
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IntegrableThetaKernelFibersStatement =====
@@ -1049,7 +1049,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.iterated_integrals_four_factors : Fub4 := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.iterated_integrals_four_factors_holds | exact GlobalTheory.CompanionTheory.ColumnSplitting.iterated_integrals_four_factors_holds | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.iterated_integrals_four_factors_holds <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.iterated_integrals_four_factors_holds
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IteratedIntegralsFourFactorsStatement =====
@@ -1071,7 +1071,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.joined_block_formula : JnBl := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.jnBl | exact GlobalTheory.CompanionTheory.ColumnSplitting.jnBl | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.jnBl <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.jnBl
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JoinedBlockFormulaStatement =====
@@ -1175,7 +1175,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.joined_projection_formula : JnPi := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.jnPi_holds | exact GlobalTheory.CompanionTheory.ColumnSplitting.jnPi_holds | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.jnPi_holds <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.jnPi_holds
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.JoinedProjectionFormulaStatement =====
@@ -1278,7 +1278,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.orbit_finiteness_of_lattice_bound : LatBound → OrbFin := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.orbFin_of_latBound | exact GlobalTheory.CompanionTheory.ColumnSplitting.orbFin_of_latBound | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.orbFin_of_latBound <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.orbFin_of_latBound
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OrbitFinitenessOfLatticeBoundStatement =====
@@ -1380,7 +1380,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.orbit_measure_concentrated_on_quadric : ZpEq → AcEq → ∀ (D : D7) (n t : ℕ) (B W : HSp D) (d : HypDec B W t) (hn : W.rank + t = n) (I : IkD d n) (μ : Measure (Mx D W.rank t)), μ.IsAddHaarMeasure → ∀ (b₀ : HermE D W.rank), b₀.1.det ≠ 0 → ∀ x₀, gramQ W x₀ = b₀.1 → nuT hn I μ x₀ {z | ¬ ((1 : AE D) • z.1 = z.1 ∧ (1 : AE D) • z.2 = z.2 ∧ ip B z.1 z.1 = (1 : AE D) • rat b₀.1 ∧ qv B b₀ z = 0)} = 0 := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.nuT_supp | exact GlobalTheory.CompanionTheory.ColumnSplitting.nuT_supp | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.nuT_supp <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.nuT_supp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OrbitMeasureConcentratedOnQuadricStatement =====
@@ -1402,7 +1402,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.orbit_measure_integral_points_nonzero : ∀ (D : D7) (n t : ℕ) (B W : HSp D) (d : HypDec B W t) (hn : W.rank + t = n) (I : IkD d n) (μ : Measure (Mx D W.rank t)), μ.IsAddHaarMeasure → ∀ x₀, ∃ S₀ : Finset (Pl D), ∀ S, S₀ ⊆ S → nuT hn I μ x₀ {z | IntOff S z.1 ∧ IntOff S z.2} ≠ 0 := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.nuT_intOff_ne_zero | exact GlobalTheory.CompanionTheory.ColumnSplitting.nuT_intOff_ne_zero | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.nuT_intOff_ne_zero <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.nuT_intOff_ne_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OrbitMeasureIntegralPointsNonzeroStatement =====
@@ -1492,7 +1492,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.orbit_measure_translation_invariant : ∀ (D : D7) (n t : ℕ) (B W : HSp D) (d : HypDec B W t) (hn : W.rank + t = n) (I : IkD d n) (μ : Measure (Mx D W.rank t)), μ.IsAddHaarMeasure → ∀ x₀ (y : Mx D W.rank t), (nuT hn I μ x₀).map (fun z => (z.1, z.2 + mm z.1 y)) = nuT hn I μ x₀ := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.nuT_shear_invariant | exact GlobalTheory.CompanionTheory.ColumnSplitting.nuT_shear_invariant | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.nuT_shear_invariant <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.nuT_shear_invariant
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OrbitMeasureTranslationInvariantStatement =====
@@ -1630,7 +1630,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.orbit_measure_unitary_group_invariant : QK → Law → ∀ (D : D7) (n t : ℕ) (B W : HSp D) (d : HypDec B W t) (hn : W.rank + t = n) (I : IkD d n) (μ : Measure (Mx D W.rank t)), μ.IsAddHaarMeasure → ∀ x₀ (h : GA D B), (nuT hn I μ x₀).map (fun z => (mm (mt B h) z.1, mm (mt B h) z.2)) = nuT hn I μ x₀ := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.InvU.nuT_map_ac | exact GlobalTheory.CompanionTheory.ColumnSplitting.InvU.nuT_map_ac | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.InvU.nuT_map_ac <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.InvU.nuT_map_ac
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OrbitMeasureUnitaryGroupInvariantStatement =====
@@ -1731,7 +1731,7 @@ open GlobalTheory.CompanionTheory.ColumnSplitting
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.unipotent_shift_invariance : Shift := by
-  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.shift | exact GlobalTheory.CompanionTheory.ColumnSplitting.shift | (intros; apply GlobalTheory.CompanionTheory.ColumnSplitting.shift <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ColumnSplitting.shift
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnipotentShiftInvarianceStatement =====

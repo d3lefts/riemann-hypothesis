@@ -299,8 +299,8 @@ theorem hupsTw_monomial {σ R : Type*} [CommRing R] (w : σ → ℕ) (s : σ →
     hupsTw w (MvPolynomial.monomial s a) =
       Polynomial.C (MvPolynomial.monomial s a) * Polynomial.X ^ hupsWt w s := by
   rw [hupsTw, MvPolynomial.aeval_monomial, MvPolynomial.monomial_eq]
-  simp only [mul_pow, Finsupp.prod_mul, hupsWt, Finsupp.prod, Finsupp.sum, ← pow_mul,
-    Finset.prod_pow_eq_pow_sum, map_mul, map_prod, map_pow, Polynomial.algebraMap_apply,
+  simp only [mul_pow, hupsWt, Finsupp.prod, Finsupp.sum, ← pow_mul,
+    map_mul, map_prod, map_pow, Polynomial.algebraMap_apply,
     MvPolynomial.algebraMap_eq]
   simp only [mul_comm (w _) _]
   rw [Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum]
@@ -327,7 +327,7 @@ theorem hupsTw_coeff_coeff {σ R : Type*} [CommRing R] (w : σ → ℕ) (p : MvP
     · rw [if_pos h.symm, if_pos h, if_pos rfl]
     · simp [h, Ne.symm h]
   · intro t _ hts
-    simp [hts, MvPolynomial.coeff_monomial]
+    simp [hts]
   · intro hs
     rw [MvPolynomial.mem_support_iff, not_not] at hs
     simp [hs]
@@ -863,7 +863,6 @@ theorem relIndex_pi_const {M : Type*} [AddCommGroup M] (H L : AddSubgroup M) (k 
     refine ⟨fun i => ⟨(x : Fin k → M) i, ?_⟩, Subtype.ext rfl⟩
     first
     | exact x.2 i (Set.mem_univ i)
-    | exact AddSubgroup.mem_pi.mp x.2 i (Set.mem_univ i)
   have hcomap : AddSubgroup.comap f ((AddSubgroup.pi Set.univ fun _ : Fin k => H).addSubgroupOf
       (AddSubgroup.pi Set.univ fun _ : Fin k => L)) =
       AddSubgroup.pi Set.univ fun _ : Fin k => H.addSubgroupOf L := by

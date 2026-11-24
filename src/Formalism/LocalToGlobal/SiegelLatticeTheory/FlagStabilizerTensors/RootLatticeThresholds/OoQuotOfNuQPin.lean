@@ -220,7 +220,7 @@ theorem comb_mem (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (w : D.what₂.
   by_cases h : (A - 1) a'' a' = 0
   · rw [h, zero_smul]; exact Submodule.zero_mem _
   · have hne : a'' ≠ a' := by intro he; subst he; apply h; simp [hA.1]
-    have hA0 : A a'' a' ≠ 0 := by intro h0; apply h; simp [h0, Matrix.one_apply, hne]
+    have hA0 : A a'' a' ≠ 0 := by intro h0; apply h; simp [h0, hne]
     have hlt : a'' < a' := lt_of_le_of_ne (hA.2 _ _ hA0).1 hne
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a'', hlt, rfl⟩)
 
@@ -566,8 +566,7 @@ theorem TG_comb (c : FreeE w → ℂ) (b : Fin (D.R.rS + 1)) :
     rw [Matrix.mulVec_mulVec, h1, Matrix.one_mulVec]
   rw [yM_G X u u' w v hw c b]
   simp only [G_eq, Matrix.mulVec_sub, Matrix.mulVec_sum, Matrix.mulVec_smul, hA, Matrix.sub_apply, sub_smul,
-    Finset.sum_sub_distrib, Matrix.one_apply, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq', Finset.sum_ite_eq,
-    Finset.mem_univ, if_true]
+    Finset.sum_sub_distrib, Matrix.one_apply, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
 
 include hw in
 theorem inN_u' (c : FreeE w → ℂ) :

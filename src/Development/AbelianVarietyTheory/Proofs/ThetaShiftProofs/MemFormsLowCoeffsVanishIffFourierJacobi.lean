@@ -176,11 +176,7 @@ theorem isIsotropicSub_span {G : Matrix (Fin r) (Fin r) E} {s : Set (Fin r → E
 
 theorem exists_smul_mem (X : Data E r) (v : Fin r → E) : ∃ n : ℤ, n ≠ 0 ∧ (n : E) • v ∈ X.Λ := by
   first
-  | exact @_root_.GlobalTheory.SubmoduleScalarClosure.main
-  | exact _root_.GlobalTheory.SubmoduleScalarClosure.main
   | (apply _root_.GlobalTheory.SubmoduleScalarClosure.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.SubmoduleScalarClosure.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.SubmoduleScalarClosure.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.SubmoduleScalarClosure.main ..)
 
 section Torus
@@ -277,11 +273,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r ρ : ℕ}
 theorem sum_re_eq_trace (X : Data E r) (x : E) :
     ∑ τ : X.Ψ, (τ.1 (x + cc x)).re = ((Algebra.trace ℚ E x : ℚ) : ℝ) := by
   first
-  | exact @_root_.GlobalTheory.TraceRealPartConjugateSum.sum_re_add_conj
-  | exact _root_.GlobalTheory.TraceRealPartConjugateSum.sum_re_add_conj
   | (apply _root_.GlobalTheory.TraceRealPartConjugateSum.sum_re_add_conj <;> assumption)
-  | (intros; apply _root_.GlobalTheory.TraceRealPartConjugateSum.sum_re_add_conj <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.TraceRealPartConjugateSum.sum_re_add_conj <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.TraceRealPartConjugateSum.sum_re_add_conj ..)
 
 theorem kappa_ne (X : Data E r) : X.κ0 ≠ 0 := by

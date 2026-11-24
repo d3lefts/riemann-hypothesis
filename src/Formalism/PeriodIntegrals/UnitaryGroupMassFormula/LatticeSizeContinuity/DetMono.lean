@@ -88,9 +88,7 @@ private theorem exists_unitary_diagonal_pos_of_posDef {n : ℕ} (G : Matrix (Fin
   · have h := hG.1.eigenvectorUnitary.2
     rw [Matrix.mem_unitaryGroup_iff'] at h
     simpa [Matrix.star_eq_conjTranspose] using h
-  · have h := hG.1.spectral_theorem
-    refine h.trans ?_
-    rfl
+  · exact hG.1.spectral_theorem
 
 theorem exists_congr_one {n : ℕ} (G : Matrix (Fin n) (Fin n) ℂ) (hG : G.PosDef) :
     ∃ y : Matrix (Fin n) (Fin n) ℂ, IsUnit y.det ∧ yᴴ * G * y = 1 := by

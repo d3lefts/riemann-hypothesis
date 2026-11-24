@@ -241,7 +241,7 @@ theorem _root_.GlobalTheory.exists_pos_finite_density_of_almost_translation_inva
     obtain ⟨δ, hδ, hδ'⟩ := hinv (1 + η) (by linarith)
     have hρ0 : 0 < δ / 2 := by linarith
     have hηρ0 : 0 < η * (δ / 2) := mul_pos hη0 hρ0
-    have hηρ : η * (δ / 2) < δ / 2 := by nlinarith
+    have hηρ : η * (δ / 2) < δ / 2 := mul_lt_of_lt_one_left hρ0 (by linarith)
     refine ⟨η * (δ / 2) / (1 + η), div_pos hηρ0 (by linarith), fun u hu v hv => ?_⟩
     have hu0 := hu.1
     have hv0 := hv.1
@@ -268,13 +268,13 @@ theorem _root_.GlobalTheory.exists_pos_finite_density_of_almost_translation_inva
     have hηw : 0 < η * w := mul_pos hη0 hw0
     have hwv : w < v := by
       rw [← hvw]
-      nlinarith [hηw]
-    have hwδ : w < δ := by nlinarith [mul_pos hη0 hv0]
+      linarith
+    have hwδ : w < δ := by linarith [mul_pos hη0 hv0]
     have hD := hDown ((1 + η) * (δ / 2)) w v fun x hx => by
-      have := (hδ' x (ball_subset_ball (by nlinarith) hx) w ⟨hw0, hwδ⟩).2
+      have := (hδ' x (ball_subset_ball (by linarith) hx) w ⟨hw0, hwδ⟩).2
       rwa [hvw] at this
     have hD2 : L w * M (δ / 2) ≤ L ((1 + η) * (δ / 2)) * M v :=
-      (mul_le_mul_of_nonneg_left (hMmono _ _ (by nlinarith)) (hLpos w hw0).le).trans hD
+      (mul_le_mul_of_nonneg_left (hMmono _ _ (by linarith [mul_pos hη0 hv0])) (hLpos w hw0).le).trans hD
     rw [hLr w hw0, hLr _ (mul_pos (by linarith) hρ0), mul_pow] at hD2
     have hvd : v ^ d = (1 + η) ^ d * w ^ d := by rw [← hvw, mul_pow]
     have he : 0 < (1 + η) ^ d := pow_pos (by linarith) d
@@ -295,7 +295,7 @@ theorem _root_.GlobalTheory.exists_pos_finite_density_of_almost_translation_inva
       mul_le_mul_of_nonneg_left h2 (mul_pos he hUd).le
     have h5 : (1 - η) ^ d * M u * w ^ d * (δ / 2) ^ d ≤
         ((1 + η) ^ d) ^ 2 * u ^ d * M v * (δ / 2) ^ d := by
-      nlinarith
+      linarith
     have h6 := le_of_mul_le_mul_right h5 hP
     have hne1 : u ^ d * L 1 ≠ 0 := (mul_pos hUd hc₁).ne'
     have hne2 : (1 + η) ^ d * w ^ d * L 1 ≠ 0 := (mul_pos (mul_pos he hWd) hc₁).ne'
@@ -339,7 +339,7 @@ theorem _root_.GlobalTheory.exists_pos_finite_density_of_almost_translation_inva
     have h5 : ε / (2 * (2 * g (t₁ / 2))) * (2 * g (t₁ / 2)) = ε / 2 := by
       field_simp
     rw [Real.dist_eq, abs_sub_lt_iff]
-    constructor <;> nlinarith
+    constructor <;> linarith
   obtain ⟨c, hc⟩ := CompleteSpace.complete hcau
   have hc0 : 0 < c := by
     have : g (t₁ / 2) / 2 ≤ c := ge_of_tendsto hc (by

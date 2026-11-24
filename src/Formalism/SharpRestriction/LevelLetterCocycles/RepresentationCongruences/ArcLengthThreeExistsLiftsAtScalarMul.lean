@@ -412,7 +412,7 @@ theorem arc_length_three_hyp_first (W : LocWach PD LL O v n) (hcase : Formalism.
       fun k => if k = k₀ then letE a * R * lA W ^ σ else 0, ?_, ?_, ?_⟩
     · intro k
       by_cases hk : k = k₀
-      · subst hk; simp only [if_pos rfl]; exact TypesA.IsHorTr_smul W κ₁ hHh
+      · subst hk; simp only; exact TypesA.IsHorTr_smul W κ₁ hHh
       · simp only [if_neg hk]; rw [add_comm]; exact TypesA.IsHorTr_smul W κ (hHh1 k)
     · intro k
       by_cases hk : k = k₀
@@ -480,7 +480,7 @@ theorem arc_length_three_hyp_first (W : LocWach PD LL O v n) (hcase : Formalism.
     · simp only [Fin.sum_univ_one, lE, pow_zero, one_mul]
       by_cases hk : k = k₀
       · subst hk; simp
-      · simp [if_neg hk, Pi.single_apply, hk]
+      · simp [hk]
   obtain ⟨y, hyΔ, hyl, hxy⟩ := hN
   rw [← ha, hxy, one_smul]
   exact ⟨hyΔ, ⟨y, hyΔ.1, by simpa using hyl⟩⟩
@@ -580,7 +580,7 @@ theorem arc_length_three_hyp_second (W : LocWach PD LL O v n) (hcase : Formalism
       rw [smul_smul, smul_smul, pow_two, Module.End.mul_apply]
       congr 1
       rw [hQ, map_pow, map_mul, hps1, hu]
-      simp only [Units.val_mul, Units.val_pow_eq_pow_val, Units.coe_map, MonoidHom.coe_coe, mul_pow]
+      simp only [mul_pow]
       have h1' : ((u⁻¹ : (LetA O n)ˣ) : LetA O n) * (u : LetA O n) = 1 := Units.inv_mul u
       rw [hu] at h1'
       simp only [Units.val_mul, Units.val_pow_eq_pow_val, Units.coe_map, MonoidHom.coe_coe] at h1'
@@ -660,7 +660,7 @@ theorem arc_length_three_hyp_second (W : LocWach PD LL O v n) (hcase : Formalism
   rw [hz₀eq, hL, hRt, hJJ]
   congr 1
   have hπ : W.π₀ ^ M = W.π₀ * W.π₀ ^ (M - 1) := by
-    rw [← pow_succ']; (try congr 1); (try omega)
+    rw [← pow_succ']; (try congr 1)
   have hqN : qA W ^ N = qA W ^ A₀ * qA W ^ (N - b₁ - A₀ - A.η) * qA W ^ A.η * qA W ^ b₁ := by
     rw [← pow_add, ← pow_add, ← pow_add]; (try congr 1); (try omega)
   rw [hπ, hqN]
@@ -769,8 +769,6 @@ theorem alg_C (h : O⟦X⟧ →ₐ[O] O⟦X⟧) (a : O) : h (C a) = C a := by
   have e : (C a : O⟦X⟧) = algebraMap O O⟦X⟧ a := by
     first
     | rfl
-    | simp
-    | (rw [PowerSeries.algebraMap_apply']; rfl)
   rw [e, AlgHom.commutes]
 
 private theorem exists_pow_sub_pow_eq_mul_sub_of_constantCoeff_eq_one (l : ℕ) (x y : O⟦X⟧)
@@ -781,7 +779,6 @@ private theorem exists_pow_sub_pow_eq_mul_sub_of_constantCoeff_eq_one (l : ℕ) 
   · simp [map_sum, hx, hy]
   · first
     | exact (geom_sum₂_mul x y l).symm
-    | exact ((Commute.all x y).geom_sum₂_mul l).symm
 
 theorem exists_GL_latBasis_of_isSplitEquiv (l : ℕ) :
     ∃ Q0 : O⟦X⟧, constantCoeff Q0 = l ∧ (1 + X : O⟦X⟧) ^ l - 1 = X * Q0 := by
@@ -1491,10 +1488,10 @@ theorem arc_length_three_first_level [NeZero n] [Fintype (K →ₐ[Qp] LL)] [IsD
     rw [hty i] at h1
     cases hu : up i
     · simp only [hu, Mi', hi', Bool.false_eq_true, if_false, Formalism.MainNotions.LocalTheoryWindows.LT.win, Set.mem_union,
-        Set.mem_Icc, hAS, hAη, hAG] at h1 ⊢
+        Set.mem_Icc, hAS, hAη] at h1 ⊢
       push_cast
       omega
-    · simp only [hu, Mi', hi', if_true, Formalism.MainNotions.LocalTheoryWindows.LT.win, Set.mem_union, Set.mem_Icc, hAS, hAη, hAG] at h1 ⊢
+    · simp only [hu, Mi', hi', if_true, Formalism.MainNotions.LocalTheoryWindows.LT.win, Set.mem_union, Set.mem_Icc, hAS, hAη] at h1 ⊢
       push_cast
       omega
   have hwid : ∀ i, Mi' i + hi' i = size i + S + η := by

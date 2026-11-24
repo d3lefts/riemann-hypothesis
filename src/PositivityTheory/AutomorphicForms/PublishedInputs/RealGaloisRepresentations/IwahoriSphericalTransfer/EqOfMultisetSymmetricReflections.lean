@@ -82,7 +82,7 @@ theorem symm_multiset_centre_unique : ∀ (s : Multiset ℤ) (x y : ℤ), s ≠ 
     intro z hz
     have h1 : (s.map (z - ·)).sum = (Multiset.card s : ℤ) * z - s.sum := by
       rw [Multiset.sum_map_sub, Multiset.map_const', Multiset.sum_replicate, Multiset.map_id']
-      simp [nsmul_eq_mul]
+      simp
     have h2 : s.sum = (Multiset.card s : ℤ) * z - s.sum := by
       conv_lhs => rw [hz]
       exact h1
@@ -107,7 +107,7 @@ open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.eq_of_multiset_symmetric_reflections : ∀ (s : Multiset ℤ) (x y : ℤ), s ≠ 0 → s = s.map (x - ·) → s = s.map (y - ·) → x = y := by
-  first | exact @GlobalTheory.Glob.symm_multiset_centre_unique | exact GlobalTheory.Glob.symm_multiset_centre_unique | (intros; apply GlobalTheory.Glob.symm_multiset_centre_unique <;> assumption)
+  first | exact @GlobalTheory.Glob.symm_multiset_centre_unique
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: PositivityTheory.AutomorphicForms.PublishedInputs.RealGaloisRepresentations.IwahoriSphericalTransfer.EqOfMultisetSymmetricReflections =====

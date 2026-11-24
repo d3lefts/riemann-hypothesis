@@ -112,7 +112,7 @@ theorem map_evAt_eq_one (D : D7) (hF : D.host.F = maximalRealSubfield D.host.E) 
   rw [Matrix.map_apply, Matrix.map_apply, evAt_swapCast_symm, h2]
   by_cases h : i = j
   · subst h; simp
-  · simp [Matrix.one_apply, h]
+  · simp [h]
 
 theorem stdFrame_stab_red : ∀ (D : D7) (V : HSp D) (n : ℕ) (hF : D.host.F = maximalRealSubfield D.host.E) (P : principalLevelFrame.RowPsi V n) (β : GL (Fin V.rank) (EAf D)) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)), R3.StdFrame hF P → IsBaseFrame V β Λ 1 → ∀ κ ∈ ReciprocityTheory.Aut.Umax D.host.E n, finE V (P.ψ κ) ∈ Formalism.L2.DIV.St β ∧ ∀ (A : Set (HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E)))) (v : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E))) (PP : Formalism.L2.DIV.Pl D.host.E), ReciprocityTheory.Aut.TrivOutside A κ → NG.OverPl PP v → v ∉ A → redFn β PP (finE V (P.ψ κ)) = 1 := by
   intro D V n hF P β Λ hP hB κ hκ
@@ -135,7 +135,7 @@ theorem stdFrame_stab_red : ∀ (D : D7) (V : HSp D) (n : ℕ) (hF : D.host.F = 
   rw [h3, sub_eq_zero]
   by_cases h : i = j
   · subst h; simp
-  · simp [Matrix.one_apply, h]
+  · simp [h]
 
 end GlobalTheory.FrameOff
 end -- clump:auto
@@ -222,8 +222,7 @@ theorem comm_a (p0 p1 pm : Fin n) (h01 : p0 ≠ p1) (h0m : p0 ≠ pm) (h1m : p1 
       tU (Pi.single pm (-1)) (Pi.single p1 1) (sdot _ _ _ h1m) := by
   apply Units.ext
   simp only [Units.val_mul, tU_val, tU_inv_val, add_mul, mul_add, sub_mul, mul_sub, one_mul, mul_one, vmv_mul_vmv,
-    Matrix.smul_mul, Matrix.mul_smul, smul_smul, single_dotProduct, Pi.single_apply, h01, h0m, h1m, h01.symm, h0m.symm, h1m.symm,
-    if_false, if_true, mul_zero, zero_smul, add_zero, sub_zero, zero_mul, mul_one]
+    Matrix.mul_smul, single_dotProduct, Pi.single_apply, h0m, h1m, h01.symm, if_false, if_true, mul_zero, zero_smul, add_zero, sub_zero, mul_one]
   ext p q
   simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, vecMulVec_apply, Pi.single_apply, smul_eq_mul]
   split_ifs <;> simp_all
@@ -234,8 +233,7 @@ theorem comm_b (p0 p1 pm : Fin n) (h01 : p0 ≠ p1) (h0m : p0 ≠ pm) (h1m : p1 
       tU (Pi.single p0 (a * b)) (Pi.single p1 1) (sdot _ _ _ h01.symm) := by
   apply Units.ext
   simp only [Units.val_mul, tU_val, tU_inv_val, add_mul, mul_add, sub_mul, mul_sub, one_mul, mul_one, vmv_mul_vmv,
-    Matrix.smul_mul, Matrix.mul_smul, smul_smul, single_dotProduct, Pi.single_apply, h01, h0m, h1m, h01.symm, h0m.symm, h1m.symm,
-    if_false, if_true, mul_zero, zero_smul, add_zero, sub_zero, zero_mul, mul_one]
+    Matrix.smul_mul, single_dotProduct, Pi.single_apply, h1m, h01.symm, h0m.symm, if_false, if_true, mul_zero, zero_smul, add_zero, zero_mul, mul_one]
   ext p q
   simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, vecMulVec_apply, Pi.single_apply, smul_eq_mul]
   split_ifs <;> simp_all [mul_comm]
@@ -358,7 +356,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.normalised_subgroup_column_matrices_entry_zero : ∀ (k : Type) [CommRing k], IsField k → ∀ n r : ℕ, 2 ≤ r → r < n → ∀ (H : Subgroup (GL (Fin n) k)) (b : GL (Fin n) k), (∀ u ∈ unip k n, ∀ h ∈ H, u * h * u⁻¹ ∈ H) → (∀ (h : GL (Fin n) k) (m : Fin n) (v : Fin n → k), r ≤ (m : ℕ) → v m = 0 → h.val = colMat v m → h ∈ H) → (∀ (h : GL (Fin n) k) (m : Fin n) (v : Fin n → k), r ≤ (m : ℕ) → v m = 0 → (b * h * b⁻¹).val = colMat v m → h ∈ H) → (∀ i j : Fin n, (i : ℕ) + 1 = j → (j : ℕ) < r → ∃ (c : k) (h : GL (Fin n) k), h.val = Matrix.transvection i j c ∧ h ∉ H) → ∀ a c : Fin n, r ≤ (a : ℕ) → (c : ℕ) < r → b.val a c = 0 := by
-  first | exact @GlobalTheory.PosAgree.entry_zero | exact GlobalTheory.PosAgree.entry_zero | (intros; apply GlobalTheory.PosAgree.entry_zero <;> assumption)
+  first | exact @GlobalTheory.PosAgree.entry_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NormalisedSubgroupColumnMatricesEntryZeroStatement =====
@@ -496,8 +494,8 @@ theorem map_transvection_entry {R k : Type} [CommRing R] [CommRing k] (φ : R �
     φ ((1 : Matrix (Fin n) (Fin n) R) a c + if a = i ∧ c = j then x else 0) = Matrix.transvection i j (φ x) a c := by
   rw [transvection_apply', map_add (f := _)]
   by_cases h1 : a = c
-  · subst h1; simp [Matrix.one_apply, apply_ite φ]
-  · simp [h1, Matrix.one_apply, apply_ite φ]
+  · subst h1; simp [apply_ite φ]
+  · simp [h1, apply_ite φ]
 
 end GlobalTheory.ParaForce
 
@@ -626,7 +624,7 @@ theorem para_of_colMat_fixed : ∀ (L : Type) [Field L] [NumberField L] [IsCMFie
         have h2 : a ≠ c := fun h => by subst h; omega
         show M a c = 0
         rw [hMe]
-        simp [Matrix.one_apply, h1, h2]
+        simp [h1, h2]
       · have h1 : a ≠ m := fun h => by subst h; omega
         show M a a = 1
         rw [hMe]
@@ -641,7 +639,7 @@ theorem para_of_colMat_fixed : ∀ (L : Type) [Field L] [NumberField L] [IsCMFie
         rw [map_incl_apply]
         show ((M a c : Os s) : s.v.adicCompletion (maximalRealSubfield L)) = 0
         rw [hMe]
-        simp [Matrix.one_apply, h1, h2]
+        simp [h1, h2]
       · rfl
     have hdd : NG.detDD s r (Matrix.GeneralLinearGroup.map (incl s) y) = 1 := by
       rw [detDD_map]
@@ -678,7 +676,7 @@ theorem para_of_colMat_fixed : ∀ (L : Type) [Field L] [NumberField L] [IsCMFie
         · have h2 : a ≠ c := fun h => by subst h; omega
           have h3 : ¬ (a = i ∧ c = j) := fun h => by obtain ⟨rfl, rfl⟩ := h; omega
           rw [hent]
-          simp [Matrix.one_apply, h2, h3]
+          simp [h2, h3]
         · have h3 : ¬ (a = i ∧ a = j) := fun h => hne (h.1.symm.trans h.2)
           rw [hent]
           simp [h3]
@@ -689,11 +687,11 @@ theorem para_of_colMat_fixed : ∀ (L : Type) [Field L] [NumberField L] [IsCMFie
         rw [map_incl_apply, hent]
         by_cases h1 : a = i ∧ c = j
         · obtain ⟨rfl, rfl⟩ := h1
-          simp [hij, hjr, Matrix.one_apply, hne, x']
+          simp [hij, hjr, hne, x']
         · rw [if_neg h1]
           split_ifs with h4
           · have h2 : a ≠ c := fun h => by subst h; omega
-            simp [Matrix.one_apply, h2]
+            simp [h2]
           · rfl
       have hsup : NG.supDiag s r (Matrix.GeneralLinearGroup.map (incl s) y) = x0 := by
         unfold NG.supDiag

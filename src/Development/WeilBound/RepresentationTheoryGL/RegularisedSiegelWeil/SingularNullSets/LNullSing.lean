@@ -1226,7 +1226,7 @@ theorem mul_gD_apply' {m : ℕ} (M : Fx A m t) (i : Fin t) (u : A) (p : Fin m) (
   by_cases h : j = i
   · subst h
     simp [mul_comm]
-  · simp [h, Function.update_apply]
+  · simp [h]
 
 theorem mul_gU_gD_apply {m : ℕ} (M : Fx A m t) (i : Fin t) (c : Fin t → A) (u' : A) (p : Fin m)
     (j : Fin t) :
@@ -1256,7 +1256,7 @@ theorem gD_mul (i : Fin t) (u' u : A) (h : u' * u = 1) : gD i u' * gD i u = 1 :=
     by_cases hpi : p = i
     · subst hpi
       simp [h]
-    · simp [Function.update_apply, hpi]
+    · simp [hpi]
   · simp [hpq]
 
 end GlobalTheory.CompanionTheory.NullFr.CoverStep
@@ -1404,10 +1404,10 @@ def colH (g : GL (Fin t) A) : (Fx A a r × Fx A a t) ≃ₜ (Fx A a r × Fx A a 
   invFun z := (z.1, z.2 * (g⁻¹).1)
   left_inv z := by
     have : g.1 * (g⁻¹).1 = 1 := by rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
-    simp [Matrix.mul_assoc, this]
+    simp [Matrix.mul_assoc]
   right_inv z := by
     have : (g⁻¹).1 * g.1 = 1 := by rw [← Units.val_mul, inv_mul_cancel, Units.val_one]
-    simp [Matrix.mul_assoc, this]
+    simp [Matrix.mul_assoc]
   continuous_toFun := continuous_fst.prodMk (continuous_snd.matrix_mul continuous_const)
   continuous_invFun := continuous_fst.prodMk (continuous_snd.matrix_mul continuous_const)
 
@@ -1666,7 +1666,7 @@ theorem frames_null {ι : Type} [Fintype ι] (md : Aˣ →* ℝ≥0) (hmd : IsHa
           ((eventually_all.2 fun p => eventually_all.2 fun k => ev _).and
           ((eventually_all.2 fun p => ev _).and (eventually_all.2 fun k => ev _))))
       obtain ⟨n, h1, h2, h3, h4, h5⟩ := hall.exists
-      simp only [Set.mem_union, Set.mem_iUnion]
+      simp only [Set.mem_iUnion]
       exact ⟨j, i, n, hadm, h1, h2, fun p k _ => h3 p k, h4, c, hci, fun k => ⟨hcf k, h5 k⟩, hcv⟩
     · exact Or.inl hadm
   refine measure_mono_null hsub (measure_union_null supp ?_)

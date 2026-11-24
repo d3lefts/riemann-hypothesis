@@ -148,7 +148,7 @@ private theorem exists_eigvec {k : Type} [Field k] (M : Matrix (Fin 2) (Fin 2) k
   rw [Matrix.sub_mulVec] at hMv
   have hs : Matrix.scalar (Fin 2) c *ᵥ v = c • v := by
     ext i
-    simp [Matrix.scalar_apply, Matrix.mulVec_smul]
+    simp [Matrix.scalar_apply]
   rw [hs] at hMv
   exact (sub_eq_zero.mp hMv).symm
 
@@ -282,7 +282,7 @@ theorem _root_.UpperTheory.V.Z.Sym.Sig.modelD : UpperTheory.V.Z.Sym.Sig.ModelD :
       (t : Etau k ((a : k) + ((a⁻¹ : kˣ) : k))).im • diagonal (fun i => ((![a, a⁻¹] i : kˣ) : k)) =
       diagonal fun i => ((![evU (root_left a) t, evU (root_right a) t] i : kˣ) : k) := by
     ext i l
-    fin_cases i <;> fin_cases l <;> simp [Matrix.one_apply, Matrix.diagonal_apply, ev_coe] <;> ring
+    fin_cases i <;> fin_cases l <;> simp [ev_coe] <;> ring
   rw [← hdiag, Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_one, hPP,
     Matrix.mul_smul, Matrix.smul_mul]
 

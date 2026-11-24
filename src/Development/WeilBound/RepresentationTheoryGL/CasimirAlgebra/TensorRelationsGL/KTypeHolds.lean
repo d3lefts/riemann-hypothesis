@@ -181,7 +181,7 @@ theorem curry_holds : Curry := by
     have hz : ∀ b : Fin k, ¬ (Fin.natAdd m b < Fin.castAdd k i) := fun b h => by
       simp only [Fin.lt_def, Fin.coe_castAdd, Fin.coe_natAdd] at h <;> omega
     have hc : ∀ x : Fin m, Fin.castAdd k x < Fin.castAdd k i ↔ x < i := fun x => by
-      simp only [Fin.lt_def, Fin.coe_castAdd, Fin.coe_natAdd] <;> omega
+      simp only [Fin.lt_def, Fin.coe_castAdd]
     simp only [xJ, LinearMap.comp_apply, LinearMap.add_apply, Pi.add_apply, Om_apply, LinearMap.sum_apply,
       Finset.sum_apply, pm_apply, iteApp, ite_apply, Pi.zero_apply, lift_apply, curF_apply, Fin.append_left, upd_castAdd, Finset.sum_filter,
       Fin.sum_univ_add, swap_castAdd, hz, hc, if_false, Finset.sum_const_zero, add_zero]
@@ -190,10 +190,9 @@ theorem curry_holds : Curry := by
     have hz : ∀ x : Fin m, Fin.castAdd k x < Fin.natAdd m j := fun x => by
       simp only [Fin.lt_def, Fin.coe_castAdd, Fin.coe_natAdd] <;> omega
     have hc : ∀ b : Fin k, Fin.natAdd m b < Fin.natAdd m j ↔ b < j := fun b => by
-      simp only [Fin.lt_def, Fin.coe_castAdd, Fin.coe_natAdd] <;> omega
+      simp only [Fin.lt_def, Fin.coe_natAdd] <;> omega
     simp only [xJ, LinearMap.comp_apply, LinearMap.add_apply, Pi.add_apply, Om_apply, LinearMap.sum_apply,
-      Finset.sum_apply, pm_apply, iteApp, ite_apply, Pi.zero_apply, curF_apply, tE_apply, Fin.append_right, upd_natAdd, upd_castAdd,
-      Finset.sum_filter, Fin.sum_univ_add, swap_natAdd, swap_mixed, hz, hc, if_true, Finset.sum_add_distrib]
+      Finset.sum_apply, pm_apply, iteApp, ite_apply, Pi.zero_apply, curF_apply, tE_apply, Fin.append_right, upd_natAdd, Finset.sum_filter, Fin.sum_univ_add, swap_natAdd, swap_mixed, hz, hc, if_true, Finset.sum_add_distrib]
     rw [Finset.sum_comm (f := fun x p => if I p = x then
       f (Fin.append (Function.update I p (J j)) (Function.update J j x)) else 0)]
     simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true, add_assoc]
@@ -240,7 +239,7 @@ theorem pm_swap_eq {P : Type} [DecidableEq P] (p j : P) (h : p ≠ j) :
   rw [pm_apply, comp_swap I p j h]
   simp only [LinearMap.sum_apply, Finset.sum_apply, Module.End.mul_apply, eAt_apply,
     Function.update_apply, if_neg (Ne.symm h)]
-  simp [Finset.sum_ite_eq, Finset.sum_ite_eq']
+  simp [Finset.sum_ite_eq]
 
 theorem xJ_eq {m : ℕ} (E : Fin n → Fin n → Module.End ℂ M) (j : Fin m) :
     xJ E j = ∑ a, ∑ b, tE (Finset.univ.filter (· < j)) E a b * eAt j b a := by
@@ -586,7 +585,7 @@ theorem T_apply (E : Fin n → Fin n → Module.End ℂ M) (u : ℂ) (k : Fin n)
   simp [T, Om, lift, eAt, Tm, Finset.sum_add_distrib, LinearMap.add_apply]
   congr 1
   · rw [Finset.sum_eq_single (I k)]
-    · simp [sub_smul]
+    · simp
     · intro b _ hb
       simp [hb]
     · simp
@@ -1227,15 +1226,15 @@ theorem main (hT : Trans) (N : ℕ) : TAk N := by
     intro F
     simp only [LinearMap.comp_apply, cj_apply, LinearEquiv.apply_symm_apply, Module.End.mul_apply, LinearEquiv.coe_coe]
     rw [cA_split (fun p => lab p = τ0) col (fun p p' h => by rw [hcl p p' h]) b]
-    simp only [LinearEquiv.apply_symm_apply, Module.End.mul_apply]
+    simp only [LinearEquiv.apply_symm_apply]
     rw [hcAl]
   have hkey0 : ℓ ∘ₗ cA col b ∘ₗ cj (spl (n := n) (M := M) (fun p : P => lab p = τ0)) (lift (P := {p : P // lab p = τ0}) S1 * S0) =
         ((ℓ ∘ₗ cA (fun p : {p : P // ¬ lab p = τ0} => col p) (fun p => b p) ∘ₗ S1) ∘ₗ cA (M := TV n M {p : P // ¬ lab p = τ0}) (fun p : {p : P // lab p = τ0} => col p) (fun p => b p) ∘ₗ S0) ∘ₗ (spl (n := n) (M := M) (fun p : P => lab p = τ0)).toLinearMap := by
     apply LinearMap.ext
     intro F
-    simp only [LinearMap.comp_apply, cj_apply, LinearEquiv.apply_symm_apply, Module.End.mul_apply, LinearEquiv.coe_coe]
+    simp only [LinearMap.comp_apply, cj_apply, Module.End.mul_apply, LinearEquiv.coe_coe]
     rw [cA_split (fun p => lab p = τ0) col (fun p p' h => by rw [hcl p p' h]) b]
-    simp only [LinearEquiv.apply_symm_apply, Module.End.mul_apply]
+    simp only [LinearEquiv.apply_symm_apply]
     rw [hcAl]
   refine ⟨cj (spl (n := n) (M := M) (fun p : P => lab p = τ0)) (lift (P := {p : P // lab p = τ0}) S1 * S0), ?_, ?_, ?_⟩
   · unfold envAlg

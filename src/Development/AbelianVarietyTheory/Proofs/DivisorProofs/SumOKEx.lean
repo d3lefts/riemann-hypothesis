@@ -15,6 +15,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IndicatorSma
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemGlLatCongOfSmul
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemMatLatSmulBlockLat
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ValuationLeOneOfMem
+import Mathlib
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnderMemAndPlaceAboveEqOfMem
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PadicIsNonarchimedeanLocalField
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NsmulProjectionXColumnsMemSelfDualLattice
@@ -71,6 +72,8 @@ namespace GlobalTheory.FunObj
 open GlobalTheory.ChiGrid GlobalTheory.SplitFlip GlobalTheory.SplitWeil GlobalTheory.StepData GlobalTheory.StdFrames Formalism.L2.Host Formalism.L2.DIV
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField borelKw borelSpaceKw
+
+attribute [local instance high] GlobalTheory.SplitWeil.matrixMeasurableSpace
 
 section Flip
 
@@ -129,7 +132,7 @@ theorem isNatDatum_sliceB {ϖ : kˣ} {e : ℕ} {γ : List Edge} {T : G.Args → 
         ext r s; simp [Matrix.toCols₂]
       · by_cases hb' : b = .theta i j
         · subst hb'
-          ext r s; simp [Function.update_of_ne hne, Matrix.toCols₁]
+          ext r s; simp [Matrix.toCols₁]
         · simp [Function.update_of_ne hb, Function.update_of_ne hb']
     have hZ' := FourierDepth.mem_matLat_smul_stdLat.1 hZ₀
     refine (congrArg T key).trans (hT.2.2 _ _ fun b => ?_)
@@ -177,7 +180,7 @@ theorem isTensor_flipTensor {ψ : AddChar k Circle} {ϖ : kˣ} {e : ℕ} (hϖ : 
       by_cases hb2 : b = .ex i j
       · subst hb2; simp
       · by_cases hb1 : b = .theta i j
-        · subst hb1; simp [Function.update_of_ne hne]
+        · subst hb1; simp
         · simp only [Function.update_of_ne hb2, Function.update_of_ne hb1]
           exact hxy b (mo b hb hb1 hb2)
     have e2 : G.joinA i j x = G.joinA i j y := by
@@ -209,13 +212,13 @@ theorem isTensor_flipTensor {ψ : AddChar k Circle} {ϖ : kˣ} {e : ℕ} (hϖ : 
         by_cases hb : b = .ex i j
         · subst hb; simp
         · by_cases hb' : b = .theta i j
-          · subst hb'; simp [Function.update_of_ne hne]
+          · subst hb'; simp
           · simp [Function.update_of_ne hb, Function.update_of_ne hb']
       refine (congrArg T key).trans (hT.2.2 _ _ fun b => ?_)
       by_cases hb : b = .ex i j
       · subst hb; simp
       · by_cases hb' : b = .theta i j
-        · subst hb'; simp [Function.update_of_ne hne]
+        · subst hb'; simp
         · simpa [Function.update_of_ne hb, Function.update_of_ne hb'] using hz b
     have e2 : G.joinA i j (x + z) = G.joinA i j x + G.joinA i j z := by
       ext r (s | s) <;> simp [Grid.joinA]
@@ -434,8 +437,6 @@ theorem exists_idemSum_locPl' {μ₀ : T} (hL : L.Is μ₀) (G : GridData L sc) 
   · exact b ▸ G.pl.w_split _ a
   · first
     | exact GlobalTheory.ParahoricLift.exists_isIdemAt fun h => (hL.Q_pl t w b).2 w b h
-    | exact GlobalTheory.ParahoricLift.exists_isIdemAt fun h => (hL.Q_pl t w b).2 w b ((GlobalTheory.IdemSupport.isConjPl_iff _ _).2 h)
-    | exact GlobalTheory.ParahoricLift.exists_isIdemAt fun h => (hL.Q_pl t w b).2 w b ((GlobalTheory.IdemSupport.isConjPl_iff _ _).1 h)
 
 
 variable (G) in

@@ -396,7 +396,7 @@ theorem _root_.GlobalTheory.T.spread_torsor_to_etale_algebra : ∀ (T O : Type) 
         (∀ e : E, s (algebraMap (GlobalTheory.LocAcyc.GenFib T E) DE (algebraMap E _ e)) =
           algebraMap O (GlobalTheory.LocAcyc.GenFib T O) (ψ e)) →
         Nonempty (D →ₐ[GlobalTheory.LocAcyc.GenFib T O] GlobalTheory.LocAcyc.GenFib T O) := by
-  first | (exact @GlobalTheory.LocAcyc.spread_torsor_to_etale) | (exact GlobalTheory.LocAcyc.spread_torsor_to_etale) | (intros; apply GlobalTheory.LocAcyc.spread_torsor_to_etale  <;> assumption)
+  first | (exact @GlobalTheory.LocAcyc.spread_torsor_to_etale)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SpreadTorsorToEtaleAlgebraStatement =====

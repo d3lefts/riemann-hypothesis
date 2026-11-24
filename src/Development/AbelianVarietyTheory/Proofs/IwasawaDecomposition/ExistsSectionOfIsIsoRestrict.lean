@@ -61,6 +61,7 @@ import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
 import Formalism.SharpRestriction.CuspSpanNormBounds.Point
 import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FrTanAlg
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 

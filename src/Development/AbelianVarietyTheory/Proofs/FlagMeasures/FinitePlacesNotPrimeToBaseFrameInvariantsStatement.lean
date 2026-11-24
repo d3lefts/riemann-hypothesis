@@ -62,7 +62,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.frame_factors_local_units_almost_all : ∀ (D : D7) (Z : LocDat D) (a : Fin (D.R.rS + 1)),
     {p : PlF D | ¬ Formalism.MainNotions.S.LocNG.IsUnitO (Z.M p) (frFac Z.δ p a)}.Finite := by
-  first | exact @GlobalTheory.FrameFactorUnit.frFac_isUnitO_finite | exact GlobalTheory.FrameFactorUnit.frFac_isUnitO_finite | (intros; apply GlobalTheory.FrameFactorUnit.frFac_isUnitO_finite <;> assumption)
+  first | exact @GlobalTheory.FrameFactorUnit.frFac_isUnitO_finite
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.FrameFactorsLocalUnitsAlmostAllStatement =====
@@ -130,7 +130,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.local_models_unsplit_almost_all : ∀ (D : D7) (Z : LocDat D), {p : PlF D | (Z.M p).split ≠ none}.Finite := by
-  first | exact @GlobalTheory.LocSplitFinite.split_finite | exact GlobalTheory.LocSplitFinite.split_finite | (intros; apply GlobalTheory.LocSplitFinite.split_finite <;> assumption)
+  first | exact @GlobalTheory.LocSplitFinite.split_finite
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.LocalModelsUnsplitAlmostAllStatement =====
@@ -221,7 +221,7 @@ theorem _root_.GlobalTheory.T.localised_base_frames_leading_minor_eq : ∀ (D : 
     AtBase Z p F F' Tn T'n P → ∀ l : ℕ, P.Dm l =
       (∏ a : Fin (D.R.rS + 1), if a.val < l then (Z.M p).L.cj (frFac Z.δ p a) * frFac Z.δ p a else 1) *
         (D.s.atP p).ιE (Formalism.MainNotions.S.Dl F.fl F'.fl l) := by
-  first | exact @GlobalTheory.LocMinor.leadMinor_atBase | exact GlobalTheory.LocMinor.leadMinor_atBase | (intros; apply GlobalTheory.LocMinor.leadMinor_atBase <;> assumption)
+  first | exact @GlobalTheory.LocMinor.leadMinor_atBase
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.LocalisedBaseFramesLeadingMinorEqStatement =====
@@ -447,7 +447,7 @@ open scoped Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.finite_places_not_primeTo_baseFrameInvariants : ∀ (D : D7) (Z : LocDat D), ∀ (u u' : D.what₂.Word) (F00 : LFlag (D.sp.Y 0) D.R.rS (((D.mem u).A.T : ℕ) : D.host.E)) (F'0 : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E)), Gval F00 F'0 ≠ 0 → ∀ FP : ∀ p : PlF D, LocNG.FPair (locH Z p) D.R.rS, (∀ p, AtBase Z p F00 F'0 (Tu D u) (Tu D u') (FP p)) → {p : PlF D | ¬ (FP p).PrimeTo}.Finite := by
-  first | exact @GlobalTheory.PrimeAlmostAll.primeTo_finite | exact GlobalTheory.PrimeAlmostAll.primeTo_finite | (intros; apply GlobalTheory.PrimeAlmostAll.primeTo_finite <;> assumption)
+  first | exact @GlobalTheory.PrimeAlmostAll.primeTo_finite
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.FinitePlacesNotPrimeToBaseFrameInvariantsStatement =====

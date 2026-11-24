@@ -81,7 +81,6 @@ theorem hQ_symm {T' : E} (F' : LFlag S r T') (c : E) (hc : star c = c) : (hQ F' 
       starRingEnd_apply c, hc]
     ring
   first
-    | exact key
     | exact ⟨key⟩
 
 theorem hV_pos {T' : ℕ} (F' : LFlag S r ((T' : ℕ) : E)) (hT : 0 < T')
@@ -220,7 +219,6 @@ theorem γU_coe {T' : E} (F' : LFlag S r T') (γ : S.V ≃ₗ[E] S.V) (hU : ∀ 
 theorem γU_symm_coe {T' : E} (F' : LFlag S r T') (γ : S.V ≃ₗ[E] S.V) (hU : ∀ v, γ v ∈ Uo F' ↔ v ∈ Uo F')
     (a : Uo F') : (((γU F' γ hU).symm a : Uo F') : S.V) = γ.symm a := by
   first
-    | exact LinearEquiv.ofSubmodules_symm_apply _
     | simp [γU]
 
 def γQ {T' : E} (F' : LFlag S r T') (γ : S.V ≃ₗ[E] S.V) (hU : ∀ v, γ v ∈ Uo F' ↔ v ∈ Uo F')
@@ -266,8 +264,6 @@ theorem mem_Lb {T' : E} (F' : LFlag S r T') (Λ : Submodule (𝓞 E) S.V) {q : Q
     q ∈ Lb F' Λ ↔ ∃ a : Uo F', (a : S.V) ∈ Λ ∧ Submodule.Quotient.mk a = q := by
   first
     | exact Iff.rfl
-    | (simp [Lb, ΛU]; done)
-    | (constructor <;> rintro ⟨a, ha, rfl⟩ <;> exact ⟨a, ha, rfl⟩)
 
 theorem Lb_lattice {T' : E} (F' : LFlag S r T') (Λ : Submodule (𝓞 E) S.V)
     (hΛ : Submodule.IsFullLattice E Λ) : Submodule.IsFullLattice E (Lb F' Λ) := by
@@ -330,7 +326,6 @@ theorem gmap_mul' {T' : E} (F' : LFlag S r T') (a b : Qt F' ≃ₗ[E] Qt F') (L 
   rw [← Submodule.map_comp]
   first
     | rfl
-    | (congr 1)
 
 theorem γQ_finOrd {T' : ℕ} (F' : LFlag S r ((T' : ℕ) : E)) (hT : 0 < T')
     (hτ : ∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRingEnd ℂ (τ a))
@@ -553,7 +548,7 @@ theorem mod_lattice_absolute_value : ModXAbs := by
     exact hξX
   have hLb := Lb_lattice F' Λ hΛ
   have hfg : (Lb F' Λ).FG := by
-    first | exact hLb.toIsLattice.fg | exact hLb.fg
+    first | exact hLb.toIsLattice.fg
   have hfix := mink_fix (Lb F' Λ) hfg φ hφL n hn hpow' g hg hcongQ
   have hall : ∀ q, φ q = q := by
     have hle : Submodule.span E (Lb F' Λ : Set (Qt F')) ≤
@@ -569,15 +564,6 @@ theorem mod_lattice_absolute_value : ModXAbs := by
           rw [Submodule.IsFullLattice.span_eq_top]
           exact Submodule.mem_top
         | obtain ⟨a, rfl⟩ := Submodule.Quotient.mk_surjective (Pk F') q
-          obtain ⟨o, ho, hoa⟩ := Bl.general_b_fact_third''''.goal1 S Λ hΛ (a : S.V)
-          have hmem : (Submodule.Quotient.mk (p := Pk F') (o • a) : Qt F') ∈ Lb F' Λ :=
-            (mem_Lb F' Λ).2 ⟨o • a, by simpa using hoa, rfl⟩
-          have ho' : algebraMap (𝓞 E) E o ≠ 0 :=
-            (map_ne_zero_iff _ (IsFractionRing.injective (𝓞 E) E)).2 ho
-          have ha : (Submodule.Quotient.mk (p := Pk F') a : Qt F') =
-              (algebraMap (𝓞 E) E o)⁻¹ • (Submodule.Quotient.mk (p := Pk F') (o • a) : Qt F') := by
-            rw [Submodule.Quotient.mk_smul, ← algebraMap_smul E o, smul_smul, inv_mul_cancel₀ ho', one_smul]
-          rw [ha]
           exact Submodule.smul_mem _ _ (Submodule.subset_span hmem))
     rw [LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply, sub_eq_zero] at hq
     exact hq

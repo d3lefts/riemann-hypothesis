@@ -286,8 +286,6 @@ private theorem log_le_log_of_pos_of_le {a b : ℝ} (ha : 0 < a) (h : a ≤ b) :
 private theorem div_le_div_of_mul_le_mul_of_pos' {a b c d : ℝ} (hb : 0 < b) (hd : 0 < d)
     (h : a * d ≤ c * b) : a / b ≤ c / d := by
   first
-  | exact (div_le_div_iff_of_pos hb hd).mpr h
-  | exact (div_le_div_iff hb hd).mpr h
   | exact (div_le_div_iff₀ hb hd).mpr h
 
 lemma pm_key_Y (m x y Y : ℝ) (hx : 1 ≤ x) (hy : 1 ≤ y) (h1 : x * y / 2 ≤ m) (hmY : m ≤ Y)
@@ -885,6 +883,9 @@ theorem band_total : BandTotal := by
   have := Finset.sum_le_card_nsmul (Finset.range I) _ _ hterm
   rwa [Finset.card_range, nsmul_eq_mul] at this
 
+/-- Bound the contribution from bases above `X''`. Only first powers in
+`(X'', X'' * (1 + th))` contribute, each at most `w'' * th` before the logarithmic
+weight. The interval count `X'' * th + 1` gives the two terms in the bound. -/
 theorem high_bucket_bound : HighBucket := by
   intro a at_ w'' X'' th s I w hw'' hth0 hth1 hX ha hat0 hat hs hI hw
   simp only [askAt]
@@ -902,6 +903,22 @@ theorem high_bucket_bound : HighBucket := by
       rw [hbp]; split_ifs
       · positivity
       · exact le_rfl
+    have higher_power_vanishes : ∀ i ∈ I p, 2 ≤ i →
+        max (at_ / (p : ℝ) ^ i - w p i) 0 = 0 := by
+      intro i hiI hi2
+      apply le_antisymm
+      · apply max_le _ le_rfl
+        have hpow : (p : ℝ) ^ 2 ≤ (p : ℝ) ^ i := pow_le_pow_right₀ (by linarith) hi2
+        have hp2 : 2 * X'' ≤ (p : ℝ) ^ 2 := by nlinarith
+        have hpi0 : (0 : ℝ) < (p : ℝ) ^ i := by positivity
+        have h2 : at_ / (p : ℝ) ^ i ≤ w'' := by
+          rw [div_le_iff₀ hpi0]; rw [← ha] at hat
+          have : at_ ≤ w'' * (2 * X'') := by nlinarith
+          have h5 : w'' * (2 * X'') ≤ w'' * (p : ℝ) ^ i :=
+            mul_le_mul_of_nonneg_left (hp2.trans hpow) hw''.le
+          linarith
+        linarith [hw p hp i hiI]
+      · exact le_max_right _ _
     have hi : ∀ i ∈ I p, max (at_ / (p : ℝ) ^ i - w p i) 0 ≤ if i = 1 then bp else 0 := by
       intro i hiI
       have hi1 := hI p hp i hiI
@@ -920,19 +937,7 @@ theorem high_bucket_bound : HighBucket := by
             rw [div_le_iff₀ hp0]; rw [← ha] at hat
             nlinarith
           linarith [hw p hp 1 hiI]
-      · rw [if_neg h1]
-        apply max_le _ le_rfl
-        have hi2 : 2 ≤ i := by omega
-        have hpow : (p : ℝ) ^ 2 ≤ (p : ℝ) ^ i := pow_le_pow_right₀ (by linarith) hi2
-        have hp2 : 2 * X'' ≤ (p : ℝ) ^ 2 := by nlinarith
-        have hpi0 : (0 : ℝ) < (p : ℝ) ^ i := by positivity
-        have h2 : at_ / (p : ℝ) ^ i ≤ w'' := by
-          rw [div_le_iff₀ hpi0]; rw [← ha] at hat
-          have : at_ ≤ w'' * (2 * X'') := by nlinarith
-          have h5 : w'' * (2 * X'') ≤ w'' * (p : ℝ) ^ i :=
-            mul_le_mul_of_nonneg_left (hp2.trans hpow) hw''.le
-          linarith
-        linarith [hw p hp i hiI]
+      · rw [if_neg h1, higher_power_vanishes i hiI (by omega)]
     have hinner : ∑ i ∈ I p, max (at_ / (p : ℝ) ^ i - w p i) 0 ≤ bp := by
       refine (Finset.sum_le_sum hi).trans ?_
       rw [Finset.sum_ite_eq']
@@ -950,6 +955,7 @@ theorem high_bucket_bound : HighBucket := by
     · simp
   refine (Finset.sum_le_sum hper).trans ?_
   rw [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul]
+  -- Even an interval of length less than one can contain an integer.
   have hcard := interval_count X'' (X'' * (1 + th))
     (s.filter (fun p : ℕ => (p : ℝ) < X'' * (1 + th))) (by nlinarith) (by
       intro n hn

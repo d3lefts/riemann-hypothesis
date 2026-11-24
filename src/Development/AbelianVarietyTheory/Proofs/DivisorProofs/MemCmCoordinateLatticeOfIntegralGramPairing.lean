@@ -789,9 +789,7 @@ theorem UpperTheory.exists_nsmul_mem_sum_image_lattice_of_surjective_mod :
     obtain ⟨v, rfl⟩ := hΦs u
     rw [hΦapp]
     refine Submodule.sum_mem _ (fun a _ => ?_)
-    have hva : v a ∈ Submodule.span ℝ (ΛA : Set (Fin gA → ℂ)) := by
-      rw [hA]
-      trivial
+    have hva : v a ∈ Submodule.span ℝ (ΛA : Set (Fin gA → ℂ)) := hA ▸ Submodule.mem_top
     have hsub : ((J a).restrictScalars ℝ) '' (ΛA : Set (Fin gA → ℂ)) ⊆ (Sz : Set (Fin gB → ℂ)) := by
       rintro _ ⟨z, hz, rfl⟩
       refine ⟨Pi.single a z, Submodule.mem_pi.mpr (fun b _ => ?_), ?_⟩
@@ -816,12 +814,11 @@ theorem UpperTheory.exists_nsmul_mem_sum_image_lattice_of_surjective_mod :
     exact htS i.2
   have hzS : Submodule.span ℤ (Set.range b) ≤ Sz :=
     Submodule.span_le.mpr (by rintro _ ⟨i, rfl⟩; exact hbS i)
-  haveI : DiscreteTopology ΛB.toAddSubgroup := ‹DiscreteTopology ΛB›
-  haveI : DiscreteTopology (ΛB : Set (Fin gB → ℂ)) := ‹DiscreteTopology ΛB›
-  have hcl : IsClosed (ΛB : Set (Fin gB → ℂ)) := (ΛB.toAddSubgroup).isClosed_of_discreteTopology
-  have hfin : ((ZSpan.fundamentalDomain b) ∩ (ΛB : Set (Fin gB → ℂ))).Finite :=
-    Metric.finite_isBounded_inter_isClosed (isDiscrete_iff_discreteTopology.mpr ‹_›)
-      (ZSpan.fundamentalDomain_isBounded b) hcl
+  have hfin : ((ZSpan.fundamentalDomain b) ∩ (ΛB : Set (Fin gB → ℂ))).Finite := by
+    change ((ZSpan.fundamentalDomain b) ∩ ΛB.toAddSubgroup).Finite
+    have : DiscreteTopology ΛB.toAddSubgroup := ‹DiscreteTopology ΛB›
+    exact Metric.finite_isBounded_inter_isClosed DiscreteTopology.isDiscrete
+      (ZSpan.fundamentalDomain_isBounded b) inferInstance
   have hmem : ∀ n : ℕ, ZSpan.fract b (n • l) ∈ (ZSpan.fundamentalDomain b) ∩ (ΛB : Set (Fin gB → ℂ)) := by
     intro n
     refine ⟨ZSpan.fract_mem_fundamentalDomain b _, ?_⟩
@@ -835,8 +832,7 @@ theorem UpperTheory.exists_nsmul_mem_sum_image_lattice_of_surjective_mod :
     have h2 : n • l - m • l = (ZSpan.floor b (n • l) : Fin gB → ℂ) - ZSpan.floor b (m • l) := by
       rw [sub_eq_sub_iff_sub_eq_sub]
       exact heq.symm
-    rw [h1, h2]
-    exact Sz.sub_mem (hzS (ZSpan.floor b _).2) (hzS (ZSpan.floor b _).2)
+    simpa only [h1, h2] using Sz.sub_mem (hzS (ZSpan.floor b _).2) (hzS (ZSpan.floor b _).2)
   obtain ⟨x, hx, hxe⟩ := hdiff
   refine ⟨n - m, x, Nat.sub_pos_of_lt hmn, fun a => Submodule.mem_pi.mp hx a (Set.mem_univ a), ?_⟩
   rw [← hxe]
@@ -1322,7 +1318,7 @@ theorem ptOf_comp {S : Scheme.{0}} (t : Sp ℂ ⟶ S) {A B : Over S}
     (y : Over.mk (𝟙 (Sp ℂ)) ⟶ (Over.pullback t).obj A) (f : A ⟶ B) :
     ptOf t (y ≫ (Over.pullback t).map f) = ptOf t y ≫ f := by
   ext
-  simp [ptOf, pullback.lift_fst]
+  simp [ptOf]
 
 theorem ptOf_injective {S : Scheme.{0}} (t : Sp ℂ ⟶ S) {A : Over S} :
     Function.Injective (ptOf t (A := A)) := by

@@ -778,7 +778,7 @@ section
 open GlobalTheory.SumCount GlobalTheory.SumSize
 
 theorem _root_.GlobalTheory.T.theta_kCoset_count_formula : _root_.GlobalTheory.FunPr.ThetaLocalInputs → GlobalTheory.SumCount.CosK := by
-  first | exact @_root_.GlobalTheory.CosCount.card_kCosets_theta | exact _root_.GlobalTheory.CosCount.card_kCosets_theta | (intros; apply _root_.GlobalTheory.CosCount.card_kCosets_theta <;> assumption)
+  first | exact @_root_.GlobalTheory.CosCount.card_kCosets_theta
 end
 end -- clump:auto
 end -- clump:auto
@@ -801,7 +801,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 
 theorem _root_.GlobalTheory.T.sum_count_bound_archimedean : _root_.GlobalTheory.FunPr.ThetaLocalInputs → DepthK → InfCountK := by
-  first | exact @_root_.GlobalTheory.SumCount.archimedean_sum_count_bound | exact _root_.GlobalTheory.SumCount.archimedean_sum_count_bound | (intros; apply _root_.GlobalTheory.SumCount.archimedean_sum_count_bound <;> assumption)
+  first | exact @_root_.GlobalTheory.SumCount.archimedean_sum_count_bound
 end
 end -- clump:auto
 end -- clump:auto

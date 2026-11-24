@@ -276,7 +276,7 @@ theorem _root_.GlobalTheory.T.finite_translate_jets_fock : _root_.GlobalTheory.F
         (heisO ψ S T u f) (MvPolynomial.monomial k 1) 0 =
         c * ((k.prod fun v n => GlobalTheory.FunObj.period δ v.1 ^ n) * GL3Theta.applyAt0 D (MvPolynomial.monomial k 1)
           (StandardLatticesGL3.comb D (TaylorLogMetric.tor0 D D.host.ccK δ) a s e0)) := by
-  first | exact @_root_.GlobalTheory.FinTransJet.fock_jets_heisenberg_orbit_finite | exact _root_.GlobalTheory.FinTransJet.fock_jets_heisenberg_orbit_finite | (intros; apply _root_.GlobalTheory.FinTransJet.fock_jets_heisenberg_orbit_finite <;> assumption)
+  first | exact @_root_.GlobalTheory.FinTransJet.fock_jets_heisenberg_orbit_finite
 end
 end -- clump:auto
 end -- clump:auto
@@ -386,7 +386,7 @@ theorem _root_.GlobalTheory.T.bottom_translate_jets_algebraic : ∀ {D : D7} {T 
       ∀ k : FVar D WW.rank A.rank →₀ ℕ, Finsupp.mapDomain Prod.fst k = dg →
         IsAlgebraic ℚ (pureTensorO W.ψ W.θ (GlobalTheory.Grid.neg A) WW (fun τ => -X.rA.s τ) X.rW.s X.rA.B X.rW.B
           (heisO W.ψ (GlobalTheory.Grid.neg A) WW u X.vac) (MvPolynomial.monomial k 1) 0 / Ω) := by
-  first | exact @_root_.GlobalTheory.BotTransJet.isAlgebraic_pureTensorO_div_period | exact _root_.GlobalTheory.BotTransJet.isAlgebraic_pureTensorO_div_period | (intros; apply _root_.GlobalTheory.BotTransJet.isAlgebraic_pureTensorO_div_period <;> assumption)
+  first | exact @_root_.GlobalTheory.BotTransJet.isAlgebraic_pureTensorO_div_period
 end
 end -- clump:auto
 end -- clump:auto

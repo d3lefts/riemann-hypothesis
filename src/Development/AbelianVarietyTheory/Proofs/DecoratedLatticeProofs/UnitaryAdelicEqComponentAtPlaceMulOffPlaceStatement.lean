@@ -191,7 +191,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.AppendedVectorData (lastKer lastPai
 open GlobalTheory.FinPl
 
 theorem _root_.GlobalTheory.T.unitaryAdelic_eq_componentAtPlace_mul_offPlace : ∀ (D : D7) (S : HSp D) (h : GA D S) (v : Pl D), ∃ hv ∈ grpAt S (· = v), ∃ h' ∈ grpOff S (· = v), h = hv * h' := by
-  first | exact @GlobalTheory.FinPl.decompAt | exact GlobalTheory.FinPl.decompAt | (intros; apply GlobalTheory.FinPl.decompAt <;> assumption)
+  first | exact @GlobalTheory.FinPl.decompAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.UnitaryAdelicEqComponentAtPlaceMulOffPlaceStatement =====

@@ -143,7 +143,7 @@ theorem wtOK_sites : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X}
     have hcomm := Nat.mul_comm j (D.R.t + 1)
     have hiN : i.1 < D.R.k + j * (D.R.t + 1) := by have := i.2; simp only [Ranks.N] at this; exact this
     apply Int.cast_injective (α := ℚ)
-    simp only [hvs, Sys.nuv, nu]
+    simp only [Sys.nuv, nu]
     by_cases hr : i.1 < D.R.k
     · rw [if_pos (show 1 ≤ i.1 + 1 ∧ i.1 + 1 ≤ (sysS H X std).G.P.m + 1 by omega)]
       simp only [lamI]
@@ -210,7 +210,7 @@ open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.MainNotions.G
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.kernelSite_modelStageWeights_eq_chainWeights : AllSites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S => ∀ j < D.R.m, Nonempty (Lv.comp (j + 1)) → WtOK (sysS H X std) D (hT.gat_pos u w hg) u μ j) := by
-  first | exact @GlobalTheory.TwV.DelA.wtOK_sites | exact GlobalTheory.TwV.DelA.wtOK_sites | (intros; apply GlobalTheory.TwV.DelA.wtOK_sites <;> assumption)
+  first | exact @GlobalTheory.TwV.DelA.wtOK_sites
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteModelStageWeightsEqChainWeightsStatement =====

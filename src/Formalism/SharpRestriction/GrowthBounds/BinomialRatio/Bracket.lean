@@ -195,20 +195,17 @@ namespace Formalism.MainNotions.ColumnSystems.Pf
 open Formalism.MainNotions.G
 
 theorem nk_toNat_cast (z : ℤ) (h : 0 ≤ z) : ((z.toNat : ℕ) : ℝ) = ((z : ℤ) : ℝ) := by
-  have e := Int.toNat_of_nonneg h
-  exact_mod_cast congrArg (Int.cast : ℤ → ℝ) e
+  exact_mod_cast (Int.toNat_of_nonneg h)
 
 theorem brk_hat (m : ℕ) (η δ a : ℝ) (hη0 : 0 ≤ η) (hδη : δ ≤ η) (hδ0 : 0 ≤ δ) (hA0 : 0 ≤ a)
     (hm : (m : ℝ) ≤ η * a) : (a + m) * (1 + δ) ≤ Real.exp (2 * η) * a := by
   have h1 : 1 + η ≤ Real.exp η := by linarith [Real.add_one_le_exp η]
-  have h2 : (1 + η) ^ 2 ≤ Real.exp (2 * η) := by
-    rw [show 2 * η = η + η by ring, Real.exp_add, ← sq]
-    exact pow_le_pow_left₀ (by linarith) h1 2
   calc (a + m) * (1 + δ) ≤ (a + η * a) * (1 + η) :=
         mul_le_mul (by linarith) (by linarith) (by linarith) (by nlinarith)
     _ = a * (1 + η) ^ 2 := by ring
-    _ ≤ a * Real.exp (2 * η) := mul_le_mul_of_nonneg_left h2 hA0
-    _ = Real.exp (2 * η) * a := by ring
+    _ ≤ a * (Real.exp η) ^ 2 :=
+        mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (by linarith) h1 2) hA0
+    _ = Real.exp (2 * η) * a := by rw [show 2 * η = η + η by ring, Real.exp_add, sq]; ring
 
 
 
@@ -413,8 +410,7 @@ theorem bracket_of {C0 CYb Cde Ck CD Cb CE1 CE2 Cc : ℝ} (hF : PairFactsAt C0 C
     obtain ⟨⟨-, -, -, -, h5, -, h7, -⟩, -⟩ := hI
     have := (h5 j).2
     omega
-  have hkdef : X.k = (X.m : ℝ) + 1 := rfl
-  rw [hkdef] at hkA hkAi hkCi hpk hk10 hLak
+  rw [show X.k = (X.m : ℝ) + 1 from rfl] at hkA hkAi hkCi hpk hk10 hLak
   have hk' : ∃ i0, ¬ ((((pairO mu (clA C0 CE1 CE2 X j rz ry) i0 - pairRho mu i0 : ℤ) : ℝ)) +
       4 * ((clA C0 CE1 CE2 X j rz ry i0 : ℝ) + X.m) / (X.p : ℝ) ^ 2 ≤
         X.La C0 * max ((pairC mu i0 : ℤ) : ℝ) (clA C0 CE1 CE2 X j rz ry i0 : ℝ) / ((X.m : ℝ) + 1) ∧
@@ -444,8 +440,7 @@ theorem bracket_of {C0 CYb Cde Ck CD Cb CE1 CE2 Cc : ℝ} (hF : PairFactsAt C0 C
   have e2 : ∏ i : Fin (segS X.TT j), (((pairN (s := segS X.TT j) lam i).toNat : ℝ) + X.m) =
       ∏ i : Fin (segS X.TT j), (((pairN (s := segS X.TT j) lam i : ℤ) : ℝ) + X.m) :=
     Finset.prod_congr rfl fun i _ => by rw [nk_toNat_cast _ (hn i).1]
-  rw [e0, e1, e2]
-  exact h2
+  simpa only [e0, e1, e2] using h2
 
 theorem restBracket_of (hF : RestPairFacts) (hN : CoarseDegreesLargeBeyond) : RestBracket :=
   TransportedAlt.mono (fun _ _ _ _ _ _ _ _ _ _ h => bracket_of h.1 h.2) (hF.and hN)

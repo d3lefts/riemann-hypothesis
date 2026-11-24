@@ -860,7 +860,6 @@ theorem field_mem_unitary : FieldMemU := by
     have := hcont.aestronglyMeasurable (μ := volume) (measurableSet_singleton (0 : ℂ)).compl
     first
       | rwa [restrict_compl_singleton] at this
-      | rwa [Measure.restrict_eq_self_of_ae_mem (compl_mem_ae_iff.mpr (measure_singleton 0))] at this
   refine (memLp_two_iff_integrable_sq_norm hmeas).2 ?_
   refine ((hV.int a hloc).re).congr (Filter.Eventually.of_forall fun cc => ?_)
   exact (norm_vecT_sq hV _).symm
@@ -1833,7 +1832,7 @@ theorem _root_.Formalism.FourierDecayAlt.P.CutBP.GT.germDataTopAll_of_partsCpt (
         · unfold PBK.mainD
           rw [← Finset.sum_neg_distrib]
           refine Finset.sum_congr rfl fun z hzm => ?_
-          simp only [hbt, btT, if_neg (hroot z hzm), coT, ptT, smul_smul, neg_smul, neg_mul]
+          simp only [hbt, btT, if_neg (hroot z hzm), coT, ptT, smul_smul, neg_smul]
       rw [hsum]
       have hk : ∀ j ∈ Finset.insertNone (G.rootSet s (epsT s * D)), ∀ l ∈ Finset.insertNone (G.rootSet s (epsT s * D)),
           ⟪vecT p w.length c Fi L (ptT s h x D j), vecT p w.length c Fi L (ptT s h x D l)⟫_ℂ =

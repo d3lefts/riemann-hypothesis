@@ -82,7 +82,7 @@ private lemma zii_log_le {a L v W : ℝ} (ha : 1 ≤ a) (hv : 1 ≤ v) (hL : 1 �
     have := Real.log_le_sub_one_of_pos (by norm_num : (0:ℝ) < 9)
     linarith
   have h4 : Real.log a ≤ L := by
-    have : Real.log a ≤ Real.log (a * v) := Real.log_le_log ha0 (by nlinarith)
+    have : Real.log a ≤ Real.log (a * v) := Real.log_le_log ha0 (le_mul_of_one_le_right ha0.le hv)
     linarith
   linarith
 
@@ -104,7 +104,7 @@ theorem zeta_proposition_second : PropZ_ii := by
     have : κ + 1 ≤ N := by rw [hN.N_eq]; exact Nat.le_add_right _ _
     exact_mod_cast this
   have hNL : (N:ℝ) * L ≤ b' := by linarith [hN.lin]
-  have hNNL : (N:ℝ) ≤ N * L := by nlinarith
+  have hNNL : (N:ℝ) ≤ N * L := le_mul_of_one_le_right (Nat.cast_nonneg N) hL1
   have hKb : (κ:ℝ) + 1 ≤ b' := by linarith
   have hKa : (κ:ℝ) + 1 ≤ a := le_trans hKb hba
   have hSb : S ≤ b' := by
@@ -113,7 +113,7 @@ theorem zeta_proposition_second : PropZ_ii := by
     have : (0:ℝ) ≤ (m:ℝ) * t := by positivity
     linarith
   have ha1 : 1 ≤ a := le_trans hb1 hba
-  have haa : a ≤ a ^ 2 := by nlinarith
+  have haa : a ≤ a ^ 2 := le_self_pow₀ ha1 two_ne_zero
   have hlogK0 : 0 ≤ Real.log ((κ:ℝ) + 1) := Real.log_nonneg hK1
   have hKbS : 0 ≤ ((κ:ℝ) + 1) * (b' + S) * Real.log ((κ:ℝ) + 1) :=
     mul_nonneg (mul_nonneg hK0.le (by linarith)) hlogK0
@@ -134,19 +134,26 @@ theorem zeta_proposition_second : PropZ_ii := by
       have e2 : ((κ:ℝ) + 1) * (b' + S) ≤ a * (2 * a) :=
         mul_le_mul hKa (by linarith) (by linarith) (by linarith)
       have hlog : Real.log ((plus (lam ρ) 0 : ℝ) + (κ:ℝ) + 1) ≤ 10 * L :=
-        zii_log_le ha1 hv1 hL1 hN.log_av (by linarith) (by nlinarith)
+        zii_log_le ha1 hv1 hL1 hN.log_av (by linarith) (by
+          have : a * (2 * a) = 2 * a ^ 2 := by ring
+          linarith)
       have f1 := mul_le_mul_of_nonneg_right hWb hlogK0
       have f2 := mul_le_mul_of_nonneg_left hlog (sq_nonneg ((κ:ℝ) + 1))
-      nlinarith [f1, f2, hKbS]
+      linarith [f1, f2, hKbS]
     · rw [if_neg hρ]
       have hw := hwtp' ρ hρ
-      have e1 : ((κ:ℝ) + 1 + 3) * S ≤ 4 * (((κ:ℝ) + 1) * (b' + S)) := by nlinarith
+      have e1 : ((κ:ℝ) + 1 + 3) * S ≤ 4 * (((κ:ℝ) + 1) * (b' + S)) := by
+        have hKS : S ≤ ((κ:ℝ) + 1) * S := le_mul_of_one_le_left hS0 hK1
+        have hKb' : 0 ≤ ((κ:ℝ) + 1) * b' := mul_nonneg hK0.le (by linarith)
+        linarith
       have e2 : ((κ:ℝ) + 1 + 3) * S ≤ (4 * a) * a := mul_le_mul (by linarith) (by linarith) hS0 (by linarith)
       have hlog : Real.log ((plus (lam ρ) 0 : ℝ) + (κ:ℝ) + 1) ≤ 10 * L :=
-        zii_log_le ha1 hv1 hL1 hN.log_av (by linarith) (by nlinarith)
+        zii_log_le ha1 hv1 hL1 hN.log_av (by linarith) (by
+          have : (4 * a) * a = 4 * a ^ 2 := by ring
+          linarith)
       have f1 := mul_le_mul_of_nonneg_right (hw.trans e1) hlogK0
       have f2 := mul_le_mul_of_nonneg_left hlog (sq_nonneg ((κ:ℝ) + 1))
-      nlinarith [f1, f2, hKbS]
+      linarith [f1, f2, hKbS]
   have hsumZ4 : ∑ ρ, MeanSquareWeightBound (lam ρ) ≤ (TT.card : ℝ) * (2 * a * Real.log ((κ:ℝ) + 1))
       + (Fintype.card ι : ℝ) * (4 * ((κ:ℝ) + 1) * (b' + S) * Real.log ((κ:ℝ) + 1)
         + 10 * ((κ:ℝ) + 1) ^ 2 * L) := by
@@ -228,7 +235,7 @@ private lemma ziii_log {a L v x : ℝ} (ha : 1 ≤ a) (hv : 1 ≤ v) (hL : 1 ≤
     have := Real.log_le_sub_one_of_pos (by norm_num : (0:ℝ) < 7)
     linarith
   have h4 : Real.log a ≤ L := by
-    have : Real.log a ≤ Real.log (a * v) := Real.log_le_log ha0 (by nlinarith)
+    have : Real.log a ≤ Real.log (a * v) := Real.log_le_log ha0 (le_mul_of_one_le_right ha0.le hv)
     linarith
   linarith
 
@@ -252,18 +259,20 @@ private lemma ziii_top {C₀ K a b' S L v logT W p lst At bt : ℝ} (hC : 0 ≤ 
         + (2 + C₀) * (b' + S) * logT + 8 * K ^ 2 * L) := by
   have hK0 : 0 ≤ K := by linarith
   have ha0 : 0 ≤ a := by linarith
-  have hlkv : 0 ≤ Real.log (K * v) := Real.log_nonneg (by nlinarith)
+  have hlkv : 0 ≤ Real.log (K * v) := Real.log_nonneg (one_le_mul_of_one_le_of_one_le hK hv)
   have hbS : bt + S ≤ 3 * a := by linarith
   have hKbt : K * (bt + S) ≤ a * (3 * a) :=
     (mul_le_mul_of_nonneg_left hbS hK0).trans (mul_le_mul_of_nonneg_right hKa (by linarith))
   have hW' : W ≤ 2 * a + 4 * K * (b' + S) := by
     have : K * (bt + S) ≤ K * (4 * (b' + S)) := mul_le_mul_of_nonneg_left (by linarith) hK0
     linarith
-  have haa : a ≤ a ^ 2 := by nlinarith
+  have haa : a ≤ a ^ 2 := le_self_pow₀ (le_trans hb1 hba) two_ne_zero
   have hlg : Real.log (p + K) ≤ 8 * L :=
-    ziii_log (by linarith) hv hL hlog (by linarith) (by nlinarith)
+    ziii_log (by linarith) hv hL hlog (by linarith) (by
+      have : a * (3 * a) = 3 * a ^ 2 := by ring
+      linarith)
   have hlst : lst ≤ (2 + C₀) * (b' + S) := by
-    nlinarith [mul_nonneg hC (by linarith : (0:ℝ) ≤ b' + S)]
+    linarith [mul_nonneg hC (by linarith : (0:ℝ) ≤ b' + S)]
   have := ziii_place (U := 2 * a) hC hK hlkv hT hW' hlg hlst
   linarith
 
@@ -276,19 +285,21 @@ private lemma ziii_other {C₀ K a b' S L v logT W p lst : ℝ} (hC : 0 ≤ C₀
         + (2 + C₀) * (b' + S) * logT + 8 * K ^ 2 * L) := by
   have hK0 : 0 ≤ K := by linarith
   have ha0 : 0 ≤ a := by linarith
-  have hlkv : 0 ≤ Real.log (K * v) := Real.log_nonneg (by nlinarith)
+  have hlkv : 0 ≤ Real.log (K * v) := Real.log_nonneg (one_le_mul_of_one_le_of_one_le hK hv)
   have hW' : W ≤ 0 + 4 * K * (b' + S) := by
     have h1 : 1 * S ≤ K * S := mul_le_mul_of_nonneg_right hK hS
     have h2 : 0 ≤ K * b' := mul_nonneg hK0 (by linarith)
-    nlinarith
+    linarith
   have hK3 : K + 3 ≤ 4 * a := by linarith
   have hSa : S ≤ a := by linarith
   have hKS : (K + 3) * S ≤ 4 * a * a := mul_le_mul hK3 hSa hS (by linarith)
-  have haa : a ≤ a ^ 2 := by nlinarith
+  have haa : a ≤ a ^ 2 := le_self_pow₀ (le_trans hb1 hba) two_ne_zero
   have hlg : Real.log (p + K) ≤ 8 * L :=
-    ziii_log (by linarith) hv hL hlog (by linarith) (by nlinarith)
+    ziii_log (by linarith) hv hL hlog (by linarith) (by
+      have : 4 * a * a = 4 * a ^ 2 := by ring
+      linarith)
   have hlst : lst ≤ (2 + C₀) * (b' + S) := by
-    nlinarith [mul_nonneg hC (by linarith : (0:ℝ) ≤ b')]
+    linarith [mul_nonneg hC (by linarith : (0:ℝ) ≤ b')]
   have := ziii_place (U := 0) hC hK hlkv hT hW' hlg hlst
   linarith
 
@@ -333,7 +344,7 @@ theorem zeta_proposition_third : PropZ_iii := by
     have : (0:ℝ) ≤ κ := Nat.cast_nonneg κ
     linarith
   have hKa : (κ : ℝ) + 1 ≤ a := by linarith
-  have hlkv : 0 ≤ Real.log (((κ : ℝ) + 1) * v) := Real.log_nonneg (by nlinarith)
+  have hlkv : 0 ≤ Real.log (((κ : ℝ) + 1) * v) := Real.log_nonneg (one_le_mul_of_one_le_of_one_le hK1 hv)
   have key : ∀ ρ, ((wt (plus (lam ρ)) : ℝ) * (C₀ * Real.log (((κ : ℝ) + 1) * v))
         + ((κ : ℝ) + 1) ^ 2 * Real.log ((plus (lam ρ) 0 : ℝ) + (κ : ℝ) + 1)
         + |(lam ρ (Fin.last κ) : ℝ)| * logT) ≤
@@ -443,7 +454,7 @@ theorem b_nums {D : D7} {T g1 g2 : ℕ} {Cn x b L b' Sc eta : ℝ} (h : Nums D T
   have hbb' : b' ≤ b := by rwa [mul_div_cancel_left₀ b hx0.ne'] at hbb
   have hm2 : (2 : ℝ) ≤ D.R.m := by exact_mod_cast D.R.two_le_m
   have ht1 : (1 : ℝ) ≤ D.R.t := by exact_mod_cast Nat.one_le_iff_ne_zero.mpr D.R.t_odd.pos.ne'
-  have hmt : (2 : ℝ) ≤ D.R.m * D.R.t := by nlinarith [mul_nonneg (sub_nonneg.2 hm2) (sub_nonneg.2 ht1)]
+  have hmt : (2 : ℝ) ≤ D.R.m * D.R.t := by linarith [mul_nonneg (sub_nonneg.2 hm2) (sub_nonneg.2 ht1)]
   have hq : 4 ≤ b' / x := by linarith
   have hb'4x : 4 * x ≤ b' := by rwa [le_div_iff₀ hx0] at hq
   have hb'0 : 0 ≤ b' := by linarith
@@ -451,7 +462,7 @@ theorem b_nums {D : D7} {T g1 g2 : ℕ} {Cn x b L b' Sc eta : ℝ} (h : Nums D T
   have hdiv : b' / x ≤ b' := div_le_self hb'0 (by linarith)
   have h8 : 8 ≤ x * b * D.host.v := by
     have hxb : 16 ≤ x * b := by nlinarith
-    nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ x * b) (by linarith : (0 : ℝ) ≤ D.host.v - 1)]
+    linarith [mul_nonneg (by linarith : (0 : ℝ) ≤ x * b) (by linarith : (0 : ℝ) ≤ D.host.v - 1)]
   have hL1 : 1 ≤ L := by
     have h1 : (1 : ℝ) < Real.log 8 := by
       rw [Real.lt_log_iff_exp_lt (by norm_num)]
@@ -466,11 +477,11 @@ theorem b_nums {D : D7} {T g1 g2 : ℕ} {Cn x b L b' Sc eta : ℝ} (h : Nums D T
   have hNb : (D.R.N D.R.m : ℝ) ≤ b' := by
     have hN0 : (0 : ℝ) ≤ D.R.N D.R.m := Nat.cast_nonneg _
     have hm3 : (8 : ℝ) ≤ (D.R.m : ℝ) ^ 3 := by
-      nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ (D.R.m : ℝ) - 2)
+      linarith [mul_nonneg (by linarith : (0 : ℝ) ≤ (D.R.m : ℝ) - 2)
         (by positivity : (0 : ℝ) ≤ (D.R.m : ℝ) ^ 2 + 2 * D.R.m + 4)]
     have hA : (1 : ℝ) ≤ (1 + 2 * (2 * Cn + 4)) * (D.R.m : ℝ) ^ 3 := by
-      nlinarith [mul_nonneg hCn (by positivity : (0 : ℝ) ≤ (D.R.m : ℝ) ^ 3)]
-    nlinarith [mul_nonneg (sub_nonneg.2 hA) hN0]
+      linarith [mul_nonneg hCn (by positivity : (0 : ℝ) ≤ (D.R.m : ℝ) ^ 3)]
+    linarith [mul_nonneg (sub_nonneg.2 hA) hN0]
   exact ⟨hL1, hCn, hb'4, hbb', hNb, hSe.trans hdiv, hL, h8⟩
 
 theorem b_lam_eq (D : D7) (u : D.what₂.Word) (j : ℕ) (hj : j ≤ D.R.m) (τ : D.what₂.Tau) (i : Fin (D.R.N j)) :
@@ -597,7 +608,7 @@ theorem numbers_of_nums {D : D7} {T g1 g2 : ℕ} {Cn x b L b' Sc eta : ℝ} (K :
     by_cases h2 : (g2 : ℝ) = 0
     · rw [h2, mul_zero, Real.log_zero]; positivity
     rw [Real.log_mul h1 h2]
-    nlinarith
+    linarith
   · have := D.R.m_add_three_le_k; omega
   · have := D.R.two_le_m; omega
   · have h1 : x * (Sc + eta + (D.R.m : ℝ) * D.R.t) ≤ b' := by
@@ -702,8 +713,8 @@ theorem col_setup (D : D7) (u : D.what₂.Word) (Cn x b L b' Sc eta K : ℝ) (hK
     rw [hl0 τ, hlk τ]
     push_cast
     constructor
-    · nlinarith [mul_le_mul_of_nonneg_left hfl hκ0]
-    · nlinarith [mul_le_mul_of_nonneg_left hfl hκ0]
+    · linarith [mul_le_mul_of_nonneg_left hfl hκ0]
+    · linarith [mul_le_mul_of_nonneg_left hfl hκ0]
   have hnt : ∀ τ, τ ∉ tops D → ∀ i : Fin (κ + 1 + 1), 0 ≤ (lam τ i : ℝ) ∧ (lam τ i : ℝ) ≤ Cn * Sc := by
     intro τ hτ i
     have := (hW τ).2.2.1 (fun h => hτ ((mem_tops D τ).2 h)) i (by have := i.2; omega)
@@ -725,7 +736,7 @@ theorem col_setup (D : D7) (u : D.what₂.Word) (Cn x b L b' Sc eta K : ℝ) (hK
       linarith
     rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at h1
     push_cast at h1 ⊢
-    nlinarith
+    linarith
   · intro τ hτ
     have h1 : (wt (lam τ) : ℝ) ≤ ∑ _i : Fin (κ + 1 + 1), K * Sc := by
       unfold wt
@@ -777,7 +788,7 @@ theorem arith5 (C K n a lk f k b' Sc lT L : ℝ) (hK1 : 1 ≤ K) (hn : 0 ≤ n) 
     C * f * (K * Sc) * lT ≤ max C 0 * K * f * Sc * lT ∧
     C * f * k ^ 2 * L ≤ max C 0 * K * f * k ^ 2 * L := by
   have hK0 : 0 ≤ K := by linarith
-  have hX2 : b' + K * Sc ≤ K * (b' + Sc) := by nlinarith [mul_nonneg (sub_nonneg.2 hK1) hb]
+  have hX2 : b' + K * Sc ≤ K * (b' + Sc) := by linarith [mul_nonneg (sub_nonneg.2 hK1) hb]
   refine ⟨?_, ?_, ?_, ?_⟩
   · calc C * n * a * lk = C * ((n * a * lk) * 1) := by ring
       _ ≤ max C 0 * K * ((n * a * lk) * 1) :=
@@ -860,7 +871,7 @@ theorem arith6 (C K n a l f k b' Sc lT L : ℝ) (hK1 : 1 ≤ K) (hn : 0 ≤ n) (
     C * n * a * l + C * f * (b' + K * Sc) * (k * l + lT) + C * f * k ^ 2 * L ≤
       max C 0 * K * n * a * l + max C 0 * K * f * (b' + Sc) * (k * l + lT) + max C 0 * K * f * k ^ 2 * L := by
   have hK0 : 0 ≤ K := by linarith
-  have hX2 : b' + K * Sc ≤ K * (b' + Sc) := by nlinarith [mul_nonneg (sub_nonneg.2 hK1) hb]
+  have hX2 : b' + K * Sc ≤ K * (b' + Sc) := by linarith [mul_nonneg (sub_nonneg.2 hK1) hb]
   have h1 : C * n * a * l ≤ max C 0 * K * n * a * l := by
     calc C * n * a * l = C * ((n * a * l) * 1) := by ring
       _ ≤ max C 0 * K * ((n * a * l) * 1) :=

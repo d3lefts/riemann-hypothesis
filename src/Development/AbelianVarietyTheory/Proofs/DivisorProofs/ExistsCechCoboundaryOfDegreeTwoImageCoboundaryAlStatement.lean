@@ -216,10 +216,10 @@ theorem delta_cechOfPosetOne_of_eq {y : CC F 2} {f : C1 F} (hf : e2 F y = d1 F f
   have sI : cubeSign t.1 i = 1 := cubeSign_eq_one_of_forall_le hle
   have sJ : cubeSign t.1 j = -1 := by
     rw [cubeSign, ht, Finset.filter_insert, Finset.filter_insert, Finset.filter_singleton]
-    simp [hij, hjk.not_gt, lt_irrefl]
+    simp [hij, hjk.not_gt]
   have sK : cubeSign t.1 k = 1 := by
     rw [cubeSign, ht, Finset.filter_insert, Finset.filter_insert, Finset.filter_singleton]
-    simp [hik, hjk, lt_irrefl, Finset.card_pair hij.ne]
+    simp [hik, hjk, Finset.card_pair hij.ne]
   erw [e2_min_single y (Cube.eraseIdx t ⟨i, hi⟩) (ne t.1 (card_nonempty t)),
     e2_min_single y (Cube.eraseIdx t ⟨j, hj⟩) (ne t.1 (card_nonempty t)),
     e2_min_single y (Cube.eraseIdx t ⟨k, hk⟩) (ne t.1 (card_nonempty t)),
@@ -258,8 +258,6 @@ theorem exists_cech_coboundary_of_degreeTwo_image_coboundary : ∀ {κ : Type} [
         (ht.trans (by ext; simp only [Finset.mem_insert, Finset.mem_singleton]; try tauto))
     | exact delta_cechOfPosetOne_of_eq hf t (by assumption : d < b) (by assumption : b < a)
         (ht.trans (by ext; simp only [Finset.mem_insert, Finset.mem_singleton]; try tauto))
-    | exact (lt_irrefl _ ((h₁.trans h₃).trans h₂)).elim
-    | exact (lt_irrefl _ ((h₁.trans h₂).trans h₃)).elim
 
 end GlobalTheory.CechPoset
 end -- clump:auto
@@ -278,7 +276,7 @@ open GlobalTheory.CechPoset
 
 
 theorem _root_.GlobalTheory.T.exists_cech_coboundary_of_degreeTwo_image_coboundary' : ∀ {κ : Type} [LinearOrder κ] {R : Type} [CommRing R] (F : (NE κ)ᵒᵖ ⥤ CommAlgCat.{0} R) (y : CC F 2), δ F 2 y = 0 → ∀ f : C1 F, e2 F y = d1 F f → ∃ c : CC F 1, δ F 1 c = y := by
-  first | exact @GlobalTheory.CechPoset.exists_cech_coboundary_of_degreeTwo_image_coboundary | exact GlobalTheory.CechPoset.exists_cech_coboundary_of_degreeTwo_image_coboundary | (intros; apply GlobalTheory.CechPoset.exists_cech_coboundary_of_degreeTwo_image_coboundary <;> assumption)
+  first | exact @GlobalTheory.CechPoset.exists_cech_coboundary_of_degreeTwo_image_coboundary
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCechCoboundaryOfDegreeTwoImageCoboundaryAlStatement =====

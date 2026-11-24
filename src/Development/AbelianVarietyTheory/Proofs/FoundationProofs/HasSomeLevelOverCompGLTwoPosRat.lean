@@ -132,7 +132,7 @@ theorem conj_Gamma_den_mul (g : GL (Fin 2) ℚ) (M : ℕ) (y : SL(2, ℤ))
   ext i j
   change (↑((1 : Matrix (Fin 2) (Fin 2) ℤ) i j +
     M • (A₁.num * k * A₂.num) i j) : ZMod M) = (1 : Matrix (Fin 2) (Fin 2) (ZMod M)) i j
-  simp [nsmul_eq_mul, Matrix.one_apply]
+  simp [Matrix.one_apply]
 
 theorem exists_conj_principal_congruence :
     ∀ g : GQ, ∃ n : ℕ, 0 < n ∧ ∀ N : ℕ, ∀ δ ∈ CongruenceSubgroup.Gamma (N * n),
@@ -334,7 +334,7 @@ theorem qAll_affine : ∀ (E : Subring ℂ) (N a d : ℕ) (b : ℤ) (f : ℍ →
   · intro τ
     have hz : 0 < (((a : ℂ) * τ + b) / d).im := by
       have : (((a : ℂ) * τ + b) / d).im = a * τ.im / d := by
-        simp [Complex.div_ofReal_im]
+        simp
       rw [this]; have := τ.im_pos; positivity
     have hτ := hc (UpperHalfPlane.ofComplex (((a : ℂ) * τ + b) / d))
     rw [UpperHalfPlane.ofComplex_apply_of_im_pos hz] at hτ

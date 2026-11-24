@@ -57,7 +57,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.LN
 
 theorem _root_.GlobalTheory.T.extension_of_abelian_schemes : Laws → Laws2 → Ega := by
-  first | exact @GlobalTheory.LN.ega_of_laws | exact GlobalTheory.LN.ega_of_laws | (intros; apply GlobalTheory.LN.ega_of_laws <;> assumption)
+  first | exact @GlobalTheory.LN.ega_of_laws
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DegenerationProofs.EgaBundleFromLawsStatement =====

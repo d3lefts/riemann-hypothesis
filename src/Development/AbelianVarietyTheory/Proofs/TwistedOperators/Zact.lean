@@ -136,7 +136,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 
 
 theorem _root_.GlobalTheory.T.isUnramifiedAtPlaceIdempotent_of_unramified_over_place : ∀ {D : D7} {χ : (AE D)ˣ →* Circle} {v : HeightOneSpectrum (𝓞 D.host.F)} {ε : AF D.host.F}, IsPlaceIdem D v ε → (∀ w : HeightOneSpectrum (𝓞 D.host.E), w.under (𝓞 D.host.F) = v → GlobalTheory.LFun.UnrAt χ w) → GlobalTheory.WeilParts.UnramAt ε χ := by
-  first | exact @GlobalTheory.UnrOverPlaceConv.unramAt_of_unrAt_all | exact GlobalTheory.UnrOverPlaceConv.unramAt_of_unrAt_all | (intros; apply GlobalTheory.UnrOverPlaceConv.unramAt_of_unrAt_all <;> assumption)
+  first | exact @GlobalTheory.UnrOverPlaceConv.unramAt_of_unrAt_all
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsUnramifiedAtPlaceIdempotentOfUnramifiedOverPlaStatement =====
@@ -232,7 +232,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 
 
 theorem _root_.GlobalTheory.T.not_dvd_differentIdeal_of_standardAddChar_unramified : ∀ {F : Type} [Field F] [NumberField F] {ψ : AddChar (AF F) ℂ}, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsStd ψ → ∀ {v : HeightOneSpectrum (𝓞 F)}, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.PsiUnr ψ v → ¬ v.asIdeal ∣ differentIdeal ℤ (𝓞 F) := by
-  first | exact @GlobalTheory.PsiDifferent.not_dvd_different_of_psiUnr | exact GlobalTheory.PsiDifferent.not_dvd_different_of_psiUnr | (intros; apply GlobalTheory.PsiDifferent.not_dvd_different_of_psiUnr <;> assumption)
+  first | exact @GlobalTheory.PsiDifferent.not_dvd_different_of_psiUnr
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.NotDvdDifferentIdealOfStandardAddCharUnramifiedStatement =====
@@ -329,7 +329,7 @@ theorem _root_.GlobalTheory.T.squareTriple_finitePlaces_of_orientedRoutes : ∀ 
       (GlobalTheory.WeilParts.UnramAt ε (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.alpha G t ↑i ↑j) ∧ GlobalTheory.WeilParts.UnramAt ε (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.beta G ↑i ↑j)) ∨
       (¬ GlobalTheory.WeilParts.NonSplitAt D v ε ∧ ¬ GlobalTheory.WeilParts.UnramAt ε (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.alpha G t ↑i ↑j / GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.beta G ↑i ↑j) ∧
         ¬ v.asIdeal ∣ differentIdeal ℤ (𝓞 D.host.F)) := by
-  first | exact @GlobalTheory.TripleRam.ram_clause | exact GlobalTheory.TripleRam.ram_clause | (intros; apply GlobalTheory.TripleRam.ram_clause <;> assumption)
+  first | exact @GlobalTheory.TripleRam.ram_clause
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SquareTripleFinitePlacesOfOrientedRoutesStatement =====
@@ -479,7 +479,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 theorem _root_.GlobalTheory.T.isSeesawHermitianTriple_gridSquare_of_standing : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {μ₀ : T}, L.Is μ₀ → ∀ (W : G.Weil) (t : T) (i j : Fin D.R.m),
     SquareStanding G t → ∀ M : Vol G, M.Is t →
       GlobalTheory.SquareComm.IsTriple (G.V (.grid (↑i + 1) (↑j + 1))) (G.V (.grid ↑i ↑j)) (GlobalTheory.Doubling.hsum (G.V (.grid ↑i (↑j + 1))) (G.V (.grid (↑i + 1) ↑j))) (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.alpha G t i j) (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.beta G i j) := by
-  first | exact @GlobalTheory.SquareTripleForm.isTriple_of_standing | exact GlobalTheory.SquareTripleForm.isTriple_of_standing | (intros; apply GlobalTheory.SquareTripleForm.isTriple_of_standing <;> assumption)
+  first | exact @GlobalTheory.SquareTripleForm.isTriple_of_standing
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsSeesawHermitianTripleGridSquareOfStandingStatement =====
@@ -502,7 +502,7 @@ theorem _root_.GlobalTheory.T.routeDatum_mem_algebraicVectors_grid_frames : ∀ 
     GlobalTheory.SquareDict.IsGridFr W _ A → GlobalTheory.SquareDict.IsGridFr W _ AV → GlobalTheory.SquareDict.IsGridFr W _ AV₁ →
     ∀ (B : Frames G) (ρ : RealMatch W) (Θ : TotT G (routeBig t i j)) (Θ' : TotT G (routeSmall t i j)), IsMatched B t ρ i j Θ Θ' →
       GlobalTheory.SquareDict.datumA W Θ ∈ GlobalTheory.SquareComm.algF W.ψ W.θ true A (GlobalTheory.SquareComm.frSum AV AV₁) := by
-  first | exact @GlobalTheory.SquareAlg.datumA_mem_algF | exact GlobalTheory.SquareAlg.datumA_mem_algF | (intros; apply GlobalTheory.SquareAlg.datumA_mem_algF <;> assumption)
+  first | exact @GlobalTheory.SquareAlg.datumA_mem_algF
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RouteDatumMemAlgebraicVectorsGridFramesStatement =====
@@ -525,7 +525,7 @@ theorem _root_.GlobalTheory.T.smallRouteDatum_mem_algebraicVectors_grid_frames :
     GlobalTheory.SquareDict.IsGridFr W _ A₁ → GlobalTheory.SquareDict.IsGridFr W _ AV → GlobalTheory.SquareDict.IsGridFr W _ AV₁ →
     ∀ (B : Frames G) (ρ : RealMatch W) (Θ : TotT G (routeBig t i j)) (Θ' : TotT G (routeSmall t i j)), IsMatched B t ρ i j Θ Θ' →
       GlobalTheory.SquareDict.datumB W Θ' ∈ GlobalTheory.SquareComm.algF W.ψ W.θ false A₁ (GlobalTheory.SquareComm.frSum AV AV₁) := by
-  first | exact @GlobalTheory.SquareDict.datumB_mem_algF | exact GlobalTheory.SquareDict.datumB_mem_algF | (intros; apply GlobalTheory.SquareDict.datumB_mem_algF <;> assumption)
+  first | exact @GlobalTheory.SquareDict.datumB_mem_algF
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SmallRouteDatumMemAlgebraicVectorsGridFramesStatement =====
@@ -616,7 +616,7 @@ theorem _root_.GlobalTheory.T.smallRoute_kernel_eq_char_mul_thetaKernel : ∀ {D
     ∀ (B : Frames G) (ρ : RealMatch W) (Θ : TotT G (routeBig t i j)) (Θ' : TotT G (routeSmall t i j)), IsMatched B t ρ i j Θ Θ' →
     ∀ g g₁ u, kerSmall W Θ' g g₁ u = GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.xiV G i j g * GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.xiV₁ G t i j g₁ *
       thetaKO ωB u (GlobalTheory.SquareComm.blk _ _ (g, g₁)) (GlobalTheory.SquareDict.datumB W Θ') := by
-  first | exact @GlobalTheory.SquareDict.kerSmall_eq_thetaKO | exact GlobalTheory.SquareDict.kerSmall_eq_thetaKO | (intros; apply GlobalTheory.SquareDict.kerSmall_eq_thetaKO <;> assumption)
+  first | exact @GlobalTheory.SquareDict.kerSmall_eq_thetaKO
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SmallRouteKernelEqCharMulThetaKernelStatement =====

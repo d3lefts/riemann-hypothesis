@@ -295,7 +295,7 @@ noncomputable section
 namespace PI.AlgValsFin.W
 
 theorem eq_one_of_forall_zpow {z : ℂ} (h : ∀ k : ℤ, ‖z ^ k - 1‖ < 1) : z = 1 := by
-  first | exact UpperTheory.Reformulated.B.Qk23.eq_one_of_forall_zpow .. | (apply UpperTheory.Reformulated.B.Qk23.eq_one_of_forall_zpow <;> assumption) | (intros; apply UpperTheory.Reformulated.B.Qk23.eq_one_of_forall_zpow <;> assumption) | (apply @UpperTheory.Reformulated.B.Qk23.eq_one_of_forall_zpow <;> assumption) | (intros; apply @UpperTheory.Reformulated.B.Qk23.eq_one_of_forall_zpow <;> assumption) | (apply @UpperTheory.Reformulated.B.Qk23.eq_one_of_forall_zpow <;> first | assumption | infer_instance) | exact @UpperTheory.Reformulated.B.Qk23.eq_one_of_forall_zpow z h | exact @UpperTheory.Reformulated.B.Qk23.eq_one_of_forall_zpow z
+  first | (apply UpperTheory.Reformulated.B.Qk23.eq_one_of_forall_zpow <;> assumption) | exact @UpperTheory.Reformulated.B.Qk23.eq_one_of_forall_zpow z h | exact @UpperTheory.Reformulated.B.Qk23.eq_one_of_forall_zpow z
 
 end PI.AlgValsFin.W
 end -- clump:auto
@@ -375,7 +375,6 @@ theorem exists_pow_close (n : ℕ) : ∃ N : ℕ, 0 < N ∧ ∀ x : v.adicComple
     have hw : Valued.v w = exp (-((n : ℤ) + 1)) := by
       rw [hw_def, map_pow, val_alg, valuation_of_algebraMap, hπ, ← WithZero.exp_nsmul]
       congr 1
-      push_cast
       ring
     have hw0 : w ≠ 0 := by
       intro h0

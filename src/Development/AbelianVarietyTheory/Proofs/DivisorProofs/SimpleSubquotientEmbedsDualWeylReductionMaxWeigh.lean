@@ -427,7 +427,7 @@ theorem coeff_genHom_mem (ν : Fin N → ℕ) (f : MvPolynomial (Fin N × Fin N)
     eval₂Hom (C.comp C) fun o => Option.elim o (C (X none)) fun v => ∑ b : Fin N, X (v.1, b) * C (X (some (b, v.2)))
   have h1 : (map (colAddGen O (r := N) l j).toRingHom).comp (genHom O N).toRingHom = Φ.comp (colAddGen O l j).toRingHom := by
     apply MvPolynomial.ringHom_ext
-    · intro c; simp [Φ, genHom_C]
+    · intro c; simp [Φ]
     · intro v
       by_cases h : v.2 = j
       · simp [Φ, genHom_X, colAddGen, h, mul_add, Finset.sum_add_distrib, Finset.mul_sum, mul_left_comm]
@@ -435,7 +435,7 @@ theorem coeff_genHom_mem (ν : Fin N → ℕ) (f : MvPolynomial (Fin N × Fin N)
   have h2 : (map (rename (R := O) (some : Fin N × Fin N → Option (Fin N × Fin N))).toRingHom).comp (genHom O N).toRingHom =
       Φ.comp (rename some).toRingHom := by
     apply MvPolynomial.ringHom_ext
-    · intro c; simp [Φ, genHom_C]
+    · intro c; simp [Φ]
     · intro v; simp [Φ, genHom_X]
   have h3 := congrArg (AddMonoidAlgebra.coeff · m) (RingHom.congr_fun h1 f)
   have h4 := congrArg (AddMonoidAlgebra.coeff · m) (RingHom.congr_fun h2 f)
@@ -450,7 +450,7 @@ theorem genHom_component (v : Fin N → ℕ) (f : MvPolynomial (Fin N × Fin N) 
     aeval (fun v : Fin N × Fin N => ∑ b : Fin N, X (v.1, b) * C (X (b, v.2)))
   have h1 : Φ.toRingHom.comp (map C) = (genHom O N).toRingHom := by
     apply MvPolynomial.ringHom_ext
-    · intro c; simp [Φ, genHom_C]
+    · intro c; simp [Φ]
     · intro v; simp [Φ, genHom_X]
   have h2 : ∀ g, genHom O N g = Φ (map C g) := fun g => (RingHom.congr_fun h1 g).symm
   rw [h2, h2, ← algHom_weightedHomogeneousComponent Φ (rowW N N) (rowW N N)]
@@ -526,9 +526,9 @@ theorem genHom_rowAct (A : Matrix (Fin N) (Fin N) O) (f : MvPolynomial (Fin N ×
     genHom O N (rowAct O A f) = extHom O N (rowAct O A) (genHom O N f) := by
   have : (genHom O N).toRingHom.comp (rowAct O A).toRingHom = (extHom O N (rowAct O A)).comp (genHom O N).toRingHom := by
     apply MvPolynomial.ringHom_ext
-    · intro c; simp [extHom, genHom_C]
+    · intro c; simp [extHom]
     · intro v
-      simp [extHom, genHom_X, genHom_C, rowAct, Finset.mul_sum, Finset.sum_mul, mul_assoc]
+      simp [extHom, genHom_X, rowAct, Finset.mul_sum, Finset.sum_mul, mul_assoc]
       exact Finset.sum_comm
   exact RingHom.congr_fun this f
 
@@ -537,7 +537,7 @@ def unitHom (Z : Type) : MvPolynomial (Fin N × Fin N) O →ₐ[O] MvPolynomial 
 theorem extHom_unit (Z : Type) (f : MvPolynomial (Fin N × Fin N) O) : extHom O N (unitHom O N Z) (genHom O N f) = C f := by
   have : (extHom O N (unitHom O N Z)).comp (genHom O N).toRingHom = C := by
     apply MvPolynomial.ringHom_ext
-    · intro c; simp [extHom, genHom_C]
+    · intro c; simp [extHom]
     · intro v
       simp [extHom, genHom_X, unitHom, apply_ite]
   exact RingHom.congr_fun this f
@@ -553,7 +553,7 @@ theorem extHom_colAddGen (l j : Fin N) (ν : Fin N → ℕ) (f : MvPolynomial (F
     eval₂Hom ((extHom O N (elemHom O N l j)).comp (genHom O N).toRingHom) fun v => X (some v)
   have : (extHom O N (colAddGen O l j)).comp (genHom O N).toRingHom = Θ.comp (genHom O N).toRingHom := by
     apply MvPolynomial.ringHom_ext
-    · intro c; simp [extHom, genHom_C, Θ]
+    · intro c; simp [extHom, Θ]
     · intro v
       have e1 : ∀ b, extHom O N (elemHom O N l j) (genHom O N (X (b, v.2))) =
           C (X (b, v.2)) + if b = l then X none * C (X (j, v.2)) else 0 := by
@@ -1278,7 +1278,7 @@ theorem exists_prodProj (O : Type) [CommRing O] (N : ℕ) (ι : Type) [Fintype �
     funext σ
     by_cases h : σ = τ
     · subst h; simp
-    · simp [Function.update_of_ne h, h]
+    · simp [h]
 
 theorem prodProj_mul_eq_zero (O : Type) [CommRing O] (N : ℕ) (ι : Type) [Fintype ι] [DecidableEq ι] (lam : ι → ℕ → ℕ)
     (w : ι → Fin N → ℕ) (e : Module.End O (NablaT O N lam))
@@ -1428,7 +1428,7 @@ theorem mr_aeval {σ τ' A : Type} [CommRing A] [Algebra k A] (L : A →ₗ[k] k
   | monomial u a =>
     have h1 : aeval (fun v => map (algebraMap k A) (g v)) (monomial u (1 : A)) =
         map (algebraMap k A) (aeval g (monomial u (1 : k))) := by
-      simp only [aeval_monomial, Finsupp.prod, map_prod, map_pow, map_one, one_mul, map_mul, map_X]
+      simp only [aeval_monomial, Finsupp.prod, map_prod, map_pow, map_one, one_mul]
     have h2 : (monomial u a : MvPolynomial σ A) = C a * monomial u 1 := by rw [C_mul_monomial, mul_one]
     rw [h2, map_mul, aeval_C, h1, algebraMap_eq, mr_C_mul_map, ← h2, mr_monomial,
       show (monomial u (L a) : MvPolynomial σ k) = L a • monomial u 1 by rw [smul_monomial, smul_eq_mul, mul_one],

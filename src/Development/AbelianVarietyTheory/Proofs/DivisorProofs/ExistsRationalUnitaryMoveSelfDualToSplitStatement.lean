@@ -192,7 +192,7 @@ theorem exists_move_matrix (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Hos
     congr 2
     by_cases hij : i = j
     · subst hij; simp
-    · simp [Matrix.one_apply_ne hij, Pi.single_apply, Ne.symm hij]
+    · simp [Matrix.one_apply_ne hij, Ne.symm hij]
   · have hc : (fun j => IsCMField.complexConj E ((γ.1 *ᵥ fun j => IsCMField.complexConj E (v j)) j)) =
         adjM γ.1ᵀ *ᵥ v := by
       funext j
@@ -255,7 +255,7 @@ open scoped TensorProduct Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_rationalUnitary_move_selfDual_to_split : ∀ (D : D7) (V : HSp D), V.gram = 1 → Bridge.hLat V 1 = Formalism.L2.Pj.stdLat D.host.E V.rank → ∀ (H : Geo.Tor.Host D.host.E) (N : ℕ), 0 < N → ∀ Λ : GenLat D.host.E V.rank, Λ.Unimod → Λ.TrivAt N → ∃ (γ : Matrix (Fin V.rank) (Fin V.rank) D.host.E) (h : GA D V), GlobalTheory.IndefiniteRowSideFullHecke.UnitaryAdjointCongruence.IsUnitaryM γ ∧ (∀ j, GlobalTheory.IndefiniteRowSideFullHecke.UnitaryAdjointCongruence.CongAt N (fun i => γ i j) fun i => (((1 : Matrix (Fin V.rank) (Fin V.rank) (𝓞 D.host.E)) i j : 𝓞 D.host.E) : D.host.E)) ∧ h ∈ GfC V ∧ GlobalTheory.UnRep.SuppSplit (GlobalTheory.Member.cF D) N (finHom V h).1 ∧ GlobalTheory.IndefiniteRowSideFullHecke.UnitaryAdjointCongruence.actLat γ Λ = GlobalTheory.UnRep.FullReps.conjLat H (Bridge.hLat V (fin V h)) := by
-  first | exact @GlobalTheory.SplitMove.exists_move_to_split | exact GlobalTheory.SplitMove.exists_move_to_split | (intros; apply GlobalTheory.SplitMove.exists_move_to_split <;> assumption)
+  first | exact @GlobalTheory.SplitMove.exists_move_to_split
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRationalUnitaryMoveSelfDualToSplitStatement =====

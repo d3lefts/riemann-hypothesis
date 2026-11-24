@@ -137,7 +137,6 @@ theorem continuous_phaseM_X {W : Type} [Fintype W] {n M : ℕ}
   have h2 : Continuous fun X : W → Fin n → Fin M → ℂ => X w a j := by fun_prop
   first
     | exact ((Complex.continuous_conj.comp h1).mul continuous_const).mul (by fun_prop)
-    | exact ((Complex.continuous_conj.comp h2).mul continuous_const).mul (by fun_prop)
 
 theorem continuous_phaseM_b {W : Type} [Fintype W] {n M : ℕ}
     (J : W → Matrix (Fin M) (Fin M) ℂ) (X : W → Fin n → Fin M → ℂ) :
@@ -247,7 +246,7 @@ def mixOp (J : W → Matrix (Fin M) (Fin M) ℂ) : TupV W n M →ₗ[ℂ] TupV W
     simp [smul_add, Finset.sum_add_distrib]
   map_smul' c x := by
     ext k : 2
-    simp [Finset.smul_sum, smul_smul, mul_comm, mul_left_comm]
+    simp [Finset.smul_sum, smul_smul, mul_comm]
     exact Finset.sum_congr rfl fun _ _ => by ring
 
 @[simp] theorem mixOp_apply (J : W → Matrix (Fin M) (Fin M) ℂ) (z : TupV W n M) (k : W × Fin M) :
@@ -835,9 +834,6 @@ theorem lintegral_prod_le : ∀ (W : Type) [Fintype W] (n M : ℕ), ∃ C : ℝ,
     haveI : MeasurableAdd (EuclideanSpace ℂ (Fin n)) := inferInstance
     first
       | exact Measure.pi.isAddHaarMeasure _
-      | exact Measure.pi.isAddHaarMeasure
-      | exact @Measure.pi.isAddHaarMeasure (W × Fin M) _ (fun _ => EuclideanSpace ℂ (Fin n)) _
-          (fun _ => volume) _ _ _ _ _
   have hνπ := Measure.isAddLeftInvariant_eq_smul (Measure.map L (volume : Measure (TupV W n M)))
     (Measure.pi fun _ : W × Fin M => (volume : Measure (EuclideanSpace ℂ (Fin n))))
   refine ⟨(Measure.addHaarScalarFactor (Measure.map L (volume : Measure (TupV W n M)))
@@ -922,12 +918,11 @@ theorem inner_polarOp {W : Type} [Fintype W] {n M : ℕ} (J : W → Matrix (Fin 
   have hre : ∀ u v : EuclideanSpace ℂ (Fin n), inner ℝ u v = RCLike.re (inner ℂ u v) := by
     intro u v
     first
-      | rfl
       | (simp only [PiLp.inner_apply, map_sum]
-         exact Finset.sum_congr rfl fun a _ => by first | rfl | exact Complex.real_inner_eq_re_inner _ _)
+         exact Finset.sum_congr rfl fun a _ => by first | rfl)
   have key : ∑ p, inner ℂ (x (w, p)) (mixOp J (diagOp b y) (w, p)) =
       2 * sesq (J w) (b w) (tupCoord x w) (tupCoord y w) := by
-    simp only [PiLp.inner_apply, mixOp_apply, diagOp_apply, tupCoord_apply]
+    simp only [PiLp.inner_apply, mixOp_apply, diagOp_apply]
     simp [sesq, Matrix.mulVec, dotProduct, Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ =>
       Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -1166,7 +1161,7 @@ theorem _root_.GlobalTheory.T.hermitian_archimedean_complex_coordinates : ∀ (F
     (∀ b w, ((Ψ b w : hermC n) : Matrix (Fin n) (Fin n) ℂ) = matC Θ (b : Matrix (Fin n) (Fin n) (Ainf F ⊗[F] E)) w) ∧
     ∀ ν : Measure (HermR (Ainf F) σ n), ν.IsAddHaarMeasure →
       (ν.map Ψ).IsAddHaarMeasure ∧ ∀ G : (InfinitePlace F → hermC n) → ℂ, Integrable G (ν.map Ψ) → Integrable (fun b => G (Ψ b)) ν := by
-  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Arch.HermCoord.exists_hermEquiv | exact GlobalTheory.CompanionTheory.SiegelND.Integ.Arch.HermCoord.exists_hermEquiv | (intros; apply GlobalTheory.CompanionTheory.SiegelND.Integ.Arch.HermCoord.exists_hermEquiv <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Arch.HermCoord.exists_hermEquiv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HermitianArchimedeanComplexCoordinatesStatement =====
@@ -1195,10 +1190,10 @@ theorem one_add_I_blkM_eq {n : ℕ} (b : Matrix (Fin n) (Fin n) ℂ) (u : Fin n 
   · simp [blkM, Matrix.one_apply]
   · have h : ¬Fin.castAdd 1 i' = Fin.natAdd n j' := by
       rw [Fin.ext_iff]; simp; omega
-    simp [blkM, Matrix.one_apply, h]
+    simp [blkM, h]
   · have h : ¬Fin.natAdd n i' = Fin.castAdd 1 j' := by
       rw [Fin.ext_iff]; simp; omega
-    simp [blkM, Matrix.one_apply, h]
+    simp [blkM, h]
   · obtain rfl := Subsingleton.elim i' j'
     simp [blkM]
 
@@ -1227,7 +1222,7 @@ theorem det_one_add_I_blkM {n : ℕ} (b : Matrix (Fin n) (Fin n) ℂ) (v : Fin n
     · simp
     · ext i j
       have hI : Complex.I * Complex.I = -1 := Complex.I_mul_I
-      simp [Matrix.mul_apply, dotProduct, Finset.mul_sum, mul_assoc, mul_left_comm]
+      simp [Matrix.mul_apply, dotProduct, Finset.mul_sum]
       simp only [← mul_assoc, hI, neg_mul, one_mul, Finset.sum_neg_distrib, neg_neg]
       ring
   have hdet := congrArg Matrix.det hmul
@@ -1849,7 +1844,7 @@ theorem _root_.GlobalTheory.T.tuple_archimedean_complex_coordinates : ∀ (F E :
     (∀ X, Φ X = tupC Θ X) ∧ Continuous Φ ∧ Continuous Φ.symm ∧
     ∀ μ : Measure (Fin n → Fin M → Ainf F ⊗[F] E), μ.IsAddHaarMeasure →
       (μ.map Φ).IsAddHaarMeasure ∧ ∀ g : (InfinitePlace F → Fin n → Fin M → ℂ) → ℂ, ∫ X, g (Φ X) ∂μ = ∫ Y, g Y ∂(μ.map Φ) := by
-  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Arch.TupHaar.tup_coord_haar | exact GlobalTheory.CompanionTheory.SiegelND.Integ.Arch.TupHaar.tup_coord_haar | (intros; apply GlobalTheory.CompanionTheory.SiegelND.Integ.Arch.TupHaar.tup_coord_haar <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Arch.TupHaar.tup_coord_haar
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TupleArchimedeanComplexCoordinatesStatement =====

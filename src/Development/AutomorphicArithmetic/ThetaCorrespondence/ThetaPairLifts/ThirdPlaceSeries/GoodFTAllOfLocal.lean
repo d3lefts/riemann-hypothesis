@@ -82,7 +82,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.seriesIdempotentStarCompatible_of_labelling_agree : Green → ∀ (D : D7) (L : ∀ k, LabelDatum (D.host.g k)), LabTie D L → GlobalTheory.GoodTypes.SeriesConj D := by
-  first | exact @GlobalTheory.GoodTypes.seriesConj_of_labTie | exact GlobalTheory.GoodTypes.seriesConj_of_labTie | (intros; apply GlobalTheory.GoodTypes.seriesConj_of_labTie <;> assumption)
+  first | exact @GlobalTheory.GoodTypes.seriesConj_of_labTie
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SeriesIdempotentStarCompatibleOfLabellingAgreeStatement =====
@@ -141,7 +141,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.exists_isRc_classMap_correspondence : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (D : D7) (T : GlobalTheory.RowTie.WDTie D.nd D.naut) (I : Ident D), ∃ rc : GlobalTheory.SerSys.Corr D, _root_.GlobalTheory.TypeRec.IsSeriesCorrespondence hL T I rc ∧ ∀ k v, _root_.GlobalTheory.SerSys.IsClassMapD D.naut.lpDim (rc k v) := by
-  first | exact @_root_.UpperTheory.One.M.exists_isRc_isClassMapD_alt | exact _root_.UpperTheory.One.M.exists_isRc_isClassMapD_alt | (intros; apply _root_.UpperTheory.One.M.exists_isRc_isClassMapD_alt <;> assumption)
+  first | exact @_root_.UpperTheory.One.M.exists_isRc_isClassMapD_alt
 end
 end -- clump:auto
 end -- clump:auto

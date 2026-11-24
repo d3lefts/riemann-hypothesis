@@ -210,19 +210,11 @@ lemma askExp (D : ArithData H) {S0 : Finset ℕ} (hD : HostFactsS D S0) (a : ℝ
   have hA : (1 / ((PhiSet (H := H)).card : ℂ)) * ∑ g ∈ S, ∑ ψ : AddChar (E0 × H) ℂ, starRingEnd ℂ (ψ g) *
         ∑ n ∈ Icc 1 N, (Λ n : ℂ) * primVal D ψ n * ((max (a / n - w (partner t g)) 0 : ℝ) : ℂ)
       = ∑ n ∈ Icc 1 N, (Λ n : ℂ) * ∑ g ∈ S, Kc D n g * Fc a t w n g := by
-    calc _ = ∑ g ∈ S, ∑ ψ : AddChar (E0 × H) ℂ, ∑ n ∈ Icc 1 N, (1 / ((PhiSet (H := H)).card : ℂ)) *
-          (starRingEnd ℂ (ψ g) * ((Λ n : ℂ) * primVal D ψ n * ((max (a / n - w (partner t g)) 0 : ℝ) : ℂ))) := by
-          simp only [Finset.mul_sum]
-      _ = ∑ g ∈ S, ∑ n ∈ Icc 1 N, ∑ ψ : AddChar (E0 × H) ℂ, (1 / ((PhiSet (H := H)).card : ℂ)) *
-          (starRingEnd ℂ (ψ g) * ((Λ n : ℂ) * primVal D ψ n * ((max (a / n - w (partner t g)) 0 : ℝ) : ℂ))) :=
-          Finset.sum_congr rfl (fun g _ => Finset.sum_comm)
-      _ = ∑ n ∈ Icc 1 N, ∑ g ∈ S, ∑ ψ : AddChar (E0 × H) ℂ, (1 / ((PhiSet (H := H)).card : ℂ)) *
-          (starRingEnd ℂ (ψ g) * ((Λ n : ℂ) * primVal D ψ n * ((max (a / n - w (partner t g)) 0 : ℝ) : ℂ))) :=
-          Finset.sum_comm
-      _ = _ := by
-          simp only [Kc, Fc, Finset.mul_sum, Finset.sum_mul]
-          refine Finset.sum_congr rfl (fun n _ => Finset.sum_congr rfl (fun g _ =>
-            Finset.sum_congr rfl (fun ψ _ => by ring)))
+    simp only [Kc, Fc, Finset.mul_sum, Finset.sum_mul]
+    simp_rw [Finset.sum_comm (s := (univ : Finset (AddChar (E0 × H) ℂ))) (t := Icc 1 N)]
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun n _ => Finset.sum_congr rfl fun g _ =>
+      Finset.sum_congr rfl fun ψ _ => by ring
   rw [hA]
   rw [sum_vonMangoldt_primePow N (fun n => ∑ g ∈ S, Kc D n g * Fc a t w n g) (by
     intro p i hp hi hgt
@@ -820,7 +812,7 @@ lemma ch_top_main_eq {H : Type} [AddCommGroup H] [Fintype H] [DecidableEq H] {U0
     rw [← Finset.sum_coe_sort PhiSet]
     exact Equiv.sum_comp eP (fun x => g x)
   unfold Data.Main
-  simp only [ha, hw, hg, hL, hsum, hf]
+  simp only [ha, hw, hg, hL, hf]
   rw [Finset.sum_comm]
   rw [← Finset.sum_coe_sort TT]
   rw [← Equiv.sum_comp eT]

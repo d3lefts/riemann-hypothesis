@@ -94,7 +94,7 @@ theorem exists_linear_mod_sq {A : Type} [CommRing A] [Algebra ℂ A] {ι : Type}
         rw [Finset.sum_eq_single l]
         · simp
         · intro b _ hb
-          simp [Pi.single_apply, hb]
+          simp [hb]
         · simp
       rw [hs, sub_self]
       exact zero_mem _
@@ -333,7 +333,6 @@ def Lm : (Fin (N + 1) → ℂ) →ₗ[ℂ] Sec p (fOpen ι g₀) ⧸ sqQ ι g₀
 theorem ev₀_algebraMap (z : ℂ) : ev₀ ι g₀ hy (algebraMap ℂ (Sec p (fOpen ι g₀)) z) = z := by
   first
   | exact (CxPts.ev_eq hy _).symm.trans (CxPts.ev_algX hy z)
-  | exact CxPts.ev_algX hy z
 
 theorem ev₀_smul (z : ℂ) (a : Sec p (fOpen ι g₀)) : ev₀ ι g₀ hy (z • a) = z * ev₀ ι g₀ hy a := by
   rw [Algebra.smul_def, map_mul, ev₀_algebraMap]
@@ -356,7 +355,7 @@ theorem Lm_apply (hp : ι ≫ PSpace.str ℂ N = p) (c : Fin (N + 1) → ℂ) :
   rw [hfr]
   congr 1
 
-  simp only [vv, smul_sub, Finset.sum_sub_distrib, map_sum, ev₀_smul, map_mul, Algebra.smul_def,
+  simp only [vv, Finset.sum_sub_distrib, map_sum, map_mul, Algebra.smul_def,
   ev₀_algebraMap, mul_sub]
 
 end Cot

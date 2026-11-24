@@ -320,7 +320,7 @@ theorem exists_complexLinear_extension_of_traceIsometry : ∀ (K E : Type) [Fiel
     ext v
     have := congrArg (fun y => emb v.2 (y v.1)) hx
 
-    simp only [Finset.sum_apply, Pi.smul_apply, Algebra.smul_def, map_sum, map_mul, hK] at this
+    simp only [Finset.sum_apply, Algebra.smul_def, map_sum] at this
     rw [this]
     simp [Matrix.mulVec, dotProduct, B, mul_comm, hK]
   rw [hv]
@@ -990,9 +990,7 @@ theorem selfDual_standard_at_rational_prime : ∀ (K : Type) [Field K] [NumberFi
   intro K _ _ σ n _ _ p 𝔭 α β L t hσ hN hp hp𝔭 hα hβ hβα hL ht h1 h2
   have hint : ∀ x ∈ (algebraMap (𝓞 K) K).range, σ x ∈ (algebraMap (𝓞 K) K).range := by
     rintro _ ⟨x, rfl⟩
-    have : IsIntegral ℤ (σ (algebraMap (𝓞 K) K x)) :=
-      (RingOfIntegers.isIntegral_coe x).map σ.toIntAlgHom
-    exact ⟨⟨_, this⟩, rfl⟩
+    exact ⟨⟨σ (x : K), (RingOfIntegers.isIntegral_coe x).map σ.toIntAlgHom⟩, rfl⟩
   obtain ⟨t', ht'⟩ := hint (t : K) ⟨t, rfl⟩
   have ht'' : (t' : K) = σ t := ht'
   have h1' : ∀ x ∈ L, ∀ j, (t' : K) * x j ∈ (algebraMap (𝓞 K) K).range := by
@@ -1010,14 +1008,10 @@ theorem selfDual_standard_at_rational_prime : ∀ (K : Type) [Field K] [NumberFi
     exact hint _ (h1 y hy j)
   set a : 𝓞 K := β * t + α * t' with ha
   have haK : (a : K) = β * t + α * t' := by simp [ha]
+  have hβt : β * t ∉ 𝔭.asIdeal := fun h => (𝔭.isPrime.mem_or_mem h).elim hβ ht
   have ha𝔭 : a ∉ 𝔭.asIdeal := by
     intro h
-    have h' : β * t ∈ 𝔭.asIdeal := by
-      have := 𝔭.asIdeal.sub_mem h (𝔭.asIdeal.mul_mem_right t' hα)
-      simpa [ha] using this
-    rcases 𝔭.isPrime.mem_or_mem h' with h | h
-    · exact hβ h
-    · exact ht h
+    exact hβt (by simpa [ha] using 𝔭.asIdeal.sub_mem h (𝔭.asIdeal.mul_mem_right t' hα))
   have hσa : σ a = a := by
     rw [haK, map_add (f := _), map_mul, map_mul, hβα, ht'', hσ, hσ]
     ring
@@ -1032,8 +1026,7 @@ theorem selfDual_standard_at_rational_prime : ∀ (K : Type) [Field K] [NumberFi
         = β • (Pi.single j (t : K) : n → K) + α • (Pi.single j (t' : K) : n → K) := by
       ext i
       by_cases h : i = j
-      · subst h
-        simp [haK, Algebra.smul_def]
+      · simp [h, haK, Algebra.smul_def]
       · simp [Pi.single_eq_of_ne h]
     rw [this]
     exact add_mem (L.smul_mem _ (h2 j)) (L.smul_mem _ (h2' j))
@@ -1042,11 +1035,8 @@ theorem selfDual_standard_at_rational_prime : ∀ (K : Type) [Field K] [NumberFi
   have hmO : a * a = (m : 𝓞 K) := by
     apply RingOfIntegers.coe_injective
     simpa using hm
-  obtain ⟨e, he⟩ : ∃ e : ℤ, ((m.natAbs : ℕ) : ℤ) = e * m := by
-    rcases Int.natAbs_eq m with h | h
-    · exact ⟨1, by omega⟩
-    · exact ⟨-1, by omega⟩
-  have hs : ((m.natAbs : ℕ) : K) = (e : K) * (a * a) := by
+  have he : ((m.natAbs : ℕ) : ℤ) = m.sign * m := by simp
+  have hs : ((m.natAbs : ℕ) : K) = (m.sign : K) * (a * a) := by
     rw [hm]
     have := congrArg (Int.cast : ℤ → K) he
     rwa [Int.cast_natCast, Int.cast_mul] at this
@@ -1054,26 +1044,23 @@ theorem selfDual_standard_at_rational_prime : ∀ (K : Type) [Field K] [NumberFi
   · rw [Nat.coprime_comm, hp.coprime_iff_not_dvd]
     intro h
     obtain ⟨c, hc⟩ := Int.natCast_dvd.2 h
-    have : a * a ∈ 𝔭.asIdeal := by
-      rw [hmO, hc]
-      push_cast
-      exact 𝔭.asIdeal.mul_mem_right _ hp𝔭
-    rcases 𝔭.isPrime.mem_or_mem this with h | h <;> exact ha𝔭 h
+    have hmem : a * a ∈ 𝔭.asIdeal := by
+      simpa [hmO, hc] using 𝔭.asIdeal.mul_mem_right (c : 𝓞 K) hp𝔭
+    exact (𝔭.isPrime.mem_or_mem hmem).elim ha𝔭 ha𝔭
   · intro x hx i
-    have : ((m.natAbs : ℕ) : K) * x i = (e : K) * a * (a * x i) := by rw [hs]; ring
+    have : ((m.natAbs : ℕ) : K) * x i = (m.sign : K) * a * (a * x i) := by rw [hs]; ring
     rw [this]
-    exact mul_mem (mul_mem (intCast_mem _ e) ⟨a, rfl⟩) (ha1 x hx i)
+    exact mul_mem (mul_mem (intCast_mem _ m.sign) ⟨a, rfl⟩) (ha1 x hx i)
   · intro v hv
     choose w hw using hv
     have : ((m.natAbs : ℕ) : K) • v
-        = ∑ j, ((e : 𝓞 K) * w j * a) • (Pi.single j (a : K) : n → K) := by
+        = ∑ j, ((m.sign : 𝓞 K) * w j * a) • (Pi.single j (a : K) : n → K) := by
       ext i
       rw [Finset.sum_apply, Finset.sum_eq_single i
         (by intro b _ hb; simp [Pi.single_eq_of_ne hb.symm]) (by simp)]
       rw [Pi.smul_apply, Pi.smul_apply, Pi.single_eq_same, hs, ← hw i, Algebra.smul_def (_ : 𝓞 K),
         smul_eq_mul]
       simp only [map_mul, map_intCast]
-      change _ = (e : K) * _ * (a : K) * (a : K)
       ring
     rw [this]
     exact L.sum_mem fun j _ => L.smul_mem _ (ha2 j)

@@ -62,7 +62,7 @@ open Formalism.IndefR.Lev Formalism.L2.DIV Formalism.IndefR.Mult
 
 
 theorem _root_.GlobalTheory.T.complex_principal_level_eq_realisation_principal_level : ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 I0 T : Type} {A3 : FamIn3 D.what₂.LL Γ Pl0 I0 (List ℕ) T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (Rl : RealDat3 D A3 Ks) {cG : G0 Rl.Pg D.R.r ≃* G0g D.nd} {ρ : Setup D.ntw}, RealPin Rl cG ρ → ∀ (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool), ρ.levK i j b = levG (Wc D j) (Rl.βW j) (Rl.datWp j Rl.triv) := by
-  first | exact @GlobalTheory.SeriesTie.levK_eq_levG_triv | exact GlobalTheory.SeriesTie.levK_eq_levG_triv | (intros; apply GlobalTheory.SeriesTie.levK_eq_levG_triv <;> assumption)
+  first | exact @GlobalTheory.SeriesTie.levK_eq_levG_triv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ComplexPrincipalLevelEqRealisationPrincipalLevelStatement =====
@@ -80,7 +80,7 @@ open Formalism.IndefR.Lev Formalism.L2.DIV Formalism.IndefR.Mult
 
 
 theorem _root_.GlobalTheory.T.heckeCharacter_value_at_splitPlace_determinant : ∀ {D : D7} (c : (AE D)ˣ →* Circle) (χ : Formalism.L2.Host.HChar D.host.E) (Q : Finset (Pl D.host.E)) (V : HSp D) (P : Pl D.host.E) (k : ℕ) (α : GA D V) (z : (AE D)ˣ), ChrEq c χ → GlobalTheory.ExportSeries.UnramOutside c Q → GlobalTheory.ExportSeries.SplitSet Q → Bridge.SplitOff P (Q : Set (Pl D.host.E)) → IsHeckeAt V P k α → IsDetAt (idemAt P) V α z → ((c z : Circle) : ℂ) = ((χ.val P : ℂˣ) : ℂ) ^ k := by
-  first | exact @GlobalTheory.HeckeDetValue.chr_detAt | exact GlobalTheory.HeckeDetValue.chr_detAt | (intros; apply GlobalTheory.HeckeDetValue.chr_detAt <;> assumption)
+  first | exact @GlobalTheory.HeckeDetValue.chr_detAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HeckeCharacterValueAtSplitPlaceDeterminantStatement =====
@@ -98,7 +98,7 @@ open Formalism.IndefR.Lev Formalism.L2.DIV Formalism.IndefR.Mult
 
 
 theorem _root_.GlobalTheory.T.split_off_outside_S0 : ∀ {D : D7} {N : NData D.R D.host D.what₂} {X : NTw D.R D.host D.what₂ D.LL0 N} {ρ : Setup X}, ρ.Good → ∀ (i : X.Tw) (Q : Finset (Pl D.host.E)), (∀ P' ∈ Q, P' ∈ X.S0 i) → ∀ (P : Pl D.host.E), IsSplitPl D.host P → P ∉ X.S0 i → Bridge.SplitOff P (Q : Set (Pl D.host.E)) := by
-  first | exact @GlobalTheory.SplitOffS0.main | exact GlobalTheory.SplitOffS0.main | (intros; apply GlobalTheory.SplitOffS0.main <;> assumption)
+  first | exact @GlobalTheory.SplitOffS0.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SplitOffOutsideS0Statement =====
@@ -116,7 +116,7 @@ open Formalism.IndefR.Lev Formalism.L2.DIV Formalism.IndefR.Mult
 
 
 theorem _root_.GlobalTheory.T.twisting_char_values_mem_coeff_field_range : ∀ {D : D7} {N : NData D.R D.host D.what₂} {X : NTw D.R D.host D.what₂ D.LL0 N} {ρ : Setup X}, ρ.Good → ∀ (i : X.Tw) (j : Fin D.R.m) (b : Bool) (z : (AE D)ˣ), ∃ a : FractionRing (X.O i), ρ.e i b a = (((ρ.B i j b).de.chi z : Circle) : ℂ) := by
-  first | exact @GlobalTheory.DeltaRange.delta_value_mem_range | exact GlobalTheory.DeltaRange.delta_value_mem_range | (intros; apply GlobalTheory.DeltaRange.delta_value_mem_range <;> assumption)
+  first | exact @GlobalTheory.DeltaRange.delta_value_mem_range
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TwistingCharValuesMemCoeffFieldRangeStatement =====
@@ -227,7 +227,7 @@ theorem ratHecke_realRd : ∀ (D : D7) (Γ : Type) [Group Γ] [Fintype Γ] (Pl0 
     ((YS.eF i _ b (Nat.le_add_left _ _) j.2).symm _))) x = _ * _ *
       ∑ γ ∈ R, ((1 : ℂ)⁻¹ • evK YS v₀ hρ i j b (YS.eF i _ b (Nat.le_add_left _ _) j.2 f)) (x * γ)
   rw [LinearEquiv.apply_symm_apply, key]
-  simp only [inv_one, one_smul, Pi.smul_apply, smul_eq_mul, heckeLin, LinearMap.coe_mk, AddHom.coe_mk]
+  simp only [inv_one, Pi.smul_apply, smul_eq_mul, heckeLin, LinearMap.coe_mk, AddHom.coe_mk]
   rw [Base.mu, MonoidHom.mul_apply, Circle.coe_mul, hmu0 α R z d, hde α R z d, map_inv₀]
   rw [show normV P = Nat.card (kP P) from rfl, D.sp.V_rank _ (Nat.le_add_left _ _) j.2]
   simp only [one_mul]

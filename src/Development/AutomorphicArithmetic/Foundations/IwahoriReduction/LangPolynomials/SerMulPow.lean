@@ -406,7 +406,7 @@ private theorem nl_dec {S : Type} [CommRing S] [Nontrivial S] (n : ℕ) (hn : 0 
     rw [Finset.sum_eq_single ⟨j, hj⟩]
     · simp
     · intro b _ hb
-      simp [Pi.single_apply, hb]
+      simp [hb]
     · simp
   have hXr : ∀ r, r < n → P (Polynomial.X ^ r) := by
     intro r hr
@@ -653,7 +653,7 @@ theorem trace_basis_pow {B A : Type} [CommRing B] [CommRing A] [Algebra B A] (p 
     · have e : x ^ ((i : ℕ) + j) = y • b ⟨(i : ℕ) + j - p, by omega⟩ := by
         rw [hb, Algebra.smul_def, ← hx, ← pow_add]
         congr 1
-        simp only [Fin.val_mk]
+        simp only
         omega
       rw [e, map_smul, b.repr_self, Finsupp.smul_apply, Finsupp.single_apply, if_neg, smul_zero, if_neg]
       · omega

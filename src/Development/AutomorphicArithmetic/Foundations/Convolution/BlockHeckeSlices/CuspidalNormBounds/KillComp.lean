@@ -382,7 +382,7 @@ theorem UpperTheory.ConvolutionTheory.FX.rearrange :
       have hl : aeval ξ (lin v) = algebraMap ℂ A c + ∑ j, ((Matrix.vecMul v b.emb j : ℝ) : ℂ) • D j := by
 
         simp only [lin, map_sum, map_mul, aeval_C, aeval_X, hξ, hc, mul_add, Finset.sum_add_distrib, Matrix.vecMul, dotProduct,
-        Complex.ofReal_sum, Complex.ofReal_mul, Finset.sum_smul, Finset.mul_sum, Algebra.smul_def, mul_assoc]
+        Complex.ofReal_sum, Complex.ofReal_mul, Finset.mul_sum, Algebra.smul_def]
         rw [Finset.sum_comm]
         simp only [Finset.sum_mul, mul_assoc]
       have hp : ∀ q : MvPolynomial ι ℂ, lift D τ (aeval (fun i => (AddMonoidAlgebra.single 0 (C (b.Λ i) + lin (b.emb i)) : EP (Fin b.r))) q) =
@@ -600,7 +600,7 @@ private theorem esymm_add' (s t : Multiset ℂ) (j : ℕ) :
 
 private theorem esymm_sum : ∀ (m : ℕ) (M : Fin m → Multiset ℂ) (j : ℕ),
     (∑ l, M l).esymm j = ∑ a ∈ Finset.piAntidiag Finset.univ j, ∏ l, (M l).esymm (a l)
-  | 0, M, 0 => by simp [esymm_zero']
+  | 0, M, 0 => by simp
   | 0, M, j + 1 => by simp [Multiset.esymm, Multiset.powersetCard_zero_right]
   | m + 1, M, j => by
     rw [Fin.sum_univ_succ, esymm_add', sum_pi]

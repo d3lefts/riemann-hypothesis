@@ -611,7 +611,7 @@ private theorem scal_ex (r : ℝ) (hr : 0 < r) : ∃ (t : ℝ) (c : GL (Fin a) (
       (expU fun _ : InfinitePlace E => ((Real.log r / 2 : ℝ) : ℂ)) : GL (Fin a) (Cinf E)).val =
       Real.exp (Real.log r / 2) • (1 : Matrix (Fin a) (Fin a) (Cinf E)) := by
     ext i j w
-    by_cases hij : i = j <;> simp [expU, hij, Matrix.one_apply]
+    by_cases hij : i = j <;> simp [expU, hij]
   have e : Real.exp (Real.log r / 2) * Real.exp (Real.log r / 2) = r := by
     rw [← Real.exp_add, add_halves, Real.exp_log hr]
   change Matrix.of (sand _ p).1 = r • Matrix.of p.1
@@ -823,7 +823,7 @@ private theorem sum_smooth {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V]
   induction n with
   | zero =>
     intro F _ _ _ y hy hb
-    simp only [CharP.cast_eq_zero, Nat.cast_zero, contDiffOn_zero]
+    simp only [CharP.cast_eq_zero, contDiffOn_zero]
     exact fun p hp => (sum_deriv hY hy hb hp).2.continuousAt.continuousWithinAt
   | succ n ih =>
     intro F _ _ _ y hy hb

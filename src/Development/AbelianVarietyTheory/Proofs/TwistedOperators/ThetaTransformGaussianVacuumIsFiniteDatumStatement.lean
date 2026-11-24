@@ -447,7 +447,7 @@ theorem at_place (θ : InfFam D) (hθ : IsInfFam θ) (ε : Bool) (S X : HSp D) (
       ext i j; simp
     cases ε
     · simp only [Bool.false_eq_true, if_false, one_smul, neg_smul, Matrix.transpose_neg, Matrix.neg_mul, hh]
-    · simp only [if_true, one_smul, hn, neg_smul, Matrix.neg_mul, Matrix.mul_neg, neg_neg, hh]
+    · simp only [if_true, one_smul, neg_smul, Matrix.neg_mul, Matrix.mul_neg, neg_neg, hh]
       have hn2 : (-A.cart τ).map (starRingEnd ℂ) = -(A.cart τ).map (starRingEnd ℂ) := by ext i j; simp
       rw [hn2, Matrix.mul_neg]
   have hm : ∀ M : Matrix (Fin X.rank) (Fin S.rank) ℂ,
@@ -548,7 +548,7 @@ theorem _root_.GlobalTheory.T.realPlaceLines_related_and_vanish_off_place : ∀ 
           (cS.symm (lineAt θ τ (cplxO ((frSgn ε A).cart τ) (B.cart τ) z) 1)).map (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.piInf (Bs.emb w')) = 0) ∧
         (cS.symm (lineAt θ τ (cplxO ((frSgn ε A).cart τ) (B.cart τ) z) 1)).map (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.piInf (Bs.emb w)) =
           Complex.I • (Vs.θ w * (cS.symm (lineAt θ τ z 1)).map (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.piInf (Bs.emb w)) * (Ws.θ w)ᵀ) := by
-  first | exact @GlobalTheory.PlaceLines.lines_at_place | exact GlobalTheory.PlaceLines.lines_at_place | (intros; apply GlobalTheory.PlaceLines.lines_at_place <;> assumption)
+  first | exact @GlobalTheory.PlaceLines.lines_at_place
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RealPlaceLinesRelatedAndVanishOffPlaceStatement =====
@@ -700,7 +700,7 @@ theorem _root_.GlobalTheory.T.gaussianVacuum_heisenbergDerivative_complexStructu
           GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ActsD (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F)
             (M.heisLine Bs.ψ (cS.symm (lineAt θ τ (cplxO ((frSgn ε A).cart τ) (B.cart τ) z) 1))) g g₁' →
           g₁ + Complex.I • g₁' = 0 := by
-  first | exact @GlobalTheory.GaussCancel.heis_cancel | exact GlobalTheory.GaussCancel.heis_cancel | (intros; apply GlobalTheory.GaussCancel.heis_cancel <;> assumption)
+  first | exact @GlobalTheory.GaussCancel.heis_cancel
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.GaussianVacuumHeisenbergDerivativeComplexStructuStatement =====
@@ -838,7 +838,7 @@ theorem _root_.GlobalTheory.T.thetaTransform_gaussianVacuum_isFiniteDatum : ∀ 
       ∀ (g : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf D.host.F (Fin S.rank × Fin d)) (φ : ∀ v : IsDedekindDomain.HeightOneSpectrum (𝓞 D.host.F), (Fin S.rank × Fin d → v.adicCompletion D.host.F) → ℂ), M.IsGauss Bs.ψ Bs.emb g →
         (∀ v, φ v ∈ GlobalTheory.WeilM.SB _) → (∀ᶠ v in Filter.cofinite, φ v = M.vac v) →
         ∃ f : WO S X → ℂ, IsFinF ψ θ ε A B f ∧ IsDatum M ψ cS (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure g φ) f := by
-  first | exact @GlobalTheory.GaussThetaFinite.isFinF_of_isGauss | exact GlobalTheory.GaussThetaFinite.isFinF_of_isGauss | (intros; apply GlobalTheory.GaussThetaFinite.isFinF_of_isGauss <;> assumption)
+  first | exact @GlobalTheory.GaussThetaFinite.isFinF_of_isGauss
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ThetaTransformGaussianVacuumIsFiniteDatumStatement =====

@@ -74,7 +74,7 @@ open scoped TensorProduct InnerProductSpace ContDiff
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_compactType_in_compactStable_submodule : ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] (σ : Mt n → (H →L[ℂ] H)), IsURepOn (UJset ε) σ → ∀ S : Submodule ℂ H, FiniteDimensional ℂ S → IsKStableOn ε σ S → S ≠ ⊥ → ∃ (μ : Fin n → ℝ) (S' : Submodule ℂ H), S' ≤ S ∧ IsKTypeOf ε σ μ S' := by
-  first | exact @GlobalTheory.KTypeExists.exists_kType | exact GlobalTheory.KTypeExists.exists_kType | (intros; apply GlobalTheory.KTypeExists.exists_kType <;> assumption)
+  first | exact @GlobalTheory.KTypeExists.exists_kType
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactTypeInCompactStableSubmoduleStatement =====
@@ -89,7 +89,7 @@ open scoped TensorProduct InnerProductSpace ContDiff
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.voganNormSq_holomorphicLowestKType_sub_root_lt : ∀ (n p : ℕ) (ε : Fin n → Bool) (lam : Fin n → ℝ), Formalism.QuantumDeterminants.IsHCParam lam → (∀ a, ε a = decide ((a : ℕ) < p)) → ∀ a c : Fin n, ε a = true → ε c = false → vNormSq ε (Formalism.QuantumDeterminants.lowK ε lam - Formalism.REAL.root a c) < vNormSq ε (Formalism.QuantumDeterminants.lowK ε lam) := by
-  first | exact @GlobalTheory.HolDict.vNormSq_lowK_sub_noncompact_root_lt | exact GlobalTheory.HolDict.vNormSq_lowK_sub_noncompact_root_lt | (intros; apply GlobalTheory.HolDict.vNormSq_lowK_sub_noncompact_root_lt <;> assumption)
+  first | exact @GlobalTheory.HolDict.vNormSq_lowK_sub_noncompact_root_lt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.VoganNormSqHolomorphicLowestKTypeSubRootLtStatement =====
@@ -189,7 +189,7 @@ lemma vNormSq_lt (p : ℕ) (ε : Fin n → Bool) (hε : ∀ a, ε a = decide ((a
       ring
     rw [sum_root_mul, sum_root_mul] at h2
     have h3 : root a0 c0 a0 - root a0 c0 c0 = 2 := by
-      simp [root, Pi.single_apply, hne, hne.symm]; norm_num
+      simp [root, hne, hne.symm]; norm_num
     linarith
   have h1 : vNormSq ε Λ - vNormSq ε μ = ∑ k, root a c k * (L + M) k + ∑ k, γ k * (L + M) k := by
     simp only [vNormSq, nsq, dot, ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib]

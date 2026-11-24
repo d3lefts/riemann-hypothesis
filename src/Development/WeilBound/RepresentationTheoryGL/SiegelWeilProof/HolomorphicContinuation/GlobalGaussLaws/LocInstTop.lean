@@ -263,7 +263,7 @@ theorem cov {m n : ℕ} (fr : Matrix (Fin m) (Fin m) ℂ) (hfr : IsUnit fr.det) 
     _ = ∫ y, f y ∂(Measure.map Te volume) := (integral_map_equiv Te f).symm
     _ = _ := by
       rw [hm, hmap, integral_smul_measure]
-      simp [ENNReal.toReal_ofReal (abs_nonneg _)]
+      simp
 
 theorem continuous_evX {m n : ℕ} (P : PX m n) : Continuous (evX P) := by
   unfold evX
@@ -1382,7 +1382,7 @@ theorem nbar_zero : nbar (n := n) 0 = 1 := by simp [nbar, fromBlocks_one]
 
 theorem inG_nbar (s : ℝ) : InG (nbar (n := n) s) := by
   unfold InG
-  simp [nbar, JJ, fromBlocks_conjTranspose, fromBlocks_multiply, Matrix.conjTranspose_smul, Complex.conj_ofReal]
+  simp [nbar, JJ, fromBlocks_conjTranspose, fromBlocks_multiply, Matrix.conjTranspose_smul]
 
 def nbE (s : ℝ) : GR n :=
   ⟨⟨nbar s, nbar (-s), by rw [nbar_mul, add_neg_cancel, nbar_zero], by rw [nbar_mul, neg_add_cancel, nbar_zero]⟩, inG_nbar s⟩
@@ -1586,7 +1586,7 @@ theorem det_shift (c κ : ℝ) (b : Matrix (Fin n) (Fin n) ℂ) (hb : b.IsHermit
     by_cases h : i = j
     · subst h
       simp
-    · simp [one_apply, h]
+    · simp [h]
   have hD : (c : ℂ) • (1 : Matrix (Fin n) (Fin n) ℂ) - (Complex.I * κ) • b =
       Unitary.conjStarAlgAut ℂ _ hb.eigenvectorUnitary
         ((c : ℂ) • 1 - (Complex.I * κ) • diagonal (RCLike.ofReal ∘ hb.eigenvalues)) := by

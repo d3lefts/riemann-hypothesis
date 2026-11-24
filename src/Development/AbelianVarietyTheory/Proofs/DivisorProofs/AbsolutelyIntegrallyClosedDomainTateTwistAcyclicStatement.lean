@@ -70,7 +70,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.isField_monicRoots_tensor_fractionRing_strictlyHenselian : ∀ (A O : Type) [CommRing A] [IsDomain A] [CommRing O] [Algebra A O], AIC A → SH O → IndEt A O → IsField (O ⊗[A] FractionRing A) ∧ AIC (O ⊗[A] FractionRing A) := by
-  first | (exact @GlobalTheory.isField_aic_tensor_fractionRing_of_strictlyHenselian) | (exact GlobalTheory.isField_aic_tensor_fractionRing_of_strictlyHenselian) | (intros; apply GlobalTheory.isField_aic_tensor_fractionRing_of_strictlyHenselian  <;> assumption)
+  first | (exact @GlobalTheory.isField_aic_tensor_fractionRing_of_strictlyHenselian)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFieldMonicRootsTensorFractionRingStrictlyHenseStatement =====
@@ -112,7 +112,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.isStrictlyHenselian_of_isField_monicRoots : ∀ (T : Type) [CommRing T], IsField T → AIC T → SH T := by
-  first | (exact @GlobalTheory.EtC.isField_aic_sh) | (exact GlobalTheory.EtC.isField_aic_sh) | (intros; apply GlobalTheory.EtC.isField_aic_sh  <;> assumption)
+  first | (exact @GlobalTheory.EtC.isField_aic_sh)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsStrictlyHenselianOfIsFieldMonicRootsStatement =====
@@ -159,7 +159,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.eqv_spMap_tw_of_isUnit : ∀ (q : ℕ) (i : ℤ) (A B : Type) [CommRing A] [CommRing B] (φ : A →+* B), SH A → SH B → IsUnit (q : A) → Eqv _ (spMap φ) (tw q i) := by
-  first | (exact @GlobalTheory.EtC.sh_eqv_tw) | (exact GlobalTheory.EtC.sh_eqv_tw) | (intros; apply GlobalTheory.EtC.sh_eqv_tw  <;> assumption)
+  first | (exact @GlobalTheory.EtC.sh_eqv_tw)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ShEqvTwStatement =====
@@ -216,7 +216,7 @@ theorem b5 : B5 := by
         j.comp e.toAlgHom := by
       apply Algebra.TensorProduct.ext'
       intro o a
-      simp [j, e, Algebra.ofId_apply, Algebra.algebraMap_eq_smul_one, TensorProduct.smul_tmul]
+      simp [j, e, Algebra.ofId_apply, Algebra.algebraMap_eq_smul_one]
     rw [hψ]
     have h1 : Eqv (ZMod q) (spMap (j : O →+* O ⊗[A] FractionRing A)) (tw q i) :=
       GlobalTheory.T.eqv_spMap_tw_of_isUnit q i O _ (j : O →+* O ⊗[A] FractionRing A) hO hSH hqO
@@ -245,7 +245,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.absolutelyIntegrallyClosed_domain_tateTwistAcyclic : GlobalTheory.EtC.B5 := by
-  first | (exact @GlobalTheory.EtC.b5) | (exact GlobalTheory.EtC.b5) | (intros; apply GlobalTheory.EtC.b5  <;> assumption)
+  first | (exact @GlobalTheory.EtC.b5)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbsolutelyIntegrallyClosedDomainTateTwistAcyclicStatement =====

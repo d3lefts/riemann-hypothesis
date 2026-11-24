@@ -119,7 +119,7 @@ theorem _root_.GlobalTheory.T.columnArrowKernel_real_eq_detChar_mul_fockKernel :
                 Matrix (Fin (G.V (.top j)).rank) (Fin (G.V (.top j)).rank) ℂ)ᵀ)
               (GlobalTheory.AvgCol.frChInv W S.N j Q))))
             (x : GA D (G.V (.top j))) (finOf _ h : GA D (G.V (.top (j + 1)))) := by
-  first | exact @GlobalTheory.ColKer.kerA_col_mul_real | exact GlobalTheory.ColKer.kerA_col_mul_real | (intros; apply GlobalTheory.ColKer.kerA_col_mul_real <;> assumption)
+  first | exact @GlobalTheory.ColKer.kerA_col_mul_real
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ColumnArrowKernelRealEqDetCharMulFockKernelStatement =====
@@ -246,7 +246,7 @@ theorem GlobalTheory.AvgJet.avg_jet : ∀ (ι : Type) [Fintype ι] (a b : ℕ), 
     have hsub : GlobalTheory.CompactHowe.substF hh (fun τ => (((r k τ)⁻¹ : GL (Fin a) ℂ) : Matrix (Fin a) (Fin a) ℂ)ᵀ) Q =
         mvZ (fun _ => 1) hh (mvZ (fun τ => (((r k τ : GL (Fin a) ℂ) : Matrix (Fin a) (Fin a) ℂ))⁻¹) (fun _ => 1) Q) := by
       rw [hcomp]
-      simp only [mul_one, one_mul, Matrix.coe_units_inv]
+      simp only [mul_one, Matrix.coe_units_inv]
       rfl
     rw [map_inv r k, hΛ]
     simp only [evalAt_rhoK]
@@ -386,7 +386,7 @@ theorem _root_.GlobalTheory.T.fockComponent_transportedPoints_eq_jetOperator : �
           (fun m => W.ker (.top t j) (W.fock (.top t j) (movedVec t S d) (GlobalTheory.AvgCol.frCh W S.N j (MvPolynomial.monomial m 1)))
             (x : GA D (G.V (.top j))) (y : GA D (G.V (.top (j + 1)))))
           (nuEnd G (.top t j)) := by
-  first | exact @GlobalTheory.AvgColJet.fockComp_frC_eq_jetOp | exact GlobalTheory.AvgColJet.fockComp_frC_eq_jetOp | (intros; apply GlobalTheory.AvgColJet.fockComp_frC_eq_jetOp <;> assumption)
+  first | exact @GlobalTheory.AvgColJet.fockComp_frC_eq_jetOp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FockComponentTransportedPointsEqJetOperatorStatement =====
@@ -450,7 +450,7 @@ theorem _root_.GlobalTheory.T.realPoints_topNode_onto_unitary_haar_unique : ∀ 
         Matrix (Fin (G.V (.top j)).rank) (Fin (G.V (.top j)).rank) ℂ)) ∧
     ∀ κ κ' : Measure (GinfC (G.V (.top j))), κ.IsHaarMeasure → IsProbabilityMeasure κ → κ'.IsHaarMeasure →
       IsProbabilityMeasure κ' → κ = κ' := by
-  first | exact @GlobalTheory.RowTest.realPts_ontoUni_haar_unique | exact GlobalTheory.RowTest.realPts_ontoUni_haar_unique | (intros; apply GlobalTheory.RowTest.realPts_ontoUni_haar_unique <;> assumption)
+  first | exact @GlobalTheory.RowTest.realPts_ontoUni_haar_unique
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RealPointsTopNodeOntoUnitaryHaarUniqueStatement =====
@@ -553,7 +553,7 @@ theorem _root_.GlobalTheory.T.exists_dual_integral_arrowKernel_fock_eq_fockComp_
             Λ (realAct W.θ S.N.fr (.top j) ((k : GA D (G.V (.top j)))⁻¹) v) ∂κ =
           Λ' (realAct W.θ S.N.fr (.top (j + 1)) h⁻¹
             (fockComp W S.N.frC (.top t j) (S.Z.vec d) (x * S.N.u _) (finOf _ h * S.N.u _) v)) := by
-  first | exact @GlobalTheory.AvgCol.avg_col | exact GlobalTheory.AvgCol.avg_col | (intros; apply GlobalTheory.AvgCol.avg_col <;> assumption)
+  first | exact @GlobalTheory.AvgCol.avg_col
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DenseOfPolynomialStdGaussianMemSchwartzStatement =====
@@ -647,7 +647,7 @@ theorem _root_.GlobalTheory.T.compactPair_realAverage_fock_eq_jetOperator : ∀ 
             Λ' (realAct W.θ S.N.fr (.grid (i + 1) D.R.m) k'⁻¹
               (Formalism.L2.Ker.jetOp (wt G (.grid i D.R.m)) (wt G (.grid (i + 1) D.R.m))
                 (fun m => ℓ (MvPolynomial.monomial (m.mapDomain (fvar G (.chi i D.R.m : Pair T))) 1)) (nuEnd G (.chi i D.R.m : Pair T)) v)) := by
-  first | exact @GlobalTheory.RowHoweAvg.real_average_jet | exact GlobalTheory.RowHoweAvg.real_average_jet | (intros; apply GlobalTheory.RowHoweAvg.real_average_jet <;> assumption)
+  first | exact @GlobalTheory.RowHoweAvg.real_average_jet
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.CompactPairRealAverageFockEqJetOperatorStatement =====
@@ -672,7 +672,7 @@ theorem _root_.GlobalTheory.T.exists_fockFrameChange_lastColumn_definitePair : �
       ∀ k : GA D (G.V (.grid i D.R.m)), k ∈ GinfC (G.V (.grid i D.R.m)) →
         ∀ k' : GA D (G.V (.grid (i + 1) D.R.m)), k' ∈ GinfC (G.V (.grid (i + 1) D.R.m)) → ∀ P,
           σ₀ (realSubst W W.onb (.chi i D.R.m) k k' P) = realSubst W S.N.frC (.chi i D.R.m) k k' (σ₀ P) := by
-  first | exact @GlobalTheory.FockFrameChange.exists_frame_change | exact GlobalTheory.FockFrameChange.exists_frame_change | (intros; apply GlobalTheory.FockFrameChange.exists_frame_change <;> assumption)
+  first | exact @GlobalTheory.FockFrameChange.exists_frame_change
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsFockFrameChangeLastColumnDefinitePairStatement =====
@@ -829,7 +829,7 @@ theorem _root_.GlobalTheory.T.lastColumnArrow_realAverage_functional : ∀ {D : 
             Λ (realAct W.θ S.N.fr (.grid i D.R.m) ((k : GA D (G.V (.grid i D.R.m)))⁻¹) v) ∂κ =
           Λ' (realAct W.θ S.N.fr (.grid (i + 1) D.R.m) h⁻¹
             (fockComp W S.N.frC (.chi i D.R.m : Pair T) (S.Z.vec d) (x * S.N.u _) (finOf _ h * S.N.u _) v)) := by
-  first | exact @GlobalTheory.LastColAvg.real_average | exact GlobalTheory.LastColAvg.real_average | (intros; apply GlobalTheory.LastColAvg.real_average <;> assumption)
+  first | exact @GlobalTheory.LastColAvg.real_average
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.LastColumnArrowRealAverageFunctionalStatement =====
@@ -865,7 +865,7 @@ theorem realAct_inv_continuous : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : C
       simp only [A, map_inv]
       show ((((realIn θ fr X (k : GA D (G.V X)) τ)⁻¹)⁻¹ : GL (Fin (G.V X).rank) ℂ) : Matrix (Fin (G.V X).rank) (Fin (G.V X).rank) ℂ).transpose = _
       rw [inv_inv]
-      simp [realIn, MulAut.conj_apply, GlobalTheory.CoefModel.realGL_coe]
+      simp [realIn, GlobalTheory.CoefModel.realGL_coe]
     refine Continuous.congr ?_ fun k => (e k).symm
     exact ((continuous_const.mul ((hc τ).comp continuous_subtype_val)).mul continuous_const).matrix_transpose
   have key := GlobalTheory.CoefModel.continuous_rhoH (wt G X) hG A hA (GlobalTheory.CoefModel.toHilb (wt G X) hG w)
@@ -895,7 +895,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 theorem _root_.GlobalTheory.T.realActionOnVertexWeight_continuous : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (θ : InfFam D), IsInfFam θ →
     ∀ (fr : ∀ X : Node, GL (Fin (G.V X).rank) D.host.E) (X : Node) (Λ : Module.Dual ℂ (VV ℂ (wt G X))) (w : VV ℂ (wt G X)),
     Continuous fun k : GinfC (G.V X) => Λ (realAct θ fr X ((k : GA D (G.V X))⁻¹) w) := by
-  first | exact @GlobalTheory.RealActCont.realAct_inv_continuous | exact GlobalTheory.RealActCont.realAct_inv_continuous | (intros; apply GlobalTheory.RealActCont.realAct_inv_continuous <;> assumption)
+  first | exact @GlobalTheory.RealActCont.realAct_inv_continuous
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RealActionOnVertexWeightContinuousStatement =====

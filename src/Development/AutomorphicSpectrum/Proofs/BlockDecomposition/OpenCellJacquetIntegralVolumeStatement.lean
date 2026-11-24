@@ -415,28 +415,6 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 variable {h N : ℕ} {d : Fin h → ℕ} {hd : ∑ a, d a = N}
 variable {W : Type} [AddCommGroup W] [Module ℂ W] {ρ : Representation ℂ (Levi k fun a => Fin (d a)) W}
 variable [MeasurableSpace (unipU k d hd)] [BorelSpace (unipU k d hd)]
-private theorem phi_levi_current (ψ : AddChar k Circle) (f f' : IndSp (stdBlocks d hd) ρ) (a : GL (Fin N) k)
-    (ha : a ∈ unipL k d hd) (m : unipM k d)
-    (hm : pm k (wOpen d hd) * a * (pm k (wOpen d hd))⁻¹ = leviEmb k (stdBlocks d hd) m.1)
-    (hf' : f' = parInd (stdBlocks d hd) ρ a f) :
-    phi ψ f' = fun x => ρ m.1 (phi ψ f (conjU a⁻¹ (inv_mem (unipL_le ha)) x)) := by
-  subst hf'
-  funext x
-  have e1 : pm k (wOpen d hd) * x.1 * a = leviEmb k (stdBlocks d hd) m.1 *
-      (pm k (wOpen d hd) * (conjU (d := d) (hd := hd) a⁻¹ (inv_mem (unipL_le ha)) x).1) := by
-    rw [← hm]
-    show _ = pm k (wOpen d hd) * a * (pm k (wOpen d hd))⁻¹ * (pm k (wOpen d hd) * (a⁻¹ * x.1 * a⁻¹⁻¹))
-    group
-  have e2 := parInd_law (stdBlocks d hd) ρ f
-    ⟨leviEmb k (stdBlocks d hd) m.1, leviEmb_mem_parab k (stdBlocks d hd) m.1⟩
-    (pm k (wOpen d hd) * (conjU (d := d) (hd := hd) a⁻¹ (inv_mem (unipL_le ha)) x).1)
-  rw [leviProj_leviEmb, deltaHalf_unipM m, Units.val_one, one_smul] at e2
-  show (((thetaU ψ x)⁻¹ : ℂˣ) : ℂ) • (parInd (stdBlocks d hd) ρ a f).1.1 (pm k (wOpen d hd) * x.1) =
-    ρ m.1 ((((thetaU ψ (conjU a⁻¹ (inv_mem (unipL_le ha)) x))⁻¹ : ℂˣ) : ℂ) •
-      f.1.1 (pm k (wOpen d hd) * (conjU (d := d) (hd := hd) a⁻¹ (inv_mem (unipL_le ha)) x).1))
-  rw [parInd_apply, e1, thetaU_conjU, map_smul]
-  exact congrArg _ e2
-
 private theorem radInt_levi_current {ψ : AddChar k Circle} (hψ : Continuous ψ) (hρ : IsSmooth ρ) (μ : Measure (unipU k d hd))
     [μ.IsHaarMeasure] (a : GL (Fin N) k) (ha : a ∈ unipL k d hd) (m : unipM k d)
     (hm : pm k (wOpen d hd) * a * (pm k (wOpen d hd))⁻¹ = leviEmb k (stdBlocks d hd) m.1)
@@ -445,7 +423,7 @@ private theorem radInt_levi_current {ψ : AddChar k Circle} (hψ : Continuous ψ
   have key := smInt_comp μ (ρ m.1) (conjU a⁻¹ (inv_mem (unipL_le ha))) (phi ψ f.1)
     (measurePreserving_conjU μ _ _) (isLocallyConstant_phi hψ _) (hasCompactSupport_phi ψ hρ _ f.2)
   show smInt μ (phi ψ f'.1) = _
-  rw [phi_levi_current ψ f.1 f'.1 a ha m hm hf, key]
+  rw [phi_levi ψ f.1 f'.1 a ha m hm hf, key]
   rfl
 
 end GlobalTheory.CompanionTheory.Rodier.RadInt

@@ -106,9 +106,7 @@ theorem row_fin (n : ℕ) (a : Fin n) :
 theorem denom_fin (n : ℕ) :
     ∏ a : Fin n, ∏ b ∈ univ.filter (fun b : Fin n => a < b), (((b : ℕ) : ℝ) - ((a : ℕ) : ℝ)) =
       ∏ i ∈ range n, ((i.factorial : ℕ) : ℝ) := by
-  refine (Finset.prod_congr rfl (fun a _ => row_fin n a)).trans ?_
-  exact (Fin.prod_univ_eq_prod_range (fun i : ℕ => ∏ j ∈ Ico (i + 1) n, ((j : ℝ) - (i : ℝ))) n).trans
-    (denom_range n)
+  exact (Finset.prod_congr rfl (fun a _ => row_fin n a)).trans ((Fin.prod_univ_eq_prod_range (fun i : ℕ => ∏ j ∈ Ico (i + 1) n, ((j : ℝ) - (i : ℝ))) n).trans (denom_range n))
 
 theorem natW_anti {N : ℕ} (lam : DomWeight N) : Antitone lam.natW :=
   fun _ _ hij => Int.toNat_le_toNat (sub_le_sub_right (lam.anti hij) _)

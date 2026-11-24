@@ -118,7 +118,6 @@ theorem local_dual {A M : Type} [CommRing A] [AddCommGroup M] [Module A M] (O : 
         σ e * h y' y - T * h y' f * h (σ (b * e) • y0) y := by
       rw [← hc y (σ e • y' - σ (T * h f y') • σ (b * e) • y0)]
       simp only [hsub, hsr, hsl, hσσ, map_sub, map_mul, hσT, hc]
-      try ring
     rw [e1, show σ e * h y' y - T * h (σ (b * e) • y0) y * h y' f =
         σ e * h y' y - T * h y' f * h (σ (b * e) • y0) y by ring, ← e2]
     exact hy _ (hsix y' hy')
@@ -334,7 +333,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.FlatSpaceComponents GlobalTheory.Ad
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_isAdelicGlueVector_of_glueBaseData : ∀ (D : D7) (u : D.what₂.Word) (π : 𝓞 D.host.E), IsPi u π → ∀ (X : HSp D) (L₀ : Lat X) (f₀ : Pl D.host.E → Fin X.rank → EAf D), IsBasePair X u π L₀ f₀ → ∃ f, IsGlueVec X u L₀ f ∧ ∀ w : Pl D.host.E, π ∈ w.asIdeal → idem w • f = f₀ w := by
-  first | exact @GlobalTheory.AdIsom.BaseVec.exists_isGlueVec | exact GlobalTheory.AdIsom.BaseVec.exists_isGlueVec | (intros; apply GlobalTheory.AdIsom.BaseVec.exists_isGlueVec <;> assumption)
+  first | exact @GlobalTheory.AdIsom.BaseVec.exists_isGlueVec
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIsAdelicGlueVectorOfGlueBaseDataStatement =====

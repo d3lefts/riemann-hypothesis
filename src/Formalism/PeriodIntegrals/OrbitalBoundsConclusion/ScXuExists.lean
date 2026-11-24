@@ -131,8 +131,6 @@ theorem leg (hP : ∀ β ∈ Λ2, ∀ x ∈ Λ1, pr P β x ∈ O) {up φp uq φq
     intro V W t
     first
     | (simp only [add_dotProduct, smul_dotProduct, smul_eq_mul]; done)
-    | (simp; done)
-    | (simp [dotProduct, add_mul, Finset.sum_add_distrib, Finset.mul_sum, mul_assoc]; done)
   obtain ⟨γ2, hγ2⟩ : ∃ γ2 : Fin n → K, γ2 = φq - (pr P φq up * (pr P φp up)⁻¹) • φp := ⟨_, rfl⟩
   have hγ2u : (γ2 ᵥ* P) ⬝ᵥ up = 0 := by
     rw [← pr_eq_vecMul, hγ2, pr_sub_left, pr_smul_left]
@@ -140,13 +138,11 @@ theorem leg (hP : ∀ β ∈ Λ2, ∀ x ∈ Λ1, pr P β x ∈ O) {up φp uq φq
   have hγ2P : γ2 ᵥ* P = φq ᵥ* P - (pr P φq up * (pr P φp up)⁻¹) • (φp ᵥ* P) := by
     subst hγ2
     first
-    | (simp only [sub_vecMul, vecMul_smul]; done)
+    | (simp only [sub_vecMul]; done)
     | (simp only [sub_vecMul, smul_vecMul]; done)
-    | (simp [sub_vecMul]; done)
-    | (ext j; simp [vecMul, dotProduct, sub_mul, Finset.sum_sub_distrib, Finset.mul_sum, mul_assoc]; done)
   have hγ2mem : γ2 ∈ Λ2 := by
     have hs : pr P φq up * (pr P φp up)⁻¹ ∈ O := by
-      first | exact mul_mem hb hcpi | exact O.mul_mem _ _ hb hcpi
+      first | exact mul_mem hb hcpi
     rw [hγ2]
     exact Λ2.sub_mem hφq (smem O hs hφp)
   have hγ2a : ∀ i, pr P γ2 (a i) = 0 ∧ pr P γ2 (a' i) = 0 := fun i => by
@@ -164,9 +160,9 @@ theorem leg (hP : ∀ β ∈ Λ2, ∀ x ∈ Λ1, pr P β x ∈ O) {up φp uq φq
     rw [hγ2u]
     ring
   have hn1 : -(pr P φp uq)⁻¹ ∈ O := by
-    first | exact neg_mem hdi | exact O.neg_mem _ hdi
+    first | exact neg_mem hdi
   have hn2 : -(pr P φq uq)⁻¹ ∈ O := by
-    first | exact neg_mem hcqi | exact O.neg_mem _ hcqi
+    first | exact neg_mem hcqi
   have hT1 := isAdmissible_rankOneGL hP (uq - up) φp _ _ h1 hcpi hn1 (Λ1.sub_mem huq hup) hφp hwα1 hφpa
   have hT2 := isAdmissible_rankOneGL hP up γ2 _ _ h2 hn2 hcqi hup hγ2mem hupα hγ2a
   refine ⟨rankOneUnitGL (uq - up) (φp ᵥ* P) _ _ h1 * rankOneUnitGL up (γ2 ᵥ* P) _ _ h2,
@@ -214,9 +210,7 @@ theorem v_small {g y : K} (hg : O.valuation g < 1) (hy : y ∈ O) : O.valuation 
   have h1 : O.valuation y ≤ 1 := valuationSubring_valuation_le_one_of_mem O hy
   calc O.valuation g * O.valuation y ≤ O.valuation g * 1 := by
         first
-        | exact mul_le_mul_left' h1 _
         | exact mul_le_mul_of_nonneg_left h1 zero_le'
-        | gcongr
     _ = O.valuation g := mul_one _
     _ < 1 := hg
 
@@ -238,18 +232,15 @@ private theorem sub_vecMul_field {K : Type} [Field K] {n : ℕ} (M : Matrix (Fin
     (x y : Fin n → K) : (x - y) ᵥ* M = x ᵥ* M - y ᵥ* M := by
   first
   | exact Matrix.sub_vecMul M x y
-  | (funext j; simp [Matrix.vecMul, dotProduct, sub_mul, Finset.sum_sub_distrib])
 
 private theorem add_vecMul_field {K : Type} [Field K] {n : ℕ} (M : Matrix (Fin n) (Fin n) K)
     (x y : Fin n → K) : (x + y) ᵥ* M = x ᵥ* M + y ᵥ* M := by
   first
   | exact Matrix.add_vecMul M x y
-  | (funext j; simp [Matrix.vecMul, dotProduct, add_mul, Finset.sum_add_distrib])
 
 private theorem smul_vecMul_field {K : Type} [Field K] {n : ℕ} (M : Matrix (Fin n) (Fin n) K)
     (c : K) (x : Fin n → K) : (c • x) ᵥ* M = c • (x ᵥ* M) := by
   first
-  | exact Matrix.vecMul_smul M c x
   | (funext j; simp [Matrix.vecMul, dotProduct, Finset.mul_sum, mul_assoc])
 
 private theorem exists_mem_sum_smul_eq_smul_of_divisible {K : Type} [Field K] (O : ValuationSubring K) {n r : ℕ}
@@ -284,8 +275,8 @@ private theorem exists_pr_orthogonal_left_sub_smul_mem {K : Type} [Field K] (O :
   refine ⟨u0 - g • w, Λ1.sub_mem hu0 (smem O hg hw), fun j => ?_, w, hw, rfl⟩
   rw [← hS]
   constructor
-  · simp [pr_sub_right, pr_sum_right, pr_add_right, pr_smul_right, e1, e2, e3, e4]
-  · simp [pr_sub_right, pr_sum_right, pr_add_right, pr_smul_right, e1, e2, e3, e4]
+  · simp [pr_sub_right, pr_sum_right, pr_add_right, pr_smul_right, e1, e3]
+  · simp [pr_sub_right, pr_sum_right, pr_add_right, pr_smul_right, e2, e4]
 
 private theorem exists_pr_orthogonal_right_sub_smul_mem {K : Type} [Field K] (O : ValuationSubring K) {n r : ℕ}
     (P : Matrix (Fin n) (Fin n) K) (Λ2 : Submodule O (Fin n → K)) (a a' α α' : Fin r → Fin n → K)
@@ -305,8 +296,8 @@ private theorem exists_pr_orthogonal_right_sub_smul_mem {K : Type} [Field K] (O 
   refine ⟨φ0 - g • w, Λ2.sub_mem hφ0 (smem O hg hw), fun j => ?_, w, hw, rfl⟩
   rw [← hS]
   constructor
-  · simp [pr_sub_left, pr_sum_left, pr_add_left, pr_smul_left, e1, e2, e3, e4]
-  · simp [pr_sub_left, pr_sum_left, pr_add_left, pr_smul_left, e1, e2, e3, e4]
+  · simp [pr_sub_left, pr_sum_left, pr_add_left, pr_smul_left, e1, e4]
+  · simp [pr_sub_left, pr_sum_left, pr_add_left, pr_smul_left, e2, e3]
 
 private theorem exists_isAdmissible_of_chain_lemma_8 {K : Type} [Field K] {O : ValuationSubring K} {n r : ℕ}
     {P : Matrix (Fin n) (Fin n) K} {Λ1 Λ2 : Submodule O (Fin n → K)} {a a' α α' : Fin r → Fin n → K}
@@ -551,7 +542,6 @@ open Formalism.MainNotions.S PI.ScRefExists
 theorem gp_int (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (ε : RV I v) (p1 : RV I v →+* KV I v)
     (hp : IsAdaptedFirstProjection I v ε p1) : ∀ x ∈ Formalism.UG.intOE I.E, p1 (inclV I v x) ∈ OV I v := by
   first
-  | exact hp.2.2.2.1
   | exact hp.2.2.2
 
 def hl (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (X Y : Fin I.n → RV I v) : RV I v :=
@@ -836,9 +826,7 @@ open Formalism.MainNotions.S PI.ScRefExists
 
 theorem inv_mem_of_val (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (c : ℕ)
     (hc : Valued.v ((c : v.adicCompletion I.F)) = 1) : ((c : KV I v))⁻¹ ∈ OV I v := by
-  have h1 : Valued.v (((c : v.adicCompletion I.F))⁻¹) = 1 := by rw [map_inv₀, hc, inv_one]
-  show ((c : v.adicCompletion I.F))⁻¹ ∈ v.adicCompletionIntegers I.F
-  exact (HeightOneSpectrum.mem_adicCompletionIntegers _ _ v).2 h1.le
+  exact (HeightOneSpectrum.mem_adicCompletionIntegers _ _ v).2 (by simp [map_inv₀, hc])
 
 theorem lat_of_inAt (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) {g : ℕ} (hv : (g : 𝓞 I.F) ∈ v.asIdeal)
     (x : VA I) (hx : InAt I g 1 x) :

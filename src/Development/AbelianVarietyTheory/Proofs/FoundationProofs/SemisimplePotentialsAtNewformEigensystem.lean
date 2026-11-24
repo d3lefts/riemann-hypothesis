@@ -563,7 +563,7 @@ theorem analyticAt_cuspFunction_of_hasSum {f : ℍ → ℂ} {a : ℕ → ℂ}
     refine p.le_radius_of_tendsto (l := 0) ?_
     have ht' : Tendsto (fun n : ℕ => ‖a n‖ * (r : ℝ) ^ n) atTop (𝓝 0) := by simpa using ht
     convert ht' using 2 with n
-    simp [hp, FormalMultilinearSeries.ofScalars_norm]
+    simp [hp]
   have hpos : 0 < p.radius := lt_of_lt_of_le zero_lt_one hrad
   have hP := p.hasFPowerSeriesOnBall hpos
   have hAn : AnalyticAt ℂ p.sum 0 := hP.analyticAt
@@ -1243,8 +1243,7 @@ theorem dict_hk : ∀ (N l w : ℕ) (α : Matrix (Fin 2) (Fin 2) ℤ) (ι : Type
     exact ⟨_, fun z hz => incr hdet hF ⟨γ, hγ⟩ π g hg z hz⟩
   · funext γ
     have hex := exists_perm hδ γ
-    simp only [GlobalTheory.HeckeFamilyMatrices.hk, LinearMap.pi_apply, dif_pos hex, LinearMap.sum_apply, Finset.sum_apply,
-      LinearMap.comp_apply, LinearMap.proj_apply]
+    simp only [GlobalTheory.HeckeFamilyMatrices.hk, LinearMap.pi_apply, dif_pos hex, LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.proj_apply]
 
     rw [cocP, incr hdet hF γ hex.choose (fun i => (hex.choose_spec i).choose)
     (fun i => (hex.choose_spec i).choose_spec) _ hI, map_sum]

@@ -146,7 +146,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_basis_averaged_series_of_class_sums : ∀ (D : D7) (E : IntegralHeckeForms.XD D), IntegralHeckeForms.admT4 D.nexp E → ∀ i, D.ntw.NonzeroIndexPlace i → ∀ j ∈ Finset.Icc 1 D.R.m, ∀ b, ∃ S, BasisOf D.nexp i j b (SgJ D.nexp E i j b) S := by
-  first | exact @GlobalTheory.TwInputs.exists_basisOf_of_classSum | exact GlobalTheory.TwInputs.exists_basisOf_of_classSum | (intros; apply GlobalTheory.TwInputs.exists_basisOf_of_classSum <;> assumption)
+  first | exact @GlobalTheory.TwInputs.exists_basisOf_of_classSum
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsBasisAveragedSeriesOfClassSumsStatement =====
@@ -307,7 +307,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.averaged_series_full_rank_of_complex_span_good : ∀ (D : D7) (ρ : Setup D.ntw) (hρ : ρ.Good) (rd : Rds D.nexp ρ), Comparison₂ hρ rd → (∀ i j b, Faithful (rd i j b)) → ∀ (E : IntegralHeckeForms.XD D) (i : D.ntw.Tw), (∀ j b, RatBase (rd i j b)) → (∀ j ∈ Finset.Icc 1 D.R.m, ∀ b a, a ∈ E.Dat0 i j b) → SpanGood rd i → ∀ j ∈ Finset.Icc 1 D.R.m, ∀ b, FullRk D.nexp E i j b (SgJ D.nexp E i j b) := by
-  first | exact @GlobalTheory.RankDescent.fullRk_of_spanGood | exact GlobalTheory.RankDescent.fullRk_of_spanGood | (intros; apply GlobalTheory.RankDescent.fullRk_of_spanGood <;> assumption)
+  first | exact @GlobalTheory.RankDescent.fullRk_of_spanGood
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AveragedSeriesFullRankOfComplexSpanGoodStatement =====
@@ -323,7 +323,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.goodForms_spanned_by_thetaSeries_of_classSums : ∀ (D : D7) (ρ : Setup D.ntw) (hρ : ρ.Good) (rd : Rds D.nexp ρ), ∀ i, SumOnto rd i → SpanGood rd i := by
-  first | exact @GlobalTheory.TwInputs.spanGood_of_sumOnto | exact GlobalTheory.TwInputs.spanGood_of_sumOnto | (intros; apply GlobalTheory.TwInputs.spanGood_of_sumOnto <;> assumption)
+  first | exact @GlobalTheory.TwInputs.spanGood_of_sumOnto
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GoodFormsSpannedByThetaSeriesOfClassSumsStatement =====
@@ -426,7 +426,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.fullRank_thetaSeries_forms_of_rational_scalars : GlobalTheory.Published.CuspRapidDecay → ∀ (D : D7) (X : RealSide D) (E : IntegralHeckeForms.XD D) (Y : SerSide X E), ∀ i, BaseTup Y i → (∀ j b, RatRow Y.YS X.geo.v₀ Y.Z.good i j b) → ∀ j ∈ Finset.Icc 1 D.R.m, ∀ b, FullRk D.nexp E i j b (SgJ D.nexp E i j b) := by
-  first | exact @GlobalTheory.TieRank.rank_of_ties | exact GlobalTheory.TieRank.rank_of_ties | (intros; apply GlobalTheory.TieRank.rank_of_ties <;> assumption)
+  first | exact @GlobalTheory.TieRank.rank_of_ties
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FullRankThetaSeriesFormsOfRationalScalarsStatement =====
@@ -971,7 +971,7 @@ theorem resLam_toLam (F : MvPolynomial ι (X.O0 i)) :
       rw [← MvPolynomial.rename_X e q, MvPolynomial.killCompl_rename_app, toLam, MvPolynomial.aeval_X]
       congr 3
       funext t
-      by_cases ht : t = q <;> simp [Pi.single_apply, he.eq_iff, ht]
+      by_cases ht : t = q <;> simp [he.eq_iff, ht]
     · rw [MvPolynomial.killCompl, MvPolynomial.aeval_X, dite_eq_right hq, map_zero, sub_eq_zero, ← map_one (MonoidAlgebra.of _ _)]
       congr 1
       apply Multiplicative.toAdd.injective
@@ -1611,7 +1611,7 @@ section -- clump:auto
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.MainNotions.BlochKatoReduction Formalism.MainNotions.BlochKatoReduction.Gen GlobalTheory.TwSys GlobalTheory.SelFun GlobalTheory.Published GlobalTheory.ResSel
 
 theorem _root_.GlobalTheory.T.cocycleFormsSpan_oddResidueChar : ∀ (D : Formalism.BasicNotions.D7) (N : NData D.R D.host D.what₂) (X : NTw D.R D.host D.what₂ D.LL0 N) (bkP : BKPh X) (i : X.Tw) (s : X.Sig i), GalHyp bkP i s → SpanOdd i s := by
-  first | exact @GlobalTheory.ResSel.SpanOddPf.spanOdd | exact GlobalTheory.ResSel.SpanOddPf.spanOdd | (intros; apply GlobalTheory.ResSel.SpanOddPf.spanOdd <;> assumption)
+  first | exact @GlobalTheory.ResSel.SpanOddPf.spanOdd
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CocycleFormsSpanOddResidueCharStatement =====
@@ -1782,7 +1782,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.Published
 
 theorem _root_.GlobalTheory.T.realization_of_published_alt : Cheb → PoitouTateTotallyComplex → CohDimTwo → TameLocal → LocalFiniteness → LocalTateDuality → LocalEulerChar → GlobalFiniteness → GlobalEulerChar → UnramifiedOrthogonality → BlochKatoReduction.Gen.ArchimedeanSignatureMatching → GreenbergWiles → RayCharacterArtin → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.ChebotarevDegreeOne → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds.ToricDenominator → ∀ (D : D7) (nch : NChoice D) (xd : ThData D) (X : RealSide D) (Y : SerSide X (twEOf xd)) (G : _root_.GlobalTheory.TwInputs.GalSideAlt D), (∀ i, D.ntw.NonzeroIndexPlace i → ∀ j b, RatRow Y.YS X.geo.v₀ Y.Z.good i j b) → XiBdd Y.Z.rd → (∀ j, GlobalTheory.IndefiniteRowSideFullHecke.LatticesOverBalls.HkSupAt X.core X.R.toRealDat j) → _root_.UpperTheory.GalS.GalHodgeN D G.wd → LocalSituation.Conclusion5 D → IsGalois ℚ ↥D.LL0 → (∀ (k : Fin 2) (z : ℂ), z ^ (D.host.g k * (D.host.g k - 1)) = 1 → z ∈ (Formalism.L2.Host.embLL0 D).fieldRange) → NChTie D nch → (∀ w, D.what₂.muAt w ≠ D.what₂.mu0 → BaseTup Y (nch.twI w)) → GlobalTheory.Mem.Top.ExportAt D nch xd := by
-  first | exact @_root_.GlobalTheory.ExportClose.exportAt_of_bundles_alt | exact _root_.GlobalTheory.ExportClose.exportAt_of_bundles_alt | (intros; apply _root_.GlobalTheory.ExportClose.exportAt_of_bundles_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.ExportClose.exportAt_of_bundles_alt
 end
 end -- clump:auto
 end -- clump:auto

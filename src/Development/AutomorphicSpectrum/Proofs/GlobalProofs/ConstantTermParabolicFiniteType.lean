@@ -274,7 +274,6 @@ theorem middle_core {K : Type} [Field K] {n r a d : ℕ} (hd : a + d + a = n)
   have hCC : C * Ci = 1 := by
     first
       | exact mul_eq_one_comm.mp hCi
-      | exact Matrix.mul_eq_one_comm_of_equiv (Equiv.refl _) hCi
   obtain ⟨Cm, hCm⟩ : ∃ Cm : Matrix (Fin n) (Fin d) K, ∀ i t, Cm i t = C i ⟨a + t.val, by omega⟩ :=
     ⟨fun i t => C i ⟨a + t.val, by omega⟩, fun _ _ => rfl⟩
   obtain ⟨Cb, hCb⟩ : ∃ Cb : Matrix (Fin d) (Fin n) K, ∀ t i, Cb t i = Ci ⟨a + t.val, by omega⟩ i :=
@@ -406,7 +405,6 @@ theorem pair_vec (V : HSp D) {p : ℕ} (U : Matrix (Fin V.rank) (Fin p) D.host.E
   Formalism.BasicNotions.HSpace.gram, Finset.mul_sum, Finset.sum_mul, RingHom.id_apply]
   first
     | (refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_; ring)
-    | (rw [Finset.sum_comm]; refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_; ring)
 
 theorem pair_frame (V V' : HSp D) (ι : V'.V →ₗ[D.host.E] V.V) {p : ℕ} (U : Matrix (Fin V.rank) (Fin p) D.host.E) (i : Fin p)
     (j : Fin V'.rank) :
@@ -452,7 +450,6 @@ theorem frame_cols : ∀ (D : D7) (V V' : HSp D) (ι : V'.V →ₗ[D.host.E] V.V
     intro x y
     have hs := V.herm
     first
-      | exact (hs x y).symm
       | exact (hs.eq x y).symm
   have hG : Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) V.gram = V.gram := by
     ext k l
@@ -594,7 +591,7 @@ theorem _root_.GlobalTheory.T.adapted_frame_orthogonal_subspace : ∀ (D : D7) (
       (∀ (i : Fin V.rank) (j : Fin V'.rank), frameMat V V' ι i j = ∑ r : Fin V'.rank, C.1 i (⟨a + r.val, by omega⟩ : Fin V.rank) * B r j) ∧
       ∀ b : Fin V.rank, (b.val < a ∨ V.rank ≤ b.val + a) →
         (Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) (frameMat V V' ι) * V.gram) *ᵥ (fun k => C.1 k b) = 0 := by
-  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.LeviPart.ComplFrame.frame_cols | exact GlobalTheory.CompanionTheory.Hypotheses₂.LeviPart.ComplFrame.frame_cols | (intros; apply GlobalTheory.CompanionTheory.Hypotheses₂.LeviPart.ComplFrame.frame_cols <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.LeviPart.ComplFrame.frame_cols
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GlobalProofs.AdelicCharacterLocalNontrivialStatement =====
@@ -1247,7 +1244,7 @@ theorem foldr_slice {V V' : HSp D} {s : GA D V' →* GA D V} {y : GA D V} (τ : 
     simp only [List.foldr_cons, List.map_cons, List.prod_cons]
     rw [ih, hE]
     funext h
-    simp [map_mul, map_sub, Polynomial.aeval_X, Polynomial.aeval_C, Module.End.mul_apply, LinearMap.sub_apply,
+    simp [map_mul, map_sub, Polynomial.aeval_X, Polynomial.aeval_C, LinearMap.sub_apply,
       Module.algebraMap_end_apply]
 
 theorem prod_roots_toList {q : Polynomial ℂ} (hq : q.Monic) :

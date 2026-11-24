@@ -190,7 +190,7 @@ theorem _root_.GlobalTheory.T.finitePart_eq_integralCombination_of_mem_completed
     ∃ (m : ℕ) (β : Fin m → Formalism.L2.Theta.AE D) (b : Fin m → Fin n → D.host.E),
       (∀ p, finPart D (β p) ∈ intAE D) ∧ (∀ p, b p ∈ B) ∧
       ∀ i, finPart D (Y i) = finPart D (∑ p, β p * incA D (b p i)) := by
-  first | exact @GlobalTheory.LatExpand.finPart_eq_int_comb_of_mem_hatL | exact GlobalTheory.LatExpand.finPart_eq_int_comb_of_mem_hatL | (intros; apply GlobalTheory.LatExpand.finPart_eq_int_comb_of_mem_hatL <;> assumption)
+  first | exact @GlobalTheory.LatExpand.finPart_eq_int_comb_of_mem_hatL
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FinitePartEqIntegralCombinationOfMemCompletedLatStatement =====
@@ -266,7 +266,7 @@ theorem act_gen_apply (S T : HSp D) (g : Formalism.L2.Theta.GA D S) (h : Formali
         ∑ m, cA D ((Formalism.L2.Theta.mt S g *ᵥ fun k => incA D (s k)) m) * incA D (S.gram m j)) := by
   rw [← row_move]
   simp only [actO, Matrix.mul_apply, Matrix.of_apply, GlobalTheory.LatMoveStd.gen_eq]
-  simp only [ Matrix.mul_apply, Matrix.of_apply, GlobalTheory.LatMoveStd.gen_eq, Matrix.mulVec, dotProduct,
+  simp only [ Matrix.mulVec, dotProduct,
     Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
   ring
@@ -373,7 +373,7 @@ theorem _root_.GlobalTheory.T.weilActionO_mem_latticeO_of_integralCombinations :
         finPart D (∑ p, β p * incA D (b p i))) →
     ∀ w ∈ latO S T (AS : Set (Fin S.rank → D.host.E)) (AT : Set (Fin T.rank → D.host.E)) (fun _ => True),
       actO S T g h w ∈ latO S T (BS : Set (Fin S.rank → D.host.E)) (BT : Set (Fin T.rank → D.host.E)) (fun _ => True) := by
-  first | exact @GlobalTheory.LatMoveGen.actO_mem_latO | exact GlobalTheory.LatMoveGen.actO_mem_latO | (intros; apply GlobalTheory.LatMoveGen.actO_mem_latO <;> assumption)
+  first | exact @GlobalTheory.LatMoveGen.actO_mem_latO
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.WeilActionOMemLatticeOOfIntegralCombinationsStatement =====

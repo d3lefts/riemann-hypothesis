@@ -135,7 +135,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CharKer
 
 theorem _root_.GlobalTheory.T.cechTrivial_pullback_of_isPullbackGenerator : ∀ (X Y : Scheme.{0}) (p : X ⟶ Y) (M : LB Y) (e : ∀ k, Γ(X, p ⁻¹ᵁ M.U k)ˣ), IsPullGen p M e → Triv (M.pull p) := by
-  first | exact @GlobalTheory.CharKer.triv_pull_of_isPullGen | exact GlobalTheory.CharKer.triv_pull_of_isPullGen | (intros; apply GlobalTheory.CharKer.triv_pull_of_isPullGen <;> assumption)
+  first | exact @GlobalTheory.CharKer.triv_pull_of_isPullGen
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CechTrivialPullbackOfIsPullbackGeneratorStatement =====
@@ -152,7 +152,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CharKer
 
 theorem _root_.GlobalTheory.T.character_eq_one_of_descended_lineBundle_trivial : ∀ (K : Type) [Field K] (A A' N T : Over (Sp K)) [GrpObj A] [GrpObj A'] [GrpObj N] (i : N ⟶ A) (q : A ⟶ A') (χ : Γ((N ⊗ T).left, ⊤)ˣ) (M : LB (A' ⊗ T).left) (e : ∀ k, Γ((A ⊗ T).left, (pmap q T).left ⁻¹ᵁ M.U k)ˣ), IsAbelianScheme A → IsMonHom q → IsPullback i (toUnit N) q η[A'] → M.IsLB → IsEquivGen i q χ M e → Triv M → χ = 1 := by
-  first | exact @GlobalTheory.CharKer.character_eq_one_of_triv | exact GlobalTheory.CharKer.character_eq_one_of_triv | (intros; apply GlobalTheory.CharKer.character_eq_one_of_triv <;> assumption)
+  first | exact @GlobalTheory.CharKer.character_eq_one_of_triv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharacterEqOneOfDescendedLineBundleTrivialStatement =====
@@ -267,7 +267,7 @@ theorem gm_addGen {S : Scheme.{0}} {A A' T Z : Over S} [GrpObj A] [GrpObj A'] (q
   have eS : y.left ≫ (ptSnd A T).left = (lift a' t).left := by
     rw [← Over.comp_left, hy]
     unfold ptSnd
-    simp [comp_lift]
+    simp
   have eM : y.left ≫ (ptMul A T).left = (lift (a * a') t).left := by
     rw [← Over.comp_left, hy]
     unfold ptMul
@@ -389,7 +389,7 @@ open GlobalTheory.CharKer
 
 
 theorem _root_.GlobalTheory.T.additivityDefect_generator_invariant_same_image : ∀ (S : Scheme.{0}) (A A' N T : Over S) [GrpObj A] [IsCommMonObj A] [GrpObj A'] [GrpObj N] (i : N ⟶ A) (q : A ⟶ A') [IsMonHom q] (χ : Γ((N ⊗ T).left, ⊤)ˣ) (M : LB (A' ⊗ T).left) (e : ∀ k, Γ((A ⊗ T).left, (pmap q T).left ⁻¹ᵁ M.U k)ˣ), IsMonHom i → IsPullback i (toUnit N) q η[A'] → IsCharacter χ → IsEquivGen i q χ M e → ∀ (Z : Scheme.{0}) (y₁ y₂ : Z ⟶ (A ⊗ (A ⊗ T)).left), y₁ ≫ (pmap2 q T).left = y₂ ≫ (pmap2 q T).left → ∀ (k : (addBundle M).ι) (W : Z.Opens) (h₁ : W ≤ y₁ ⁻¹ᵁ ((pmap2 q T).left ⁻¹ᵁ (addBundle M).U k)) (h₂ : W ≤ y₂ ⁻¹ᵁ ((pmap2 q T).left ⁻¹ᵁ (addBundle M).U k)), res h₁ (pullU y₁ _ (addGen q M e k)) = res h₂ (pullU y₂ _ (addGen q M e k)) := by
-  first | exact @GlobalTheory.CharKer.addGen_invariant | exact GlobalTheory.CharKer.addGen_invariant | (intros; apply GlobalTheory.CharKer.addGen_invariant <;> assumption)
+  first | exact @GlobalTheory.CharKer.addGen_invariant
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdditivityDefectGeneratorInvariantSameImageStatement =====
@@ -477,7 +477,7 @@ open GlobalTheory.CharKer
 
 
 theorem _root_.GlobalTheory.T.isPullbackLineBundleGenerator_additivityDefect : ∀ (S : Scheme.{0}) (A A' T : Over S) [MonObj A] [MonObj A'] (q : A ⟶ A') [IsMonHom q] (M : LB (A' ⊗ T).left) (e : ∀ k, Γ((A ⊗ T).left, (pmap q T).left ⁻¹ᵁ M.U k)ˣ), IsPullGen (pmap q T).left M e → IsPullGen (pmap2 q T).left (addBundle M) (addGen q M e) := by
-  first | exact @GlobalTheory.CharKer.isPullGen_addGen | exact GlobalTheory.CharKer.isPullGen_addGen | (intros; apply GlobalTheory.CharKer.isPullGen_addGen <;> assumption)
+  first | exact @GlobalTheory.CharKer.isPullGen_addGen
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsPullbackLineBundleGeneratorAdditivityDefectStatement =====
@@ -524,7 +524,7 @@ lemma restrict_appTop_toTop (p : X ⟶ Y) (V : Y.Opens) (a : Γ(Y, V)) :
 
 lemma restrict_props (p : X ⟶ Y) [Flat p] [Surjective p] [IsAffineHom p] (V : Y.Opens) :
     Flat (p ∣_ V) ∧ Surjective (p ∣_ V) ∧ IsAffineHom (p ∣_ V) :=
-  ⟨inferInstance, IsZariskiLocalAtTarget.restrict ‹_› V, by first | exact HasAffineProperty.restrict ‹_› V | exact IsZariskiLocalAtTarget.restrict (P := @IsAffineHom) ‹_› V | exact (MorphismProperty.IsStableUnderBaseChange.of_isPullback (P := @IsAffineHom) (isPullback_morphismRestrict p V).flip ‹_›) | exact (inferInstance : IsAffineHom (p.resLE V (p ⁻¹ᵁ V) le_rfl))⟩
+  ⟨inferInstance, IsZariskiLocalAtTarget.restrict ‹_› V, by first | exact (MorphismProperty.IsStableUnderBaseChange.of_isPullback (P := @IsAffineHom) (isPullback_morphismRestrict p V).flip ‹_›) | exact (inferInstance : IsAffineHom (p.resLE V (p ⁻¹ᵁ V) le_rfl))⟩
 
 lemma appTop_toTop (V : X.Opens) {Z : Scheme.{0}} (y : Z ⟶ V.toScheme) (s : Γ(X, V)) :
     y.appTop (V.ι.appLE V ⊤ V.ι_preimage_self.ge s) =
@@ -616,7 +616,7 @@ open GlobalTheory.CharKer
 
 
 theorem _root_.GlobalTheory.T.lineBundle_trivial_of_invariant_pullback_generator : ∀ (X Y : Scheme.{0}) (p : X ⟶ Y), Flat p → Surjective p → IsAffineHom p → ∀ (M : LB Y) (e : ∀ k, Γ(X, p ⁻¹ᵁ M.U k)ˣ), IsPullGen p M e → (∀ (Z : Scheme.{0}) (y₁ y₂ : Z ⟶ X), y₁ ≫ p = y₂ ≫ p → ∀ (k : M.ι) (W : Z.Opens) (h₁ : W ≤ y₁ ⁻¹ᵁ (p ⁻¹ᵁ M.U k)) (h₂ : W ≤ y₂ ⁻¹ᵁ (p ⁻¹ᵁ M.U k)), res h₁ (pullU y₁ _ (e k)) = res h₂ (pullU y₂ _ (e k))) → Triv M := by
-  first | exact @GlobalTheory.CharKer.triv_of_isPullGen_of_invariant | exact GlobalTheory.CharKer.triv_of_isPullGen_of_invariant | (intros; apply GlobalTheory.CharKer.triv_of_isPullGen_of_invariant <;> assumption)
+  first | exact @GlobalTheory.CharKer.triv_of_isPullGen_of_invariant
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LineBundleTrivialOfInvariantPullbackGeneratorStatement =====
@@ -698,7 +698,7 @@ open GlobalTheory.CharKer
 
 
 theorem _root_.GlobalTheory.T.prodMapPairTimesIdentity_flat_surjective_affine : ∀ (S : Scheme.{0}) (A A' T : Over S) (q : A ⟶ A'), Flat q.left → Surjective q.left → IsAffineHom q.left → Flat (pmap2 q T).left ∧ Surjective (pmap2 q T).left ∧ IsAffineHom (pmap2 q T).left := by
-  first | exact @GlobalTheory.CharKer.pmap2_flat_surjective_isAffineHom | exact GlobalTheory.CharKer.pmap2_flat_surjective_isAffineHom | (intros; apply GlobalTheory.CharKer.pmap2_flat_surjective_isAffineHom <;> assumption)
+  first | exact @GlobalTheory.CharKer.pmap2_flat_surjective_isAffineHom
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProdMapPairTimesIdentityFlatSurjectiveAffineStatement =====
@@ -744,7 +744,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CharKer
 
 theorem _root_.GlobalTheory.T.characterLineBundle_additive_of_equivariantGenerator : ∀ (K : Type) [Field K] [IsAlgClosed K] (A A' N T : Over (Sp K)) [GrpObj A] [GrpObj A'] [GrpObj N] (i : N ⟶ A) (q : A ⟶ A') (χ : Γ((N ⊗ T).left, ⊤)ˣ) (M : LB (A' ⊗ T).left) (e : ∀ k, Γ((A ⊗ T).left, (pmap q T).left ⁻¹ᵁ M.U k)ˣ), IsAbelianScheme A → IsAbelianScheme A' → IsMonHom i → IsMonHom q → IsFinite q.left → Flat q.left → Surjective q.left → IsPullback i (toUnit N) q η[A'] → IsCharacter χ → M.IsLB → IsEquivGen i q χ M e → IsAdditive M := by
-  first | exact @GlobalTheory.CharKer.isAdditive_of_isEquivGen | exact GlobalTheory.CharKer.isAdditive_of_isEquivGen | (intros; apply GlobalTheory.CharKer.isAdditive_of_isEquivGen <;> assumption)
+  first | exact @GlobalTheory.CharKer.isAdditive_of_isEquivGen
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharacterLineBundleAdditiveOfEquivariantGeneratoStatement =====
@@ -812,7 +812,7 @@ theorem tri_isPullback_over : IsPullback (triM₁₂ A N T) (triM₂₃ A N T i)
     have e₂ := congrArg (· ≫ snd A _ ≫ fst N T) h₁
     have e₃ := congrArg (· ≫ snd A _ ≫ snd N T) h₁
     have e₄ := congrArg (· ≫ snd A _ ≫ fst N T) h₂
-    simp only [triM₁₂, triM₂₃, Category.assoc, lift_fst, lift_snd, lift_fst_assoc, lift_snd_assoc] at e₁ e₂ e₃ e₄
+    simp only [triM₁₂, triM₂₃, Category.assoc, lift_fst, lift_snd, lift_snd_assoc] at e₁ e₂ e₃ e₄
     apply hom_ext
     · simpa using e₁
     · apply hom_ext
@@ -881,7 +881,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CharKer
 
 theorem _root_.GlobalTheory.T.exists_kernelAction_triple_overlap : ∀ (S : Scheme.{0}) (A N T : Over S) [GrpObj A] [GrpObj N] (i : N ⟶ A) (χ : Γ((N ⊗ T).left, ⊤)ˣ), IsMonHom i → IsCharacter χ → ∃ (W : Scheme.{0}) (m₁₂ m₂₃ m₁₃ : W ⟶ (A ⊗ (N ⊗ T)).left), IsPullback m₁₂ m₂₃ (actMap i T).left (prMap A N T).left ∧ m₁₃ ≫ (prMap A N T).left = m₁₂ ≫ (prMap A N T).left ∧ m₁₃ ≫ (actMap i T).left = m₂₃ ≫ (actMap i T).left ∧ pullTop m₁₃ (pullTop (snd A (N ⊗ T)).left χ) = pullTop m₁₂ (pullTop (snd A (N ⊗ T)).left χ) * pullTop m₂₃ (pullTop (snd A (N ⊗ T)).left χ) := by
-  first | exact @GlobalTheory.CharKer.triOverlap | exact GlobalTheory.CharKer.triOverlap | (intros; apply GlobalTheory.CharKer.triOverlap <;> assumption)
+  first | exact @GlobalTheory.CharKer.triOverlap
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsKernelActionTripleOverlapStatement =====
@@ -959,9 +959,9 @@ theorem lmul'_eq_one {c : B ⊗[R] B} (hu : IsUnit c)
   let μ : B ⊗[R] B →ₐ[R] B := Algebra.TensorProduct.lmul' R
   let ν : B ⊗[R] (B ⊗[R] B) →ₐ[R] B :=
     μ.comp (Algebra.TensorProduct.map (AlgHom.id R B) μ)
-  have h12 : ν.comp (m₁₂ R B) = μ := by ext <;> simp [ν, μ, m₁₂, Algebra.TensorProduct.one_def]
-  have h13 : ν.comp (m₁₃ R B) = μ := by ext <;> simp [ν, μ, m₁₃, Algebra.TensorProduct.one_def]
-  have h23 : ν.comp (m₂₃ R B) = μ := by ext <;> simp [ν, μ, m₂₃, Algebra.TensorProduct.one_def]
+  have h12 : ν.comp (m₁₂ R B) = μ := by ext <;> simp [ν, μ, m₁₂]
+  have h13 : ν.comp (m₁₃ R B) = μ := by ext <;> simp [ν, μ, m₁₃]
+  have h23 : ν.comp (m₂₃ R B) = μ := by ext <;> simp [ν, μ, m₂₃]
   have h' := congrArg ν h
   rw [map_mul, ← AlgHom.comp_apply, ← AlgHom.comp_apply, ← AlgHom.comp_apply, h12, h13, h23] at h'
   exact (hu.map μ).mul_left_cancel (by rw [mul_one]; exact h'.symm)
@@ -1060,7 +1060,7 @@ theorem exists_local (R B C D : CommRingCat.{0}) (f : R ⟶ B) (j₁ j₂ : B �
       ext x
       change m₁₂ R B (e.hom.hom (j₁.hom x)) = m₁₃ R B (e.hom.hom (j₁.hom x))
       rw [e1']
-      simp [m₁₂, m₁₃, Algebra.TensorProduct.one_def]
+      simp [m₁₂, m₁₃]
     · rw [← Category.assoc, h₂, Category.assoc, p23]
       ext x
       change m₂₃ R B (e.hom.hom (j₂.hom x)) = m₁₃ R B (e.hom.hom (j₂.hom x))
@@ -1229,7 +1229,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CharKer
 
 theorem _root_.GlobalTheory.T.locally_trivial_unit_cocycle_scheme : ∀ (X Y Z W : Scheme.{0}) (p : X ⟶ Y) (a b : Z ⟶ X) (m₁₂ m₂₃ m₁₃ : W ⟶ Z) (χ : Γ(Z, ⊤)ˣ), IsAffineHom p → Flat p → Surjective p → IsPullback b a p p → IsPullback m₁₂ m₂₃ a b → m₁₃ ≫ b = m₁₂ ≫ b → m₁₃ ≫ a = m₂₃ ≫ a → pullTop m₁₃ χ = pullTop m₁₂ χ * pullTop m₂₃ χ → ∀ y : Y, ∃ V : Y.Opens, y ∈ V ∧ ∃ e : Γ(X, p ⁻¹ᵁ V)ˣ, ∀ (W' : Z.Opens) (h₁ : W' ≤ a ⁻¹ᵁ (p ⁻¹ᵁ V)) (h₂ : W' ≤ b ⁻¹ᵁ (p ⁻¹ᵁ V)), res h₁ (pullU a _ e) = res le_top χ * res h₂ (pullU b _ e) := by
-  first | exact @GlobalTheory.CharKer.exists_local_charUnit | exact GlobalTheory.CharKer.exists_local_charUnit | (intros; apply GlobalTheory.CharKer.exists_local_charUnit <;> assumption)
+  first | exact @GlobalTheory.CharKer.exists_local_charUnit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocallyTrivialUnitCocycleSchemeStatement =====
@@ -1287,7 +1287,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CharKer
 
 theorem _root_.GlobalTheory.T.exists_nhds_characterUnit_kernel_action : ∀ (S : Scheme.{0}) (A A' N T : Over S) [GrpObj A] [GrpObj A'] [GrpObj N] (i : N ⟶ A) (q : A ⟶ A') (χ : Γ((N ⊗ T).left, ⊤)ˣ), IsMonHom i → IsMonHom q → IsFinite q.left → Flat q.left → Surjective q.left → IsPullback i (toUnit N) q η[A'] → IsCharacter χ → ∀ y : (A' ⊗ T).left, ∃ V : (A' ⊗ T).left.Opens, y ∈ V ∧ ∃ e : Γ((A ⊗ T).left, (pmap q T).left ⁻¹ᵁ V)ˣ, ∀ (W : (A ⊗ (N ⊗ T)).left.Opens) (h₁ : W ≤ (actMap i T).left ⁻¹ᵁ ((pmap q T).left ⁻¹ᵁ V)) (h₂ : W ≤ (prMap A N T).left ⁻¹ᵁ ((pmap q T).left ⁻¹ᵁ V)), res h₁ (pullU (actMap i T).left _ e) = res le_top (pullTop (snd A (N ⊗ T)).left χ) * res h₂ (pullU (prMap A N T).left _ e) := by
-  first | exact @GlobalTheory.CharKer.exists_nhds_charUnit | exact GlobalTheory.CharKer.exists_nhds_charUnit | (intros; apply GlobalTheory.CharKer.exists_nhds_charUnit <;> assumption)
+  first | exact @GlobalTheory.CharKer.exists_nhds_charUnit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNhdsCharacterUnitKernelActionStatement =====
@@ -1368,12 +1368,12 @@ theorem exists_equivGen : ∀ (S : Scheme.{0}) (A A' N T : Over S) [GrpObj A] [G
   · exact eq_top_iff.2 fun y _ => TopologicalSpace.Opens.mem_iSup.2 ⟨y, hyV y⟩
   · intro k
     apply inj
-    simp only [res_pullU_units, hg, map_mul, map_inv, res_res_units, map_one, mul_inv_cancel]
+    simp only [res_pullU_units, hg, map_one, mul_inv_cancel]
   · intro a b c
     apply inj
     simp only [res_pullU_units, hg, map_mul, map_inv, res_res_units, _root_.mul_assoc, inv_mul_cancel_left]
   · intro k l W h₁ h₂ h₃
-    simp only [res_pullU_units, hg, map_mul, map_inv, res_res_units, _root_.mul_assoc, inv_mul_cancel, _root_.mul_one]
+    simp only [hg, map_mul, map_inv, res_res_units, _root_.mul_assoc, inv_mul_cancel, _root_.mul_one]
 
 end GlobalTheory.CharKer
 end -- clump:auto
@@ -1393,7 +1393,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CharKer
 
 theorem _root_.GlobalTheory.T.exists_descended_lineBundle_equivariantGenerator : ∀ (S : Scheme.{0}) (A A' N T : Over S) [GrpObj A] [GrpObj A'] [GrpObj N] (i : N ⟶ A) (q : A ⟶ A') (χ : Γ((N ⊗ T).left, ⊤)ˣ), IsMonHom i → IsMonHom q → IsFinite q.left → Flat q.left → Surjective q.left → IsPullback i (toUnit N) q η[A'] → IsCharacter χ → ∃ (M : LB (A' ⊗ T).left) (e : ∀ k, Γ((A ⊗ T).left, (pmap q T).left ⁻¹ᵁ M.U k)ˣ), M.IsLB ∧ IsEquivGen i q χ M e := by
-  first | exact @GlobalTheory.CharKer.exists_equivGen | exact GlobalTheory.CharKer.exists_equivGen | (intros; apply GlobalTheory.CharKer.exists_equivGen <;> assumption)
+  first | exact @GlobalTheory.CharKer.exists_equivGen
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDescendedLineBundleEquivariantGeneratorStatement =====
@@ -1410,7 +1410,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CharKer
 
 theorem _root_.GlobalTheory.T.exists_nontrivial_character_finite_comm_group : ∀ (K : Type) [Field K] (N : Over (Sp K)) [GrpObj N] [IsCommMonObj N], IsFinite N.hom → (𝟙 N ≠ (1 : N ⟶ N)) → ∃ (T : Over (Sp K)) (χ : Γ((N ⊗ T).left, ⊤)ˣ), IsCharacter χ ∧ χ ≠ 1 := by
-  first | exact @GlobalTheory.CharExists.exists_character_ne_one | exact GlobalTheory.CharExists.exists_character_ne_one | (intros; apply GlobalTheory.CharExists.exists_character_ne_one <;> assumption)
+  first | exact @GlobalTheory.CharExists.exists_character_ne_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNontrivialCharacterFiniteCommGroupStatement =====
@@ -1463,7 +1463,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.exists_nontrivial_additive_family_killed_by_isogeny : ∀ (K : Type) [Field K] [IsAlgClosed K] (A A' N : Over (Sp K)) [GrpObj A] [GrpObj A'] [GrpObj N] (i : N ⟶ A) (q : A ⟶ A'), IsAbelianScheme A → IsAbelianScheme A' → IsMonHom i → IsMonHom q → IsFinite N.hom → IsFinite q.left → Flat q.left → Surjective q.left → IsPullback i (toUnit N) q η[A'] → i ≠ 1 → ∃ (T : Over (Sp K)) (M : LB (A' ⊗ T).left), M.IsLB ∧ IsAdditive M ∧ Triv (ev M (fst A T ≫ q) (snd A T)) ∧ ¬ Triv M := by
-  first | exact @GlobalTheory.CharKer.exists_nontriv_family | exact GlobalTheory.CharKer.exists_nontriv_family | (intros; apply GlobalTheory.CharKer.exists_nontriv_family <;> assumption)
+  first | exact @GlobalTheory.CharKer.exists_nontriv_family
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNontrivialAdditiveFamilyKilledByIsogenyStatement =====

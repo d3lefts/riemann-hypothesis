@@ -933,7 +933,7 @@ theorem mem_aux (σ : R →+* R) (e : ℤˣ) (i : ι) (hi : ∀ x : ι, x = i) (
   rw [GlobalTheory.CompanionTheory.RgEis.Cover.J_apply e i hi]
   rcases x with x | x <;> rcases y with y | y <;> rw [hi x, hi y] <;>
     simp only [Matrix.smul_apply, Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.map_apply,
-      Sum.elim_inl, Sum.elim_inr, smul_eq_mul, map_mul, map_one, hN, hσ, hσd', one_mul, mul_one,
+      Sum.elim_inl, Sum.elim_inr, smul_eq_mul, map_mul, hN, hσ, hσd', one_mul, mul_one,
       PositivityTheory.RgEis.Ad.J, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,
       Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂, Matrix.zero_apply, Matrix.one_apply_eq]
   · ring
@@ -1235,7 +1235,7 @@ theorem dg_mem_kGL {ι : Type} [Fintype ι] [DecidableEq ι] (x : Rˣ) (h1 : (x 
     cases a with
     | inl a => simp
     | inr a =>
-      simp only [Function.comp, Sum.elim_inr, Pi.star_apply, RCLike.star_def, Complex.mul_conj,
+      simp only [Sum.elim_inr, Pi.star_apply, RCLike.star_def, Complex.mul_conj,
         Complex.normSq_eq_norm_sq, h3 w]
       simp
 
@@ -1462,7 +1462,7 @@ theorem sig_entries (A : Ad E R) (ε : ℤˣ) (t : Rˣ) (ht : A.σ t = -(((ε : 
   simp only [Matrix.mul_apply, Fintype.sum_sum_type, Fintype.sum_unique, Ad.J, hd, Matrix.fromBlocks_apply₁₁,
     Matrix.fromBlocks_apply₁₂, Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂, Matrix.transpose_apply,
     Matrix.map_apply, Matrix.zero_apply, Matrix.one_apply_eq, Matrix.smul_apply, smul_eq_mul, mul_zero, mul_one,
-    zero_add, add_zero, zero_mul, ← he', hone] at h1 h2 h3 h4
+    zero_add, add_zero, ← he', hone] at h1 h2 h3 h4
   set T : R := ((t⁻¹ : Rˣ) : R) with hTd
   have hT : (t : R) * T = 1 := Units.mul_inv t
   have hs : -(e * (t : R)) * A.σ T = 1 := by rw [← ht, ← map_mul, hT, map_one]

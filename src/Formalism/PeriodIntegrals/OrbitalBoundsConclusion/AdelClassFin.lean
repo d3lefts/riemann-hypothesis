@@ -96,7 +96,6 @@ theorem partBetween : PartBetween := by
   haveI : Finite ((𝓞 E) ⧸ Ideal.span {δ}) := by
     first
       | exact (Ideal.absNorm_ne_zero_iff _).mp (by rw [Ne, Ideal.absNorm_eq_zero_iff]; exact hne)
-      | exact Ideal.finiteQuotientOfFreeOfNeBot _ hne
   have hδE : algebraMap (𝓞 E) E δ ≠ 0 := by
     intro h
     apply hδ
@@ -471,14 +470,14 @@ theorem single_inl {E : Type} [Field E] {m k n : ℕ} (e : Fin k ⊕ Fin n ≃ F
   obtain ⟨t, rfl⟩ := e.surjective r
   cases t with
   | inl a => simp [cat, Pi.single_apply, e.injective.eq_iff]
-  | inr b => simp [cat, Pi.single_apply, e.injective.eq_iff]
+  | inr b => simp [cat, e.injective.eq_iff]
 
 theorem single_inr {E : Type} [Field E] {m k n : ℕ} (e : Fin k ⊕ Fin n ≃ Fin m) (j : Fin n) :
     (Pi.single (e (Sum.inr j)) (1 : E) : Fin m → E) = cat e 0 (Pi.single j 1) := by
   funext r
   obtain ⟨t, rfl⟩ := e.surjective r
   cases t with
-  | inl a => simp [cat, Pi.single_apply, e.injective.eq_iff]
+  | inl a => simp [cat, e.injective.eq_iff]
   | inr b => simp [cat, Pi.single_apply, e.injective.eq_iff]
 
 theorem cat_eq_sum {E : Type} [Field E] {m k n : ℕ} (e : Fin k ⊕ Fin n ≃ Fin m) (c : Fin k → E) :
@@ -487,7 +486,7 @@ theorem cat_eq_sum {E : Type} [Field E] {m k n : ℕ} (e : Fin k ⊕ Fin n ≃ F
   obtain ⟨t, rfl⟩ := e.surjective r
   cases t with
   | inl a => simp [cat, Finset.sum_apply, Pi.single_apply, e.injective.eq_iff]
-  | inr b => simp [cat, Finset.sum_apply, Pi.single_apply, e.injective.eq_iff]
+  | inr b => simp [cat, Finset.sum_apply, e.injective.eq_iff]
 
 theorem entry_eq {E : Type} [Field E] [StarRing E] {m : ℕ} (J A : Matrix (Fin m) (Fin m) E) (r s : Fin m) :
     (cT (starRingEnd E) A * J * A) r s =
@@ -1266,7 +1265,6 @@ theorem gd_qsmul (q : ℚ) (x : Fin m → E) : q • x = ((q : E)) • x := by
 theorem gd_star_rat (q : ℚ) : star ((q : E)) = (q : E) := by
   first
     | exact star_ratCast q
-    | simpa [starRingEnd_apply] using map_ratCast (starRingEnd E) q
 
 def gdLeft (y : Fin m → E) : (Fin m → E) →ₗ[ℚ] ℚ where
   toFun x := Algebra.trace ℚ E (hform (starRingEnd E) J x y)
@@ -1311,11 +1309,10 @@ theorem successive_vector_gram_det : SvGramDet := by
       by_cases h : a = i
       · subst h
         simp
-      · simp [Pi.single_apply, h]
+      · simp [h]
     rw [hs]
     first
       | rw [single_dotProduct, one_mul]
-      | simp [dotProduct, Pi.single_apply]
   have hnd : ∀ y : Fin m → E, (∀ x, hform (starRingEnd E) J x y = 0) → y = 0 := by
     intro y hy
     have hJy : J *ᵥ y = 0 := by

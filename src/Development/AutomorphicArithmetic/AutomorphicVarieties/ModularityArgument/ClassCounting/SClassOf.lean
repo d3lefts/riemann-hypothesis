@@ -801,7 +801,6 @@ theorem UpperTheory.V.ZK.Cl.cJoin : CJoin := by
   obtain ⟨π, hπ1, hπ2, hπ3, hπ4⟩ := hαI k r hSp μ hμ
   obtain ⟨P, φ, hφ⟩ := hlam k (r.comp (algebraMap (𝓞 L) (𝓞 F))) hr
     (Gal(F/L) × (ZMod (l ^ ν) × ZMod (l ^ ν)) → k) π (μ.comp Hs.subtype) hπ1 hπ2 hπ3 hπ4
-  beta_reduce at hyb
   rw [← (sChain (ZMod (l ^ ν))).2.2.1, hφ]
   refine Eq.trans (hTriv k (ZMod (l ^ ν)) (2 * e + 1 + 1) θ hθ Hs
     (Gal(F/L) × (ZMod (l ^ ν) × ZMod (l ^ ν)) → k) P (Fin N → k) (μ.comp Hs.subtype) φ y' hy'c) ?_
@@ -939,13 +938,13 @@ theorem UpperTheory.V.ZK.Cl.cMu :
         by_cases hij : i = j
         · subst hij
           simpa using hc P hP
-        · simp [Pi.single_apply, hij]
+        · simp [hij]
       have e : (Pi.single j (c * algebraMap L F (m : L)) : J → F) = (m : L) • (Pi.single j c : J → F) := by
         ext i
         by_cases hij : i = j
         · subst hij
           simp [Algebra.smul_def, mul_comm]
-        · simp [Pi.single_apply, hij]
+        · simp [hij]
       intro σ j'
       show ResF r (σ (((g : GG L F J) (Pi.single j (c * algebraMap L F (m : L)))) j')) 0
       rw [e, map_smul, Pi.smul_apply, Algebra.smul_def, map_mul, AlgEquiv.commutes]
@@ -1787,7 +1786,7 @@ theorem UpperTheory.V.ZK.Cl.cFree :
     { toFun := fun h => i ∘ₗ (α h).toLinearMap ∘ₗ s + (LinearMap.id - i ∘ₗ s)
       map_one' := LinearMap.ext fun x => by simp
       map_mul' := fun g h => LinearMap.ext fun x => by
-        simp [hsi, map_mul, Module.End.mul_apply] }
+        simp [hsi, map_mul] }
   let lam : H →* GL (Fin N) R :=
     (Units.map (LinearMap.toMatrixAlgEquiv' :
       Module.End R (Fin N → R) ≃ₐ[R] Matrix (Fin N) (Fin N) R).toMonoidHom).comp E.toHomUnits

@@ -290,8 +290,8 @@ lemma pi_single_mul_ne {R : J → Type} [∀ i, MulZeroClass (R i)] {i j : J} (h
     (x : R i) (y : R j) : (Pi.single i x : Π k, R k) * Pi.single j y = 0 := by
   funext k
   by_cases hk : k = i
-  · subst hk; simp [Pi.single_apply, Ne.symm h]
-  · simp [Pi.single_apply, hk]
+  · subst hk; simp [Ne.symm h]
+  · simp [hk]
 
 lemma unit_mul_ne_factor {j j' : J} (h : j ≠ j') (p q : Fin (d j)) (p' q' : Fin (d j')) :
     unit (d := d) j p q * unit j' p' q' = 0 :=
@@ -588,7 +588,7 @@ theorem apply_eq_mulVec (D : PLat O bar) (e : Module.Basis (Fin r) ℤ D.La) (P 
 
   conv_lhs => rw [← e.sum_repr x, map_sum]
   ext i
-  simp only [map_zsmul, Finset.sum_apply, Pi.smul_apply, zsmul_eq_mul, perM, Matrix.mulVec, dotProduct, Matrix.of_apply]
+  simp only [map_zsmul, Finset.sum_apply, zsmul_eq_mul, perM, Matrix.mulVec, dotProduct, Matrix.of_apply]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
 theorem perM_mul_actM (D : PLat O bar) (e : Module.Basis (Fin r) ℤ D.La) (P : D.La →+ (Fin g → ℂ)) (a : O) :
@@ -949,7 +949,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 open scoped Matrix
 
 theorem _root_.GlobalTheory.T.holomorphicMap_lifts_locally_to_periodFamilies : ∀ (O : Type) [Ring O] (bar : O → O) (g : ℕ) (ρ : O →+* Matrix (Fin g) (Fin g) ℂ) (Λ : Type) (F : Fam ℂ O Λ g) (N : ℕ) (D' : PLat O bar) (t : Λ → D'.La) (m : ℕ) (B : Set (Fin m → ℂ)) (y : (Fin m → ℂ) → (Sp ℂ ⟶ F.X)) (b₀ : Fin m → ℂ) P₀ e₀, 0 < N → (∀ a, F.eta a ^ N = 1) → LocallyOfFiniteType F.s → IsOpen B → b₀ ∈ B → (∀ b ∈ B, y b ≫ F.s = spMap (RingHom.id ℂ)) → IsHolTo B y → UnifAt F (RingHom.id ℂ) ρ N D' t P₀ (y b₀) e₀ → ∃ (B' : Set (Fin m → ℂ)) (P : (Fin m → ℂ) → (D'.La →+ (Fin g → ℂ))) (e : ∀ b, (Fin g → ℂ) → (Over.mk (y b) ⟶ F.A)), IsOpen B' ∧ b₀ ∈ B' ∧ B' ⊆ B ∧ P b₀ = P₀ ∧ IsHolPeriods D' ρ B' P ∧ IsHolTo (B' ×ˢ Set.univ) (fun bz : (Fin m → ℂ) × (Fin g → ℂ) => (e bz.1 bz.2).left) ∧ ∀ b ∈ B', UnifAt F (RingHom.id ℂ) ρ N D' t (P b) (y b) (e b) := by
-  first | exact @GlobalTheory.PELU.holomorphic_map_lifts_to_periods | exact GlobalTheory.PELU.holomorphic_map_lifts_to_periods | (intros; apply GlobalTheory.PELU.holomorphic_map_lifts_to_periods <;> assumption)
+  first | exact @GlobalTheory.PELU.holomorphic_map_lifts_to_periods
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HolomorphicMapLiftsLocallyToPeriodFamiliesStatement =====

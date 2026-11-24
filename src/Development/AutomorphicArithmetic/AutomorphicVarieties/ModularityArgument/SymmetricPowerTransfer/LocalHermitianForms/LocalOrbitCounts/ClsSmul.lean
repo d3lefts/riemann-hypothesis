@@ -213,13 +213,13 @@ theorem exists_frame (L : IsLoc O Δ) (h3 : Module.finrank K V = 3) (hB : ∀ x 
   have g2 : B f f = 0 := by
     simp [f, q₁, q₂, q₃, b12, b21, b13, b31, b23, b32, ht]
     field_simp
-    first | linear_combination hab' | (right; right; linear_combination hab') | (simp [h2, n₃]; linear_combination hab')
+    first | (right; right; linear_combination hab') | (simp [h2]; linear_combination hab')
   have g3 : B e f = 1 := by simp [e, f, q₁, q₂, q₃, b12, b21, b13, b31, b23, b32, ht]; field_simp; linear_combination -hab'
-  have g4 : B e h = 0 := by simp [e, h, q₁, q₂, q₃, b12, b21, b13, b31, b23, b32]; ring
+  have g4 : B e h = 0 := by simp [e, h, q₁, q₂, b12, b21, b31, b32]; ring
   have g5 : B f h = 0 := by
     simp only [f, h, map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply, smul_eq_mul, q₁, q₂, b12, b21, b31, b32]; ring
   have g6 : B h h = algebraMap O K (-(u₁ * u₂ * u₃) : Oˣ) := by
-    simp [h, q₁, q₂, q₃, b12, b21]; linear_combination (algebraMap O K u₁ * algebraMap O K u₂) * hab'
+    simp [h, q₁, q₂, b12, b21]; linear_combination (algebraMap O K u₁ * algebraMap O K u₂) * hab'
   refine ⟨e, me, f, mf, h, mh, _, g1, g2, g3, g4, g5, g6, fun v hv => ?_⟩
   set η : Oˣ := -(u₁ * u₂ * u₃)
   have g3' : B f e = 1 := hB _ _ ▸ g3
@@ -707,7 +707,7 @@ theorem poly_Mu {r : K} (h1 : r ≠ 0) (h2 : 2 + r ≠ 0) (hr : r ^ 2 = 2 + τ) 
   rcases ha with rfl | rfl <;> ext <;> simp [Mu] <;> field_simp <;> ring
 
 theorem u_norm {r : K} (h1 : r ≠ 0) (hr : r ^ 2 = 2 + τ) : (r⁻¹ • (1 + ω) : Etau K τ) * (r⁻¹ • (1 + star ω)) = 1 := by
-  ext <;> simp <;> field_simp <;> first | ring1 | linear_combination -hr | linear_combination -2 * hr
+  ext <;> simp <;> field_simp <;> first | ring1 | linear_combination -hr
 
 theorem Mu_Mu (a b : Etau K τ) (v : K × Etau K τ) : Mu a (Mu b v) = Mu (a * b) v := by simp [Mu, mul_assoc]
 
@@ -838,7 +838,7 @@ private theorem mkL_mu_half_one_add_omega_eq {R : K} (h1 : R ≠ 0) (h2 : 2 + R 
 private theorem sq_inv_smul_one_add_omega_eq_omega {R : K} (h1 : R ≠ 0) (hr : R ^ 2 = 2 + τ) :
     (R⁻¹ • (1 + ω) : Etau K τ) * (R⁻¹ • (1 + ω)) = ω := by
   ext <;> simp <;> field_simp <;>
-    first | ring1 | linear_combination hr | linear_combination -hr | linear_combination 2 * hr | linear_combination -2 * hr
+    first | ring1 | linear_combination hr | linear_combination -hr
 
 private theorem isInt_herm_mkL_iff_bf_integral (L : IsLoc O Δ) (hσ : Δ * σ ^ 2 = algebraMap O K ε) (hσ0 : σ ≠ 0)
     (v w v' w' : K × Etau K τ) :
@@ -984,7 +984,7 @@ theorem fix_down (L : IsLoc O Δ) (hσ : Δ * σ ^ 2 = algebraMap O K ε) (h1 : 
       obtain ⟨v', w', rfl⟩ := mkL_surj hσ0 x
       obtain ⟨hv'0, h0w'⟩ := hsplit v' w' hx
       rw [isInt_herm_mkL_iff_bf_integral L hσ hσ0]
-      simp only [map_zero, LinearMap.zero_apply, mul_zero, sub_zero]
+      simp only [map_zero, mul_zero, sub_zero]
       exact ⟨h v' hv'0, h w' (hswap1 w' h0w')⟩
   · ext v
     constructor
@@ -1044,9 +1044,9 @@ private theorem cls_smul (k : Kˣ) (Λ : Set (Etau K τ)) : cls τ (((k : K) •
   ext S
   constructor
   · rintro ⟨s, rfl⟩
-    exact ⟨s * k, by simp [← Set.image_comp, Function.comp_def, smul_smul]⟩
+    exact ⟨s * k, by simp [← Set.image_comp, smul_smul]⟩
   · rintro ⟨s, rfl⟩
-    exact ⟨s * k⁻¹, by simp [← Set.image_comp, Function.comp_def, smul_smul]⟩
+    exact ⟨s * k⁻¹, by simp [← Set.image_comp, smul_smul]⟩
 
 private theorem of_cls {Λ Λ' : Set (Etau K τ)} (h : cls τ Λ = cls τ Λ') : ∃ k : Kˣ, Λ = ((k : K) • ·) '' Λ' :=
   (h ▸ (⟨1, by simp⟩ : Λ ∈ cls τ Λ) : Λ ∈ cls τ Λ')
@@ -1056,9 +1056,9 @@ private theorem cls_mul (z : (Etau K τ)ˣ) (Λ : Set (Etau K τ)) :
   ext S
   constructor
   · rintro ⟨_, ⟨s, rfl⟩, rfl⟩
-    exact ⟨s, by simp [← Set.image_comp, Function.comp_def]⟩
+    exact ⟨s, by simp [← Set.image_comp]⟩
   · rintro ⟨s, rfl⟩
-    exact ⟨_, ⟨s, rfl⟩, by simp [← Set.image_comp, Function.comp_def]⟩
+    exact ⟨_, ⟨s, rfl⟩, by simp [← Set.image_comp]⟩
 
 private theorem norm_int (L : IsLoc O Δ) (hD : τ ^ 2 - 4 ≠ 0) {Λ : Set (Etau K τ)} (hΛ : IsLat O τ Λ) {x : Etau K τ} (hx : ∀ y ∈ Λ, x * y ∈ Λ) :
     QuadraticAlgebra.norm x ∈ (algebraMap O K).range := by

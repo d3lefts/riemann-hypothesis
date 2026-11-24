@@ -68,9 +68,8 @@ section TR
 variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V]
 
 lemma traceReal_star (z : K) : Algebra.trace ℚ K (starRingEnd K z) = Algebra.trace ℚ K z := by
-  let e : K ≃ₐ[ℚ] K :=
-    AlgEquiv.ofRingEquiv (f := (starRingAut : RingAut K)) (fun q => by simp [starRingAut])
-  exact Algebra.trace_eq_of_algEquiv e z
+  exact Algebra.trace_eq_of_algEquiv
+    (AlgEquiv.ofRingEquiv (f := (starRingAut : RingAut K)) (fun q => by simp [starRingAut])) z
 
 lemma traceReal_star_rat (q : ℚ) : starRingEnd K (algebraMap ℚ K q) = algebraMap ℚ K q := by
   rw [eq_ratCast (algebraMap ℚ K) q, map_ratCast]

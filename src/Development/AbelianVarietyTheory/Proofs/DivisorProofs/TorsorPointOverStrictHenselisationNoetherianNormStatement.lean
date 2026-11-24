@@ -175,7 +175,7 @@ theorem _root_.GlobalTheory.T.exists_point_closureFiniteEtale_strictHenselian : 
     ∀ (D : Type) [CommRing D] [Algebra (GlobalTheory.LocAcyc.GenFib A R) D],
       Module.Finite (GlobalTheory.LocAcyc.GenFib A R) D → GlobalTheory.KeyOriginNoeth.ClosureFiniteEtale A R D →
       ∃ σ : D →+* B, σ.comp (algebraMap (GlobalTheory.LocAcyc.GenFib A R) D) = ψ := by
-  first | (exact @GlobalTheory.KeyOriginNoeth.exists_point_of_closureFiniteEtale) | (exact GlobalTheory.KeyOriginNoeth.exists_point_of_closureFiniteEtale) | (intros; apply GlobalTheory.KeyOriginNoeth.exists_point_of_closureFiniteEtale  <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginNoeth.exists_point_of_closureFiniteEtale)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPointClosureFiniteEtaleStrictHenselianStatement =====
@@ -355,8 +355,7 @@ theorem _root_.GlobalTheory.EnlargeBaseChange.fits_baseChange : ∀ (T O : Type)
     rw [IsScalarTower.algebraMap_apply A A[X] EA, Polynomial.algebraMap_eq,
       IsScalarTower.algebraMap_apply A₁ A₁[X] (A₁[X] ⊗[A[X]] EA), Polynomial.algebraMap_eq]
     have := RingHom.congr_fun hγ1 (Polynomial.C a)
-    simp only [RingHom.comp_apply, Polynomial.coe_mapRingHom, Polynomial.map_C,
-      AlgHom.coe_toRingHom] at this
+    simp only [RingHom.comp_apply, Polynomial.coe_mapRingHom, Polynomial.map_C] at this
     exact this
   let β : _root_.GlobalTheory.LocAcyc.GenFib A (Localization.AtPrime QA) →+*
       _root_.GlobalTheory.LocAcyc.GenFib A₁ (Localization.AtPrime QA') :=
@@ -470,7 +469,7 @@ theorem _root_.GlobalTheory.T.fittingDatum_baseChange_localEnlargement : ∀ (T 
         (∀ (Z : Type) [CommRing Z] (w₁ w₂ : EA' →+* Z),
           w₁.comp (algebraMap (Polynomial A₁) EA') = w₂.comp (algebraMap (Polynomial A₁) EA') →
           w₁.comp γ = w₂.comp γ → w₁ = w₂) := by
-  first | (exact @GlobalTheory.EnlargeBaseChange.fits_baseChange) | (exact GlobalTheory.EnlargeBaseChange.fits_baseChange) | (intros; apply GlobalTheory.EnlargeBaseChange.fits_baseChange  <;> assumption)
+  first | (exact @GlobalTheory.EnlargeBaseChange.fits_baseChange)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FittingDatumBaseChangeLocalEnlargementStatement =====
@@ -546,7 +545,7 @@ section -- clump:auto
 open IsLocalRing
 
 theorem _root_.GlobalTheory.T.etale_hom_to_field_factors_algClosed_subfield : ∀ (A B K L : Type) [CommRing A] [IsLocalRing A] [CommRing B] [Algebra A B] [Algebra.Etale A B] [Field K] [IsAlgClosed K] [Field L] (α : A →+* K) (ι : K →+* L) (β : B →+* L), (∀ a ∈ maximalIdeal A, α a = 0) → β.comp (algebraMap A B) = ι.comp α → ∃ ψ : B →+* K, ψ.comp (algebraMap A B) = α ∧ ι.comp ψ = β := by
-  first | (exact @GlobalTheory.etale_hom_to_field_lands_in_algClosed_subfield) | (exact GlobalTheory.etale_hom_to_field_lands_in_algClosed_subfield) | (intros; apply GlobalTheory.etale_hom_to_field_lands_in_algClosed_subfield  <;> assumption)
+  first | (exact @GlobalTheory.etale_hom_to_field_lands_in_algClosed_subfield)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleHomToFieldFactorsAlgClosedSubfieldStatement =====
@@ -738,7 +737,7 @@ theorem _root_.GlobalTheory.T.localRing_mod_t_embeds_strictHenselian : ∀ (T O 
       Function.Injective i₁ ∧ IsLocalHom i₁ ∧ i₁.comp f = i ∧
       e.comp (algebraMap (Polynomial A) EA) = f.comp (Polynomial.evalRingHom 0) ∧
       ∀ x : EA, algebraMap T O (i₁ (e x)) - j x ∈ Ideal.span {algebraMap (Polynomial T) O Polynomial.X} := by
-  first | (exact @GlobalTheory.FibreRetract.fibre_retract) | (exact GlobalTheory.FibreRetract.fibre_retract) | (intros; apply GlobalTheory.FibreRetract.fibre_retract  <;> assumption)
+  first | (exact @GlobalTheory.FibreRetract.fibre_retract)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalRingModTEmbedsStrictHenselianStatement =====
@@ -1033,7 +1032,7 @@ theorem _root_.GlobalTheory.T.enlarge_strictHenselisation_retract_mod : ∀ (T O
       ∃ (β : GlobalTheory.LocAcyc.GenFib A (Localization.AtPrime QA) →+* GlobalTheory.LocAcyc.GenFib A' (Localization.AtPrime QA')) (h : DA →+* DA'),
         ψA'.comp β = ψA ∧
         h.comp (algebraMap (GlobalTheory.LocAcyc.GenFib A (Localization.AtPrime QA)) DA) = (algebraMap (GlobalTheory.LocAcyc.GenFib A' (Localization.AtPrime QA')) DA').comp β := by
-  first | (exact @GlobalTheory.KeyOriginEnlarge.enlarge_retract) | (exact GlobalTheory.KeyOriginEnlarge.enlarge_retract) | (intros; apply GlobalTheory.KeyOriginEnlarge.enlarge_retract  <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginEnlarge.enlarge_retract)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EnlargeStrictHenselisationRetractModStatement =====
@@ -1174,7 +1173,7 @@ theorem _root_.GlobalTheory.T.strictHenselisation_enlarge_good_at_origin : ∀ (
           ψA'.comp β = ψA ∧
           h.comp (algebraMap (GlobalTheory.LocAcyc.GenFib A (Localization.AtPrime QA)) DA) =
             (algebraMap (GlobalTheory.LocAcyc.GenFib A' (Localization.AtPrime QA')) DA').comp β := by
-  first | (exact @GlobalTheory.KeyOriginEnlarge.enlarge_good) | (exact GlobalTheory.KeyOriginEnlarge.enlarge_good) | (intros; apply GlobalTheory.KeyOriginEnlarge.enlarge_good  <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginEnlarge.enlarge_good)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StrictHenselisationEnlargeGoodAtOriginStatement =====
@@ -1257,7 +1256,7 @@ theorem _root_.GlobalTheory.T.torsor_point_over_strictHenselisation_noetherianNo
       (actA : Multiplicative (ZMod q) →* (DA ≃ₐ[GlobalTheory.LocAcyc.GenFib A (Localization.AtPrime QA)] DA)),
       GlobalTheory.KeyOriginCut.IsZTorsor (GlobalTheory.LocAcyc.GenFib A (Localization.AtPrime QA)) DA q actA →
     ∃ σ : DA →+* GlobalTheory.LocAcyc.GenFib T O, σ.comp (algebraMap (GlobalTheory.LocAcyc.GenFib A (Localization.AtPrime QA)) DA) = ψA := by
-  first | (exact @GlobalTheory.KeyOriginNoeth.torsor_point_of_essFiniteType) | (exact GlobalTheory.KeyOriginNoeth.torsor_point_of_essFiniteType) | (intros; apply GlobalTheory.KeyOriginNoeth.torsor_point_of_essFiniteType  <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginNoeth.torsor_point_of_essFiniteType)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorsorPointOverStrictHenselisationNoetherianNormStatement =====

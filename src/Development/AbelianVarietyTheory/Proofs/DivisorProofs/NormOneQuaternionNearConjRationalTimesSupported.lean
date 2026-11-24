@@ -100,7 +100,7 @@ theorem isotropic_of_ringHom {a b c : F} (q : DA F a b) (hq0 : q.re = 0)
     ∃ x : Fin 4 → k, x ≠ 0 ∧ ∑ i, ψ (![a, b, -(a * b), -c] i) * x i ^ 2 = 0 := by
   rw [mul_self_of_re_eq_zero q hq0] at hqq
   have h1 := congrArg QuaternionAlgebra.re hqq
-  simp only [QuaternionAlgebra.algebraMap_eq, QuaternionAlgebra.re_coe] at h1
+  simp only [QuaternionAlgebra.algebraMap_eq] at h1
   have h2 := congrArg φ h1
   simp only [map_add (f := _), map_sub, map_mul, map_pow, hφ] at h2
   refine ⟨![φ q.imI, φ q.imJ, φ q.imK, 1], fun h => by simpa using congrFun h 3, ?_⟩
@@ -469,7 +469,7 @@ open NumberField IsDedekindDomain GlobalTheory.QSA
 open scoped Quaternion Topology
 
 theorem _root_.GlobalTheory.T.eventually_exists_quaternion_norm_one_re_eq : ∀ (F : Type) [Field F] [NumberField F] (a b : F), a ≠ 0 → b ≠ 0 → ∀ᶠ v in (Filter.cofinite : Filter (HeightOneSpectrum (𝓞 F))), ∀ t ∈ v.adicCompletionIntegers F, ∃ u : ℍ[v.adicCompletion F, algebraMap F (v.adicCompletion F) a, algebraMap F (v.adicCompletion F) b], nrm u = 1 ∧ u.re = t ∧ u.imI ∈ v.adicCompletionIntegers F ∧ u.imJ ∈ v.adicCompletionIntegers F ∧ u.imK ∈ v.adicCompletionIntegers F := by
-  first | exact @GlobalTheory.QSA.IntRep.exists_nrm_eq_one_re_eq | exact GlobalTheory.QSA.IntRep.exists_nrm_eq_one_re_eq | (intros; apply GlobalTheory.QSA.IntRep.exists_nrm_eq_one_re_eq <;> assumption)
+  first | exact @GlobalTheory.QSA.IntRep.exists_nrm_eq_one_re_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyExistsQuaternionNormOneReEqStatement =====
@@ -611,9 +611,9 @@ theorem traceOpen_near_of_isUnit : ∀ (R : Type) [CommRing R] [TopologicalSpace
     refine continuous_pi fun i => ?_
     fin_cases i
     · simpa [coords, φ] using continuous_fst
-    · simp only [coords, φ]; exact (continuous_snd.mul continuous_const : Continuous fun p : R × R => p.2 * _)
-    · simp only [coords, φ]; exact (continuous_snd.mul continuous_const : Continuous fun p : R × R => p.2 * _)
-    · simp only [coords, φ]; exact (continuous_snd.mul continuous_const : Continuous fun p : R × R => p.2 * _)
+    · simp only [φ]; exact (continuous_snd.mul continuous_const : Continuous fun p : R × R => p.2 * _)
+    · simp only [φ]; exact (continuous_snd.mul continuous_const : Continuous fun p : R × R => p.2 * _)
+    · simp only [φ]; exact (continuous_snd.mul continuous_const : Continuous fun p : R × R => p.2 * _)
   have hφs : φ (s, 1) = g := by ext <;> simp [φ, s]
   have hpre : φ ⁻¹' W ∈ 𝓝 (s, (1 : R)) := hφ.continuousAt.preimage_mem_nhds (by rw [hφs]; exact hW)
   obtain ⟨O₀, hO₀, V, hV, hOV⟩ := mem_nhds_prod_iff.1 hpre
@@ -764,7 +764,7 @@ private lemma nrm_apply_eq_nrm_finAdele_loc {a b : F}
   let φ := RestrictedProduct.evalRingHom (fun v : HeightOneSpectrum (𝓞 F) => v.adicCompletion F)
     (B := fun v => v.adicCompletionIntegers F) (𝓕 := Filter.cofinite) v
   change φ (_root_.GlobalTheory.QSA.nrm x) = _
-  simp only [_root_.GlobalTheory.QSA.nrm, map_sub, map_add (f := _), map_mul, map_pow]
+  simp only [_root_.GlobalTheory.QSA.nrm]
   rfl
 
 

@@ -1035,8 +1035,7 @@ theorem comb_mem (b : Fin n → Fin n → E) (hbM : ∀ l, Mm (b l)) (w : Fin n 
   classical
   have h0 : Mm 0 := Mlam 0 (fun l => by
     first
-    | exact ⟨0, 1, (fun h => P.isPrime.ne_top ((Ideal.eq_top_iff_one _).mpr h)), by simp⟩
-    | (unfold IntAt; done))
+    | exact ⟨0, 1, (fun h => P.isPrime.ne_top ((Ideal.eq_top_iff_one _).mpr h)), by simp⟩)
   exact Finset.sum_induction _ Mm (fun a b ha hb => Madd a b ha hb) h0
     (fun l _ => Msmul _ _ (hw l) (hbM l))
 
@@ -1054,7 +1053,7 @@ theorem herm (hp : (Ideal.absNorm P.asIdeal).Prime)
       ∀ x, (∃ v, Mm v ∧ v l = x ∧ ∀ k, l < k → v k = 0) → IntAt P (qE P ^ K * x) := by
     intro l
     apply ideal_form P hp hq j (fun x => ∃ v, Mm v ∧ v l = x ∧ ∀ k, l < k → v k = 0)
-    · refine ⟨Pi.single l 1, Mlam _ fun k => ?_, by simp, fun k hk => by simp [Pi.single_apply, hk.ne']⟩
+    · refine ⟨Pi.single l 1, Mlam _ fun k => ?_, by simp, fun k hk => by simp [hk.ne']⟩
       by_cases hk : k = l
       · rw [hk]; simpa using intAt_one P
       · simpa [Pi.single_apply, hk] using intAt_zero P
@@ -1100,7 +1099,7 @@ theorem herm (hp : (Ideal.absNorm P.asIdeal).Prime)
         congr 1
         rw [Finset.sum_eq_single ⟨k, by omega⟩]
         · simp
-        · intro i _ hi; simp [Pi.single_apply, hi]
+        · intro i _ hi; simp [hi]
         · simp
   exact fun v hv => main n le_rfl v hv (fun l hl => absurd l.2 (by omega))
 
@@ -1189,7 +1188,7 @@ theorem prX_le_of_nf {N c : ℕ} (kj : ℕ) (h : Sp E (N + c) ≃ₗ[E] Sp E (N 
     intro v
     have := hJ (h⁻¹ v)
     rw [lamEq, lamEq, ← this]
-    simp [MulAut.conj_apply, LinearEquiv.mul_apply]
+    simp
   have hX : ∀ x : Sp E N, h⁻¹ (Loc.inX E N c x) ∈ LocE.lamY P (Ideal.absNorm P.asIdeal) N c 0 ↔ x ∈ stdAt E N P := by
     intro x
     rw [hc, mem_stdAt]
@@ -1259,7 +1258,7 @@ theorem twNormLat_main : PI.TwNormLat.TwNormLat := by
       rcases Nat.lt_or_eq_of_le hl with hlt | heq
       · rw [hUT _ l (by rw [Fin.lt_def]; exact hlt)]
         have : l ≠ ⟨N, hN⟩ := fun e => by rw [e] at hlt; exact lt_irrefl _ hlt
-        simp [Pi.single_apply, this]
+        simp [this]
       · have : l = ⟨N, hN⟩ := Fin.ext heq.symm
         rw [this, hbl]
         simp only [d, lt_irrefl, if_false, Pi.single_eq_same]
@@ -1283,7 +1282,6 @@ theorem twNormLat_main : PI.TwNormLat.TwNormLat := by
     · simp only [c', if_neg h1, d, if_neg (not_lt.2 hl), Pi.sub_apply, Pi.smul_apply, smul_eq_mul, hbl,
         Pi.zero_apply, sub_zero]
       field_simp
-      try simp
   have hcd : ∀ l, c' l l ≠ 0 := by
     intro l
     by_cases hl : N ≤ l.1

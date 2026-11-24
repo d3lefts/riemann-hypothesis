@@ -216,13 +216,13 @@ theorem iso_tensor_dual (a : WDRep h V) (b : WDRep h V') :
     | zero => simp
     | tmul f g =>
       refine TensorProduct.ext' fun m n => ?_
-      simp [TensorProduct.dualDistrib_apply]
+      simp
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul f g =>
       refine TensorProduct.ext' fun m n => ?_
-      simp [TensorProduct.dualDistrib_apply]
+      simp
       ring
     | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
@@ -234,8 +234,8 @@ theorem qPow_neg' (s : ℝ) : qPow w (-s) = (qPow w s)⁻¹ :=
 theorem iso_tw_dual (a : WDRep h V) (s : ℝ) : (a.tw s).dual.Iso (a.dual.tw (-s)) := by
   refine ⟨LinearEquiv.refl ℂ _, fun σ f => ?_, fun f => rfl⟩
   ext v
-  simp only [WDRep.tw, WDRep.dual_ρ, WDRep.twist_ρ, unrChar_apply, LinearEquiv.refl_apply,
-    LinearMap.dualMap_apply, LinearMap.smul_apply, map_smul, smul_eq_mul, qPow_neg', map_inv, _root_.inv_zpow']
+  simp only [WDRep.tw, WDRep.dual_ρ, WDRep.twist_ρ, LinearEquiv.refl_apply,
+    LinearMap.dualMap_apply, LinearMap.smul_apply, map_smul, smul_eq_mul, qPow_neg', map_inv]
   congr 2
   simp
 
@@ -243,7 +243,7 @@ theorem shiftEnd_single {n : ℕ} (j : Fin n) :
     shiftEnd n (Pi.single j 1) = if hj : (j : ℕ) + 1 < n then Pi.single ⟨j + 1, hj⟩ 1 else 0 := by
   ext k
   rw [shiftEnd_apply]
-  split_ifs with h1 h2 h2 <;> simp only [Pi.single_apply, Fin.ext_iff, Fin.val_mk, Pi.zero_apply] <;>
+  split_ifs with h1 h2 h2 <;> simp only [Pi.single_apply, Fin.ext_iff, Pi.zero_apply] <;>
     split_ifs <;> first | rfl | (exfalso; have := k.2; have := j.2; omega)
 
 theorem spEig_rev {n : ℕ} (i : Fin n) : WDRep.spEig w n i.rev = (WDRep.spEig w n i)⁻¹ := by
@@ -937,7 +937,7 @@ open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial Formalism.Conju
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.isLanglandsClassification_twist_multisegment : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [CharZero k] (𝔪 : Multiset (Segment k)) (x : IrrGL (k := k)) (χ : kˣ →* ℂˣ) (hχ : IsSmoothChar χ), IsL 𝔪 x.rep → IsL (𝔪.map fun Δ => Δ.tw χ hχ) (x.tw χ hχ).rep := by
-  first | exact @GlobalTheory.LocGL.isL_map_tw_of_isL | exact GlobalTheory.LocGL.isL_map_tw_of_isL | (intros; apply GlobalTheory.LocGL.isL_map_tw_of_isL <;> assumption)
+  first | exact @GlobalTheory.LocGL.isL_map_tw_of_isL
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsLanglandsClassificationTwistMultisegmentStatement =====
@@ -1364,7 +1364,7 @@ theorem isCuspidal_of_inflates (i : ℚ_[g] ≃+* k) (hi : Continuous i) {n : �
     refine Submodule.span_le.2 ?_
     rintro _ ⟨⟨x, hx⟩, y, rfl⟩
     refine Submodule.subset_span ⟨⟨Q * x * Q⁻¹, hQ x hx⟩, σ.ρ Q y, ?_⟩
-    simp [map_mul, Module.End.mul_apply, hinvQ]
+    simp [map_mul, hinvQ]
   refine Submodule.Quotient.subsingleton_iff.2 (eq_top_iff.2 fun v _ => ?_)
   have hv : σ.ρ Q⁻¹ v ∈ twKer σ.ρ (GlobalTheory.FiniteGL.unipRadical k (GlobalTheory.FiniteGL.twoBlocks n a)) 1 := by
     rw [htop]

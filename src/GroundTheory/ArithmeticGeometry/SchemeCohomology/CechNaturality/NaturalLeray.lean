@@ -49,28 +49,11 @@ import Mathlib.Tactic.TypeStar
 
 set_option maxSynthPendingDepth 1
 
+-- Use `sheafIsAbelian`, the instance Mathlib's `Sheaf.H` API is stated for, instead of the
+-- definitionally equal `TopCat.Sheaf.instAbelian`: the kernel is slow to identify the two.
+attribute [-instance] TopCat.Sheaf.instAbelian
+
 namespace GroundTheory.Arith.SchemeCoh
-
-section
-
-open AlgebraicGeometry CategoryTheory TopologicalSpace
-
-universe c236Ext c236Scheme
-
-private noncomputable def H.linearMapV436 {X : Scheme.{c236Scheme}}
-    [HasExt.{c236Ext} (Sheaf (Opens.grothendieckTopology X.toTopCat) AddCommGrpCat.{c236Scheme})]
-    (A : Type*) [CommRing A] [Algebra A Γ(X, ⊤)]
-    {F G : X.Modules} (φ : F ⟶ G) (n : ℕ) :
-    Sheaf.H.{c236Ext} (modulesAb F) n →ₗ[A] Sheaf.H.{c236Ext} (modulesAb G) n where
-  toFun := Sheaf.H.map.{c236Ext} (modulesAbMap φ) n
-  map_add' := map_add _
-  map_smul' a x := by
-    change Sheaf.H.map.{c236Ext} (modulesAbMap φ) n (a • x) =
-      a • Sheaf.H.map.{c236Ext} (modulesAbMap φ) n x
-    rw [H.smul_def, H.smul_def, ← Sheaf.H.map_comp_apply, ← Sheaf.H.map_comp_apply,
-      ← modulesAbMap_comp, ← modulesAbMap_comp, smulHom_comp]
-
-end
 
 noncomputable section
 
@@ -289,7 +272,8 @@ lemma injectiveSequence_goodAcyclic (G : Sheaf (Opens.grothendieckTopology X) Ad
   goodAcyclic_of_shortExact hC (S := injectiveSequence G) (injectiveSequence_shortExact G) hG
     fun _ V => injectiveSequence_cechAcyclic G V
 
-def cechHEquiv : ∀ (n : ℕ) (G : Sheaf (Opens.grothendieckTopology X) AddCommGrpCat.{u}),
+-- The dimension-shifting recursion has no executable implementation.
+noncomputable def cechHEquiv : ∀ (n : ℕ) (G : Sheaf (Opens.grothendieckTopology X) AddCommGrpCat.{u}),
     GoodAcyclic B Good G → (cechH G.obj U n ≃+ Sheaf.H.{w'} G n)
   | 0, G, _ => cechHZeroEquivH G U hU
   | 1, G, hG => cechHOneEquiv (S := injectiveSequence G) U hU (injectiveSequence_shortExact G)

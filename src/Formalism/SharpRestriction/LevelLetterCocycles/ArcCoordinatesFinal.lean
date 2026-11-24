@@ -654,7 +654,7 @@ theorem horTr_split (hinj : Function.Injective (algebraMap O LL)) (T : LocLat G 
     rw [hy 0 hM m, hsol0 k]
     by_cases hm : m = k
     · subst hm; simp
-    · simp [hm, Pi.single_apply]
+    · simp [hm]
   obtain ⟨M', rfl⟩ : ∃ M', M = M' + 1 := ⟨M - 1, by omega⟩
   refine ⟨∑ r ∈ Finset.range M', W.π₀ ^ r • Formalism.MainNotions.LiftingTheory.vecB W T b (y (r + 1)),
     Formalism.MainNotions.UnusedSlot80.Relay2.InNΔi_sum W T c _ _ fun r _ =>
@@ -1755,7 +1755,7 @@ theorem lev0Mpr_of [NeZero n] (C : Formalism.MainNotions.UnusedSlot80.LevC.Ctx W
           ring
         rw [h']
 
-        simp only [hcj, map_mul, map_pow, map_sum]
+        simp only [hcj, map_mul, map_pow]
         linear_combination h
       have hdg := dg_core hFa (fun j => W.lev a' ζ (cj j * (W.q ^ H * W.φA (abelian₂ W A a e)))) vv
         (fun i j => algebraMap O LL (c₀ i j)) (fun i => W.lev a' ζ (W.q ^ (H + H) * Nn i)) (fun i => α i 0)

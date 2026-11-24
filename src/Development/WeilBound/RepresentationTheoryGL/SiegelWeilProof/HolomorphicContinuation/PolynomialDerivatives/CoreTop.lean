@@ -379,7 +379,7 @@ theorem opMono_add (t : (Fin m × Fin n × Bool) ⊕ (Fin m × Fin n × Bool) �
 
 theorem opMono_smul (t : (Fin m × Fin n × Bool) ⊕ (Fin m × Fin n × Bool) →₀ ℕ) (r : ℂ) (f : PX m n) :
     opMono t (r • f) = r • opMono t f := by
-  simp [opMono, map_smul, mul_smul_comm]
+  simp [opMono, map_smul]
 
 def opL (s : Sym m n) : Module.End ℂ (PX m n) where
   toFun := op s
@@ -461,8 +461,7 @@ theorem rr_aeval (N : ℕ) (q : Polynomial ℂ) (x : S (n := n) ε N) :
   induction q using Polynomial.induction_on' with
   | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
   | monomial k a =>
-    simp only [Polynomial.aeval_monomial, Module.End.mul_apply, LinearMap.map_smul_of_tower,
-      Algebra.algebraMap_eq_smul_one, LinearMap.smul_apply, Module.End.one_apply, map_smul]
+    simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Algebra.algebraMap_eq_smul_one, LinearMap.smul_apply, Module.End.one_apply, map_smul]
     congr 1
     induction k generalizing x with
     | zero => simp
@@ -665,7 +664,7 @@ theorem bicomm : Bicomm := by
         simp only [T', diag_apply]
         by_cases hl : l' = l
         · subst hl; simp
-        · simp [Pi.single_apply, hl]
+        · simp [hl]
       have := LinearMap.congr_fun (ht i) (Pi.single l u)
       simp only [Module.End.mul_apply] at this
       simp only [Module.End.mul_apply, tt, LinearMap.comp_apply, LinearMap.coe_single, LinearMap.coe_proj,
@@ -731,7 +730,7 @@ theorem pderiv_mem_supported {S : Set (Fin m × Fin n × Bool)} {g : PX m n} (hg
     rcases eq_or_ne i k with rfl | h
     · simp only [Pi.single_eq_same]; exact Subalgebra.one_mem _
     · rw [Pi.single_eq_of_ne h]; exact Subalgebra.zero_mem _
-  | algebraMap r => simp [Subalgebra.zero_mem]
+  | algebraMap r => simp
   | add x y _ _ hx hy => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hx hy
   | mul x y hx' hy' hx hy =>
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
@@ -771,7 +770,7 @@ theorem compact_algebra_mul_second_family (ε : Fin m → Bool) (w : Module.End 
   | mem x hx =>
     obtain ⟨ij, rfl⟩ := hx
     exact compact_operator_mul_second_family ε ij.1 ij.2 f g hg
-  | algebraMap r => simp [Algebra.algebraMap_eq_smul_one, smul_mul_assoc]
+  | algebraMap r => simp [Algebra.algebraMap_eq_smul_one]
   | add x y _ _ hx hy => simp [hx, hy, add_mul]
   | mul x y _ _ hx hy => simp only [Module.End.mul_apply, hy, hx]
 
@@ -971,7 +970,6 @@ theorem box_finiteDimensional (ε : Fin m → Bool) (R : Finset (Fin m → ℕ))
         omega
       · rw [Finsupp.notMem_support_iff.mp hk]; exact Nat.zero_le _
     refine ⟨fun k => ⟨s k, Nat.lt_succ_of_le (hle k)⟩, Set.mem_univ _, ?_⟩
-    congr 1
     ext k
     simp
   exact FiniteDimensional.span_of_finite ℂ hfin
@@ -1069,7 +1067,7 @@ theorem coreLC_of' (hBi : Bicomm) (hEL : EquivLift) (hRep : RepB) (hFF : FormFac
     have h2 : ∀ i j, ∀ f ∈ box ε (R : Set (Fin m → ℕ)), t' (KopL ε i j f) = KopL ε i j (t' f) := by
       intro i j f hf
       have e := congrArg Subtype.val (LinearMap.congr_fun (ht (i, j)) ⟨f, hf⟩)
-      simp only [Module.End.mul_apply, LinearMap.restrict_apply, LinearMap.restrict_coe_apply, T] at e
+      simp only [Module.End.mul_apply, LinearMap.restrict_apply, T] at e
       rw [ht' _ (hKV (i, j) f hf), ht' f hf]
       exact e
     obtain ⟨w, hw, hwt⟩ := hEL m n ε c hc R t' h1 h2

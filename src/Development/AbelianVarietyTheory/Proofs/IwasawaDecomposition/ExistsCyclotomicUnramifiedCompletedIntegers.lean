@@ -87,14 +87,12 @@ theorem closure_adjoin_unitBall_coeff_bound : ∀ (l : ℕ) [Fact l.Prime] (F : 
   intro l _ F ζ hζ
   set ι := algebraMap (PadicAlgCl l) ℂ_[l] with hι
   let F0 : Subfield ℂ_[l] := (F.toSubfield.map ι).topologicalClosure
-  have hF0 : (F0 : Set ℂ_[l]) = closure (ι '' (F : Set (PadicAlgCl l))) := rfl
   have hmemF : ∀ y ∈ F, ι y ∈ F0 := fun y hy =>
     Subfield.le_topologicalClosure _ ⟨y, hy, rfl⟩
   obtain ⟨r, hr⟩ := NontriviallyNormedField.non_trivial (α := ℚ_[l])
   have hrmem : ι (algebraMap ℚ_[l] (PadicAlgCl l) r) ∈ F0 := hmemF _ (F.algebraMap_mem r)
   have hrnorm : ‖ι (algebraMap ℚ_[l] (PadicAlgCl l) r)‖ = ‖r‖ := by
-    rw [← PadicComplex.coe_eq, PadicComplex.norm_extends]
-    exact PadicAlgCl.norm_extends l r
+    rw [← PadicComplex.coe_eq, PadicComplex.norm_extends, PadicAlgCl.norm_extends]
   letI : NontriviallyNormedField F0 :=
     { SubfieldClass.toNormedField F0 with
       non_trivial := ⟨⟨_, hrmem⟩, by
@@ -114,14 +112,11 @@ theorem closure_adjoin_unitBall_coeff_bound : ∀ (l : ℕ) [Fact l.Prime] (F : 
   have hQmonic : Q.Monic := (minpoly.monic hζ).map g
   have hQdeg : Q.natDegree = n := (minpoly.monic hζ).natDegree_map g
   have hQroot : aeval z Q = 0 := by
-    have h1 : (algebraMap F0 ℂ_[l]).comp g = ι.comp (algebraMap ℚ_[l] (PadicAlgCl l)) := by
-      ext; rfl
+    have h1 : (algebraMap F0 ℂ_[l]).comp g = ι.comp (algebraMap ℚ_[l] (PadicAlgCl l)) := rfl
     rw [aeval_def, eval₂_map, h1, ← hom_eval₂, ← aeval_def, minpoly.aeval, map_zero]
   have hQ1 : Q ≠ 1 := by
-    intro h
-    have := congrArg natDegree h
-    rw [hQdeg, natDegree_one] at this
-    exact (minpoly.natDegree_pos hζ).ne' this
+    exact fun h =>
+      (minpoly.natDegree_pos hζ).ne' (by rw [← hQdeg, h, natDegree_one] : n = 0)
   let φ : (Fin n → F0) →ₗ[F0] ℂ_[l] := Fintype.linearCombination F0 (fun i : Fin n => z ^ (i : ℕ))
   have hpoly : ∀ p : F0[X], aeval z p ∈ LinearMap.range φ := by
     intro p
@@ -167,19 +162,16 @@ theorem closure_adjoin_unitBall_coeff_bound : ∀ (l : ℕ) [Fact l.Prime] (F : 
   have hφw : φ w = x := by
     rw [← hv, ← hkw, map_add (f := _), LinearMap.mem_ker.1 hk, zero_add]
   have hwn : ‖w‖ ≤ C0 := by
-    have h := hC0.le_mul_dist ⟨w, hw⟩ 0
-    rw [map_zero, dist_zero_right, dist_zero_right] at h
-    have h2 : ‖(φ.domRestrict W) ⟨w, hw⟩‖ = ‖x‖ := by
-      rw [LinearMap.domRestrict_apply, hφw]
-    rw [h2] at h
     calc ‖w‖ = ‖(⟨w, hw⟩ : W)‖ := rfl
-      _ ≤ C0 * ‖x‖ := h
+      _ ≤ C0 * ‖(φ.domRestrict W) ⟨w, hw⟩‖ :=
+        hC0.le_mul_norm (φ.domRestrict W).map_zero ⟨w, hw⟩
+      _ = C0 * ‖x‖ := by rw [LinearMap.domRestrict_apply, hφw]
       _ ≤ C0 * 1 := mul_le_mul_of_nonneg_left hx1 C0.2
       _ = C0 := mul_one _
-  refine ⟨fun i => (w i : ℂ_[l]), fun i => ⟨(w i).2, ?_⟩, ?_⟩
-  · exact (norm_le_pi_norm w i).trans hwn
-  · rw [← hφw, Fintype.linearCombination_apply]
-    rfl
+  refine ⟨fun i => (w i : ℂ_[l]),
+    fun i => ⟨(w i).2, (norm_le_pi_norm w i).trans hwn⟩, ?_⟩
+  rw [← hφw, Fintype.linearCombination_apply]
+  rfl
 
 end GlobalTheory
 end -- clump:auto
@@ -297,11 +289,6 @@ theorem isAlgClosed_res [IsAlgClosed C] [IsLocalRing (ints F)]
     IsAlgClosed (IsLocalRing.ResidueField (ints F)) := by
   first
   | (rename_i h_1 h_2 h_4 h_5; revert C h_1 h_2 F h_4 h_5 hF; exact @_root_.GlobalTheory.NormEvalSubBound.main_theorem)
-  | exact @_root_.GlobalTheory.NormEvalSubBound.main_theorem
-  | exact _root_.GlobalTheory.NormEvalSubBound.main_theorem
-  | (apply _root_.GlobalTheory.NormEvalSubBound.main_theorem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.NormEvalSubBound.main_theorem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.NormEvalSubBound.main_theorem <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.NormEvalSubBound.main_theorem ..)
 
 theorem coe_ints_closure :

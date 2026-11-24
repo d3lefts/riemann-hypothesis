@@ -97,7 +97,7 @@ open scoped Matrix
 attribute [local instance 1100] Subalgebra.algebra in
 attribute [local instance 100] IntermediateField.instAlgebraSubtypeMem in
 theorem _root_.GlobalTheory.T.exists_component_of_modelCharts : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (r : ℕ) (U : Formalism.L2.PjFree.Unf Xo c σ r), Formalism.L2.PjFree.IsUnf U → ∀ (h : GenFrEx Xo c) (k : U.Comp), ∃ Z : Comp Xo c, ∀ (x : (U.X k).dom) (C : FChart h) (ψ : C.R →ₐ[c.F] CAt σ) (z : FrPt Xo c (CAt σ)) (t : Ix Dw → (CAt σ)ˣ), FrMap ψ C.y z → FrBor t z (U.un k x) → C.Z = Z := by
-  first | exact @GlobalTheory.OneComp.exists_comp_of_charts | exact GlobalTheory.OneComp.exists_comp_of_charts | (intros; apply GlobalTheory.OneComp.exists_comp_of_charts <;> assumption)
+  first | exact @GlobalTheory.OneComp.exists_comp_of_charts
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.GenericRegularity.ExistsComponentOfModelChartsStatement =====
@@ -180,7 +180,7 @@ open scoped Matrix
 
 attribute [local instance 1100] Subalgebra.algebra in
 theorem _root_.GlobalTheory.T.exists_countable_flagSpace_atlas : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (h : GenFrEx Xo c), ∃ (ι : Type) (_ : Countable ι) (C : ι → FChart h), ∀ (L : Type) [Field L] [Algebra c.F L] (y : FrPt Xo c L), ∃ (i : ι) (ψ : (C i).R →ₐ[c.F] L) (z : FrPt Xo c L) (t : Ix Dw → Lˣ), FrMap ψ (C i).y z ∧ FrBor t z y := by
-  first | exact @GlobalTheory.Reg.exists_countable_atlas | exact GlobalTheory.Reg.exists_countable_atlas | (intros; apply GlobalTheory.Reg.exists_countable_atlas <;> assumption)
+  first | exact @GlobalTheory.Reg.exists_countable_atlas
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.GenericRegularity.ExistsCountableFlagSpaceAtlasStatement =====

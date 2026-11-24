@@ -206,7 +206,7 @@ private theorem sum_pairSingle_mul_eq_ite (i j : ι) (hij : i ≠ j) (x y z w : 
   by_cases hpi : p = i
   · simp [hpi, Pi.single_apply, add_mul, Finset.sum_add_distrib, ite_mul]
   · by_cases hpj : p = j
-    · simp [hpi, hpj, Ne.symm hij, Pi.single_apply, add_mul, Finset.sum_add_distrib, ite_mul]
+    · simp [hpj, Ne.symm hij, Pi.single_apply, add_mul, Finset.sum_add_distrib, ite_mul]
     · simp [hpi, hpj, Pi.single_apply, ite_mul]
 
 private theorem unit_lemma' (i j : ι) (hij : i ≠ j) (x y a' b' : R) (key : x * a' + y * b' = 1) :
@@ -513,7 +513,7 @@ theorem card_coker_matrix {R : Type} [CommRing R] [IsDomain R] [IsPrincipalIdeal
     letI := hV.invertible
     rw [LinearMap.range_eq_top]
     intro y
-    exact ⟨Matrix.mulVec (⅟V) y, by simp [Matrix.mulVecLin_apply, Matrix.mulVec_mulVec]⟩
+    exact ⟨Matrix.mulVec (⅟V) y, by simp [Matrix.mulVec_mulVec]⟩
   have hrange : (LinearMap.range A.mulVecLin).map (Ue : (Fin n → R) →ₗ[R] (Fin n → R)) =
       LinearMap.range (Matrix.diagonal d).mulVecLin := by
     rw [← hD, Matrix.mulVecLin_mul, LinearMap.range_comp_of_range_eq_top _ hVs, Matrix.mulVecLin_mul,
@@ -527,7 +527,7 @@ theorem card_coker_matrix {R : Type} [CommRing R] [IsDomain R] [IsPrincipalIdeal
     simp only [LinearMap.mem_range, Submodule.mem_pi, Set.mem_univ, true_implies, Ideal.mem_span_singleton']
     constructor
     · rintro ⟨w, rfl⟩ i
-      exact ⟨w i, by simp [Matrix.mulVecLin_apply, Matrix.mulVec_diagonal, mul_comm]⟩
+      exact ⟨w i, by simp [Matrix.mulVec_diagonal, mul_comm]⟩
     · intro h
       choose w hw using h
       exact ⟨w, funext fun i => by simp only [Matrix.mulVecLin_apply, Matrix.mulVec_diagonal]; rw [mul_comm]; exact hw i⟩

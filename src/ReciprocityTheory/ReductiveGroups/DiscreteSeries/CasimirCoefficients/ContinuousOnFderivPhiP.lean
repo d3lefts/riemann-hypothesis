@@ -180,8 +180,7 @@ lemma posSet_subset_Uset : posSet n ⊆ Uset ε := by
   refine Matrix.PosDef.conjTranspose_mul_mul_same hx ?_
   intro v w hvw
   have h1 : (toMK k)ᴴ * toMK k = 1 := by
-    rw [← Matrix.star_eq_conjTranspose]
-    exact Unitary.star_mul_self_of_mem k.2.1
+    simpa [Matrix.star_eq_conjTranspose] using Unitary.star_mul_self_of_mem k.2.1
   have := congrArg (fun u => (toMK k)ᴴ *ᵥ u) hvw
   simpa only [Matrix.mulVec_mulVec, h1, Matrix.one_mulVec] using this
 
@@ -294,9 +293,8 @@ lemma hasFDerivAt_psM [CompactSpace (KG ε)] (T : KType ε Λ) (μ : Fin n → �
     HasFDerivAt (fun x : 𝕄 => psM T μ x)
       (((Module.finrank ℂ T.V : ℂ) / ((muK ε Set.univ).toReal : ℂ)) •
         ∫ k, GintD T μ z k ∂(muK ε)) z := by
-  have h := (hasFDerivAt_intG T μ hz).const_smul
+  exact (hasFDerivAt_intG T μ hz).const_smul
     ((Module.finrank ℂ T.V : ℂ) / ((muK ε Set.univ).toReal : ℂ))
-  exact h
 
 end Ps1
 
@@ -311,8 +309,7 @@ theorem psM_holo {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KType ε Λ) (�
   have := compactSpace_KG ε
   refine ⟨Ps1.Uset ε, Ps1.isOpen_Uset, Ps1.posSet_subset_Uset, fun z hz k => hz k,
     fun z hz => ?_, fun z hz H => ?_⟩
-  · have h : DifferentiableAt ℂ (psM T μ) z := (Ps1.hasFDerivAt_psM T μ hz).differentiableAt
-    exact h.differentiableWithinAt
+  · exact (Ps1.hasFDerivAt_psM T μ hz).differentiableAt.differentiableWithinAt
   · rw [show fderiv ℂ (psM T μ) z H =
         fderiv ℂ (fun x : Fin n → Fin n → ℂ => psM T μ x) z (Matrix.of.symm H) from rfl,
       (Ps1.hasFDerivAt_psM T μ hz).fderiv, ContinuousLinearMap.smul_apply,

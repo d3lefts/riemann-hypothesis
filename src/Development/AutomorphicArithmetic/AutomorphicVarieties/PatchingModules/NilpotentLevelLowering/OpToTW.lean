@@ -237,7 +237,7 @@ theorem UpperTheory.V.AlgebraTools.topNil_map :
       show S i * S j = S j * S i
       apply LinearMap.ext
       intro p
-      simp [S, Module.End.mul_apply, hTx i j, hT'x i j]
+      simp [S, hTx i j, hT'x i j]
     obtain ⟨⟨C, hC, hstab⟩, -⟩ := topNil_free R κ (M × M') S hS
     let φ : Module.End R (M × M') := (LinearMap.inr R M M').comp (f.comp (LinearMap.fst R M M'))
     have hφ : ∀ i, Commute φ (S i) := by
@@ -245,7 +245,7 @@ theorem UpperTheory.V.AlgebraTools.topNil_map :
       show φ * S i = S i * φ
       apply LinearMap.ext
       intro p
-      simp [φ, S, Module.End.mul_apply, hf]
+      simp [φ, S, hf]
     have hmem : ((x, 0) : M × M') ∈ topNil (IsLocalRing.maximalIdeal R) S ⊔ C := by
       rw [hC.sup_eq_top]
       exact Submodule.mem_top
@@ -1140,10 +1140,10 @@ theorem freePart {Λ : Type} [CommRing Λ] [IsLocalRing Λ] [IsNoetherianRing Λ
   let act : MvPowerSeries (Fin q × Fin n) Λ →ₐ[Λ] Module.End Λ (LinearMap.range i) :=
     { toFun := fun z => E.conj (Algebra.lsmul Λ Λ N (s z))
       map_one' := by ext x; simp [LinearEquiv.conj_apply]
-      map_mul' := by intro a b; ext x; simp [LinearEquiv.conj_apply, mul_smul]
+      map_mul' := by intro a b; ext x; simp [LinearEquiv.conj_apply]
       map_zero' := by ext x; simp [LinearEquiv.conj_apply]
-      map_add' := by intro a b; ext x; simp [LinearEquiv.conj_apply, add_smul]
-      commutes' := by intro c; ext x; simp [LinearEquiv.conj_apply, algebraMap_smul] }
+      map_add' := by intro a b; ext x; simp [LinearEquiv.conj_apply]
+      commutes' := by intro c; ext x; simp [LinearEquiv.conj_apply] }
   have hact : ∀ z y, act z (E y) = E (s z • y) := by
     intro z y
     show E.conj (Algebra.lsmul Λ Λ N (s z)) (E y) = _

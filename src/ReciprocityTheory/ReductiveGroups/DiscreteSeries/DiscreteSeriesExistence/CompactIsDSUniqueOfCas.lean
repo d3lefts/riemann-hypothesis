@@ -193,10 +193,9 @@ theorem cf_datum_of_copies (hDS : Formalism.MainNotions.S.IsDS ε lam σ) (hgap 
   have hσ : IsURepOn (UJset ε) σ := hDS.2.2.1
   obtain ⟨S, hS⟩ := hDS.2.2.2.2.2.1
   obtain ⟨V, hV, hV0, hVK, -⟩ := exists_datum_of_isKTypeOf hσ hS
-  have hV' : IsKIrrHW ε (smE ε σ) (lowK ε lam) V := hV
   have hD := isDerivedOn_smE hσ
-  have hc := hcV V hV' hVK
-  exact ⟨V, hV', hV0, hVK, hc, data_closGen_eq_top hgap hσ hD hV' hc hVK hDS.2.2.2.1 hV0⟩
+  have hc := hcV V hV hVK
+  exact ⟨V, hV, hV0, hVK, hc, data_closGen_eq_top hgap hσ hD hV hc hVK hDS.2.2.2.1 hV0⟩
 
 theorem casOnSmooth_of_datum (hgap : StdGap ε lam) (hσ : IsURepOn (UJset ε) σ)
     (hirr : Formalism.MainNotions.S.IsIrredOn (UJset ε) σ) {V : Submodule ℂ (smD ε σ)}
@@ -251,20 +250,17 @@ theorem compact_isDS_unique_of_cas (hpq : pOf ε = 0 ∨ qOf ε = 0) (hlam : S7.
     rw [hmemW] at hx ⊢
     have h := hUK k x
     simp only [S7.KType.op] at h
-    rw [h]
-    exact hSK _ (S7.toMK_mem ε k) _ hx
+    simpa only [h] using hSK _ (S7.toMK_mem ε k) _ hx
   rcases T.irred W hW with h | h
   · exfalso
     apply hv0
     have hvW : U.symm v ∈ W := by
       rw [hmemW, LinearIsometryEquiv.apply_symm_apply]; exact hvS
     rw [h, Submodule.mem_bot] at hvW
-    have := congrArg U hvW
-    rwa [LinearIsometryEquiv.apply_symm_apply, map_zero] at this
+    simpa only [LinearIsometryEquiv.apply_symm_apply, map_zero] using congrArg U hvW
   · refine eq_top_iff.2 fun y _ => ?_
     have hyW : U.symm y ∈ W := by rw [h]; exact Submodule.mem_top
-    rw [hmemW, LinearIsometryEquiv.apply_symm_apply] at hyW
-    exact hyW
+    simpa only [hmemW, LinearIsometryEquiv.apply_symm_apply] using hyW
 
 end Arbitrary
 

@@ -907,11 +907,6 @@ theorem vol_mul_colCoef : Big fun {D} _ _ _ _ _ _ _ _ _ _ _ ch => ∀ (s : ℤˣ
         (GlobalTheory.RowWt.colCoef ch t β j : ℝ) = V₀ := by
   first
   | (exact @_root_.GlobalTheory.SymmetricJacobianSignature.cell_volume_mul_coef)
-  | exact @_root_.GlobalTheory.SymmetricJacobianSignature.cell_volume_mul_coef
-  | exact _root_.GlobalTheory.SymmetricJacobianSignature.cell_volume_mul_coef
-  | (apply _root_.GlobalTheory.SymmetricJacobianSignature.cell_volume_mul_coef <;> assumption)
-  | (intros; apply _root_.GlobalTheory.SymmetricJacobianSignature.cell_volume_mul_coef <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.SymmetricJacobianSignature.cell_volume_mul_coef <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.SymmetricJacobianSignature.cell_volume_mul_coef ..)
 
 end GlobalTheory.CellIdx
@@ -941,7 +936,7 @@ theorem _root_.GlobalTheory.T.exists_haar_volume_of_conjugate_lattice : Big fun 
     ∃ V₀ : ℝ, 0 < V₀ ∧ ∀ t β b, IsRep t ch.S.B s β b → ∀ hb : b j ∈ GfC _,
       la.real {n | (⟨b j, hb⟩ : GfC _)⁻¹ * n.1 * ⟨b j, hb⟩ ∈ (latGrp ch.G j).subgroupOf (GfC _)} *
         (GlobalTheory.RowWt.colCoef ch t β j : ℝ) = V₀ := by
-  first | exact @GlobalTheory.CellIdx.vol_mul_colCoef | exact GlobalTheory.CellIdx.vol_mul_colCoef | (intros; apply GlobalTheory.CellIdx.vol_mul_colCoef <;> assumption)
+  first | exact @GlobalTheory.CellIdx.vol_mul_colCoef
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsHaarVolumeOfConjugateLatticeStatement =====
@@ -1441,7 +1436,7 @@ theorem _root_.GlobalTheory.T.rowPeriodSubgroup_finitePoints_semidirect : ∀ {D
       (σ : GfC (ch.G.V (.top j)) →* (rowGrp ch.G j).subgroupOf (GfC (ch.G.V (.grid D.R.m j)))),
       Continuous π ∧ Continuous σ ∧ (∀ y, π (σ y) = y) ∧ (∀ r, π r = 1 ↔ r.1 ∈ (rowN ch.G j).subgroupOf (GfC _)) ∧
       ∀ b : GfC (ch.G.V (.grid D.R.m j)), prSet ch.G j b = π '' {r | b⁻¹ * r.1 * b ∈ (latGrp ch.G j).subgroupOf (GfC _)} := by
-  first | exact @GlobalTheory.CellMass.rowGrp_finite_semidirect | exact GlobalTheory.CellMass.rowGrp_finite_semidirect | (intros; apply GlobalTheory.CellMass.rowGrp_finite_semidirect <;> assumption)
+  first | exact @GlobalTheory.CellMass.rowGrp_finite_semidirect
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RowPeriodSubgroupFinitePointsSemidirectStatement =====
@@ -1505,7 +1500,7 @@ theorem _root_.GlobalTheory.T.finitePoints_rowPeriod_conjLevel_fubini : Big fun 
       0 < κ ∧ la.IsHaarMeasure ∧ ν.IsHaarMeasure ∧ ∀ b : GfC (ch.G.V (.grid D.R.m j)),
         ρ.real {r | b⁻¹ * r.1 * b ∈ (latGrp ch.G j).subgroupOf (GfC _)} =
           κ * la.real {n | b⁻¹ * n.1 * b ∈ (latGrp ch.G j).subgroupOf (GfC _)} * ν.real (prSet ch.G j b) := by
-  first | exact @GlobalTheory.CellMass.cell_fubini | exact GlobalTheory.CellMass.cell_fubini | (intros; apply GlobalTheory.CellMass.cell_fubini <;> assumption)
+  first | exact @GlobalTheory.CellMass.cell_fubini
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FinitePointsRowPeriodConjLevelFubiniStatement =====
@@ -1596,7 +1591,7 @@ theorem _root_.GlobalTheory.T.unfolding_cell_mass_eq_const_mul_local_coefficient
       ∀ M M' : Vol ch.G, M.Is t → IsTermVol t ch.S.toGridChoice Φ β M' → ∀ x : ℝ≥0, M.ν (.top j) = x • M'.ν (.top j) →
         ∀ hb : b j ∈ GfC _, cellWt (ρ j) (μ j) ((latGrp ch.G j).subgroupOf _) ⟨b j, hb⟩ * ((x : ℝ) : ℂ) =
           c * (GlobalTheory.RowWt.colCoef ch t β j : ℂ) := by
-  first | exact @GlobalTheory.CellMass.cell_mass | exact GlobalTheory.CellMass.cell_mass | (intros; apply GlobalTheory.CellMass.cell_mass <;> assumption)
+  first | exact @GlobalTheory.CellMass.cell_mass
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnfoldingCellMassEqConstMulLocalCoefficientsStatement =====

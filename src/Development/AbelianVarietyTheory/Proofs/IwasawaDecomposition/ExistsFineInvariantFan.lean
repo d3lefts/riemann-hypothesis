@@ -554,7 +554,7 @@ theorem dominates : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
     have h0 : c • (x - y) = 0 := by rw [smul_sub]; exact sub_eq_zero.mpr hxy
     have h1 : g (c • (x - y)) (c • (x - y)) = c * c * g (x - y) (x - y) := by
       simp only [map_zsmul, LinearMap.smul_apply, smul_eq_mul]; ring
-    simp only [h0, map_zero, LinearMap.zero_apply] at h1
+    simp only [h0, map_zero] at h1
     have h2 : g (x - y) (x - y) = 0 := by
       rcases mul_eq_zero.mp h1.symm with h | h
       · exact absurd (mul_self_eq_zero.mp h) hc0
@@ -1605,7 +1605,7 @@ theorem finrank_le_of_isDomT {X : Type} [AddCommGroup X] [Module (𝓞 E) X] {be
     · intro h0
       by_contra hne
       have e := he' a a
-      simp only [h0, map_zero, LinearMap.zero_apply] at e
+      simp only [h0, map_zero] at e
       exact (hpos _ hne).ne' (by exact_mod_cast e)
     · intro h0
       refine eq_zero_of_posDef hd ?_

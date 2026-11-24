@@ -216,16 +216,13 @@ end Th
 
 theorem int_le_val {z : ℤ} {t : ℝ} {v : WithTop ℤ} (h1 : (z : ℝ) ≤ t) (h2 : ((⌈t⌉ : ℤ) : WithTop ℤ) ≤ v) :
     ((z : ℤ) : WithTop ℤ) ≤ v := by
-  have h3 : z ≤ ⌈t⌉ := by
-    have h4 : (z : ℝ) ≤ ((⌈t⌉ : ℤ) : ℝ) := h1.trans (Int.le_ceil t)
-    exact_mod_cast h4
+  have h3 : z ≤ ⌈t⌉ := by exact_mod_cast h1.trans (Int.le_ceil t)
   exact (WithTop.coe_le_coe.mpr h3).trans h2
 
 theorem geR_of_ceil {s t : ℝ} {v : WithTop ℤ} (h1 : s ≤ t) (h2 : ((⌈t⌉ : ℤ) : WithTop ℤ) ≤ v) : geR v s := by
   intro z hz
   rw [hz] at h2
-  have h3 : ⌈t⌉ ≤ z := WithTop.coe_le_coe.mp h2
-  exact h1.trans (Int.ceil_le.mp h3)
+  exact h1.trans (Int.ceil_le.mp (WithTop.coe_le_coe.mp h2))
 
 theorem ar1 (T a m s c : ℝ) (h1 : a + m + s ≤ T) (h2 : 128 * c ≤ s) : a + 4 * c + m ≤ T - s / 2 - 60 * c := by
   linarith
@@ -582,9 +579,9 @@ theorem prod_range_zmod {M : Type} [CommMonoid M] {J : ℕ} [NeZero J] (g : ℤ 
   · intro t _
     simp
   · intro j _
-    simp [ZMod.natCast_zmod_val]
+    simp
   · intro t ht
-    simp only [Finset.mem_coe, Finset.mem_range] at ht
+    simp only [Finset.mem_range] at ht
     simp [ZMod.val_natCast, Nat.mod_eq_of_lt ht]
   · intro j _
     rfl

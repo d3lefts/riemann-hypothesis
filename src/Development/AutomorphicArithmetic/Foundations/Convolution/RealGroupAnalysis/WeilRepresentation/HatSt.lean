@@ -139,7 +139,7 @@ private theorem slice_mem {F : Type} [Field F] [NumberField F] {f : V4 F → ℂ
   have hv : ∀ x : Fin 2 ⊕ Fin 2 → A F, M.map (algebraMap F (A F)) *ᵥ x = fun i => x (e.symm i) := by
     intro x
     funext i
-    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, M, Matrix.submatrix_apply, id]
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, M, Matrix.submatrix_apply]
     rw [← Equiv.sum_comp e.symm]
     simp [Matrix.one_apply, apply_ite]
   have h1 := GroundTheory.Heights₂.Theta.comp_mulVec_mem_schwartzBruhatPi M N hNM hMN hf
@@ -453,7 +453,7 @@ private theorem act_nU (D : Dat F E) (u t s z₀ z₁ : A F) :
       D.mkE (s - 2 * (u * z₀ - UpperTheory.ConvolutionTheory.R2.rt D.δ * (t * z₁))) 0 := by
     rw [gl_val]
     simp [Dat.herm, Matrix.mul_apply, Fin.sum_univ_two, h0, hb]
-    simp only [Dat.mkE, map_sub, map_mul, map_add (f := _), map_neg, map_zero, map_ofNat]
+    simp only [Dat.mkE, map_sub, map_mul, map_neg, map_zero, map_ofNat]
     linear_combination (2 * AdeleBaseChange.adeleMap F E t * AdeleBaseChange.adeleMap F E z₁) * hθ
   have z0 : D.co 0 = ![0, 0] := by rw [← h0, co_mkE]
   rw [Dat.act, Dat.unherm, e11, e01, e00, co_mkE, co_mkE, z0]

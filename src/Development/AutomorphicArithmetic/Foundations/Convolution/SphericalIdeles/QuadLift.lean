@@ -939,8 +939,8 @@ private theorem nabs_norm [CharZero k] (x : k'ˣ) :
   have hT := _root_.GlobalTheory.KSp.map_linearEquiv_haar k k' μ T
   have hdet : LinearEquiv.det T = (Units.map (Algebra.norm k : k' →* k) x)⁻¹ := by
     ext
-    simp only [LinearEquiv.coe_det, T, Units.coe_map, MonoidHom.coe_coe, Algebra.norm_apply,
-      Units.val_inv_eq_inv_val, map_inv₀]
+    simp only [LinearEquiv.coe_det, T, Units.coe_map, Algebra.norm_apply,
+      Units.val_inv_eq_inv_val]
     have hl : (↑(DistribMulAction.toLinearEquiv k k' x⁻¹) : k' →ₗ[k] k') =
         LinearMap.mul k k' ↑x⁻¹ := by
       ext y
@@ -1281,14 +1281,14 @@ theorem UpperTheory.Gal.Join.twExp :
   have r_mul : ∀ a b, r (a * b) = r a * r b := by
     intro a b
     ext y
-    simp [r_apply, Module.End.mul_apply, map_mul]
+    simp [r_apply, map_mul]
   have hcomm : ∀ a b, r a * r b = r b * r a := by
     intro a b
     rw [← r_mul, ← r_mul, mul_comm]
   have hsemi : ∀ t, A' * r t = r (s t) * A' := by
     intro t
     ext y
-    simp [r_apply, A_apply, Module.End.mul_apply, hAρ]
+    simp [r_apply, A_apply, hAρ]
   let N : (T → ℂ) → Submodule ℂ P := fun χ => ⨅ t, (r t).maxGenEigenspace (χ t)
   have hmaps : ∀ a b c, Set.MapsTo (r a) ((r b).maxGenEigenspace c) ((r b).maxGenEigenspace c) :=
     fun a b c => Module.End.mapsTo_maxGenEigenspace_of_comm (hcomm b a) c

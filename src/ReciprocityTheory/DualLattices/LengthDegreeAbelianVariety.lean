@@ -110,7 +110,7 @@ lemma sumLat_inv_mulVec {n s : ℕ} (Mτ : Fin n → Lat v (Fin s)) (w : Fin n �
     Equiv.prodComm_symm, Equiv.prodComm_apply, Prod.swap_prod_mk, Matrix.blockDiagonal_apply,
     Fintype.sum_prod_type, ite_mul, zero_mul]
   rw [Finset.sum_comm]
-  simp only [Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true]
 
 lemma v_mulVec_le {m k : Type} [Fintype k] (P : Matrix m k C) (x : k → C)
     (hP : ∀ i j, v (P i j) ≤ 1) (hx : ∀ j, v (x j) ≤ 1) (i : m) : v ((P *ᵥ x) i) ≤ 1 := by
@@ -811,7 +811,7 @@ theorem valuation_pairwiseDifferenceProduct_pow_le_colength_sq (C : Type) [Field
       intro c τ i
       simp only [Bb, Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Matrix.reindex_apply,
         Matrix.submatrix_apply, Equiv.prodComm_symm, Equiv.prodComm_apply, Prod.swap_prod_mk,
-        Matrix.blockDiagonal_apply, ite_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+        Matrix.blockDiagonal_apply, ite_mul, zero_mul]
       rw [Finset.sum_eq_single τ (fun b _ hb => by simp [Ne.symm hb]) (by simp)]
       simp
     have hpts : Sb.pts = sumPts Mτ := by
@@ -944,7 +944,7 @@ def blkLat {n s : ℕ} (Ls : Fin n → Lat v (Fin s)) : Lat v (Fin n × Fin s) w
     have h : (Matrix.of fun x y : Fin n × Fin s => if x.1 = y.1 then (Ls x.1).B x.2 y.2 else 0) =
         (Matrix.blockDiagonal fun τ => (Ls τ).B).submatrix (Equiv.prodComm _ _) (Equiv.prodComm _ _) := by
       ext x y
-      simp [Matrix.blockDiagonal_apply, eq_comm]
+      simp [Matrix.blockDiagonal_apply]
     rw [h, Matrix.det_submatrix_equiv_self, Matrix.det_blockDiagonal]
     exact Finset.prod_ne_zero_iff.2 fun τ _ => (Ls τ).det_ne
 
@@ -953,7 +953,7 @@ lemma blkLat_det {n s : ℕ} (Ls : Fin n → Lat v (Fin s)) :
   have h : (blkLat Ls).B =
       (Matrix.blockDiagonal fun τ => (Ls τ).B).submatrix (Equiv.prodComm _ _) (Equiv.prodComm _ _) := by
     ext x y
-    simp [blkLat, Matrix.blockDiagonal_apply, eq_comm]
+    simp [blkLat, Matrix.blockDiagonal_apply]
   rw [h, Matrix.det_submatrix_equiv_self, Matrix.det_blockDiagonal]
 
 lemma blkLat_pts {n s : ℕ} (Ls : Fin n → Lat v (Fin s)) : (blkLat Ls).pts = sumPts Ls := by
@@ -1056,8 +1056,7 @@ theorem idemGen : IdemGenStatement := by
     apply Matrix.toLin'.injective
     rw [Matrix.toLin'_mul, hLM]
     refine LinearMap.ext fun x => ?_
-    simp only [LinearMap.comp_apply, Matrix.toLin'_apply, L, LinearMap.coe_comp,
-      Function.comp_apply, LinearEquiv.coe_coe]
+    simp only [LinearMap.comp_apply, Matrix.toLin'_apply, L, LinearEquiv.coe_coe]
     congr 1
     apply Subtype.ext
     simp [Matrix.mulVec_mulVec, hP]

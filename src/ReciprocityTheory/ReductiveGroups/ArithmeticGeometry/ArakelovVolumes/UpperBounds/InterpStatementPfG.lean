@@ -135,7 +135,7 @@ theorem norm_pair_sq_le (a ξ : Fin n → ℂ) :
     ‖∑ j, a j * conj (ξ j)‖ ^ 2 ≤ (∑ j, ‖a j‖ ^ 2) * ∑ j, ‖ξ j‖ ^ 2 := by
   have h1 : ‖∑ j, a j * conj (ξ j)‖ ≤ ∑ j, ‖a j‖ * ‖ξ j‖ := by
     refine (norm_sum_le _ _).trans (le_of_eq (Finset.sum_congr rfl fun j _ => ?_))
-    simp [norm_mul]
+    simp
   calc ‖∑ j, a j * conj (ξ j)‖ ^ 2 ≤ (∑ j, ‖a j‖ * ‖ξ j‖) ^ 2 :=
         pow_le_pow_left₀ (norm_nonneg _) h1 2
     _ ≤ _ := Finset.sum_mul_sq_le_sq_mul_sq _ _ _
@@ -231,9 +231,6 @@ theorem ann_closed (ε : ℝ) : IsClosed (ann (n := n) ε) := by
   first
   | exact (isClosed_le continuous_const continuous_norm).inter
       (isClosed_le continuous_norm continuous_const)
-  | (simp only [Set.setOf_and]
-     exact (isClosed_le continuous_const continuous_norm).inter
-      (isClosed_le continuous_norm continuous_const))
 
 theorem ann_compact (ε : ℝ) : IsCompact (ann (n := n) ε) := by
   refine (isCompact_closedBall (0 : V n) (2 * ε)).of_isClosed_subset (ann_closed ε) ?_
@@ -248,8 +245,6 @@ theorem cut_norm_le (ε : ℝ) (hε : 0 < ε) (y : V n) : ‖cut ε hε y‖ ≤
   have h1 : (bumpE ε hε : V n → ℝ) y ≤ 1 := (bumpE ε hε).le_one
   first
   | (rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg h0]; exact h1)
-  | (rw [Complex.norm_of_nonneg h0]; exact h1)
-  | simpa [abs_of_nonneg h0] using h1
 
 theorem sq_le_two (a b : ℂ) : ‖b‖ ^ 2 ≤ 2 * ‖a‖ ^ 2 + 2 * ‖a - b‖ ^ 2 := by
   have h1 : ‖b‖ ≤ ‖a‖ + ‖a - b‖ := by

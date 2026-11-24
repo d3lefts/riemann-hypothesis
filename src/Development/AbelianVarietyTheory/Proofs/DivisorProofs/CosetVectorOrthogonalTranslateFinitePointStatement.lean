@@ -324,7 +324,7 @@ theorem _root_.GlobalTheory.T.addChar_trace_unitBlock_trivial_of_moves : ∀ {D 
   ∀ (σ : AE D) (i j : Fin S.rank), infPart D σ = 0 → InHat I (algebraMap D.host.E (FA D) r * fe D σ) →
   (∀ k, InHat I (algebraMap D.host.E (FA D) r * fe D σ * fe D (mt S g⁻¹ i k))) →
   ψ (Algebra.trace (AF D.host.F) (AE D) (incA D D.host.xi0 * (incA D (star r⁻¹) * (2 * σ * (1 - mt S g⁻¹) i j)))) = 1 := by
-  first | exact @GlobalTheory.CosetOrth.Pairing.char_trace_eq_one | exact GlobalTheory.CosetOrth.Pairing.char_trace_eq_one | (intros; apply GlobalTheory.CosetOrth.Pairing.char_trace_eq_one <;> assumption)
+  first | exact @GlobalTheory.CosetOrth.Pairing.char_trace_eq_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AddCharTraceUnitBlockTrivialOfMovesStatement =====
@@ -477,7 +477,7 @@ theorem _root_.GlobalTheory.T.conjugatePlace_valuation_count_under : ∀ (D : D7
     (∀ 𝔞 : Ideal (𝓞 D.host.E), 𝔞 ≠ ⊥ → FractionalIdeal.count D.host.E w' ((D.host.conj • 𝔞 : Ideal (𝓞 D.host.E)) : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E) =
       FractionalIdeal.count D.host.E w (𝔞 : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E)) ∧
     ∀ w'' : HeightOneSpectrum (𝓞 D.host.E), w''.under (𝓞 D.host.F) = w.under (𝓞 D.host.F) ↔ w'' = w ∨ w'' = w' := by
-  first | exact @GlobalTheory.ConjPlace.conj_place | exact GlobalTheory.ConjPlace.conj_place | (intros; apply GlobalTheory.ConjPlace.conj_place <;> assumption)
+  first | exact @GlobalTheory.ConjPlace.conj_place
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjugatePlaceValuationCountUnderStatement =====
@@ -645,7 +645,7 @@ open GlobalTheory.CosetOrth
 theorem _root_.GlobalTheory.T.dense_rationalHomPoints_idealCompletion : ∀ {D : D7} (S T : HSp D) (r : D.host.E) (I : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E), r ≠ 0 → I ≠ 0 →
   ∀ U : AddSubgroup (WO S T), IsOpen (U : Set (WO S T)) → ∀ u : WO S T, HatPt r I u →
   ∃ z : Matrix (Fin T.rank) (Fin S.rank) D.host.E, (∀ i j, z i j ∈ I) ∧ u - finPt (S := S) (T := T) rfl rfl r z ∈ U := by
-  first | exact @GlobalTheory.CosetOrthDens.exists_finPt_sub_mem | exact GlobalTheory.CosetOrthDens.exists_finPt_sub_mem | (intros; apply GlobalTheory.CosetOrthDens.exists_finPt_sub_mem <;> assumption)
+  first | exact @GlobalTheory.CosetOrthDens.exists_finPt_sub_mem
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DenseRationalHomPointsIdealCompletionStatement =====
@@ -809,7 +809,7 @@ theorem _root_.GlobalTheory.T.exists_pow_integral_completedHomLattice : ∀ {D :
   (∀ z : Matrix (Fin T.rank) (Fin S.rank) D.host.E, finPt (S := S) (T := T) rfl rfl r z ∈ (latO S T (stdLat S) LB fun _ => True) →
     z ∈ Formalism.MainNotions.TaylorLogMetric.YYl D (Formalism.MainNotions.StandardLatticesGL3.stdL D S.rank) (Formalism.MainNotions.StandardLatticesGL3.stdL D T.rank)) →
   ∃ k : ℕ, ∀ u ∈ (latO S T (stdLat S) LB fun _ => True), HatPt ((((D.host.QS * D.host.q) ^ k : ℕ) : D.host.E) * r) 1 u := by
-  first | exact @GlobalTheory.CosetOrth.LatInt.exists_hatPt_of_mem_latO | exact GlobalTheory.CosetOrth.LatInt.exists_hatPt_of_mem_latO | (intros; apply GlobalTheory.CosetOrth.LatInt.exists_hatPt_of_mem_latO <;> assumption)
+  first | exact @GlobalTheory.CosetOrth.LatInt.exists_hatPt_of_mem_latO
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPowIntegralCompletedHomLatticeStatement =====
@@ -939,7 +939,7 @@ theorem _root_.GlobalTheory.T.integral_of_completedLattice_selfDual_rankOne : �
   (∀ t : AE D, infPart D t = 0 → InHat 1 (fe D t) →
     ψ (Algebra.trace (AF D.host.F) (AE D) (incA D D.host.xi0 * (incA D (star r⁻¹) * (t * c)))) = 1) →
   InHat 1 (algebraMap D.host.E (FA D) ((n : D.host.E) * n * r) * fe D c) := by
-  first | exact @GlobalTheory.CosetOrth.inHat_of_char_dual | exact GlobalTheory.CosetOrth.inHat_of_char_dual | (intros; apply GlobalTheory.CosetOrth.inHat_of_char_dual <;> assumption)
+  first | exact @GlobalTheory.CosetOrth.inHat_of_char_dual
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralOfCompletedLatticeSelfDualRankOneStatement =====
@@ -1021,7 +1021,7 @@ open GlobalTheory.CosetOrth
 
 theorem _root_.GlobalTheory.T.mem_idealIntegralFiniteAdeles_of_memCompletion : ∀ {D : D7} (𝔪 : Ideal (𝓞 D.host.E)), 𝔪 ≠ ⊥ → ∀ x : Formalism.MainNotions.StandardLatticesGL3.AE D,
   InHat (𝔪 : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E) (GlobalTheory.BotFormula.toFinE D x) → x ∈ hatId D 𝔪 := by
-  first | exact @GlobalTheory.CosetOrth.mem_hatId_of_inHat | exact GlobalTheory.CosetOrth.mem_hatId_of_inHat | (intros; apply GlobalTheory.CosetOrth.mem_hatId_of_inHat <;> assumption)
+  first | exact @GlobalTheory.CosetOrth.mem_hatId_of_inHat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemIdealIntegralFiniteAdelesOfMemCompletionStatement =====
@@ -1249,7 +1249,7 @@ theorem _root_.GlobalTheory.T.unitaryFinitePoint_congr_one_of_inv_conj_congr : �
       ((D.host.conj • 𝔪 : Ideal (𝓞 D.host.E)) : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E)))) →
   ∀ i j, InHat 1 (finMat y i j) ∧ InHat 1 (finMat y⁻¹ i j) ∧
     InHat (𝔪 : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E) ((finMat y - 1) i j) := by
-  first | exact @GlobalTheory.CosetOrth.Cong.inHat_of_inv_cong | exact GlobalTheory.CosetOrth.Cong.inHat_of_inv_cong | (intros; apply GlobalTheory.CosetOrth.Cong.inHat_of_inv_cong <;> assumption)
+  first | exact @GlobalTheory.CosetOrth.Cong.inHat_of_inv_cong
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryFinitePointCongrOneOfInvConjCongrStatement =====
@@ -1375,7 +1375,7 @@ theorem _root_.GlobalTheory.T.valued_finiteUnitary_le_one_off_openSubset : ∀ {
   GlobalTheory.BotFormula.IsFinPt V g y → g ∈ openOff V (stdLat V) Sf →
   ∀ w : HeightOneSpectrum (𝓞 D.host.E), w.under (𝓞 D.host.F) ∉ Sf → ∀ i j,
     Valued.v (finMat y i j w) ≤ 1 ∧ Valued.v (finMat y⁻¹ i j w) ≤ 1 := by
-  first | exact @GlobalTheory.CosetOrth.valued_finMat_le_one_of_mem_openOff | exact GlobalTheory.CosetOrth.valued_finMat_le_one_of_mem_openOff | (intros; apply GlobalTheory.CosetOrth.valued_finMat_le_one_of_mem_openOff <;> assumption)
+  first | exact @GlobalTheory.CosetOrth.valued_finMat_le_one_of_mem_openOff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ValuedFiniteUnitaryLeOneOffOpenSubsetStatement =====
@@ -1512,7 +1512,7 @@ theorem _root_.GlobalTheory.T.valued_one_sub_le_of_moves_idealCompletion : ∀ {
   (∀ (s : FiniteAdeleRing (𝓞 E) E) (i j : Fin a), InHat I s → (∀ k, InHat I (s * H i k)) →
     InHat 1 (algebraMap E (FiniteAdeleRing (𝓞 E) E) n * (s * (1 - H) i j))) →
   ∀ i j, Valued.v ((1 - H) i j w) ≤ WithZero.exp (-c) := by
-  first | exact @GlobalTheory.CosetOrth.valued_one_sub_le_of_moves_integral | exact GlobalTheory.CosetOrth.valued_one_sub_le_of_moves_integral | (intros; apply GlobalTheory.CosetOrth.valued_one_sub_le_of_moves_integral <;> assumption)
+  first | exact @GlobalTheory.CosetOrth.valued_one_sub_le_of_moves_integral
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ValuedOneSubLeOfMovesIdealCompletionStatement =====
@@ -1862,7 +1862,7 @@ theorem _root_.GlobalTheory.T.cosetVector_orthogonal_translate_finite_point : �
   o + P.a ≤ P.d → ∀ (ν : Measure (WO X.A X.B)) (𝓕 : Set (WO X.A X.B)), IsCovolOne (ratL X.B X.A) ν 𝓕 →
   ∀ y, X.ιA y ∈ openOff X.A (stdLat X.A) Sf → ¬ (y ∈ intG D P.a ∧ CongOne D 𝔪 y) →
     ip X.A X.B ν 𝓕 (X.om (X.ιA y, 1) φ) φ = 0 := by
-  first | exact @GlobalTheory.NormRatio.ip_om_cosetVec_eq_zero | exact GlobalTheory.NormRatio.ip_om_cosetVec_eq_zero | (intros; apply GlobalTheory.NormRatio.ip_om_cosetVec_eq_zero <;> assumption)
+  first | exact @GlobalTheory.NormRatio.ip_om_cosetVec_eq_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CosetVectorOrthogonalTranslateFinitePointStatement =====

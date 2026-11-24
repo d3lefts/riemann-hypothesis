@@ -120,7 +120,7 @@ theorem fockComp_mul_right (B : VertexFrames G) (t : T) (j : ℕ) (hj : (Pair.to
   unfold jetTab kerFin GridData.Weil.ker thetaKO
   have e1 : G.toPair (.top t j) (a : GA D (G.V (Pair.top t j : Pair T).small)) ((b * h : FinPt G (.top (j + 1))) : GA D _) =
       G.toPair (.top t j) a b * G.toPair (.top t j) 1 h.1 := by
-    simp [GridData.toPair, Prod.ext_iff]
+    simp [GridData.toPair]
   have e2 : G.toPair (.top t j) 1 h.1 = ((1 : GA D _), h.1) := rfl
   rw [e1, map_mul, Module.End.mul_apply, e2]
   unfold fockIn
@@ -196,7 +196,7 @@ theorem _root_.GlobalTheory.T.productFunction_totalTensor_invariant_lastArrows :
         (colShift S t (finEmb G.sp.topDec k) (S.Z.vec (d.1 (lastIx D)))) j (w j)) *
       ∏ i, Function.update (fun i => S.Z.vec (d.2 i)) (lastIx D) (rowShift S k (S.Z.vec (d.2 (lastIx D)))) i (v i)) =
     τ.sum fun d a => a * (∏ j, S.Z.vec (d.1 j) (w j)) * ∏ i, S.Z.vec (d.2 i) (v i) := by
-  first | exact @GlobalTheory.LastVertexTensor.productFn_invariant | exact GlobalTheory.LastVertexTensor.productFn_invariant | (intros; apply GlobalTheory.LastVertexTensor.productFn_invariant <;> assumption)
+  first | exact @GlobalTheory.LastVertexTensor.productFn_invariant
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ProductFunctionTotalTensorInvariantLastArrowsStatement =====
@@ -235,7 +235,7 @@ theorem fockComp_mul_right (B : VertexFrames G) (i : ℕ) (hi : (Pair.chi i D.R.
   have e1 : G.toPair (.chi i D.R.m : Pair T) (a : GA D (G.V (Pair.chi i D.R.m : Pair T).small))
       ((b * h : FinPt G (.grid (i + 1) D.R.m)) : GA D _) =
       G.toPair (.chi i D.R.m : Pair T) a b * G.toPair (.chi i D.R.m : Pair T) 1 h.1 := by
-    simp [GridData.toPair, Prod.ext_iff, map_mul]
+    simp [GridData.toPair, map_mul]
   have e2 : G.toPair (.chi i D.R.m : Pair T) 1 h.1 = (negGA _ h.1, (1 : GA D _)) := rfl
   rw [e1, map_mul, Module.End.mul_apply, e2]
   unfold fockIn
@@ -408,7 +408,7 @@ theorem _root_.GlobalTheory.T.expansion_pairing_invariant_last_vertex_level : �
       pairPts S τ (Function.update x D.R.m (finEmb G.sp.topDec (y D.R.m * k))) (Function.update y D.R.m (y D.R.m * k))
         (Ψ (Function.update x D.R.m (finEmb G.sp.topDec (y D.R.m * k)) 0)) (F (Function.update y D.R.m (y D.R.m * k) 0)) =
       pairPts S τ x y (Ψ (x 0)) (F (y 0)) := by
-  first | exact @GlobalTheory.LastVertexInv.pairPts_last_invariant | exact GlobalTheory.LastVertexInv.pairPts_last_invariant | (intros; apply GlobalTheory.LastVertexInv.pairPts_last_invariant <;> assumption)
+  first | exact @GlobalTheory.LastVertexInv.pairPts_last_invariant
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExpansionPairingInvariantLastVertexLevelStatement =====
@@ -427,7 +427,7 @@ theorem _root_.GlobalTheory.T.normalizedKernelOfVector_add : ∀ {D : D7} {T : T
     (S : GridChoice W U) (p : Pair T) {f f' : WO (G.pS p) (G.pT p) → ℂ},
     IsThetaFunO W.ψ _ _ f → IsThetaFunO W.ψ _ _ f' → ∀ (x : FinPt G p.small) (y : FinPt G p.big),
     kkVec S p (f + f') x y = kkVec S p f x y + kkVec S p f' x y := by
-  first | exact @GlobalTheory.TopZeroInv.kkVec_add | exact GlobalTheory.TopZeroInv.kkVec_add | (intros; apply GlobalTheory.TopZeroInv.kkVec_add <;> assumption)
+  first | exact @GlobalTheory.TopZeroInv.kkVec_add
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.NormalizedKernelOfVectorAddStatement =====
@@ -445,7 +445,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 theorem _root_.GlobalTheory.T.normalizedKernelOfVector_smul : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T}
     (S : GridChoice W U) (p : Pair T) (c : ℂ) (f : WO (G.pS p) (G.pT p) → ℂ) (x : FinPt G p.small) (y : FinPt G p.big),
     kkVec S p (c • f) x y = c • kkVec S p f x y := by
-  first | exact @GlobalTheory.TopZeroInv.kkVec_smul | exact GlobalTheory.TopZeroInv.kkVec_smul | (intros; apply GlobalTheory.TopZeroInv.kkVec_smul <;> assumption)
+  first | exact @GlobalTheory.TopZeroInv.kkVec_smul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.NormalizedKernelOfVectorSmulStatement =====
@@ -1230,7 +1230,7 @@ theorem product_invariant : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts
     refine Eq.trans (Finset.sum_congr rfl fun d _ => ?_) (h1.trans (Finset.sum_congr rfl fun d _ => ?_))
     · have e1 : ∀ j, F' d (.inl j) (x (.inl j)) = (d.1 j).fn (firstPt t g (fun j => x (.inl j)) j) := fun j => by
         rcases eq_or_ne j ⟨0, zero_lt_m D⟩ with rfl | hj
-        · simp only [firstPt, Function.update_self]
+        · simp only [firstPt]
           exact congrFun (Function.update_self first _ (datFn d)) _
         · have a1 : firstPt t g (fun j => x (.inl j)) j = x (.inl j) := Function.update_of_ne hj _ _
           rw [a1]
@@ -1271,7 +1271,7 @@ theorem _root_.GlobalTheory.T.unfoldingExpansion_productFunction_fixed_by_Kplus 
     ∀ z : ∀ l : Arr D, WO (G.pS (arrP t l)) (G.pT (arrP t l)),
       (τ.sum fun d b => b * ∏ l, moveFirst W ((S.N.u (.top 0))⁻¹ * k * S.N.u (.top 0)) (vecsOf S d) l (z l)) =
         τ.sum fun d b => b * ∏ l, vecsOf S d l (z l) := by
-  first | exact @GlobalTheory.TopZeroFirst.product_invariant | exact GlobalTheory.TopZeroFirst.product_invariant | (intros; apply GlobalTheory.TopZeroFirst.product_invariant <;> assumption)
+  first | exact @GlobalTheory.TopZeroFirst.product_invariant
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnfoldingExpansionProductFunctionFixedByKplusStatement =====
@@ -1439,7 +1439,7 @@ theorem _root_.GlobalTheory.T.expansionPairing_invariant_parabolic_basePoint : �
     ∀ (x : ∀ j, FinPt G (.top j)) (y : ∀ i, FinPt G (.grid i D.R.m)) (k : FinPt G (.top 0)),
       finG (G.V (.top 0)) k ∈ S.levTop t Φ β 0 (by have := D.R.two_le_m; omega) →
       pairPts S τ (Function.update x 0 (x 0 * k)) y (Ψ (x 0 * k)) (F (y 0)) = pairPts S τ x y (Ψ (x 0)) (F (y 0)) := by
-  first | exact @GlobalTheory.TopZeroInv.pairPts_update_top_zero | exact GlobalTheory.TopZeroInv.pairPts_update_top_zero | (intros; apply GlobalTheory.TopZeroInv.pairPts_update_top_zero <;> assumption)
+  first | exact @GlobalTheory.TopZeroInv.pairPts_update_top_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExpansionPairingInvariantParabolicBasePointStatement =====
@@ -1517,7 +1517,7 @@ theorem _root_.GlobalTheory.T.normalisedKernelExpansionSum_levelInvariant : ∀ 
       pairPts S τ (Function.update x D.R.m (finEmb G.sp.topDec (y D.R.m * k))) (Function.update y D.R.m (y D.R.m * k))
         (Ψ (Function.update x D.R.m (finEmb G.sp.topDec (y D.R.m * k)) 0)) (F (Function.update y D.R.m (y D.R.m * k) 0)) =
       pairPts S τ x y (Ψ (x 0)) (F (y 0))) := by
-  first | exact @GlobalTheory.ExpansionInvariance.levels_invariant | exact GlobalTheory.ExpansionInvariance.levels_invariant | (intros; apply GlobalTheory.ExpansionInvariance.levels_invariant <;> assumption)
+  first | exact @GlobalTheory.ExpansionInvariance.levels_invariant
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.NormalisedKernelExpansionSumLevelInvariantStatement =====

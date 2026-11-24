@@ -100,7 +100,7 @@ theorem exists_basis_of_duality {E : Type} [Field E] {n m : ℕ} (X Y : Matrix (
   have hcol : ∀ i, col i ∈ LinearMap.range C0.mulVecLin := fun i =>
     ⟨Pi.single i 1, by
       funext k
-      simp [Matrix.mulVecLin_apply, C0]⟩
+      simp [C0]⟩
   have hX : ∀ (j : Fin m), (fun k => X k j) ∈ LinearMap.range C0.mulVecLin := by
     intro j
     have hi : j.val < n := by have := j.2; omega
@@ -145,7 +145,7 @@ theorem exists_basis_of_duality {E : Type} [Field E] {n m : ℕ} (X Y : Matrix (
       have eBY : ∀ w, B *ᵥ (Y *ᵥ w) = w := fun w => by rw [Matrix.mulVec_mulVec, hBY, Matrix.one_mulVec]
       rw [hK, hmem]
       constructor
-      · simp only [Matrix.mulVec_sub, eAX, eAY, sub_self, sub_zero]
+      · simp only [Matrix.mulVec_sub, eAX, eAY, sub_self]
       · simp only [Matrix.mulVec_sub, eBX, eBY, sub_self, sub_zero]
     have h3 := hKr ⟨_, hk⟩
     have h1 := hmv X hX (A *ᵥ v)
@@ -212,7 +212,7 @@ open GlobalTheory.UAut GlobalTheory.AdelicU GlobalTheory.SiegelSet
 
 theorem _root_.GlobalTheory.T.exists_adapted_witt_basis : ∀ (D : D7) (V : HSp D) (m : ℕ) (X Y : Matrix (Fin V.rank) (Fin m) D.host.E),
     IsWittFrame D.sp.cm.sig V.gram X Y → ∃ C : GL (Fin V.rank) D.host.E, GlobalTheory.BlockForms.IsAdapted D.sp.cm.sig V.gram X Y C := by
-  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.AdaptedBasis.exists_isAdapted | exact GlobalTheory.CompanionTheory.Hypotheses₂.AdaptedBasis.exists_isAdapted | (intros; apply GlobalTheory.CompanionTheory.Hypotheses₂.AdaptedBasis.exists_isAdapted <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.AdaptedBasis.exists_isAdapted
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GlobalProofs.OrthogonalSubspaceWittFrameExtensionStatement =====

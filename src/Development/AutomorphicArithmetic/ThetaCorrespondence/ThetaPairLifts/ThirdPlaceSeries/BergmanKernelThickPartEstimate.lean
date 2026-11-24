@@ -1056,7 +1056,7 @@ section
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.BasicNotions.TH Formalism.L2.Theta ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.AllWt GlobalTheory.CompHt GlobalTheory.CovTop GlobalTheory.BigTop GlobalTheory.CovHt
 
 theorem _root_.GlobalTheory.T.torus_length_lower_bound_quotient' : _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.LiftsCondition fun Fm x _ ι p i PP C => (i : ℕ) + 1 < (Fm.D x ι).R.m → zBase (Fm.L x ι) ^ 24 ≤ lenT p i PP ∧ ∀ u1, Quo p i PP u1 → lenT p i PP * GlobalTheory.CovHt.l1 u1 ≤ C * unitE p ∧ ∀ τ (a b : Fin ((dat p i).p + (dat p i).q)), (b : ℕ) = a + 1 → (lenT p i PP : ℤ) ≤ u1 τ a - u1 τ b := by
-  first | exact @_root_.GlobalTheory.CovHt.DividedNum.lenT_bounds_of_covers_before_last | exact _root_.GlobalTheory.CovHt.DividedNum.lenT_bounds_of_covers_before_last | (intros; apply _root_.GlobalTheory.CovHt.DividedNum.lenT_bounds_of_covers_before_last <;> assumption)
+  first | exact @_root_.GlobalTheory.CovHt.DividedNum.lenT_bounds_of_covers_before_last
 end
 end -- clump:auto
 end -- clump:auto
@@ -1147,7 +1147,7 @@ section
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.BasicNotions.TH Formalism.L2.Theta ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.AllWt GlobalTheory.CompHt GlobalTheory.CovTop GlobalTheory.BigTop GlobalTheory.CovHt
 
 theorem _root_.GlobalTheory.T.exp_neg_B_le_bergOn_of_la1sq_bound : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → HypothesesH → _root_.GlobalTheory.CovTop.DeepGoodness → _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.FlatDegreeCondition → _root_.GlobalTheory.CovTop.CoversCondition fun Fm x _ ι p i Y PP C => ∀ u1, Quo p i PP u1 → ∃ B : ℝ, 0 ≤ B ∧ lenT p i PP * B ≤ C * unitE p ∧ ∀ (Z : Comp Y.d.Xo₂ Y.d.c₂) (σ : Y.d.c₂.F →+* ℂ), GoodEmb Y.d.c₂ σ → ∀ y : FPt (Y.U σ).X, (⟨y.1, y.2.1⟩ : Σ k, Frame ((Y.U σ).X k).Ψ (Fm.D x ι).R.r) ∈ framesOn (Y.U σ) Z → (Fm.L x ι).sc.b ≤ (Y.d.l₂.M : ℝ) * ((Y.U σ).X y.1).firstMinimumSq y.2.1 → ENNReal.ofReal (Real.exp (-B)) ≤ bergOn (Y.U σ) ((Fm.D x ι).sp.W ((i : ℕ) + 1)) (Y.dict σ) Z (wtOf (dat p i) u1 0) y := by
-  first | exact @_root_.GlobalTheory.ThickBerg.exp_neg_B_le_bergOn_of_mem_framesOn | exact _root_.GlobalTheory.ThickBerg.exp_neg_B_le_bergOn_of_mem_framesOn | (intros; apply _root_.GlobalTheory.ThickBerg.exp_neg_B_le_bergOn_of_mem_framesOn <;> assumption)
+  first | exact @_root_.GlobalTheory.ThickBerg.exp_neg_B_le_bergOn_of_mem_framesOn
 end
 end
 end -- clump:auto

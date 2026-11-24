@@ -607,7 +607,7 @@ theorem actT_latOne (hinj : Function.Injective (algebraMap O LL)) (ψ : G →* O
   apply LinearMap.ext
   rintro ⟨x, hx⟩
   apply Subtype.ext
-  simp only [Formalism.WeaklyAdmissibleFiltrations.actT, LinearMap.restrict_apply, LinearMap.smul_apply, LinearMap.id_apply, Submodule.coe_smul]
+  simp only [Formalism.WeaklyAdmissibleFiltrations.actT, LinearMap.smul_apply, LinearMap.id_apply, Submodule.coe_smul]
   show ((tableLineDegreeTwo.charL (LL := LL) ψ g : LLˣ) : LL) • x = ((ψ g : Oˣ) : O) • x
   simp [tableLineDegreeTwo.charL, Algebra.smul_def]
 
@@ -626,7 +626,7 @@ theorem actD_one (hinj : Function.Injective (algebraMap O LL)) (M : G →* Matri
   congr 1
   funext j
   fin_cases j
-  simp [stdLatG, matRep, mapM, Matrix.mulVec, dotProduct, Algebra.smul_def]
+  simp [matRep, mapM, Matrix.mulVec, dotProduct, Algebra.smul_def]
 
 theorem equivG (hinj : Function.Injective (algebraMap O LL)) (lam : O) (a : ℕ) (ψ χ : G →* Oˣ)
     (M : G →* Matrix (Fin 1) (Fin 1) O) (hM : ∀ g, M g 0 0 = (((χ g)⁻¹ * ψ g : Oˣ) : O)) (g : G)
@@ -775,7 +775,7 @@ theorem repV_eq_inv_smul_twist : ∀ (D : D7) (i : D.nd.Loc) (w : HeightOneSpect
   rw [chiT_one]
   have h : repV C (twistM N θ) g = (algebraMap (↥(OL C.LL)) (↥C.LL.1) (θ g : ↥(OL C.LL))) • repV C N g := by
     simp only [repV, matRep, mapM, twistM]
-    simp [RingHom.mapMatrix_apply, Matrix.map_smul', Matrix.toLinAlgEquiv'_apply]
+    simp [RingHom.mapMatrix_apply]
     rw [show ((θ g : ↥(OL C.LL)) • N g).map (algebraMap ↥(OL C.LL) ↥C.LL.1)
         = (algebraMap ↥(OL C.LL) ↥C.LL.1 (θ g : ↥(OL C.LL))) • (N g).map (algebraMap ↥(OL C.LL) ↥C.LL.1) from by
           ext a b; simp [Matrix.map_apply], map_smul]

@@ -241,7 +241,7 @@ theorem gcl_wirt_slice {r : ℕ} (F : MA.E r → ℂ) (x : MA.E r) (hF : Differe
   · simp only [MA.wirt, NF.dZ, e1, hd]
     simp [M.vz] <;> ring
   · simp only [MA.wirt, NF.dZb, e2, hd]
-    simp [M.vzb] <;> ring
+    simp [M.vzb]
 
 theorem gcl_radR_sum {k r : ℕ} {z z' : Fin (2 * r + k + 1) → ℂ} {μsec : ℂ → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ}
     {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {ι : Type} (s : Finset ι) (F : ι → Q.Fn k r E)
@@ -1050,7 +1050,7 @@ theorem xpol_monic (P : M.Par) (ρ : M.Ty P) : (xpol P ρ).Monic :=
 theorem xpol_natDegree (P : M.Par) (ρ : M.Ty P) : (xpol P ρ).natDegree = P.k - 1 := by
   unfold xpol
   rw [Polynomial.natDegree_prod_of_monic _ _ (fun _ _ => Polynomial.monic_X_add_C _)]
-  simp [Polynomial.natDegree_X_add_C]
+  simp
 
 theorem xpol_coeff (P : M.Par) (ρ : M.Ty P) : (xpol P ρ).coeff (P.k - 1) = 1 := by
   rw [← xpol_natDegree P ρ]
@@ -1344,11 +1344,9 @@ theorem fst_sub' (a b : Q.Pr V) : (a - b).1 = a.1 - b.1 := rfl
 theorem fst_smul' (c : ℂ) (a : Q.Pr V) : (c • a).1 = c • a.1 := by
   first
   | rfl
-  | exact Prod.smul_fst _ _
 theorem fst_sum' {ι : Type*} (s : Finset ι) (f : ι → Q.Pr V) : (∑ i ∈ s, f i).1 = ∑ i ∈ s, (f i).1 := by
   first
   | exact Prod.fst_sum
-  | exact map_sum (AddMonoidHom.fst (Module.End ℂ V) (Module.End ℂ V)ᵐᵒᵖ) f s
 
 end fst
 

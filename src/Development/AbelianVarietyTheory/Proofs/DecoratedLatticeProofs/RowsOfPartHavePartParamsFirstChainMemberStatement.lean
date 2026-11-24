@@ -216,7 +216,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.VolumeFlatSection (Blocks parahoric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.heckeOperator_inverseCoset_conj_eigenvalue : ∀ (D : D7) (V : HSp D) (J : Set (GA D V)) (χ : GA D V → ℂ) (Sb : Finset (HeightOneSpectrum (𝓞 D.host.F))), SphOff J χ Sb → ∀ f ∈ GlobalTheory.FinZeta.bddAut V, (∀ k ∈ J, ∀ g, f (g * k) = χ k * f g) → ∀ e : HeightOneSpectrum (𝓞 D.host.E) → List ℤ → ℂ, (∀ P d R, Hecke₂ V J χ Sb P d R → heckeLin V R f = e P (dualLab d) • f) → ∀ P d R, Hecke₂ V J χ Sb P d R → heckeLin V R f = conj (e P d) • f := by
-  first | exact @GlobalTheory.HeckeAdjEigen.heckeLin_eq_conj_of_dualLab | exact GlobalTheory.HeckeAdjEigen.heckeLin_eq_conj_of_dualLab | (intros; apply GlobalTheory.HeckeAdjEigen.heckeLin_eq_conj_of_dualLab <;> assumption)
+  first | exact @GlobalTheory.HeckeAdjEigen.heckeLin_eq_conj_of_dualLab
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HeckeOperatorInverseCosetConjEigenvalueStatement =====
@@ -304,7 +304,7 @@ theorem levS_flat_gen (Q : Finset (Pl D.host.E)) (hr : D.R.r ≤ (Yc D 0).rank)
     simp [blkOf, hi, hj] at hij
   refine levS_congr _ _ _ fun x => ?_
   show (x ∈ parLev _ _ _ _ ∧ _) ↔ (x ∈ parLev _ _ _ _ ∧ _)
-  simp only [LevCh.dat0, Lev.datY, eq_self_iff_true, if_true, ite_true, parLev, Subgroup.mem_inf, Subgroup.mem_iInf, mem_parah]
+  simp only [LevCh.dat0, Lev.datY, if_true, parLev, Subgroup.mem_inf, Subgroup.mem_iInf, mem_parah]
   constructor
   · rintro ⟨⟨⟨⟨hU, hSt⟩, hPg⟩, -⟩, hT⟩
     refine ⟨⟨⟨⟨hU, hSt⟩, fun i hi => hPg i (Finset.mem_union_left _ hi)⟩, fun i hi => absurd hi (Finset.notMem_empty _)⟩, ?_⟩
@@ -464,7 +464,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.LiftRows (Given)
 
 theorem _root_.GlobalTheory.T.rows_of_part_have_part_params_first_chain_member : GlobalTheory.Published.CuspRapidDecay → ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), Given R F → (∀ h : RangeX R, RChain R h) → RangeX R → RowPar R := by
-  first | exact @GlobalTheory.ChainTw.rowPar_of_chain | exact GlobalTheory.ChainTw.rowPar_of_chain | (intros; apply GlobalTheory.ChainTw.rowPar_of_chain <;> assumption)
+  first | exact @GlobalTheory.ChainTw.rowPar_of_chain
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.RowsOfPartHavePartParamsFirstChainMemberStatement =====

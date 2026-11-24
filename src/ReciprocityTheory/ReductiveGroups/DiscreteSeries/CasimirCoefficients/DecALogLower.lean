@@ -441,8 +441,6 @@ lemma dm_range {ε : Fin n → Bool} {Y U : Matrix (Fin n) (Fin n) ℂ} {y : Fin
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     first
       | (rw [Complex.star_def, Complex.mul_conj'])
-      | (rw [Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq]; push_cast; ring)
-      | simp [Complex.mul_conj, Complex.normSq_eq_norm_sq]
   have hUU : Uᴴ * U = 1 := Matrix.mem_unitaryGroup_iff'.1 hU
   have h2 : ∀ M : Matrix (Fin n) (Fin n) ℂ, Uᴴ * (U * M) = M := fun M => by
     rw [← Matrix.mul_assoc, hUU, Matrix.one_mul]
@@ -549,7 +547,6 @@ lemma decA_spec {Y : Matrix (Fin n) (Fin n) ℂ} (hY : inP ε Y) :
   refine ⟨hA.eigenvectorUnitary, hA.eigenvalues, (hA.eigenvectorUnitary).2, ?_⟩
   first
     | exact hA.spectral_theorem
-    | simpa [Matrix.star_eq_conjTranspose] using hA.spectral_theorem
     | (conv_lhs => rw [hA.spectral_theorem]); rfl
 
 lemma decA_exp {U : Matrix (Fin n) (Fin n) ℂ} (hU : U ∈ Matrix.unitaryGroup (Fin n) ℂ) (y : Fin n → ℝ) :
@@ -564,9 +561,7 @@ lemma decA_exp {U : Matrix (Fin n) (Fin n) ℂ} (hU : U ∈ Matrix.unitaryGroup 
   have hd : NormedSpace.exp (fun j => ((y j : ℝ) : ℂ)) = fun j => ((Real.exp (y j) : ℝ) : ℂ) := by
     funext j
     first
-      | (rw [Pi.exp_apply]; simp [← Complex.exp_eq_exp_ℂ, Complex.ofReal_exp])
-      | (simp [Pi.exp_def, ← Complex.exp_eq_exp_ℂ, Complex.ofReal_exp])
-      | (simp [NormedSpace.exp_pi, ← Complex.exp_eq_exp_ℂ, Complex.ofReal_exp])
+      | (simp [← Complex.exp_eq_exp_ℂ, Complex.ofReal_exp])
   rw [← hinv, Matrix.exp_conj U _ hu, Matrix.exp_diagonal, hd]
 
 lemma decA_lead_re {U : Matrix (Fin n) (Fin n) ℂ} (y : Fin n → ℝ) (i : ℕ) (hi : i ≤ n) :

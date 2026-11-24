@@ -128,7 +128,7 @@ theorem _root_.GlobalTheory.T.exists_common_semiAbelian_pullback_two_unitary_tra
     IsLocalHom f' → (∀ a, fK (algebraMap T.V _ a) = algebraMap W _ (f a)) →
     (∀ a, fK' (algebraMap T'.V _ a) = algebraMap W _ (f' a)) → spMap fK ≫ T.y = spMap fK' ≫ T'.y →
     ∃ tW : SAB H (Sp W), Nonempty (SABMap tW T.t (spMap f)) ∧ Nonempty (SABMap tW T'.t (spMap f')) := by
-  first | exact @GlobalTheory.UPoinc.TraitUniq.exists_common_pull | exact GlobalTheory.UPoinc.TraitUniq.exists_common_pull | (intros; apply GlobalTheory.UPoinc.TraitUniq.exists_common_pull <;> assumption)
+  first | exact @GlobalTheory.UPoinc.TraitUniq.exists_common_pull
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCommonSemiAbelianPullbackTwoUnitaryTraitsStatement =====
@@ -153,7 +153,7 @@ theorem _root_.GlobalTheory.T.exists_linear_uniformisation_base_change_complete_
     ∀ tW : SAB H (Sp W), Nonempty (SABMap tW t (spMap f)) →
       ∃ (PW : PELUnif (maximalIdeal W) tW) (e : PW.D.toPre.X ≃ₗ[𝓞 E] P.D.toPre.X),
         ∀ y r, PsiCoord P.D.toPre (e y) r → ∃ u : Wˣ, PsiCoord PW.D.toPre y (u * f r) := by
-  first | exact @GlobalTheory.UnifDvrBaseChange.exists_pelUnif | exact GlobalTheory.UnifDvrBaseChange.exists_pelUnif | (intros; apply GlobalTheory.UnifDvrBaseChange.exists_pelUnif <;> assumption)
+  first | exact @GlobalTheory.UnifDvrBaseChange.exists_pelUnif
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLinearUniformisationBaseChangeCompleteDvrStatement =====
@@ -214,7 +214,7 @@ theorem _root_.GlobalTheory.T.linear_uniformisations_character_iso_associated_co
     [IsLocalRing W], GlobalTheory.Mum.Base W → ∀ (t : SAB H (Sp W)) (P P' : PELUnif (maximalIdeal W) t),
       ∃ e : P.D.toPre.X ≃ₗ[𝓞 E] P'.D.toPre.X, ∀ y r r', PsiCoord P.D.toPre y r → PsiCoord P'.D.toPre (e y) r' →
         Associated (r ^ 2) (r' ^ 2) := by
-  first | exact @GlobalTheory.PelUnifUniqCoord.main | exact GlobalTheory.PelUnifUniqCoord.main | (intros; apply GlobalTheory.PelUnifUniqCoord.main <;> assumption)
+  first | exact @GlobalTheory.PelUnifUniqCoord.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinearUniformisationsCharacterIsoAssociatedCoordStatement =====
@@ -282,7 +282,7 @@ theorem GlobalTheory.UPoinc.uTraitUniqSt_holds : UTraitUniqSt := by
     intro y
     obtain ⟨u, n, hn, hc⟩ := T.mono y
     obtain ⟨u', n', hn', hc'⟩ := T'.mono (e y)
-    simp only [Fin.prod_univ_one, Matrix.cons_val_zero, Matrix.cons_val_fin_one] at hn hc hn' hc'
+    simp only [Fin.prod_univ_one, Matrix.cons_val_fin_one] at hn hc hn' hc'
     have hc1 : PsiCoord T.P.D.toPre (e1 (e1.symm y)) (u * T.ϖ ^ n 0) := by
       rw [LinearEquiv.apply_symm_apply]; exact hc
     obtain ⟨v, hv⟩ := he1 _ _ hc1

@@ -191,7 +191,7 @@ theorem det_sub_det_mem_span_of_mulVec_eq :
         ext i j
         by_cases h : i = p
         · subst h; simp [M]
-        · simp [M, Matrix.updateRow_ne h, h]
+        · simp [M, h]
       have e2 : (M S).updateRow p (c p) = M S := by
         ext i j
         by_cases h : i = p
@@ -252,7 +252,7 @@ theorem mvPowerSeries_X_syzygy {k : Type} [CommRing k] {g : ℕ}
         tsub_add_cancel_of_le (by simpa [Finsupp.single_le_iff, Nat.one_le_iff_ne_zero] using hj)
       have e2 : (∀ l < j, (m - single j 1 : Fin g →₀ ℕ) l = 0) ↔ ∀ l < j, m l = 0 := by
         refine forall_congr' fun l => forall_congr' fun hl => ?_
-        simp [Finsupp.single_apply, hl.ne']
+        simp [hl.ne']
       simp only [e, e2, hj, ne_eq, not_false_eq_true, if_true, true_and]
   have h2 : ∀ j, coeff m (t j i * X j) =
       if (∀ l < i, m l = 0) ∧ j ≠ i then coeff (m + single i 1) (r j * X j) else 0 := by
@@ -261,7 +261,7 @@ theorem mvPowerSeries_X_syzygy {k : Type} [CommRing k] {g : ℕ}
     by_cases hji : j = i
     · simp [hji]
     have e0 : (m + single i 1 : Fin g →₀ ℕ) j = m j := by
-      simp [Finsupp.single_apply, Ne.symm hji]
+      simp [Ne.symm hji]
     rw [e0]
     by_cases hj : m j = 0
     · simp [hj]
@@ -273,7 +273,7 @@ theorem mvPowerSeries_X_syzygy {k : Type} [CommRing k] {g : ℕ}
       simp [this, h.not_gt]
     · have e2 : (∀ l < i, (m - single j 1 : Fin g →₀ ℕ) l = 0) ↔ ∀ l < i, m l = 0 := by
         refine forall_congr' fun l => forall_congr' fun hl => ?_
-        simp [Finsupp.single_apply, (hl.trans h).ne']
+        simp [(hl.trans h).ne']
       simp only [e2, hj, h, hji, ne_eq, not_false_eq_true, if_true, true_and, and_true]
 
   simp only [Matrix.mulVec, dotProduct, Matrix.sub_apply, Matrix.transpose_apply, sub_mul,
@@ -773,7 +773,7 @@ theorem exists_smul_ker_le (π : MvPolynomial (Fin g) O →ₐ[O] B) (hπ : π.t
     intro b hb
     have := AlgHom.congr_fun h1 b
     have hb' : e b = 0 := hb
-    simp only [AlgHom.comp_apply, Ideal.Quotient.mkₐ_eq_mk, Algebra.ofId_apply, hb', map_zero] at this
+    simp only [AlgHom.comp_apply, Ideal.Quotient.mkₐ_eq_mk, hb', map_zero] at this
     exact Ideal.Quotient.eq_zero_iff_mem.mp this
   have hfp : Algebra.FinitePresentation O B := by
     letI : Algebra (MvPolynomial (Fin g) O) B := π.toRingHom.toAlgebra

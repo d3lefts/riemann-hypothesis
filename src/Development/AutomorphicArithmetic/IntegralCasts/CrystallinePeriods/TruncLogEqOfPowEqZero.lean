@@ -411,9 +411,8 @@ def adicMk (I : Ideal A) (x : ∀ n : ℕ, A ⧸ I ^ n)
 theorem factorPow_evalₐ (I : Ideal A) {m n : ℕ} (hle : m ≤ n) (x : AdicCompletion I A) :
     Ideal.Quotient.factorPow I hle (AdicCompletion.evalₐ I n x) = AdicCompletion.evalₐ I m x := by
   induction x using AdicCompletion.induction_on with
-  | h x =>
-    simp only [AdicCompletion.evalₐ_mk, Ideal.Quotient.factorPow, Ideal.Quotient.factor_mk]
-    exact AdicCompletion.Ideal.mk_eq_mk I hle x
+  | h x => simpa only [AdicCompletion.evalₐ_mk, Ideal.Quotient.factorPow, Ideal.Quotient.factor_mk]
+    using AdicCompletion.Ideal.mk_eq_mk I hle x
 
 theorem evalₐ_pow_eq_zero (I : Ideal A) {x : AdicCompletion I A}
     (hx : AdicCompletion.evalOneₐ I x = 0) (n : ℕ) : AdicCompletion.evalₐ I n x ^ n = 0 := by
@@ -424,8 +423,7 @@ theorem evalₐ_pow_eq_zero (I : Ideal A) {x : AdicCompletion I A}
   rw [← AdicCompletion.factorₐ_evalₐ_one, ← h1, ← ha] at hx
   simp only [Ideal.Quotient.factorPow, Ideal.Quotient.factor_mk,
     Ideal.Quotient.eq_zero_iff_mem] at hx
-  rw [← ha, ← map_pow, Ideal.Quotient.eq_zero_iff_mem]
-  exact Ideal.pow_mem_pow hx _
+  simpa only [← ha, ← map_pow, Ideal.Quotient.eq_zero_iff_mem] using Ideal.pow_mem_pow hx (n + 1)
 
 def truncLog {B : Type*} [CommRing B] [Algebra ℚ B] (N : ℕ) (x : B) : B :=
   ∑ k ∈ Finset.range N, ((-1 : ℚ) ^ k / (k + 1)) • x ^ (k + 1)
@@ -439,8 +437,7 @@ theorem truncLog_eq_of_pow_eq_zero {B : Type*} [CommRing B] [Algebra ℚ B] {x :
   induction n, hle using Nat.le_induction with
   | base => rfl
   | succ n hle ih =>
-    rw [← ih, truncLog, Finset.sum_range_succ, pow_eq_zero_of_le (by omega) h, smul_zero, add_zero]
-    rfl
+    simpa only [truncLog, Finset.sum_range_succ, pow_eq_zero_of_le (show m ≤ n + 1 by omega) h, smul_zero, add_zero] using ih
 
 def adicLog [Algebra ℚ A] (I : Ideal A) (u : AdicCompletion I A)
     (hu : AdicCompletion.evalOneₐ I u = 1) : AdicCompletion I A :=

@@ -486,7 +486,7 @@ open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.CompanionTheo
 theorem _root_.GlobalTheory.T.coinduced_cech_acyclic : ∀ {R : Type} [CommRing R] {P : Type} [SemilatticeInf P] {κ : Type} [LinearOrder κ] (e : κ → P),
     Function.Surjective e → ∀ (M : P → ModuleCat.{0} R) (n : ℕ),
     IsZero (((cechOf e).obj (coind M)).homology (n + 1)) := by
-  first | exact @GlobalTheory.CompanionTheory.Hodge.Nerve.Acyc.isZero_homology | exact GlobalTheory.CompanionTheory.Hodge.Nerve.Acyc.isZero_homology | (intros; apply GlobalTheory.CompanionTheory.Hodge.Nerve.Acyc.isZero_homology <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Hodge.Nerve.Acyc.isZero_homology
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CoinducedCechAcyclicStatement =====
@@ -603,8 +603,6 @@ theorem valL_dNC (M : P → ModuleCat.{0} R) {n : ℕ} (c : Fin (n + 2) ⥤ Pᵒ
   first
     | (simp only [GlobalTheory.CompanionTheory.Hodge.Nerve.dNC, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul];
         all_goals exact Finset.sum_congr rfl fun i _ => rfl)
-    | (rw [GlobalTheory.CompanionTheory.Hodge.Nerve.dNC, LinearMap.sum_apply, map_sum];
-        exact Finset.sum_congr rfl fun i _ => by rw [LinearMap.smul_apply, map_smul]; rfl)
 
 def contr (M : P → ModuleCat.{0} R) {n : ℕ} (f : NC (coind M) (n + 1)) : NC (coind M) n :=
   fun c b ↦ valL M (snoc c b.1 b.2) b.1 (snoc_last_le c b.1 b.2) f
@@ -678,7 +676,7 @@ open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.CompanionTheo
 
 theorem _root_.GlobalTheory.T.coinduced_nerve_acyclic : ∀ {R : Type} [CommRing R] {P : Type} [SemilatticeInf P] (M : P → ModuleCat.{0} R) (n : ℕ),
     IsZero ((nerveCx.obj (coind M)).homology (n + 1)) := by
-  first | exact @GlobalTheory.CompanionTheory.Hodge.Nerve.isZero_homology_coind | exact GlobalTheory.CompanionTheory.Hodge.Nerve.isZero_homology_coind | (intros; apply GlobalTheory.CompanionTheory.Hodge.Nerve.isZero_homology_coind <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Hodge.Nerve.isZero_homology_coind
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CoinducedNerveAcyclicStatement =====
@@ -728,19 +726,16 @@ theorem exists_h0_iso (K L : CochainComplex (ModuleCat.{0} R) ℕ) (ε : K.X 0 �
     have := congrArg (fun φ => ModuleCat.Hom.hom φ x) (GlobalTheory.CompanionTheory.Hodge.DimShift.h0ι_d K)
     first
       | exact this
-      | simpa using this
   have hL : ∀ y, (L.d 0 1).hom ((GlobalTheory.CompanionTheory.Hodge.DimShift.h0ι L).hom y) = 0 := fun y => by
     have := congrArg (fun φ => ModuleCat.Hom.hom φ y) (GlobalTheory.CompanionTheory.Hodge.DimShift.h0ι_d L)
     first
       | exact this
-      | simpa using this
   have h1 : (GlobalTheory.CompanionTheory.Hodge.DimShift.h0ι K ≫ ε.hom) ≫ L.d 0 1 = 0 := by
     apply ModuleCat.hom_ext
     apply LinearMap.ext
     intro x
     first
       | exact (h _).1 (hK x)
-      | simpa using (h _).1 (hK x)
   have h2 : (GlobalTheory.CompanionTheory.Hodge.DimShift.h0ι L ≫ ε.inv) ≫ K.d 0 1 = 0 := by
     apply ModuleCat.hom_ext
     apply LinearMap.ext
@@ -752,7 +747,6 @@ theorem exists_h0_iso (K L : CochainComplex (ModuleCat.{0} R) ℕ) (ε : K.X 0 �
     have := (h (ε.inv.hom ((GlobalTheory.CompanionTheory.Hodge.DimShift.h0ι L).hom y))).2 (by rw [hε]; exact hL y)
     first
       | exact this
-      | simpa using this
   obtain ⟨f₁, hf₁⟩ := GlobalTheory.CompanionTheory.Hodge.DimShift.h0ι_lift L (GlobalTheory.CompanionTheory.Hodge.DimShift.h0ι K ≫ ε.hom) h1
   obtain ⟨f₂, hf₂⟩ := GlobalTheory.CompanionTheory.Hodge.DimShift.h0ι_lift K (GlobalTheory.CompanionTheory.Hodge.DimShift.h0ι L ≫ ε.inv) h2
   refine ⟨⟨f₁, f₂, ?_, ?_⟩, hf₁⟩
@@ -902,8 +896,8 @@ theorem dNC_zero_apply (G : C ⥤ ModuleCat.{0} R) (x : NC G 0) (c : Fin (0 + 1 
     simp only [dNC, LinearMap.sum_apply, Finset.sum_apply, LinearMap.smul_apply, Pi.smul_apply]
     show ∑ i : Fin 2, (-1 : R) ^ (i : ℕ) • (pullNC G (Fin.succAboveOrderEmb i).toOrderHom) x c = _
     rw [Fin.sum_univ_two]
-    simp only [Fin.val_zero, Fin.val_one, pow_zero, pow_one, one_smul, neg_one_smul, sub_eq_add_neg] <;> rfl
-  rw [hsum, pull_last, pull_first] <;> rfl
+    simp only [Fin.val_zero, Fin.val_one, pow_zero, pow_one, one_smul, neg_one_smul, sub_eq_add_neg]
+  rw [hsum, pull_last, pull_first]
 
 end Chains
 

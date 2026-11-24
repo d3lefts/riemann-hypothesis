@@ -208,7 +208,7 @@ theorem GlobalTheory.Dieu.EtFromConn.isTr_comp : ∀ (p : ℕ) [Fact p.Prime] (B
     · intro c x
       simp [map_smul, smul_eq_mul, map_mul]
     · intro i
-      simp only [AddMonoidHom.comp_apply, LinearMap.toAddMonoidHom_coe, RingHom.toAddMonoidHom_eq_coe,
+      simp only [AddMonoidHom.comp_apply, RingHom.toAddMonoidHom_eq_coe,
         AddMonoidHom.coe_coe]
       rw [← hbu_eq, Module.Basis.constr_basis]
   refine ⟨hbu, lbu, hlbu, fun y => ?_⟩
@@ -896,7 +896,6 @@ theorem app_app_eq_algebraMap_counit_of_isConn_of_isEt {p : ℕ} [Fact p.Prime] 
   suffices h : i₀.app n ((x.app n).toRingHom (a - algebraMap k (C.A n) (counit (R := k) a))) = 0 by
     rw [map_sub, map_sub, sub_eq_zero] at h
     refine h.trans ?_
-    change i₀.app n ((x.app n) (algebraMap k (C.A n) (counit (R := k) a))) = _
     rw [(x.app n).map_algebraMap, AlgHomClass.commutes]
   haveI := hC n
   haveI : IsNoetherianRing (G'₀.A n) := isNoetherian_of_tower k' inferInstance

@@ -80,7 +80,6 @@ private lemma app_res_app_res_lemma {X Y Z : Scheme.{0}} (f : X ⟶ Y) (g : Y �
       (f ≫ g).app U ≫ X.presheaf.map (homOfLE hO').op := by
   first
     | rw [Scheme.Hom.naturality_assoc]
-    | rw [← Scheme.Hom.naturality_assoc]
   rw [← Functor.map_comp, ← Category.assoc]
   rfl
 
@@ -90,7 +89,6 @@ private lemma res_app_res_lemma_2 {X Y : Scheme.{0}} (f : X ⟶ Y) (V₁ V : Y.O
       f.app V ≫ X.presheaf.map (homOfLE hO').op := by
   first
     | rw [Scheme.Hom.naturality_assoc]
-    | rw [← Scheme.Hom.naturality_assoc]
   rw [← Functor.map_comp]
   rfl
 
@@ -451,7 +449,6 @@ theorem cmap_comp {κ X A A' : Type} [AddCommGroup X] [CommRing A] [CommRing A']
   have hx := congrArg (fun f => ((Additive.toMul (f (Multiplicative.toAdd x)) : A'ˣ) : A')) hlin
   first
   | exact hx
-  | simpa using hx
 
 open ReciprocityTheory.ChartRestriction.G.Semi in
 theorem appLE_res {X Y : Scheme.{0}} (g : Y ⟶ X) {U U₀ : X.Opens} (hU : U ≤ U₀) {V W : Y.Opens}
@@ -463,7 +460,6 @@ theorem appLE_res {X Y : Scheme.{0}} (g : Y ⟶ X) {U U₀ : X.Opens} (hU : U �
   have h2 := congrArg (fun f => f.hom u.val) key
   first
   | exact h2
-  | simpa [res, pullU] using h2
 
 end ReciprocityTheory.ChartRestriction.G.Out.GtBCPf
 end -- clump:auto
@@ -502,7 +498,6 @@ lemma res_val_res {X : Scheme.{0}} {U V₁ V₂ : X.Opens} (h₁ : V₁ ≤ U) (
   have e : (homOfLE h₁).op = (homOfLE h₂).op ≫ (homOfLE h).op := by
     first
     | rfl
-    | exact Quiver.Hom.unop_inj (Subsingleton.elim _ _)
   rw [e, Functor.map_comp]
   rfl
 
@@ -517,18 +512,15 @@ lemma hleG (j : (pullExt f E).ChartIdx) {V : E.B.left.Opens} {V₁ : ((Over.pull
       = (pullback.fst G.hom f ≫ d.q.left) ⁻¹ᵁ V := by
     first
     | rw [qB_h]
-    | exact congrArg (fun g => g ⁻¹ᵁ V) (qB_h f d.q)
   calc (qB f d.q).left ⁻¹ᵁ V₁ ≤ (qB f d.q).left ⁻¹ᵁ (pullback.fst E.B.hom f ⁻¹ᵁ V) :=
         (qB f d.q).left.preimage_mono h₁
     _ = ((qB f d.q).left ≫ pullback.fst E.B.hom f) ⁻¹ᵁ V := by
         first
         | rfl
-        | exact (Scheme.preimage_comp _ _ _).symm
     _ = (pullback.fst G.hom f ≫ d.q.left) ⁻¹ᵁ V := key
     _ = pullback.fst G.hom f ⁻¹ᵁ (d.q.left ⁻¹ᵁ V) := by
         first
         | rfl
-        | exact Scheme.preimage_comp _ _ _
 
 
 

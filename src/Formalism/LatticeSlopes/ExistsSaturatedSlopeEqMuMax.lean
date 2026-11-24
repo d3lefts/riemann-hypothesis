@@ -89,8 +89,7 @@ theorem finite_mem_norm_le (L : Submodule ℤ E) [hL : DiscreteTopology L] (C : 
 theorem sub_mem_of_starProjection_eq (W : Submodule ℝ E) {x z : E}
     (h : Wᗮ.starProjection x = Wᗮ.starProjection z) : x - z ∈ W := by
   have h0 : Wᗮ.starProjection (x - z) = 0 := by rw [map_sub, h, sub_self]
-  rw [Submodule.starProjection_apply_eq_zero_iff, Submodule.orthogonal_orthogonal] at h0
-  exact h0
+  rwa [Submodule.starProjection_apply_eq_zero_iff, Submodule.orthogonal_orthogonal] at h0
 
 theorem mem_of_starProjection_mem_span_orthQuotient {L M N₁ : Submodule ℤ E} (hM : IsSaturated L M) (h1 : N₁ ≤ M)
     {x : E} (hx : x ∈ L)

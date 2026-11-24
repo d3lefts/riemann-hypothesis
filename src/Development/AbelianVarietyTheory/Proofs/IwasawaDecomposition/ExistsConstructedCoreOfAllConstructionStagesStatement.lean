@@ -97,7 +97,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.columnLayerConditions_trueColumns_laterStages : ∀ (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T) (Z : w.Lt) (t : ColT w Z), ColLay (w.D Z) t.full.1.base.lev0 (Formalism.L2.Herm.toErrXS t.full.1) := by
-  first | exact @GlobalTheory.Mem.Top.ColOwe.colLay_colT | exact GlobalTheory.Mem.Top.ColOwe.colLay_colT | (intros; apply GlobalTheory.Mem.Top.ColOwe.colLay_colT <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.ColOwe.colLay_colT
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ColumnLayerConditionsTrueColumnsLaterStagesStatement =====
@@ -408,7 +408,7 @@ theorem cong_of_col {n : ℕ} {J R S : Matrix (Fin (n + 1)) (Fin (n + 1)) E} {a 
   have hU' : U = blk 1 (U.submatrix Fin.succ Fin.succ) := by
     ext i j
     cases i using Fin.cases <;> cases j using Fin.cases <;>
-      simp [blk, hc, hr, Matrix.one_apply, Fin.succ_ne_zero]
+      simp [blk, hc, hr, Fin.succ_ne_zero]
   rw [hU', cT_blk, blk_mul, blk_mul] at hU
   rw [hU', det_blk, one_mul] at hd
   exact ⟨_, hd, (blk_inj hU).2⟩
@@ -1669,7 +1669,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.forcedContent_eq_scale_at_residueChar : ∀ (D : D7) (L : SizeData₂ D) (j : ℕ) (v : D.what₂.places.Pl), Fval L j v = FK L.sc D j (D.what₂.places.resChar v) := by
-  first | exact @GlobalTheory.Mem.Top.Bl.Fval_eq_FK | exact GlobalTheory.Mem.Top.Bl.Fval_eq_FK | (intros; apply GlobalTheory.Mem.Top.Bl.Fval_eq_FK <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.Bl.Fval_eq_FK
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ParametersForcedContentEqScaleAtResidueCharStatement =====
@@ -1701,7 +1701,7 @@ theorem fval_off (l : Lv4 𝒮 K w Z) (L : SizeData₂ (w.D Z)) (hL : L.sc = K.s
     by_contra h
     exact hv' _ h
   unfold F0K at key
-  simp only [Equiv.symm_apply_apply] at key
+  simp only at key
   have e : j - 1 + 1 = j := by omega
   rw [e] at key
   exact key
@@ -1807,7 +1807,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_constructedCore_of_all_construction_stages : StandardLattice.SiegelMassRatioCM → ∀ 𝒮 : Slots, AmbEx 𝒮 → DivEx 𝒮 → ThEx 𝒮 → StepW (pinAnd (Has4 𝒮)) (HasC (BuiltE 𝒮)) := by
-  first | exact @GlobalTheory.Mem.Top.Bl.CoreAsm.stepW_core | exact GlobalTheory.Mem.Top.Bl.CoreAsm.stepW_core | (intros; apply GlobalTheory.Mem.Top.Bl.CoreAsm.stepW_core <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.Bl.CoreAsm.stepW_core
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsConstructedCoreOfAllConstructionStagesStatement =====

@@ -104,7 +104,7 @@ theorem sub_of_red {E : Type} [Field E] [NumberField E] {n : ℕ} (M : ℕ) {A B
   clear e
   refine ⟨b, RingOfIntegers.isIntegral_coe b, ?_⟩
   have := congrArg (fun z : 𝓞 E => (z : E)) hb
-  simp only [map_mul, map_natCast, map_sub] at this
+  simp only [map_mul, map_natCast] at this
   rw [Matrix.sub_apply, mul_comm]
   exact this.symm
 
@@ -642,7 +642,7 @@ lemma entry_bound {N : ℕ} (P Z Q : Matrix (Fin N) (Fin N) ℝ) (i j : Fin N) (
     _ ≤ ∑ _q : Fin N, ∑ _p : Fin N, c := by
         refine Finset.sum_le_sum fun q _ => ?_
         exact (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun p _ => h p q)
-    _ = N * N * c := by simp [Finset.sum_const, Finset.card_fin]; ring
+    _ = N * N * c := by simp [Finset.sum_const]; ring
 
 lemma orth_entry_le {N : ℕ} (k : Matrix (Fin N) (Fin N) ℝ) (h : kᵀ * k = 1) (p q : Fin N) :
     |k p q| ≤ 1 := by
@@ -1086,8 +1086,8 @@ theorem det_ne_zero {e : Fin N → Fin I.n → I.E} (he : IsZBasis I e) (c : ℕ
     have e2 : (fun i => starRingEnd I.E (y0 i)) = Pi.single k ((I.J *ᵥ x) k)⁻¹ := by
       funext i
       by_cases h : i = k
-      · subst h; simp [hy0def, star_inv₀, starRingEnd_apply, star_star]
-      · simp [hy0def, Pi.single_apply, h]
+      · subst h; simp [hy0def, starRingEnd_apply, star_star]
+      · simp [hy0def, h]
     rw [e2]
     simp [dotProduct, Pi.single_apply]
     exact inv_mul_cancel₀ (by simpa using hk)
@@ -1217,7 +1217,7 @@ theorem gm_mulVec {N : ℕ} (ρ : (InfinitePlace I.F → Fin I.n → ℂ) ≃ₗ
   rw [vec_sum_zsmul, map_sum]
   funext i
   simp only [map_zsmul]
-  simp only [gm, mulVec, dotProduct, of_apply, Finset.sum_apply, Pi.smul_apply, zsmul_eq_mul]
+  simp only [gm, mulVec, dotProduct, of_apply, Finset.sum_apply, zsmul_eq_mul]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
 theorem gm_change {N : ℕ} (ρ : (InfinitePlace I.F → Fin I.n → ℂ) ≃ₗ[ℝ] (Fin N → ℝ)) (y : I.Ginf)
@@ -1228,7 +1228,7 @@ theorem gm_change {N : ℕ} (ρ : (InfinitePlace I.F → Fin I.n → ℂ) ≃ₗ
 
   rw [vec_sum_zsmul I y (fun k => M k j) e, map_sum]
   simp only [map_zsmul]
-  simp only [Finset.sum_apply, Pi.smul_apply, zsmul_eq_mul]
+  simp only [Finset.sum_apply, zsmul_eq_mul]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 
 theorem sum_change {N : ℕ} (M : Matrix (Fin N) (Fin N) ℤ) (e : Fin N → Fin I.n → I.E) (w : Fin N → ℤ) :
@@ -1704,7 +1704,7 @@ theorem fix_one (I : AutInst) {N : ℕ} (e : Fin N → Fin I.n → I.E) (A : Mat
     intro l
     by_cases h : l = j
     · subst h; simpa using isIntegral_one
-    · simp [Pi.single_apply, h, isIntegral_zero]
+    · simp [h, isIntegral_zero]
   have := congrFun (key _ hs) i
   rw [Matrix.mulVec_single_one] at this
   simpa [Matrix.col, Matrix.one_apply, Pi.single_apply, eq_comm] using this
@@ -1895,7 +1895,7 @@ lemma entry_bound (z : I.Ginf) {N : ℕ} (e₀ : Fin N → Fin I.n → I.E) (c :
   have h : uMat (z v)⁻¹ j i = (∑ l, c l • vec I z (e₀ l)) v j := by
     calc uMat (z v)⁻¹ j i
         = (uMat (z v)⁻¹ *ᵥ (Pi.single v (Pi.single i (1 : ℂ)) : InfinitePlace I.F → Fin I.n → ℂ) v) j := by
-          simp [Matrix.mulVec_single_one]
+          simp
       _ = (uMat (z v)⁻¹ *ᵥ (∑ l, c l • vec I 1 (e₀ l)) v) j := by rw [hc]
       _ = (∑ l, c l • vec I z (e₀ l)) v j := by
           simp only [Finset.sum_apply, Pi.smul_apply, Matrix.mulVec_sum, Matrix.mulVec_smul, vec_one I z]

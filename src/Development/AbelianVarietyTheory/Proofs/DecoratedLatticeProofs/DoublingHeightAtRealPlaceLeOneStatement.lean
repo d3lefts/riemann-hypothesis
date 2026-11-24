@@ -150,9 +150,7 @@ theorem det_one_add_ge (W : Matrix (Fin n) (Fin n) ℂ) (hW : ‖W.det‖ = 1) :
     rw [h3] at hd
     have h4 : ((∏ i, hh.eigenvalues i : ℝ) : ℂ) = 1 := by
       first
-        | exact_mod_cast hd.symm
         | (rw [Complex.ofReal_prod]; exact hd.symm)
-        | simpa using hd.symm
     exact_mod_cast h4
   refine ⟨∏ i, (1 + hh.eigenvalues i), ?_, ?_⟩
   · have hs : (∏ i, Real.sqrt (hh.eigenvalues i)) = 1 := by
@@ -312,7 +310,7 @@ open GlobalTheory.Core.Rk.IP
 
 
 theorem _root_.GlobalTheory.T.doublingHeightAtRealPlace_le_one : ∀ (D : D7) (A : HSp D) (a : GL (Fin A.rank) (AE D)), IsMaj A a → ∀ (w : InfinitePlace D.host.F) (y : Gw A w), GlobalTheory.IndefiniteRowSideFullHecke.SphericalVolumeLift.hgtW A a w y ≤ 1 := by
-  first | exact @GlobalTheory.Core.Rk.HgtArch.hgtW_le_one | exact GlobalTheory.Core.Rk.HgtArch.hgtW_le_one | (intros; apply GlobalTheory.Core.Rk.HgtArch.hgtW_le_one <;> assumption)
+  first | exact @GlobalTheory.Core.Rk.HgtArch.hgtW_le_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.DoublingHeightAtRealPlaceLeOneStatement =====

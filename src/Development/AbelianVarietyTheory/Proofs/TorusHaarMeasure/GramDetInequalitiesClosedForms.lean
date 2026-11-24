@@ -449,16 +449,10 @@ open MeasureTheory Topology Matrix in
 open scoped ComplexOrder ENNReal Pointwise in
 theorem _root_.GlobalTheory.sum_log_gramDet_ratio_pos : (∀ (m n : Type) [Fintype m] [Fintype n] [DecidableEq n] (A B : Matrix m n ℂ), ‖(Aᴴ * B).det‖ ^ 2 ≤ (((A)ᴴ * (A)).det.re) * (((B)ᴴ * (B)).det.re) ∧ ((Aᴴ * B).det ≠ 0 → (((A)ᴴ * (A)).det.re) * (((B)ᴴ * (B)).det.re) ≤ ‖(Aᴴ * B).det‖ ^ 2 → ∃ C : Matrix n n ℂ, B = A * C)) → (∀ (r : ℕ) (S : Finset (Matrix (Fin r) (Fin r) ℂ)), (∀ a ∈ S, a.IsHermitian ∧ a.det ≠ 0 ∧ a⁻¹ ∈ S) → (∀ W : Submodule ℂ (Fin r → ℂ), (∀ a ∈ S, ∀ v ∈ W, (a * a).mulVec v ∈ W) → W = ⊥ ∨ W = ⊤) → ∀ (i : ℕ), 0 < i → i < r → ∀ M : Matrix (Fin r) (Fin i) ℂ, 0 < (((M)ᴴ * (M)).det.re) → (∀ a ∈ S, 0 < (((a * M)ᴴ * (a * M)).det.re)) ∧ 0 < ∑ a ∈ S, Real.log ((((a * M)ᴴ * (a * M)).det.re) / (((M)ᴴ * (M)).det.re))) := by
   intro hCS r S hS hirr i hi0 hir M hM
-  have hG0 : ∀ X : Matrix (Fin r) (Fin i) ℂ, 0 ≤ (Xᴴ * X).det.re ∧ (Xᴴ * X).det.im = 0 := by
-    intro X
-    have h := Complex.le_def.mp (posSemidef_conjTranspose_mul_self X).det_nonneg
-    exact ⟨by simpa using h.1, by simpa using h.2.symm⟩
-  have hnorm : ∀ X : Matrix (Fin r) (Fin i) ℂ, ‖(Xᴴ * X).det‖ = (Xᴴ * X).det.re := by
-    intro X
-    have h : (Xᴴ * X).det = (((Xᴴ * X).det.re : ℝ) : ℂ) :=
-      Complex.ext (by simp) (by simp [(hG0 X).2])
-    rw [h, Complex.norm_real, Real.norm_of_nonneg (by simpa using (hG0 X).1)]
-    simp
+  have hG0 : ∀ X : Matrix (Fin r) (Fin i) ℂ, 0 ≤ (Xᴴ * X).det.re := fun X =>
+    (Complex.le_def.mp (posSemidef_conjTranspose_mul_self X).det_nonneg).1
+  have hnorm : ∀ X : Matrix (Fin r) (Fin i) ℂ, ‖(Xᴴ * X).det‖ = (Xᴴ * X).det.re := fun X =>
+    (Complex.re_eq_norm.mpr (posSemidef_conjTranspose_mul_self X).det_nonneg).symm
   have hunit : ∀ a ∈ S, IsUnit a.det := fun a ha => isUnit_iff_ne_zero.mpr (hS a ha).2.1
   have hmul : ∀ a ∈ S, (a * M)ᴴ * (a⁻¹ * M) = Mᴴ * M := by
     intro a ha
@@ -472,10 +466,10 @@ theorem _root_.GlobalTheory.sum_log_gramDet_ratio_pos : (∀ (m n : Type) [Finty
   have hMsq : 0 < ((Mᴴ * M).det.re) ^ 2 := pow_pos hM 2
   have hpos : ∀ a ∈ S, 0 < ((a * M)ᴴ * (a * M)).det.re := by
     intro a ha
-    refine lt_of_le_of_ne (hG0 _).1 fun h => ?_
+    refine lt_of_le_of_ne (hG0 _) fun h => ?_
     have h' := hpair a ha
     rw [← h, zero_mul] at h'
-    linarith
+    exact hMsq.not_ge h'
   refine ⟨hpos, ?_⟩
   have hinvinv : ∀ a ∈ S, a⁻¹⁻¹ = a := fun a ha => nonsing_inv_nonsing_inv a (hunit a ha)
   have hsum_inv : ∑ a ∈ S, Real.log ((((a⁻¹ * M)ᴴ * (a⁻¹ * M)).det.re) / (((M)ᴴ * (M)).det.re)) =
@@ -498,7 +492,7 @@ theorem _root_.GlobalTheory.sum_log_gramDet_ratio_pos : (∀ (m n : Type) [Finty
   have hstrict : ∃ a ∈ S, 0 < Real.log ((((a * M)ᴴ * (a * M)).det.re) / (((M)ᴴ * (M)).det.re)) +
       Real.log ((((a⁻¹ * M)ᴴ * (a⁻¹ * M)).det.re) / (((M)ᴴ * (M)).det.re)) := by
     by_contra hcon
-    push_neg at hcon
+    push Not at hcon
     have hle : ∀ a ∈ S, ((a * M)ᴴ * (a * M)).det.re * ((a⁻¹ * M)ᴴ * (a⁻¹ * M)).det.re ≤
         ((Mᴴ * M).det.re) ^ 2 := by
       intro a ha
@@ -506,10 +500,7 @@ theorem _root_.GlobalTheory.sum_log_gramDet_ratio_pos : (∀ (m n : Type) [Finty
       have h' := hcon a ha
       rw [hterm a ha] at h'
       exact absurd h' (not_le.mpr (Real.log_pos h))
-    have hdet : (Mᴴ * M).det ≠ 0 := by
-      intro h
-      rw [h] at hM
-      simp at hM
+    have hdet : (Mᴴ * M).det ≠ 0 := Complex.ne_zero_of_re_pos hM
     have hcol : ∀ a ∈ S, ∃ C : Matrix (Fin i) (Fin i) ℂ, a * a * M = M * C := by
       intro a ha
       have ha' := (hS a ha).2.2
@@ -531,7 +522,7 @@ theorem _root_.GlobalTheory.sum_log_gramDet_ratio_pos : (∀ (m n : Type) [Finty
         ext x l
         have h2 := congrArg (fun f => f (Pi.single l 1) x) (LinearMap.range_eq_bot.mp h)
         simpa [Matrix.mulVecLin_apply] using h2
-      haveI : Nonempty (Fin i) := ⟨⟨0, hi0⟩⟩
+      have hne : Nonempty (Fin i) := Fin.pos_iff_nonempty.mp hi0
       rw [hM0] at hM
       simp at hM
     · have h1 := LinearMap.finrank_range_le (Matrix.mulVecLin M)

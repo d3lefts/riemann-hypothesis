@@ -350,7 +350,6 @@ theorem UpperTheory.exists_level_unipotent_invariance_automorphicForm :
   rw [hy] at e
   rw [← e]
   change f.1 (G * (m _ * k)) = _
-  congr 1
   group
 end -- clump:auto
 end -- clump:auto

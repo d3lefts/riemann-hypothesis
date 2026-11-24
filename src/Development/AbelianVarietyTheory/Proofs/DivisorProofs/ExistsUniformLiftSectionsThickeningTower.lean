@@ -583,7 +583,6 @@ theorem exists_triple_of_card_eq_three {ι : Type*} [LinearOrder ι] {t : Finset
     | exact ⟨b, c, a, by assumption, by assumption, by ext; simp only [Finset.mem_insert, Finset.mem_singleton]; tauto⟩
     | exact ⟨c, a, b, by assumption, by assumption, by ext; simp only [Finset.mem_insert, Finset.mem_singleton]; tauto⟩
     | exact ⟨c, b, a, by assumption, by assumption, by ext; simp only [Finset.mem_insert, Finset.mem_singleton]; tauto⟩
-    | (exfalso; order)
 
 theorem Cube.d_two_apply_triple {ι : Type} [LinearOrder ι] {R : Type*} [Ring R]
     (A : Cube ι R) (x : Cube.Term A 2) {i j l : ι} (hij : i < j) (hjl : j < l) :
@@ -916,7 +915,7 @@ theorem uniformSerre_cocycle : ∀ (R : Type) [CommRing R] [IsNoetherianRing R] 
           (((isHomogeneous_X_pow j N').mul (hG'h i)).sub ((isHomogeneous_X_pow i N').mul (hG'h j)))))
     rw [h𝔞 _ _ hh] at hL
     have := hL e (proj I e _) (fun m => coeff_proj I e _ m)
-    simp only [mul_pow, mul_assoc, proj_add, proj_sub, proj_Xpow_mul, hF'p, ↓reduceIte] at this
+    simp only [mul_pow, mul_assoc, proj_sub, proj_Xpow_mul, hF'p, ↓reduceIte] at this
     simpa only [mul_pow, mul_assoc] using this
 
 end GlobalTheory
@@ -1425,7 +1424,6 @@ theorem Charts.tower_preimage_germ : ∀ (R : Type) [CommRing R] (I : Ideal R) (
   induction e with
   | zero =>
     intro i
-    subst_vars
     refine ⟨?_, fun j z _ => ?_⟩
     · rw [h0]; rfl
     · rw [h0]

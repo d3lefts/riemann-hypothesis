@@ -507,7 +507,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.chow_form_specialization_propo
   (∀ x ∈ P, ∀ x' ∈ P, ∀ t : ℂ, x' = t • x → x' = x) →
   P.card = δ → eval (consGroup u₀ v) g ≠ 0 →
     ∃ c : ℂ, c ≠ 0 ∧ ∀ u : Fin n → ℂ, eval (consGroup u v) g = c * ∏ x ∈ P, ∑ j, u j * x j := by
-  first | exact @ModelDimension.chow_form_product_formula | exact ModelDimension.chow_form_product_formula
+  first | exact @ModelDimension.chow_form_product_formula
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChowFormSpecializationProportional =====
@@ -619,7 +619,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.chow_form_fibre_specialization
   eval (consGroup u₀ (nrmGroups h e (coefRows h π))) g ≠ 0 →
     ∃ c : ℂ, c ≠ 0 ∧ ∀ u : Fin n → ℂ, eval (consGroup u (nrmGroups h e (coefRows h π))) g =
       c * ∏ᶠ y ∈ fibrePts (coneSet h W) π, ∑ j, u j * h.pointOf y j := by
-  first | exact @PositivityTheory.Xgn.t_xgz_chow_mahler_fibrefactor | exact PositivityTheory.Xgn.t_xgz_chow_mahler_fibrefactor
+  first | exact @PositivityTheory.Xgn.t_xgz_chow_mahler_fibrefactor
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChowFormFibreSpecialization =====

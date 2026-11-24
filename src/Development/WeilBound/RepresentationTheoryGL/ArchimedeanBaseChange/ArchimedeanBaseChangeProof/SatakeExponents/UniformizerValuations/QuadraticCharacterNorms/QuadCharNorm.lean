@@ -106,7 +106,7 @@ theorem char_eq_zpow (χ : ℂˣ →* ℂˣ) (hc : Continuous χ) (hu : ∀ z, �
   have hz0 : (z : ℂ) ≠ 0 := z.ne_zero
   have hn0 : (‖(z : ℂ)‖ : ℂ) ≠ 0 := by exact_mod_cast norm_ne_zero_iff.2 hz0
   have hw : (z : ℂ) / (‖(z : ℂ)‖ : ℂ) ∈ Submonoid.unitSphere ℂ := by
-    simp [Submonoid.unitSphere, mem_sphere_zero_iff_norm, norm_div, hz0]
+    simp [Submonoid.unitSphere, hz0]
   let w : Circle := (⟨_, hw⟩ : Circle)
   let r : ℂˣ := Units.mk0 (‖(z : ℂ)‖ : ℂ) hn0
   have hzr : z = Circle.toUnits w * r := Units.ext (by
@@ -266,7 +266,7 @@ theorem _root_.GlobalTheory.T.infinityType_unitaryHeckeCharCM_restricting_to_eta
     (∀ x, μ.1 (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.ideleMap (maximalRealSubfield E) E x) = (GlobalTheory.GalOfCusp.quadChar E).1 x) →
     ∃ e : InfinitePlace E → ℤ, (∀ v, Odd (e v)) ∧
       ∀ z : (Cinf E)ˣ, (chiInf μ z : ℂ) = ∏ v, (z.1 v / (‖z.1 v‖ : ℂ)) ^ e v := by
-  first | exact @GlobalTheory.MuInfType.infType | exact GlobalTheory.MuInfType.infType | (intros; apply GlobalTheory.MuInfType.infType <;> assumption)
+  first | exact @GlobalTheory.MuInfType.infType
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.InfinityTypeUnitaryHeckeCharCMRestrictingToEtaStatement =====
@@ -568,7 +568,7 @@ theorem _root_.GlobalTheory.T.exists_unitary_hecke_character_norm : ∀ (E : Typ
         Neutral.B1.diagUnits E k * GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.ideleMap (maximalRealSubfield E) E b * u ∈ U →
         (GlobalTheory.GalOfCusp.quadChar E).1 b =
           ψ (Neutral.B1.diagUnits E k * GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.ideleMap (maximalRealSubfield E) E b * u) := by
-  first | exact @GlobalTheory.ConsEta.exists_open_subgroup_eta_consistent | exact GlobalTheory.ConsEta.exists_open_subgroup_eta_consistent | (intros; apply GlobalTheory.ConsEta.exists_open_subgroup_eta_consistent <;> assumption)
+  first | exact @GlobalTheory.ConsEta.exists_open_subgroup_eta_consistent
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUnitaryHeckeCharacterNormStatement =====

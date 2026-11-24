@@ -135,7 +135,7 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (τ : Ain
   have hfadj : zW f * zW f.adjugate = algebraMap ℤ_[l] (WCb l) f.det • (1 : Matrix (Fin d) (Fin d) (WCb l)) := by
     rw [← hzWmul, Matrix.mul_adjugate]
     ext i j
-    by_cases h : i = j <;> simp [zW, h, Matrix.one_apply]
+    by_cases h : i = j <;> simp [zW, h]
   have hTdet : F.T.det ≠ 0 := ((Matrix.isUnit_iff_isUnit_det _).1 F.unit).ne_zero
   have hdf : algebraMap ℤ_[l] (WCb l) f.det ≠ 0 := algebraMap_ne_zero _ hf
   set Y1 := zW f.adjugate * F.T with hY1
@@ -322,7 +322,7 @@ noncomputable def kerMat {d d' : ℕ} (P : Matrix (Fin d) (Fin d') ℤ_[l]) (n :
 theorem kerMat_mulVec {d d' : ℕ} (P : Matrix (Fin d) (Fin d') ℤ_[l]) (n : ℕ) (w : Fin d' → ℤ_[l]) :
     kerMat P n *ᵥ w = ((∑ j, w j • kerBasis P n j : kerMod P n) : Fin d' → ℤ_[l]) := by
   ext i
-  simp [kerMat, Matrix.mulVec, dotProduct, Submodule.coe_sum, Finset.sum_apply, mul_comm]
+  simp [kerMat, Matrix.mulVec, dotProduct, Finset.sum_apply, mul_comm]
 
 theorem exists_kernel_lattice : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type) [Group Γ] (d d' n : ℕ) (ρ : Γ →* GL (Fin d) ℤ_[l]) (ρ' : Γ →* GL (Fin d') ℤ_[l]) (Pi : Matrix (Fin d) (Fin d') (ℤ_[l])), Onto (fun g => (ρ g).val) (fun g => (ρ' g).val) Pi n → ∃ (f : Matrix (Fin d') (Fin d') (ℤ_[l])) (ρ'' : Γ →* GL (Fin d') ℤ_[l]), f.det ≠ 0 ∧ (∀ g, f * (ρ'' g).val = (ρ' g).val * f) ∧ ∀ v : Fin d' → ℤ_[l], (∀ i, (l : ℤ_[l]) ^ n ∣ (Pi *ᵥ v) i) ↔ ∃ w, v = f *ᵥ w := by
   intro l _ Γ _ d d' n ρ ρ' P hP
@@ -428,7 +428,7 @@ theorem pid_dichotomy {O : Type*} [CommRing O] [IsDomain O] [IsPrincipalIdealRin
     by_cases hj : j ∈ Set.range snf.f
     · obtain ⟨i, rfl⟩ := hj
       have h2 := congrFun (snf.repr_comp_embedding_eq_smul ⟨_, hmem k⟩) i
-      simp only [Function.comp_apply, Pi.smul_apply, smul_eq_mul] at h2
+      simp only [Function.comp_apply, smul_eq_mul] at h2
       have h3 : snf.bM.repr (fun i => P i k) (snf.f i) = snf.a i * snf.bN.repr ⟨_, hmem k⟩ i := h2
       rw [h3]
       intro hu
@@ -738,7 +738,7 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (d d' n :
   refine ⟨Q * U.submatrix id (fun k => (e k : Fin d')), Uinv.submatrix (fun k => (e k : Fin d')) id,
     U.submatrix id (fun k => (e k : Fin d')), hunit, fun i j => hUi _ _, fun i j => hU _ _, hdiv, ?_⟩
   intro i j
-  simp [Matrix.mul_submatrix_one, Matrix.submatrix]
+  simp [Matrix.submatrix]
 
 end GlobalTheory.SmithQuot
 end -- clump:auto
@@ -799,14 +799,14 @@ theorem flatKer {l : ℕ} [Fact l.Prime] {d d' n : ℕ} (Pi : Matrix (Fin d) (Fi
   have hu' : ∀ j, u j = ∑ m, A m (Sum.inl j) • yy (Finsupp.single m 1) := by
     intro j
     have h1 : u j = x (fun q => if Sum.inl j = q then 1 else 0) := by
-      simp [x, Fintype.linearCombination_apply, Fintype.sum_sum_type]
+      simp [x, Fintype.linearCombination_apply]
     rw [h1, hx, LinearMap.comp_apply, hyy]
   choose w hw using fun m => (hker (fun j => A m (Sum.inl j))).1 (fun i => ⟨A m (Sum.inr i), hA m i⟩)
   refine ⟨fun t => ∑ m, w m t • yy (Finsupp.single m 1), funext fun j => ?_⟩
   rw [hu' j]
   have h2 : ∀ m, A m (Sum.inl j) = ∑ t, f j t * w m t := fun m => congrFun (hw m) j
 
-  simp only [h2, Matrix.mulVec, dotProduct, Finset.sum_smul, Finset.mul_sum, Finset.sum_mul, Algebra.smul_def, Matrix.map_apply,
+  simp only [h2, Matrix.mulVec, dotProduct, Finset.mul_sum, Finset.sum_mul, Algebra.smul_def, Matrix.map_apply,
   map_sum, map_mul, mul_assoc]
   exact Finset.sum_comm
 

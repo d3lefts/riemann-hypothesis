@@ -165,7 +165,7 @@ theorem exists_invariant_posDef_hermitian {n : ℕ} (H : Subgroup (GL (Fin n) �
       simp only [dotProduct, Pi.star_apply, Complex.re_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Complex.sq_norm, Complex.normSq_apply]
-      simp [Complex.star_def, Complex.mul_re]
+      simp [Complex.mul_re]
     have hnz : ∀ g : H, m g *ᵥ x ≠ 0 := by
       intro g h0
       have : (((g : GL (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ) * m g) *ᵥ x = x := by
@@ -242,7 +242,7 @@ theorem exists_congr_one {n : ℕ} {P : Matrix (Fin n) (Fin n) ℂ} (hP : P.IsHe
   have := hpos _ hx
   rw [Matrix.star_mulVec, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, hQ] at this
   cases h : ε i
-  · simp [h, Matrix.mulVec_single_one, dotProduct, Pi.single_apply, Matrix.diagonal_apply] at this
+  · simp [h, dotProduct, Pi.single_apply] at this
     linarith
   · simp
 
@@ -329,7 +329,7 @@ theorem simultaneous_normal_form : ∀ {n : ℕ} {J P : Matrix (Fin n) (Fin n) �
     have : (s i : ℂ) * d i * s i = ((d i * (s i * s i) : ℝ) : ℂ) := by push_cast; ring
     rw [this, hsi]
     rcases lt_or_gt_of_ne (hdne i) with h | h
-    · simp [h, not_lt.2 h.le, abs_of_neg h, (hdne i)]
+    · simp [not_lt.2 h.le, abs_of_neg h, (hdne i)]
     · simp [h, abs_of_pos h, (hdne i)]
   · have hi : (Q₀⁻¹).1ᴴ * Q₀.1ᴴ = 1 := by
       rw [← Matrix.conjTranspose_mul, Units.mul_inv, Matrix.conjTranspose_one]
@@ -463,7 +463,7 @@ theorem _root_.GlobalTheory.T.exists_majorantFrame_compact_subgroup_le : ∀ (F 
     ∃ c : (∀ w : InfinitePlace F, GL (Fin n) (w.Completion ⊗[F] E)),
       (∀ w, ∃ ε : Fin n → Bool, Formalism.UG.cT (sigR _ σ) (c w).1 * JR w.Completion J * (c w).1 =
         Matrix.diagonal fun i => if ε i then 1 else -1) ∧ K ≤ majCpt σ J c := by
-  first | exact @GlobalTheory.CptMajorant.exists_frame_le_majCpt | exact GlobalTheory.CptMajorant.exists_frame_le_majCpt | (intros; apply GlobalTheory.CptMajorant.exists_frame_le_majCpt <;> assumption)
+  first | exact @GlobalTheory.CptMajorant.exists_frame_le_majCpt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMajorantFrameCompactSubgroupLeStatement =====
@@ -549,8 +549,8 @@ theorem _root_.GlobalTheory.conjTranspose_mul_mul_self_of_unitary_conj :
     simp only [← Matrix.mul_assoc, hBm]
   simp only [conjTranspose_add, conjTranspose_mul, conjTranspose_sub, conjTranspose_one,
     conjTranspose_conjTranspose, hJ, Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub,
-    Matrix.one_mul, Matrix.mul_one, Matrix.mul_assoc, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, hXP, hYP,
-    Matrix.mul_zero, Matrix.zero_mul, sub_zero, add_zero, zero_add]
+    Matrix.one_mul, Matrix.mul_one, Matrix.mul_assoc, r1, r2, r3, r4, r5, r6, r9, r10, hXP, hYP,
+    Matrix.mul_zero, sub_zero, add_zero]
   abel
 
 end GlobalTheory
@@ -697,7 +697,7 @@ theorem schur_complement_step_cpx : ∀ (n r : ℕ) (J θ : Matrix (Fin n) (Fin 
     ext a c
     rw [Matrix.mul_apply, Fin.sum_univ_add]
     simp only [K, Fin.addCases_left, Fin.addCases_right, Matrix.add_apply, Matrix.one_apply,
-      mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true,
+      mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true,
       Matrix.mul_apply]
     rw [add_comm]
     rfl
@@ -797,74 +797,21 @@ theorem isotropic_unipotent_column_relations : ∀ (n r : ℕ) (J : Matrix (Fin 
     · intro x y hxy
       exact Fin.ext (by simpa using congrArg Fin.val hxy)
     · intro i hi
-      have : ¬ i.val < m := by
-        intro hlt
-        exact hi ⟨⟨i.val, hlt⟩, rfl⟩
-      simp [this]
-    · intro j
-      simp
+      have hmi : ¬ i.val < m := fun hlt => hi ⟨⟨i.val, hlt⟩, rfl⟩
+      simp [hmi]
+    · simp
   have he1 : ∀ a : Fin l → ℂ, Matrix.mulVec X (fun i : Fin r => if hi : i.val < l then a ⟨i.val, hi⟩ else 0) =
       Matrix.mulVec X₁ a := fun a => hext l (by omega) a
   have he2 : ∀ a : Fin (l + d) → ℂ, Matrix.mulVec X (fun i : Fin r => if hi : i.val < l + d then a ⟨i.val, hi⟩ else 0) =
       Matrix.mulVec X₂ a := fun a => hext (l + d) h a
-  have hcol : ∀ (v : Fin n → ℂ) (i : Fin (l + d)),
-      Matrix.mulVec (X₂.conjTranspose * J) v i =
-        Matrix.mulVec (X.conjTranspose * J) v ⟨i.val, by omega⟩ := by
-    intro v i
-    rfl
-  have hXc : ∀ (i j : Fin r), Matrix.mulVec (X.conjTranspose * J) (fun k => X k j) i = 0 := by
-    intro i j
-    exact congrFun (congrFun hX i) j
-  have key : ∀ j : Fin r, ∃ c : Fin r → ℂ,
-      (∀ i, c i ≠ 0 → (i.val < l ∧ l ≤ j.val) ∨ (i.val < l + d ∧ l + d ≤ j.val)) ∧
-      Matrix.mulVec u (fun k => X k j) = (fun k => X k j) + Matrix.mulVec X c := by
-    intro j
-    by_cases hj1 : j.val < l
-    · refine ⟨0, fun i hi => absurd rfl hi, ?_⟩
-      funext k
-      have := congrFun (congrFun h1 k) ⟨j.val, hj1⟩
-      simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct, X₁] using this
-    by_cases hj2 : j.val < l + d
-    · refine ⟨fun i => if hi : i.val < l then A ⟨i.val, hi⟩ ⟨j.val - l, by omega⟩ else 0, ?_, ?_⟩
-      · intro i hi
-        left
-        by_cases hil : i.val < l
-        · exact ⟨hil, by omega⟩
-        · exact absurd (by simp [hil]) hi
-      · have he1' := he1 (fun i => A i ⟨j.val - l, by omega⟩)
-        beta_reduce at he1'
-        rw [he1']
-        funext k
-        have := congrFun (congrFun hb k) ⟨j.val - l, by omega⟩
-        have hjj : (⟨l + (j.val - l), by omega⟩ : Fin r) = j := Fin.ext (by simp; omega)
-        simp only [Matrix.mul_apply, Matrix.add_apply, Xb, X₁, Matrix.submatrix_apply, id, hjj] at this
-        simpa [Matrix.mulVec, dotProduct, Matrix.mul_apply, X₁] using this
-    · have hz : Matrix.mulVec (X₂.conjTranspose * J) (fun k => X k j) = 0 := by
-        funext i
-        rw [hcol]
-        exact hXc _ _
-      obtain ⟨w, a, hwa⟩ := hperp _ hz
-      refine ⟨(fun i : Fin r => if hi : i.val < l + d then w ⟨i.val, hi⟩ else 0) +
-          (fun i : Fin r => if hi : i.val < l then a ⟨i.val, hi⟩ else 0), ?_, ?_⟩
-      · intro i hi
-        right
-        refine ⟨?_, by omega⟩
-        by_contra hc
-        have hc' : ¬ i.val < l := by omega
-        exact hi (by simp [hc, hc'])
-      · rw [Matrix.mulVec_add, he1, he2, ← hwa]
-        abel
-  choose c hc hc' using key
-  refine ⟨Matrix.of fun i j => c j i, ?_, ?_, ?_⟩
-  · ext k j
-    have := congrFun (hc' j) k
-    simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct] using this
-  · intro i j hij
-    exact hc j i (by simpa using hij)
-  · intro v hv
+  -- the argument used both for columns beyond `l + d` and for the final clause
+  have hmain : ∀ v : Fin n → ℂ,
+      (∀ i : Fin r, i.val < l + d → Matrix.mulVec (X.conjTranspose * J) v i = 0) →
+      ∃ w : Fin r → ℂ, (∀ i, w i ≠ 0 → i.val < l + d) ∧
+        Matrix.mulVec u v - v = Matrix.mulVec X w := by
+    intro v hv
     have hz : Matrix.mulVec (X₂.conjTranspose * J) v = 0 := by
       funext i
-      rw [hcol]
       exact hv _ (by simp)
     obtain ⟨w, a, hwa⟩ := hperp v hz
     refine ⟨(fun i : Fin r => if hi : i.val < l + d then w ⟨i.val, hi⟩ else 0) +
@@ -874,6 +821,38 @@ theorem isotropic_unipotent_column_relations : ∀ (n r : ℕ) (J : Matrix (Fin 
       have hc' : ¬ i.val < l := by omega
       exact hi (by simp [hc, hc'])
     · rw [hwa, Matrix.mulVec_add, he1, he2]
+  have key : ∀ j : Fin r, ∃ c : Fin r → ℂ,
+      (∀ i, c i ≠ 0 → (i.val < l ∧ l ≤ j.val) ∨ (i.val < l + d ∧ l + d ≤ j.val)) ∧
+      Matrix.mulVec u (fun k => X k j) = (fun k => X k j) + Matrix.mulVec X c := by
+    intro j
+    by_cases hj1 : j.val < l
+    · refine ⟨0, by simp, ?_⟩
+      funext k
+      have := congrFun (congrFun h1 k) ⟨j.val, hj1⟩
+      simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct, X₁] using this
+    by_cases hj2 : j.val < l + d
+    · refine ⟨fun i => if hi : i.val < l then A ⟨i.val, hi⟩ ⟨j.val - l, by omega⟩ else 0, ?_, ?_⟩
+      · intro i hi
+        by_cases hil : i.val < l
+        · exact Or.inl ⟨hil, by omega⟩
+        · exact absurd (by simp [hil]) hi
+      · have he1' := he1 (fun i => A i ⟨j.val - l, by omega⟩)
+        beta_reduce at he1'
+        rw [he1']
+        funext k
+        have := congrFun (congrFun hb k) ⟨j.val - l, by omega⟩
+        have hjj : (⟨l + (j.val - l), by omega⟩ : Fin r) = j := Fin.ext (by simp; omega)
+        simp only [Matrix.mul_apply, Matrix.add_apply, Xb, X₁, Matrix.submatrix_apply, id, hjj] at this
+        simpa [Matrix.mulVec, dotProduct, Matrix.mul_apply, X₁] using this
+    · obtain ⟨w, hwsupp, hw⟩ := hmain (fun k => X k j) fun i _ => congrFun (congrFun hX i) j
+      exact ⟨w, fun i hi => Or.inr ⟨hwsupp i hi, by omega⟩, sub_eq_iff_eq_add'.mp hw⟩
+  choose c hc hc' using key
+  refine ⟨Matrix.of fun i j => c j i, ?_, ?_, hmain⟩
+  · ext k j
+    have := congrFun (hc' j) k
+    simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct] using this
+  · intro i j hij
+    exact hc j i (by simpa using hij)
 
 end GlobalTheory
 end -- clump:auto
@@ -981,25 +960,26 @@ theorem radical_elt_moving_dual_to_majorant (n p : ℕ) (J θ : Matrix (Fin n) (
     intro a b hab
     have := congrArg (fun v => (Y₂ᴴ * J).mulVec v) hab
     simpa [Matrix.mulVec_mulVec, hYX] using this
-  have hP : (X₂ᴴ * (J * θ) * X₂).PosDef := hQ.conjTranspose_mul_mul_same hinj
-  obtain ⟨P, hPdef⟩ : ∃ P, P = X₂ᴴ * (J * θ) * X₂ := ⟨_, rfl⟩
-  rw [← hPdef] at hP ⊢
+  have tXX : ∀ {m : Type} (B : Matrix (Fin p) m ℂ), X₂ᴴ * (J * (X₂ * B)) = 0 := by
+    intro m B
+    rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hXX, Matrix.zero_mul]
+  set P := X₂ᴴ * (J * θ) * X₂ with hPdef
+  have hP : P.PosDef := hQ.conjTranspose_mul_mul_same hinj
   have hdet : IsUnit P.det := isUnit_iff_ne_zero.mpr hP.det_pos.ne'
   have hPPi : P * P⁻¹ = 1 := Matrix.mul_nonsing_inv P hdet
   have hPiP : P⁻¹ * P = 1 := Matrix.nonsing_inv_mul P hdet
   have hPiH : (P⁻¹)ᴴ = P⁻¹ := by rw [conjTranspose_nonsing_inv, hP.isHermitian.eq]
-  obtain ⟨Y', hY'⟩ : ∃ Y', Y' = θ * X₂ * P⁻¹ := ⟨_, rfl⟩
+  set Y' := θ * X₂ * P⁻¹ with hY'
   have hXY' : X₂ᴴ * J * Y' = 1 := by
-    rw [← hPPi, hY', hPdef]; simp only [Matrix.mul_assoc]
+    rw [← hPPi, hY', hPdef]
+    simp only [Matrix.mul_assoc]
   have hY'Y' : Y'ᴴ * J * Y' = 0 := by
     have h1 : ∀ B : Matrix (Fin n) (Fin p) ℂ, θᴴ * (J * (θ * B)) = J * B := by
       intro B
       rw [← Matrix.mul_assoc, hθJ, Matrix.mul_assoc, ← Matrix.mul_assoc θ, hθ, Matrix.one_mul]
-    have h2 : X₂ᴴ * (J * (X₂ * P⁻¹)) = 0 := by
-      rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hXX, Matrix.zero_mul]
     rw [hY']
-    simp only [conjTranspose_mul, hPiH, Matrix.mul_assoc, h1, h2, Matrix.mul_zero]
-  obtain ⟨D, hD⟩ : ∃ D, D = Y' - Y₂ := ⟨_, rfl⟩
+    simp only [conjTranspose_mul, hPiH, Matrix.mul_assoc, h1, tXX, Matrix.mul_zero]
+  set D := Y' - Y₂ with hD
   have hXD : X₂ᴴ * J * D = 0 := by rw [hD, Matrix.mul_sub, hXY', hXY, sub_self]
   have hDX : Dᴴ * J * X₂ = 0 := by
     have := congrArg conjTranspose hXD
@@ -1010,31 +990,26 @@ theorem radical_elt_moving_dual_to_majorant (n p : ℕ) (J θ : Matrix (Fin n) (
     rw [hY'Y', hYY]
     abel
 
-  have tXX : ∀ {m : Type} (B : Matrix (Fin p) m ℂ), X₂ᴴ * (J * (X₂ * B)) = 0 := by
-    intro m B; rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hXX, Matrix.zero_mul]
   have tXD : ∀ {m : Type} (B : Matrix (Fin p) m ℂ), X₂ᴴ * (J * (D * B)) = 0 := by
-    intro m B; rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hXD, Matrix.zero_mul]
+    intro m B
+    rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hXD, Matrix.zero_mul]
   have tDX : ∀ {m : Type} (B : Matrix (Fin p) m ℂ), Dᴴ * (J * (X₂ * B)) = 0 := by
-    intro m B; rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hDX, Matrix.zero_mul]
-  have tXY : ∀ {m : Type} (B : Matrix (Fin p) m ℂ), X₂ᴴ * (J * (Y₂ * B)) = B := by
-    intro m B; rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hXY, Matrix.one_mul]
+    intro m B
+    rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hDX, Matrix.zero_mul]
   have hXX' : X₂ᴴ * (J * X₂) = 0 := by rw [← Matrix.mul_assoc, hXX]
-  have hXD' : X₂ᴴ * (J * D) = 0 := by rw [← Matrix.mul_assoc, hXD]
   have hDX' : Dᴴ * (J * X₂) = 0 := by rw [← Matrix.mul_assoc, hDX]
   have hXY'' : X₂ᴴ * (J * Y₂) = 1 := by rw [← Matrix.mul_assoc, hXY]
-  obtain ⟨E, hE⟩ : ∃ E, E = Dᴴ * J * Y₂ := ⟨_, rfl⟩
-  have hE' : Dᴴ * (J * Y₂) = E := by rw [hE, Matrix.mul_assoc]
-  obtain ⟨u, hu⟩ : ∃ u : Matrix (Fin n) (Fin n) ℂ,
-      u = 1 + (D * X₂ᴴ * J - X₂ * Dᴴ * J + X₂ * E * X₂ᴴ * J) := ⟨_, rfl⟩
+  set u : Matrix (Fin n) (Fin n) ℂ :=
+    1 + (D * X₂ᴴ * J - X₂ * Dᴴ * J + X₂ * (Dᴴ * J * Y₂) * X₂ᴴ * J) with hu
   have huJ : uᴴ * J * u = J := by
     have hexp : uᴴ * J * u = J + J * X₂ * (Dᴴ * J * D + Dᴴ * J * Y₂ + Y₂ᴴ * J * D) * X₂ᴴ * J := by
-      rw [hu, hE]
+      rw [hu]
       simp only [conjTranspose_add, conjTranspose_sub, conjTranspose_mul, conjTranspose_one,
         conjTranspose_conjTranspose, hJ, Matrix.mul_add, Matrix.add_mul, Matrix.mul_sub,
         Matrix.sub_mul, Matrix.mul_assoc, Matrix.one_mul, Matrix.mul_one, tXX, tXD, tDX,
-        hXX', hXD', hDX', Matrix.mul_zero, Matrix.zero_mul, add_zero, zero_add, sub_zero, zero_sub]
+        Matrix.mul_zero, add_zero]
       abel
-    rw [hexp, hkey]; simp
+    simp [hexp, hkey]
   have huX : u * X₂ = X₂ := by
     rw [hu]
     simp only [Matrix.add_mul, Matrix.sub_mul, Matrix.mul_assoc, Matrix.one_mul, hXX', hDX',
@@ -1042,24 +1017,20 @@ theorem radical_elt_moving_dual_to_majorant (n p : ℕ) (J θ : Matrix (Fin n) (
   have huY : u * Y₂ = Y' := by
     rw [hu]
     simp only [Matrix.add_mul, Matrix.sub_mul, Matrix.mul_assoc, Matrix.one_mul, hXY'',
-      Matrix.mul_one, hE']
+      Matrix.mul_one]
     rw [hD]; abel
-  have hdetJ : J.det ≠ 0 := by
+  have hdetJ : J.det ≠ 0 := fun h0 => hQ.det_pos.ne' (by rw [Matrix.det_mul, h0, zero_mul])
+  have huU : IsUnit u := by
+    rw [Matrix.isUnit_iff_isUnit_det, isUnit_iff_ne_zero]
     intro h0
-    have := hQ.det_pos
-    rw [Matrix.det_mul, h0, zero_mul] at this
-    exact lt_irrefl _ this
-  have hudet : IsUnit u.det := by
-    refine isUnit_iff_ne_zero.mpr fun h0 => hdetJ ?_
     have := congrArg Matrix.det huJ
     rw [Matrix.det_mul, Matrix.det_mul, h0, mul_zero] at this
-    exact this.symm
-  have huU : IsUnit u := (Matrix.isUnit_iff_isUnit_det u).mpr hudet
+    exact hdetJ this.symm
   refine ⟨huU.unit, ?_, ?_, ?_, ?_⟩
   · simpa using huJ
   · simpa using huX
   · intro v hv
-    have hv' : X₂ᴴ *ᵥ (J *ᵥ v) = 0 := by rw [Matrix.mulVec_mulVec]; exact hv
+    have hv' : X₂ᴴ *ᵥ (J *ᵥ v) = 0 := by rw [Matrix.mulVec_mulVec, hv]
     refine ⟨-(Dᴴ *ᵥ (J *ᵥ v)), ?_⟩
     simp only [IsUnit.unit_spec, hu, Matrix.add_mulVec, Matrix.sub_mulVec, Matrix.one_mulVec,
       ← Matrix.mulVec_mulVec, hv', Matrix.mulVec_zero, Matrix.mulVec_neg]
@@ -1230,7 +1201,7 @@ theorem exists_unip_conj_unitary : ∀ (n r : ℕ) (J : Matrix (Fin n) (Fin n) �
   have e1 : ((c⁻¹).1 * u.1 * G * (u⁻¹).1 * c.1).conjTranspose * ((c⁻¹).1 * u.1 * G * (u⁻¹).1 * c.1) =
       (c.1).conjTranspose * ((u⁻¹).1.conjTranspose *
         (G.conjTranspose * ((u.1).conjTranspose * ((c⁻¹).1.conjTranspose * (c⁻¹).1) * u.1) * G) * (u⁻¹).1) * c.1 := by
-    simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
+    simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
   rw [e1, ← hQ, hG]
   have e2 : (c.1).conjTranspose * ((u⁻¹).1.conjTranspose * ((u.1).conjTranspose * (J * θ) * u.1) * (u⁻¹).1) * c.1 =
       (c.1).conjTranspose * ((u.1 * (u⁻¹).1).conjTranspose * (J * θ) * (u.1 * (u⁻¹).1)) * c.1 := by
@@ -1517,9 +1488,9 @@ theorem goodPos : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
     exact hnorm g⁻¹ x (hmc.1 hx)
   have hK2c : IsCompact (K2 : Set (GAd σ J)) := by
     have : (K2 : Set (GAd σ J)) = (fun x => g⁻¹ * x * g⁻¹⁻¹) '' (majCpt σ J c : Set (GAd σ J)) := by
-      ext x; simp [hK2, MulAut.conj_apply]
+      ext x; simp [hK2]
     rw [this]; exact hmc.2.image (hconj g⁻¹)
-  have hKK2 : K ≤ K2 := fun x hx => ⟨g * x * g⁻¹, hle ⟨x, hx, rfl⟩, by simp [MulAut.conj_apply, mul_assoc]⟩
+  have hKK2 : K ≤ K2 := fun x hx => ⟨g * x * g⁻¹, hle ⟨x, hx, rfl⟩, by simp [mul_assoc]⟩
   have hK2K : K2 ≤ K := hK.2 ⟨hK2le, hK2c⟩ hKK2
   obtain ⟨u, hu, hui, y, hy⟩ := exists_conj_mem_majCpt_frame F E σ hCM n J hJ r Xf Yf hW c hc S l d h ι hι hd h1 h2 h3
   refine ⟨u, hu, hui, y, (u * ι (GlobalTheory.CuspRep.infGL E d y))⁻¹ * g, by group, fun k => hK2K ?_⟩
@@ -1552,7 +1523,7 @@ theorem _root_.GlobalTheory.T.parabolic_block_embedding_compact : ∀ (F E : Typ
       ∀ g : GAd σ J, ∃ u ∈ GlobalTheory.StdPar.unip σ J Xf S, u ∈ infPts σ J ∧ ∃ (y : GL (Fin d) (GlobalTheory.CuspRep.Cinf E)) (g₀ : GAd σ J),
         g = u * ι (GlobalTheory.CuspRep.infGL E d y) * g₀ ∧
         ∀ k : GlobalTheory.CuspRep.Kinf E d, g₀⁻¹ * ι (GlobalTheory.CuspRep.infGL E d (Unitary.toUnits k)) * g₀ ∈ K := by
-  first | exact @GlobalTheory.CompanionTheory.GoodPos.goodPos | exact GlobalTheory.CompanionTheory.GoodPos.goodPos | (intros; apply GlobalTheory.CompanionTheory.GoodPos.goodPos <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.GoodPos.goodPos
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GlobalProofs.IsBlockPointStatement =====

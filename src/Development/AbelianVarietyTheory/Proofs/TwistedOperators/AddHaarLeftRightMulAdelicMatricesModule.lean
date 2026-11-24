@@ -220,11 +220,11 @@ def jSPHomeo : SPart F S × OPart F S ≃ₜ
   invFun := jSPinv F S
   left_inv p := by
     ext v
-    · simp [jSP, jSPinv, v.2]
+    · simp [jSP, jSPinv]
     · simp [jSP, jSPinv, v.2]
   right_inv x := by
     ext v
-    by_cases h : v ∈ S <;> simp [jSP, jSPinv, h]
+    by_cases h : v ∈ S <;> simp [jSP, jSPinv]
   continuous_toFun := continuous_jSP F S
   continuous_invFun := continuous_jSPinv F S
 
@@ -253,7 +253,7 @@ open MeasureTheory Topology Matrix NumberField IsDedekindDomain Formalism.MainNo
 open scoped NNReal ENNReal TensorProduct
 
 theorem _root_.GlobalTheory.T.isOpenEmbedding_finiteAdeleOfSPartAndIntegralPart : ∀ (F : Type) [Field F] [NumberField F] (S : Finset (HeightOneSpectrum (𝓞 F))), IsOpenEmbedding (jS F S) := by
-  first | exact @GlobalTheory.ModuLR.isOpenEmbedding_jS | exact GlobalTheory.ModuLR.isOpenEmbedding_jS | (intros; apply GlobalTheory.ModuLR.isOpenEmbedding_jS <;> assumption)
+  first | exact @GlobalTheory.ModuLR.isOpenEmbedding_jS
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsOpenEmbeddingFiniteAdeleOfSPartAndIntegralPartStatement =====

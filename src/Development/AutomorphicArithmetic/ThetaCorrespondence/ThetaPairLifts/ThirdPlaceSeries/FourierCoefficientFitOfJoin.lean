@@ -139,7 +139,7 @@ end
 section
 
 theorem _root_.GlobalTheory.T.local_sum_estimates_joined : _root_.GlobalTheory.FunPr.ThetaLocalInputs → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ThetaIntegralsAgree → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.LocalMatching → GlobalTheory.RowClaim.SumOKK ∧ GlobalTheory.RowClaim.ConstK ∧ GlobalTheory.RowClaim.LinK ∧ GlobalTheory.RowClaim.Formula2K ∧ GlobalTheory.RowClaim.SumRatK := by
-  first | exact @_root_.GlobalTheory.RowClaim.JoinF.joined_local_sum_estimates | exact _root_.GlobalTheory.RowClaim.JoinF.joined_local_sum_estimates | (intros; apply _root_.GlobalTheory.RowClaim.JoinF.joined_local_sum_estimates <;> assumption)
+  first | exact @_root_.GlobalTheory.RowClaim.JoinF.joined_local_sum_estimates
 end
 end -- clump:auto
 end -- clump:auto
@@ -255,7 +255,7 @@ section
 open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.BigTop GlobalTheory.BigTop.Fun GlobalTheory.SqTop
 
 theorem _root_.GlobalTheory.T.leafDensity_of_logDeriv_bound_and_denSum : _root_.GlobalTheory.BigTop.Fun.SettingAtPoint → (Closed FamHyp fun Fm _ => _root_.GlobalTheory.BigTop.EventuallyAtPoints Fm fun x _ i _ => |(Fm.L x i).logDerivativeAtOne| ≤ (Fm.L x i).sc.x ^ (Fm.L x i).sc.eps) → DenSum → _root_.GlobalTheory.BigTop.Fun.LeafDensity @Comparison₂ := by
-  first | exact @_root_.GlobalTheory.BigTop.Fun.den_tie_alt | exact _root_.GlobalTheory.BigTop.Fun.den_tie_alt | (intros; apply _root_.GlobalTheory.BigTop.Fun.den_tie_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigTop.Fun.den_tie_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -485,7 +485,7 @@ section
 open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.BigTop GlobalTheory.BigTop.Fun GlobalTheory.SqTop
 
 theorem _root_.GlobalTheory.T.existsFunctionIn_of_sqRatio_range : _root_.GlobalTheory.BigTop.Fun.SettingAtPoint → (Closed FamHyp fun Fm _ => _root_.GlobalTheory.BigTop.EventuallyAtPoints Fm fun x _ i _ => |(Fm.L x i).logDerivativeAtOne| ≤ (Fm.L x i).sc.x ^ (Fm.L x i).sc.eps) → GlobalTheory.RowClaim.SumOKK → GlobalTheory.RowClaim.SumRatK → GlobalTheory.RowClaim.ConstK → (_root_.GlobalTheory.BigTop.Fun.CharacterAtPoint fun {D} _ _ _ _ _ _ _ _ _ _ _ ch => ∀ i j t, GlobalTheory.RowTest.sqRatio ch i j t ∈ Set.range D.what₂.embLL) → GlobalTheory.NormSum.IntSt → FieldDat → TorEx → DenEx → BotEx → BotSmall → _root_.GlobalTheory.BigTop.Fun.ExistsFunctionIn @Fld @Comparison₂ := by
-  first | exact @_root_.GlobalTheory.BigTop.Fun.ex_of_claims_alt | exact _root_.GlobalTheory.BigTop.Fun.ex_of_claims_alt | (intros; apply _root_.GlobalTheory.BigTop.Fun.ex_of_claims_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigTop.Fun.ex_of_claims_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -560,7 +560,7 @@ section -- clump:auto
 section
 
 theorem _root_.GlobalTheory.T.scaling_function_bound' : _root_.GlobalTheory.BigTop.Fun.ScaleCondition := by
-  first | exact @_root_.GlobalTheory.BigTop.Fun.existsIntegralMultiple_holds_alt | exact _root_.GlobalTheory.BigTop.Fun.existsIntegralMultiple_holds_alt | (intros; apply _root_.GlobalTheory.BigTop.Fun.existsIntegralMultiple_holds_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigTop.Fun.existsIntegralMultiple_holds_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -699,7 +699,7 @@ section
 open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.BigTop GlobalTheory.BigTop.Fun GlobalTheory.SqTop
 
 theorem _root_.GlobalTheory.T.leafIntegrality_of_logDeriv_bound : _root_.GlobalTheory.BigTop.Fun.SettingAtPoint → (Closed FamHyp fun Fm _ => _root_.GlobalTheory.BigTop.EventuallyAtPoints Fm fun x _ i _ => |(Fm.L x i).logDerivativeAtOne| ≤ (Fm.L x i).sc.x ^ (Fm.L x i).sc.eps) → BotSmall → BotNe → _root_.GlobalTheory.BigTop.Fun.LeafIntegrality @Comparison₂ := by
-  first | exact @_root_.GlobalTheory.BigTop.Fun.int_tie_alt | exact _root_.GlobalTheory.BigTop.Fun.int_tie_alt | (intros; apply _root_.GlobalTheory.BigTop.Fun.int_tie_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigTop.Fun.int_tie_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -781,7 +781,7 @@ theorem htMap_quot {K : Type} [Field K] [NumberField K] [StarRing K] {n d D : �
   have hm : ∀ {a b : ℕ} (M : Matrix (Fin b) (Fin a) K),
       LinearMap.toMatrix (Pi.basisFun K (Fin a)) (Pi.basisFun K (Fin b)) M.mulVecLin = M := fun M => by
     ext i j
-    simp [LinearMap.toMatrix_apply, Matrix.mulVec, dotProduct, Pi.single_apply]
+    simp [Matrix.mulVec, dotProduct, Pi.single_apply]
   rw [hm, hm]
   have e : ∀ {a b : ℕ} (M : Matrix (Fin a) (Fin b) ℂ),
       ‖LinearMap.toContinuousLinearMap (Matrix.toEuclideanLin M)‖ = ‖M‖ := fun M => (l2_opNorm_def M).symm
@@ -887,7 +887,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigTop.Fun GlobalTheory.SumSize
 
 theorem _root_.GlobalTheory.T.leafHeightMapBound_of_infK : _root_.GlobalTheory.BigTop.Fun.BundleCondition → _root_.GlobalTheory.BigTop.Fun.SettingAtPoint → InfK → _root_.GlobalTheory.BigTop.Fun.LeafHeightMapBound @Comparison₂ := by
-  first | exact @_root_.GlobalTheory.QuotientNormCoisometry.leafHeightMapBound_tie_of_infK | exact _root_.GlobalTheory.QuotientNormCoisometry.leafHeightMapBound_tie_of_infK | (intros; apply _root_.GlobalTheory.QuotientNormCoisometry.leafHeightMapBound_tie_of_infK <;> assumption)
+  first | exact @_root_.GlobalTheory.QuotientNormCoisometry.leafHeightMapBound_tie_of_infK
 end
 end -- clump:auto
 end -- clump:auto
@@ -1007,7 +1007,7 @@ section -- clump:auto
 section
 
 theorem _root_.GlobalTheory.T.leafKernel_tie_of_claim_inputs : _root_.GlobalTheory.BigTop.Fun.BundleCondition → _root_.GlobalTheory.BigTop.Fun.SettingAtPoint → GlobalTheory.RowClaim.LinK → GlobalTheory.RowClaim.InjK → GlobalTheory.RowClaim.ConstK → GlobalTheory.RowClaim.Formula2K → _root_.GlobalTheory.BigTop.Fun.LeafKernel @GlobalTheory.BigTop.Fun.Comparison₂ := by
-  first | exact @_root_.GlobalTheory.BigTop.Fun.leafKernel_of_linK_injK_constK_formula2K | exact _root_.GlobalTheory.BigTop.Fun.leafKernel_of_linK_injK_constK_formula2K | (intros; apply _root_.GlobalTheory.BigTop.Fun.leafKernel_of_linK_injK_constK_formula2K <;> assumption)
+  first | exact @_root_.GlobalTheory.BigTop.Fun.leafKernel_of_linK_injK_constK_formula2K
 end
 end -- clump:auto
 end -- clump:auto
@@ -1065,7 +1065,7 @@ end LeafFixedPointPairing
 section
 open GlobalTheory.BigTop GlobalTheory.BigTop.Fun GlobalTheory.SumSize
 theorem _root_.GlobalTheory.Adopt.leafFixedPoint_of_finK_awayK : _root_.GlobalTheory.BigTop.Fun.SettingAtPoint → FinK → AwayK → _root_.GlobalTheory.BigTop.Fun.LeafFixedPoint @Comparison₂ := by
-  first | exact @_root_.LeafFixedPointPairing.GlobalTheory.CompanionTheory.LeafFixedPointPlaceNorm.fp_tie_alt | exact _root_.LeafFixedPointPairing.GlobalTheory.CompanionTheory.LeafFixedPointPlaceNorm.fp_tie_alt | (intros; apply _root_.LeafFixedPointPairing.GlobalTheory.CompanionTheory.LeafFixedPointPlaceNorm.fp_tie_alt <;> assumption)
+  first | exact @_root_.LeafFixedPointPairing.GlobalTheory.CompanionTheory.LeafFixedPointPlaceNorm.fp_tie_alt
 end
 end
 end -- clump:auto
@@ -1083,7 +1083,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigTop.Fun GlobalTheory.SumSize
 
 theorem _root_.GlobalTheory.T.leafFixedPoint_of_finK_awayK : _root_.GlobalTheory.BigTop.Fun.SettingAtPoint → FinK → AwayK → _root_.GlobalTheory.BigTop.Fun.LeafFixedPoint @Comparison₂ := by
-  first | exact @_root_.GlobalTheory.Adopt.leafFixedPoint_of_finK_awayK | exact _root_.GlobalTheory.Adopt.leafFixedPoint_of_finK_awayK | (intros; apply _root_.GlobalTheory.Adopt.leafFixedPoint_of_finK_awayK <;> assumption)
+  first | exact @_root_.GlobalTheory.Adopt.leafFixedPoint_of_finK_awayK
 end
 end -- clump:auto
 end -- clump:auto
@@ -1112,7 +1112,7 @@ section
 open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.BigTop GlobalTheory.BigTop.Fun GlobalTheory.SqTop
 
 theorem _root_.GlobalTheory.T.abs_logDerivativeAtOne_le_x_rpow_eps : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (Closed FamHyp fun Fm _ => _root_.GlobalTheory.BigTop.EventuallyAtPoints Fm fun x _ i _ => |(Fm.L x i).logDerivativeAtOne| ≤ (Fm.L x i).sc.x ^ (Fm.L x i).sc.eps) := by
-  first | exact @_root_.GlobalTheory.logDeriv_LFunction_at_one_le_along_family_alt | exact _root_.GlobalTheory.logDeriv_LFunction_at_one_le_along_family_alt | (intros; apply _root_.GlobalTheory.logDeriv_LFunction_at_one_le_along_family_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.logDeriv_LFunction_at_one_le_along_family_alt
 end
 end
 end -- clump:auto
@@ -1213,7 +1213,7 @@ section
 open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.BigTop GlobalTheory.BigTop.Fun GlobalTheory.SqTop
 
 theorem _root_.GlobalTheory.T.oneSq_of_log_derivative_bound_and_oneSqSt : _root_.GlobalTheory.BigTop.Fun.SettingAtPoint → (Closed FamHyp fun Fm _ => _root_.GlobalTheory.BigTop.EventuallyAtPoints Fm fun x _ i _ => |(Fm.L x i).logDerivativeAtOne| ≤ (Fm.L x i).sc.x ^ (Fm.L x i).sc.eps) → (_root_.GlobalTheory.BigTop.Fun.LeafConditions (Fitted @Comparison₂) fun p _ d _ _ => ThA d.G p.P.A3.A.μ0 p.R.mu) → OneSqSt → _root_.GlobalTheory.BigTop.Fun.LeafUniqueSquareRoot @Comparison₂ := by
-  first | exact @_root_.GlobalTheory.BigTop.Fun.oneSq_of_log_derivative_bound_thA | exact _root_.GlobalTheory.BigTop.Fun.oneSq_of_log_derivative_bound_thA | (intros; apply _root_.GlobalTheory.BigTop.Fun.oneSq_of_log_derivative_bound_thA <;> assumption)
+  first | exact @_root_.GlobalTheory.BigTop.Fun.oneSq_of_log_derivative_bound_thA
 end
 end -- clump:auto
 end -- clump:auto
@@ -1413,7 +1413,7 @@ section
 open Formalism.BasicNotions Formalism.MainNotions NumberField Formalism.L2.Indef Formalism.L2.Indef.Tree GlobalTheory.BigTop GlobalTheory.BigTop.Fun
 
 theorem _root_.GlobalTheory.T.ramified_sum_bound' : _root_.GlobalTheory.BigTop.Fun.RamifiedSumBound' := by
-  first | exact @_root_.GlobalTheory.BigTop.Fun.ramified_sums_seventh_bound_alt | exact _root_.GlobalTheory.BigTop.Fun.ramified_sums_seventh_bound_alt | (intros; apply _root_.GlobalTheory.BigTop.Fun.ramified_sums_seventh_bound_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigTop.Fun.ramified_sums_seventh_bound_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1519,7 +1519,7 @@ section -- clump:auto
 section
 
 theorem _root_.GlobalTheory.T.set_at_of_size_at' : _root_.GlobalTheory.BigTop.Fun.SizeAtAlt → _root_.GlobalTheory.BigTop.Fun.SettingAtPoint := by
-  first | exact @_root_.GlobalTheory.BigTop.Fun.setAt_of_sizeAt_alt | exact _root_.GlobalTheory.BigTop.Fun.setAt_of_sizeAt_alt | (intros; apply _root_.GlobalTheory.BigTop.Fun.setAt_of_sizeAt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigTop.Fun.setAt_of_sizeAt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1666,7 +1666,7 @@ section
 open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.BigTop GlobalTheory.BigTop.Fun GlobalTheory.SqTop
 
 theorem _root_.GlobalTheory.T.sq_ratio_mem_range_emb_ll : _root_.GlobalTheory.FunPr.ThetaLocalInputs → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ThetaIntegralsAgree → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.LocalMatching → _root_.GlobalTheory.BigTop.Fun.SettingAtPoint → (Closed FamHyp fun Fm _ => _root_.GlobalTheory.BigTop.EventuallyAtPoints Fm fun x _ i _ => |(Fm.L x i).logDerivativeAtOne| ≤ (Fm.L x i).sc.x ^ (Fm.L x i).sc.eps) → GlobalTheory.RowClaim.ConstK → LNe → TriEx → Tower → (_root_.GlobalTheory.BigTop.Fun.CharacterAtPoint fun {D} _ _ _ _ _ _ _ _ _ _ _ ch => ∀ i j t, GlobalTheory.RowTest.sqRatio ch i j t ∈ Set.range D.what₂.embLL) := by
-  first | exact @_root_.GlobalTheory.BigTop.Fun.square_ratio_at_point_of_leading_term_alt | exact _root_.GlobalTheory.BigTop.Fun.square_ratio_at_point_of_leading_term_alt | (intros; apply _root_.GlobalTheory.BigTop.Fun.square_ratio_at_point_of_leading_term_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigTop.Fun.square_ratio_at_point_of_leading_term_alt
 end
 end
 end -- clump:auto
@@ -1787,7 +1787,7 @@ section
 open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.BigTop GlobalTheory.BigTop.Fun GlobalTheory.SqTop
 
 theorem _root_.GlobalTheory.T.leaf_theta_bound_of_set_at : _root_.GlobalTheory.BigTop.Fun.SettingAtPoint → (Closed FamHyp fun Fm _ => _root_.GlobalTheory.BigTop.EventuallyAtPoints Fm fun x _ i _ => |(Fm.L x i).logDerivativeAtOne| ≤ (Fm.L x i).sc.x ^ (Fm.L x i).sc.eps) → ThbSt → _root_.GlobalTheory.BigTop.Fun.LeafThetaBound @Comparison₂ := by
-  first | exact @_root_.GlobalTheory.BigTop.Fun.thb_tie_alt | exact _root_.GlobalTheory.BigTop.Fun.thb_tie_alt | (intros; apply _root_.GlobalTheory.BigTop.Fun.thb_tie_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigTop.Fun.thb_tie_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1850,7 +1850,7 @@ section -- clump:auto
 section
 
 theorem _root_.GlobalTheory.T.weight_of_size_bound' : _root_.GlobalTheory.BigTop.Fun.SizeAtAlt → _root_.GlobalTheory.BigTop.Fun.LeafWeightBound @GlobalTheory.BigTop.Fun.Comparison₂ := by
-  first | exact @_root_.GlobalTheory.BigTop.Fun.wt_tie_alt | exact _root_.GlobalTheory.BigTop.Fun.wt_tie_alt | (intros; apply _root_.GlobalTheory.BigTop.Fun.wt_tie_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigTop.Fun.wt_tie_alt
 end
 end -- clump:auto
 end -- clump:auto

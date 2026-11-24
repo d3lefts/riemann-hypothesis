@@ -168,7 +168,7 @@ theorem decomp [Fintype κ] [DecidableEq κ] (f : MvPowerSeries κ R) :
   simp_rw [X, coeff_monomial_mul, one_mul, coeff_cof]
   by_cases hd : d = 0
   · subst hd
-    simp [Finsupp.single_le_iff]
+    simp
   · rw [if_neg hd, zero_add]
     obtain ⟨k0, -⟩ := Finsupp.support_nonempty_iff.2 hd
     have hterm : ∀ k, (if single k 1 ≤ d then
@@ -245,11 +245,7 @@ private theorem mem_sup_pow_iff (n : ℕ) (f : MvPowerSeries κ R) :
       Ideal.span (Set.range (X : κ → MvPowerSeries κ R))) ^ n ↔
       ∀ e : κ →₀ ℕ, coeff e f ∈ I ^ (n - e.degree) := by
   first
-  | exact @_root_.GlobalTheory.IdealPowerCoefficients.mem_pow_iff_coeff_mem
-  | exact _root_.GlobalTheory.IdealPowerCoefficients.mem_pow_iff_coeff_mem
   | (apply _root_.GlobalTheory.IdealPowerCoefficients.mem_pow_iff_coeff_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.IdealPowerCoefficients.mem_pow_iff_coeff_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.IdealPowerCoefficients.mem_pow_iff_coeff_mem <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.IdealPowerCoefficients.mem_pow_iff_coeff_mem ..)
 
 private theorem smodEq_pow_iff {S : Type*} [CommRing S] (J : Ideal S) (n : ℕ) (x y : S) :

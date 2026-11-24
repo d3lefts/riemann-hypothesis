@@ -728,8 +728,7 @@ theorem gapB_ev (eps C3 C0 : ℝ) (heps : 0 < eps) :
     have := D.R.k_ge; have := D.R.r_eq; have := D.R.two_le_m
     exact_mod_cast (by omega : 1 ≤ D.R.r)
   have hf : (1 : ℝ) ≤ D.R.f := by
-    have h2 : 2 ≤ D.R.f := le_trans D.R.two_le_m D.R.m_le_f
-    exact_mod_cast le_trans one_le_two h2
+    exact_mod_cast le_trans one_le_two (le_trans D.R.two_le_m D.R.m_le_f)
   have hL0 : 0 ≤ sc.L := le_trans (by have := le_max_right C3 0; positivity) hL
   rw [le_div_iff₀ hC0]
   have e1 : (D.R.r : ℝ) ^ 9 ≤ (D.R.r : ℝ) ^ 19 := pow_le_pow_right₀ hr (by norm_num)
@@ -742,7 +741,6 @@ theorem gapB_ev (eps C3 C0 : ℝ) (heps : 0 < eps) :
 
 theorem family_of_global_statements (D : D7) (h2b : MassRatio₂ D) (h41 : BaseVolumeEqualsMass D) : LemmaFiveOneIdentity D := by
   let _ := D.host.cmStar
-  have h43 := index_product_formulas_and_ratio D
   intro u
   have hv := host_v_pos D
   have hk := D.R.k_ge
@@ -753,13 +751,8 @@ theorem family_of_global_statements (D : D7) (h2b : MassRatio₂ D) (h41 : BaseV
   have hf : (0 : ℝ) < D.R.f := by exact_mod_cast degree_pos_alt D
   have hkR : (0 : ℝ) < D.R.k := by exact_mod_cast (by omega : 0 < D.R.k)
   have hg : ∀ i : Fin 2, (2 : ℝ) ≤ (D.host.g i : ℝ) := fun i => by exact_mod_cast (D.host.g_prime i).two_le
-  have hfac : ∀ (i : Fin 2) (j : ℕ), 1 ≤ j → 0 < 1 - ((D.host.g i : ℝ) ^ j)⁻¹ := by
-    intro i j hj
-    have h1 : (2 : ℝ) ≤ (D.host.g i : ℝ) ^ j :=
-      le_trans (hg i) (le_self_pow₀ (by linarith [hg i]) (by omega))
-    have h2 : ((D.host.g i : ℝ) ^ j)⁻¹ ≤ 2⁻¹ := inv_anti₀ (by norm_num) h1
-    norm_num at h2 ⊢
-    linarith
+  have hfac : ∀ (i : Fin 2) (j : ℕ), 1 ≤ j → 0 < 1 - ((D.host.g i : ℝ) ^ j)⁻¹ :=
+    fun i j hj => one_sub_inv_pow_pos (D.host.g i) (D.host.g_prime i).two_le j hj
   have e1 : (D.R.f : ℝ) * D.R.k * logXuD D u = Real.log (DstarD D / duStarU D u) := by
     unfold logXuD logXu
     field_simp
@@ -774,7 +767,7 @@ theorem family_of_global_statements (D : D7) (h2b : MassRatio₂ D) (h41 : BaseV
     Finset.prod_pos fun i _ => Finset.prod_pos fun j hj =>
       pow_pos (hfac i j (by have := (Finset.mem_Ioc.1 hj).1; omega)) _
   have hQpos : 0 < Q := mul_pos (pow_pos hgg _) hQ2
-  have h3 : idxSig D (D.host.g 0) (D.host.g 1) / idxPi D (D.host.g 0) (D.host.g 1) = Q := h43.2.2
+  have h3 : idxSig D (D.host.g 0) (D.host.g 1) / idxPi D (D.host.g 0) (D.host.g 1) = Q := (index_product_formulas_and_ratio D).2.2
   have hidx : idxPi D (D.host.g 0) (D.host.g 1) ≠ 0 := by
     intro h0
     rw [h0, div_zero] at h3
@@ -849,7 +842,6 @@ theorem upper_weight_bound_eventually (D : D7) (sc : Scale) (C0 CY : ℝ)
     lowS D sc w ≤ logXuD D u := by
   let _ := D.host.cmStar
   obtain ⟨hB, r1, r2, r3, r4, r5, r6, -, -⟩ := hA
-  have hk := D.R.k_ge
   have hm := D.R.two_le_m
   have hL := scale_one_le_L sc
   have hx0 : 0 < sc.x := lt_trans one_pos sc.one_lt_alt
@@ -885,11 +877,9 @@ theorem upper_weight_bound_eventually (D : D7) (sc : Scale) (C0 CY : ℝ)
       have := (abs_le.1 a).1
       linarith
     have e2 := Finset.card_nsmul_le_sum _ _ _ e1
-    rw [Nat.card_Ioc, nsmul_eq_mul] at e2
-    have e3 : ((D.R.r - D.R.k : ℕ) : ℝ) = (D.R.m : ℝ) - 1 := by
-      rw [er, Nat.add_sub_cancel_left, Nat.cast_sub (by omega : 1 ≤ D.R.m)]
-      simp
-    rw [e3] at e2
+    rw [Nat.card_Ioc, nsmul_eq_mul, er, Nat.add_sub_cancel_left,
+      Nat.cast_sub (by omega : 1 ≤ D.R.m), Nat.cast_one] at e2
+    rw [er]
     linarith
 
   have hSG : -2 ≤ ∑ i : Fin 2, ∑ j ∈ Ioc D.R.k D.R.r, Real.log (1 - ((D.host.g i : ℝ) ^ j)⁻¹) := by
@@ -1004,11 +994,10 @@ theorem ramified_rank_lines_of_free (eps C0 CY : ℝ) (heps : 0 < eps) :
   obtain ⟨x0, hx0⟩ := Filter.eventually_atTop.1 (h1.and h2)
   refine ⟨x0, fun D sc he hx h2b h2v h3 h4B Δ w hA u => ?_⟩
   obtain ⟨a, b⟩ := hx0 sc.x hx
-  have hL : sc.L = sc.x ^ eps := by unfold Scale.L; rw [he]
   have hpos : 0 ≤ sc.x ^ eps := Real.rpow_nonneg (lt_trans one_pos sc.one_lt_alt).le _
   rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hpos] at a
   have a' := le_trans (le_abs_self _) a
-  exact upper_weight_bound_eventually D sc C0 CY (by rw [hL]; linarith) h2b h2v h3 h4B Δ w hA u
+  exact upper_weight_bound_eventually D sc C0 CY (by unfold Scale.L; rw [he]; linarith) h2b h2v h3 h4B Δ w hA u
 
 theorem part_five_family_of_mass_volume (eps C0 CY : ℝ) (heps : 0 < eps) :
     ∃ x0 : ℝ, ∀ (D : D7) (sc : Scale), sc.eps = eps → x0 ≤ sc.x → MassRatio₂ D → BaseVolumeEqualsMass D → SigmaDegreeTwoSidedBoundOfGap D →
@@ -1023,7 +1012,6 @@ theorem part_five_family_of_mass_volume (eps C0 CY : ℝ) (heps : 0 < eps) :
   have hgap := h4B Δ w hB
   have id := family_of_global_statements D h2b h2v u
   have hkN := D.R.k_ge
-  have hmN := D.R.two_le_m
   have er : D.R.r = D.R.k + D.R.m - 1 := rfl
   have hk5 : (5 : ℝ) ≤ D.R.k := by exact_mod_cast hkN
   have hm44 : (44 : ℝ) ≤ D.R.m := by exact_mod_cast r3
@@ -1130,14 +1118,8 @@ theorem division_level_prime_family {eps : ℝ} (Fm : Formalism.MainNotions.FamP
   obtain ⟨x2, h2v⟩ := h2v
   obtain ⟨x3, h3⟩ := h3
   refine ⟨max (max xa xb) (max xg (max x1 (max x2 x3))), fun x hx hxx i => ?_⟩
-  have ea : xa ≤ x := le_trans (le_trans (le_max_left _ _) (le_max_left _ _)) hx
-  have eb : xb ≤ x := le_trans (le_trans (le_max_right _ _) (le_max_left _ _)) hx
-  have eg : xg ≤ x := le_trans (le_trans (le_max_left _ _) (le_max_right _ _)) hx
-  have e1 : x1 ≤ x := le_trans (le_trans (le_trans (le_max_left _ _) (le_max_right _ _)) (le_max_right _ _)) hx
-  have e2 : x2 ≤ x :=
-    le_trans (le_trans (le_trans (le_trans (le_max_left _ _) (le_max_right _ _)) (le_max_right _ _)) (le_max_right _ _)) hx
-  have e3 : x3 ≤ x :=
-    le_trans (le_trans (le_trans (le_trans (le_max_right _ _) (le_max_right _ _)) (le_max_right _ _)) (le_max_right _ _)) hx
+  simp only [max_le_iff] at hx
+  obtain ⟨⟨ea, eb⟩, eg, e1, e2, e3⟩ := hx
   have hsx : (Fm.L x i).sc.x = x := Fm.L_x x i hxx
   have gap := hg (Fm.D x i) (Fm.L x i).sc (Fm.L_eps x i) (by rw [hsx]; exact eg)
   have h5 : Conclusion5Sharp (Fm.D x i) (Fm.L x i).sc C0 CY := fun Δ w hA u =>
@@ -1182,10 +1164,8 @@ theorem RamifiedRankLines (D : D7) (h : ∀ u, product_first_zeroth_parts.family
     push_cast at h1'
     rw [h1']
     ring
-  · rw [hM, e1]
-    exact h2
-  · rw [hM, e2]
-    exact h3
+  · rwa [hM, e1]
+  · rwa [hM, e2]
 
 theorem division_rank_slopes_of_lines (D : D7) (L : SizeData₂ D) (C1 : ℝ) (h2 : ∀ u, product_first_zeroth_parts.family_property_and D u)
     (h5 : ∀ u, CongruenceLatticeLengthBound D u) (hNu : DV.NuDef D L) (hAtT : NuAtTDef D L) (hLoc : LocSpan D)
@@ -1286,14 +1266,9 @@ theorem lemma_five_one_of_theorem_two {eps : ℝ} (Fm : FamP eps) (hT : TuSize F
   obtain ⟨x2, hE⟩ := hE
   obtain ⟨x3, h3⟩ := flipTwoThree.le_rpow_for_large_x ((2 : ℝ) / 5) (by norm_num) 4
   refine ⟨4 * 9, max (max x0 x1) (max (max x2 x3) (max 4 (Fm.x1 + 1))), fun x hx i => ?_⟩
-  have e0 : x ≥ x0 := le_trans (le_trans (le_max_left _ _) (le_max_left _ _)) hx
-  have e1 : x ≥ x1 := le_trans (le_trans (le_max_right _ _) (le_max_left _ _)) hx
-  have e2 : x ≥ x2 := le_trans (le_trans (le_trans (le_max_left _ _) (le_max_left _ _)) (le_max_right _ _)) hx
-  have e3 : x3 ≤ x := le_trans (le_trans (le_trans (le_max_right _ _) (le_max_left _ _)) (le_max_right _ _)) hx
-  have e4 : 4 ≤ x := le_trans (le_trans (le_trans (le_max_left _ _) (le_max_right _ _)) (le_max_right _ _)) hx
-  have e5 : Fm.x1 < x := by
-    have := le_trans (le_trans (le_trans (le_max_right _ _) (le_max_right _ _)) (le_max_right _ _)) hx
-    linarith
+  simp only [max_le_iff] at hx
+  obtain ⟨⟨e0, e1⟩, ⟨⟨e2, e3⟩, e4, e5'⟩⟩ := hx
+  have e5 : Fm.x1 < x := by linarith
   have hsx : (Fm.L x i).sc.x = x := Fm.L_x x i e5
   have hm : 4 ≤ (Fm.D x i).R.m := by
     have z1 := (flipTwoThree.size_bounds_of_scale (Fm.L x i) (Fm.sizes x e5 i) (by rw [hsx]; exact e4)).1
@@ -1352,8 +1327,7 @@ theorem nuCommensF_min (Fm : FamP eps) (hE : J.LvlF Fm) : NuCommensF Fm := by
 theorem ramRankF_min (Fm : FamP eps) (hE : J.LvlF Fm) : RamRankF Fm := by
   obtain ⟨a0, hE⟩ := hE
   refine ⟨a0, fun x hx i u => ?_⟩
-  have h := ((hE x hx i).1 u).1
-  exact_mod_cast h
+  exact_mod_cast ((hE x hx i).1 u).1
 
 theorem muRank_min (Fm : FamP eps) {C0 : ℝ} (hC0 : 0 < C0) (cPr : ChosenProviso Fm C0) (hN : NuFullF Fm)
     (hE : J.LvlF Fm) (hS : SettingEventually Fm) : J.MuRank Fm := by
@@ -1370,8 +1344,7 @@ theorem muRank_min (Fm : FamP eps) {C0 : ℝ} (hC0 : 0 < C0) (cPr : ChosenProvis
     have := le_trans (le_trans (le_max_right _ _) (le_max_right _ _)) hx
     linarith
   have hSet := hS x b2 b4 i u
-  have h1 : ((Fm.D x i).div.Nu u).rank = ((Fm.D x i).mem u).A.du := (hN x b0 i).rank u
-  rw [h1]
+  rw [show ((Fm.D x i).div.Nu u).rank = ((Fm.D x i).mem u).A.du from (hN x b0 i).rank u]
   have hd : 0 < (Fm.D x i).duS u := jnt_duS_pos_of_proviso (Fm.L x i) C0 hC0 (hP x b3 i) u
   have hT' : (2 : ℚ) < (((Fm.D x i).mem u).A.T : ℚ) := by exact_mod_cast two_lt_level_prime _ u hSet
   have h2 : (0 : ℚ) < 1 - 1 / ((((Fm.D x i).mem u).A.T : ℚ) - 1) := by
@@ -1379,8 +1352,7 @@ theorem muRank_min (Fm : FamP eps) {C0 : ℝ} (hC0 : 0 < C0) (cPr : ChosenProvis
     linarith
   have h3 : (0 : ℚ) < (((Fm.D x i).mem u).A.du : ℚ) := by
     rw [((hE x b1 i).1 u).1]
-    have : (0 : ℚ) < ((Fm.D x i).duS u : ℚ) := by exact_mod_cast hd
-    positivity
+    exact mul_pos (by exact_mod_cast hd) (pow_pos h2 _)
   exact_mod_cast h3
 
 theorem linkGLOBAL7_items (Fm : FamP eps) (Cabs CH C0 : ℝ) (hCabs : 0 ≤ Cabs) (hCH : 0 < CH) (hC0 : 3 ≤ C0)

@@ -167,7 +167,7 @@ theorem ent_of_zk [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O K] 
   obtain ⟨r, hr⟩ := hw
   intro s t
   obtain ⟨a, ha⟩ := kg_ent hk s t
-  exact ⟨r * a, by simp [sc_val, hr, ha]⟩
+  exact ⟨r * a, by simp [hr, ha]⟩
 
 end Mat
 
@@ -288,9 +288,9 @@ theorem cls_smul (s : Kˣ) (S : Set (Etau K τ)) : cls τ (((s : K) • ·) '' S
   ext T
   constructor
   · rintro ⟨r, rfl⟩
-    exact ⟨r * s, by simp [← Set.image_comp, Function.comp_def, mul_smul]⟩
+    exact ⟨r * s, by simp [← Set.image_comp, mul_smul]⟩
   · rintro ⟨r, rfl⟩
-    exact ⟨r * s⁻¹, by simp [← Set.image_comp, Function.comp_def, smul_smul]⟩
+    exact ⟨r * s⁻¹, by simp [← Set.image_comp, smul_smul]⟩
 
 theorem cls_lat [IsFractionRing O K] {g g' : GL (Fin 2) K} :
     cls τ (LL O τ g) = cls τ (LL O τ g') ↔ g⁻¹ * g' ∈ ZK O K := by
@@ -434,7 +434,7 @@ private theorem map_two_add_smul_eq (O K : Type) [CommRing O] [Field K] [Algebra
     (X : Matrix (Fin 2) (Fin 2) O) :
     (1 + 1 + π • X).map (algebraMap O K) = 1 + 1 + algebraMap O K π • X.map (algebraMap O K) := by
   ext a b
-  fin_cases a <;> fin_cases b <;> simp [Matrix.one_apply] <;> rw [Algebra.smul_def]
+  fin_cases a <;> fin_cases b <;> simp <;> rw [Algebra.smul_def]
 
 theorem UpperTheory.V.Z.Sym.Loc.stabG : UpperTheory.V.Z.Sym.Loc.StabG := by
   classical
@@ -472,10 +472,10 @@ theorem UpperTheory.V.Z.Sym.Loc.stabG : UpperTheory.V.Z.Sym.Loc.StabG := by
     rw [e0] at hM
     have htr : trace (z : Etau K τ) = c * algebraMap O K (Matrix.trace (k : Matrix (Fin 2) (Fin 2) O)) := by
       rw [← j_trace j hj, ← Matrix.trace_units_conj' y (j z), hM]
-      simp [Matrix.trace_fin_two, Matrix.GeneralLinearGroup.map_apply] <;> ring
+      simp [Matrix.trace_fin_two] <;> ring
     have hdet : norm (z : Etau K τ) = c ^ 2 * algebraMap O K (Matrix.det (k : Matrix (Fin 2) (Fin 2) O)) := by
       rw [← j_det j hj, ← Matrix.det_units_conj' y (j z), hM]
-      simp [Matrix.det_fin_two, Matrix.GeneralLinearGroup.map_apply] <;> ring
+      simp [Matrix.det_fin_two]
     obtain ⟨u, hu⟩ := (Matrix.isUnit_iff_isUnit_det _).mp k.isUnit
     have hunit : algebraMap O K ↑u⁻¹ * algebraMap O K ↑u = 1 := by
       rw [← map_mul]
@@ -587,7 +587,7 @@ theorem UpperTheory.V.Z.Sym.Loc.stabG : UpperTheory.V.Z.Sym.Loc.StabG := by
   have hkm : km.map (algebraMap O K) = 1 + 1 + algebraMap O K π • X.map (algebraMap O K) := by
     exact map_two_add_smul_eq O K π X
   have hdet : km.det = 4 + π * (2 * X 0 0 + 2 * X 1 1 + π * (X 0 0 * X 1 1 - X 0 1 * X 1 0)) := by
-    simp [km, Matrix.det_fin_two, Matrix.one_apply]
+    simp [km, Matrix.det_fin_two]
     ring
   have hdu : IsUnit km.det := by
     by_contra hnu
@@ -641,12 +641,12 @@ theorem UpperTheory.V.Z.Sym.Loc.finD : UpperTheory.V.Z.Sym.Loc.FinD := by
       refine ⟨z, ?_⟩
       show ((g : GL (Fin 2) (Lsq K Δ)) : Matrix (Fin 2) (Fin 2) (Lsq K Δ)) = _
       rw [← hz]
-      first | rfl | simp [Matrix.GeneralLinearGroup.scalar]
+      first | rfl
     · rintro ⟨z, hz⟩
       refine ⟨z, ?_⟩
       apply Units.ext
       rw [show ((g : GL (Fin 2) (Lsq K Δ)) : Matrix (Fin 2) (Fin 2) (Lsq K Δ)) = Glob.mt g from rfl, hz]
-      first | rfl | simp [Matrix.GeneralLinearGroup.scalar]
+      first | rfl
   have hmap : (ZD Δ ⊔ KD Δ O).map φ.toMonoidHom = ZK O K := by
     rw [Subgroup.map_sup]
     unfold ZK

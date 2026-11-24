@@ -191,9 +191,8 @@ theorem anisoPeel_of_valCount (hv : ValCount) : AnisoPeel := by
       obtain ⟨hxW, hxx⟩ := hx
       have hee : hf (Fintype.card K) M x x ≠ 0 := hxx ▸ hb0
       rw [Finset.filter_filter, an_fiber hadd hinv hM W b w x hxW hxx hb0]
-      have hk' := hk _ (nondeg_perp_aniso hadd W hW x hxW hee) (finrank_perp_aniso W x hxW hee)
-      rw [an_cntT_eq] at hk'
-      exact hk'
+      rw [← an_cntT_eq]
+      exact hk _ (nondeg_perp_aniso hadd W hW x hxW hee) (finrank_perp_aniso W x hxW hee)
     rw [Finset.sum_congr rfl hterm, Finset.sum_const, nsmul_eq_mul]
     have hcard : ((Finset.univ.filter (fun x : Fin n → L =>
         x ∈ W ∧ hf (Fintype.card K) M x x = b)).card : ℤ) =
@@ -674,13 +673,12 @@ theorem iso_li_tail {n c : ℕ} (x : Fin n → L) (X' : Fin c → Fin n → L) (
     LinearIndependent L (fun i => X' i - a i • x) := by
   rw [Fintype.linearIndependent_iff] at h ⊢
   intro g hg i
-  have := h (Fin.cons (-(∑ j, g j * a j)) g) (by
+  simpa using (h (Fin.cons (-(∑ j, g j * a j)) g) (by
     rw [Fin.sum_univ_succ]
     simp only [Fin.cons_zero, Fin.cons_succ]
     rw [← hg]
     simp only [smul_sub, Finset.sum_sub_distrib, smul_smul, ← Finset.sum_smul, neg_smul]
-    abel) i.succ
-  simpa using this
+    abel) i.succ)
 
 theorem iso_li_cons {n c : ℕ} (x : Fin n → L) (U : Fin c → Fin n → L) (a : Fin c → L)
     (φ : (Fin n → L) →ₗ[L] L) (hφx : φ x = 1) (hφU : ∀ i, φ (U i) = 0)
@@ -692,7 +690,7 @@ theorem iso_li_cons {n c : ℕ} (x : Fin n → L) (U : Fin c → Fin n → L) (a
   simp only [Fin.cons_zero, Fin.cons_succ] at hg
   have h1 := congrArg φ hg
 
-  simp only [map_add (f := _), map_sum, map_smul, hφx, hφU, smul_eq_mul, mul_one, add_zero, mul_add, mul_zero,
+  simp only [map_add (f := _), map_sum, map_smul, hφx, hφU, smul_eq_mul, mul_one, mul_add, mul_zero,
   map_zero] at h1
   have h2 : ∑ i, g i.succ • U i = 0 := by
     have e : ∑ i, g i.succ • U i + (g 0 + ∑ i, g i.succ * a i) • x = 0 := by
@@ -882,7 +880,7 @@ theorem isoPeel_of_valCount (hv : ValCount) : IsoPeel := by
         refine ⟨(t - s * hf q M y y) • ⟨x, hxW⟩ + s • ⟨y, hyW⟩, ?_⟩
         rw [hψ]
         simp only [Submodule.coe_add, Submodule.coe_smul, hf_add_left, hf_smul_left, hxx, hyx, hxy]
-        ext <;> simp <;> ring
+        ext <;> simp
       have hrange : LinearMap.range ψ = ⊤ := LinearMap.range_eq_top.2 hsurj
       have hrn := LinearMap.finrank_range_add_finrank_ker ψ
       rw [hrange, finrank_top, Module.finrank_prod, Module.finrank_self] at hrn
@@ -1018,13 +1016,10 @@ theorem cg_hf_right (K L : Type) [Field K] [Fintype K] [Field L] [Algebra K L] {
     intro s f
     rw [hq]
     first
-    | exact sum_pow_char_pow s f
     | (haveI : ExpChar L p := ExpChar.prime hp
        have h := map_sum (iterateFrobenius L p n) f s
        simp only [iterateFrobenius_def] at h
        exact h)
-    | (haveI : ExpChar L p := ExpChar.prime hp
-       simp)
   have hfrob : ∀ b, (∑ l, c l * y l b) ^ Fintype.card K =
       ∑ l, c l ^ Fintype.card K * y l b ^ Fintype.card K := by
     intro b
@@ -1063,13 +1058,10 @@ theorem cg_map_mul (K L : Type) [Field K] [Fintype K] [Field L] [Algebra K L] {m
     intro s f
     rw [hq]
     first
-    | exact sum_pow_char_pow s f
     | (haveI : ExpChar L p := ExpChar.prime hp
        have h := map_sum (iterateFrobenius L p n) f s
        simp only [iterateFrobenius_def] at h
        exact h)
-    | (haveI : ExpChar L p := ExpChar.prime hp
-       simp)
   ext i j
   simp only [Matrix.map_apply, Matrix.mul_apply]
   rw [hfr]

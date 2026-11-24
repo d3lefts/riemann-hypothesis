@@ -102,9 +102,8 @@ private theorem sum_quadratic_column_indicator_eq_dotProduct_mulVec {k : Type} [
       if b = b' then dotProduct u (β.mulVec v) + dotProduct v (β.mulVec u) else 0 := by
   by_cases hb : b = b'
   · subst hb
-    simp only [Prod.mk.injEq, ite_and, mul_ite, ite_mul, mul_one, mul_zero, zero_mul,
-      Finset.sum_add_distrib, if_true]
-    simp [Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.sum_ite_irrel]
+    simp only [Prod.mk.injEq, ite_and, mul_ite, mul_one, mul_zero, Finset.sum_add_distrib, if_true]
+    simp [Finset.sum_ite_eq', Finset.sum_ite_irrel]
     simp only [dotProduct, Matrix.mulVec, Finset.mul_sum]
     congr 1
     · exact Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => by ring
@@ -126,7 +125,7 @@ theorem quadratic_column_derivative : QuadColDerivSt := by
   · simp [quadCol, map_sum]
   · intro u b
 
-    simp only [dAdd, quadCol, map_sum, pderiv_C_mul_X_mul_X, pderiv_C_mul', map_add (f := _), map_mul,
+    simp only [dAdd, quadCol, map_sum, pderiv_C_mul_X_mul_X, map_add (f := _), map_mul,
     MvPowerSeries.constantCoeff_X, mul_zero, add_zero, Finset.sum_const_zero]
   · intro u v b b'
 
@@ -298,8 +297,7 @@ def rW (c : ι → ι → k) (n : ι →₀ ℕ) : k :=
 theorem secondOrder_add (c : ι → ι → k) (p q : MvPolynomial ι k) :
     secondOrder k c (p + q) = secondOrder k c p + secondOrder k c q := by
   unfold secondOrder
-  simp only [map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
-  done
+  simp only [map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem lamW_secondOrder (c : ι → ι → k) (P : MvPolynomial ι k) :
     lamW ψ (secondOrder k c P) = (AddMonoidAlgebra.coeff P).sum (fun n a => a * rW ψ c n) := by
@@ -310,8 +308,6 @@ theorem lamW_secondOrder (c : ι → ι → k) (P : MvPolynomial ι k) :
       intro g
       first
         | exact Finset.sum_map_toList _ _
-        | exact Finset.sum_toList _ _
-        | rw [Finset.sum_eq_multiset_sum, ← Finset.coe_toList, Multiset.map_coe, Multiset.sum_coe]
     rw [Finsupp.sum_single_index (zero_mul _)]
     simp only [secondOrder, lamW_sum, MvPolynomial.pderiv_monomial, MvPolynomial.C_mul_monomial,
       lamW_monomial, rW, hL, Finset.mul_sum]

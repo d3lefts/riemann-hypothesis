@@ -225,9 +225,7 @@ theorem sum_ite_mem {α β : Type*} [DecidableEq α] (f : β → α) (T : Finset
     have e : ∀ s, (((y :: l).filter fun z => f z = s).length : ℝ) =
         ((l.filter fun z => f z = s).length : ℝ) + if f y = s then 1 else 0 := by
       intro s
-      by_cases h : f y = s
-      · simp [h]
-      · simp [h]
+      by_cases h : f y = s <;> simp [h]
     simp only [List.map_cons, List.sum_cons, ih, e, Finset.sum_add_distrib, Finset.sum_ite_eq]
     split_ifs <;> ring
 
@@ -243,8 +241,7 @@ theorem llPos_mem (j : ℤ) (l : ℕ) (hl : l < (Fr.LLset j).card) : llPos Fr j 
 
 theorem mem_LLset (j x : ℤ) : x ∈ Fr.LLset j ↔
     (Fr.fr (j - 1) (r - 1) < x ∧ x < Fr.fr j 0) ∧ posOf n' x ∈ Fr.TT := by
-  unfold Frames.LLset
-  simp only [Finset.mem_filter, Finset.mem_Ioo]
+  simp [Frames.LLset]
 
 variable {Fr} {L₁ N₁ : ℕ}
 
@@ -992,20 +989,19 @@ end Geo
 theorem restTh : RestTh := by
   intro p n' r K _ _ _ O _ Fr L₁ N₁ hV deg Y mS J _ nL hJ hnL j A G M hA hc ka hN u hu
   have hr : 1 ≤ r := NeZero.pos r
-  have e := hnL j
   unfold thStar
-  simp only [e] at hu hN ⊢
+  simp only [hnL j] at hu hN ⊢
   obtain ⟨hxm, hxw⟩ := posU_mem' hV hr (segZ j) u hu
   obtain ⟨c1, c2, c3⟩ := hc _ hxm hxw
   intro k hk
   have hB : Bo p Fr deg (segZ j) (posU Fr (Fr.LLset (segZ j)).card (segZ j) u) / 2 ≤ (k : ℝ) := c3 k hk
+  have s1 := sl_le_g2mg p n' r K Fr deg mS Y (segZ j) (posU Fr (Fr.LLset (segZ j)).card (segZ j) u)
   refine max_le hB (max_le ?_ ?_)
   · split_ifs with h1
     · obtain ⟨d1, d2⟩ := c1 h1
       have k1 := (hN u hu _).2 d1
       rw [hk] at d2
       have d3 := WithTop.coe_le_coe.1 d2
-      have s1 := sl_le_g2mg p n' r K Fr deg mS Y (segZ j) (posU Fr (Fr.LLset (segZ j)).card (segZ j) u)
       have : ka j (u + 1) 0 + (mS : ℤ) + sl p Fr deg Y (r + K) (segZ j)
           (posU Fr (Fr.LLset (segZ j)).card (segZ j) u) ≤ k := by linarith
       exact_mod_cast this
@@ -1022,7 +1018,6 @@ theorem restTh : RestTh := by
           (fun y hy => le_pred_iff hV hr (segZ j) u h21 hu y hy)
       rw [ev, hk] at d2
       have d3 := WithTop.coe_le_coe.1 d2
-      have s1 := sl_le_g2mg p n' r K Fr deg mS Y (segZ j) (posU Fr (Fr.LLset (segZ j)).card (segZ j) u)
       have eo := oldest_pred hV hr (segZ j) u h21 hu h22
       have eg : g2mg p n' r K Fr deg mS Y (segZ j) (posU Fr (Fr.LLset (segZ j)).card (segZ j) (u - 1)) =
           g2mg p n' r K Fr deg mS Y (segZ j) (posU Fr (Fr.LLset (segZ j)).card (segZ j) u) := by
@@ -1437,10 +1432,9 @@ theorem mem_TSet_iff (j : ZMod J) (mm : Fin r) (s : Fin (Dt.nL j) ⊕ Fin r) :
     · rintro (⟨l, h⟩ | ⟨m', hm, h⟩)
       · cases h
       · cases h
-        have : mm.val < m.val := hm
         omega
     · intro h
-      exact Or.inr ⟨m, (by show mm.val < m.val; omega), rfl⟩
+      exact Or.inr ⟨m, by omega, rfl⟩
 
 theorem TSet_fst {j : ZMod J} {mm : Fin r} {t : TL J Dt.nL r} (h : t ∈ Dt.TSet j mm) : t.1 = j := by
   rcases h with ⟨l, rfl⟩ | ⟨m, _, rfl⟩ <;> rfl

@@ -334,7 +334,7 @@ private theorem rows_succ {l L N p k : ℕ} [Fact l.Prime] [NeZero N] (x : ZMod 
     · exact twist_succ_eq_smul_of_inv_p_of_k_eq_one _ _ _ _ _ _ _ L hb1 hb0 ht k1
     · exact twist_succ_eq_smul_of_p_eq_zero _ _ _ _ _ _ _ L hpz
   · show ((rV l (L + 1) N p 1 : ℤ) : ZMod (N * l ^ L * p)) = (k : ZMod _) * ((rV l L N p 1 : ℤ) : ZMod _)
-    apply c1 <;> simp only [rV, Matrix.cons_val_one, Matrix.head_cons] <;> push_cast
+    apply c1 <;> simp only [rV, Matrix.cons_val_one] <;> push_cast
     · exact const_succ_eq_smul_of_inv_p_of_k_eq_one _ _ _ _ _ _ L hb1 hb0 hz k1
     · exact const_succ_eq_smul_of_p_eq_zero_of_k_eq_l _ _ _ _ _ _ L hpz k2
 
@@ -777,7 +777,7 @@ private theorem rows_succ {l L N p k : ℕ} [Fact l.Prime] [NeZero N] (x : ZMod 
         push_cast
         linear_combination ((bar l (L + 1) N p : ZMod p) * (N + x.val * topT l (L + 1) N * l ^ (L + 1))
           - k * bar l L N p * (N + x.val * topT l L N * l ^ L)) * f0 - ((N : ZMod p) * l ^ L) * k2
-    · simp only [rw0, Pi.smul_apply, smul_eq_mul, rU, Matrix.cons_val_one, Matrix.head_cons, Fin.mk_one]
+    · simp only [rw0, Pi.smul_apply, smul_eq_mul, rU, Matrix.cons_val_one, Fin.mk_one]
       simp
   · funext i
     fin_cases i
@@ -793,11 +793,11 @@ private theorem rows_succ {l L N p k : ℕ} [Fact l.Prime] [NeZero N] (x : ZMod 
           - k * bar l L N p * topT l L N * l ^ L) * f0
     · simp only [rw0, Pi.smul_apply, smul_eq_mul]
       apply lift
-      · simp only [rV, Matrix.cons_val_one, Matrix.head_cons, Fin.mk_one]
+      · simp only [rV, Matrix.cons_val_one, Fin.mk_one]
         push_cast
         linear_combination (N : ZMod (N * l ^ L)) * e1 - ((k : ZMod (N * l ^ L)) * N) * e2
           + ((l : ZMod (N * l ^ L)) - k) * e4 - (N : ZMod (N * l ^ L)) * k1
-      · simp only [rV, Matrix.cons_val_one, Matrix.head_cons, Fin.mk_one]
+      · simp only [rV, Matrix.cons_val_one, Fin.mk_one]
         push_cast
         linear_combination ((bar l (L + 1) N p : ZMod p) * N - k * bar l L N p * N) * f0 - ((N : ZMod p) * l ^ L) * k2
 
@@ -1359,7 +1359,7 @@ theorem UpperTheory.V.Z.Kato.Nb.sRel0 :
       conv_lhs => rw [← hr y]
       rw [← hm, hr, mul_inv_cancel_left]
     rw [hm, hr, eq_inv_mul_of_mul_eq h1]
-    simp [mul_comm, mul_left_comm]
+    simp [mul_left_comm]
   have hB := sBStab Ω ε X l N (2 * e - 1) hN
   obtain ⟨-, -, -, hsum, -, -, hgal, -⟩ := sApi Ω ε X l n
   let P : X.Fn l →+ (Fin 2 → Qbar l) := AddMonoidHom.mk' pr hadd

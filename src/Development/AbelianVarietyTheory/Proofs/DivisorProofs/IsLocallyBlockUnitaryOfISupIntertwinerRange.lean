@@ -142,7 +142,6 @@ theorem unitOn_map : ∀ (ι M : Type) [Fintype ι] [DecidableEq ι] [AddCommGro
     intro h0
     apply hne
     rw [← hfg x hx]
-    change f (g x) = 0
     rw [h0, map_zero]
   · intro a b hab x hx y hy
     have hu0 := hgU1 x hx
@@ -259,7 +258,7 @@ theorem locU_of_iSup_range_eq_top : ∀ (ι M : Type) [Fintype ι] [DecidableEq 
     refine ⟨Pi.single (e ⟨i, hi⟩) x, ?_⟩
     rw [hg, Finset.sum_eq_single (e ⟨i, hi⟩)]
     · simp [f]
-    · intro b _ hb; simp [Pi.single_apply, hb]
+    · intro b _ hb; simp [hb]
     · simp
   choose z hz using fun y hy => LinearMap.mem_range.1 (hrange y hy)
   obtain ⟨U, hU, hUU⟩ := _root_.GlobalTheory.HoweR.locU_pi_fin ι M s F hloc SS.card (t.attach.image fun y : {x // x ∈ t} => z y.1 y.2)

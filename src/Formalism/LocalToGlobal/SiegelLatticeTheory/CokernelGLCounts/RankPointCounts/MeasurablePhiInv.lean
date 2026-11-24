@@ -160,10 +160,8 @@ private theorem existsUnique_neg_section_add_mem {V : Type} [AddCommGroup V]
     rw [e]
     first
     | rw [QuotientAddGroup.eq, AddSubgroup.mem_addSubgroupOf]
-    | rw [QuotientAddGroup.eq', AddSubgroup.mem_addSubgroupOf]
     first
     | exact Iff.rfl
-    | simp
   exact ⟨QuotientAddGroup.mk ⟨m, hm⟩, (key _).2 rfl, fun q hq => (key q).1 hq⟩
 
 private theorem existsUnique_mem_iUnion_translate_preimage {V : Type} [AddCommGroup V]
@@ -227,11 +225,9 @@ theorem fund_index {V : Type} [AddCommGroup V] [MeasurableSpace V] [MeasurableAd
   haveI : MeasurableVAdd Λ V := by
     first
     | infer_instance
-    | exact ⟨fun c => measurable_const_add (c : V), fun v => (measurable_add_const v).comp measurable_subtype_coe⟩
   haveI : VAddInvariantMeasure Λ V μ := by
     first
     | infer_instance
-    | exact ⟨fun c s _ => measure_preimage_add μ (c : V) s⟩
   have hsurj : Function.Surjective (QuotientAddGroup.mk : L → L ⧸ Λ.addSubgroupOf L) :=
     QuotientAddGroup.mk_surjective
   obtain ⟨ρ, hρL, hρ⟩ : ∃ ρ : L ⧸ Λ.addSubgroupOf L → V,
@@ -428,8 +424,6 @@ private theorem mem_idealLattice_iff' (K : Type) [Field K] [NumberField K]
     x ∈ idealLattice K I ↔ ∃ a : K, a ∈ (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) ∧ mixedEmbedding K a = x := by
   first
   | (rw [mem_idealLattice]; rfl)
-  | exact mem_idealLattice K I
-  | simp [idealLattice]
 
 theorem idealLattice_fd (K : Type) [Field K] [NumberField K] (I : (FractionalIdeal (nonZeroDivisors (𝓞 K)) K)ˣ) :
     ∃ FL : Set (mixedSpace K), MeasurableSet FL ∧
@@ -479,12 +473,10 @@ private theorem phiMap_mixedEmbedding_eq {K : Type} [Field K] [NumberField K] {�
   · rw [(hφ i).resolve_left h, ComplexEmbedding.conjugate_coe_eq]
     first
     | rfl
-    | simp [mixedEmbedding]
   · have h' : φ i = (σ i).1.embedding := by simpa using h
     rw [h']
     first
     | rfl
-    | simp [mixedEmbedding]
 
 theorem exists_fd (K : Type) [Field K] [NumberField K] [IsEmpty {w : InfinitePlace K // w.IsReal}]
     (ι : Type) [Fintype ι] (φ : ι → (K →+* ℂ)) (σ : ι ≃ {w : InfinitePlace K // w.IsComplex})

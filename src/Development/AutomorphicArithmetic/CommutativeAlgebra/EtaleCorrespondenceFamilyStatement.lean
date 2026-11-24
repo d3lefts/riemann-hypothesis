@@ -240,9 +240,9 @@ private theorem surj_productMap {Y : Scheme.{0}} [Y.IsSeparated] {A B C : CommRi
     ext b
     simp [φ]
   have q1 : pullback.mapDesc f1 f2 i ≫ (pullback.congrHom e1 e2).hom ≫ pullback.fst _ _ = pullback.fst f1 f2 := by
-    simp only [pullback.mapDesc, pullback.congrHom_hom, pullback.map, pullback.lift_fst, pullback.lift_fst_assoc, Category.comp_id]
+    simp only [pullback.mapDesc, pullback.congrHom_hom, pullback.map, pullback.lift_fst, Category.comp_id]
   have q2 : pullback.mapDesc f1 f2 i ≫ (pullback.congrHom e1 e2).hom ≫ pullback.snd _ _ = pullback.snd f1 f2 := by
-    simp only [pullback.mapDesc, pullback.congrHom_hom, pullback.map, pullback.lift_snd, pullback.lift_snd_assoc, Category.comp_id]
+    simp only [pullback.mapDesc, pullback.congrHom_hom, pullback.map, pullback.lift_snd, Category.comp_id]
   have hJe : J = Spec.map (CommRingCat.ofHom φ) := by
     rw [← cancel_mono (pullbackSpecIso ℤ A B).inv]
     apply pullback.hom_ext
@@ -258,7 +258,7 @@ private theorem surj_productMap {Y : Scheme.{0}} [Y.IsSeparated] {A B C : CommRi
   obtain ⟨t, ht⟩ := hs ((Scheme.ΓSpecIso C).inv.hom c)
   refine ⟨(Scheme.ΓSpecIso (.of (A ⊗[ℤ] B))).hom.hom t, ?_⟩
   have h3 := congrArg (fun f => f.hom ((Scheme.ΓSpecIso (.of (A ⊗[ℤ] B))).hom.hom t)) nat
-  simp only [CommRingCat.comp_apply, CommRingCat.hom_comp, RingHom.comp_apply] at h3
+  simp only [CommRingCat.hom_comp, RingHom.comp_apply] at h3
   have h4 : (Scheme.ΓSpecIso (.of (A ⊗[ℤ] B))).inv.hom ((Scheme.ΓSpecIso (.of (A ⊗[ℤ] B))).hom.hom t) = t := by
     simp
   rw [h4] at h3
@@ -541,7 +541,7 @@ private theorem cubeSign_mul_sortSign_erase_eq_neg_of_collide {α β : Type} [Li
         rcases lt_or_gt_of_ne hyb with h2 | h2
       all_goals first
         | (exfalso; order)
-        | simp [h1, h2, h3, hya, hyb, lt_asymm h1, lt_asymm h2, lt_asymm h3]
+        | simp [h1, h2, h3, hya, lt_asymm h1, lt_asymm h2, lt_asymm h3]
     rw [Finset.prod_congr rfl pt, Finset.prod_mul_distrib, Finset.prod_ite_eq' s a, if_pos ha]
     ring
   have eA := sortSign_eq_sortSign_erase_mul τ ha
@@ -961,7 +961,7 @@ theorem lift_bijective (hc : c ≫ p = p') (a : ℕ) (W : Z.Opens) :
   letI := algΓ p; letI := algΓ p'
   show Function.Bijective (sectionsOn.mapOver (appTop_algebraMap hc) (𝟙 _) W)
   rw [sectionsOn.mapOver.eq_1]
-  simp only [LinearMap.coe_mk, AddHom.coe_mk]
+  simp only [LinearMap.coe_mk]
   have key : ∀ y, (ConcreteCategory.hom
       (Scheme.Modules.Hom.app (𝟙 ((Scheme.Modules.pushforward c).obj (Omega p' a))) W)) y = y :=
     fun y => rfl
@@ -972,7 +972,7 @@ theorem lift_bijective (hc : c ≫ p = p') (a : ℕ) (W : Z.Opens) :
   · intro y
     refine ⟨(sectionsOn.toΓ ((Scheme.Modules.pushforward c).obj (Omega p' a)) W).symm
       (sectionsOn.toΓ (Omega p' a) (c ⁻¹ᵁ W) y), ?_⟩
-    simp only [LinearMap.coe_mk, AddHom.coe_mk]
+    simp only [AddHom.coe_mk]
     erw [AddEquiv.apply_symm_apply]
     exact (sectionsOn.toΓ (Omega p' a) (c ⁻¹ᵁ W)).symm_apply_apply y
 

@@ -204,8 +204,7 @@ theorem rowNu_self : rowNu (r := k) ν = ν := by
 
 theorem isHWV (hν : Antitone ν) : IsHWV (EV K k ν) (fun a => (ν a : ℤ)) (hwV K k ν hν) := by
   refine ⟨fun h => hwNe K k k le_rfl ν (congrArg Subtype.val h), ?_, fun a b hab => ?_⟩
-  · have := wt_mem (hwV K k ν hν) (rowNu (r := k) ν) (hwRowWeight K k k le_rfl ν hν)
-    rwa [rowNu_self] at this
+  · simpa [rowNu_self] using wt_mem (hwV K k ν hν) (rowNu (r := k) ν) (hwRowWeight K k k le_rfl ν hν)
   · apply Subtype.ext
     show Dop K a b (hw K le_rfl ν) = 0
     rw [sw_Dop_rowDiv]
@@ -428,8 +427,7 @@ theorem sandwichO (D : Formalism.BasicNotions.D7) {p n' : ℕ} (O : Type) [CommR
     apply hinj
     rw [← hz, sw_map_smul]
     rfl
-  rw [he]
-  exact hz0
+  simpa [he] using hz0
 
 section Set
 
@@ -466,9 +464,7 @@ theorem good_ring_of_setting (h : HidaSetting p n' W Qq O Kf ι σ j w) : Admiss
 
 theorem ellWt_nuOf (m : ℕ) (lam : Fin (m + 1) → ℤ) :
     ellWt (fun a => (nuOf lam a : ℤ)) = ellWt lam := by
-  have hl : lastIdx (m + 1) = Fin.last m := by
-    ext
-    simp [lastIdx]
+  have hl : lastIdx (m + 1) = Fin.last m := Fin.ext (by simp [lastIdx])
   simp [ellWt, nuOf, hl]
   omega
 

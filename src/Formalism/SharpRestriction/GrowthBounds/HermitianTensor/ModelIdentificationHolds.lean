@@ -491,11 +491,8 @@ theorem detFactsP : DetFactsP := by
     have hM : (rowAct A (n := r) l).mapMatrix (Matrix.of fun i j : Fin r => (X (i, j) : MvPolynomial (Fin r × Fin r) A)) =
         (C : A →+* MvPolynomial (Fin r × Fin r) A).mapMatrix l *
           (Matrix.of fun i j : Fin r => (X (i, j) : MvPolynomial (Fin r × Fin r) A)) := by
-      apply Matrix.ext
-      intro i j
-      rw [Matrix.mul_apply]
-      show rowAct A l (X (i, j)) = ∑ b, C (l i b) * X (b, j)
-      simp [rowAct]
+      ext i j
+      simp [rowAct, Matrix.mul_apply]
     refine hA.trans ?_
     rw [hM, Matrix.det_mul, ← RingHom.map_det]
     rfl
@@ -514,9 +511,6 @@ theorem numP : NumP := by
   have h2 : (Nat.log p (8 * a + (r + 1)) : ℝ) ≤ Real.logb p ((8 * a + (r + 1) : ℕ) : ℝ) := by
     first
     | exact Real.natLog_le_logb _ _
-    | (have hpow := Nat.pow_log_le_self p (x := 8 * a + (r + 1)) (by omega)
-       rw [Real.le_logb_iff_rpow_le hp1 (by positivity)]
-       exact_mod_cast hpow)
   have h3 : (Nat.log p (ell + r - 1) : ℝ) ≤ Nat.log p (8 * a + (r + 1)) := by exact_mod_cast h1
   have hL : (Nat.log p (ell + r - 1) : ℝ) ≤ Real.logb p ((8 * a + (r + 1) : ℕ) : ℝ) + 1 := by linarith
   push_cast at hL hN
@@ -590,7 +584,7 @@ private theorem rowA_X {K : Type} [CommRing K] {k n : ℕ} (a : Fin k) (v : Fin 
     by_cases hb : b = a
     · subst hb
       simp [rowDeg, Finsupp.single_apply]
-    · simp [rowDeg, Finsupp.single_apply, Prod.ext_iff, hb]
+    · simp [rowDeg, Prod.ext_iff, hb]
   · exact absurd rfl hu
 
 private theorem degA_prod_X_eq_card_first_coord_eq {K : Type} [CommRing K] {k n m : ℕ} (a : Fin k) (g : Fin m → Fin k × Fin n)
@@ -698,7 +692,7 @@ theorem qc_rowL_lift (A : Type) [CommRing A] (r s : ℕ) (hs' : s + 1 ≤ r + 1 
   have hne : ∀ j : Fin r, Fin.last (r + 1) ≠ midI r j := fun j => (midI_ne_last r j).symm
   apply qc_rowA_minor
   rw [Finset.sum_apply, Fin.sum_univ_succ]
-  simp [qcLiftI, Pi.single_apply, hne, hl]
+  simp [qcLiftI, hne, hl]
 
 theorem qc_shapeC_add {r : ℕ} (c c' : ℕ) (β β' : Fin r → ℕ) :
     shapeC c β + shapeC c' β' = shapeC (c + c') (β + β') := by
@@ -728,7 +722,7 @@ theorem qc_shapeC_om (r s : ℕ) (hs : s ≤ r) : shapeC 1 (qcOm r s) = qcOm (r 
     unfold midOf
     by_cases h1 : 0 < t.val ∧ t.val < r + 1
     · rw [dite_eq_left h1]
-      simp only [Fin.val_mk]
+      simp only
       split_ifs <;> omega
     · rw [dite_eq_right h1]
       simp only
@@ -1641,10 +1635,9 @@ theorem theorem_I_of_pairing_GL (D : Formalism.BasicNotions.D7) (hPh : QPh) : Se
   obtain ⟨T0, -, h0⟩ := hA 0 le_rfl
   obtain ⟨T1, -, h1⟩ := h0 T0 le_rfl
   obtain ⟨T2, -, h2⟩ := h1 T1 T1 T1 le_rfl le_rfl le_rfl
-  obtain ⟨CA, Ckap, Ct, Cs, -, -, -, -, hB⟩ := h2 T2 le_rfl
+  obtain ⟨_, _, _, _, _, _, _, _, hB⟩ := h2 T2 le_rfl
   have hT : AdmT D := hB.2.2.2.2
-  have h11 : GradedLatticeStable D := hT.2.2.2.2.2.2.1
-  exact theorem_I_of_contraction D (contraction_of_pairing_GL hPh h11.2) hA
+  exact theorem_I_of_contraction D (contraction_of_pairing_GL hPh (hT.2.2.2.2.2.2.1.2)) hA
 
 end Formalism.MainNotions.flipOneThree.Pf
 end -- clump:auto

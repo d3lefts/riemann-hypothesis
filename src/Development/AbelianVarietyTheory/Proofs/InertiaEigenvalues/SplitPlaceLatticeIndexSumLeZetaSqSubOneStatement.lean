@@ -102,7 +102,7 @@ theorem isInt_of_mem_span_basisFun {w : Fin r → K}
     by_cases hij : i = j
     · subst hij
       exact ⟨1, by simp⟩
-    · exact ⟨0, by simp [Pi.basisFun_apply, Pi.single_apply, hij]⟩
+    · exact ⟨0, by simp [Pi.basisFun_apply, hij]⟩
   | zero => exact ⟨0, by simp⟩
   | add x y _ _ hx hy =>
     obtain ⟨a, ha⟩ := hx
@@ -427,7 +427,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.lattice_index_split_place_eq_product_local : ∀ {D : D7} (e : AE D) (v : HeightOneSpectrum (𝓞 D.host.F)) (π : AE D →+* Fv D.host.F v), IsSplitIdem D e → Chart e v π → ∀ (W : HSp D) (β : GL (Fin W.rank) (Fv D.host.F v)), Frame W e π β → ∀ g : GA D W, SuppAt e W g → latIndex W g = ((Submodule.span (Ov D v) (Set.range (Pi.basisFun (Fv D.host.F v) (Fin W.rank)))).map ((((rho W π β g : GL (Fin W.rank) (Fv D.host.F v)) : Matrix (Fin W.rank) (Fin W.rank) (Fv D.host.F v)).mulVecLin).restrictScalars (Ov D v))).toAddSubgroup.relIndex (Submodule.span (Ov D v) (Set.range (Pi.basisFun (Fv D.host.F v) (Fin W.rank)))).toAddSubgroup * ((Submodule.span (Ov D v) (Set.range (Pi.basisFun (Fv D.host.F v) (Fin W.rank)))).map ((((rho W π β g⁻¹ : GL (Fin W.rank) (Fv D.host.F v)) : Matrix (Fin W.rank) (Fin W.rank) (Fv D.host.F v))ᵀ.mulVecLin).restrictScalars (Ov D v))).toAddSubgroup.relIndex (Submodule.span (Ov D v) (Set.range (Pi.basisFun (Fv D.host.F v) (Fin W.rank)))).toAddSubgroup := by
-  first | exact @GlobalTheory.SplitIndexLocal.latIndex_split_local | exact GlobalTheory.SplitIndexLocal.latIndex_split_local | (intros; apply GlobalTheory.SplitIndexLocal.latIndex_split_local <;> assumption)
+  first | exact @GlobalTheory.SplitIndexLocal.latIndex_split_local
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LatticeIndexSplitPlaceEqProductLocalStatement =====
@@ -543,7 +543,7 @@ theorem idx_transpose [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O
   let N : Matrix (Fin r) (Fin r) O := Matrix.of fun i j => N0 (i, j)
   have hNmap : N.map (algebraMap O K) = a • g := by
     ext i j
-    simp only [N, Matrix.map_apply, Matrix.of_apply, Matrix.smul_apply, hN0 (i, j), ha_def, smul_eq_mul, Algebra.smul_def, Algebra.algebraMap_self, RingHom.id_apply]
+    simp only [N, Matrix.map_apply, Matrix.of_apply, Matrix.smul_apply, hN0 (i, j), ha_def, smul_eq_mul, Algebra.smul_def]
   have hNdet : N.det ≠ 0 := by
     intro h0
     have e := RingHom.map_det (algebraMap O K) N
@@ -720,7 +720,6 @@ theorem index_split {r : ℕ} (M : Submodule O (Fin (r+1) → O)) :
   have := index_eq_mul_of_exact _ hπ _ hι M.toAddSubgroup
   rw [this]
   congr 2
-  all_goals (ext x; simp)
 
 theorem le_of_lift {r : ℕ} (M1 M2 : Submodule O (Fin (r+1) → O)) (g : O)
     (hI : M1.map (headL r) ≤ Ideal.span {g}) (hc : M1.comap (consL r) ≤ M2.comap (consL r))
@@ -1501,7 +1500,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.RawLift
 
 theorem _root_.GlobalTheory.T.split_place_lattice_index_sum_le_zeta_sq_sub_one : ∀ (D : D7) (W : HSp D) (n : ℕ), 2 * W.rank + 5 ≤ n → ∀ (v : HeightOneSpectrum (𝓞 D.host.F)) (f : Formalism.L2.Theta.AE D), IsFinIdem D v f → (∃ e, Formalism.L2.Theta.IsSplitIdem D e ∧ e + Formalism.L2.Theta.cA D e = f) → ∀ C : Finset (GA D W), (∀ g ∈ C, SuppF W f g ∧ g ∉ KsphC W ∅) → (∀ g ∈ C, ∀ g' ∈ C, g⁻¹ * g' ∈ KsphC W ∅ → g = g') → ∑ g ∈ C, (latIndex W g : ℝ) ^ (-(n : ℝ) / 2) ≤ (∏ i ∈ Finset.range W.rank, (1 - (Ideal.absNorm v.asIdeal : ℝ) ^ ((i : ℝ) - (n : ℝ) / 2))⁻¹) ^ 2 - 1 := by
-  first | exact @GlobalTheory.SplitIndexSum.indexSum_split | exact GlobalTheory.SplitIndexSum.indexSum_split | (intros; apply GlobalTheory.SplitIndexSum.indexSum_split <;> assumption)
+  first | exact @GlobalTheory.SplitIndexSum.indexSum_split
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SplitPlaceLatticeIndexSumLeZetaSqSubOneStatement =====

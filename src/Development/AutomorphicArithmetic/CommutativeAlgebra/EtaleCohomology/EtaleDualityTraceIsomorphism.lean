@@ -1136,7 +1136,6 @@ theorem LeafTw0LocGen_of : LateralTheory.E.LeafTw0LocSplitPf.LeafTw0LocGen := by
     have h0 := map_zero (((toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ twF q 0)).app (op V)).hom)
     first
       | exact (congrArg (Sec.res h) h0).trans (map_zero _)
-      | (erw [h0]; exact map_zero _)
   · obtain ⟨S, hS, hP⟩ := loc_finset (U := V) (Finset.univ.biUnion fun k => (r k).support) (fun ξ _ => geo V ζ0 ξ)
     refine ⟨S, hS, fun W h hh => ?_⟩
     have hrel := hP W h hh
@@ -1357,8 +1356,8 @@ def tau (I J : Cx R) : Pair I J (T I J) where
     change ((jm I J s t w h ≫ sheafifyMap Scheme.etaleTopology ((P I J).d w (w + 1))).app (op U)).hom (a ⊗ₜ b) = _
     rw [jm_d]
     simp only [NatTrans.app_add, NatTrans.app_zsmul, NatTrans.comp_app, ModuleCat.hom_add, ModuleCat.hom_comp,
-      LinearMap.add_apply, LinearMap.comp_apply, Units.smul_def]
-    simp only [ModuleCat.hom_zsmul, LinearMap.smul_apply, LinearMap.add_apply, LinearMap.comp_apply]
+      Units.smul_def]
+    simp only [ModuleCat.hom_zsmul]
     rfl
 
 def Phi (I J : Cx R) (U : Scheme.{0}) (w : ℤ) : Tens I J U w →ₗ[ULift.{1} R] ToType ((P I J).X w |>.obj (op U)) := by
@@ -1378,7 +1377,7 @@ theorem lift_eq (I J : Cx R) (U : Scheme.{0}) (w : ℤ) (x : Tens I J U w) :
     (tau I J).lift U w x = ((toSheafify Scheme.etaleTopology ((P I J).X w)).app (op U)).hom (Phi I J U w x) := by
   classical
   induction x using DirectSum.induction_on with
-  | zero => first | (erw [map_zero, map_zero] <;> rfl) | (erw [map_zero, map_zero, map_zero] <;> rfl) | (erw [map_zero, map_zero, map_zero, map_zero] <;> rfl) | (simp only [map_zero]) | rfl
+  | zero => first | (erw [map_zero, map_zero] <;> rfl)
   | add x y hx hy => erw [map_add, map_add, map_add, hx, hy] <;> rfl
   | of p t =>
     rw [Phi_lof]
@@ -1393,7 +1392,7 @@ theorem Phi_nat (I J : Cx R) {V U : Scheme.{0}} (g : V ⟶ U) (w : ℤ) (x : Ten
     ((P I J).X w |>.map g.op).hom (Phi I J U w x) = Phi I J V w (Tens.res g w x) := by
   classical
   induction x using DirectSum.induction_on with
-  | zero => first | (erw [map_zero, map_zero] <;> rfl) | (erw [map_zero, map_zero, map_zero] <;> rfl) | (erw [map_zero, map_zero, map_zero, map_zero] <;> rfl) | (simp only [map_zero]) | rfl
+  | zero => first | (erw [map_zero, map_zero] <;> rfl)
   | add x y hx hy => erw [map_add, map_add, map_add, map_add, hx, hy] <;> rfl
   | of p t =>
     rw [Phi_lof]
@@ -1426,7 +1425,7 @@ theorem Phi_bij (I J : Cx R) (U : Scheme.{0}) (w : ℤ) : Function.Bijective (Ph
   have h1 : ∀ x, Ψ.hom (Phi I J U w x) = x := by
     intro x
     induction x using DirectSum.induction_on with
-    | zero => erw [map_zero]; first | rfl | exact map_zero Ψ.hom
+    | zero => erw [map_zero]; first | rfl
     | add x y hx hy => erw [map_add, map_add, hx, hy]; rfl
     | of p t =>
       rw [Phi_lof]

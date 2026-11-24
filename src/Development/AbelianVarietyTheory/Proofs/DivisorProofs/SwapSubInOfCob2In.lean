@@ -182,7 +182,7 @@ theorem powerSeriesEvalTwoGroups_zero_zero (c : MvPowerSeries (Fin d ⊕ Fin d) 
     funext s; cases s <;> rfl
   rw [this, subst_zero_eq_C_constantCoeff]
   ext n
-  simp [coeff_C]
+  simp
 
 theorem powerSeriesEvalTwoGroups_X_zero (c : MvPowerSeries (Fin d ⊕ Fin d) R) :
     at2 c (fun i => (X i : MvPowerSeries (Fin d) R)) (fun _ => 0) =
@@ -442,7 +442,7 @@ theorem prod_choose_single {d : ℕ} (y : Fin d →₀ ℕ) (i : Fin d) (q : ℕ
     ∏ k, (y k).choose (Finsupp.single i q k) = (y i).choose q := by
   rw [Finset.prod_eq_single i]
   · simp
-  · intro b _ hb; simp [Finsupp.single_apply, Ne.symm hb]
+  · intro b _ hb; simp [Ne.symm hb]
   · intro h; exact absurd (Finset.mem_univ i) h
 
 variable {p : ℕ} [hp : Fact p.Prime] {M : Type} [AddCommGroup M] {d : ℕ}

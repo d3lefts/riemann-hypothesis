@@ -178,9 +178,6 @@ theorem val_genPow' {Y Z : Scheme.{0}} {K : Type} [Fintype K] (φ : K → (Y ⟶
     (J : (Z ⟶ Xo.univ.t.G.left) → Xo.univ.t.PP.L.ι) : val (genPow φ ε g k) r z J = val g r z J ^ k := by
   first
   | exact GermD.val_genPowG Xo.univ.t φ ε g k r z J
-  | exact GermD.val_genPowG (t := Xo.univ.t) φ ε g k r z J
-  | (simp only [genPow]; exact GermD.val_genPowG _ φ ε g k r z J)
-  | (unfold genPow; exact GermD.val_genPowG _ φ ε g k r z J)
 
 theorem gmU_mul {A : Type} [CommRing A] [Algebra S A] (z : (overAt y.x A).left) (w w' : Aˣ) :
     gm (𝟙 _) z ⊤ (unitΓ (w * w')) = gm (𝟙 _) z ⊤ (unitΓ w) * gm (𝟙 _) z ⊤ (unitΓ w') := by
@@ -302,7 +299,7 @@ theorem coc_chart (hP1 : ExpGJ.PhOneValSt) (hP2 : ExpGJ.PhTwoValSt) (hAd : ExpGJ
   rw [hU']
   ring_nf
   apply Additive.ofMul.injective
-  simp only [ofMul_mul, ofMul_inv, ofMul_pow, ofMul_zpow]
+  simp only [ofMul_mul, ofMul_inv, ofMul_pow]
   abel
 
 end Formalism.MainNotions.ModuliIntegralCharts.H1.ExpGL
@@ -339,14 +336,10 @@ private theorem subst_rename_lemma {σ τ υ R : Type} [CommRing R] [Finite σ] 
       MvPowerSeries.subst (fun t => a (ρ t)) (q : MvPowerSeries τ R) := by
   have h1 : MvPowerSeries.HasSubst a := by
     first
-    | exact MvPowerSeries.HasSubst.of_constantCoeff_zero ha
     | exact MvPowerSeries.hasSubst_of_constantCoeff_zero ha
-    | exact MvPowerSeries.HasSubst.of_constantCoeff_nilpotent (fun s => by rw [ha s]; exact IsNilpotent.zero)
   have h2 : MvPowerSeries.HasSubst (fun t => a (ρ t)) := by
     first
-    | exact MvPowerSeries.HasSubst.of_constantCoeff_zero (fun t => ha (ρ t))
     | exact MvPowerSeries.hasSubst_of_constantCoeff_zero (fun t => ha (ρ t))
-    | exact MvPowerSeries.HasSubst.of_constantCoeff_nilpotent (fun t => by rw [ha (ρ t)]; exact IsNilpotent.zero)
   rw [← MvPowerSeries.coe_substAlgHom h1, ← MvPowerSeries.coe_substAlgHom h2]
   erw [MvPowerSeries.substAlgHom_coe, MvPowerSeries.substAlgHom_coe, MvPolynomial.aeval_rename]
   rfl
@@ -511,8 +504,6 @@ theorem bqOrigin : BqOriginSt := by
     haveI := Xo.univ.t.act.hom e
     first
       | (simp; done)
-      | (show (toUnit _ ≫ η[Xo.univ.t.G]) ≫ _ = toUnit _ ≫ η[Xo.univ.t.G]
-         rw [Category.assoc, IsMonHom.one_hom])
 
   have hF : lift (1 : overAt y.x S ⟶ Xo.univ.t.G) 1 ≫ faceMap Xo.univ.t.G 2 = lift 1 (lift 1 1) := by
     first
@@ -523,12 +514,11 @@ theorem bqOrigin : BqOriginSt := by
             lift_fst, lift_snd,
             show pzero Xo.univ.t.G (G2 Xo.univ.t.G) = (1 : G2 Xo.univ.t.G ⟶ Xo.univ.t.G) from rfl,
             ExpGD.comp_one'])
-      | (simp [faceMap, x2, pzero]; done)
 
   have hR : val C.wP (r ≫ (1 : overAt y.x S ⟶ Xo.univ.t.G).left) z J =
       val Xo.univ.t.PP.rig (r ≫ (toUnit (overAt y.x S)).left) z J := by
     rw [← val_corr hJ C.prim.2 (r ≫ (toUnit (overAt y.x S)).left), val_pull hJ, Category.assoc]
-    all_goals first | rfl | exact hJ
+    all_goals first | rfl
   have hP : ∀ e : 𝓞 E, val C.wP ((r ≫ (1 : overAt y.x S ⟶ Xo.univ.t.G).left) ≫
       (Xo.univ.t.act.act e).left) z J = val Xo.univ.t.PP.rig (r ≫ (toUnit (overAt y.x S)).left) z J := by
     intro e
@@ -543,7 +533,7 @@ theorem bqOrigin : BqOriginSt := by
       rw [hF, comp_lift, comp_lift, hA, hA, hA]
     rw [Category.assoc, ← Over.comp_left, hm, Over.comp_left, ← Category.assoc]
     refine (val_pull hJ _ _ _).symm.trans ((val_corr hJ (Xo.univ.t.cub.face 2) _).trans ?_)
-    first | exact val_one _ | exact val_one hJ _ | (simp [val_one, hJ]; done)
+    first | exact val_one _
 
   have hLa0 : val wLa ((r ≫ (1 : overAt y.x S ⟶ Xo.univ.t.G).left) ≫
       (lift (Xo.univ.t.act.act 1) (Xo.univ.t.act.act (a * H.w0))).left) z J = 1 := by
@@ -607,7 +597,7 @@ theorem bqOrigin : BqOriginSt := by
             (LB.pullGen Xo.univ.t.PP.L _ _ wLb (lift (Xo.univ.t.act.act a) (Xo.univ.t.act.act H.w0)).left)))))
     (r ≫ (1 : overAt y.x S ⟶ Xo.univ.t.G).left) z J *
       val Xo.univ.t.PP.rig (r ≫ (toUnit (overAt y.x S)).left) z J ^ (3 : ℤ) = 1
-  simp only [val_mul hJ, val_inv, val_pull hJ, hP, hR, hC, hLa0, hLb0, hJ]
+  simp only [val_mul hJ, val_inv, val_pull hJ, hP, hR, hLa0, hLb0]
   rw [hCB]
   clear hA hF hR hP hC hLa0 hLb0 hstar hLa hLb hCB
   generalize val Xo.univ.t.PP.rig (r ≫ (toUnit (overAt y.x S)).left) z J = R
@@ -636,7 +626,7 @@ section Generic
 
 theorem map_id_apply {S σ : Type} [CommRing S] (f : MvPowerSeries σ S) : MvPowerSeries.map (algebraMap S S) f = f := by
   ext n
-  simp [MvPowerSeries.coeff_map]
+  simp
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {S : Type} [CommRing S] [Algebra ℚ S] {d n : ℕ} [StarRing (𝓞 E)] (B : FB S d (𝓞 E)) {h : PS S 2 d}
   (hg : B.IsCanonGauge S h)
@@ -668,8 +658,6 @@ omit hg [Algebra ℚ S] in
 theorem actK_eq (a : 𝓞 E) : B.actK S a = B.A.act a := by
   first
   | rfl
-  | (simp [FB.actK]; done)
-  | (unfold FB.actK; rfl)
 
 theorem g_ad (a : 𝓞 E) (u v : Q S d n) :
     E2 (B.ad a) u v = FB.expS S (E2 h (ac (AQ B.A a) u) v - E2 h u (ac (AQ B.A (star a)) v)) := by
@@ -768,13 +756,9 @@ private theorem subst_rename_lemma {σ τ υ R : Type} [CommRing R] [Finite σ] 
   have h1 : MvPowerSeries.HasSubst a := by
     first
     | exact MvPowerSeries.hasSubst_of_constantCoeff_zero ha
-    | exact MvPowerSeries.HasSubst.of_constantCoeff_nilpotent (fun s => by rw [ha s]; exact IsNilpotent.zero)
-    | exact MvPowerSeries.hasSubst_of_constantCoeff_nilpotent (fun s => by rw [ha s]; exact IsNilpotent.zero)
   have h2 : MvPowerSeries.HasSubst (fun t => a (ρ t)) := by
     first
     | exact MvPowerSeries.hasSubst_of_constantCoeff_zero (fun t => ha (ρ t))
-    | exact MvPowerSeries.HasSubst.of_constantCoeff_nilpotent (fun s => by rw [(fun t => ha (ρ t)) s]; exact IsNilpotent.zero)
-    | exact MvPowerSeries.hasSubst_of_constantCoeff_nilpotent (fun s => by rw [(fun t => ha (ρ t)) s]; exact IsNilpotent.zero)
   rw [← MvPowerSeries.coe_substAlgHom h1, ← MvPowerSeries.coe_substAlgHom h2]
   erw [MvPowerSeries.substAlgHom_coe, MvPowerSeries.substAlgHom_coe, MvPolynomial.aeval_rename]
   rfl
@@ -810,8 +794,6 @@ theorem ptm_pair (C : ChartAt Xo c y) (φ : Fin C.d → MvPowerSeries (Fin 1 × 
   have hs : MvPowerSeries.HasSubst (fun p : Fin 3 × Fin C.d => P3 C φ u0 u1 u2 p.1 p.2) := by
     first
     | exact MvPowerSeries.hasSubst_of_constantCoeff_zero (fun p => hP p.1 p.2)
-    | exact MvPowerSeries.HasSubst.of_constantCoeff_zero (fun p => hP p.1 p.2)
-    | exact MvPowerSeries.HasSubst.of_constantCoeff_nilpotent (fun p => by rw [hP p.1 p.2]; exact IsNilpotent.zero)
   congr 1
   funext i j
   fin_cases i <;> simp [σ2, MvPolynomial.coe_X, MvPowerSeries.subst_X hs]
@@ -957,13 +939,9 @@ theorem subst_coe_rename {σ τ υ : Type} {R : Type} [CommRing R] [Finite σ] [
   have h1 : MvPowerSeries.HasSubst a := by
     first
     | exact MvPowerSeries.hasSubst_of_constantCoeff_zero ha
-    | exact MvPowerSeries.HasSubst.of_constantCoeff_nilpotent (fun s => by rw [ha s]; exact IsNilpotent.zero)
-    | exact MvPowerSeries.hasSubst_of_constantCoeff_nilpotent (fun s => by rw [ha s]; exact IsNilpotent.zero)
   have h2 : MvPowerSeries.HasSubst (fun t => a (ρ t)) := by
     first
     | exact MvPowerSeries.hasSubst_of_constantCoeff_zero (fun t => ha (ρ t))
-    | exact MvPowerSeries.HasSubst.of_constantCoeff_nilpotent (fun s => by rw [(fun t => ha (ρ t)) s]; exact IsNilpotent.zero)
-    | exact MvPowerSeries.hasSubst_of_constantCoeff_nilpotent (fun s => by rw [(fun t => ha (ρ t)) s]; exact IsNilpotent.zero)
   rw [← MvPowerSeries.coe_substAlgHom h1, ← MvPowerSeries.coe_substAlgHom h2]
   erw [MvPowerSeries.substAlgHom_coe, MvPowerSeries.substAlgHom_coe, MvPolynomial.aeval_rename]
   rfl
@@ -1041,7 +1019,6 @@ theorem phOneVal_holds : ExpGJ.PhOneValSt := by
       intro j
       unfold psIn
       rw [subst_coe_rename (fun p : Fin 3 × Fin C.d => P3 p.1 p.2) (fun p => hP3c p.1 p.2)]
-      beta_reduce
       rw [psJet_subst_trunc m (fun t : Fin 2 × Fin C.d => P3 ((![0, 1] : Fin 2 → Fin 3) t.1) t.2)
         (fun t => hP3c _ t.2), ← law_φa c hφ u0 u1 j]
       congr 2

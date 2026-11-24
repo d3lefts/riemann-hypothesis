@@ -78,10 +78,9 @@ theorem UpperTheory.V.AlgebraTools.adjoin_nil_finite :
             (x - algebraMap A G a) * y + algebraMap A G a * (y - algebraMap A G b) := by
           rw [map_mul]; ring
         rw [e]
-        obtain ⟨k, hk⟩ := ha
-        obtain ⟨m, hm⟩ := hb
-        exact (Commute.all _ _).isNilpotent_add ⟨k, by rw [mul_pow, hk, zero_mul]⟩
-          ⟨m, by rw [mul_pow, hm, mul_zero]⟩
+        exact (Commute.all _ _).isNilpotent_add
+          ((Commute.all _ _).isNilpotent_mul_right ha)
+          ((Commute.all _ _).isNilpotent_mul_left hb)
       add_mem' := by
         rintro x y ⟨a, ha⟩ ⟨b, hb⟩
         refine ⟨a + b, ?_⟩
@@ -92,17 +91,14 @@ theorem UpperTheory.V.AlgebraTools.adjoin_nil_finite :
         exact (Commute.all _ _).isNilpotent_add ha hb
       algebraMap_mem' := fun r => ⟨r, by simp⟩ }
   have hS : Algebra.adjoin A (P : Set G) ≤ N := Algebra.adjoin_le (fun y hy => hnil y hy)
-  have hint : ∀ y, (∃ a : A, IsNilpotent (y - algebraMap A G a)) → IsIntegral A y := by
-    rintro y ⟨a, k, hk⟩
-    have hn : IsIntegral A (y - algebraMap A G a) :=
-      ⟨X ^ k, monic_X_pow k, by simp [hk]⟩
-    have := hn.add (isIntegral_algebraMap (x := a))
-    simpa using this
   refine ⟨?_, ?_, fun y hy => hS hy⟩
-  · obtain ⟨s, hs⟩ := hP
-    rw [← hs, Algebra.adjoin_span]
-    exact Algebra.finite_adjoin_of_finite_of_isIntegral s.finite_toSet
-      (fun y hy => hint y (hnil y (hs ▸ Submodule.subset_span hy)))
+  · obtain ⟨s, rfl⟩ := hP
+    rw [Algebra.adjoin_span]
+    refine Algebra.finite_adjoin_of_finite_of_isIntegral s.finite_toSet (fun y hy => ?_)
+    obtain ⟨a, k, hk⟩ := hnil y (Submodule.subset_span hy)
+    have h := (isIntegral_algebraMap (x := a)).add
+      (show IsIntegral A (y - algebraMap A G a) from ⟨X ^ k, monic_X_pow k, by simp [hk]⟩)
+    simpa using h
   · apply IsLocalRing.of_isUnit_or_isUnit_one_sub_self
     intro y
     obtain ⟨a, ha⟩ := hS y.2
@@ -245,7 +241,7 @@ theorem UpperTheory.V.Pa.trLat :
       have e : algebraMap S.Bh S.U.AA (S.pr0 (algebraMap S.Bh S.U.AA (algebraMap S.B S.Bh b)) - algebraMap S.B S.Bh b) ∈ S.U.N := by
         have h := (S.pr1 (algebraMap S.Bh S.U.AA (algebraMap S.B S.Bh b))).2
         rw [map_sub]
-        convert S.U.N.neg_mem h using 1 <;> simp [Ctx.pr1] <;> ring
+        convert S.U.N.neg_mem h using 1 <;> simp [Ctx.pr1]
       have hz := Submodule.disjoint_def.1 S.U.compl.disjoint _ (Submodule.mem_one.2 ⟨_, rfl⟩) e
       exact sub_eq_zero.1 (S.U.inj (by rw [hz, map_zero]))
     rw [RingHom.mem_ker, map_sub, heA, hφ, T.res, this, S.rF_f, sub_eq_zero]

@@ -513,7 +513,7 @@ open NumberField GlobalTheory.AllWt GlobalTheory.CompHt GlobalTheory.DegCmp Glob
 open scoped ENNReal NNReal
 
 theorem _root_.GlobalTheory.T.isIntegralInConeDegree_of_valuativeBound : ∀ (K V Ω : Type) [Field K] [AddCommGroup V] [Module K V] [Field Ω] [Algebra K Ω] (ev : V →ₗ[K] Ω), CharZero K → FiniteDimensional K V → (⊤ : IntermediateField K Ω).FG → ∀ (τ : ℕ) (t : Ω), ValBound ev τ t → IsIntDeg ev τ t := by
-  first | exact @GlobalTheory.DegVal.ValInt.isIntDeg_of_valBound | exact GlobalTheory.DegVal.ValInt.isIntDeg_of_valBound | (intros; apply GlobalTheory.DegVal.ValInt.isIntDeg_of_valBound <;> assumption)
+  first | exact @GlobalTheory.DegVal.ValInt.isIntDeg_of_valBound
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIntegralInConeDegreeOfValuativeBoundStatement =====
@@ -589,7 +589,7 @@ theorem growthOn_le_compDeg : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     obtain ⟨δ, hδ⟩ := _root_.GlobalTheory.ConeDeg.degree_growth_integral.2.1 c.F _ _ ev (dimFlag Dw) a ha hne0 hneT
     rw [_root_.GlobalTheory.ConeDeg.degree_growth_integral.1 c.F _ _ ev (dimFlag Dw) a ha δ hδ] at hlow
     rw [compDeg, ← hev, hδ.imageDeg_eq]
-    first | exact (ENNReal.mul_le_mul_iff_right haD0 haDT).1 hlow | exact (ENNReal.mul_le_mul_iff_left haD0 haDT).1 hlow
+    first | exact (ENNReal.mul_le_mul_iff_right haD0 haDT).1 hlow
 
 end GlobalTheory.DegVal
 end -- clump:auto

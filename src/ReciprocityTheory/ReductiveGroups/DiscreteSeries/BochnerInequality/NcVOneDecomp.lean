@@ -189,22 +189,18 @@ private lemma card_opposite_sign_above_add_below_le (e : Fin n → Bool) (a : Fi
   have hd : Disjoint (univ.filter fun b => a < b ∧ e b ≠ e a)
       (univ.filter fun b => b < a ∧ e b ≠ e a) := by
     rw [Finset.disjoint_filter]
-    intro b _ h1 h2
-    exact lt_asymm h1.1 h2.1
+    exact fun b _ h1 h2 => lt_asymm h1.1 h2.1
   rw [← Nat.cast_add, ← Finset.card_union_of_disjoint hd]
   exact_mod_cast Finset.card_le_card (fun b hb => by
     simp only [Finset.mem_union, Finset.mem_filter, Finset.mem_univ, true_and] at hb ⊢
-    rcases hb with h | h
-    · exact h.2
-    · exact h.2)
+    rcases hb with h | h <;> exact h.2)
 
 private lemma card_opposite_sign_add_le_of_ne (e : Fin n → Bool) {r s : Fin n} (hrs : e r ≠ e s) :
     ((univ.filter fun b => e b ≠ e r).card : ℝ) + ((univ.filter fun b => e b ≠ e s).card : ℝ) ≤ n := by
   have key : ∀ x y z : Bool, x ≠ y → x ≠ z → y ≠ z → False := by decide
   have hd : Disjoint (univ.filter fun b => e b ≠ e r) (univ.filter fun b => e b ≠ e s) := by
     rw [Finset.disjoint_filter]
-    intro b _ h1 h2
-    exact key _ _ _ h1 h2 hrs
+    exact fun b _ h1 h2 => key _ _ _ h1 h2 hrs
   rw [← Nat.cast_add, ← Finset.card_union_of_disjoint hd]
   exact_mod_cast (Finset.card_le_univ _).trans (by simp)
 

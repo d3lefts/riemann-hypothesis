@@ -75,7 +75,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.hodge_lattice_dvr_degree : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (X : Scheme.{0}) (t : SAB H X) (Ω : Type) [Field Ω] [CharZero Ω] (ξ : Sp Ω ⟶ X) (d r : ℕ) (M : LieModel t.G ξ (Fin d → Ω)) (S : GermSys t ξ M) (ρ : 𝓞 E →+* Module.End Ω (Fin d → Ω)) (𝓗 : HodgeLat M.lat ρ H.bar r) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Algebra O Ω] (s : X ⟶ Sp O) [IsSeparated s] [LocallyOfFiniteType s] (ϖ : O) (p : ℕ) (σ : E →+* Ω), Irreducible ϖ → p.Prime → ϖ ∣ (p : O) → ξ ≫ s = spMap (algebraMap O Ω) → IsCptGen ξ → PowFns t → S.Gives 𝓗 → (∀ q : Cpt ξ, (p : X.residueField q.1) = 0 → FibPF t q.1) → Nat.card (E →+* Ω) = Module.finrank ℚ E → (∀ (s' : E →+* Ω) (a : 𝓞 E), s' (a : E) ∈ (algebraMap O Ω).range) → 𝓗.DegZero σ (algebraMap O Ω ϖ) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.germ_degZero | exact GlobalTheory.CompanionTheory.Ar.Flat.germ_degZero | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.germ_degZero <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.germ_degZero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.HodgeLatticeDvrDegreeStatement =====
@@ -281,7 +281,7 @@ theorem hodgeLat_model : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   obtain ⟨e, he, -⟩ := _root_.GlobalTheory.CompanionTheory.Ar.lieModel_existsUnique_equiv Y.X Y.t.G Z.Ω (Z.ξ₀ ≫ Y.j) (Fin d → Z.Ω) Z.V M Z.M
   let ρ' : 𝓞 E →+* Module.End Z.Ω (Fin d → Z.Ω) := (e.symm.conjRingEquiv : _ ≃+* _).toRingHom.comp Z.ρ
   have hρ' : ∀ a v, e (ρ' a v) = Z.ρ a (e v) := fun a v => by
-    simp [ρ', LinearEquiv.conjRingEquiv, LinearEquiv.conj_apply]
+    simp [ρ', LinearEquiv.conjRingEquiv]
   have hact : M.IsActOf Y.t.act.act ρ' := fun a v => by
     rw [← he, hρ', Z.act a (e v), he]
   have hrho : ∀ a v, ρ' a v = (rho S.g₀.B a).mulVec v := fun a v => M.inj (by rw [S.act₀, hact a v])
@@ -299,7 +299,7 @@ theorem hodgeLat_model : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     · obtain ⟨-, -, -, -, -, e1, e2⟩ := facts _ h
       have hcc : ComplexEmbedding.conjugate (ComplexEmbedding.conjugate τ') = τ' := by
         ext x
-        simp [ComplexEmbedding.conjugate_coe_eq]
+        simp
       rw [hcc] at e2
       rw [e1, e2, add_comm]
   have hC : HChar S.g₀.B (D.p + D.q) := GlobalTheory.T.hermitian_signature_character E Z.Ω d (D.p + D.q) S.g₀.B ρ' hrho hcard hsum

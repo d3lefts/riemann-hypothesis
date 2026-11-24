@@ -320,7 +320,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.complete_dvr_dominating_valuation : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] (l : Type) [Field l] [Algebra (IsLocalRing.ResidueField V) l] [FiniteDimensional (IsLocalRing.ResidueField V) l], ∃ (R : Type) (_ : CommRing R) (_ : IsDomain R) (_ : IsDiscreteValuationRing R) (f : V →+* R) (_ : IsLocalHom f) (s : l →+* IsLocalRing.ResidueField R), IsAdicComplete (IsLocalRing.maximalIdeal R) R ∧ Function.Injective f ∧ s.comp (algebraMap _ l) = IsLocalRing.ResidueField.map f := by
-  first | exact @GlobalTheory.CompanionTheory.Relay.complete_dvr_dominating_valuation | exact GlobalTheory.CompanionTheory.Relay.complete_dvr_dominating_valuation | (intros; apply GlobalTheory.CompanionTheory.Relay.complete_dvr_dominating_valuation <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Relay.complete_dvr_dominating_valuation
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.CompleteDvrDominatingValuationStatement =====
@@ -356,7 +356,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.geometric_power_free_functorial : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (X0 : Scheme.{0}) (t : SAB H X0), (∀ (k k₂ : Type) [Field k] [Field k₂] (f : k →+* k₂) (x : Sp k ⟶ X0), GeomPF t x → GeomPF t (spMap f ≫ x)) ∧ ∀ (X₂ : Scheme.{0}) (t₂ : SAB H X₂) (f : X₂ ⟶ X0) (_ : SABMap t₂ t f) (k : Type) [Field k] (x : Sp k ⟶ X₂), GeomPF t₂ x ↔ GeomPF t (x ≫ f) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.GeomBC.geomPF_baseChange | exact GlobalTheory.CompanionTheory.Ar.GeomBC.geomPF_baseChange | (intros; apply GlobalTheory.CompanionTheory.Ar.GeomBC.geomPF_baseChange <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.GeomBC.geomPF_baseChange
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.GeometricPowerFreeFunctorialStatement =====
@@ -461,7 +461,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.pel_uniformised_geometric_free : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (t : SAB H (Sp R)) (_ : PELUnif (IsLocalRing.maximalIdeal R) t), GeomPF t (spMap (IsLocalRing.residue R)) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Unif.geomPF_closedPoint | exact GlobalTheory.CompanionTheory.Ar.Unif.geomPF_closedPoint | (intros; apply GlobalTheory.CompanionTheory.Ar.Unif.geomPF_closedPoint <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Unif.geomPF_closedPoint
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.PelUniformisedGeometricFreeStatement =====
@@ -735,7 +735,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.model_fibres_power_free : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] [IsNoetherianRing O] (β : O →+* c.F) (Y : Model Xo c β), Dense (Set.range Y.j) → Y.SplitFibres → Y.N3 → ∀ (p : ℕ), p.Prime → ∀ z : Y.X, (p : Y.X.residueField z) = 0 → FibPF Y.t z := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.ModelFib.model_fibPF | exact GlobalTheory.CompanionTheory.Ar.ModelFib.model_fibPF | (intros; apply GlobalTheory.CompanionTheory.Ar.ModelFib.model_fibPF <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.ModelFib.model_fibPF
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ModelFibresPowerFreeStatement =====

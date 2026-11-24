@@ -164,7 +164,7 @@ theorem det_lower_I_ne (y : GR n) :
   have hEE : (C + Complex.I • D) * (C + Complex.I • D)ᴴ = fromCols C D * (fromCols C D)ᴴ := by
     rw [conjTranspose_fromCols_eq_fromRows_conjTranspose, fromCols_mul_fromRows]
     simp only [conjTranspose_add, conjTranspose_smul, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, hs, smul_smul, Complex.star_def, Complex.conj_I]
+      Matrix.smul_mul, Matrix.mul_smul, hs, Complex.star_def, Complex.conj_I]
     simp
     abel_nf
     simp [smul_smul]
@@ -299,50 +299,33 @@ theorem strip_open_real_discs (n : ℕ) (X : Fin n → ℝ) :
       z ∈ Metric.ball (t : ℂ) ρ ∧
       Metric.ball (t : ℂ) ρ ⊆ {z : ℂ | ∀ j, |z.im * X j| < Real.pi / 4} := by
   set S := {z : ℂ | ∀ j, |z.im * X j| < Real.pi / 4} with hS
-  have hpi : 0 < Real.pi / 4 := by positivity
-  refine ⟨?_, ?_, ?_⟩
-  · have h : S = ⋂ j, {z : ℂ | |z.im * X j| < Real.pi / 4} := by
-      ext z
-      simp [hS]
-    rw [h]
+  -- the admissible imaginary parts form an open subset of the real line
+  have hV : IsOpen {r : ℝ | ∀ j, r * |X j| < Real.pi / 4} := by
+    rw [Set.ofPred_forall]
     exact isOpen_iInter_of_finite fun j => isOpen_lt (by fun_prop) continuous_const
-  · intro t
-    simp [hS, hpi]
+  refine ⟨?_, ?_, ?_⟩
+  · rw [hS, Set.ofPred_forall]
+    exact isOpen_iInter_of_finite fun j => isOpen_lt (by fun_prop) continuous_const
+  · simp [hS, Real.pi_pos]
   · intro z hz
-    have hopen : IsOpen {r : ℝ | ∀ j, r * |X j| < Real.pi / 4} := by
-      have h : {r : ℝ | ∀ j, r * |X j| < Real.pi / 4} = ⋂ j, {r : ℝ | r * |X j| < Real.pi / 4} := by
-        ext r
-        simp
-      rw [h]
-      exact isOpen_iInter_of_finite fun j => isOpen_lt (by fun_prop) continuous_const
-    have hmem : |z.im| ∈ {r : ℝ | ∀ j, r * |X j| < Real.pi / 4} := by
-      intro j
-      have h := hz j
-      rwa [abs_mul] at h
-    obtain ⟨ε, hε, hball⟩ := Metric.isOpen_iff.mp hopen _ hmem
+    obtain ⟨ε, hε, hball⟩ :=
+      Metric.isOpen_iff.mp hV _ (by simpa only [hS, abs_mul, Set.mem_ofPred_eq] using hz)
+    have hρ : ∀ j, (|z.im| + ε / 2) * |X j| < Real.pi / 4 :=
+      hball (show |z.im| + ε / 2 ∈ Metric.ball |z.im| ε by
+        rw [Real.ball_eq_Ioo]
+        constructor <;> linarith)
     refine ⟨z.re, |z.im| + ε / 2, by positivity, ?_, ?_⟩
-    · rw [Metric.mem_ball, Complex.dist_eq]
-      have h : z - (z.re : ℂ) = (z.im : ℂ) * Complex.I := by
-        apply Complex.ext <;> simp
-      rw [h, norm_mul, Complex.norm_I, mul_one, Complex.norm_real, Real.norm_eq_abs]
-      linarith
+    · rw [Metric.mem_ball]
+      simp [Complex.dist_eq, Complex.norm_def, Complex.normSq, Real.sqrt_mul_self_eq_abs, hε]
     · intro w hw j
-      rw [Metric.mem_ball, Complex.dist_eq] at hw
+      rw [Metric.mem_ball] at hw
       have him : |w.im| < |z.im| + ε / 2 := by
-        have h1 : |(w - (z.re : ℂ)).im| ≤ ‖w - (z.re : ℂ)‖ := Complex.abs_im_le_norm _
-        simp only [Complex.sub_im, Complex.ofReal_im, sub_zero] at h1
+        have h := Complex.abs_im_le_norm (w - (z.re : ℂ))
+        simp only [Complex.sub_im, Complex.ofReal_im, sub_zero, dist_eq_norm] at h hw
         linarith
-      have hρ : (|z.im| + ε / 2) * |X j| < Real.pi / 4 := by
-        have hin : |z.im| + ε / 2 ∈ Metric.ball |z.im| ε := by
-          rw [Metric.mem_ball, Real.dist_eq, show |z.im| + ε / 2 - |z.im| = ε / 2 by ring,
-            abs_of_pos (by positivity)]
-          linarith
-        exact hball hin j
-      show |w.im * X j| < Real.pi / 4
-      rw [abs_mul]
-      calc |w.im| * |X j| ≤ (|z.im| + ε / 2) * |X j| :=
-            mul_le_mul_of_nonneg_right him.le (abs_nonneg _)
-        _ < Real.pi / 4 := hρ
+      calc |w.im * X j| = |w.im| * |X j| := abs_mul _ _
+        _ ≤ (|z.im| + ε / 2) * |X j| := mul_le_mul_of_nonneg_right him.le (abs_nonneg _)
+        _ < Real.pi / 4 := hρ j
 
 end GlobalTheory.CompanionTheory.Strip
 end -- clump:auto

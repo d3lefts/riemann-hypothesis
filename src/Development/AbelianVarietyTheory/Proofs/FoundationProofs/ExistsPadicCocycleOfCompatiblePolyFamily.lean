@@ -241,7 +241,7 @@ theorem entries_eq_one_of_mem_Gamma {K : ℕ} {δ : SL(2, ℤ)} (hδ : δ ∈ Co
     (i j : Fin 2) :
     (((δ : Matrix (Fin 2) (Fin 2) ℤ) i j : ℤ) : ZMod K) = (((1 : Matrix (Fin 2) (Fin 2) ℤ) i j : ℤ) : ZMod K) := by
   obtain ⟨h1, h2, h3, h4⟩ := CongruenceSubgroup.Gamma_mem.1 hδ
-  fin_cases i <;> fin_cases j <;> simp [Matrix.one_apply, h1, h2, h3, h4]
+  fin_cases i <;> fin_cases j <;> simp [h1, h2, h3, h4]
 
 theorem exists_coc_near : ∀ (N l w : ℕ), 0 < N → l.Prime → l ≠ 2 → ¬ l ∣ N → Odd w → ∀ Φ,
     IsFam l w (Gam N l) Φ → ∀ n : ℕ, ∃ z : SL(2, ℤ) → MvPolynomial (Fin 2) (ZMod (l ^ n)),
@@ -506,7 +506,7 @@ theorem adj_of_near : ∀ (N l w n : ℕ), 0 < N → l.Prime → l ≠ 2 → ¬ 
   let Δ : Subgroup G := (CongruenceSubgroup.Gamma K).subgroupOf (Gam N l)
   have hρmul : ∀ g h v, ρ (g * h) v = ρ h (ρ g v) := by
     intro g h v
-    simp only [ρ, AlgHom.toLinearMap_apply, Subgroup.coe_mul, Matrix.SpecialLinearGroup.coe_mul]
+    simp only [ρ, AlgHom.toLinearMap_apply]
     exact L1 _ _ v
   have hρone : ∀ v, ρ 1 v = v := by
     intro v
@@ -543,7 +543,7 @@ theorem adj_of_near : ∀ (N l w n : ℕ), 0 < N → l.Prime → l ≠ 2 → ¬ 
       rw [h1]
       by_cases hij : i = j
       · subst hij; rw [if_pos rfl, map_neg, map_one]; simp [Matrix.neg_apply]
-      · simp [hij, Matrix.neg_apply, Matrix.one_apply]
+      · simp [hij, Matrix.neg_apply]
     rw [L6 _ _ v hent, L7 w v hv, hw.neg_one_pow, neg_one_smul]
   have hc2 : ∀ g, c' * g * c'⁻¹ * g⁻¹ ∈ Δ := by
     intro g

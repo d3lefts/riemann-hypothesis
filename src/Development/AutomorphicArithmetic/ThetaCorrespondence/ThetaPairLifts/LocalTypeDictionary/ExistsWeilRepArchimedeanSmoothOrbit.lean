@@ -597,7 +597,6 @@ theorem archOp_apply_continuous : ∀ {F E : Type} [Field F] [NumberField F] [Fi
   have ha := acts_archOp om (γ (Multiplicative.ofAdd t)) f (hex _ hh f) r₀ (hrest f)
   simp only [Function.comp_apply]
   show _ = om _ _ (liftV x)
-  change _ = om (1, γ (Multiplicative.ofAdd t)) (tens (evI F) (⇑f) r₀) (liftV x)
   rw [ha]
   have h1 : r₀ (liftV x) = 1 := hr₀1 _ fun i => rfl
   have h2 : (fun i => evI F (liftV x i)) = x := by
@@ -695,7 +694,7 @@ theorem archAct_linear_mul : ∀ {F E : Type} [Field F] [NumberField F] [Field E
     rw [lift_coordI]
     simp only [actAB, Matrix.mul_smul, Matrix.smul_mul, coordI_one]
     congr 1
-    simp only [one_mul, Units.val_one, Subgroup.coe_one, Subgroup.coe_mul, Units.val_mul, Matrix.transpose_mul, Matrix.mul_assoc]
+    simp only [Units.val_one, Subgroup.coe_one, Subgroup.coe_mul, Units.val_mul, Matrix.transpose_mul, Matrix.mul_assoc]
     simp only [Matrix.one_mul]
 
 end GlobalTheory.ArchLine
@@ -918,7 +917,7 @@ theorem _root_.GlobalTheory.T.archimedean_line_spanned_by_weil_vector : _root_.G
       (∀ (h : GlobalTheory.RealWeil.Sch l) (x : EuclideanSpace ℝ l), Continuous fun t => T t h x) ∧
       ∀ (t : ℝ) (f : SInf F (Fin n × Fin d)),
         Acts (evI F) (om (1, γ (Multiplicative.ofAdd t))) ⇑f ⇑(Φ.symm (T t (Φ f))) := by
-  first | exact @_root_.GlobalTheory.ArchLine.archimedean_real_line_invariance | exact _root_.GlobalTheory.ArchLine.archimedean_real_line_invariance | (intros; apply _root_.GlobalTheory.ArchLine.archimedean_real_line_invariance <;> assumption)
+  first | exact @_root_.GlobalTheory.ArchLine.archimedean_real_line_invariance
 end
 end -- clump:auto
 end -- clump:auto

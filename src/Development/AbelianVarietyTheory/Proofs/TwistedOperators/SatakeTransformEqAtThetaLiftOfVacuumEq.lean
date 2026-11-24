@@ -142,7 +142,7 @@ theorem tMat_add (ϖ : L) (h0 : ϖ ≠ 0) (m : ℕ) (a c : Fin m → ℤ) :
   unfold tMat
   rw [diagonal_mul_diagonal]
   congr 1; funext i
-  split_ifs <;> simp [zpow_add₀ h0, neg_add] <;> ring
+  split_ifs <;> simp [zpow_add₀ h0] <;> ring
 
 theorem tMat_zero (ϖ : L) (m : ℕ) : tMat ϖ n m 0 = 1 := by
   unfold tMat
@@ -773,7 +773,7 @@ theorem dTor_mul {σ : L →+* L} {ϖ : L} (hσϖ : σ ϖ = ϖ) (hϖ : ϖ ≠ 0)
   by_cases h1 : j = lo n k
   · subst h1; simp [hne.symm, hσϖ, hϖ]
   by_cases h2 : j = (lo n k).rev
-  · subst h2; simp [hne, hne.symm, hσϖ, hϖ]
+  · subst h2; simp [hne.symm, hσϖ, hϖ]
   have h3 : j.rev ≠ lo n k := fun h => h2 (by rw [← h, Fin.rev_rev])
   have h4 : j.rev ≠ (lo n k).rev := fun h => h1 (Fin.rev_injective h)
   simp [h1, h2, h3, h4]
@@ -1494,7 +1494,7 @@ theorem prodId2 : ∀ (n n' : ℕ) (hn : n ≤ n') (qu : ℂˣ) (α : Fin (n / 2
     have e : Fin.cast (show n' / 2 - n / 2 + n / 2 = n' / 2 by omega) (Fin.natAdd (n' / 2 - n / 2) r) =
         ⟨n' / 2 - n / 2 + r.1, by omega⟩ := Fin.ext (by simp)
     rw [e, dite_eq_left (by simp)]
-    simp only [Fin.val_mk, Nat.add_sub_cancel_left, Fin.eta]
+    simp only [Nat.add_sub_cancel_left, Fin.eta]
   · rw [dite_eq_right (by simp; omega), _root_.one_zpow]
 
 theorem satU_eq_satU_liftPar_of_heckeVec_eq : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] [CompleteSpace L] (ϖ : L) (σ : L →+* L) (q : ℕ) (δ : L) (ψ : AddChar L ℂ) (n n' : ℕ) (M : Type) [AddCommGroup M] [Module ℂ M] (ρ : Matrix (Fin n') (Fin n) L → Module.End ℂ M) (ω : GU σ n × GU σ n' →* Module.End ℂ M) (s : M), IsStd ϖ σ q δ ψ ρ ω s → CayleyRule q n' ρ (ω.comp (MonoidHom.inl _ _)) s → CayleyRule q n ρ (ω.comp (MonoidHom.inr _ _)) s → n ≤ n' → ∀ h ∈ Hecke ℂ (KU σ n), ∀ h' ∈ Hecke ℂ (KU σ n'), heckeVec (ω.comp (MonoidHom.inl _ _)) (KU σ n) h s = heckeVec (ω.comp (MonoidHom.inr _ _)) (KU σ n') h' s → ∀ qu : ℂˣ, (qu : ℂ) = q → ∀ α : Fin (n / 2) → ℂˣ, SatU ϖ q h (fun i => (α i : ℂ)) = SatU ϖ q h' (fun i => (liftPar qu n n' α i : ℂ)) := by

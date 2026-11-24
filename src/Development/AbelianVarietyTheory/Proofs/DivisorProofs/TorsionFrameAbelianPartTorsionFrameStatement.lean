@@ -172,7 +172,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.UT GlobalTheory.ZH
 
 theorem _root_.GlobalTheory.T.exists_lineBundlePower_section_nonzero_at_origin : LL → ∀ (R : Type) [CommRing R] [IsDomain R] (A : PolAV (Spec (CommRingCat.of (FractionRing R)))) (F : Type) [Field F] [Algebra (FractionRing R) F] (ρ : LB.Gen (A.L.pull (eSec A.A))), ρ.IsGen → ∀ k : ℕ, 4 ≤ k → ∃ (t : SecA A F k) (c : F), c ≠ 0 ∧ ∀ z J, Good A.L z J → sA t (ptSecT A.A 1).left z J = @id ((TFK (R := R) F).left.presheaf.stalk z) (cst (R := R) F z c) * (val (rigT A.A A.L ρ (TFK (R := R) F) (k : ℤ)) (𝟙 _) z J).val := by
-  first | exact @GlobalTheory.Poinc.Origin.exists_sec_value_ne_zero | exact GlobalTheory.Poinc.Origin.exists_sec_value_ne_zero | (intros; apply GlobalTheory.Poinc.Origin.exists_sec_value_ne_zero <;> assumption)
+  first | exact @GlobalTheory.Poinc.Origin.exists_sec_value_ne_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLineBundlePowerSectionNonzeroAtOriginStatement =====
@@ -255,7 +255,7 @@ theorem frame_tors : LL → AllU fun {R} _ _ {I} {D} {A} {G} _ _ U => ∀ (F : T
     have hinj : Function.Injective E.h := fun a b h => hsm (by simpa only [hEh] using h)
     obtain ⟨β₀, hβ₀⟩ := ThetaSum.exists_gen_pow U.LG U.cubG U.symG U.symG_gen N E.aG hEG
     obtain ⟨β, hβ, -⟩ := exists_gen U.LG.isLB (φ' := ![𝟙 _, E.aG.left]) (ε' := ![((k * N ^ 2 : ℕ) : ℤ), -(k : ℤ)])
-      (formEq_of_eq fun i => by fin_cases i <;> simp <;> push_cast <;> ring) (GeneratorPullback.powGen _ _ _ β₀ k)
+      (formEq_of_eq fun i => by fin_cases i <;> simp <;> push_cast) (GeneratorPullback.powGen _ _ _ β₀ k)
       (powGen_isGen _ _ _ _ hβ₀ k)
     obtain ⟨-, CT2⟩ := coef_twistPull hL R I hI D A G hG U F E hinj (k * N ^ 2) k hk1 hk'1 ⟨β, hβ⟩
     rw [hEB] at CT2
@@ -361,7 +361,7 @@ open GlobalTheory.UT GlobalTheory.ZH
 open GlobalTheory.Poinc.Tors
 
 theorem _root_.GlobalTheory.T.torsion_frame_abelian_part_torsion_frame : LL → AllU fun {R} _ _ {I} {D} {A} {G} _ _ U => ∀ (F : Type) [Field F] [Algebra (FractionRing R) F] (w₀ : W0 U.toUnifPre) (ρ : LB.Gen (A.L.pull (eSec A.A))), NormW U.toUnifPre w₀ ρ → ∀ N : ℕ, 1 ≤ N → ∀ (g o : GtPtF D.toPre F), GtPtF.IsNsmul N g o → o.IsZero → ∀ (w : Frm D.toPre F 1 g.b) (x : TFK (R := R) F ⟶ A.A) (fr : FrAt x), w.IsGen → LiesOver U.toUnifPre w₀ g w x fr → IsTorsFrame A ρ N x fr → ∀ κ : LB.Gen (kapLB D.toPre (𝟙 D.toPre.P.A ^ N) (N ^ 2) 1), Normd κ → ∀ z J, Good D.toPre.P.L z J → val w (𝟙 _) z J ^ (N ^ 2) * val κ g.b.left z J = 1 := by
-  first | exact @GlobalTheory.Poinc.Tors.FrameTors.frame_tors | exact GlobalTheory.Poinc.Tors.FrameTors.frame_tors | (intros; apply GlobalTheory.Poinc.Tors.FrameTors.frame_tors <;> assumption)
+  first | exact @GlobalTheory.Poinc.Tors.FrameTors.frame_tors
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorsionFrameAbelianPartTorsionFrameStatement =====

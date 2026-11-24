@@ -191,11 +191,11 @@ theorem exists_integral_poly_of_primitiveRoot_totally_ramified :
     have hd : (e : ℤ) * (ki - kj) = (j : ℤ) - i := by linarith
     apply hij
     rcases lt_trichotomy (ki - kj) 0 with h' | h' | h'
-    · have h2 : (e : ℤ) * (ki - kj) ≤ -e := by nlinarith
+    · have h2 : (e : ℤ) * (ki - kj) ≤ -e := by linarith [mul_le_mul_of_nonneg_left (show ki - kj ≤ -1 by omega) (Int.natCast_nonneg e)]
       omega
     · rw [h', mul_zero] at hd
       omega
-    · have h2 : (e : ℤ) ≤ (e : ℤ) * (ki - kj) := by nlinarith
+    · have h2 : (e : ℤ) ≤ (e : ℤ) * (ki - kj) := by linarith [mul_le_mul_of_nonneg_left (show (1 : ℤ) ≤ ki - kj by omega) (Int.natCast_nonneg e)]
       omega
   have hvu : v u ≤ 1 := A.valuation_le_one ⟨u, hu⟩
   have hcA : ∀ i ∈ Finset.range e, c i ∈ A := by
@@ -215,7 +215,7 @@ theorem exists_integral_poly_of_primitiveRoot_totally_ramified :
       have h1 : v (c i * w ^ i) = γ ^ ((e : ℤ) * k + i) := by
         rw [Valuation.map_mul, Valuation.map_pow, hk, zpow_add₀ hγ0, zpow_natCast]
       have h2 : (e : ℤ) * k + i < 0 := by
-        nlinarith [mul_nonneg (Int.natCast_nonneg e) (by omega : (0 : ℤ) ≤ -1 - k)]
+        linarith [mul_nonneg (Int.natCast_nonneg e) (by omega : (0 : ℤ) ≤ -1 - k)]
       have h3 : 1 < γ ^ ((e : ℤ) * k + i) := one_lt_zpow_of_neg₀ hγpos hγ1 h2
       rw [← h1] at h3
       exact absurd (hle.trans hvu) (not_le.2 h3)

@@ -135,7 +135,7 @@ def entryDerStar (ε : Fin n → Bool) (k : KG ε) (a b : Fin n) : Mx n →ₗ[�
     simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, star_add]
   map_smul' r Y := by
     simp only [Matrix.smul_apply, RingHom.id_apply, Complex.real_smul]
-    simp only [star_sum, Finset.mul_sum, star_mul', Complex.star_def, map_mul, Complex.conj_ofReal]
+    simp only [star_sum, Finset.mul_sum, star_mul', Complex.star_def, Complex.conj_ofReal]
     refine Finset.sum_congr rfl fun l _ => ?_
     ring
 
@@ -239,7 +239,7 @@ open GlobalTheory.KFourier MeasureTheory
 
 
 theorem _root_.GlobalTheory.T.compactUnitaryRightDeriv_real_linear_direction : ∀ {n : ℕ} (ε : Fin n → Bool) (d : ℕ) (φ : KG ε → ℂ), φ ∈ polyV ε d → ∀ {r : ℕ} (X : Fin r → Mx n) (c : Fin r → ℝ), (∀ j, inK ε (X j)) → rder ε [∑ j, (c j : ℂ) • X j] φ = ∑ j, (c j : ℂ) • rder ε [X j] φ := by
-  first | exact @GlobalTheory.KFourier.rder_real_linear | exact GlobalTheory.KFourier.rder_real_linear | (intros; apply GlobalTheory.KFourier.rder_real_linear <;> assumption)
+  first | exact @GlobalTheory.KFourier.rder_real_linear
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.CompactUnitaryRightDerivRealLinearDirectionStatement =====
@@ -432,7 +432,7 @@ open GlobalTheory.KFourier MeasureTheory
 
 
 theorem _root_.GlobalTheory.T.compactUnitaryHaar_smallBall_lower_bound : ∀ {n : ℕ} (ε : Fin n → Bool), ∃ c : ℝ, 0 < c ∧ ∃ D : ℕ, ∀ δ : ℝ, 0 < δ → δ ≤ 1 → c * δ ^ D ≤ (muK ε {k | Formalism.REAL.hs (toMK k - 1) ≤ δ}).toReal := by
-  first | exact @GlobalTheory.HaarSmallBall.smallBall | exact GlobalTheory.HaarSmallBall.smallBall | (intros; apply GlobalTheory.HaarSmallBall.smallBall <;> assumption)
+  first | exact @GlobalTheory.HaarSmallBall.smallBall
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.CompactUnitaryHaarSmallBallLowerBoundStatement =====
@@ -557,7 +557,7 @@ open GlobalTheory.KFourier MeasureTheory
 
 
 theorem _root_.GlobalTheory.T.hilbertSchmidt_compactUnitary_sub_one_eq_trace : ∀ {n : ℕ} (ε : Fin n → Bool) (k : KG ε), Formalism.REAL.hs (toMK k - 1) = 2 * (n : ℝ) - 2 * (Matrix.trace (toMK k)).re := by
-  first | exact @GlobalTheory.hs_toMK_sub_one | exact GlobalTheory.hs_toMK_sub_one | (intros; apply GlobalTheory.hs_toMK_sub_one <;> assumption)
+  first | exact @GlobalTheory.hs_toMK_sub_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.HilbertSchmidtCompactUnitarySubOneEqTraceStatement =====
@@ -631,7 +631,7 @@ open GlobalTheory.KFourier MeasureTheory
 
 
 theorem _root_.GlobalTheory.T.hilbertSchmidt_compactUnitary_sub_one_le_four_mul : ∀ {n : ℕ} (ε : Fin n → Bool) (k : KG ε), Formalism.REAL.hs (toMK k - 1) ≤ 4 * (n : ℝ) := by
-  first | exact @GlobalTheory.HsLe.hs_toMK_sub_one_le | exact GlobalTheory.HsLe.hs_toMK_sub_one_le | (intros; apply GlobalTheory.HsLe.hs_toMK_sub_one_le <;> assumption)
+  first | exact @GlobalTheory.HsLe.hs_toMK_sub_one_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.HilbertSchmidtCompactUnitarySubOneLeFourMulStatement =====
@@ -726,7 +726,7 @@ theorem kernel_near_one : ∀ {n : ℕ} (ε : Fin n → Bool), ∃ C : ℝ, 0 �
     have := integral_mono (μ := muK ε) (integrable_const ((1 / ((n : ℝ) + 1)) ^ m)) (hint _ (φcont.pow m))
       (fun k => pow_le_pow_left₀ (by positivity) (φpos k) m)
     rw [integral_const] at this
-    simp only [probReal_univ, measure_univ, ENNReal.toReal_one, one_smul, Measure.real] at this
+    simp only [measure_univ, ENNReal.toReal_one, one_smul, Measure.real] at this
     exact lt_of_lt_of_le (by positivity) this
   refine ⟨fun k => φ k ^ m / Z, (φcont.pow m).div_const Z,
     fun k => div_nonneg (pow_nonneg (le_trans (by positivity) (φpos k)) m) Zpos.le, ?_, ?_, ?_⟩
@@ -874,7 +874,7 @@ open GlobalTheory.KFourier MeasureTheory
 
 
 theorem _root_.GlobalTheory.T.exists_compactUnitaryKernel_concentrated_near_one : ∀ {n : ℕ} (ε : Fin n → Bool), ∃ C : ℝ, 0 ≤ C ∧ ∀ m : ℕ, ∃ κ : KG ε → ℝ, Continuous κ ∧ (∀ k, 0 ≤ κ k) ∧ ∫ k, κ k ∂(muK ε) = 1 ∧ (fun k => (κ k : ℂ)) ∈ polyV ε m ∧ ∫ k, κ k * Real.sqrt (Formalism.REAL.hs (toMK k - 1)) ∂(muK ε) ≤ C * ((m : ℝ) + 1) ^ (-(1 / 4 : ℝ)) := by
-  first | exact @GlobalTheory.KFourier.kernel_near_one | exact GlobalTheory.KFourier.kernel_near_one | (intros; apply GlobalTheory.KFourier.kernel_near_one <;> assumption)
+  first | exact @GlobalTheory.KFourier.kernel_near_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.ExistsCompactUnitaryKernelConcentratedNearOneStatement =====
@@ -976,7 +976,7 @@ open GlobalTheory.KFourier MeasureTheory
 
 
 theorem _root_.GlobalTheory.T.exists_spanning_lieAlgebra_coef_sq_bound : ∀ {n : ℕ} (ε : Fin n → Bool) {r : ℕ} (X : Fin r → Mx n), (∀ Y, inK ε Y → ∃ c : Fin r → ℝ, Y = ∑ j, (c j : ℂ) • X j) → ∃ C : ℝ, 0 ≤ C ∧ ∀ Y, inK ε Y → ∃ c : Fin r → ℝ, Y = ∑ j, (c j : ℂ) • X j ∧ ∑ j, c j ^ 2 ≤ C * Formalism.REAL.hs Y := by
-  first | exact @GlobalTheory.KGap.spanning_coef_bound | exact GlobalTheory.KGap.spanning_coef_bound | (intros; apply GlobalTheory.KGap.spanning_coef_bound <;> assumption)
+  first | exact @GlobalTheory.KGap.spanning_coef_bound
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.ExistsSpanningLieAlgebraCoefSqBoundStatement =====
@@ -1147,7 +1147,7 @@ open GlobalTheory.KFourier MeasureTheory
 
 
 theorem _root_.GlobalTheory.T.sqrt_integral_norm_sq_le_integral_kernel_mul_translate : ∀ {n : ℕ} (ε : Fin n → Bool) (p : KG ε → ℂ) (κ : KG ε → ℝ), Continuous p → Continuous κ → (∀ k, 0 ≤ κ k) → ∫ k, κ k ∂(muK ε) = 1 → (∀ k, ∫ x, star (p x) * (κ (x⁻¹ * k) : ℂ) ∂(muK ε) = 0) → Real.sqrt (∫ x, ‖p x‖ ^ 2 ∂(muK ε)) ≤ ∫ k, κ k * Real.sqrt (∫ x, ‖p x - p (x * k)‖ ^ 2 ∂(muK ε)) ∂(muK ε) := by
-  first | exact @GlobalTheory.KFourier.sqrt_integral_normSq_le_integral_kernel_mul_translate | exact GlobalTheory.KFourier.sqrt_integral_normSq_le_integral_kernel_mul_translate | (intros; apply GlobalTheory.KFourier.sqrt_integral_normSq_le_integral_kernel_mul_translate <;> assumption)
+  first | exact @GlobalTheory.KFourier.sqrt_integral_normSq_le_integral_kernel_mul_translate
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.L2normLeIntegralKernelMulTranslateDiffStatement =====
@@ -1208,7 +1208,7 @@ open GlobalTheory.KFourier MeasureTheory
 
 
 theorem _root_.GlobalTheory.T.orthogonal_lowerDegree_kernel_translates : ∀ {n : ℕ} (ε : Fin n → Bool) (i : ℕ) (p κ : KG ε → ℂ), κ ∈ lowV ε i → (∀ q ∈ lowV ε i, ∫ k, q k * p k ∂(muK ε) = 0) → ∀ k : KG ε, ∫ x, star (p x) * κ (x⁻¹ * k) ∂(muK ε) = 0 := by
-  first | exact @GlobalTheory.KFourier.orth_translate_lowV | exact GlobalTheory.KFourier.orth_translate_lowV | (intros; apply GlobalTheory.KFourier.orth_translate_lowV <;> assumption)
+  first | exact @GlobalTheory.KFourier.orth_translate_lowV
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.OrthogonalLowerDegreeKernelTranslatesStatement =====
@@ -1345,7 +1345,7 @@ open GlobalTheory.KFourier MeasureTheory
 
 
 theorem _root_.GlobalTheory.T.poly_translation_l2_bound : ∀ {n : ℕ} (ε : Fin n → Bool) (d : ℕ) (φ : KG ε → ℂ), φ ∈ polyV ε d → ∀ Y : Mx n, inK ε Y → ∫ x, ‖φ x - φ (x * expK ε Y 1)‖ ^ 2 ∂(muK ε) ≤ ∫ x, ‖rder ε [Y] φ x‖ ^ 2 ∂(muK ε) := by
-  first | exact @GlobalTheory.KFourier.norm_sub_expK_sq_le | exact GlobalTheory.KFourier.norm_sub_expK_sq_le | (intros; apply GlobalTheory.KFourier.norm_sub_expK_sq_le <;> assumption)
+  first | exact @GlobalTheory.KFourier.norm_sub_expK_sq_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.PolyTranslationL2BoundStatement =====
@@ -1502,7 +1502,7 @@ open GlobalTheory.KFourier MeasureTheory
 
 
 theorem _root_.GlobalTheory.T.compactUnitary_polynomial_spectral_gap : ∀ {n : ℕ} (ε : Fin n → Bool) {r : ℕ} (X : Fin r → Mx n), (∀ j, inK ε (X j)) → (∀ Y, inK ε Y → ∃ c : Fin r → ℝ, Y = ∑ j, (c j : ℂ) • X j) → ∃ c α : ℝ, 0 < c ∧ 0 < α ∧ ∀ i : ℕ, 1 ≤ i → ∀ p ∈ polyV ε i, (∀ q ∈ lowV ε i, ∫ k, q k * p k ∂(muK ε) = 0) → c * (i : ℝ) ^ α * ∫ k, ‖p k‖ ^ 2 ∂(muK ε) ≤ ∑ j, ∫ k, ‖rder ε [X j] p k‖ ^ 2 ∂(muK ε) := by
-  first | exact @GlobalTheory.KFourier.spectral_gap_rder | exact GlobalTheory.KFourier.spectral_gap_rder | (intros; apply GlobalTheory.KFourier.spectral_gap_rder <;> assumption)
+  first | exact @GlobalTheory.KFourier.spectral_gap_rder
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.CompactUnitaryPolynomialSpectralGapStatement =====

@@ -289,7 +289,7 @@ abbrev QL := A.L ⧸ (Ideal.span {e}).map (algebraMap A.K A.L)
 
 instance twQ : IsScalarTower F (QK A e) (QL A e) := IsScalarTower.of_algebraMap_eq fun x => by
   rw [IsScalarTower.algebraMap_apply F A.K (QK A e)]
-  simp only [Ideal.Quotient.algebraMap_eq, RingHom.comp_apply, Ideal.Quotient.algebraMap_quotient_map_quotient]
+  simp only [Ideal.Quotient.algebraMap_eq, Ideal.Quotient.algebraMap_quotient_map_quotient]
   show Ideal.Quotient.mk _ (algebraMap F A.L x) = _
   rw [IsScalarTower.algebraMap_apply F A.K A.L]
 
@@ -394,7 +394,7 @@ theorem exists_idem (K : Type) [CommRing K] [IsArtinianRing K] [IsReduced K] [No
     simp at this
   · intro h
     have := congrFun (congrArg φ h) j
-    simp [Pi.single_apply, hij] at this
+    simp [hij] at this
 
 end GlobalTheory.JR.EtQuot
 
@@ -541,7 +541,7 @@ theorem selfDual_kx_exists : ∀ (F E : Type) [NontriviallyNormedField F] [Nontr
   obtain ⟨hL, -⟩ := hT
   have hsymm : (trxForm A (x : A.K)).IsSymm := by
     refine ⟨fun u b => ?_⟩
-    simp only [trxForm, LinearMap.mk₂_apply, RingHom.id_apply]
+    simp only [trxForm, LinearMap.mk₂_apply]
     ring_nf
   have hleft : ∀ u : A.K, (∀ b, trxForm A (x : A.K) u b = 0) → u = 0 := by
     intro u hu
@@ -674,7 +674,7 @@ theorem pt_scale_eq_rg_mS : ∀ (F E : Type) [NontriviallyNormedField F] [Nontri
     (fun b' => Φ (a * (s : A.K), b') * A.psiK ψ (x * b' * (u * ((s⁻¹ : A.Kˣ) : A.K))))
   simp only [pt, rg, mS, fourB, kx]
   simp only [Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val',
-    Matrix.cons_val_fin_one, Matrix.head_cons, Matrix.head_fin_const, mul_zero, add_zero, zero_add]
+    Matrix.cons_val_fin_one, mul_zero, add_zero, zero_add]
   rw [eq_inv_mul_iff_mul_eq₀ (by exact_mod_cast hs0)] at key
   rw [← key, ← integral_const_mul]
   refine integral_congr_ae (Eventually.of_forall fun b => ?_)
@@ -931,7 +931,7 @@ theorem weilHyp_nS : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyN
   funext p
   simp only [Hyp.pt, Hyp.rg, nS, fourB, Hyp.kx, Et.psiK]
   simp only [Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val',
-    Matrix.cons_val_fin_one, mul_one, mul_zero, add_zero, zero_add]
+    Matrix.cons_val_fin_one, mul_one, mul_zero, add_zero]
   congr 1
   funext b
   rw [show x * b * (p.1 * z + p.2) = z * x * (p.1 * b) + x * b * p.2 by ring, map_add (f := _), AddChar.map_add_eq_mul]

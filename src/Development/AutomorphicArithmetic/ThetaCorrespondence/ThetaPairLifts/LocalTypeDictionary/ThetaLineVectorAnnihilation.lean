@@ -305,7 +305,7 @@ theorem _root_.GlobalTheory.T.unitaryArchimedeanOneParam_eq_prod_cmType_lines : 
       (∀ τ, Y τ ∈ lieAt W τ) ∧ (∀ τ, γs τ ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Lines D.sp.cm.sig Wd) ∧
       (∀ τ t, γs τ (Multiplicative.ofAdd t) = GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU W 1 hJ (oneP θ W τ (Y τ) t)) ∧
       ∀ t, γ t = ((Finset.univ : Finset D.what₂.Tau).toList.map fun τ => γs τ t).prod := by
-  first | exact @GlobalTheory.ConjLineSplit.line_eq_prod | exact GlobalTheory.ConjLineSplit.line_eq_prod | (intros; apply GlobalTheory.ConjLineSplit.line_eq_prod <;> assumption)
+  first | exact @GlobalTheory.ConjLineSplit.line_eq_prod
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnitaryArchimedeanOneParamEqProdCmTypeLinesStatement =====
@@ -458,7 +458,7 @@ theorem hasDerivAt_of_curve {T : ℝ → ((κ → AF F) → ℂ) → (κ → AF 
   refine ((((ev _).tendsto g).comp hlim).mul_const (r x)).congr' (Filter.Eventually.of_forall fun t => ?_)
   simp only [Function.comp_apply, tens]
   rw [slope_def_module, hc0]
-  simp only [SchwartzMap.smul_apply, SchwartzMap.sub_apply, sub_zero, Complex.real_smul, smul_eq_mul]
+  simp only [SchwartzMap.smul_apply, SchwartzMap.sub_apply, sub_zero, Complex.real_smul]
   ring
 
 end
@@ -628,7 +628,7 @@ theorem _root_.GlobalTheory.T.jointly_continuous_archimedean_weil_action : _root
     (∀ t : ℝ, om (γ (Multiplicative.ofAdd t), 1) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) (h t) r) =
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) (k t) r) →
     Filter.Tendsto h (nhds 0) (nhds h₀) → Filter.Tendsto k (nhds 0) (nhds h₀) := by
-  first | exact @_root_.GlobalTheory.ArchJointCont.tendsto_schrodinger_action_along_line | exact _root_.GlobalTheory.ArchJointCont.tendsto_schrodinger_action_along_line | (intros; apply _root_.GlobalTheory.ArchJointCont.tendsto_schrodinger_action_along_line <;> assumption)
+  first | exact @_root_.GlobalTheory.ArchJointCont.tendsto_schrodinger_action_along_line
 end
 end -- clump:auto
 end -- clump:auto
@@ -696,7 +696,7 @@ theorem line_sum_curve_eq_prod (hP : _root_.GlobalTheory.FunPr.ThetaLocalInputs)
       · refine hlim'.congr' ?_
         filter_upwards [self_mem_nhdsWithin] with t ht
         simp only [s, if_neg (show t ≠ 0 from ht)]
-      · simp only [tendsto_pure_left, s, if_pos rfl]
+      · simp only [tendsto_pure_left, s]
         exact fun _ => mem_of_mem_nhds
     have hk' : Tendsto k (𝓝 0) (𝓝 S') :=
       _root_.GlobalTheory.T.jointly_continuous_archimedean_weil_action hP M ψ χX χW om hψ hG hW (γs i) (hγs i) r hr00 hr s k S' hk hs
@@ -777,7 +777,7 @@ theorem _root_.GlobalTheory.T.line_derivative_additive_in_lines : _root_.GlobalT
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ActsD (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) (fun t => om (γ (Multiplicative.ofAdd t), 1)) f f₁ →
     (∀ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ActsD (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) (fun t => om (γs i (Multiplicative.ofAdd t), 1)) f (fs i)) →
     f₁ = (l.map fs).sum := by
-  first | exact @_root_.GlobalTheory.LineAdd.deriv_prod_lines_eq_sum | exact _root_.GlobalTheory.LineAdd.deriv_prod_lines_eq_sum | (intros; apply _root_.GlobalTheory.LineAdd.deriv_prod_lines_eq_sum <;> assumption)
+  first | exact @_root_.GlobalTheory.LineAdd.deriv_prod_lines_eq_sum
 end
 end -- clump:auto
 end -- clump:auto
@@ -880,7 +880,7 @@ theorem _root_.GlobalTheory.T.line_derivative_splits : _root_.GlobalTheory.FunPr
     ∃ Ψ : ι → ((Fin n × Fin d → AF F) → ℂ), (∀ i, Ψ i ∈ GlobalTheory.SquareAgree.algD M B.ψ B.emb) ∧
       (∀ i, ∀ u, HasDerivAt (fun t : ℝ => GlobalTheory.WeilM.thetaSum F (M.co.rho B.ψ u (om (γs i (Multiplicative.ofAdd t), 1) ΦD)))
         (GlobalTheory.WeilM.thetaSum F (M.co.rho B.ψ u (Ψ i))) 0) ∧ Φ₁D = (l.map Ψ).sum := by
-  first | exact @_root_.GlobalTheory.LineDerivSplit.line_derivative_split_eq_sum | exact _root_.GlobalTheory.LineDerivSplit.line_derivative_split_eq_sum | (intros; apply _root_.GlobalTheory.LineDerivSplit.line_derivative_split_eq_sum <;> assumption)
+  first | exact @_root_.GlobalTheory.LineDerivSplit.line_derivative_split_eq_sum
 end
 end -- clump:auto
 end -- clump:auto
@@ -971,7 +971,7 @@ theorem _root_.GlobalTheory.T.theta_line_vector_annihilation : _root_.GlobalTheo
     ∀ γ ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Lines D.sp.cm.sig Γ.V, ∀ ΦD ∈ algD Γ.M Bs.ψ Bs.emb, ∀ Φ₁D ∈ algD Γ.M Bs.ψ Bs.emb,
     (∀ x, HasDerivAt (fun t : ℝ => om (γ (Multiplicative.ofAdd t), 1) ΦD x) (Φ₁D x) 0) → ∀ Φ₁,
     IsDatum Γ.M ψ cA Φ₁D Φ₁ → p Φ₁ = 0 := by
-  first | exact @_root_.GlobalTheory.LineKillV.line_vector_annihilated | exact _root_.GlobalTheory.LineKillV.line_vector_annihilated | (intros; apply _root_.GlobalTheory.LineKillV.line_vector_annihilated <;> assumption)
+  first | exact @_root_.GlobalTheory.LineKillV.line_vector_annihilated
 end
 end -- clump:auto
 end -- clump:auto

@@ -530,7 +530,7 @@ private theorem flag_rev (r : Γ →* GL (Fin n) k) {H H' : Subgroup Γ} (f : �
   refine ⟨fun i j hij => ?_, fun i => ?_⟩
   · rw [e', (hh ((f u)⁻¹)).1 _ _ (Fin.rev_lt_rev.2 hij), mul_zero]
   · rw [e', (hh ((f u)⁻¹)).2]
-    simp [div_eq_mul_inv]
+    simp
 
 end Mat
 
@@ -576,8 +576,14 @@ private theorem place_under {A : ValuationSubring Ω} {w : HeightOneSpectrum (�
   rw [IsScalarTower.algebraMap_apply (W.Lp L) L Ω]
   exact h (algebraMap (𝓞 (W.Lp L)) (𝓞 L) x)
 
+private instance separableLp : Algebra.IsSeparable (W.Lp L) L :=
+  Algebra.IsAlgebraic.isSeparable_of_perfectField
+
+private instance isGaloisLp : IsGalois (W.Lp L) L :=
+  Algebra.IsQuadraticExtension.isGalois (W.Lp L) L
+
 private instance normalLp : Normal (W.Lp L) L :=
-  (Algebra.IsQuadraticExtension.isGalois (W.Lp L) L).to_normal
+  isGaloisLp.to_normal
 
 private theorem range_iff (γ : G (W.Lp L) Ω) :
     γ ∈ (W.resP L Ω).range ↔ AlgEquiv.restrictNormalHom L γ = 1 := by
@@ -858,10 +864,14 @@ theorem UpperTheory.V.Ws.Pt.point_representation_weights :
     _root_.UpperTheory.V.Af.HypothesesH' → ∀ (l : ℕ) [Fact l.Prime] (L Ω : Type) [Field L] [NumberField L] [IsCMField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω] (s : W.HidaSetting l L Ω) (V : s.Lev) (c : Coef l) (n : ℕ) (r : W.Resid V.frame c.O n) (B : W.UniversalOrdinaryDeterminantRing r) (ι : PadicAlgCl l ≃+* ℂ) (J : Ideal B.B), B.PointTheoremBaseObject ι J → ∀ (x : B.Pt) (ρ : G L Ω →* GL (Fin n) (PadicAlgCl l)) (m : W.Vl l L → Fin n → ℤ), 2 ≤ n → n ≤ 4 → x.IsRep ρ → Continuous ρ → _root_.UpperTheory.V.Z.Win.IsAutCsdA ι ρ → (∀ g ∈ Ine (F := L) (s.A s.v0), ρ g = 1) → (∀ v i j, i < j → m v j + 2 ≤ m v i) → (∀ v : W.Vl l L, W.HasFlag (ρ.comp (Dec (F := L) (s.A v)).subtype) (x.psi v)) → (∃ k : ℕ, 0 < k ∧ ∀ (v : W.Vl l L) i (g : Dec (F := L) (s.A v)), (g : G L Ω) ∈ Ine (F := L) (s.A v) → (x.psi v i g * cycBar L Ω l g ^ (-m v i)) ^ k = 1) → J ≤ RingHom.ker x := by
   intro hP l _ L Ω _ _ _ _ _ _ s V c n r B ι J hJ x ρ m hn2 hn4 hrep hc haut hv0 hm hfl ⟨k, hk, hw⟩
   have hov : ∀ v : W.Vl l L, (s.A v).valuation (l : Ω) < 1 := fun v => by
-    simpa using (s.hA v _).2 v.2
+    have h := (s.hA v.1 ((l : ℕ) : 𝓞 (W.Lp L))).2 v.2
+    rw [show (((l : ℕ) : 𝓞 (W.Lp L)) : W.Lp L) = (l : W.Lp L) from
+      map_natCast (algebraMap (𝓞 (W.Lp L)) (W.Lp L)) l, map_natCast] at h
+    exact h
   have hl : ∀ v : W.Vl l L, ((l : ℕ) : 𝓞 L) ∈ (s.w v).asIdeal := fun v => by
     refine (s.hw v _).1 ?_
-    simpa using hov v
+    rw [show (((l : ℕ) : 𝓞 L) : L) = (l : L) from map_natCast (algebraMap (𝓞 L) L) l, map_natCast]
+    exact hov v
   refine hJ x (fun v j _ => -m v j) ρ hn2 hn4 ⟨fun v τ i j hij => ?_, fun v j => ?_⟩
     hrep hc haut hv0
     fun v => ⟨hfl v, fun i j hij => ?_⟩
@@ -996,7 +1006,7 @@ theorem UpperTheory.V.Th.local_zero_of_modular_p :
   have hmul : ∀ g, IsGSp (algebraMap c'.O (PadicAlgCl l) (inc h (D.th (resQ T.F g))))
       ((X.P.map (y : X.A →+* PadicAlgCl l)).r g) := fun g => by
     rw [← y.commutes]
-    exact gsp_map (y : X.A →+* PadicAlgCl l) (X.pair.mult g)
+    exact _root_.gsp_map (y : X.A →+* PadicAlgCl l) (X.pair.mult g)
   have hunr := Pt.ptUnr K n (X.P.map (y : X.A →+* PadicAlgCl l)).r fun g hg => by
     change (y : X.A →+* PadicAlgCl l).mapMatrix (X.P.r g) = 1
     rw [X.pair.kill g hg, map_one]

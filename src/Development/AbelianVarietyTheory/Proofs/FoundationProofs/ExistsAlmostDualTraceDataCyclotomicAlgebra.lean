@@ -226,11 +226,7 @@ theorem exists_residue_pow_pow_eq (l : ℕ) [Fact l.Prime] {Ω : Type} [Field Ω
     (A : ValuationSubring Ω) (hl1 : A.valuation (l : Ω) < 1) (xA : A) :
     ∃ N : ℕ, 0 < N ∧ residue A xA ^ (l ^ N) = residue A xA := by
   first
-  | exact @_root_.GlobalTheory.ResiduePowerFixed.residue_pow_fixed
-  | exact _root_.GlobalTheory.ResiduePowerFixed.residue_pow_fixed
   | (apply _root_.GlobalTheory.ResiduePowerFixed.residue_pow_fixed <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ResiduePowerFixed.residue_pow_fixed <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ResiduePowerFixed.residue_pow_fixed <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.ResiduePowerFixed.residue_pow_fixed ..)
 
 theorem fixA_eq_pow_add_mul : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω]
@@ -295,7 +291,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.
 open scoped Matrix NNReal
 
 theorem _root_.GlobalTheory.T.fixed_element_lth_power_mod : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (A : ValuationSubring Ω), OverL l A → ∀ a : fixA A, ∃ (b : fixA A) (z : A), (a : A) = (b : A) ^ l + (l : A) * z := by
-  first | (exact @GlobalTheory.RecOne.fixA_eq_pow_add_mul) | (exact GlobalTheory.RecOne.fixA_eq_pow_add_mul) | (intros; apply GlobalTheory.RecOne.fixA_eq_pow_add_mul  <;> assumption)
+  first | (exact @GlobalTheory.RecOne.fixA_eq_pow_add_mul)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FoundationProofs.FixedElementLthPowerModStatement =====
@@ -430,7 +426,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.
 open scoped Matrix NNReal
 
 theorem _root_.GlobalTheory.T.approxRoot_fixedField_inertiaCyclotomicKernel : ∀ (l : ℕ) [Fact l.Prime], l ≠ 2 → ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (A : ValuationSubring Ω), OverL l A → ∀ v : Valuation Ω ℝ≥0, (∀ x : Ω, v x ≤ 1 ↔ x ∈ A) → 0 < v (l : Ω) → v (l : Ω) < 1 → ApproxRoot l v (Fix Ω (ineCyc l A)) := by
-  first | (exact @GlobalTheory.RecOne.CycRoots.approxRoot_fix_ineCyc) | (exact GlobalTheory.RecOne.CycRoots.approxRoot_fix_ineCyc) | (intros; apply GlobalTheory.RecOne.CycRoots.approxRoot_fix_ineCyc  <;> assumption)
+  first | (exact @GlobalTheory.RecOne.CycRoots.approxRoot_fix_ineCyc)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ApproxRootFixedFieldInertiaCyclotomicKernelStatement =====
@@ -481,7 +477,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.
 open scoped Matrix NNReal
 
 theorem _root_.GlobalTheory.T.exists_decomposition_invariant_real_valuation : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (A : ValuationSubring Ω), OverL l A → ∃ v : Valuation Ω ℝ≥0, (∀ x : Ω, v x ≤ 1 ↔ x ∈ A) ∧ (∀ s ∈ Dec (F := ℚ) A, ∀ x : Ω, v (s x) = v x) ∧ 0 < v (l : Ω) ∧ v (l : Ω) < 1 := by
-  first | (exact @GlobalTheory.RecOne.exists_real_valuation) | (exact GlobalTheory.RecOne.exists_real_valuation) | (intros; apply GlobalTheory.RecOne.exists_real_valuation  <;> assumption)
+  first | (exact @GlobalTheory.RecOne.exists_real_valuation)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsDecompositionInvariantRealValuationStatement =====

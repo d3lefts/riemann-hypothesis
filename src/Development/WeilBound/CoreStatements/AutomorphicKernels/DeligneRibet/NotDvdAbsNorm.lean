@@ -216,7 +216,7 @@ theorem finite_excluded (𝔣 : Ideal (𝓞 F)) (hf : 𝔣 ≠ ⊥) (W : Finset 
     have h : {I : Ideal (𝓞 F) | Ideal.absNorm I ≤ B}.Finite := by
       have : {I : Ideal (𝓞 F) | Ideal.absNorm I ≤ B} =
           ⋃ n ∈ Finset.range (B + 1), {I : Ideal (𝓞 F) | Ideal.absNorm I = n} := by
-        ext I; simp [Nat.lt_succ_iff]
+        ext I; simp
       rw [this]
       exact Set.Finite.biUnion (Finset.finite_toSet _) fun n _ => Ideal.finite_setOfPred_absNorm_eq n
     exact (h.preimage (f := fun v : HeightOneSpectrum (𝓞 F) => v.asIdeal)
@@ -576,7 +576,6 @@ theorem abel_oneVar_uW (r l N : ℕ) (i : Fin r) (v : (Fin r → ℕ) → ℚ) (
         ∑ c : Fin (N + 1), ∑' m, (OneVar.uW l N i v c m : ℂ) * DL (List.replicate (c : ℕ) i) g m := by
   refine ⟨fun c => ?_, fun c => ?_, fun c k hk hgk => ?_, fun c k hk hsk => ?_, fun g hs => ?_⟩
   · unfold OneVar.uW
-    beta_reduce
     split_ifs with h
     · have hc := OneVar.iterate_good_bdd hl hg hb c
       exact OneVar.bddW_sign _ (@GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Abel.aop_props r l i _ hl hc.1 hc.2).2.1
@@ -586,13 +585,11 @@ theorem abel_oneVar_uW (r l N : ℕ) (i : Fin r) (v : (Fin r → ℕ) → ℚ) (
       simp [OneVar.uW, h, Bop, hm]
     · exact Or.inl (by have := c.isLt; omega)
   · unfold OneVar.uW
-    beta_reduce
     split_ifs with h
     · exact OneVar.goodAt_smul _ ((@GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Abel.OtherVar.otherVar_main r l i k _ hk).1 (OneVar.iterate_good_other hk hgk c)).2
     · exact OneVar.goodAt_smul _ (OneVar.iterate_good_other hk hgk N)
   · intro m hm
     unfold OneVar.uW
-    beta_reduce
     split_ifs with h
     · simp [((@GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Abel.OtherVar.otherVar_main r l i k _ hk).2 (OneVar.iterate_supp_other hk hsk c)).2 m hm]
     · simp [OneVar.iterate_supp_other hk hsk N m hm]
@@ -796,7 +793,7 @@ namespace GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Integrality
 theorem eqOn_compl_one {H R : ℂ → ℂ} (hH : DifferentiableOn ℂ H {1}ᶜ) (hR : DifferentiableOn ℂ R {1}ᶜ)
     (h : ∀ s : ℂ, 1 < s.re → H s = R s) : Set.EqOn H R {1}ᶜ := by
   have hconn : IsPreconnected ({1}ᶜ : Set ℂ) :=
-    (isConnected_compl_singleton_of_one_lt_rank (by rw [Complex.rank_real_complex]; first | exact Cardinal.one_lt_two | norm_num | exact_mod_cast (show (1:ℕ) < 2 by norm_num)) 1).isPreconnected
+    (isConnected_compl_singleton_of_one_lt_rank (by rw [Complex.rank_real_complex]; first | exact Cardinal.one_lt_two) 1).isPreconnected
   have hmem : (2 : ℂ) ∈ ({1}ᶜ : Set ℂ) := by
     rw [Set.mem_compl_singleton_iff]; norm_num
   have hopen : IsOpen {s : ℂ | 1 < s.re} := isOpen_lt continuous_const Complex.continuous_re
@@ -904,7 +901,7 @@ theorem classTwist_value_int : ∀ (F : Type) [Field F] [NumberField F] [IsTotal
     refine ⟨(Ideal.absNorm (Ideal.span {conePt (y j) (v j) m})) ^ (k - 1), ?_⟩
     try beta_reduce
     rw [Finset.prod_pow, h1]
-    first | norm_cast | (push_cast; ring) | simp
+    first | norm_cast
   choose qj Kj zj hqj hzj using hint
   obtain ⟨K', Z, hZ⟩ := exists_pow_mul_sum Finset.univ l qj Kj zj hzj
   have hs0 : (1 - (k : ℂ)) = -(((k - 1 : ℕ)) : ℂ) := by rw [Nat.cast_sub hk]; push_cast; ring

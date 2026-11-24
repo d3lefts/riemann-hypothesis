@@ -385,7 +385,7 @@ theorem pairs_append {p q : ℕ} (g : Fin (p + q) → Fin (p + q) → ℝ) :
   have h1 : ∀ (i : Fin p) (j : Fin q), (i : ℕ) < p + (j : ℕ) := fun i j => by omega
   have h2 : ∀ (i : Fin q) (j : Fin p), ¬ p + (i : ℕ) < (j : ℕ) := fun i j => by omega
   have h3 : ∀ (i j : Fin q), (p + (i : ℕ) < p + (j : ℕ)) ↔ ((i : ℕ) < (j : ℕ)) := fun i j => by omega
-  simp only [h1, h2, h3, if_true, if_false, Finset.prod_const_one, mul_one, one_mul, Finset.prod_mul_distrib]
+  simp only [h1, h2, h3, if_true, if_false, Finset.prod_const_one, one_mul, Finset.prod_mul_distrib]
 
 theorem pairs_cast {n n' : ℕ} (h : n = n') (f : Fin n' → Fin n' → ℝ) :
     ∏ a : Fin n, ∏ b ∈ univ.filter (fun b => a < b), f (Fin.cast h a) (Fin.cast h b) =
@@ -1026,7 +1026,7 @@ open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.E
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.trace_upper_bound_all_members' : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (p : _root_.GlobalTheory.Mem.Top.Bl.Parameters hL), GlobalTheory.Fc.RowE (Bl.IsGoodE p.s) (_root_.GlobalTheory.Mem.Top.Bl.BundleLinkage p) (fun κ D O _ _ => ∀ u : D.what₂.Word, Formalism.MainNotions.S.Tr D u ≤ O.L.sc.b ^ (κ.C.CTu * (D.R.m : ℝ))) := by
-  first | exact @_root_.GlobalTheory.LevelPrimeUpper.levelPrime_le_at_points_alt | exact _root_.GlobalTheory.LevelPrimeUpper.levelPrime_le_at_points_alt | (intros; apply _root_.GlobalTheory.LevelPrimeUpper.levelPrime_le_at_points_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.LevelPrimeUpper.levelPrime_le_at_points_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1065,7 +1065,7 @@ open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.E
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.degHypL_all_linked_good_members : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (p : _root_.GlobalTheory.Mem.Top.Bl.Parameters hL) (A B : Formalism.MainNotions.Inhab.FC → ℝ), GlobalTheory.Fc.RowE (Bl.IsGoodE p.s) (_root_.GlobalTheory.Mem.Top.Bl.BundleLinkage p) (fun κ D O _ _ => GlobalTheory.Core.Deg.HypL D O.L.sc.L (max (A κ.C) (8 * κ.C.CGam)) (max (B κ.C) 40) (κ.C.P.CYL + 1) (1 / 4) 3 (1 / 2) κ.C.CTu) := by
-  first | exact @_root_.GlobalTheory.Core.HypAt.hypL_at_points_alt | exact _root_.GlobalTheory.Core.HypAt.hypL_at_points_alt | (intros; apply _root_.GlobalTheory.Core.HypAt.hypL_at_points_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.Core.HypAt.hypL_at_points_alt
 end
 end -- clump:auto
 end -- clump:auto

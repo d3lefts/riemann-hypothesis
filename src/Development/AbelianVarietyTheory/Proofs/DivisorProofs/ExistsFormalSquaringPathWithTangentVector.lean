@@ -434,7 +434,7 @@ theorem firstOrder_isJet : ∀ (A B R : Type) [CommRing A] [CommRing B] [CommRin
   · intro f
     simp
   · intro f
-    simp [coeff_C, coeff_C_mul, coeff_X]
+    simp [coeff_C]
 
 end GlobalTheory.Nef.PathJet
 end -- clump:auto

@@ -582,7 +582,7 @@ theorem lev_Eat_simple (D : D7) (HW : HWOf D.loc) (l : ℕ) [Fact l.Prime] (hl :
   have hF1c : PowerSeries.constantCoeff F1 = 1 := by
     have hd := congrArg (fun f : PowerSeries ↥LL.1 => PowerSeries.constantCoeff (PowerSeries.derivative f)) hF1
     simp only [map_sub, Derivation.map_one_eq_zero, sub_zero, hFd, hF0, Derivation.leibniz,
-      PowerSeries.derivative_X, smul_eq_mul, map_add, map_mul, map_one, PowerSeries.constantCoeff_X,
+      PowerSeries.derivative_X, smul_eq_mul, map_add, map_mul, PowerSeries.constantCoeff_X,
       zero_mul, zero_add, mul_one] at hd
     exact hd.symm
 
@@ -693,7 +693,6 @@ theorem lev_letE_mul (c : ZMod n) (ζ : LL) (a : LetA O n) :
   have h0 : ((letE c : LetA O n) * a - a) c = 0 := by
     first
     | (simp [letE]; done)
-    | (simp [letE, Pi.single_apply]; done)
   have h1 := W.79 c ζ _ h0
   rw [map_sub, sub_eq_zero] at h1
   exact h1
@@ -705,14 +704,11 @@ theorem levN_smul_alg (i : ZMod n) (ζ : LL) (o : O) (x : ↥(W.N T)) (k : ℤ) 
     first
     | (simp; done)
     | (simp [PowerSeries.algebraMap_apply, PowerSeries.coeff_C]; done)
-    | (simp [PowerSeries.algebraMap_apply', PowerSeries.coeff_C]; done)
-    | (simp [PowerSeries.coeff_zero_eq_constantCoeff, Algebra.smul_def]; done)
   · intro j hj
     rw [AlgHom.commutes]
     first
-    | (simp [hj]; done)
+    | (simp; done)
     | (simp [PowerSeries.algebraMap_apply, PowerSeries.coeff_C, hj]; done)
-    | (simp [PowerSeries.algebraMap_apply', PowerSeries.coeff_C, hj]; done)
 
 theorem levB_smul_alg (i : ZMod n) (ζ : LL) (o : O) (x : ↥(W.N T)) (k : ℤ) :
     Ct.levB T i ζ ((algebraMap O (LetA O n) o) • x) k = algebraMap O LL o • Ct.levB T i ζ x k := by
@@ -725,15 +721,11 @@ def val1 (c : ZMod n) (x : ↥(W.N T)) : T.V ⊗[Qp] BdR :=
 theorem level_value_add (c : ZMod n) (x y : ↥(W.N T)) : val1 Ct T c (x + y) = val1 Ct T c x + val1 Ct T c y := by
   first
   | (simp only [val1, map_add (f := _), Pi.add_apply]; done)
-  | (simp [val1]; done)
-  | (simp [val1, CmpTie.levB]; done)
 
 theorem level_value_smul (c : ZMod n) (o : O) (x : ↥(W.N T)) :
     val1 Ct T c ((algebraMap O (LetA O n) o) • x) = algebraMap O LL o • val1 Ct T c x := by
   first
   | (simp only [val1, levB_smul_alg, map_smul]; done)
-  | (simp [val1, levB_smul_alg]; done)
-  | (simp [val1, levB_smul_alg, map_smul]; done)
 
 def PtHyp (c : ZMod n) (ζ : LL) : Prop :=
   IsCrys PD T.ρ ∧ (∃ j : ℕ, IsPrimitiveRoot ζ (PD.p ^ j)) ∧ ζ ^ PD.p = 1 ∧

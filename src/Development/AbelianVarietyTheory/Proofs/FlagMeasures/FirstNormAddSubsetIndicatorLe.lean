@@ -1,44 +1,24 @@
 module
 
-public import Formalism.LocalRingCardinality.DataTies
 public import Development.AbelianVarietyTheory.Definitions.Jets.SideFam
-public import Formalism.SharpRestriction.CuspSpanNormBounds.NormalizedLocalScale
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.BesselMapPairingBound
-public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.OnePlaceKF
-public import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.InitialLengthsProductMomentLe
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CayleyEndomorphismsModularStatement
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CayleyExistsAndAny
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsLowestKFiniteVectorDiscreteSeriesStatement
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FamilySetupBesselGrowthStatement
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FamilySetupCayleyBoundStatement
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FamilySetupCayleyRecursionStatement
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.LevZeroOfKHighest
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.NumericalFamilyProductBoundConstantLe
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.NumericalFamilyShapeGaps
-public import Development.AbelianVarietyTheory.Definitions.Jets.SumIoPrAlt
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.FlagWedgeFixedAndLengthEqProdDistances
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FamilySetupMomentClosure
-public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.DegVand
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.CapParamOfIsHCTypeW
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HaarLieIsHaarOnUnipotentRadicalStatement
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MomentPieriNumericsOfSizeHyps
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusNormaliserBessel
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.AbsCoordLeOfLOneNormLe
-public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BesselGapExistsFunctional
 public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.DiscreteSeriesParameterUnique
 public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.DiscreteSeriesUnitarySmoothBasicStatement
 public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.SmoothMapsClosureStatement
 public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorDecompositionParameters
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.OnePlaceKF
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.DegVand
+public import Formalism.LocalRingCardinality.DataTies
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusNormaliserBessel
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.AmplitudeSizeConsequencesOfWordIndependentHyps
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.AmplitudesRelevantCellMonomialRepStatement
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.BesselPeriodPositivityStatement
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.BlockProjectionBessel
-public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.DegreeNearParameterBound
+public import Development.AbelianVarietyTheory.Definitions.Jets.SumIoPrAlt
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.FlagWedgeFixedAndLengthEqProdDistances
 public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.PairingEqLeadingMinor
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Algebra.Ring.IsFormallyReal
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
@@ -52,6 +32,8 @@ import Mathlib.NumberTheory.Height.Projectivization
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -71,342 +53,35 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.UpperOff
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.LenEqOfUnitriangular
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.QuotientMeasureAeMemAndMeasurableBesselModelStatement
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.SmoothVectorsDiscreteSeriesGlModuleStatement
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FamilySetupBesselGrowth
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsFRepExteriorPowerStandardRep
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.QuotientMeasureAeMemAndMeasurableBesselModel
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorMomentEstimate
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorMomentWeighted
-import Mathlib.Algebra.Order.Star.Int
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.HaarEqSmul
-import Mathlib.Tactic.Linter.HaveILetI
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Algebra.Ring.IsFormallyReal
+import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsUnitaryTorusScaleBesselCharacter
 import Development.AbelianVarietyTheory.Proofs.FlagMeasures.FormalDegreeProportional
+import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HaarLieIsHaarOnUnipotentRadicalStatement
+import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MomentPieriNumericsOfSizeHyps
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.AbsCoordLeOfLOneNormLe
 import Development.AbelianVarietyTheory.Proofs.JetHarmonics.DiscreteSeriesUnitarySmoothBasic
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FamilySetupBesselGrowth
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.HaarEqSmul
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsFRepExteriorPowerStandardRep
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.LenEqOfUnitriangular
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.NumericalFamilyShapeGaps
 import Development.AbelianVarietyTheory.Proofs.JetHarmonics.PieriTensorDecomposition
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.QuotientMeasureAeMemAndMeasurableBesselModel
+import Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorMomentEstimate
 import Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselNeZeroOfCyclicOrbit
 import Formalism.HermitianCurvature.HermitianCurvatureProofs.ContinuousMulMt
 import Formalism.HermitianCurvature.HermitianCurvatureProofs.SigmaContOn
 import Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothAdd
+import Mathlib.Algebra.Order.Star.Int
 import Mathlib.Analysis.Real.Pi.Bounds
+import Mathlib.Tactic.Linter.HaveILetI
 import Mathlib.Tactic.Linter.Style
 import Std.Tactic.BVDecide.Normalize.Prop
 
 -- This file was produced by scripts/clump.py from the modules listed below.
--- Members: Development.AbelianVarietyTheory.Proofs.FlagMeasures.BesselMapPairingBoundStatement, Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypes, Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypesStatement, Development.AbelianVarietyTheory.Proofs.FlagMeasures.KappaBound, Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypesAltBis, Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusCommutesWithUnipotent, Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusCommutesWithUnipotentStatement, Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorDecompositionInjectiveParameters, Development.AbelianVarietyTheory.Proofs.FlagMeasures.FirstNormAddSubsetIndicatorLe
-
--- ===== clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.BesselMapPairingBoundStatement =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.FlagMeasures.BesselMapPairingBoundStatement", "h": "module\n\npublic import Formalism.LocalRingCardinality.DataTies\npublic import Development.AbelianVarietyTheory.Definitions.Jets.SideFam\npublic import Formalism.SharpRestriction.CuspSpanNormBounds.NormalizedLocalScale\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.BesselMapPairingBound\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Topology.Sheaves.Init\nimport Development.AbelianVarietyTheory.Definitions.SemilocalFrames.OnePlaceKF\nimport Development.AbelianVarietyTheory.Definitions.SemilocalFrames.UpperOff\n\n"}
-section -- clump:auto
-@[expose] public section
-
-open BranchingSupport GlobalTheory.CellAmp GlobalTheory.Amp Formalism.BasicNotions Formalism.MainNotions.S Formalism.QuantumDeterminants Matrix MeasureTheory Finset
-open scoped InnerProductSpace ENNReal
-
-theorem _root_.GlobalTheory.T.bessel_map_pairing_bound : Hyps → ∀ (D : D7) τ w w' θ (W : LocW D.R.k D.R.rS) (lam : Fin (2 * D.R.rS + D.R.k + 1) → ℝ) (R : Rep D.R.k D.R.rS) (h : ℝ) (l : R.H → W.Wp) (l' : R.H → W.Wq) (dd : ℝ), cdScaleTie D → GoodW D τ w w' θ W → R.IsDS (epsSH D.R) lam → PI.BesselMapUniq.IsBesselMapSm (k := D.R.k) (r := D.R.rS) W.z (psiS D W.z) R.σ W.π l → PI.BesselMapUniq.IsBesselMapSm (k := D.R.k) (r := D.R.rS) W.z' (psiS D W.z') R.σ W.π' l' → 0 < dd → (∀ v ∈ R.sm, l2SG W.νS (fun g => l (R.σ g v)) = ENNReal.ofReal (‖v‖ ^ 2 / dd)) → (∀ v ∈ R.sm, l2SG W.νS' (fun g => l' (R.σ g v)) = ENNReal.ofReal (‖v‖ ^ 2 / dd)) → ∃ A : LocS W, GoodS D lam A := by
-  first | exact @GlobalTheory.DatumOfPeriods.exists_goodS | exact GlobalTheory.DatumOfPeriods.exists_goodS | (intros; apply GlobalTheory.DatumOfPeriods.exists_goodS <;> assumption)
-end -- clump:auto
-end -- clump:auto
--- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.BesselMapPairingBoundStatement =====
-
--- ===== clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypes =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypes", "h": "module\n\npublic import Development.AbelianVarietyTheory.Definitions.Jets.SideFam\npublic import Mathlib.MeasureTheory.Integral.Lebesgue.Basic\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.InitialLengthsProductMomentLe\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CayleyEndomorphismsModularStatement\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CayleyExistsAndAny\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsLowestKFiniteVectorDiscreteSeriesStatement\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FamilySetupBesselGrowthStatement\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FamilySetupCayleyBoundStatement\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FamilySetupCayleyRecursionStatement\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.LevZeroOfKHighest\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.NumericalFamilyProductBoundConstantLe\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.LenEqOfUnitriangular\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.NumericalFamilyShapeGaps\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.QuotientMeasureAeMemAndMeasurableBesselModelStatement\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.SmoothVectorsDiscreteSeriesGlModuleStatement\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\n\n"}
-section -- clump:auto
-@[expose] public section
-
-open BranchingSupport Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData Matrix MeasureTheory Finset
-open scoped InnerProductSpace ENNReal
-
-namespace GlobalTheory.MomProdPart
-
-theorem product_moment_first : Hyps → ∀ (k r : ℕ) (Wp : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [CompleteSpace Wp] [FiniteDimensional ℂ Wp] (lam : Fin (2 * r + k + 1) → ℝ) (u : ℕ → ℝ) (b bv ga h : ℝ) (q0 : ℕ) (z : Fin (2 * r + k + 1) → ℂ) (π : Mx k r → (Wp →L[ℂ] Wp)) (μW μN μG νq : Measure (Formalism.QuantumDeterminants.Mt k r)) (R : (Fin (2 * r + k + 1) → ℤ) → Rep k r) (lb : ∀ ν, (R ν).H → Wp) (dg : (Fin (2 * r + k + 1) → ℤ) → ℝ), Setup lam u b bv ga h q0 z π μW μN μG νq R lb dg → ∀ (m : ℕ) (hm : m ≤ r + 1) ν, n1 ν + (r + 1) ^ 2 ≤ q0 → NzOn (R ν) (lb ν) → ∃ w ∈ (R ν).sm, ‖w‖ = 1 ∧ ∫⁻ x, ENNReal.ofReal ((∏ a : Fin m, lenA k r z (Matrix.of x) (Fin.castLE hm a) ^ 2) * (dg ν * ‖lb ν ((R ν).σ (Matrix.of x) w)‖ ^ 2)) ∂νq ≤ ENNReal.ofReal (Hsq r (Formalism.QuantumDeterminants.Tz k r z) b ^ m) := by
-  intro hH k r Wp _ _ _ _ lam u b bv ga h q0 z π μW μN μG νq R l dg hS m hm ν hν hnz
-  classical
-  have hK : PI.KFinSmooth := hH.1.2.2.1
-  have hNum := hS.1
-  have hFam := hS.2.1
-  have hSide := hS.2.2.1
-  have hSF := hS.2.2.2
-  have hk : 1 ≤ k := hNum.1
-  have hν0 : n1 ν ≤ q0 := le_trans (Nat.le_add_right _ _) hν
-  obtain ⟨Q, hQ⟩ := (GlobalTheory.CayleyChoice.cayley_exists_and_any k r).1 hk
-  have hQu : IsUnit Q := hQ.1.1
-  have hE : ∀ ν', ∃ E : Fin (2 * r + k + 1) → Fin (2 * r + k + 1) → Module.End ℂ (R ν').smSub,
-      n1 ν' ≤ q0 → (R ν').IsE Q E ∧ Formalism.REAL.GlRel E := by
-    intro ν'
-    by_cases h' : n1 ν' ≤ q0
-    · obtain ⟨E, hE⟩ := GlobalTheory.T.smoothVectors_discreteSeries_glModule hK k r _ _ (R ν') (hFam ν' h') Q hQu
-      exact ⟨E, fun _ => hE⟩
-    · exact ⟨fun _ _ => 0, fun h'' => absurd h'' h'⟩
-  choose E hE using hE
-  have hDS := hFam ν hν0
-  obtain ⟨w, hw1, -, hwK, hwF⟩ := GlobalTheory.T.exists_lowest_kFinite_vector_discreteSeries hK k r _ _ (R ν) hDS Q (E ν) hQ (hE ν hν0).1
-  have hMod := GlobalTheory.T.cayley_endomorphisms_modular hH k r _ _ (R ν) hk hDS Q (E ν) hQ (hE ν hν0).1
-  have hLev := GlobalTheory.lev_zero_of_kHighest _ _ _ (E ν) _ w hMod.1 hMod.2.1 hwK hwF
-  have hw1' : ‖(w : (R ν).H)‖ = 1 := hw1
-  have hwsm : (w : (R ν).H) ∈ (R ν).sm := w.2
-  refine ⟨(w : (R ν).H), hwsm, hw1', ?_⟩
-  obtain ⟨hG, -, hlen, hmeas⟩ := GlobalTheory.T.quotientMeasure_ae_mem_and_measurable_besselModel hK k r _ _ (R ν) Wp z π u μW μN μG νq hDS hSide
-  obtain ⟨hBeL, hdg, -⟩ := hSF ν hν0
-  have hT : 0 < Formalism.QuantumDeterminants.Tz k r z := hSide.2.1
-  obtain ⟨⟨hb1, hb2, -, -, -⟩, -⟩ := GlobalTheory.NumFam.num_fam k r lam u b bv ga h q0 hNum
-  have hq2 : ∀ q ≤ (r + 1) ^ 2, 0 + 2 * q ≤ 4 * (2 * r + k + 1) ^ 2 := by
-    intro q hq
-    have : (r + 1) ^ 2 ≤ (2 * r + k + 1) ^ 2 := Nat.pow_le_pow_left (by omega) 2
-    omega
-  have hb : (1 : ℝ) ≤ b := by linarith
-  have hA : 0 ≤ (((2 * r + k + 1) : ℝ) ^ 2 * (Formalism.QuantumDeterminants.Tz k r z * b ^ 4) * (6 * bv) ^ (2 * (2 * r + 2))) := by
-    have : 0 ≤ bv := by linarith
-    positivity
-  have hmain := _root_.GlobalTheory.MomentHolder.initial_product_moment_le (Formalism.QuantumDeterminants.Mt k r) νq r m hm (fun a x => lenA k r z (Matrix.of x) a)
-    (fun x => dg ν * ‖l ν ((R ν).σ (Matrix.of x) w)‖ ^ 2)
-    (((2 * r + k + 1) : ℝ) ^ 2 * (Formalism.QuantumDeterminants.Tz k r z * b ^ 4) * (6 * bv) ^ (2 * (2 * r + 2))) (b ^ 2)
-    hlen
-    (fun a => hG.mono fun x hx => (GlobalTheory.TensLen.lengths k r z hSide.1 hT _ hx).2.2.1 a)
-    (((hmeas (l ν) hBeL.1 w hwsm).norm.aemeasurable.pow_const 2).const_mul _)
-    (fun x => mul_nonneg hdg.le (by positivity))
-    (by
-      have := ((GlobalTheory.T.bessel_functional_l2_bound_and_isometry hH k r Wp lam u b bv ga h q0 z π μW μN μG νq R l dg hS ν hν0).2 hnz).2 w hwsm
-      simpa only [one_mul, hw1', one_pow, ENNReal.ofReal_one] using this)
-    hA (one_le_pow₀ hb)
-    (fun q hq => by
-      have := GlobalTheory.T.family_setup_cayley_recursion hH k r Wp lam u b bv ga h q0 z π μW μN μG νq R l dg Q E hS hQ hE q ν
-        (by omega) 0 (hq2 q hq) w hLev
-      simpa only [hw1, one_pow, mul_one] using this)
-    (fun a q hq => by
-      have := GlobalTheory.T.family_setup_cayley_bound hH k r Wp lam u b bv ga h q0 z π μW μN μG νq R l dg Q E hS hQ hE ν hν0
-        0 q (hq2 q hq) a w hLev
-      simpa only [hw1, one_pow, mul_one] using this)
-  refine hmain.trans (ENNReal.ofReal_le_ofReal ?_)
-  exact pow_le_pow_left₀ (mul_nonneg hA (by positivity))
-    (_root_.GlobalTheory.MomNum.mom_num k r lam u b bv ga h q0 _ hNum hT) _
-
-end GlobalTheory.MomProdPart
-end -- clump:auto
-end -- clump:auto
--- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypes =====
-
--- ===== clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypesStatement =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypesStatement", "h": "module\n\npublic import Development.AbelianVarietyTheory.Definitions.Jets.SideFam\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypes\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Topology.Sheaves.Init\n\n"}
-section -- clump:auto
-@[expose] public section
-
-open BranchingSupport Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData Matrix MeasureTheory Finset
-open scoped InnerProductSpace ENNReal
-
-theorem _root_.GlobalTheory.T.mass_bound_low_types : Hyps → ∀ (k r : ℕ) (Wp : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [CompleteSpace Wp] [FiniteDimensional ℂ Wp] (lam : Fin (2 * r + k + 1) → ℝ) (u : ℕ → ℝ) (b bv ga h : ℝ) (q0 : ℕ) (z : Fin (2 * r + k + 1) → ℂ) (π : Mx k r → (Wp →L[ℂ] Wp)) (μW μN μG νq : Measure (Formalism.QuantumDeterminants.Mt k r)) (R : (Fin (2 * r + k + 1) → ℤ) → Rep k r) (lb : ∀ ν, (R ν).H → Wp) (dg : (Fin (2 * r + k + 1) → ℤ) → ℝ), Setup lam u b bv ga h q0 z π μW μN μG νq R lb dg → ∀ (l : ℕ) (hl : l ≤ r + 1) ν, n1 ν + (r + 1) ^ 2 ≤ q0 → NzOn (R ν) (lb ν) → ∃ w ∈ (R ν).sm, ‖w‖ = 1 ∧ ∫⁻ x, ENNReal.ofReal ((∏ a : Fin l, lenA k r z (Matrix.of x) (Fin.castLE hl a) ^ 2) * (dg ν * ‖lb ν ((R ν).σ (Matrix.of x) w)‖ ^ 2)) ∂νq ≤ ENNReal.ofReal (Hsq r (Formalism.QuantumDeterminants.Tz k r z) b ^ l) := by
-  first | exact @GlobalTheory.MomProdPart.product_moment_first | exact GlobalTheory.MomProdPart.product_moment_first | (intros; apply GlobalTheory.MomProdPart.product_moment_first <;> assumption)
-end -- clump:auto
-end -- clump:auto
--- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypesStatement =====
-
--- ===== clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.KappaBound =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.FlagMeasures.KappaBound", "h": "module\n\npublic import Development.AbelianVarietyTheory.Definitions.Jets.SideFam\npublic import Development.AbelianVarietyTheory.Definitions.Jets.SumIoPrAlt\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.FlagWedgeFixedAndLengthEqProdDistances\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypesStatement\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FamilySetupMomentClosure\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.FamilySetupBesselGrowth\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsFRepExteriorPowerStandardRep\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.QuotientMeasureAeMemAndMeasurableBesselModel\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorMomentEstimate\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorMomentWeighted\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Algebra.Order.Star.Int\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Topology.Sheaves.Init\n\n"}
-section -- clump:auto
-@[expose] public section
-
-open BranchingSupport Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData Matrix MeasureTheory Finset
-open scoped InnerProductSpace ENNReal
-
-namespace GlobalTheory.WedgeKappaL
-
-theorem kappa_bound : Hyps → ∀ (k r : ℕ) (Wp : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [CompleteSpace Wp] [FiniteDimensional ℂ Wp] (lam : Fin (2 * r + k + 1) → ℝ) (u : ℕ → ℝ) (b bv ga h : ℝ) (q0 : ℕ) (z : Fin (2 * r + k + 1) → ℂ) (π : Mx k r → (Wp →L[ℂ] Wp)) (μW μN μG νq : Measure (Formalism.QuantumDeterminants.Mt k r)) (R : (Fin (2 * r + k + 1) → ℤ) → Rep k r) (lb : ∀ ν, (R ν).H → Wp) (dg : (Fin (2 * r + k + 1) → ℤ) → ℝ), Setup lam u b bv ga h q0 z π μW μN μG νq R lb dg → ∀ (l : ℕ) (hl : l ≤ r + 1) ν, n1 ν + (r + 1) * (r + 2) ≤ q0 → ∀ io pr ep, TensH (cmp l) (cmp l (Formalism.QuantumDeterminants.Hpk k r)) (R ν) (fun I : Sub (2 * r + k + 1) l => R (ν + eZ I.1)) io pr ep → NzOn (R ν) (lb ν) → ∀ (I : Sub (2 * r + k + 1) l) (κ₀ : ℂ), NzOn (R (ν + eZ I.1)) (lb (ν + eZ I.1)) → (∀ v ∈ (R ν).sm, lb (ν + eZ I.1) (∑ c, pr I c (tm (R ν) (wedge (fun a : Fin l => Formalism.QuantumDeterminants.fvec k r z (Fin.castLE hl a))) v c)) = κ₀ • lb ν v) → ‖κ₀‖ ^ 2 * dg ν / dg (ν + eZ I.1) ≤ Hsq r (Formalism.QuantumDeterminants.Tz k r z) b ^ l := by
-  intro hyp k r Wp _ _ _ _ lam u b bv ga h q0 z π μW μN μG νq R lb dg hS l hl ν hν io pr ep hT hnz I κ₀ hnzI hκ
-  classical
-  have hS' := hS
-  obtain ⟨hNum, hFam, hG, hSF⟩ := hS'
-  have hν0 : n1 ν ≤ q0 := by omega
-  have hνJ : ∀ J : Sub (2 * r + k + 1) l, n1 (ν + eZ J.1) + (r + 1) ^ 2 ≤ q0 := by
-    intro J
-    have := GlobalTheory.WedgeKappa.n1_add_eZ_le_add_card ν J.1
-    rw [J.2] at this
-    nlinarith
-  have hνJ0 : ∀ J : Sub (2 * r + k + 1) l, n1 (ν + eZ J.1) ≤ q0 := fun J =>
-    le_trans (Nat.le_add_right _ _) (hνJ J)
-  have hDS := hFam ν hν0
-  have hDSJ := fun J : Sub (2 * r + k + 1) l => hFam (ν + eZ J.1) (hνJ0 J)
-  have hF := GlobalTheory.WedgeFRep.isFRep_cmp k r l
-  have hdual := fun J : Sub (2 * r + k + 1) l =>
-    GlobalTheory.KappaDual.kappa_dual hyp k r _ _ _ _ _ (R ν) _ io pr ep _ _ _ Wp z π u μW μN μG νq
-      (wedge (fun a : Fin l => Formalism.QuantumDeterminants.fvec k r z (Fin.castLE hl a))) (lb ν) hDS hDSJ hF hT hG
-      (fun s hs => (_root_.GlobalTheory.FlagPartialWedge.fixes_partial_wedge_and_length k r l hl z hG.1).1 s hs) (hSF ν hν0).1 hnz J
-      (lb (ν + eZ J.1)) (hSF _ (hνJ0 J)).1
-  have hex : ∀ J : Sub (2 * r + k + 1) l, ∃ c : ℂ, (J = I → c = κ₀) ∧
-      ∀ y ∈ (R (ν + eZ J.1)).sm, lb ν (ev (cmp l (Formalism.QuantumDeterminants.Hpk k r)) (R ν) (wedge (fun a : Fin l => Formalism.QuantumDeterminants.fvec k r z (Fin.castLE hl a)))
-        (fun c => io J c y)) = ((ep J : ℂ) * star c) • lb (ν + eZ J.1) y := by
-    intro J
-    by_cases hJ : J = I
-    · subst hJ
-      exact ⟨κ₀, fun _ => rfl, (hdual J).2 κ₀ hκ⟩
-    · obtain ⟨c, hc⟩ := (hdual J).1
-      exact ⟨c, fun h => absurd h hJ, (hdual J).2 c hc⟩
-  choose κ hκI hκd using hex
-  have hd0 : 0 < dg ν := (hSF ν hν0).2.1
-  have hdJ : ∀ J : Sub (2 * r + k + 1) l, 0 < dg (ν + eZ J.1) := fun J => (hSF _ (hνJ0 J)).2.1
-  have hmass := GlobalTheory.MomMass.mom_mass hyp k r Wp lam u b bv ga h q0 z π μW μN μG νq R lb dg hS
-  obtain ⟨w, hw, hw1, hint⟩ := GlobalTheory.T.mass_bound_low_types hyp k r Wp lam u b bv ga h q0 z π μW μN μG νq R lb dg hS l hl _ (hνJ I) hnzI
-  have hinj : Function.Injective (fun (J : Sub (2 * r + k + 1) l) (a : Fin (2 * r + k + 1)) =>
-      lam a + (((ν + eZ J.1) a : ℤ) : ℝ)) := by
-    intro J J' hJ
-    apply Subtype.ext
-    apply GlobalTheory.WedgeKappa.eZ_injective
-    funext a
-    have := congrFun hJ a
-    simp only [Pi.add_apply, add_right_inj, Int.cast_inj] at this
-    exact this
-  have h8 := GlobalTheory.MomLem8.moment_lemma_pieri hyp k r _ _ _ _ _ (R ν) _ io pr ep _ _ _ Wp z π u μW μN μG νq
-    (wedge (fun a : Fin l => Formalism.QuantumDeterminants.fvec k r z (Fin.castLE hl a))) (fun w => ((Real.sqrt (dg ν) : ℝ) : ℂ) • lb ν w)
-    (fun J w => ((Real.sqrt (dg (ν + eZ J.1)) : ℝ) : ℂ) • lb (ν + eZ J.1) w)
-    (fun J => if NzOn (R (ν + eZ J.1)) (lb (ν + eZ J.1)) then
-      (ep J : ℂ) * star (κ J) * ((Real.sqrt (dg ν) : ℝ) : ℂ) / ((Real.sqrt (dg (ν + eZ J.1)) : ℝ) : ℂ) else 0)
-    hDS hDSJ hinj hF hT hG ((hmass ν hν0).2 hnz).1
-    (fun J => by
-      by_cases hJ : NzOn (R (ν + eZ J.1)) (lb (ν + eZ J.1))
-      · exact Or.inl ((hmass _ (hνJ0 J)).2 hJ).1
-      · exact Or.inr (if_neg hJ))
-    (fun J y hy => by
-      rw [hκd J y hy]
-      by_cases hJ : NzOn (R (ν + eZ J.1)) (lb (ν + eZ J.1))
-      · rw [if_pos hJ, smul_smul, smul_smul]
-        congr 1
-        have : ((Real.sqrt (dg (ν + eZ J.1)) : ℝ) : ℂ) ≠ 0 :=
-          Complex.ofReal_ne_zero.2 (Real.sqrt_pos.2 (hdJ J)).ne'
-        field_simp
-      · have : lb (ν + eZ J.1) y = 0 := by
-          by_contra hne
-          exact hJ ⟨y, hy, hne⟩
-        rw [if_neg hJ, this]
-        simp)
-    I ((hmass _ (hνJ0 I)).2 hnzI).1 w hw
-  have hae := (GlobalTheory.quotMeas_ae_mem_and_measurable hyp.1.2.2.1 k r _ _ (R ν) Wp z π u μW μN μG νq hDS hG).1
-  rw [if_pos hnzI, hκI I rfl, hw1] at h8
-  have h9 := h8.trans (le_trans (le_of_eq (lintegral_congr_ae ?_)) hint)
-  · have hH : 0 ≤ Hsq r (Formalism.QuantumDeterminants.Tz k r z) b ^ l := by
-      apply pow_nonneg
-      unfold Hsq
-      apply mul_nonneg (le_trans zero_le_one (le_max_left _ _))
-      rw [show 20 * (r + 1) = 2 * (10 * (r + 1)) by ring, pow_mul]
-      positivity
-    rw [ENNReal.ofReal_le_ofReal_iff hH] at h9
-    refine le_trans (le_of_eq ?_) h9
-    have hep : ‖(ep I : ℂ)‖ = 1 := by
-      rcases hT.ep_sq I with h | h <;> simp [h]
-    rw [norm_div, norm_mul, norm_mul, hep, norm_star, Complex.norm_real, Complex.norm_real, Real.norm_eq_abs,
-      Real.norm_eq_abs, div_pow, mul_pow, sq_abs, sq_abs, Real.sq_sqrt hd0.le, Real.sq_sqrt (hdJ I).le]
-    ring
-  · filter_upwards [hae] with x hx
-    rw [(_root_.GlobalTheory.FlagPartialWedge.fixes_partial_wedge_and_length k r l hl z hG.1).2 _ hx, norm_smul, mul_pow, Complex.norm_real, Real.norm_eq_abs,
-      sq_abs, Real.sq_sqrt (hdJ I).le]
-
-end GlobalTheory.WedgeKappaL
-end -- clump:auto
-end -- clump:auto
--- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.KappaBound =====
-
--- ===== clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypesAltBis =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypesAltBis", "h": "module\n\npublic import Development.AbelianVarietyTheory.Definitions.Jets.SideFam\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.KappaBound\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Topology.Sheaves.Init\n\n"}
-section -- clump:auto
-@[expose] public section
-
-open BranchingSupport Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData Matrix MeasureTheory Finset
-open scoped InnerProductSpace ENNReal
-
-theorem _root_.GlobalTheory.T.mass_bound_low_types_alt : Hyps → ∀ (k r : ℕ) (Wp : Type) [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [CompleteSpace Wp] [FiniteDimensional ℂ Wp] (lam : Fin (2 * r + k + 1) → ℝ) (u : ℕ → ℝ) (b bv ga h : ℝ) (q0 : ℕ) (z : Fin (2 * r + k + 1) → ℂ) (π : Mx k r → (Wp →L[ℂ] Wp)) (μW μN μG νq : Measure (Formalism.QuantumDeterminants.Mt k r)) (R : (Fin (2 * r + k + 1) → ℤ) → Rep k r) (lb : ∀ ν, (R ν).H → Wp) (dg : (Fin (2 * r + k + 1) → ℤ) → ℝ), Setup lam u b bv ga h q0 z π μW μN μG νq R lb dg → ∀ (l : ℕ) (hl : l ≤ r + 1) ν, n1 ν + (r + 1) * (r + 2) ≤ q0 → ∀ io pr ep, TensH (cmp l) (cmp l (Formalism.QuantumDeterminants.Hpk k r)) (R ν) (fun I : Sub (2 * r + k + 1) l => R (ν + eZ I.1)) io pr ep → NzOn (R ν) (lb ν) → ∀ (I : Sub (2 * r + k + 1) l) (κ₀ : ℂ), NzOn (R (ν + eZ I.1)) (lb (ν + eZ I.1)) → (∀ v ∈ (R ν).sm, lb (ν + eZ I.1) (∑ c, pr I c (tm (R ν) (wedge (fun a : Fin l => Formalism.QuantumDeterminants.fvec k r z (Fin.castLE hl a))) v c)) = κ₀ • lb ν v) → ‖κ₀‖ ^ 2 * dg ν / dg (ν + eZ I.1) ≤ Hsq r (Formalism.QuantumDeterminants.Tz k r z) b ^ l := by
-  first | exact @GlobalTheory.WedgeKappaL.kappa_bound | exact GlobalTheory.WedgeKappaL.kappa_bound | (intros; apply GlobalTheory.WedgeKappaL.kappa_bound <;> assumption)
-end -- clump:auto
-end -- clump:auto
--- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypesAltBis =====
-
--- ===== clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusCommutesWithUnipotent =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusCommutesWithUnipotent", "h": "module\n\npublic import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.DegVand\npublic import Development.AbelianVarietyTheory.Definitions.Jets.SideFam\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.CapParamOfIsHCTypeW\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HaarLieIsHaarOnUnipotentRadicalStatement\npublic import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.OnePlaceKF\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MomentPieriNumericsOfSizeHyps\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusNormaliserBessel\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.AbsCoordLeOfLOneNormLe\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BesselGapExistsFunctional\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.NumericalFamilyShapeGaps\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.HaarEqSmul\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.HaveILetI\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Topology.Sheaves.Init\n\n"}
-section -- clump:auto
-@[expose] public section
-
-open BranchingSupport GlobalTheory.CellAmp GlobalTheory.Amp Formalism.BasicNotions Formalism.MainNotions.S Formalism.QuantumDeterminants Matrix MeasureTheory Finset
-open scoped InnerProductSpace ENNReal
-
-namespace GlobalTheory.Amp.LocalSetup
-
-theorem exists_seq {k : ℕ} (u : Fin k → ℝ) : ∃ U : ℕ → ℝ, ∀ i : Fin k, U (i.val + 1) = u i :=
-  ⟨fun n => if h : n - 1 < k then u ⟨n - 1, h⟩ else 0, fun i => by simp⟩
-
-theorem exists_setup (hH : Hyps) {k r : ℕ} {Wp : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp]
-    [CompleteSpace Wp] [FiniteDimensional ℂ Wp] {lam : Fin (2 * r + k + 1) → ℝ} {u : ℕ → ℝ} {b bv ga h : ℝ} {q0 : ℕ}
-    {z : Fin (2 * r + k + 1) → ℂ} {π : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ → (Wp →L[ℂ] Wp)}
-    {μW μN μG νq : Measure (Mt k r)} {R : (Fin (2 * r + k + 1) → ℤ) → Rep k r}
-    (hN : Num k r lam u b bv ga h q0) (hF : IsFam lam q0 R) (hS : SideG k r z π u μW μN μG νq) {c : ℝ} (hc : 0 < c)
-    (hd : ∀ (mu : Fin (2 * r + k + 1) → ℝ) (R : Rep k r), R.IsDS (PI.BesselPeriodGGP.eps48 k r) mu →
-      ∀ w, w ≠ 0 → PI.BesselPeriodGGP.fdegH μG R.σ w = c * fdegHC mu) :
-    ∃ l : ∀ ν, (R ν).H → Wp,
-      Setup lam u b bv ga h q0 z π μW μN μG νq R l (fun ν => c * fdegHC (fun a => lam a + (ν a : ℝ))) := by
-  obtain ⟨⟨-, -, -, -, hG⟩, hν⟩ := GlobalTheory.NumFam.num_fam k r lam u b bv ga h q0 hN
-  have h1 : ∀ ν, ∃ l : (R ν).H → Wp, n1 ν ≤ q0 → IsBeL (R ν) z π μW μN l := by
-    intro ν
-    by_cases hq : n1 ν ≤ q0
-    · obtain ⟨l, hl⟩ := GlobalTheory.exists_normalised_bessel_map hH k r _ _ (h / 2) (R ν) Wp _ _ _ _ _ _ _ (hF ν hq)
-        (hν ν hq).2.2.1 hG hS
-      exact ⟨l, fun _ => hl⟩
-    · exact ⟨0, fun h' => absurd h' hq⟩
-  choose l hl using h1
-  exact ⟨l, hN, hF, hS, fun ν hq => ⟨hl ν hq,
-    mul_pos hc (GlobalTheory.FamilyDegreeRatio.degree_ratios k r lam u b bv ga h q0 hN ν hq).1, hd _ _ (hF ν hq)⟩⟩
-
-theorem exists_setup_both : Hyps → ∀ (D : D7) (large₂ : SizeData₂ D) (C' Cl Cg cb Cu cT CT C0 : ℝ), HypZ D large₂ C' Cl Cg cb Cu cT CT C0 → 1000 ≤ Cl → ∀ τ w w' θ (W : LocW D.R.k D.R.rS), HypTT D w w' → 0 < θ → GoodW D τ w w' θ W → ∀ t ∈ GG D.R.k D.R.rS, (∀ n, n ∈ Nset D.R.k D.R.rS ↔ t * n * t⁻¹ ∈ Nset D.R.k D.R.rS) → (∀ z, inWb D.R.k D.R.rS z → (∀ h ∈ UWset D.R.k D.R.rS z, t * h = h * t) ∧ ∀ n ∈ Nset D.R.k D.R.rS, psi D.R.k D.R.rS z cStd n = psiS D z (t * n * t⁻¹)) → ∀ R : (Fin (2 * D.R.rS + D.R.k + 1) → ℤ) → Rep D.R.k D.R.rS, IsFam (lamD D τ) (D.R.k * D.R.m ^ 5) R → haveI := FiniteDimensional.complete ℂ W.Wp; haveI := FiniteDimensional.complete ℂ W.Wq; ∃ (U U' : ℕ → ℝ) (l : ∀ ν, (R ν).H → W.Wp) (l' : ∀ ν, (R ν).H → W.Wq) (dg : (Fin (2 * D.R.rS + D.R.k + 1) → ℤ) → ℝ), Setup (lamD D τ) U (large₂.sc.b ^ max 2 Cu) (bOne D τ 1) ((D.R.r : ℝ) * (D.R.m : ℝ) ^ 10) ((D.R.r : ℝ) ^ 19) (D.R.k * D.R.m ^ 5) W.z W.π W.μW (W.μN.map fun x => fun i j => (t⁻¹ * Matrix.of x * t) i j) W.μG (W.νS.map fun x => fun i j => (t⁻¹ * Matrix.of x) i j) R l dg ∧ Setup (lamD D τ) U' (large₂.sc.b ^ max 2 Cu) (bOne D τ 1) ((D.R.r : ℝ) * (D.R.m : ℝ) ^ 10) ((D.R.r : ℝ) ^ 19) (D.R.k * D.R.m ^ 5) W.z' W.π' W.μW' (W.μN.map fun x => fun i j => (t⁻¹ * Matrix.of x * t) i j) W.μG (W.νS'.map fun x => fun i j => (t⁻¹ * Matrix.of x) i j) R l' dg := by
-  intro hH D large₂ C' Cl Cg cb Cu cT CT C0 hZ hCl τ w w' θ W hTT hθ hW t ht hNt hψ R hF
-  haveI := FiniteDimensional.complete ℂ W.Wp
-  haveI := FiniteDimensional.complete ℂ W.Wq
-  obtain ⟨c1, c2, z1, z2, t1, t2, hG, w1, -, w2, -, hN, q1, q2⟩ := hW
-  have hv : 1 ≤ D.host.v := hZ.1.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.1
-  have hNH : IsHaarOn (Nset D.R.k D.R.rS) W.μN := by
-    rw [hN]
-    exact GlobalTheory.T.haarLie_isHaarOn_unipotentRadical _ _ _ (ENNReal.ofReal_pos.2 (by positivity)) ENNReal.ofReal_lt_top
-  have hT1 : 0 < Tz D.R.k D.R.rS W.z := by
-    rw [t1]; unfold Tr; exact_mod_cast hTT.1.pos
-  have hT2 : 0 < Tz D.R.k D.R.rS W.z' := by
-    rw [t2]; unfold Tr; exact_mod_cast hTT.2.1.pos
-  obtain ⟨U, hU⟩ := exists_seq (uS D w τ)
-  obtain ⟨U', hU'⟩ := exists_seq (uS D w' τ)
-  have s1 : SideG D.R.k D.R.rS W.z W.π U W.μW W.μN W.μG W.νS :=
-    ⟨z1, hT1, ⟨_, c1⟩, GlobalTheory.ThA.capParam_of_isHCTypeW _ _ _ _ U _ _ z1 hT1 c1 hU, w1, hNH, hG, q1⟩
-  have s2 : SideG D.R.k D.R.rS W.z' W.π' U' W.μW' W.μN W.μG W.νS' :=
-    ⟨z2, hT2, ⟨_, c2⟩, GlobalTheory.ThA.capParam_of_isHCTypeW _ _ _ _ U' _ _ z2 hT2 c2 hU', w2, hNH, hG, q2⟩
-  have m1 := (_root_.GlobalTheory.BesselMove.bessel_move hH _ _ _ _ _ _ _ _ _ _ _ t ht hNt (hψ _ z1).1 (hψ _ z1).2 s1).1
-  have m2 := (_root_.GlobalTheory.BesselMove.bessel_move hH _ _ _ _ _ _ _ _ _ _ _ t ht hNt (hψ _ z2).1 (hψ _ z2).2 s2).1
-  obtain ⟨c, hc, hd⟩ := GlobalTheory.BesselDegree.schur_fdeg hH D.R.k D.R.rS (PI.BesselPeriodGGP.eps48 _ _) W.μG hG
-  obtain ⟨l, hl⟩ := exists_setup hH (_root_.GlobalTheory.SizeNum.num_of_size D large₂ C' Cl Cg cb Cu cT CT C0 hZ hCl τ w U hU).1 hF m1 hc
-    fun mu R h => (hd mu R h).1
-  obtain ⟨l', hl'⟩ := exists_setup hH (_root_.GlobalTheory.SizeNum.num_of_size D large₂ C' Cl Cg cb Cu cT CT C0 hZ hCl τ w' U' hU').1 hF m2 hc
-    fun mu R h => (hd mu R h).1
-  exact ⟨U, U', l, l', _, hl, hl'⟩
-
-end GlobalTheory.Amp.LocalSetup
-end -- clump:auto
-end -- clump:auto
--- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusCommutesWithUnipotent =====
-
--- ===== clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusCommutesWithUnipotentStatement =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusCommutesWithUnipotentStatement", "h": "module\n\npublic import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.DegVand\npublic import Development.AbelianVarietyTheory.Definitions.Jets.SideFam\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusCommutesWithUnipotent\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Topology.Sheaves.Init\n\n"}
-section -- clump:auto
-@[expose] public section
-
-open BranchingSupport GlobalTheory.CellAmp GlobalTheory.Amp Formalism.BasicNotions Formalism.MainNotions.S Formalism.QuantumDeterminants Matrix MeasureTheory Finset
-open scoped InnerProductSpace ENNReal
-
-theorem _root_.GlobalTheory.T.torus_commutes_with_unipotent : Hyps → ∀ (D : D7) (large₂ : SizeData₂ D) (C' Cl Cg cb Cu cT CT C0 : ℝ), HypZ D large₂ C' Cl Cg cb Cu cT CT C0 → 1000 ≤ Cl → ∀ τ w w' θ (W : LocW D.R.k D.R.rS), HypTT D w w' → 0 < θ → GoodW D τ w w' θ W → ∀ t ∈ GG D.R.k D.R.rS, (∀ n, n ∈ Nset D.R.k D.R.rS ↔ t * n * t⁻¹ ∈ Nset D.R.k D.R.rS) → (∀ z, inWb D.R.k D.R.rS z → (∀ h ∈ UWset D.R.k D.R.rS z, t * h = h * t) ∧ ∀ n ∈ Nset D.R.k D.R.rS, psi D.R.k D.R.rS z cStd n = psiS D z (t * n * t⁻¹)) → ∀ R : (Fin (2 * D.R.rS + D.R.k + 1) → ℤ) → Rep D.R.k D.R.rS, IsFam (lamD D τ) (D.R.k * D.R.m ^ 5) R → haveI := FiniteDimensional.complete ℂ W.Wp; haveI := FiniteDimensional.complete ℂ W.Wq; ∃ (U U' : ℕ → ℝ) (l : ∀ ν, (R ν).H → W.Wp) (l' : ∀ ν, (R ν).H → W.Wq) (dg : (Fin (2 * D.R.rS + D.R.k + 1) → ℤ) → ℝ), Setup (lamD D τ) U (large₂.sc.b ^ max 2 Cu) (bOne D τ 1) ((D.R.r : ℝ) * (D.R.m : ℝ) ^ 10) ((D.R.r : ℝ) ^ 19) (D.R.k * D.R.m ^ 5) W.z W.π W.μW (W.μN.map fun x => fun i j => (t⁻¹ * Matrix.of x * t) i j) W.μG (W.νS.map fun x => fun i j => (t⁻¹ * Matrix.of x) i j) R l dg ∧ Setup (lamD D τ) U' (large₂.sc.b ^ max 2 Cu) (bOne D τ 1) ((D.R.r : ℝ) * (D.R.m : ℝ) ^ 10) ((D.R.r : ℝ) ^ 19) (D.R.k * D.R.m ^ 5) W.z' W.π' W.μW' (W.μN.map fun x => fun i j => (t⁻¹ * Matrix.of x * t) i j) W.μG (W.νS'.map fun x => fun i j => (t⁻¹ * Matrix.of x) i j) R l' dg := by
-  first | exact @GlobalTheory.Amp.LocalSetup.exists_setup_both | exact GlobalTheory.Amp.LocalSetup.exists_setup_both | (intros; apply GlobalTheory.Amp.LocalSetup.exists_setup_both <;> assumption)
-end -- clump:auto
-end -- clump:auto
--- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusCommutesWithUnipotentStatement =====
+-- Members: Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorDecompositionInjectiveParameters, Development.AbelianVarietyTheory.Proofs.FlagMeasures.FirstNormAddSubsetIndicatorLe
 
 -- ===== clump member: Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorDecompositionInjectiveParameters =====
 -- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorDecompositionInjectiveParameters", "h": "module\n\npublic import Development.AbelianVarietyTheory.Definitions.Jets.SideFam\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.DiscreteSeriesParameterUnique\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.DiscreteSeriesUnitarySmoothBasicStatement\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.SmoothMapsClosureStatement\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorDecompositionParameters\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Algebra.Order.Star.Real\nimport Mathlib.Algebra.Ring.IsFormallyReal\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\n\n"}
@@ -512,82 +187,6 @@ theorem raw_scale {ρ : Mx k r → Matrix ι ι ℂ} {R : Rep k r} {RI : κ → 
     simp only [this]
     rw [← Finset.smul_sum, h.pr_io_ne I J hIJ y hy, smul_zero]
 
-theorem tensH_of_raw : Hyps → ∀ (k r : ℕ) (ι κ : Type) [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ] (ρ : Mx k r → Matrix ι ι ℂ) (Γ : Matrix ι ι ℂ) (d : ℕ) (R : Rep k r) (RI : κ → Rep k r) (io : ∀ I, ι → (RI I).H → R.H) (pr : ∀ I, ι → R.H → (RI I).H) (ε : Fin (2 * r + k + 1) → Bool) (mu : Fin (2 * r + k + 1) → ℝ) (muI : κ → Fin (2 * r + k + 1) → ℝ), R.IsDS ε mu → (∀ I, (RI I).IsDS ε (muI I)) → Function.Injective muI → IsFRep ρ Γ d → TensRaw ρ R RI io pr → ∃ io' pr' ep, TensH ρ Γ R RI io' pr' ep := by
-  intro hH k r ι κ _ _ _ _ ρ Γ d R RI io pr ε mu muI hR hRI hinj hF hT
-  have hK : PI.KFinSmooth := hH.1.2.2.1
-  have hP : Poulsen := hH.2.2.2.2.2.1
-  have hform := GlobalTheory.TensForm.pulledBack_isInvForm hK k r ι κ ρ Γ d R RI io pr ε mu muI hR hRI hF hT
-  have horth : ∀ I J, I ≠ J → ∀ y ∈ (RI I).sm, ∀ y' ∈ (RI J).sm,
-      hh Γ R (fun c => io I c y) (fun c => io J c y') = 0 := by
-    intro I J hIJ
-    rcases (hP k r ε _ _ _ _ (hRI I) (hRI J)).2 _ (hform I J) with h | ⟨U, hU⟩
-    · exact h
-    · exact absurd (hinj (GlobalTheory.DSInequiv.param_eq_of_equiv hH k r ε _ _ _ _ (hRI I) (hRI J) U hU)) hIJ
-  choose cI hc using fun I => (hP k r ε _ _ _ _ (hRI I) (hRI I)).1 _ (hform I I)
-  have hunit : ∀ I, ∃ w ∈ (RI I).sm, ‖w‖ = 1 := fun I => by
-    obtain ⟨-, -, -, -, h5, -, h7, ⟨w, hw, hwK, -⟩, -⟩ := GlobalTheory.T.discreteSeries_unitary_smooth_basic hK k r ε _ _ (hRI I)
-    exact ⟨w, h5 w (h7 w hwK), hw⟩
-  have hreal : ∀ I, ((cI I).re : ℂ) = cI I := fun I => by
-    obtain ⟨w, hw, hn⟩ := hunit I
-    have h1 := hc I w hw w hw
-    have h2 := hh_star Γ hF.1 R (fun c => io I c w) (fun c => io I c w)
-    rw [inner_self_eq_norm_sq_to_K, hn] at h1
-    simp only [map_one, one_pow, mul_one] at h1
-    rw [h1] at h2
-    exact Complex.conj_eq_iff_re.1 h2
-  have hne : ∀ I, cI I ≠ 0 := fun I h0 => by
-    obtain ⟨w, hw, hn⟩ := hunit I
-    have hx : ∀ c, (∑ j, Γ c j • io I j w) ∈ R.smSub := fun c =>
-      Submodule.sum_mem _ fun j _ => R.smSub.smul_mem _ ((hT.io_sm I j).mem _ hw)
-    have hz : hh Γ R (fun c => io I c w) (fun c => ∑ j, Γ c j • io I j w) = 0 := by
-      have e : (fun c => ∑ j, Γ c j • io I j w) =
-          fun c => ∑ J, io J c (∑ e, pr J e (∑ j, Γ e j • io I j w)) :=
-        funext fun c => (hT.sum_io_pr _ hx c).symm
-      rw [e, hh_sum_right]
-      refine Finset.sum_eq_zero fun J _ => ?_
-      have hm : ∑ e, pr J e (∑ j, Γ e j • io I j w) ∈ (RI J).smSub :=
-        Submodule.sum_mem _ fun e _ => (hT.pr_sm J e).mem _ (hx e)
-      by_cases hIJ : I = J
-      · subst hIJ
-        have := hc I w hw _ hm
-        rw [h0, zero_mul] at this
-        exact this
-      · exact horth I J hIJ w hw _ hm
-    have h0' := eq_zero_of_hh Γ hF.2.1 R _ hz
-    have h1 := hT.pr_io I w hw
-    simp only [h0', SmMap_zero (hT.pr_sm I _), Finset.sum_const_zero] at h1
-    rw [← h1, norm_zero] at hn
-    exact zero_ne_one hn
-  have hre : ∀ I, (cI I).re ≠ 0 := fun I h => hne I (by rw [← hreal I, h]; simp)
-  have hsc : ∀ (m m' : Fin (2 * r + k + 1) → ℝ) (S S' : Rep k r), S.IsDS ε m → S'.IsDS ε m' →
-      ∀ (T : S.H → S'.H) (a : ℂ), SmMap S S' T → SmMap S S' (fun v => a • T v) := by
-    intro m m' S S' hS hS' T a h
-    have := (GlobalTheory.T.smooth_maps_closure hK k r ε _ _ _ S S' S' hS hS' hS').2.2.1 T T (a - 1) h h
-    simpa only [sub_smul, one_smul, sub_add_cancel] using this
-  set a : κ → ℂ := fun I => (((Real.sqrt |(cI I).re|)⁻¹ : ℝ) : ℂ) with ha
-  have hane : ∀ I, a I ≠ 0 := fun I => by
-    simp only [ha, ne_eq, Complex.ofReal_eq_zero, inv_eq_zero]
-    exact (Real.sqrt_pos.2 (abs_pos.2 (hre I))).ne'
-  refine ⟨fun I c v => a I • io I c v, fun I c v => (a I)⁻¹ • pr I c v,
-    fun I => (cI I).re / |(cI I).re|, ⟨raw_scale hT a hane
-      (fun I c => hsc _ _ _ _ (hRI I) hR _ _ (hT.io_sm I c))
-      (fun I c => hsc _ _ _ _ hR (hRI I) _ _ (hT.pr_sm I c)), fun I => ?_, fun I y hy y' hy' => ?_,
-      fun I J hIJ y hy y' hy' => ?_⟩⟩
-  · rcases lt_or_gt_of_ne (hre I) with h | h
-    · right
-      rw [abs_of_neg h, div_neg, div_self (hre I)]
-    · left
-      rw [abs_of_pos h, div_self (hre I)]
-  · have h1 := hc I y hy y' hy'
-    rw [hh_smul, h1, ← mul_assoc]
-    congr 1
-    have h2 : (Real.sqrt |(cI I).re|)⁻¹ * (Real.sqrt |(cI I).re|)⁻¹ * (cI I).re = (cI I).re / |(cI I).re| := by
-      rw [← mul_inv, Real.mul_self_sqrt (abs_nonneg _), div_eq_inv_mul]
-    rw [← h2]
-    simp only [ha, RCLike.star_def, Complex.conj_ofReal]
-    rw [Complex.ofReal_mul, Complex.ofReal_mul, hreal I]
-  · rw [hh_smul, horth I J hIJ y hy y' hy', mul_zero]
-
 end GlobalTheory.TensOrth
 end -- clump:auto
 end -- clump:auto
@@ -595,7 +194,7 @@ end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorDecompositionInjectiveParameters =====
 
 -- ===== clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.FirstNormAddSubsetIndicatorLe =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.FlagMeasures.FirstNormAddSubsetIndicatorLe", "h": "module\n\npublic import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.OnePlaceKF\npublic import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.DegVand\npublic import Formalism.LocalRingCardinality.DataTies\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusNormaliserBessel\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.AmplitudeSizeConsequencesOfWordIndependentHyps\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.AmplitudesRelevantCellMonomialRepStatement\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.BesselMapPairingBoundStatement\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.BesselPeriodPositivityStatement\npublic import Development.AbelianVarietyTheory.Definitions.Jets.SideFam\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.BlockProjectionBessel\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.DegreeNearParameterBound\npublic import Development.AbelianVarietyTheory.Definitions.Jets.SumIoPrAlt\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.FlagWedgeFixedAndLengthEqProdDistances\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MassBoundLowTypesAltBis\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.PairingEqLeadingMinor\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusCommutesWithUnipotentStatement\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorDecompositionInjectiveParameters\nimport Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsUnitaryTorusScaleBesselCharacter\nimport Development.AbelianVarietyTheory.Proofs.FlagMeasures.FormalDegreeProportional\nimport Development.AbelianVarietyTheory.Proofs.FlagMeasures.HaarLieIsHaarOnUnipotentRadicalStatement\nimport Development.AbelianVarietyTheory.Proofs.FlagMeasures.MomentPieriNumericsOfSizeHyps\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.AbsCoordLeOfLOneNormLe\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.DiscreteSeriesUnitarySmoothBasic\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.FamilySetupBesselGrowth\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.HaarEqSmul\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsFRepExteriorPowerStandardRep\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.LenEqOfUnitriangular\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.NumericalFamilyShapeGaps\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.PieriTensorDecomposition\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.QuotientMeasureAeMemAndMeasurableBesselModel\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorMomentEstimate\nimport Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselNeZeroOfCyclicOrbit\nimport Formalism.HermitianCurvature.HermitianCurvatureProofs.ContinuousMulMt\nimport Formalism.HermitianCurvature.HermitianCurvatureProofs.SigmaContOn\nimport Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothAdd\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Algebra.Order.Star.Int\nimport Mathlib.Algebra.Order.Star.Real\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.Real.Pi.Bounds\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.HaveILetI\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\nimport Std.Tactic.BVDecide.Normalize.Prop\n\n"}
+-- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.FlagMeasures.FirstNormAddSubsetIndicatorLe", "h": "module\n\npublic import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.OnePlaceKF\npublic import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.DegVand\npublic import Formalism.LocalRingCardinality.DataTies\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.TorusNormaliserBessel\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.AmplitudeSizeConsequencesOfWordIndependentHyps\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.AmplitudesRelevantCellMonomialRepStatement\npublic import Development.AbelianVarietyTheory.Definitions.Jets.SumIoPrAlt\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.FlagWedgeFixedAndLengthEqProdDistances\npublic import Development.AbelianVarietyTheory.Proofs.FlagMeasures.PairingEqLeadingMinor\npublic import Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorDecompositionInjectiveParameters\nimport Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsUnitaryTorusScaleBesselCharacter\nimport Development.AbelianVarietyTheory.Proofs.FlagMeasures.FormalDegreeProportional\nimport Development.AbelianVarietyTheory.Proofs.FlagMeasures.HaarLieIsHaarOnUnipotentRadicalStatement\nimport Development.AbelianVarietyTheory.Proofs.FlagMeasures.MomentPieriNumericsOfSizeHyps\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.AbsCoordLeOfLOneNormLe\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.DiscreteSeriesUnitarySmoothBasic\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.FamilySetupBesselGrowth\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.HaarEqSmul\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsFRepExteriorPowerStandardRep\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.LenEqOfUnitriangular\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.NumericalFamilyShapeGaps\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.PieriTensorDecomposition\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.QuotientMeasureAeMemAndMeasurableBesselModel\nimport Development.AbelianVarietyTheory.Proofs.JetHarmonics.TensorMomentEstimate\nimport Formalism.HermitianCurvature.HermitianCurvatureProofs.BesselNeZeroOfCyclicOrbit\nimport Formalism.HermitianCurvature.HermitianCurvatureProofs.ContinuousMulMt\nimport Formalism.HermitianCurvature.HermitianCurvatureProofs.SigmaContOn\nimport Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothAdd\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Algebra.Order.Star.Int\nimport Mathlib.Algebra.Order.Star.Real\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.Real.Pi.Bounds\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.HaveILetI\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\nimport Std.Tactic.BVDecide.Normalize.Prop\n\n"}
 section -- clump:auto
 @[expose] public section
 
@@ -681,47 +280,6 @@ theorem kappa_zero {Wp : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp
   have h5 : 0 < ‖lI y‖ := norm_pos_iff.2 hy0
   nlinarith
 
-theorem exists_fam (hH : Hyps) {lam : Fin (2 * r + k + 1) → ℝ} (hlam : ∀ ν : Fin (2 * r + k + 1) → ℤ, n1 ν ≤ q0 →
-      IsHCParam fun a => lam a + (ν a : ℝ))
-    (hP : ∃ P, PI.UpqRep.IsCayleyU k r (PI.BesselPeriodGGP.eps48 k r) P) {ι : Type}
-    (p : ι → Fin (2 * r + k + 1) → ℤ) (hp : Function.Injective p) (X : ι → Rep k r)
-    (hX : ∀ i, (X i).IsDS (PI.BesselPeriodGGP.eps48 k r) fun a => lam a + (p i a : ℝ)) (R₀ : Rep k r) :
-    ∃ R, IsFam lam q0 R ∧ ∀ i, R (p i) = X i := by
-  have h1 : ∀ ν : Fin (2 * r + k + 1) → ℤ, ∃ R : Rep k r, (∀ i, p i = ν → R = X i) ∧
-      (n1 ν ≤ q0 → R.IsDS (PI.BesselPeriodGGP.eps48 k r) fun a => lam a + (ν a : ℝ)) := by
-    intro ν
-    by_cases h : ∃ i, p i = ν
-    · obtain ⟨i, rfl⟩ := h
-      exact ⟨X i, fun j hj => by rw [hp hj], fun _ => hX i⟩
-    · by_cases hq : n1 ν ≤ q0
-      · obtain ⟨R, hR⟩ := hH.2.2.2.1 k r _ _ (hlam ν hq) hP
-        exact ⟨R, fun i hi => absurd ⟨i, hi⟩ h, fun _ => hR⟩
-      · exact ⟨R₀, fun i hi => absurd ⟨i, hi⟩ h, fun h' => absurd h' hq⟩
-  choose R h2 h3 using h1
-  exact ⟨R, h3, fun i => h2 _ i rfl⟩
-
-theorem amp_eq (hH : Hyps) (D : D7) {τ w w' θ} {W : LocW D.R.k D.R.rS} [CompleteSpace W.Wp] [CompleteSpace W.Wq]
-    {lam : Fin (2 * D.R.rS + D.R.k + 1) → ℝ} {A : LocS W} {h : ℝ} {R : Rep D.R.k D.R.rS} (hR : R = ⟨A.H, A.σ⟩)
-    {l : R.H → W.Wp} {l' : R.H → W.Wq} (hθ : 0 < θ) (hka : 0 < D.host.ka / gg D) (hT : 0 < Tr D w)
-    (hT' : 0 < Tr D w') (hW : GoodW D τ w w' θ W) (hA : GoodS D lam A) (hg : GapAtLeast (epsSH D.R) lam h)
-    (hok : Formalism.FourierDecayAlt.ThreeDimData.GapOK D.R.k D.R.rS h)
-    (b1 : PI.BesselMapUniq.IsBesselMapSm (k := D.R.k) (r := D.R.rS) W.z (psiS D W.z) R.σ W.π l)
-    (b2 : PI.BesselMapUniq.IsBesselMapSm (k := D.R.k) (r := D.R.rS) W.z' (psiS D W.z') R.σ W.π' l')
-    (e1 : ∀ x ∈ R.sm, ∀ v ∈ R.TK, Formalism.FourierDecayAlt.ThreeDimData.be W.z
-      ((2 * D.host.ka / ((D.host.g 0 : ℝ) * (D.host.g 1 : ℝ)) : ℝ) : ℂ) W.π R.σ W.μW W.μN x v =
-        (innerSL ℂ (l v)).smulRight (l x))
-    (e2 : ∀ x ∈ R.sm, ∀ v ∈ R.TK, Formalism.FourierDecayAlt.ThreeDimData.be W.z'
-      ((2 * D.host.ka / ((D.host.g 0 : ℝ) * (D.host.g 1 : ℝ)) : ℝ) : ℂ) W.π' R.σ W.μW' W.μN x v =
-        (innerSL ℂ (l' v)).smulRight (l' x)) :
-    (∃ v, R.KFin v ∧ l v ≠ 0) ∧ (∃ v, R.KFin v ∧ l' v ≠ 0) ∧ ∃ (w0 : R.H) (η : ℂ),
-      PI.UpqRep.IsLowUnitH D.R.k D.R.rS (epsSH D.R) lam R.σ w0 ∧
-      ‖η‖ = PI.BesselPeriodGGP.fdegH W.μG R.σ w0 *
-        Real.sqrt ((Module.finrank ℂ W.Wp : ℝ) * (Module.finrank ℂ W.Wq : ℝ)) ∧
-      ∀ (ν : Measure (Mt D.R.k D.R.rS)) (γ : MatKR D.R.k D.R.rS), γ ∈ UH (Hpk D.R.k D.R.rS) →
-        ν {x | Matrix.of x ∉ UH (Hpk D.R.k D.R.rS)} = 0 → A.J ν γ = η • amp R l l' w0 ν γ := by
-  subst hR
-  exact GlobalTheory.T.bessel_period_positivity hH D τ w w' θ W lam A h l l' hθ hka hT hT' hW hA hg hok b1 b2 e1 e2
-
 theorem deg_eq {D : D7} {W : LocW D.R.k D.R.rS} {A : LocS W} {R : Rep D.R.k D.R.rS} (hR : R = ⟨A.H, A.σ⟩) {c d : ℝ}
     (h : ∀ v : A.H, v ≠ 0 → A.deg = c * PI.BesselPeriodGGP.fdegH W.μG A.σ v ∧ 0 < A.deg)
     (hd : ∀ v : R.H, v ≠ 0 → PI.BesselPeriodGGP.fdegH W.μG R.σ v = d) {v : R.H} (hv : v ≠ 0) : A.deg = c * d := by
@@ -743,155 +301,10 @@ theorem rpow_ratio {K c d e : ℝ} (hK : 0 < K) (hc : 0 < c) (hd : 0 < d) (he : 
   congr 1
   field_simp
 
-
-
-theorem line_of_tens (hH : Hyps) (hKF : AmpKF) (hCC : CellConv) (D : D7) {τ w w' θ} {W : LocW D.R.k D.R.rS}
-    [CompleteSpace W.Wp] [CompleteSpace W.Wq] (hcd : cdScaleTie D)
-    (hθ : 0 < θ) (hka : 0 < D.host.ka / gg D) (hT : 0 < Tr D w) (hT' : 0 < Tr D w') (hW : GoodW D τ w w' θ W)
-    {lam : Fin (2 * D.R.rS + D.R.k + 1) → ℝ} {A₀ : LocS W} (hA₀ : GoodS D lam A₀) {l : ℕ} (hl : l ≤ D.R.rS + 1)
-    {lamI : Sub (2 * D.R.rS + D.R.k + 1) l → Fin (2 * D.R.rS + D.R.k + 1) → ℝ}
-    {AI : Sub (2 * D.R.rS + D.R.k + 1) l → LocS W} {gd : Sub (2 * D.R.rS + D.R.k + 1) l → Prop}
-    (hAI : ∀ I, gd I → GoodS D (lamI I) (AI I)) {h : ℝ} {R : Rep D.R.k D.R.rS} (hR : R = ⟨A₀.H, A₀.σ⟩)
-    {RI : Sub (2 * D.R.rS + D.R.k + 1) l → Rep D.R.k D.R.rS} (hRI : ∀ I, gd I → RI I = ⟨(AI I).H, (AI I).σ⟩)
-    (hDS : R.IsDS (epsSH D.R) lam) (hg : GapAtLeast (epsSH D.R) lam h)
-    (hDI : ∀ I, (RI I).IsDS (epsSH D.R) (lamI I) ∧ GapAtLeast (epsSH D.R) (lamI I) h)
-    (hok : Formalism.FourierDecayAlt.ThreeDimData.GapOK D.R.k D.R.rS h) (hgc : GapCell D.R.k D.R.rS h) {io pr ep}
-    (hTH : TensH (cmp l) (cmp l (Hpk D.R.k D.R.rS)) R RI io pr ep)
-    {B : R.H → W.Wp} {B' : R.H → W.Wq} {BI : ∀ I, (RI I).H → W.Wp} {BI' : ∀ I, (RI I).H → W.Wq}
-    (b1 : PI.BesselMapUniq.IsBesselMapSm (k := D.R.k) (r := D.R.rS) W.z (psiS D W.z) R.σ W.π B)
-    (b2 : PI.BesselMapUniq.IsBesselMapSm (k := D.R.k) (r := D.R.rS) W.z' (psiS D W.z') R.σ W.π' B')
-    (e1 : ∀ x ∈ R.sm, ∀ v ∈ R.TK, Formalism.FourierDecayAlt.ThreeDimData.be W.z
-      ((2 * D.host.ka / ((D.host.g 0 : ℝ) * (D.host.g 1 : ℝ)) : ℝ) : ℂ) W.π R.σ W.μW W.μN x v =
-        (innerSL ℂ (B v)).smulRight (B x))
-    (e2 : ∀ x ∈ R.sm, ∀ v ∈ R.TK, Formalism.FourierDecayAlt.ThreeDimData.be W.z'
-      ((2 * D.host.ka / ((D.host.g 0 : ℝ) * (D.host.g 1 : ℝ)) : ℝ) : ℂ) W.π' R.σ W.μW' W.μN x v =
-        (innerSL ℂ (B' v)).smulRight (B' x))
-    (bI1 : ∀ I, PI.BesselMapUniq.IsBesselMapSm (k := D.R.k) (r := D.R.rS) W.z (psiS D W.z) (RI I).σ W.π (BI I))
-    (bI2 : ∀ I, PI.BesselMapUniq.IsBesselMapSm (k := D.R.k) (r := D.R.rS) W.z' (psiS D W.z') (RI I).σ W.π' (BI' I))
-    (eI1 : ∀ I, ∀ x ∈ (RI I).sm, ∀ v ∈ (RI I).TK, Formalism.FourierDecayAlt.ThreeDimData.be W.z
-      ((2 * D.host.ka / ((D.host.g 0 : ℝ) * (D.host.g 1 : ℝ)) : ℝ) : ℂ) W.π (RI I).σ W.μW W.μN x v =
-        (innerSL ℂ (BI I v)).smulRight (BI I x))
-    (eI2 : ∀ I, ∀ x ∈ (RI I).sm, ∀ v ∈ (RI I).TK, Formalism.FourierDecayAlt.ThreeDimData.be W.z'
-      ((2 * D.host.ka / ((D.host.g 0 : ℝ) * (D.host.g 1 : ℝ)) : ℝ) : ℂ) W.π' (RI I).σ W.μW' W.μN x v =
-        (innerSL ℂ (BI' I v)).smulRight (BI' I x))
-    {κ₀ κ₁ : Sub (2 * D.R.rS + D.R.k + 1) l → ℂ}
-    (hκ : ∀ I, ∀ v ∈ R.sm,
-      BI I (∑ c, pr I c (tm R (wedge fun a : Fin l => fvec D.R.k D.R.rS W.z (Fin.castLE hl a)) v c)) = κ₀ I • B v ∧
-      BI' I (∑ c, pr I c (tm R (wedge fun a : Fin l => fvec D.R.k D.R.rS W.z' (Fin.castLE hl a)) v c)) = κ₁ I • B' v)
-    (hz : ∀ I, ¬ gd I → κ₀ I = 0 ∨ κ₁ I = 0) {d : ℝ} {dI : Sub (2 * D.R.rS + D.R.k + 1) l → ℝ} (hd0 : 0 < d)
-    (hdI0 : ∀ I, 0 < dI I) (hd : ∀ v : R.H, v ≠ 0 → PI.BesselPeriodGGP.fdegH W.μG R.σ v = d)
-    (hdI : ∀ I, ∀ v : (RI I).H, v ≠ 0 → PI.BesselPeriodGGP.fdegH W.μG (RI I).σ v = dI I) :
-    ∃ a : Sub (2 * D.R.rS + D.R.k + 1) l → ℂ, (∀ I, ¬ gd I → a I = 0) ∧
-      (∀ I, ‖a I‖ ≤ Real.sqrt (d / dI I) * (‖κ₀ I‖ * ‖κ₁ I‖)) ∧
-      ∀ μsec (K : ℝ), 0 < K → MMv D w w' A₀ μsec = ENNReal.ofReal (K / A₀.deg) →
-        (∀ I, gd I → MMv D w w' (AI I) μsec = ENNReal.ofReal (K / (AI I).deg)) →
-        ∀ γ p, RelPt D W.z W.z' γ p → ∀ θ' : ℝ, 0 < θ' → ∀ νR, RMeas D W γ θ' νR →
-          DminN W.z W.z' γ l • jhUnit D w w' A₀ μsec νR γ = ∑ I, a I • jhUnit D w w' (AI I) μsec νR γ := by
-  classical
-  obtain ⟨n1, n2, w0, η, hw0, hη, hJ⟩ := amp_eq hH D hR hθ hka hT hT' hW hA₀ hg hok b1 b2 e1 e2
-  have hN : 0 < Real.sqrt ((Module.finrank ℂ W.Wp : ℝ) * (Module.finrank ℂ W.Wq : ℝ)) := by
-    obtain ⟨v, -, hv⟩ := n1
-    obtain ⟨v', -, hv'⟩ := n2
-    haveI := nontrivial_of_ne _ _ hv
-    haveI := nontrivial_of_ne _ _ hv'
-    have a1 : 0 < Module.finrank ℂ W.Wp := Module.finrank_pos
-    have a2 : 0 < Module.finrank ℂ W.Wq := Module.finrank_pos
-    positivity
-  have hI : ∀ I, ∃ (wI : (RI I).H) (ηI : ℂ), PI.UpqRep.IsLowUnitH D.R.k D.R.rS (epsSH D.R) (lamI I) (RI I).σ wI ∧
-      (gd I → ‖ηI‖ = dI I * Real.sqrt ((Module.finrank ℂ W.Wp : ℝ) * (Module.finrank ℂ W.Wq : ℝ)) ∧
-      ∀ (ν : Measure (Mt D.R.k D.R.rS)) (γ : MatKR D.R.k D.R.rS), γ ∈ UH (Hpk D.R.k D.R.rS) →
-        ν {x | Matrix.of x ∉ UH (Hpk D.R.k D.R.rS)} = 0 →
-          (AI I).J ν γ = ηI • amp (RI I) (BI I) (BI' I) wI ν γ) := by
-    intro I
-    by_cases hI : gd I
-    · obtain ⟨-, -, wI, ηI, h1, h2, h3⟩ :=
-        amp_eq hH D (hRI I hI) hθ hka hT hT' hW (hAI I hI) (hDI I).2 hok (bI1 I) (bI2 I) (eI1 I) (eI2 I)
-      exact ⟨wI, ηI, h1, fun _ => ⟨by rw [h2, hdI I _ (ne_zero_of_low h1)], h3⟩⟩
-    · obtain ⟨wI, -, h1⟩ := GlobalTheory.exists_isLowUnitH_of_isDSHpk (hDI I).1.2
-      exact ⟨wI, 0, h1, fun h' => absurd h' hI⟩
-  choose wI ηI hwI hηI using hI
-  rw [hd _ (ne_zero_of_low hw0)] at hη
-  obtain ⟨c, hc, hdeg⟩ := GlobalTheory.DegreeTie.deg_eq_mul_fdegH hH D τ w w' θ W hcd hW
-  have hη0 : ∀ I, gd I → ηI I ≠ 0 := fun I hI => by
-    rw [← norm_pos_iff, (hηI I hI).1]
-    exact mul_pos (hdI0 I) hN
-  refine ⟨fun I => if gd I then (Real.sqrt (d / dI I) : ℂ) * (η / d * ((ep I : ℂ) * κ₁ I * star (κ₀ I) * dI I) / ηI I)
-    else 0, fun I hI => if_neg hI, fun I => ?_, ?_⟩
-  · by_cases hI : gd I
-    · have he : ‖(ep I : ℂ)‖ = 1 := by rcases hTH.ep_sq I with h | h <;> simp [h]
-      have := hdI0 I
-      simp only [if_pos hI, norm_mul, norm_div, he, norm_star, hη, (hηI I hI).1, Complex.norm_real, Real.norm_eq_abs,
-        abs_of_pos hd0, abs_of_pos this, abs_of_nonneg (Real.sqrt_nonneg _)]
-      refine le_of_eq ?_
-      field_simp
-    · simp only [if_neg hI, norm_zero]
-      positivity
-  intro μsec K hK hM hMI γ p hγ θ' hθ' νR hν
-  obtain ⟨g₀, μR, ν₀, ν, s, hcell, hν₀, hD, hs⟩ :=
-    GlobalTheory.T.amplitudes_relevant_cell_monomial_rep D τ w w' θ W hW lam A₀ hA₀ hT hT' hθ hka γ p hγ θ' hθ' νR hν
-  have hμ : W.μN = (toBessel D τ w w' θ W lam A₀ hW hA₀ hT hT').μN := hW.2.2.2.2.2.2.2.2.2.2.2.1
-  rw [hμ] at e1 e2 eI1 eI2
-  have hc0 : ((2 * D.host.ka / ((D.host.g 0 : ℝ) * (D.host.g 1 : ℝ)) : ℝ) : ℂ) ≠ 0 := by
-    rw [Complex.ofReal_ne_zero, mul_div_assoc]
-    exact (mul_pos two_pos hka).ne'
-  have key := _root_.GlobalTheory.CellPieri.amp_pieri hH hKF hCC D.R.k D.R.rS _ _ (cmp l) (cmp l (Hpk D.R.k D.R.rS)) l
-    (toBessel D τ w w' θ W lam A₀ hW hA₀ hT hT') R RI io pr ep lam lamI h W.μG _ _ B B' BI BI' w0 wI κ₀ κ₁
-    hDS hg hDI hok hgc hc0 ENNReal.ofReal_ne_top hW.2.2.2.2.2.2.1 (GlobalTheory.WedgeFRep.isFRep_cmp _ _ l) hTH
-    (_root_.GlobalTheory.FlagPartialWedge.fixes_partial_wedge_and_length _ _ l hl W.z hW.2.2.1).1 (_root_.GlobalTheory.FlagPartialWedge.fixes_partial_wedge_and_length _ _ l hl W.z' hW.2.2.2.1).1 e1 e2
-    (fun I => ⟨eI1 I, eI2 I⟩) n1 n2 hw0 hwI hκ g₀ μR ν₀ ν hcell
-  rw [GlobalTheory.PrincipalMinorExterior.pairing_eq_leading_minor, hd _ (ne_zero_of_low hw0)] at key
-  have hDm : DminN W.z W.z' g₀ l =
-      ((Zhat D.R.k D.R.rS W.z W.z' g₀).submatrix (Fin.castLE hl) (Fin.castLE hl)).det := by
-    rw [DminN, dif_pos (by omega)]; rfl
-  have hdc : (d : ℂ) ≠ 0 := Complex.ofReal_ne_zero.2 hd0.ne'
-  rw [hD, jhUnit, hs _ _ hA₀, hJ _ _ hcell.1 hν₀, hM, deg_eq hR (hdeg _ _ hA₀) hd (ne_zero_of_low hw0)]
-  set M : ℂ := (((ENNReal.ofReal (K / (c * d))).toReal ^ (-(1 / 2 : ℝ)) : ℝ) : ℂ) with hMd
-  have e : DminN W.z W.z' g₀ l • M • s • η • amp R B B' w0 ν₀ g₀ =
-      (M * s * η / d) • (DminN W.z W.z' g₀ l * (d : ℂ)) • amp R B B' w0 ν₀ g₀ := by
-    simp only [smul_smul]
-    congr 1
-    field_simp
-  have key' : (DminN W.z W.z' g₀ l * (d : ℂ)) • amp R B B' w0 ν₀ g₀ =
-      ∑ I, ((ep I : ℂ) * κ₁ I * star (κ₀ I) * (PI.BesselPeriodGGP.fdegH W.μG (RI I).σ (wI I) : ℂ)) •
-        amp (RI I) (BI I) (BI' I) (wI I) ν₀ g₀ := by
-    rw [hDm]; exact key
-  rw [e, key', Finset.smul_sum]
-  refine Finset.sum_congr rfl fun I _ => ?_
-  rw [hdI I _ (ne_zero_of_low (hwI I))]
-  beta_reduce
-  by_cases hI : gd I
-  · rw [if_pos hI, jhUnit, hs _ _ (hAI I hI), (hηI I hI).2 _ _ hcell.1 hν₀, hMI I hI,
-      deg_eq (hRI I hI) (hdeg _ _ (hAI I hI)) (hdI I) (ne_zero_of_low (hwI I)), hMd,
-      rpow_ratio hK hc hd0 (hdI0 I)]
-    simp only [smul_smul]
-    congr 1
-    have := hη0 I hI
-    push_cast
-    field_simp
-  · rw [if_neg hI]
-    rcases hz I hI with h0 | h0 <;> simp only [h0, mul_zero, zero_mul, star_zero, zero_smul, smul_zero]
-
 section side
 
 variable {Wp : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [CompleteSpace Wp] [FiniteDimensional ℂ Wp]
   {z : Fin (2 * r + k + 1) → ℂ} {π : MM k r → (Wp →L[ℂ] Wp)} {μW μN μG νq : Measure (Mt k r)} {t : MM k r}
-
-theorem moved (hH : Hyps) {u : ℕ → ℝ} {c : ℂ} (ht : t ∈ GG k r) (hN : ∀ n, n ∈ Nset k r ↔ t * n * t⁻¹ ∈ Nset k r)
-    (hc : ∀ h ∈ UWset k r z, t * h = h * t)
-    (hψ : ∀ n ∈ Nset k r, psi k r z cStd n = psi k r z c (t * n * t⁻¹)) (hS : SideG k r z π u μW μN μG νq)
-    {R : Rep k r} {ε mu} (hR : R.IsDS ε mu) {l₁ : R.H → Wp}
-    (hl : IsBeL R z π μW (μN.map fun x => fun i j => (t⁻¹ * Matrix.of x * t) i j) l₁) :
-    PI.BesselMapUniq.IsBesselMapSm (k := k) (r := r) z (psi k r z c) R.σ π (fun v => l₁ (R.σ t⁻¹ v)) ∧
-    ∀ x ∈ R.sm, ∀ v ∈ R.TK, Formalism.FourierDecayAlt.ThreeDimData.be z c π R.σ μW μN x v =
-      (innerSL ℂ (l₁ (R.σ t⁻¹ v))).smulRight (l₁ (R.σ t⁻¹ x)) := by
-  have hU := urep_of_isDS hR
-  obtain ⟨h1, h2⟩ := (bessel_move hH k r Wp z π u c μW μN μG νq t ht hN hc hψ hS).2 R hU
-  refine ⟨(h1 _).2 ?_, h2 l₁ hl⟩
-  have e : (fun v => l₁ (R.σ t⁻¹ (R.σ t v))) = l₁ := by
-    funext v
-    rw [← sig_mul hU (inv_mem ht) ht, inv_mul' ht, sig_one hU]
-  rw [e]
-  exact hl.1
 
 theorem firstNorm_add_subsetIndicator_le {n l : ℕ} {ν : Fin n → ℤ} {q : ℕ} (h : n1 ν + l ≤ q) (I : Sub n l) : n1 (ν + eZ I.1) ≤ q := by
   have := GlobalTheory.TensExists.l1_add_le ν (eZ I.1)
@@ -905,67 +318,6 @@ theorem dg_eq {lam u b bv ga h R l dg} (hS : Setup (k := k) (r := r) lam u b bv 
     dg ν = c * fdegHC fun a => lam a + (ν a : ℝ) := by
   obtain ⟨w, -, hw⟩ := GlobalTheory.exists_isLowUnitH_of_isDSHpk (hS.2.1 ν hν).2
   rw [← (hS.2.2.2 ν hν).2.2 w (ne_zero_of_low hw), hc _ _ (hS.2.1 ν hν) w (ne_zero_of_low hw)]
-
-theorem side_kappa (hH : Hyps) (ht : t ∈ GG k r) {lam u u' b bv ga h F F' l₁ m₁ dg dg'} {μN' : Measure (Mt k r)}
-    (hS : Setup (k := k) (r := r) lam u b bv ga h q0 z π μW μN' μG
-      (νq.map fun x => fun i j => (t⁻¹ * Matrix.of x) i j) F l₁ dg)
-    (hS' : Setup (k := k) (r := r) lam u' b bv ga h q0 z π μW μN' μG
-      (νq.map fun x => fun i j => (t⁻¹ * Matrix.of x) i j) F' m₁ dg')
-    {l : ℕ} (hl : l ≤ r + 1) (hFF : l = 0 ∨ (F' = F ∧ HEq m₁ l₁ ∧ dg' = dg)) {ν} (hν : n1 ν + (r + 1) * (r + 2) ≤ q0)
-    {io pr ep} (hT : TensH (cmp l) (cmp l (Hpk k r)) (F ν) (fun I : Sub (2 * r + k + 1) l => F' (ν + eZ I.1)) io pr ep)
-    {S : ℂ} (hω : cmp l t⁻¹ *ᵥ (wedge fun a : Fin l => fvec k r z (Fin.castLE hl a)) =
-      S • wedge fun a : Fin l => fvec k r z (Fin.castLE hl a))
-    (hnz : ∃ v, (F ν).KFin v ∧ l₁ ν ((F ν).σ t⁻¹ v) ≠ 0) (I : Sub (2 * r + k + 1) l) :
-    ∃ κ₀ : ℂ, (∀ v ∈ (F ν).sm, m₁ (ν + eZ I.1) ((F' (ν + eZ I.1)).σ t⁻¹
-        (∑ c, pr I c (tm (F ν) (wedge fun a : Fin l => fvec k r z (Fin.castLE hl a)) v c))) =
-          κ₀ • l₁ ν ((F ν).σ t⁻¹ v)) ∧
-      ‖κ₀‖ ^ 2 * dg ν / dg' (ν + eZ I.1) ≤ ‖S‖ ^ 2 * Hsq r (Tz k r z) b ^ l ∧
-      (κ₀ ≠ 0 → ∀ v ∈ (F' (ν + eZ I.1)).sm,
-        l2SG νq (fun g => m₁ (ν + eZ I.1) ((F' (ν + eZ I.1)).σ t⁻¹ ((F' (ν + eZ I.1)).σ g v))) =
-          ENNReal.ofReal (‖v‖ ^ 2 / dg' (ν + eZ I.1))) := by
-  have hν0 : n1 ν ≤ q0 := by omega
-  have hνl : n1 ν + l ≤ q0 := by nlinarith
-  have hR := hS.2.1 ν hν0
-  have hRI := fun J : Sub (2 * r + k + 1) l => hS'.2.1 _ (firstNorm_add_subsetIndicator_le hνl J)
-  have hU := urep_of_isDS hR
-  have hb := GlobalTheory.rep_basic_of_isDS hH.1.2.2.1 k r _ _ _ hR
-  have hnz' : NzOn (F ν) (l₁ ν) := by
-    obtain ⟨v, hv, hv0⟩ := hnz
-    exact ⟨_, sig_sm hU (inv_mem ht) (hb.2.2.2.2.1 v (hb.2.2.2.2.2.2.1 v hv)), hv0⟩
-  obtain ⟨⟨κ₁, hκ⟩, hdual⟩ := GlobalTheory.KappaDual.kappa_dual hH k r _ _ _ _ l _ _ io pr ep _ _ _ Wp z π u μW μN' μG _ _ (l₁ ν)
-    hR hRI (GlobalTheory.WedgeFRep.isFRep_cmp k r l) hT hS.2.2.1 (_root_.GlobalTheory.FlagPartialWedge.fixes_partial_wedge_and_length k r l hl z hS.2.2.1.1).1
-    (hS.2.2.2 ν hν0).1 hnz' I (m₁ _) (hS'.2.2.2 _ (firstNorm_add_subsetIndicator_le hνl I)).1
-  have hnI : κ₁ ≠ 0 → NzOn (F' (ν + eZ I.1)) (m₁ (ν + eZ I.1)) := by
-    intro h0
-    obtain ⟨v, hv, hv0⟩ := hnz'
-    refine ⟨_, ?_, by rw [hκ v hv]; exact smul_ne_zero h0 hv0⟩
-    exact Submodule.sum_mem (F' (ν + eZ I.1)).smSub fun c _ =>
-      (hT.raw.pr_sm I c).mem _ (Formalism.FourierDecayAlt.P.DDSmoothness.smooth_smul _ hv)
-  have hH1 : 0 ≤ Hsq r (Tz k r z) b ^ l := by
-    have := (GlobalTheory.NumFam.num_fam k r _ _ _ _ _ _ _ hS.1).1
-    have hb0 : 0 ≤ b := by linarith [this.1, this.2.1]
-    unfold Hsq
-    positivity
-  refine ⟨S * κ₁, kappa_move hT.raw hU (inv_mem ht) hω (hS.2.2.2 ν hν0).1.1.2.1 I hκ, ?_, fun h0 v hv => ?_⟩
-  · rw [norm_mul, mul_pow, mul_assoc, mul_div_assoc]
-    refine mul_le_mul_of_nonneg_left ?_ (by positivity)
-    by_cases h0 : κ₁ = 0
-    · simpa [h0] using hH1
-    rcases hFF with rfl | ⟨rfl, h2, rfl⟩
-    · obtain ⟨c, -, hc⟩ := GlobalTheory.BesselDegree.schur_fdeg hH k r (PI.BesselPeriodGGP.eps48 k r) μG hS.2.2.1.2.2.2.2.2.2.1
-      have e : ν + eZ I.1 = ν := by
-        rw [Finset.card_eq_zero.1 I.2]; funext a; simp [eZ]
-      have e2 : dg' (ν + eZ I.1) = dg ν := by
-        rw [e, dg_eq hS (fun mu R h => (hc mu R h).1) hν0, dg_eq hS' (fun mu R h => (hc mu R h).1) hν0]
-      rw [e2, mul_div_assoc, div_self (hS.2.2.2 ν hν0).2.1.ne', mul_one, pow_zero]
-      exact kappa_zero hT _ I hκ (hdual κ₁ hκ) (hnI h0)
-    · obtain rfl := eq_of_heq h2
-      exact GlobalTheory.T.mass_bound_low_types_alt hH k r Wp lam u b bv ga h q0 z π μW μN' μG _ _ _ _ hS l hl ν hν io pr ep hT hnz' I κ₁
-        (hnI h0) hκ
-  · exact mass_move (urep_of_isDS (hRI I)) ht (hS'.2.2.2 _ (firstNorm_add_subsetIndicator_le hνl I)).2.1
-      (GlobalTheory.quotMeas_ae_mem_and_measurable hH.1.2.2.1 k r _ _ _ Wp z π u μW μN' μG _ hR hS.2.2.1).1
-      (((GlobalTheory.MomMass.mom_mass hH k r Wp lam u' b bv ga h q0 z π μW μN' μG _ F' m₁ dg' hS' _ (firstNorm_add_subsetIndicator_le hνl I)).2
-        (hnI (right_ne_zero_of_mul h0))).2 v hv)
 
 end side
 
@@ -1013,35 +365,6 @@ theorem eZ_inj {n l : ℕ} (ν : Fin n → ℤ) : Function.Injective fun I : Sub
   simp only [eZ] at h
   by_cases h1 : a ∈ I.1 <;> by_cases h2 : a ∈ J.1 <;> simp_all
 
-theorem exists_fams (hH : Hyps) {lam : Fin (2 * r + k + 1) → ℝ} (hlam : ∀ ν : Fin (2 * r + k + 1) → ℤ, n1 ν ≤ q0 →
-      IsHCParam fun a => lam a + (ν a : ℝ))
-    (hP : ∃ P, PI.UpqRep.IsCayleyU k r (PI.BesselPeriodGGP.eps48 k r) P) {l : ℕ} (ν : Fin (2 * r + k + 1) → ℤ)
-    (R₀ : Rep k r) (h0 : R₀.IsDS (PI.BesselPeriodGGP.eps48 k r) fun a => lam a + (ν a : ℝ))
-    (gd : Sub (2 * r + k + 1) l → Prop) (X : Sub (2 * r + k + 1) l → Rep k r)
-    (hX : ∀ I, gd I → (X I).IsDS (PI.BesselPeriodGGP.eps48 k r) fun a => lam a + ((ν + eZ I.1) a : ℝ)) :
-    ∃ F F', IsFam lam q0 F ∧ IsFam lam q0 F' ∧ F ν = R₀ ∧ (∀ I, gd I → F' (ν + eZ I.1) = X I) ∧ (l = 0 ∨ F' = F) := by
-  by_cases hl : l = 0
-  · obtain ⟨F, hF, h1⟩ := exists_fam hH hlam hP (fun _ : Unit => ν) (fun _ _ _ => rfl) (fun _ => R₀) (fun _ => h0) R₀
-    obtain ⟨F', hF', h2⟩ := exists_fam hH hlam hP (fun I : {I // gd I} => ν + eZ I.1.1)
-      ((eZ_inj ν).comp Subtype.val_injective) (fun I => X I.1) (fun I => hX I.1 I.2) R₀
-    exact ⟨F, F', hF, hF', h1 (), fun I hI => h2 ⟨I, hI⟩, Or.inl hl⟩
-  · have hne : ∀ I : Sub (2 * r + k + 1) l, ν ≠ ν + eZ I.1 := fun I h => by
-      obtain ⟨a, ha⟩ := Finset.card_pos.1 (by rw [I.2]; omega : 0 < I.1.card)
-      have := congrFun h a
-      simp [eZ, ha] at this
-    obtain ⟨F, hF, h1⟩ := exists_fam hH hlam hP
-      (fun i : Option {I // gd I} => i.elim ν fun I => ν + eZ I.1.1) (by
-        rintro (_ | I) (_ | J) h
-        · rfl
-        · exact absurd h (hne _)
-        · exact absurd h.symm (hne _)
-        · exact congrArg some (Subtype.ext (eZ_inj ν h)))
-      (fun i => i.elim R₀ fun I => X I.1) (by
-        rintro (_ | I)
-        · exact h0
-        · exact hX I.1 I.2) R₀
-    exact ⟨F, F, hF, hF, h1 none, fun I hI => h1 (some ⟨I, hI⟩), Or.inr rfl⟩
-
 theorem scale_le {b v g Cg : ℝ} (hb : Real.exp 1 < b) (hv : 1 ≤ v) (hvb : 2 * v ≤ b) (hg : 1 ≤ g)
     (hgb : g ≤ b ^ (2 * Cg)) (hC : 8 ≤ Cg) :
     max (‖((2 * (Real.pi / v) / g : ℝ) : ℂ)‖ / 2) (2 / ‖((2 * (Real.pi / v) / g : ℝ) : ℂ)‖) ≤ b ^ (2 * Cg + 2) := by
@@ -1059,198 +382,6 @@ theorem scale_le {b v g Cg : ℝ} (hb : Real.exp 1 < b) (hv : 1 ≤ v) (hvb : 2 
     rw [this]
     have : g * v / Real.pi ≤ g * v := div_le_self (by positivity) (by linarith)
     exact this.trans (mul_le_mul hgb (by nlinarith) (by linarith) (by linarith))
-
-
-
-theorem minor_line : Hyps → AmpKF → CellConv → ∀ Cg cb Cu cT CT C0 C1 : ℝ, ∃ C : ℝ, ∀ Cn : ℝ, ∃ m₀ : ℝ, ∀ (D : D7) (large₂ : SizeData₂ D) (C' Cl : ℝ), 1000 ≤ Cl → Big D large₂ Cl m₀ → cdScaleTie D → HypZ D large₂ C' Cl Cg cb Cu cT CT C0 → ∀ τ w w', HypTT D w w' → ∀ θ, normWin D large₂ C1 θ → ∀ W, GoodW D τ w w' θ W → ∀ lam', l1dist lam' (lamD D τ) ≤ Cn * D.R.k * (D.R.m : ℝ) ^ 3 → ∀ A₀ : LocS W, GoodS D lam' A₀ → ∀ l : ℕ, l ≤ D.R.rS + 1 → ∃ s : ℝ, (s = 1 ∨ s = -1) ∧ ∀ AI : Finset (Fin (2 * D.R.rS + D.R.k + 1)) → LocS W, (∀ I, I.card = l → (∃ A : LocS W, GoodS D (lam' + s • epsI I) A) → GoodS D (lam' + s • epsI I) (AI I)) → ∃ a : Finset (Fin (2 * D.R.rS + D.R.k + 1)) → ℂ, (∀ I, I.card = l → (¬ ∃ A : LocS W, GoodS D (lam' + s • epsI I) A) → a I = 0) ∧ (∑ I ∈ univ.filter (fun I => I.card = l), ‖a I‖) ≤ large₂.sc.b ^ (C * (D.R.m : ℝ) ^ 2) ∧ ∀ μsec, IsSection D.R.k D.R.rS W.z W.z' μsec → ∀ γ p, RelPt D W.z W.z' γ p → ∀ θ', normWin D large₂ C1 θ' → ∀ νR, RMeas D W γ θ' νR → DminN W.z W.z' γ l • jhUnit D w w' A₀ μsec νR γ = ∑ I ∈ univ.filter (fun I => I.card = l), a I • jhUnit D w w' (AI I) μsec νR γ := by
-  intro hH hKF hCC Cg cb Cu cT CT C0 C1
-  refine ⟨2 * (2 * Cg + 2) + 2 * (|CT| + 20 * max 2 Cu) + 2 * max 2 Cu, fun Cn => ?_⟩
-  obtain ⟨m₁, hJ⟩ := _root_.GlobalTheory.Amp.OpenCellNorm.norm_eq_const_div_deg hH hKF hCC Cg cb Cu cT CT C0 C1 (Cn + 1)
-  refine ⟨max m₁ (Cn + 1), fun D large₂ C' Cl hCl hBig hcd hZ τ w w' hTT θ hθw W hW lam' hlam A₀ hA₀ l hl =>
-    ⟨1, Or.inl rfl, fun AI hAI => ?_⟩⟩
-  classical
-  simp only [one_smul] at hAI ⊢
-  haveI := FiniteDimensional.complete ℂ W.Wp
-  haveI := FiniteDimensional.complete ℂ W.Wq
-  replace hJ := hJ D large₂ C' Cl hCl ⟨hBig.1, hBig.2.1, (le_max_left _ _).trans hBig.2.2⟩ hcd hZ τ w w' hTT θ hθw W hW
-  obtain ⟨-, -, hbe, hm, -, -, -, hmk, hv, -, hka, hvb, hg1, hgb, hCg, -, hTb, -, -⟩ :=
-    GlobalTheory.Amp.SizesProof.sizes_of_hyp D large₂ C' Cl Cg cb Cu cT CT C0 hBig.1 hZ
-  have hb1 : 1 ≤ large₂.sc.b := by linarith [Real.exp_one_gt_d9]
-  have hθ : 0 < θ := lt_of_lt_of_le (by positivity) hθw.1
-  have hka0 : 0 < D.host.ka / gg D := by rw [hka]; have := Real.pi_pos; positivity
-  have hT : 0 < Tr D w := by unfold Tr; exact_mod_cast hTT.1.pos
-  have hT' : 0 < Tr D w' := by unfold Tr; exact_mod_cast hTT.2.1.pos
-  have hmR : (D.R.m : ℝ) = 2 * D.R.rS + 2 := by exact_mod_cast hm
-  have hr0 : (0 : ℝ) ≤ D.R.rS := Nat.cast_nonneg _
-  have hlR : (l : ℝ) ≤ D.R.rS + 1 := by exact_mod_cast hl
-  have hk1 : (1 : ℝ) ≤ D.R.k := by
-    have := D.R.m_add_three_le_k
-    exact_mod_cast (by omega : 1 ≤ D.R.k)
-  have hm2 : (D.R.m : ℝ) ^ 2 ≤ D.R.k * (D.R.m : ℝ) ^ 3 := by
-    have : (D.R.m : ℝ) ^ 2 ≤ (D.R.m : ℝ) ^ 3 := pow_le_pow_right₀ (by linarith) (by norm_num)
-    nlinarith [pow_nonneg (show (0 : ℝ) ≤ D.R.m by linarith) 3]
-  obtain ⟨hNum, hgc, heps⟩ := _root_.GlobalTheory.SizeNum.num_of_size D large₂ C' Cl Cg cb Cu cT CT C0 hZ hCl τ w
-    (fun n => if h : n - 1 < D.R.k then uS D w τ ⟨n - 1, h⟩ else 0) (fun i => by simp)
-  obtain ⟨⟨hbv, hbv', hnb, -, hok⟩, hnum⟩ := GlobalTheory.NumFam.num_fam _ _ _ _ _ _ _ _ _ hNum
-  obtain ⟨ν, rfl⟩ : ∃ ν : Fin (2 * D.R.rS + D.R.k + 1) → ℤ, lam' = fun a => lamD D τ a + (ν a : ℝ) := by
-    choose x hx using hA₀.1.2
-    choose y hy using hNum.2.1.2
-    refine ⟨x - y, funext fun a => ?_⟩
-    simp only [Pi.sub_apply, Int.cast_sub]
-    linarith [hx a, hy a]
-  have hdist : ∀ μ : Fin (2 * D.R.rS + D.R.k + 1) → ℤ,
-      l1dist (fun a => lamD D τ a + (μ a : ℝ)) (lamD D τ) = n1 μ := fun μ => by
-    simp [l1dist, n1]
-  rw [hdist] at hlam
-  have hν : n1 ν + (D.R.rS + 1) * (D.R.rS + 2) ≤ D.R.k * D.R.m ^ 5 := by
-    have h1 : Cn + 1 ≤ (D.R.m : ℝ) ^ 2 := by nlinarith [(le_max_right _ _).trans hBig.2.2]
-    have h2 : (Cn + 1) * (D.R.k * (D.R.m : ℝ) ^ 3) ≤ (D.R.m : ℝ) ^ 2 * (D.R.k * (D.R.m : ℝ) ^ 3) :=
-      mul_le_mul_of_nonneg_right h1 (by positivity)
-    have h3 : ((D.R.rS : ℝ) + 1) * (D.R.rS + 2) ≤ (D.R.m : ℝ) ^ 2 := by rw [hmR]; nlinarith
-    have : (n1 ν : ℝ) + ((D.R.rS : ℝ) + 1) * (D.R.rS + 2) ≤ D.R.k * (D.R.m : ℝ) ^ 5 := by nlinarith
-    exact_mod_cast this
-  have hν0 : n1 ν ≤ D.R.k * D.R.m ^ 5 := by omega
-  have hνl : n1 ν + l ≤ D.R.k * D.R.m ^ 5 := by nlinarith
-  have hsh : ∀ I : Finset (Fin (2 * D.R.rS + D.R.k + 1)), (fun a => lamD D τ a + (ν a : ℝ)) + epsI I =
-      fun a => lamD D τ a + ((ν + eZ I) a : ℝ) := fun I => by
-    funext a
-    simp only [epsI, eZ, Pi.add_apply]
-    split_ifs <;> push_cast <;> ring
-  simp only [hsh] at hAI ⊢
-  obtain ⟨F, F', hF, hF', hF0, hFI, hFF⟩ := exists_fams hH (fun μ h => (hnum μ h).1)
-    (by rw [heps]; obtain ⟨P, hP, -⟩ := hA₀.2.1; exact ⟨P, hP⟩) ν ⟨A₀.H, A₀.σ⟩ (by rw [heps]; exact ⟨hA₀.1, hA₀.2.1⟩)
-    (fun I : Sub _ l => ∃ A : LocS W, GoodS D (fun a => lamD D τ a + ((ν + eZ I.1) a : ℝ)) A)
-    (fun I => ⟨(AI I.1).H, (AI I.1).σ⟩)
-    (fun I hI => by rw [heps]; exact ⟨(hAI I.1 I.2 hI).1, (hAI I.1 I.2 hI).2.1⟩)
-  have hc0 : ((2 * D.host.ka / ((D.host.g 0 : ℝ) * (D.host.g 1 : ℝ)) : ℝ) : ℂ) ≠ 0 := by
-    rw [Complex.ofReal_ne_zero, mul_div_assoc]
-    exact (mul_pos two_pos hka0).ne'
-  obtain ⟨t, ht, hNt, hz, hs⟩ := GlobalTheory.TorusScale.exists_torus_scale D.R.k D.R.rS _ hc0
-  choose s hs0 hs1 hs2 hs3 using hs
-  have hmod := GlobalTheory.T.torus_commutes_with_unipotent hH D large₂ C' Cl Cg cb Cu cT CT C0 hZ hCl τ w w' θ W hTT hθ hW t ht hNt
-    (fun z h => (hz z h).2)
-  obtain ⟨U, U', l₁, l₂, dg, S1, S2⟩ := hmod F hF
-  obtain ⟨V, V', m₁, m₂, dg', T1, T2, hE⟩ : ∃ V V' m₁ m₂ dg',
-      Setup (lamD D τ) V (large₂.sc.b ^ max 2 Cu) (bOne D τ 1) ((D.R.r : ℝ) * (D.R.m : ℝ) ^ 10) ((D.R.r : ℝ) ^ 19)
-        (D.R.k * D.R.m ^ 5) W.z W.π W.μW (W.μN.map fun x => fun i j => (t⁻¹ * Matrix.of x * t) i j) W.μG
-        (W.νS.map fun x => fun i j => (t⁻¹ * Matrix.of x) i j) F' m₁ dg' ∧
-      Setup (lamD D τ) V' (large₂.sc.b ^ max 2 Cu) (bOne D τ 1) ((D.R.r : ℝ) * (D.R.m : ℝ) ^ 10) ((D.R.r : ℝ) ^ 19)
-        (D.R.k * D.R.m ^ 5) W.z' W.π' W.μW' (W.μN.map fun x => fun i j => (t⁻¹ * Matrix.of x * t) i j) W.μG
-        (W.νS'.map fun x => fun i j => (t⁻¹ * Matrix.of x) i j) F' m₂ dg' ∧
-      (l = 0 ∨ (F' = F ∧ HEq m₁ l₁ ∧ HEq m₂ l₂ ∧ dg' = dg)) := by
-    rcases hFF with h | rfl
-    · obtain ⟨V, V', m₁, m₂, dg', T1, T2⟩ := hmod F' hF'
-      exact ⟨V, V', m₁, m₂, dg', T1, T2, Or.inl h⟩
-    · exact ⟨U, U', l₁, l₂, dg, S1, S2, Or.inr ⟨rfl, HEq.rfl, HEq.rfl, rfl⟩⟩
-  have hNH : IsHaarOn (Nset D.R.k D.R.rS) W.μN := by
-    rw [hW.2.2.2.2.2.2.2.2.2.2.2.1]
-    exact GlobalTheory.T.haarLie_isHaarOn_unipotentRadical _ _ _ (ENNReal.ofReal_pos.2 (by positivity)) ENNReal.ofReal_lt_top
-  have z1 := hW.2.2.1
-  have z2 := hW.2.2.2.1
-  have G1 : SideG D.R.k D.R.rS W.z W.π U W.μW W.μN W.μG W.νS :=
-    ⟨z1, S1.2.2.1.2.1, S1.2.2.1.2.2.1, S1.2.2.1.2.2.2.1, S1.2.2.1.2.2.2.2.1, hNH, hW.2.2.2.2.2.2.1,
-      hW.2.2.2.2.2.2.2.2.2.2.2.2.1⟩
-  have G2 : SideG D.R.k D.R.rS W.z' W.π' U' W.μW' W.μN W.μG W.νS' :=
-    ⟨z2, S2.2.2.1.2.1, S2.2.2.1.2.2.1, S2.2.2.1.2.2.2.1, S2.2.2.1.2.2.2.2.1, hNH, hW.2.2.2.2.2.2.1,
-      hW.2.2.2.2.2.2.2.2.2.2.2.2.2⟩
-  have hDS := hF ν hν0
-  have hDI := fun I : Sub _ l => hF' _ (firstNorm_add_subsetIndicator_le hνl I)
-  obtain ⟨io, pr, ep, hTH⟩ : ∃ io pr ep, TensH (cmp l) (cmp l (Hpk D.R.k D.R.rS)) (F ν)
-      (fun I : Sub _ l => F' (ν + eZ I.1)) io pr ep := by
-    have hI : ∀ I : Sub _ l, (F' (ν + eZ I.1)).IsDS (PI.BesselPeriodGGP.eps48 D.R.k D.R.rS)
-        (addSet (fun a => lamD D τ a + (ν a : ℝ)) I.1) := fun I => by
-      have := hDI I
-      rwa [← hsh] at this
-    obtain ⟨io, pr, hT⟩ := (hH.2.2.2.2.1 _ _ _ _ (F ν) hDS (hnum ν hν0).2.2.2).1 l _ hI
-    exact GlobalTheory.TensOrth.tensH_of_raw hH _ _ _ _ _ _ l _ _ io pr _ _ _ hDS hI (GlobalTheory.TensExists.addSet_inj _)
-      (GlobalTheory.WedgeFRep.isFRep_cmp _ _ l) hT
-  obtain ⟨b1, e1⟩ := moved hH ht hNt (hz _ z1).2.1 (hz _ z1).2.2 G1 hDS (S1.2.2.2 ν hν0).1
-  obtain ⟨b2, e2⟩ := moved hH ht hNt (hz _ z2).2.1 (hz _ z2).2.2 G2 hDS (S2.2.2.2 ν hν0).1
-  have bI1 := fun I : Sub _ l => moved hH ht hNt (hz _ z1).2.1 (hz _ z1).2.2 G1 (hDI I) (T1.2.2.2 _ (firstNorm_add_subsetIndicator_le hνl I)).1
-  have bI2 := fun I : Sub _ l => moved hH ht hNt (hz _ z2).2.1 (hz _ z2).2.2 G2 (hDI I) (T2.2.2.2 _ (firstNorm_add_subsetIndicator_le hνl I)).1
-  have hgap := fun μ h => (hnum μ h).2.2.1
-  rw [heps] at hDS hDI hgap
-  obtain ⟨n₁, n₂, -⟩ := amp_eq hH D hF0 hθ hka0 hT hT' hW hA₀ (hgap ν hν0) hok b1 b2 e1 e2
-  choose κ₀ hκ₀ hb₀ hm₀ using side_kappa hH ht S1 T1 hl (hE.imp id fun h => ⟨h.1, h.2.1, h.2.2.2⟩) hν hTH
-    (cmp_wedge_eigen _ _ (fun a => s (Fin.castLE hl a)) fun a => hs3 _ _ z1) n₁
-  choose κ₁ hκ₁ hb₁ hm₁ using side_kappa hH ht S2 T2 hl (hE.imp id fun h => ⟨h.1, h.2.2.1, h.2.2.2⟩) hν hTH
-    (cmp_wedge_eigen _ _ (fun a => s (Fin.castLE hl a)) fun a => hs3 _ _ z2) n₂
-  have hd0 := (S1.2.2.2 ν hν0).2
-  have hdI := fun I : Sub _ l => (T1.2.2.2 _ (firstNorm_add_subsetIndicator_le hνl I)).2
-  obtain ⟨a, ha0, ha1, ha2⟩ := line_of_tens hH hKF hCC D hcd hθ hka0 hT hT' hW hA₀ hl (AI := fun I => AI I.1)
-    (fun I hI => hAI I.1 I.2 hI) hF0 hFI hDS (hgap ν hν0) (fun I => ⟨hDI I, hgap _ (firstNorm_add_subsetIndicator_le hνl I)⟩) hok hgc hTH
-    b1 b2 e1 e2 (fun I => (bI1 I).1) (fun I => (bI2 I).1) (fun I => (bI1 I).2) (fun I => (bI2 I).2)
-    (fun I v hv => ⟨hκ₀ I v hv, hκ₁ I v hv⟩)
-    (fun I hI => by
-      by_contra hn
-      push Not at hn
-      exact hI (GlobalTheory.T.bessel_map_pairing_bound hH D τ w w' θ W _ _ 0 _ _ _ hcd hW (hDI I) (bI1 I).1 (bI2 I).1 (hdI I).1
-        (hm₀ I hn.1) (hm₁ I hn.2)))
-    hd0.1 (fun I => (hdI I).1) hd0.2 (fun I => (hdI I).2)
-  have hsum : ∀ {E : Type} [AddCommMonoid E] (f : Finset (Fin (2 * D.R.rS + D.R.k + 1)) → E),
-      ∑ I ∈ univ.filter (fun I => I.card = l), f I = ∑ I : Sub _ l, f I.1 := fun f =>
-    Finset.sum_subtype _ (by simp) f
-  have haI : ∀ I : Sub (2 * D.R.rS + D.R.k + 1) l, (if h : I.1.card = l then a ⟨I.1, h⟩ else 0) = a I :=
-    fun I => dif_pos I.2
-  refine ⟨fun I => if h : I.card = l then a ⟨I, h⟩ else 0, fun I hI hn => (haI ⟨I, hI⟩).trans (ha0 _ hn), ?_, ?_⟩
-  · rw [hsum]
-    simp only [haI]
-    have hM : (0 : ℝ) ≤ max 2 Cu := le_trans zero_le_two (le_max_left _ _)
-    have hn1 : (1 : ℝ) ≤ 2 * D.R.rS + D.R.k + 1 := by linarith
-    have hN : ((2 * D.R.rS + D.R.k + 1 : ℝ)) ^ l ≤ large₂.sc.b ^ (max 2 Cu * (D.R.m : ℝ) ^ 2) :=
-      pow_le_rpow hb1 (by linarith) hnb hM (by rw [hmR]; nlinarith)
-    have hS : ‖∏ a : Fin l, s (Fin.castLE hl a)‖ ≤ large₂.sc.b ^ ((2 * Cg + 2) * (D.R.m : ℝ) ^ 2) := by
-      have hQ := scale_le hbe hv hvb hg1 hgb hCg
-      rw [← hka] at hQ
-      have h1 : ∀ a, ‖s a‖ ≤ large₂.sc.b ^ ((2 * Cg + 2) * (D.R.m : ℝ)) := fun a =>
-        (hs1 a).trans (pow_le_rpow hb1 (le_max_of_le_left (by positivity)) hQ (by linarith) (by linarith))
-      rw [norm_prod]
-      refine (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun a _ => h1 _).trans ?_
-      rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
-      refine (pow_le_rpow (β := D.R.m) hb1 (by positivity) le_rfl
-        (mul_nonneg (by linarith) (by linarith)) (by linarith)).trans (le_of_eq ?_)
-      congr 1; ring
-    obtain ⟨p1, p2⟩ := hsq_le (r := D.R.rS) (l := l) hb1 hM (by linarith) (by linarith) (hTb w)
-    obtain ⟨q1, q2⟩ := hsq_le (r := D.R.rS) (l := l) hb1 hM (by linarith) (by linarith) (hTb w')
-    rw [hW.2.2.2.2.1] at hb₀
-    rw [hW.2.2.2.2.2.1] at hb₁
-    obtain ⟨c, hc, hcc⟩ := GlobalTheory.BesselDegree.schur_fdeg hH D.R.k D.R.rS (PI.BesselPeriodGGP.eps48 _ _) W.μG
-      hW.2.2.2.2.2.2.1
-    have hone : ∀ I, ‖a I‖ ≤ (large₂.sc.b ^ ((2 * Cg + 2) * (D.R.m : ℝ) ^ 2)) ^ 2 *
-        large₂.sc.b ^ ((|CT| + 20 * max 2 Cu) * (D.R.m : ℝ) ^ 2) * large₂.sc.b ^ ((|CT| + 20 * max 2 Cu) * (D.R.m : ℝ) ^ 2) *
-        large₂.sc.b ^ (max 2 Cu * (D.R.m : ℝ) ^ 2) := fun I => by
-      have h3 : dg' (ν + eZ I.1) ≤ ((2 * D.R.rS + D.R.k + 1 : ℝ)) ^ l * dg ν := by
-        rw [dg_eq S1 (fun mu R h => (hcc mu R h).1) hν0, dg_eq T1 (fun mu R h => (hcc mu R h).1) (firstNorm_add_subsetIndicator_le hνl I),
-          mul_left_comm]
-        have := (GlobalTheory.FamilyDegreeRatio.degree_ratios _ _ _ _ _ _ _ _ _ hNum ν hν0).2.1 I.1
-        rw [I.2] at this
-        exact mul_le_mul_of_nonneg_left this hc.le
-      refine (coef_le hd0.1 (hdI I).1 (norm_nonneg _) (norm_nonneg _) (ha1 I) (hb₀ I) (hb₁ I) h3 p1 q1
-        (one_le_pow₀ hn1)).trans ?_
-      gcongr
-    refine (Finset.sum_le_card_nsmul _ _ _ fun I _ => hone I).trans ?_
-    have hcard : ((univ : Finset (Sub (2 * D.R.rS + D.R.k + 1) l)).card : ℝ) ≤
-        large₂.sc.b ^ (max 2 Cu * (D.R.m : ℝ) ^ 2) := by
-      refine le_trans ?_ hN
-      rw [Finset.card_univ, Fintype.card_finset_len, Fintype.card_fin]
-      exact_mod_cast Nat.choose_le_pow _ _
-    rw [nsmul_eq_mul]
-    refine (mul_le_mul_of_nonneg_right hcard (by positivity)).trans (le_of_eq ?_)
-    have hb0 : 0 < large₂.sc.b := by linarith
-    rw [sq (large₂.sc.b ^ _), ← Real.rpow_add hb0, ← Real.rpow_add hb0, ← Real.rpow_add hb0, ← Real.rpow_add hb0,
-      ← Real.rpow_add hb0]
-    congr 1; ring
-  · intro μsec hsec γ p hγ θ' hθ' νR hνR
-    obtain ⟨K, hK, hMM⟩ := hJ μsec hsec
-    rw [hsum]
-    simp only [haI]
-    refine ha2 μsec K hK (hMM _ ?_ _ hA₀) (fun I hI => hMM _ ?_ _ (hAI I.1 I.2 hI)) γ p hγ θ'
-      (lt_of_lt_of_le (by positivity) hθ'.1) νR hνR
-    · rw [hdist]; nlinarith [sq_nonneg (D.R.m : ℝ)]
-    · rw [hdist]
-      have h1 : (n1 (ν + eZ I.1) : ℝ) ≤ n1 ν + l := by exact_mod_cast firstNorm_add_subsetIndicator_le (le_refl (n1 ν + l)) I
-      have h2 : (l : ℝ) ≤ (D.R.m : ℝ) ^ 2 := by rw [hmR]; nlinarith
-      nlinarith
 
 end GlobalTheory.CellMinorLine
 end -- clump:auto

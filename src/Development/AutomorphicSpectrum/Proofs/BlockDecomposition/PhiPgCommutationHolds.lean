@@ -102,7 +102,7 @@ theorem mul_colMat_of_mem {n : ℕ} (h : GL (Fin (n + 1)) k) (hh : h ∈ Mir k n
       have e : ∀ l : Fin n, (h : Matrix (Fin (n + 1)) (Fin (n + 1)) k) (Fin.last n) (Fin.castSucc l) = 0 := by
         intro l
         rw [hl]
-        simp [eLast, Pi.single_apply, Fin.castSucc_ne_last]
+        simp [eLast, Fin.castSucc_ne_last]
       simp [colMat, Matrix.mul_apply, Fin.sum_univ_castSucc, e]
     | cast i =>
       simp [colMat, Matrix.mul_apply, Fin.sum_univ_castSucc, mulVec, dotProduct, blockMat]
@@ -735,7 +735,7 @@ theorem sEmb_row (n : ℕ) (m : Mir k n) (j : Fin (n + 1 + 1)) :
     · subst hj
       simp [GlobalTheory.BZMir.eLast]
     · rw [Matrix.one_apply_ne (fun e => hj (Fin.castSucc_injective _ e).symm)]
-      simp [GlobalTheory.BZMir.eLast, Pi.single_apply, hj]
+      simp [GlobalTheory.BZMir.eLast, hj]
 
 theorem dEmb_mul_sEmb_mem_Cl (i t : ℕ) (d : Fin (t + 1) → k) (m : Mir k ((i + 1) + t)) :
     dEmb k i t d * sEmb k _ m ∈ Cl k i t := by

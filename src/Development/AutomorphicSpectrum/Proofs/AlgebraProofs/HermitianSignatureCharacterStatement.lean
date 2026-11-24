@@ -149,7 +149,7 @@ theorem charpoly_eq [Fintype (E →+* K)] [FiniteDimensional K V]
       rw [LinearMap.toMatrix_apply, mem_eigSp.1 (hb j) a, map_smul, b.repr_self, Matrix.diagonal_apply]
       by_cases hij : i = j
       · subst hij; simp
-      · simp [hij, Finsupp.single_apply, Ne.symm hij]
+      · simp [hij]
     rw [← LinearMap.charpoly_toMatrix _ b, hm, Matrix.charpoly_diagonal, Fintype.prod_sigma]
     simp
   · rw [Module.finrank_eq_card_basis b]
@@ -208,7 +208,7 @@ theorem charpoly_rhoH {O : Type} [CommRing O] [StarRing O] {d : ℕ} (B : Germ.F
         (Matrix.transpose (rho B (star a))) := by
     ext i j
     rcases i with i | i <;> rcases j with j | j <;>
-      simp [b, LinearMap.toMatrix_apply, rhoH, Matrix.toLin'_apply, Matrix.mulVec_single_one]
+      simp [b, LinearMap.toMatrix_apply, rhoH, Matrix.toLin'_apply]
   rw [← LinearMap.charpoly_toMatrix (rhoH B a) b, hM, Matrix.charpoly_fromBlocks_zero₁₂,
     Matrix.charpoly_transpose]
 
@@ -284,7 +284,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.hermitian_signature_character : ∀ (E : Type) [Field E] [NumberField E] [StarRing (𝓞 E)] (K : Type) [Field K] [CharZero K] (d r : ℕ) (B : Germ.FB K d (𝓞 E)) (ρ : 𝓞 E →+* Module.End K (Fin d → K)), (∀ a v, ρ a v = (rho B a).mulVec v) → Nat.card (E →+* K) = Module.finrank ℚ E → (∀ s s' : E →+* K, (∀ a : 𝓞 E, s' (a : E) = s ((star a : 𝓞 E) : E)) → Module.finrank K (HT.eigSp ρ s) + Module.finrank K (HT.eigSp ρ s') = r) → HChar B r := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.hChar_of_eigSp_ranks | exact GlobalTheory.CompanionTheory.Ar.Flat.hChar_of_eigSp_ranks | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.hChar_of_eigSp_ranks <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.hChar_of_eigSp_ranks
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.HermitianSignatureCharacterStatement =====

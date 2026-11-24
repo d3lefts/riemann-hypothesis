@@ -114,7 +114,7 @@ theorem lieEig : LieEig e F := by
         rw [Equiv.apply_symm_apply] at this
         exact hτ this
       rw [h0]
-      simp [Finset.sum_apply, eb_apply, Sigma.mk.inj_iff, hτ]
+      simp [Finset.sum_apply, eb_apply, hτ]
   rw [hsum]
   exact hw
 
@@ -199,7 +199,7 @@ theorem perFr_comb (X : Data E r) {x x' : Frame X.Ψ r} (hx : x ∈ X.dom)
       conv_lhs => rw [← mul_nonsing_inv_cancel_left (mat x ⟨_, h'⟩) (mat x' ⟨_, h'⟩) hd]
       generalize (mat x ⟨_, h'⟩)⁻¹ * mat x' ⟨_, h'⟩ = n
       change Matrix (Fin r) (Fin r) ℂ at n
-      simp only [hermC, ReciprocityTheory.ChartRestriction.G.FD.col, mul_apply, Finset.sum_mul, Finset.mul_sum]
+      simp only [hermC, ReciprocityTheory.ChartRestriction.G.FD.col, Finset.mul_sum]
       symm
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun a _ => ?_

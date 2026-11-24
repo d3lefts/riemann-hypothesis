@@ -361,7 +361,7 @@ theorem _root_.GlobalTheory.OTY.ShellZero.shell_near_zero : ∀ (n : ℕ) (Y : T
     simp only [hψdef, _root_.GlobalTheory.Published.L2Extension.psi, h1, hlam, e.left_inv hx, hZ]
     rw [norm_one, one_pow, one_mul, mul_comm (Real.exp _)]
   have hψm : Measurable ψ := by
-    simp only [hψdef, _root_.GlobalTheory.Published.L2Extension.psi]
+    simp only [hψdef]
     exact measurable_const.mul (Real.measurable_log.comp (A.continuous_sqn hs).measurable)
   obtain ⟨ρ, hρ, hball, hshell⟩ := _root_.GlobalTheory.ShellMass.shell_mass n hn (e P) e.target Z lam e.open_target hp hZd hZ0
     hdet hlamc φ (2 / δ) (1 / 30) hφc (by positivity) (by norm_num)
@@ -1359,7 +1359,7 @@ theorem GlobalTheory.OTY.extension_values_at_zeros : ∀ (n : ℕ) (Y : Type) [T
     have h0 : ∀ k, s k i (e.symm (e P)) = 0 := fun k => by rw [e.left_inv hPs]; exact hP' k
     ext k
     simp only [Z, WeightedAtlas.zLoc, PiLp.toLp_apply, div_one]
-    first | exact h0 k | simpa using h0 k | (simp; exact h0 k)
+    first | exact h0 k
   have hdet : (fderiv ℂ Z (e P)).det ≠ 0 := hjac P hP
   have hlam : ContinuousOn lam O :=
     ((A.smooth_ph L i).continuousOn).mono (fun v hv => hv.1)
@@ -1407,7 +1407,7 @@ theorem GlobalTheory.OTY.extension_values_at_zeros : ∀ (n : ℕ) (Y : Type) [T
         have h3 := hv hvB
         simp only [Pi.zero_apply, ENNReal.ofReal_eq_zero] at h3
         exact absurd h3 (not_le.2 (Real.exp_pos _))
-      first | exact measure_zero_iff_ae_nmem.2 h2 | exact measure_eq_zero_iff_ae_notMem.2 h2
+      first | exact measure_eq_zero_iff_ae_notMem.2 h2
     have hOW : volume (O \ W) = 0 := by
       apply measure_mono_null (t := {e P} ∪ (e.target ∩ e.symm ⁻¹' (nz A τ)ᶜ))
       · intro v hv
@@ -1583,7 +1583,7 @@ open MeasureTheory Filter Topology Metric ReciprocityTheory.L2DbarEstimates Reci
 open scoped ENNReal ContDiff
 
 theorem _root_.GlobalTheory.T.lintegral_sublevel_tail_le_of_finite : ∀ (Y : Type) [MeasurableSpace Y] (μ : Measure Y) (g : Y → ℝ≥0∞) (x : Y → ℝ), Measurable x → ∫⁻ y, g y ∂μ < ⊤ → Measurable g → ∀ ε : ℝ≥0∞, 0 < ε → ∃ T0 : ℝ, ∀ T, T0 ≤ T → ∫⁻ y in {y | x y ≤ -T + 1}, g y ∂μ ≤ ε := by
-  first | exact @GlobalTheory.lintegral_sublevel_tail_le | exact GlobalTheory.lintegral_sublevel_tail_le | (intros; apply GlobalTheory.lintegral_sublevel_tail_le <;> assumption)
+  first | exact @GlobalTheory.lintegral_sublevel_tail_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LintegralSublevelTailLeOfFiniteStatement =====

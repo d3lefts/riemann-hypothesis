@@ -250,17 +250,16 @@ theorem nlam_mapL {β m : S.V ≃ₗ[E] S.V} (hβ : β ∈ Formalism.HermitianLa
     rw [Formalism.L2.SG.Pf.xa_mapFlag] at hx ⊢
     obtain ⟨y, hy, rfl⟩ := hx
     refine ⟨m y - y, hm.2.1 j y hy, ?_⟩
-    simp [Formalism.L2.SG.Pf.le_mul_app, Formalism.L2.SG.Pf.le_inv_app, map_sub]
+    simp [Formalism.L2.SG.Pf.le_inv_app, map_sub]
   · change x ∈ orth S (Formalism.L2.SG.TermOp.mapFlag β hβ F₁.fl).X at hx
     change _ ∈ (Formalism.L2.SG.TermOp.mapFlag β hβ F₁.fl).X
     rw [Formalism.L2.SG.Pf.x_mapFlag] at hx ⊢
     have hy := Formalism.L2.SG.Pf.orth_map β hβ _ x hx
     refine ⟨m (β.symm x) - β.symm x, hm.2.2 _ hy, ?_⟩
-    simp [Formalism.L2.SG.Pf.le_mul_app, Formalism.L2.SG.Pf.le_inv_app, map_sub]
+    simp [Formalism.L2.SG.Pf.le_inv_app, map_sub]
 
 theorem isometry_fix_flagAnisotropicVector_of_fix_frame {β : S.V ≃ₗ[E] S.V} (hβ : β ∈ Saturated.AutF Λ F) : β F.fl.z = F.fl.z := by
-  have hl := (Saturated.mem_AutF.1 hβ).2.1 (Fin.last r)
-  rwa [Formalism.L2.SG.Pf.frame_last_td] at hl
+  simpa [Formalism.L2.SG.Pf.frame_last_td] using (Saturated.mem_AutF.1 hβ).2.1 (Fin.last r)
 
 theorem dcrel_act {β : S.V ≃ₗ[E] S.V} (hβ : β ∈ Saturated.AutF Λ F) {F₁ F₂ : LFlag S r T'}
     (h : DCRel Λ F F₁ F₂) : DCRel Λ F (Saturated.act ⟨β, hβ⟩ F₁) (Saturated.act ⟨β, hβ⟩ F₂) := by
@@ -395,8 +394,7 @@ variable {D : D7} (X : HidaSetting D)
 theorem crd_inj {y y' : (VS D).V} (h : X.crd y = X.crd y') : y = y' := by
   apply X.bas.repr.injective
   ext i
-  have hi := congrArg X.ιE (congrFun h i)
-  simpa only [HidaSetting.crd, crdOf, RingEquiv.apply_symm_apply] using hi
+  simpa only [HidaSetting.crd, crdOf, RingEquiv.apply_symm_apply] using congrArg X.ιE (congrFun h i)
 
 def linM (M : Matrix (Fin X.B.I.n) (Fin X.B.I.n) X.B.I.E) : (VS D).V →ₗ[D.host.E] (VS D).V :=
   Matrix.toLin X.bas X.bas (M.map X.ιE)
@@ -430,8 +428,6 @@ theorem incl_inj {a b : Fin X.B.I.n → X.B.I.E} (h : incl X.B.I a = incl X.B.I 
   have hinj : Function.Injective (Formalism.UG.inclE (F := X.B.I.F) (E := X.B.I.E) (Af X.B.I.F)) := by
     first
       | exact Algebra.TensorProduct.includeLeft_injective (S := X.B.I.F) (RingHom.injective _)
-      | exact Algebra.TensorProduct.includeLeft_injective (R := X.B.I.F) (RingHom.injective _)
-      | exact Algebra.TensorProduct.includeLeft_injective (RingHom.injective _)
   funext i
   exact hinj (congrFun h i)
 
@@ -537,8 +533,6 @@ theorem hsL_emb (P : Wp ≃ₗᵢ[ℂ] Wp) (A : Wq →L[ℂ] Wp) :
   first
     | ext i
       simp [hsL, Formalism.L2.SG.PackageTie.hsEmb]
-    | simp [hsL, Formalism.L2.SG.PackageTie.hsEmb]
-    | rfl
 
 end HSc
 

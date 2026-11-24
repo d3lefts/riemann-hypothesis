@@ -166,7 +166,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.exists_integral_weylBasis_spanning_all_rings : ∀ (n : ℕ) (ν : Fin n → ℕ), Antitone ν → ∃ (P : Type) (_ : Fintype P) (b : P → MvPolynomial (Fin n × Fin n) ℤ), LinearIndependent ℤ b ∧ (∀ (R : Type) [CommRing R], weyl R n n le_rfl ν = Submodule.span R (Set.range fun i => MvPolynomial.map (Int.castRingHom R) (b i))) ∧ ∀ (K : Type) [Field K] [CharZero K], dualWeyl K n n ν = Submodule.span K (Set.range fun i => MvPolynomial.map (Int.castRingHom K) (b i)) := by
-  first | exact @GlobalTheory.WeylBasis.exists_weyl_basis | exact GlobalTheory.WeylBasis.exists_weyl_basis | (intros; apply GlobalTheory.WeylBasis.exists_weyl_basis <;> assumption)
+  first | exact @GlobalTheory.WeylBasis.exists_weyl_basis
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIntegralWeylBasisSpanningAllRingsStatement =====
@@ -208,7 +208,7 @@ theorem rowGen_detPol (n : ℕ) (a b : Fin n) :
     by_cases hp : p = b
     · subst hp
       simp [rowGen, hA]
-    · simp [rowGen, hA, hp, Matrix.updateRow_ne hp]
+    · simp [rowGen, hA, hp]
   rw [h1]
   by_cases hab : a = b
   · subst hab
@@ -349,7 +349,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.mem_weylLattice_add_iff_det_pow_mul : ∀ (R : Type) [CommRing R] (n k : ℕ) (ν : Fin n → ℕ) (f : MvPolynomial (Fin n × Fin n) R), f ∈ weyl R n n le_rfl (fun a => ν a + k) ↔ ∃ g ∈ weyl R n n le_rfl ν, f = detPol R n ^ k * g := by
-  first | exact @GlobalTheory.WeylShift.mem_weyl_add | exact GlobalTheory.WeylShift.mem_weyl_add | (intros; apply GlobalTheory.WeylShift.mem_weyl_add <;> assumption)
+  first | exact @GlobalTheory.WeylShift.mem_weyl_add
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemWeylLatticeAddIffDetPowMulStatement =====
@@ -570,7 +570,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.mem_localisedStandardWeyl_of_lift_mem : ∀ (K : Type) [Field K] [NumberField K] (l : ℕ) [Fact l.Prime] (w : HeightOneSpectrum (𝓞 K)) (e0 : K →+* PadicAlgCl l) (ι : Type) [Fintype ι] [DecidableEq ι] (n : ℕ) (lam : ι → DomWeight n) (lamW : ι → ℕ → ℕ) (c : ι → ℤ) (F : Frame l ι n) (Φ : VV K lam →ₛₗ[e0] NablaT (PadicAlgCl l) n lamW), AtPlace w e0 → (∀ x : F.O, ‖F.emb x‖ ≤ 1) → Shift lam lamW c → IsPhi e0 lam lamW Φ → ∀ v : VV K lam, Φ v ∈ F.latD lamW → (v : Pol K ι n) ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (delStd K lam) := by
-  first | exact @GlobalTheory.FrameRead.DelStd.mem_localization_standardWeylLattice | exact GlobalTheory.FrameRead.DelStd.mem_localization_standardWeylLattice | (intros; apply GlobalTheory.FrameRead.DelStd.mem_localization_standardWeylLattice <;> assumption)
+  first | exact @GlobalTheory.FrameRead.DelStd.mem_localization_standardWeylLattice
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemLocalisedStandardWeylOfLiftMemStatement =====

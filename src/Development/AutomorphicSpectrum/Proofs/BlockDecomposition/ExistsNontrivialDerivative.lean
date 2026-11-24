@@ -344,7 +344,7 @@ def ev {n : ℕ} (x : Multiplicative (Fin n → k)) (a : Multiplicative (Fin n �
 
 theorem ev_mul {n : ℕ} (x a b : Multiplicative (Fin n → k)) :
     ev ψ x (a * b) = ev ψ x a * ev ψ x b := by
-  simp [ev, chi, add_dotProduct, AddChar.map_add_eq_mul, mul_inv]
+  simp [ev, chi, add_dotProduct, AddChar.map_add_eq_mul]
   exact mul_comm _ _
 
 theorem ev_eq_one {n : ℕ} {x a : Multiplicative (Fin n → k)} (h : chi k ψ a.toAdd x = 1) :
@@ -692,9 +692,9 @@ theorem continuous_glEmb (n : ℕ) : Continuous (glEmb k n) := by
   refine continuous_pi fun i => continuous_pi fun j => ?_
   induction i using Fin.lastCases with
   | last => induction j using Fin.lastCases <;> simp [glEmbMat] <;>
-      first | exact continuous_const | exact (continuous_apply _).comp (continuous_apply _) | fun_prop
+      first | exact continuous_const
   | cast i => induction j using Fin.lastCases <;> simp [glEmbMat] <;>
-      first | exact continuous_const | exact (continuous_apply _).comp (continuous_apply _) | fun_prop
+      first | exact continuous_const | exact (continuous_apply _).comp (continuous_apply _)
 
 theorem continuous_levi_comp_subtype (m : ℕ) : Continuous ((levi k (m + 1)).comp (Mir k m).subtype) :=
   continuous_induced_rng.2 ((continuous_glEmb (m + 1)).comp continuous_subtype_val)

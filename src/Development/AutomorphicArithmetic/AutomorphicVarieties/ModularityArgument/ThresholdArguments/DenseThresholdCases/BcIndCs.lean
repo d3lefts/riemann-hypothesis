@@ -1453,7 +1453,7 @@ theorem _root_.UpperTheory.Esk.pf_HRep_alt : _root_.UpperTheory.V.Af.HypothesesH
           rw [Nat.cast_sub (by omega)]; push_cast; ring, Real.rpow_natCast]
       simp
     have h9 : algSat 2 (normV w) {α, β} = {r * α, r * β} := by
-      simp only [algSat, hr, Multiset.insert_eq_cons, Multiset.map_cons, Multiset.map_singleton]
+      simp only [algSat, hr, Multiset.insert_eq_cons]
       norm_num
     rw [h9, h6, ← h8, show (ω.val w : ℂˣ) * (r * r * (((ν.val w : ℂˣ) : ℂ) * (ν.val w : ℂˣ))) = r * α * (r * β) by
       linear_combination (-(r * r)) * h7]
@@ -1896,7 +1896,7 @@ theorem UpperTheory.Esk.pf_PropMV_sv_alt : _root_.UpperTheory.V.Af.HypothesesH' 
     rw [prod_at D _ t w v₀ hv₀] at hc'
     refine ⟨hlev1 w hw, ?_, ?_, heu w hw, ⟨lam' w, hlev1 w hw ▸ hU w, ?_⟩, fun τ hτ => ?_⟩
     · by_cases h : w ∈ P <;> simp [h] <;> omega
-    · by_cases h : w ∈ P <;> simp [h] <;> ring
+    · by_cases h : w ∈ P <;> simp [h]
     · rw [hnorm]
       by_cases h : w ∈ P
       · have hv : v₀ ∈ {v | D.pl v ∈ P} := by simpa [hv₀] using h
@@ -1913,9 +1913,9 @@ theorem UpperTheory.Esk.pf_PropMV_sv_alt : _root_.UpperTheory.V.Af.HypothesesH' 
       convert hinf v using 3
       by_cases h : w ∈ P
       · have hS : v ∈ {v | D.pl v ∈ P} := by simpa [hv] using h
-        ext i; fin_cases i <;> simp [h, hS] <;> omega
+        ext i; fin_cases i <;> simp [h, hS]
       · have hS : v ∉ {v | D.pl v ∈ P} := by simpa [hv] using h
-        ext i; fin_cases i <;> simp [h, hS] <;> omega
+        ext i; fin_cases i <;> simp [h, hS]
   · simp only [eisT, if_pos hw, if_pos h]
     exact hfr w (hcl w hw) A hA σ hσ
   · simp only [eisT, if_pos hw, if_neg h, map_one]

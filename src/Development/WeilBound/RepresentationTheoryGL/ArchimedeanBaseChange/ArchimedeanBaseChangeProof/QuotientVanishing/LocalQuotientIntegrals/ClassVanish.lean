@@ -172,7 +172,7 @@ theorem haar_split {A B : Type} [TopologicalSpace G] [IsTopologicalGroup G] [Mea
   have hc : Measure.haarScalarFactor (μ.map e) (μ₁.prod ν) ≠ 0 :=
     (Measure.haarScalarFactor_pos_of_isHaarMeasure _ _).ne'
   refine ⟨μ₁, Measure.haarScalarFactor (μ.map e) (μ₁.prod ν) • ν, inferInstance, ?_, ?_⟩
-  · first | exact Measure.IsHaarMeasure.nnreal_smul _ hc | exact IsHaarMeasure.nnreal_smul _ hc | exact Measure.isHaarMeasure_nnreal_smul _ hc
+  · first | exact Measure.IsHaarMeasure.nnreal_smul _ hc
   · rw [Measure.prod_smul_right]
     exact h1
 
@@ -253,7 +253,7 @@ theorem cV_embInf (v w : InfinitePlace E) (y : GL (Fin n) ℂ) :
   by_cases h : w = v
   · subst h
     simp
-  · simp [h, Pi.mulSingle_eq_of_ne h]
+  · simp [h]
 
 theorem pFin_embInf (v : InfinitePlace E) (y : GL (Fin n) ℂ) :
     GeneralLinearGroup.map (pFin E) (embInf n v y) = 1 := by
@@ -766,7 +766,7 @@ theorem mem_perpD_iff (D : GL (Fin n) ℂ) (W : Submodule ℂ (Fin n → ℂ)) (
   · intro h
     refine Submodule.mem_map.2 ⟨(D⁻¹ : GL (Fin n) ℂ).val *ᵥ y, fun x hx => ?_, ?_⟩
     · simpa [formB, dotProduct] using h x hx
-    · simp [Matrix.toLin'_apply, Matrix.mulVec_mulVec, hDi]
+    · simp [Matrix.toLin'_apply, Matrix.mulVec_mulVec]
 
 theorem formB_nrm (D : GL (Fin n) ℂ) (x y : Fin n → ℂ) :
     formB D ((nrmC D).val *ᵥ x) ((nrmC D).val *ᵥ y) = formB D x y := by
@@ -1239,7 +1239,7 @@ theorem orth_of_comp (hiso : ∀ e, IsoStab d (Wof e)) (hmono : ∀ e e', SLe e 
   have h2 : SLe f u := fun i hi => by
     by_cases he : e i = 0
     · simp [u, he]
-    · simp [u, he, h i he hi]
+    · simp [u, h i he hi]
   exact (hmono _ _ h1).trans ((hiso u).2.trans (perpD_anti d (hmono _ _ h2)))
 
 theorem comp_of_orth (hiso : ∀ e, IsoStab d (Wof e)) (hu : ∀ W, IsoStab d W → ∃! e, Wof e = W)
@@ -1550,7 +1550,7 @@ theorem aeval_conj_units (y : GL (Fin n) ℂ) (A : Matrix (Fin n) (Fin n) ℂ) (
   | add p q hp hq => simp only [map_add (f := _), hp, hq, Matrix.mul_add, Matrix.add_mul]
   | monomial k a =>
     simp only [aeval_monomial, hpow, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, Matrix.one_mul,
-      Matrix.mul_smul, Matrix.smul_mul]
+      Matrix.mul_smul]
 
 theorem aeval_diagonal (lam : Fin n → ℂ) (q : ℂ[X]) :
     aeval (diagonal lam) q = diagonal fun j => q.eval (lam j) := by
@@ -1604,7 +1604,7 @@ theorem diag_proper (lam : Fin n → ℂ) (hl : Function.Injective lam)
       simp only [G, h1, hp]
       rw [Matrix.mul_apply]
       simp only [Matrix.mul_diagonal, mul_ite, mul_one, mul_zero, ite_mul, zero_mul,
-        Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true]
+        Finset.sum_ite_eq', Finset.mem_univ, if_true]
     rw [← h2]
     exact ((norm_le_pi_norm _ b).trans ((norm_le_pi_norm _ a).trans (norm_le_pi_norm _ i))).trans (hB _ hy)
 
@@ -1789,7 +1789,7 @@ theorem main : PositivityTheory.Rg.BcB.D4.LocProper := by
     refine ⟨(P * k, twConj (thetaR (starRingEnd ℂ) n) x d), ⟨⟨k, hk, rfl⟩, hx'⟩, ?_⟩
     show (P * k) * twConj (thetaR (starRingEnd ℂ) n) x d * (thetaR (starRingEnd ℂ) n (P * k))⁻¹ = _
     rw [hx2]
-    simp only [twConj, map_mul, map_inv]
+    simp only [twConj, map_mul]
     group
   obtain ⟨u, hu, e, he, hze⟩ := hDp z hcomm hzC
   refine ⟨u, hu, e * (P * k), Set.mul_mem_mul he ⟨k, hk, rfl⟩, ?_⟩

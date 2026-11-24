@@ -841,7 +841,7 @@ variable {L K : Type} [Field L] [CommRing K] [Algebra L K] (B : Module.Basis (Fi
 
 theorem repr_coord (s t : L) :
     B.repr (s • B 0 + t • B 1) 0 = s ∧ B.repr (s • B 0 + t • B 1) 1 = t := by
-  simp [Finsupp.single_apply]
+  simp
 
 variable {B} {Δ : L}
 
@@ -852,7 +852,7 @@ theorem coord_eq (h0 : B 0 = 1) (x : K) :
   exact h
 
 theorem repr_one (h0 : B 0 = 1) : B.repr 1 0 = 1 ∧ B.repr 1 1 = 0 := by
-  rw [← h0]; simp [Finsupp.single_apply]
+  rw [← h0]; simp
 
 theorem repr_mul (h0 : B 0 = 1) (h1 : B 1 * B 1 = algebraMap L K Δ) (x y : K) :
     B.repr (x * y) 0 = B.repr x 0 * B.repr y 0 + Δ * (B.repr x 1 * B.repr y 1) ∧
@@ -958,8 +958,8 @@ theorem inert_case (h0 : B 0 = 1) (h1 : B 1 * B 1 = algebraMap L K Δ)
     · subst hk
       obtain ⟨e0, e1⟩ := repr_one (B := B) h0
       fin_cases l <;> simp [e0, e1]
-    · simp [Pi.single_apply, hk]
-  · simp only [Units.val_mk]
+    · simp [hk]
+  · simp only
     simp [Pi.single_apply, mul_comm x', hx']
 
 theorem mul_ef {e f : K} (he : e * e = e) (hf : f * f = f) (hef : e * f = 0) (α β γ δ : L) :
@@ -1510,7 +1510,7 @@ theorem partner_spec (s : K →+* K) (L Li : Matrix (Fin N) (Fin N) K) (half : K
 
 theorem hform_single (s : K →+* K) (L : Matrix (Fin N) (Fin N) K) (i j : Fin N) :
     hform s L (Pi.single i 1) (Pi.single j 1) = L i j := by
-  simp [hform_eq, Matrix.mulVec_single_one, dotProduct, Pi.single_apply, apply_ite s]
+  simp [hform_eq, dotProduct, Pi.single_apply, apply_ite s]
 
 variable [TopologicalSpace K] [IsTopologicalRing K]
 

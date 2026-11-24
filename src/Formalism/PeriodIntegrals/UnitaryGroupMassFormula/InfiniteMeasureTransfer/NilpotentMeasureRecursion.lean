@@ -213,8 +213,7 @@ abbrev Mv (g : HI I) (v : InfinitePlace I.F) : Matrix (Fin I.n) (Fin I.n) ℂ :=
 
 theorem uMat_toInf (s : I.Ginf) (v : InfinitePlace I.F) :
     uMat (s v) = (I.P v)⁻¹ * Mv I (Formalism.L2.SG.Pf.MeasInf.toInfL I hb s) v * I.P v := by
-  have h := congrFun (betaI_toInfL I hb s) v
-  rw [← h]
+  rw [← congrFun (betaI_toInfL I hb s) v]
   exact betaV_val I v _
 
 theorem lin_eq (g : HI I) (w : Fin I.n → TI I) :
@@ -250,10 +249,9 @@ theorem conj_mem_iff {m : ℕ} (g : HI I) (v : InfinitePlace I.F) (Y : Fin m →
   rw [hL, himg, Submodule.span_image]
   constructor
   · rintro ⟨y, hy, hxy⟩
-    have h2 := congrArg (fun x => I.P v *ᵥ x) hxy
-    simp only [Matrix.mulVecLin_apply, hPi] at h2
-    rw [← h2]
-    exact hy
+    have h2 : y = (Mv I g v - 1) *ᵥ u := by
+      simpa only [Matrix.mulVecLin_apply, hPi] using congrArg (fun x => I.P v *ᵥ x) hxy
+    rwa [← h2]
   · intro h
     exact ⟨_, h, rfl⟩
 
@@ -361,8 +359,7 @@ theorem inN_iff {r : ℕ} (g : HI I) (v : InfinitePlace I.F) (e : Fin r → Fin 
     (and_congr (conj_mem_iff I g v e _ _) ?_)
   constructor
   · intro h u hu
-    have h2 := h ((I.P v)⁻¹ *ᵥ u) (fun a => by rw [hJ_conj]; exact hu a)
-    exact (conj_mem_iff I g v e _ u).1 h2
+    exact (conj_mem_iff I g v e _ u).1 (h ((I.P v)⁻¹ *ᵥ u) fun a => by rw [hJ_conj]; exact hu a)
   · intro h y hy
     have hy' : y = (I.P v)⁻¹ *ᵥ (I.P v *ᵥ y) := (Pinv_mulVec_P_mulVec I v y).symm
     rw [hy'] at hy ⊢
@@ -421,8 +418,7 @@ theorem nilpotent_measure_recursion : NStep := by
   intro I hb r e f z T hstd s
   rw [nsub_iff I _ e f z T hstd]
   simp only [Formalism.L2.SG.HidaSetting.Ninf, Set.mem_setOf_eq]
-  refine forall_congr' fun v => ?_
-  rw [uMat_toInf I hb s v, inN_iff]
+  exact forall_congr' fun v => by rw [uMat_toInf I hb s v, inN_iff]
 
 end Formalism.L2.SG.Pf.MeasInfW
 end -- clump:auto

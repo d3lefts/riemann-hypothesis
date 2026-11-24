@@ -319,7 +319,7 @@ theorem _root_.GlobalTheory.GodementJacquet.parab_mul_eMat
   simp only [Matrix.mul_apply, hE, hL, mul_ite, ite_mul, mul_one, one_mul, mul_zero, zero_mul,
     Finset.sum_ite_eq', Finset.mem_univ, if_true]
   refine Fin.addCases (fun i => ?_) (fun i => ?_) i
-  · simp [eq_comm]
+  · simp
   · rw [hlow]
     refine (Finset.sum_eq_zero fun x _ => ?_).symm
     rw [if_neg]
@@ -579,7 +579,7 @@ theorem E_mul {R : Type*} [Semiring R] {a b c j : ℕ} (hb : j ≤ b) :
     obtain ⟨h1, h2⟩ := h
     have hi : (i : ℕ) < j := h1 ▸ h2
     rw [Finset.sum_eq_single (⟨i, by omega⟩ : Fin b)]
-    · simp [hi, h1, h2]
+    · simp [h1, h2]
     · intro m _ hm
       have hne : ¬ ((i : ℕ) = m ∧ (m : ℕ) < j) := fun e => hm (Fin.ext e.1.symm)
       rw [if_neg hne, zero_mul]
@@ -1476,7 +1476,7 @@ theorem loc (hB : BallSt) : LocSt := by
       (⟨_, hind x⟩ : SB (Matrix (Fin n) (Fin r) k)) := by
     apply Subtype.ext
     refine hsum.trans ?_
-    simp [Submodule.coe_sum, Submodule.coe_smul]
+    simp
   rw [hΦeq]
   exact P.sum_mem hterm
 

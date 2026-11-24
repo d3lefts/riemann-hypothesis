@@ -132,13 +132,13 @@ theorem lower_bound_of_cyclic_coef : ∀ {Γ : Type} [Group Γ] [TopologicalSpac
       rw [hz]
 
       simp only [Finsupp.sum, map_sum, map_smul, inner_sum, sum_inner, inner_smul_right,
-      inner_smul_left, hi', hadj, Complex.conj_conj, RCLike.conj_conj, starRingEnd_self_apply]
+      inner_smul_left, hi', hadj, Complex.conj_conj]
     have h2' : ⟪c.sum fun x t => t • σ x w₀, T (c.sum fun x t => t • σ x w₀)⟫_ℂ =
         starRingEnd ℂ ⟪z, E z⟫_ℂ := by
       rw [hz]
 
       simp only [Finsupp.sum, map_sum, map_smul, inner_sum, sum_inner, inner_smul_right,
-      inner_smul_left, hTE', map_mul, Complex.conj_conj, RCLike.conj_conj, starRingEnd_self_apply]
+      inner_smul_left, hTE', map_mul, Complex.conj_conj]
     rw [Set.mem_setOf_eq, h1', h2', Complex.conj_re]
     exact hE z
   have ha : a ∈ closure (Submodule.span ℂ (Set.range fun x => σ x w₀) : Set A) := by
@@ -896,7 +896,7 @@ theorem _root_.GlobalTheory.T.matrix_coefficient_integrable_square : ∀ {Γ : T
     {B : Type} [NormedAddCommGroup B] [InnerProductSpace ℂ B] [CompleteSpace B] (ρ : Γ → (B →L[ℂ] B)), IsU ρ → ∀ v : B, Integrable (fun g => ⟪v, ρ g v⟫_ℂ) ν → ∀ b : B,
     Integrable (fun g => ‖⟪b, ρ g v⟫_ℂ‖ ^ 2) ν ∧
     ∫ g, ‖⟪b, ρ g v⟫_ℂ‖ ^ 2 ∂ν ≤ (∫ g, ‖⟪v, ρ g v⟫_ℂ‖ ∂ν) * ‖b‖ ^ 2 := by
-  first | exact @GlobalTheory.CompanionTheory.GodementCoeff.sq_integrable_and_bound | exact GlobalTheory.CompanionTheory.GodementCoeff.sq_integrable_and_bound | (intros; apply GlobalTheory.CompanionTheory.GodementCoeff.sq_integrable_and_bound <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.GodementCoeff.sq_integrable_and_bound
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MatrixCoefficientIntegrableSquareStatement =====
@@ -1491,7 +1491,7 @@ private theorem isURepOn_embH_of_signs {e : Option (Fin n) ≃ Fin (n + 1)} {ε 
   have hc : Continuous (embH e) := by
     refine continuous_pi fun a => continuous_pi fun b => ?_
     simp only [embH]
-    rcases e.symm a with _ | i <;> rcases e.symm b with _ | j <;> first | fun_prop | exact continuous_const
+    rcases e.symm a with _ | i <;> rcases e.symm b with _ | j <;> first | fun_prop
   refine ⟨⟨?_, fun a ha b hb => ?_⟩, fun g hg v => hπ.2.1 _ (embH_mem_UJset_of_signs hs hg) v,
     fun v => (hπ.2.2 v).comp hc.continuousOn (fun h hh => embH_mem_UJset_of_signs hs hh)⟩
   · simp only [embH_one]

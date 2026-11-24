@@ -144,8 +144,7 @@ theorem gapOK_mono {k r : ℕ} {h0 h : ℝ} (h1 : Formalism.FourierDecayAlt.Thre
   obtain ⟨hk, h2, h3, h4⟩ := h1
   have hmono : Formalism.FourierDecayAlt.ThreeDimData.aOf r h0 ≤ Formalism.FourierDecayAlt.ThreeDimData.aOf r h := by
     unfold Formalism.FourierDecayAlt.ThreeDimData.aOf
-    apply div_le_div_of_nonneg_right hle
-    positivity
+    exact div_le_div_of_nonneg_right hle (by positivity)
   exact ⟨hk, h2.trans hle, h3.trans hmono, h4.trans hmono⟩
 
 theorem kaS_pos_of_hyp {D : D7} {large₂ : SizeData₂ D} {C' Cl Cg cb Cu cT CT : ℝ} (hH : StandingHypotheses D large₂ C' Cl Cg cb Cu cT CT) :
@@ -164,12 +163,11 @@ theorem explicit_gap_le_polynomial (k r : ℕ) (hk : 1 ≤ k) : H0 k r ≤ 1000 
   unfold H0
   have hN1 : (1 : ℝ) ≤ ((2 * r + k + 1 : ℕ) : ℝ) := by exact_mod_cast (by omega : 1 ≤ 2 * r + k + 1)
   have haN : ((2 * r + 2 : ℕ) : ℝ) ≤ ((2 * r + k + 1 : ℕ) : ℝ) := by exact_mod_cast (by omega : 2 * r + 2 ≤ 2 * r + k + 1)
-  have ha0 : (0 : ℝ) ≤ ((2 * r + 2 : ℕ) : ℝ) := by positivity
   have h3 : ((3 * (r + 1) : ℕ) : ℝ) ≤ 2 * ((2 * r + k + 1 : ℕ) : ℝ) := by
     exact_mod_cast (by omega : 3 * (r + 1) ≤ 2 * (2 * r + k + 1))
   have hpow : ((2 * r + 2 : ℕ) : ℝ) ^ ((9 : ℝ) / 2) ≤ ((2 * r + k + 1 : ℕ) : ℝ) ^ 5 := by
     calc ((2 * r + 2 : ℕ) : ℝ) ^ ((9 : ℝ) / 2) ≤ ((2 * r + k + 1 : ℕ) : ℝ) ^ ((9 : ℝ) / 2) :=
-          Real.rpow_le_rpow ha0 haN (by norm_num)
+          Real.rpow_le_rpow (by positivity) haN (by norm_num)
       _ ≤ ((2 * r + k + 1 : ℕ) : ℝ) ^ ((5 : ℕ) : ℝ) := Real.rpow_le_rpow_of_exponent_le hN1 (by norm_num)
       _ = ((2 * r + k + 1 : ℕ) : ℝ) ^ 5 := Real.rpow_natCast _ _
   have hN0 : (0 : ℝ) ≤ ((2 * r + k + 1 : ℕ) : ℝ) := by positivity
@@ -189,11 +187,9 @@ theorem gap_ok_explicit (k r : ℕ) (hk : 1 ≤ k) : Formalism.FourierDecayAlt.T
   obtain ⟨j, rfl⟩ : ∃ j, k = j + 1 := ⟨k - 1, by omega⟩
   have hc : ((2 * r + 2 : ℕ) : ℝ) = 2 * ((r : ℝ) + 1) := by push_cast; ring
   have hcpos : (0 : ℝ) < 2 * ((r : ℝ) + 1) := by positivity
-  have hsq : 0 < Real.sqrt (2 * ((r : ℝ) + 1)) := Real.sqrt_pos.mpr hcpos
   have hsq1 : 1 ≤ Real.sqrt (2 * ((r : ℝ) + 1)) := by
     rw [Real.one_le_sqrt]
-    have := Nat.cast_nonneg (α := ℝ) r
-    linarith
+    linarith [Nat.cast_nonneg (α := ℝ) r]
   have hrp : ((2 * r + 2 : ℕ) : ℝ) ^ ((9 : ℝ) / 2) =
       (2 * ((r : ℝ) + 1)) ^ 4 * Real.sqrt (2 * ((r : ℝ) + 1)) := by
     rw [hc, show (9 : ℝ) / 2 = ((4 : ℕ) : ℝ) + 1 / 2 by norm_num, Real.rpow_add hcpos, Real.rpow_natCast,
@@ -238,8 +234,6 @@ theorem gap_ok_explicit (k r : ℕ) (hk : 1 ≤ k) : Formalism.FourierDecayAlt.T
 theorem paramTieG_of {D : D7} {large₂ : SizeData₂ D} {C' Cl Cg cb Cu cT CT : ℝ} (hH : StandingHypotheses D large₂ C' Cl Cg cb Cu cT CT)
     (Cn : ℝ) (hL : 1000 + |Cn| ≤ Cl * large₂.sc.L) : ParamTieG D Cn := by
   have hmf : D.R.m ^ 4 ≤ D.R.f := hH.2.2.1
-  have hfk : D.R.f ≤ D.R.k := hH.2.2.2.1
-  have hCl : 0 < Cl := hH.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2
   have hk3 : 3 ≤ D.R.k := by have := D.R.m_add_three_le_k; omega
   have hm2 : 2 ≤ D.R.m := D.R.two_le_m
   have hrk : D.R.k + 1 ≤ D.R.r := by
@@ -256,13 +250,12 @@ theorem paramTieG_of {D : D7} {large₂ : SizeData₂ D} {C' Cl Cg cb Cu cT CT :
   have hX0 : 0 ≤ (D.R.r : ℝ) ^ 19 * (D.R.f : ℝ) ^ 5 := by positivity
   have hX8 : (D.R.r : ℝ) ^ 8 ≤ (D.R.r : ℝ) ^ 19 * (D.R.f : ℝ) ^ 5 := by
     calc (D.R.r : ℝ) ^ 8 ≤ (D.R.r : ℝ) ^ 19 := pow_le_pow_right₀ hR1 (by norm_num)
-      _ = (D.R.r : ℝ) ^ 19 * 1 := (mul_one _).symm
-      _ ≤ (D.R.r : ℝ) ^ 19 * (D.R.f : ℝ) ^ 5 := by gcongr; exact one_le_pow₀ hF1
+      _ ≤ (D.R.r : ℝ) ^ 19 * (D.R.f : ℝ) ^ 5 :=
+          le_mul_of_one_le_right (by positivity) (one_le_pow₀ hF1)
   have hX2 : 2 * (D.R.k : ℝ) * (D.R.m : ℝ) ^ 3 ≤ (D.R.r : ℝ) ^ 19 * (D.R.f : ℝ) ^ 5 := by
     have h1 : (D.R.r : ℝ) ^ 2 ≤ (D.R.r : ℝ) ^ 19 := pow_le_pow_right₀ hR1 (by norm_num)
     have h2 : (D.R.f : ℝ) ≤ (D.R.f : ℝ) ^ 5 := by
-      calc (D.R.f : ℝ) = (D.R.f : ℝ) ^ 1 := (pow_one _).symm
-        _ ≤ (D.R.f : ℝ) ^ 5 := pow_le_pow_right₀ hF1 (by norm_num)
+      simpa using pow_le_pow_right₀ hF1 (by norm_num : (1 : ℕ) ≤ 5)
     have h3 : (D.R.m : ℝ) ^ 3 ≤ (D.R.m : ℝ) ^ 4 := pow_le_pow_right₀ (by linarith) (by norm_num)
     have h4 : 2 * (D.R.k : ℝ) ≤ (D.R.r : ℝ) ^ 2 := by nlinarith
     calc 2 * (D.R.k : ℝ) * (D.R.m : ℝ) ^ 3 ≤ (D.R.r : ℝ) ^ 2 * (D.R.f : ℝ) :=

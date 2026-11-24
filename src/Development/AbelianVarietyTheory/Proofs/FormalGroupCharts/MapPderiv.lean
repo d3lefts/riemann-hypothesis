@@ -244,9 +244,9 @@ theorem algHom_dualNumber_ext : ∀ (C : Type) [Field C] [IsAlgClosed C] [CharZe
     · intro s
       obtain ⟨k, rfl⟩ := e.surjective s
       rw [hE, Finset.sum_eq_single k]
-      · simp [d, pderiv_X]
+      · simp [d]
       · intro j _ hj
-        simp [pderiv_X, hj, hj.symm]
+        simp [hj.symm]
       · simp
     · intro j
       rw [RingHom.coe_coe, map_sub, hCa, AlgHom.commutes, ha, sub_self]
@@ -378,7 +378,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.det_jacobian_formalMulN_eq_pow_mul_unit : ∀ (R : Type) [CommRing R] (d : ℕ) (F : FGLaw R d) (N : ℕ), ∃ U : (PS R 1 d)ˣ, Matrix.det (Matrix.of fun i j : Fin d => MvPowerSeries.pderiv (R := R) ((0 : Fin 1), j) (mulF F.F N i)) = (N : PS R 1 d) ^ d * U := by
-  first | exact @GlobalTheory.MulJacobian.det_jac_mulF | exact GlobalTheory.MulJacobian.det_jac_mulF | (intros; apply GlobalTheory.MulJacobian.det_jac_mulF <;> assumption)
+  first | exact @GlobalTheory.MulJacobian.det_jac_mulF
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.DetJacobianFormalMulNEqPowMulUnitStatement =====
@@ -394,7 +394,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.formalGroupLaw_chart_finiteHeight_specialFibre : ∀ (T : Type) [CommRing T] [IsDomain T] [IsLocalRing T] (G : Over (Sp T)) [GrpObj G] [IsCommMonObj G] (D : Out.DegData T (maximalIdeal T)) (A : Out.PolAV (Spec (CommRingCat.of (FractionRing T)))) (_ : Out.UnifPre (maximalIdeal T) D A G) (d : ℕ) (F : FGLaw T d) (x : ∀ m : ℕ, algOver T (JetR T (Fin 1 × Fin d) m) ⟶ G), IsChartJ G F x → ∀ N : ℕ, 1 ≤ N → ∃ M : ℕ, Ideal.span (Set.range (MvPowerSeries.X : Fin 1 × Fin d → PS (ResidueField T) 1 d)) ^ M ≤ Ideal.span (Set.range fun j => MvPowerSeries.map (residue T) (mulF F.F N j)) := by
-  first | exact @GlobalTheory.FiniteHeight.exists_pow_span_X_le_span_map_residue_mulF | exact GlobalTheory.FiniteHeight.exists_pow_span_X_le_span_map_residue_mulF | (intros; apply GlobalTheory.FiniteHeight.exists_pow_span_X_le_span_map_residue_mulF <;> assumption)
+  first | exact @GlobalTheory.FiniteHeight.exists_pow_span_X_le_span_map_residue_mulF
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.FormalGroupLawChartFiniteHeightSpecialFibreStatement =====

@@ -52,13 +52,14 @@ import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
+import Development.AutomorphicSpectrum.Proofs.GeometryProofs.CharacterSectionMultiplicative
 import Mathlib.Tactic.Linter.Style
 
 -- This file was produced by scripts/clump.py from the modules listed below.
 -- Members: Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHopfMul, Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHopfLin
 
 -- ===== clump member: Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHopfMul =====
--- clump-header: {"m": "Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHopfMul", "h": "module\n\npublic import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.HasValues\npublic import Development.WeilBound.CoreStatements.HodgeTatePoints.TwhopfSec\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.AlgebraicGeometry.Modules.Sheaf\nimport Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Bernstein\nimport Mathlib.Analysis.SpecialFunctions.Gamma.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Etale.Weakly\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.TotallySplit\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.HaveILetI\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\n\n"}
+-- clump-header: {"m": "Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHopfMul", "h": "module\n\npublic import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.HasValues\npublic import Development.WeilBound.CoreStatements.HodgeTatePoints.TwhopfSec\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.AlgebraicGeometry.Modules.Sheaf\nimport Mathlib.AlgebraicGeometry.Morphisms.WeaklyEtale\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Bernstein\nimport Mathlib.Analysis.SpecialFunctions.Gamma.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Etale.Weakly\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.TotallySplit\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.HaveILetI\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Development.AutomorphicSpectrum.Proofs.GeometryProofs.CharacterSectionMultiplicative\n\n"}
 section -- clump:auto
 @[expose] public section
 
@@ -76,52 +77,7 @@ theorem tensor_sep {K B₁ B₂ I J : Type} [Field K] [Algebra R K] [IsFractionR
     [Finite I] [Finite J] (e : I → B₁ →ₐ[R] K) (f : J → B₂ →ₐ[R] K)
     (he : ∀ b, (∀ i, e i b = 0) → b = 0) (hf : ∀ b, (∀ j, f j b = 0) → b = 0)
     (x : B₁ ⊗[R] B₂) (h : ∀ i j, Algebra.TensorProduct.productMap (e i) (f j) x = 0) : x = 0 := by
-  classical
-  have := Fintype.ofFinite I
-  have := Fintype.ofFinite J
-  haveI : Module.Flat R K := IsLocalization.flat K (nonZeroDivisors R)
-  haveI : Module.Flat R (J → K) := Module.Flat.trans R K (J → K)
-  let E : B₁ →ₗ[R] (I → K) := LinearMap.pi fun i => (e i).toLinearMap
-  let F : B₂ →ₗ[R] (J → K) := LinearMap.pi fun j => (f j).toLinearMap
-  have hE : Function.Injective E :=
-    (injective_iff_map_eq_zero E).2 fun b hb => he b fun i => congrFun hb i
-  have hF : Function.Injective F :=
-    (injective_iff_map_eq_zero F).2 fun b hb => hf b fun j => congrFun hb j
-  have inj1 := Module.Flat.lTensor_preserves_injective_linearMap (M := B₁) F hF
-  have inj2 := Module.Flat.rTensor_preserves_injective_linearMap (M := J → K) E hE
-  let y : (I → K) ⊗[R] (J → K) := LinearMap.rTensor (J → K) E (LinearMap.lTensor B₁ F x)
-  have key0 : ∀ i j (x : B₁ ⊗[R] B₂), TensorProduct.lift (LinearMap.mul R K)
-      (TensorProduct.map (LinearMap.proj i) (LinearMap.proj j)
-        (LinearMap.rTensor (J → K) E (LinearMap.lTensor B₁ F x))) =
-      Algebra.TensorProduct.productMap (e i) (f j) x := by
-    intro i j x
-    induction x using TensorProduct.induction_on with
-    | zero => simp
-    | tmul a b => simp [E, F]
-    | add a b ha hb => simp only [map_add (f := _), ha, hb]
-  have key : ∀ i j, TensorProduct.map (LinearMap.proj i) (LinearMap.proj j) y = (0 : K ⊗[R] K) := by
-    intro i j
-    apply Algebra.IsEpi.injective_lift_mul (R := R) (A := K)
-    rw [map_zero, ← h i j]
-    exact key0 i j x
-  have key1 : ∀ i j (y : (I → K) ⊗[R] (J → K)),
-      TensorProduct.piRight R R K (fun _ : J => K) (TensorProduct.piLeft R (J → K) (fun _ : I => K) y i) j =
-      TensorProduct.map (LinearMap.proj i) (LinearMap.proj j) y := by
-    intro i j y
-    induction y using TensorProduct.induction_on with
-    | zero => simp
-    | tmul a b => simp
-    | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
-  have y0 : y = 0 := by
-    apply (TensorProduct.piLeft R (J → K) (fun _ : I => K)).injective
-    rw [map_zero]
-    funext i
-    apply (TensorProduct.piRight R R K (fun _ : J => K)).injective
-    rw [Pi.zero_apply, map_zero]
-    funext j
-    rw [Pi.zero_apply, ← key i j]
-    exact key1 i j y
-  exact inj1 (inj2 (by simpa [y] using y0))
+  exact GlobalTheory.CompanionTheory.Ar.BT.CharMul.tensor_sep e f he hf x h
 
 theorem pullback_sep {K B₁ B₂ I J : Type} [Field K] [Algebra R K] [IsFractionRing R K]
     [CommRing B₁] [CommRing B₂] [Algebra R B₁] [Algebra R B₂] [Module.Flat R B₁]
@@ -136,37 +92,7 @@ theorem pullback_sep {K B₁ B₂ I J : Type} [Field K] [Algebra R K] [IsFractio
       w ≫ pullback.fst a₁ a₂ = Spec.map (CommRingCat.ofHom (e i).toRingHom) →
       w ≫ pullback.snd a₁ a₂ = Spec.map (CommRingCat.ofHom (f j).toRingHom) → w.appTop u = 0) :
     u = 0 := by
-  subst h₁ h₂
-  set iso := pullbackSpecIso R B₁ B₂ with hiso
-  let x : B₁ ⊗[R] B₂ := (Scheme.ΓSpecIso (CommRingCat.of (B₁ ⊗[R] B₂))).hom (iso.inv.appTop u)
-  have x0 : x = 0 := by
-    refine tensor_sep e f he hf x fun i j => ?_
-    let pm := Algebra.TensorProduct.productMap (e i) (f j)
-    let w : Spec (CommRingCat.of K) ⟶ _ := Spec.map (CommRingCat.ofHom pm.toRingHom) ≫ iso.inv
-    have hw1 : w ≫ pullback.fst _ _ = Spec.map (CommRingCat.ofHom (e i).toRingHom) := by
-      simp only [w, Category.assoc, hiso, pullbackSpecIso_inv_fst, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
-      congr 2
-      ext b
-      simp [pm]
-    have hw2 : w ≫ pullback.snd _ _ = Spec.map (CommRingCat.ofHom (f j).toRingHom) := by
-      simp only [w, Category.assoc, hiso, pullbackSpecIso_inv_snd, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
-      congr 2
-      ext b
-      simp [pm]
-    have h0 := hz i j w hw1 hw2
-    have h1 : (Scheme.ΓSpecIso (CommRingCat.of K)).hom (w.appTop u) = pm x := by
-      have := congr($(Scheme.ΓSpecIso_naturality (CommRingCat.ofHom pm.toRingHom)) (iso.inv.appTop u))
-      simp only [w, Scheme.Hom.comp_appTop]
-      exact this
-    rw [h0, map_zero] at h1
-    exact h1.symm
-  have h2 : iso.inv.appTop u = 0 := by
-    have := congr((Scheme.ΓSpecIso (CommRingCat.of (B₁ ⊗[R] B₂))).inv $x0)
-    simpa [x] using this
-  have h3 : u = iso.hom.appTop (iso.inv.appTop u) := by
-    rw [← CommRingCat.comp_apply, ← Scheme.Hom.comp_appTop, iso.hom_inv_id]
-    simp
-  rw [h3, h2, map_zero]
+  exact GlobalTheory.CompanionTheory.Ar.BT.CharMul.pullback_sep e f he hf a₁ a₂ h₁ h₂ u hz
 
 variable {T : Type} [CommGroup T]
 
@@ -259,26 +185,7 @@ theorem chart_pair [Finite T] (Γ : QFGroup R T) (A₁ A₂ : Type) [CommRing A�
 
 theorem sec_prod_zero [Finite T] (Γ : QFGroup R T) (u : Γ((Γ.G ⊗ Γ.G).left, ⊤))
     (hu : ∀ a b, (lift (Γ.pt a) (Γ.pt b)).left.appTop u = 0) : u = 0 := by
-  let 𝒰 := Γ.G.left.affineOpenCover
-  refine Scheme.OpenCover.ext_elem (X := pullback Γ.G.hom Γ.G.hom) u 0
-    (Scheme.Pullback.openCoverOfLeftRight 𝒰.openCover 𝒰.openCover Γ.G.hom Γ.G.hom) fun ij => ?_
-  rw [map_zero]
-  obtain ⟨i, j⟩ := ij
-  refine chart_pair Γ (𝒰.X i) (𝒰.X j) (𝒰.f i) (𝒰.f j) (𝒰.openCover.map_prop i) (𝒰.openCover.map_prop j) _
-    fun a b w h₁ h₂ => ?_
-  have hw : w ≫ (Scheme.Pullback.openCoverOfLeftRight 𝒰.openCover 𝒰.openCover Γ.G.hom Γ.G.hom).f (i, j) =
-      (lift (Γ.pt a) (Γ.pt b)).left := by
-    rw [Over.lift_left, Scheme.Pullback.openCoverOfLeftRight_f]
-    apply pullback.hom_ext
-    · refine (Category.assoc _ _ _).trans (Eq.trans ?_ (pullback.lift_fst _ _ _).symm)
-      exact (congrArg (w ≫ ·) (pullback.lift_fst _ _ _)).trans h₁
-    · refine (Category.assoc _ _ _).trans (Eq.trans ?_ (pullback.lift_snd _ _ _).symm)
-      exact (congrArg (w ≫ ·) (pullback.lift_snd _ _ _)).trans h₂
-  have h0 := hu a b
-  rw [← hw] at h0
-  have e := congr($(Scheme.Hom.comp_appTop w
-    ((Scheme.Pullback.openCoverOfLeftRight 𝒰.openCover 𝒰.openCover Γ.G.hom Γ.G.hom).f (i, j))) u)
-  exact e.symm.trans h0
+  exact GlobalTheory.CompanionTheory.Ar.BT.CharMul.sec_prod_zero Γ u hu
 
 theorem pull {S : Scheme.{0}} {Y Y' G : Over S} (q : Y' ⟶ Y) (g : Y ⟶ G) (s : Γ(G.left, ⊤)) :
     q.left.appTop (g.left.appTop s) = (q ≫ g).left.appTop s := by

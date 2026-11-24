@@ -749,7 +749,7 @@ theorem _root_.GlobalTheory.T.formallyEtale_polynomialPlace_to_place : ∀ {K L 
     (∀ g : R, j (g : K) = (ι g : L)) → ∀ (hA : ∀ f ∈ P0.ring, j f ∈ P.ring)
     (hτ : ∀ i, (τ i : L) ∈ P.ring),
     (MvPolynomial.eval₂Hom (j.restrict P0.ring P.ring hA) (fun i => (⟨τ i, hτ i⟩ : P.ring))).FormallyEtale := by
-  first | exact @GlobalTheory.FieldPair.formallyEtale_polyPlace | exact GlobalTheory.FieldPair.formallyEtale_polyPlace | (intros; apply GlobalTheory.FieldPair.formallyEtale_polyPlace <;> assumption)
+  first | exact @GlobalTheory.FieldPair.formallyEtale_polyPlace
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormallyEtalePolynomialPlaceToPlaceStatement =====
@@ -1374,8 +1374,7 @@ def polyDer (δ : Derivation k R S) (v : Fin r → S) : Derivation k (MvPolynomi
   leibniz' p q := by
     show snd (polyHom δ v (p * q)) = p • snd (polyHom δ v q) + q • snd (polyHom δ v p)
     rw [map_mul, TrivSqZeroExt.snd_mul, polyHom_fst, polyHom_fst]
-    simp only [MulOpposite.smul_eq_mul_unop, MulOpposite.unop_op, smul_eq_mul, Algebra.smul_def,
-      Algebra.algebraMap_self, RingHom.id_apply]
+    simp only [MulOpposite.smul_eq_mul_unop, MulOpposite.unop_op, smul_eq_mul, Algebra.smul_def]
     ring
 
 theorem polyDer_C (δ : Derivation k R S) (v : Fin r → S) (a : R) : polyDer δ v (C a) = δ a := by

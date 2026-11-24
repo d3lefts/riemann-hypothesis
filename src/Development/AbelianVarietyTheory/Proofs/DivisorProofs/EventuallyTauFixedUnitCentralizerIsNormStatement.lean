@@ -108,7 +108,7 @@ theorem lTensor_phi (G : HTGroup p) (K : Type) [Field K] [Algebra ℚ K] (β Y �
   | zero => simp <;> rfl
   | tmul k c =>
     simp only [LinearMap.lTensor_tmul, phi_apply, TensorProduct.prodRight_tmul, inC, starT_tmul,
-      AlgHom.coe_toRingHom, RingHom.coe_coe, Algebra.TensorProduct.includeRight_apply,
+      RingHom.coe_coe, Algebra.TensorProduct.includeRight_apply,
       Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one, TensorProduct.tmul_sub, sh]
   | add x y hx hy =>
     rw [map_add (f := _), map_add (f := _), hx, hy]
@@ -313,7 +313,7 @@ open scoped TensorProduct Classical
 
 theorem _root_.GlobalTheory.T.eventually_integralCoords_scalarTensorInclusion : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (c : G.C), ∀ᶠ w : AwayP p in Filter.cofinite,
     IntC G w (inC G (w.1.adicCompletion ℚ) c) := by
-  first | (exact @GlobalTheory.FinClsLoc.intC_inC_eventually) | (exact GlobalTheory.FinClsLoc.intC_inC_eventually) | (intros; apply GlobalTheory.FinClsLoc.intC_inC_eventually  <;> assumption)
+  first | (exact @GlobalTheory.FinClsLoc.intC_inC_eventually)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyIntegralCoordsScalarTensorInclusionStatement =====
@@ -393,7 +393,7 @@ open scoped TensorProduct Classical
 
 theorem _root_.GlobalTheory.T.eventually_isIntegral_of_integralCoordsLocalTensor : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p), ∀ᶠ w : AwayP p in Filter.cofinite,
     ∀ x : w.1.adicCompletion ℚ ⊗[ℚ] G.C, IntC G w x → (∃ f : Polynomial (w.1.adicCompletion ℚ), f.Monic ∧ (∀ i, f.coeff i ∈ w.1.adicCompletionIntegers ℚ) ∧ Polynomial.aeval x f = 0) := by
-  first | (exact @GlobalTheory.FinClsLoc.intC_isIntegral) | (exact GlobalTheory.FinClsLoc.intC_isIntegral) | (intros; apply GlobalTheory.FinClsLoc.intC_isIntegral  <;> assumption)
+  first | (exact @GlobalTheory.FinClsLoc.intC_isIntegral)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyIsIntegralOfIntegralCoordsLocalTensorStatement =====
@@ -428,7 +428,7 @@ theorem exists_eq_of_finite (O : Type) {S : Type} [CommRing O] [HenselianLocalRi
   haveI : Finite (T ⧸ I) := Module.finite_of_finite (O ⧸ maximalIdeal O)
   have hc : ∀ s : S, starRingEnd T (algebraMap S T s) = algebraMap S T s := by
     intro s
-    ext <;> simp [T, starRingEnd_apply, QuadraticAlgebra.re_one, QuadraticAlgebra.im_one]
+    ext <;> simp [T, starRingEnd_apply]
   have hcO : (starRingEnd T).comp (algebraMap O T) = algebraMap O T := by
     ext1 r
     rw [RingHom.comp_apply, IsScalarTower.algebraMap_apply O S T, hc]
@@ -448,7 +448,7 @@ theorem exists_eq_of_finite (O : Type) {S : Type} [CommRing O] [HenselianLocalRi
     (algebraMap S T m) (hc m) (hm.map _)
   refine ⟨x.re, x.im, ?_⟩
   have := congrArg QuadraticAlgebra.re hx
-  simp [T, starRingEnd_apply, QuadraticAlgebra.re_one, QuadraticAlgebra.im_one] at this
+  simp [T, starRingEnd_apply] at this
   linear_combination -this
 
 theorem exists_eq_of_isIntegral (O : Type) {A : Type} [CommRing O] [HenselianLocalRing O]
@@ -729,7 +729,7 @@ theorem _root_.GlobalTheory.T.eventually_tauFixed_unit_centralizer_is_norm : ∀
       inC G (w.1.adicCompletion ℚ) (β : G.C) * (starT G.star (w.1.adicCompletion ℚ) (m : (w.1.adicCompletion ℚ ⊗[ℚ] G.C))).unop * inC G (w.1.adicCompletion ℚ) ((β⁻¹ : G.Cˣ) : G.C) = m →
       ∃ v : (w.1.adicCompletion ℚ ⊗[ℚ] G.C)ˣ, Commute (v : (w.1.adicCompletion ℚ ⊗[ℚ] G.C)) (inC G (w.1.adicCompletion ℚ) (Y : G.C)) ∧
         (m : (w.1.adicCompletion ℚ ⊗[ℚ] G.C)) = v * (inC G (w.1.adicCompletion ℚ) (β : G.C) * (starT G.star (w.1.adicCompletion ℚ) (v : (w.1.adicCompletion ℚ ⊗[ℚ] G.C))).unop * inC G (w.1.adicCompletion ℚ) ((β⁻¹ : G.Cˣ) : G.C)) := by
-  first | (exact @GlobalTheory.LocNormTau.exists_norm_of_tau_fixed_sep) | (exact GlobalTheory.LocNormTau.exists_norm_of_tau_fixed_sep) | (intros; apply GlobalTheory.LocNormTau.exists_norm_of_tau_fixed_sep  <;> assumption)
+  first | (exact @GlobalTheory.LocNormTau.exists_norm_of_tau_fixed_sep)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyTauFixedUnitCentralizerIsNormStatement =====

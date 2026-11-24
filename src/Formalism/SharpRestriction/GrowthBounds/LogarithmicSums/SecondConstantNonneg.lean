@@ -87,8 +87,7 @@ theorem second_constant_nonneg (L : SizeData₂ D) (C : ℝ) (hC : 0 ≤ C) : 0 
   have ha := sc_one_lt_a L.sc
   have hlx := logx_nonneg L.sc
   have hb' := sc_b'_nonneg L.sc
-  have h1 : 0 ≤ C * (rG L.sc : ℝ) * L.sc.b' * Real.log L.sc.x :=
-    mul_nonneg (mul_nonneg (mul_nonneg hC (Nat.cast_nonneg _)) hb') hlx
+  have h1 : 0 ≤ C * (rG L.sc : ℝ) * L.sc.b' * Real.log L.sc.x := by positivity
   have h2 : 0 ≤ C * Real.log L.sc.x * (L.sc.a * ((((D.R.k : ℝ) * L.sc.x ^ Scale.A) ^ 4)⁻¹)) :=
     mul_nonneg (mul_nonneg hC hlx) (mul_nonneg (by linarith) (by positivity))
   linarith

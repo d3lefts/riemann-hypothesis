@@ -179,8 +179,7 @@ theorem gam_free : ∀ (N l : ℕ), 4 ≤ N → ∀ γ ∈ Gam N l, ∀ z ∈ Hs
   have hy : 0 < z.im := hz
   have hre := congrArg Complex.re hfix
   have him := congrArg Complex.im hfix
-  simp only [Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im, Complex.intCast_re,
-    Complex.intCast_im, Complex.ratCast_re, Complex.ratCast_im] at hre him
+  simp only [Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im, Complex.ratCast_re, Complex.ratCast_im] at hre him
   push_cast at hre him
   simp at hre him
   obtain ⟨k, hk⟩ := (ZMod.intCast_eq_intCast_iff_dvd_sub 1 (A 0 0) N).1 (by simpa using ha1.symm)
@@ -564,7 +563,7 @@ theorem polySlash_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (m
   | C a => simp [slP]
   | add p q hp hq => simp [hp, hq]
   | mul_X p i hp =>
-    simp only [map_mul, hp, MvPolynomial.map_X, Betti.slP_X, map_add (f := _), map_smul]
+    simp only [map_mul, hp, MvPolynomial.map_X, Betti.slP_X, map_add (f := _)]
     simp [MvPolynomial.smul_eq_C_mul]
 
 theorem opP_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (m : Matrix (Fin 2) (Fin 2) ℤ)
@@ -768,7 +767,7 @@ theorem toZModPow_eval_mulVec {l : ℕ} [Fact l.Prime] (n : ℕ) {δ : SL(2, ℤ
   funext i
   have e : ∀ x : ℤ, PadicInt.toZModPow n ((x : ℤ_[l])) = (x : ZMod (l ^ n)) := fun x => map_intCast _ x
   fin_cases i <;>
-    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two, e, a, b, c, d]
+    simp [e, a, b, c, d]
 
 theorem rel_triv_eq_zero : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] (ε : Ω →+* ℂ) (X : Tower Ω ε) (l : ℕ) [Fact l.Prime],
     ∀ (w : ℕ) (Γ : Subgroup SL(2, ℤ)) (M₀ : ℕ), 0 < M₀ → CongruenceSubgroup.Gamma M₀ ≤ Γ →

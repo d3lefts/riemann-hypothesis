@@ -215,7 +215,7 @@ theorem dv_conj (σ : A →+* A) (hσ : ∀ x, σ (σ x) = x) {J Ji : Matrix (Fi
     rw [Matrix.smul_mulVec, Matrix.smul_mulVec, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec,
       ← Matrix.mulVec_mulVec]
     have e1 : (Matrix.of fun i j => zc j i) *ᵥ Pi.single j 1 = zc j := by
-      funext i; simp [Matrix.mulVec_single_one]
+      funext i; simp
     have e2 := ezc j
     rw [Matrix.mulVec_smul, smul_smul, hε] at e2
     rw [e2, e1]
@@ -237,7 +237,7 @@ theorem dv_conj (σ : A →+* A) (hσ : ∀ x, σ (σ x) = x) {J Ji : Matrix (Fi
     rw [Matrix.smul_mulVec, Matrix.smul_mulVec, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec,
       ← Matrix.mulVec_mulVec]
     have e1 : (Matrix.of fun i j => wc j i) *ᵥ Pi.single j 1 = wc j := by
-      funext i; simp [Matrix.mulVec_single_one]
+      funext i; simp
     rw [e1, ewc j]
     congr 2
     funext i; simp [Matrix.mulVec_diagonal]
@@ -400,7 +400,7 @@ open GlobalTheory.Hk3
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.elementaryDivisors_conjPrime_eq_dualLabel : ∀ {D : D7} (V : HSp D) (P : HeightOneSpectrum (𝓞 D.host.E)) (e : Formalism.L2.Theta.AE D) (ϖ : 𝓞 D.host.E) (d : List ℤ) (α : GA D V), Formalism.L2.NTheta.IsIdemAt e P → ϖ ∈ P.asIdeal → ϖ ∉ P.asIdeal ^ 2 → DivAt V e (ϖ : D.host.E) d α → DivAt V (cA D e) (star (ϖ : D.host.E)) (dualLab d) α := by
-  first | exact @GlobalTheory.DivConj.divAt_conj | exact GlobalTheory.DivConj.divAt_conj | (intros; apply GlobalTheory.DivConj.divAt_conj <;> assumption)
+  first | exact @GlobalTheory.DivConj.divAt_conj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ElementaryDivisorsConjPrimeEqDualLabelStatement =====

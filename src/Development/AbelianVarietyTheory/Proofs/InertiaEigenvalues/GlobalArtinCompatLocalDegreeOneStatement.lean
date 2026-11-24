@@ -191,13 +191,11 @@ theorem exists_global_near_idempotent (E E' : Type) [Field E] [NumberField E] [F
   have hrepr : ∀ t, B.repr (Φ t) = Finsupp.equivFunOnFinite.symm t := by
     intro t
     ext i
-
-    simp [hΦ, map_sum, Finsupp.smul_apply, Finsupp.single_apply]
+    simp [hΦ, map_sum, Finsupp.single_apply]
   have hM : Continuous fun t => Algebra.leftMulMatrix B (Φ t) := by
     have h : (fun t => Algebra.leftMulMatrix B (Φ t)) =
         fun t => ∑ i, t i • Algebra.leftMulMatrix B (B i) := by
       funext t
-
       simp only [hΦ, map_sum, map_smul]
     rw [h]
     exact continuous_finsetSum _ fun i _ => (continuous_apply i).smul continuous_const
@@ -226,7 +224,7 @@ theorem exists_global_near_idempotent (E E' : Type) [Field E] [NumberField E] [F
         (Algebra.leftMulMatrix B (p - q * e) + Algebra.leftMulMatrix B q *
           Algebra.leftMulMatrix B (Φ t)).det := by
       funext t
-      rw [Algebra.norm_eq_matrix_det B, ← map_mul, ← map_add (f := _)]
+      rw [Algebra.norm_eq_matrix_det B, ← map_mul, ← map_add]
       congr 2
       ring
     have : Continuous fun t => Algebra.norm K (p + q * (Φ t - e)) := by
@@ -237,14 +235,11 @@ theorem exists_global_near_idempotent (E E' : Type) [Field E] [NumberField E] [F
   have hΦ₀ : Φ t₀ = e := by simp only [hΦ, ht₀]; exact B.sum_repr e
   have hball' : ∀ x₀ : K, Valued.v x₀ ≠ 0 → {z : K | Valued.v z ≤ Valued.v x₀} ∈ 𝓝 (0 : K) := by
     intro x₀ hx₀
-    have hl : {y : K | Valued.v y = Valued.v x₀} ∈ 𝓝 x₀ := Valued.locally_const hx₀
-    have hc : ContinuousAt (fun z : K => z + x₀) 0 := (continuous_id.add continuous_const).continuousAt
-    have h' := hc.preimage_mem_nhds (by simpa using hl)
-    filter_upwards [h'] with z hz
-    simp only [Set.mem_preimage, Set.mem_setOf_eq] at hz ⊢
-    calc Valued.v z = Valued.v ((z + x₀) - x₀) := by rw [add_sub_cancel_right]
-      _ ≤ max (Valued.v (z + x₀)) (Valued.v x₀) := Valuation.map_sub _ _ _
-      _ = Valued.v x₀ := by rw [hz, max_self]
+    rw [Valued.mem_nhds_zero]
+    refine ⟨Units.mk0 (Valued.v.restrict x₀) (by simpa using hx₀), ?_⟩
+    rintro z hz
+    rw [Units.val_mk0] at hz
+    exact Valued.v.restrict_le_iff.mp hz.le
   have hva : ∀ x : E, Valued.v (algebraMap E K x) = w.valuation E x :=
     fun x => HeightOneSpectrum.valuedAdicCompletion_eq_valuation' w x
   obtain ⟨π, hπ⟩ := w.valuation_exists_uniformizer E
@@ -256,8 +251,7 @@ theorem exists_global_near_idempotent (E E' : Type) [Field E] [NumberField E] [F
     rintro γ (rfl | rfl)
     · rw [← hx₀]
       exact hball' _ (by rw [hx₀]; exact WithZero.exp_ne_zero)
-    · have := hball' 1 (by simp)
-      simpa using this
+    · simpa using hball' 1 (by simp)
   have h1 : ∀ᶠ t in 𝓝 t₀, ∀ i, Valued.v (f1 t i) ≤ 1 := by
     rw [Filter.eventually_all]
     intro i
@@ -275,23 +269,16 @@ theorem exists_global_near_idempotent (E E' : Type) [Field E] [NumberField E] [F
   obtain ⟨c, hc1, hc2, hc3⟩ := hd.mem_nhds (h1.and (h2.and h3))
   set ε : E' := ∑ i, c i • b i with hε
   have hΦc : Φ (Pi.map (fun _ : ι => (algebraMap E K : E → K)) c) = (1 : K) ⊗ₜ ε := by
-    simp only [hΦ, Pi.map_apply, hε]
-    rw [TensorProduct.tmul_sum]
-    refine Finset.sum_congr rfl fun i _ => ?_
-    rw [hB, Algebra.TensorProduct.basis_apply, TensorProduct.tmul_smul, algebraMap_smul]
+    simp only [hΦ, Pi.map_apply, hε, hB, Algebra.TensorProduct.basis_apply, TensorProduct.tmul_sum,
+      TensorProduct.tmul_smul, algebraMap_smul]
   refine ⟨ε, ?_, ?_, ?_⟩
   · intro i
     have h := hc1 i
-    simp only [hf1, hΦc] at h
-    rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, ← TensorProduct.tmul_sub,
-      hB, Algebra.TensorProduct.basis_repr_tmul] at h
-    simp only [one_smul, Finsupp.mapRange_apply] at h
-    rw [← hva]
-    exact h
-  · have h := hc2
-    simpa only [hf2, hΦc] using h
-  · have h := hc3
-    simpa only [hf3, hΦc] using h
+    simp only [hf1, hΦc, Algebra.TensorProduct.tmul_mul_tmul, one_mul, ← TensorProduct.tmul_sub,
+      hB, Algebra.TensorProduct.basis_repr_tmul, one_smul, Finsupp.mapRange_apply] at h
+    simpa only [hva] using h
+  · simpa only [hf2, hΦc] using hc2
+  · simpa only [hf3, hΦc] using hc3
 
 end GlobalTheory
 end -- clump:auto
@@ -989,7 +976,7 @@ open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial Formalism.Conju
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.globalArtin_compat_localDegreeOne : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (E' Ω' : Type) [Field E'] [NumberField E'] [Field Ω'] [Algebra E' Ω'] [IsAlgClosure E' Ω'] (A' : ValuationSubring Ω') (w' : HeightOneSpectrum (𝓞 E')) (h' : IsPlaceOver A' w') (φ : Ω ≃+* Ω') (j : E →+* E') (i : w.adicCompletion E ≃+* w'.adicCompletion E'), PlaceIso A w A' w' φ j i → ∀ (art : Neutral.B1.Ideles E →* GlobalTheory.HeckeGal.Gab E Ω) (art' : Neutral.B1.Ideles E' →* GlobalTheory.HeckeGal.Gab E' Ω'), GlobalTheory.HeckeGal.IsGlobalArtin art → GlobalTheory.HeckeGal.IsGlobalArtin art' → ∀ (σ : Weil h) (σ' : Weil h') (x : (w.adicCompletion E)ˣ), WeilRel φ σ σ' → art' (Neutral.B1.localIdele E' w' (Units.map i.toRingHom.toMonoidHom x)) = GlobalTheory.HeckeGal.toAb E' Ω' σ' → art (Neutral.B1.localIdele E w x) = GlobalTheory.HeckeGal.toAb E Ω σ := by
-  first | exact @GlobalTheory.LocDegOne.artin_of_placeIso | exact GlobalTheory.LocDegOne.artin_of_placeIso | (intros; apply GlobalTheory.LocDegOne.artin_of_placeIso <;> assumption)
+  first | exact @GlobalTheory.LocDegOne.artin_of_placeIso
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GlobalArtinCompatLocalDegreeOneStatement =====

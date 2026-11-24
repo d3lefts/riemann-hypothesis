@@ -177,7 +177,7 @@ theorem _root_.GlobalTheory.T.exists_integral_unitary_lift_idempotentPart : ∀ 
   ∀ x : (AE D)ˣ, IsUnitDet e (N.map (toE D)) x → ∃ k : Formalism.MainNotions.StandardLatticesGL3.GA D a, k ∈ intG D a ∧
     ∀ i j, GlobalTheory.BotClassDict.finQ D e * (((k : GL (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D))⁻¹ : GL (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) :
       Matrix (Fin a) (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) i j = GlobalTheory.BotClassDict.finQ D e * N i j := by
-  first | exact @GlobalTheory.StdRead.IntLift.exists_lift | exact GlobalTheory.StdRead.IntLift.exists_lift | (intros; apply GlobalTheory.StdRead.IntLift.exists_lift <;> assumption)
+  first | exact @GlobalTheory.StdRead.IntLift.exists_lift
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIntegralUnitaryLiftIdempotentPartStatement =====
@@ -292,7 +292,7 @@ open GlobalTheory.StdRead
 
 
 theorem _root_.GlobalTheory.T.memIdealIntegral_tensorSwap_iff_mem_idealSubgroup : ∀ {D : D7} (𝔪 : Ideal (𝓞 D.host.E)) (y : Formalism.MainNotions.StandardLatticesGL3.AE D), InId 𝔪 (toE D y) ↔ y ∈ hatId D 𝔪 := by
-  first | exact @GlobalTheory.StdRead.IdealDict.inId_toE_iff | exact GlobalTheory.StdRead.IdealDict.inId_toE_iff | (intros; apply GlobalTheory.StdRead.IdealDict.inId_toE_iff <;> assumption)
+  first | exact @GlobalTheory.StdRead.IdealDict.inId_toE_iff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemIdealIntegralTensorSwapIffMemIdealSubgroupStatement =====
@@ -409,7 +409,7 @@ theorem _root_.GlobalTheory.T.standardPairFirstMember_integralFrame_eq : ∀ {D 
     if IsHalf e t ∧ (∀ i j, toEAf D (t i j) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E) ∧
         ∀ i j, S.rank ≤ i.1 → InId 𝔪 (toEAf D (t i j)) then
       unitChar ν e (HMul.hMul (topL S.rank (Matrix.of fun i j => toEAf D (t i j))) β.val) else 0 := by
-  first | exact @GlobalTheory.StdReadFrame.stdFst_frame | exact GlobalTheory.StdReadFrame.stdFst_frame | (intros; apply GlobalTheory.StdReadFrame.stdFst_frame <;> assumption)
+  first | exact @GlobalTheory.StdReadFrame.stdFst_frame
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardPairFirstMemberIntegralFrameEqStatement =====
@@ -562,7 +562,7 @@ open GlobalTheory.StdRead
 theorem _root_.GlobalTheory.T.unitDetCharIndicator_eq_one_of_congruent_one : ∀ {D : D7} (e : AE D) (𝔪 : Ideal (𝓞 D.host.E)), GoodMod e 𝔪 → ∀ ν : (AE D)ˣ →* Circle, KillsCong ν 𝔪 →
   ∀ {k : ℕ} (P : Matrix (Fin k) (Fin k) (Formalism.MainNotions.StandardLatticesGL3.AE D)), (∀ i j, (P - 1) i j ∈ hatId D 𝔪) →
   unitChar ν e (P.map (toE D)) = 1 := by
-  first | exact @GlobalTheory.StdRead.CongOneChar.unitChar_cong | exact GlobalTheory.StdRead.CongOneChar.unitChar_cong | (intros; apply GlobalTheory.StdRead.CongOneChar.unitChar_cong <;> assumption)
+  first | exact @GlobalTheory.StdRead.CongOneChar.unitChar_cong
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitDetCharIndicatorEqOneOfCongruentOneStatement =====
@@ -724,7 +724,7 @@ open GlobalTheory.StdRead
 theorem _root_.GlobalTheory.T.unitDetCharIndicator_mul_integralFrame : ∀ {D : D7} (ν : (AE D)ˣ →* Circle) (e : AE D), e * e = e → toEAf D e ∈ Formalism.L2.Herm.intAf D.host.F D.host.E →
   ∀ {k : ℕ} (N : Matrix (Fin k) (Fin k) (EAf D)) (β : GL (Fin k) (EAf D)), IsIntM β.val → IsIntM (β⁻¹).val →
   unitChar ν e (HMul.hMul N β.val) = unitChar ν e N * unitChar ν e β.val := by
-  first | exact @GlobalTheory.StdRead.CharMul.unitChar_mul | exact GlobalTheory.StdRead.CharMul.unitChar_mul | (intros; apply GlobalTheory.StdRead.CharMul.unitChar_mul <;> assumption)
+  first | exact @GlobalTheory.StdRead.CharMul.unitChar_mul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitDetCharIndicatorMulIntegralFrameStatement =====
@@ -977,7 +977,7 @@ theorem _root_.GlobalTheory.T.standardPairFirst_conj_eq_sum_cosetIndicators : �
   ∀ z : Formalism.MainNotions.StandardLatticesGL3.GA D a → Matrix (Fin d) (Fin a) D.host.E, (∀ r ∈ R, IsIntE (z r) ∧ Approx 𝔪 0 r (z r)) →
   (fun w => starRingEnd ℂ (stdFst ν e 𝔪 S T β 1 w)) =
     starRingEnd ℂ (unitChar ν e β.val) • ∑ r ∈ R, unitChar ν e (matE r) • cosInd e 𝔪 hS hT (z r) := by
-  first | exact @GlobalTheory.StdExpand.conj_stdFst_eq_sum | exact GlobalTheory.StdExpand.conj_stdFst_eq_sum | (intros; apply GlobalTheory.StdExpand.conj_stdFst_eq_sum <;> assumption)
+  first | exact @GlobalTheory.StdExpand.conj_stdFst_eq_sum
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardPairFirstConjEqSumCosetIndicatorsStatement =====

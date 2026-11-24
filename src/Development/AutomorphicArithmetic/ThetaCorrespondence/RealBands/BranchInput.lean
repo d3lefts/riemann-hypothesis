@@ -270,23 +270,23 @@ theorem fdegHC_le {N : ℕ} (lam : Fin N → ℝ) (s : Fin N) (hw : ∀ a c, a <
     by_cases ha : a = s
     · subst ha
       have e1 : lam' a = lam a - 1 := by simp [hlam']
-      have e2 : lam' b = lam b := by simp [hlam', Pi.single_apply, hne.symm]
+      have e2 : lam' b = lam b := by simp [hlam', hne.symm]
       rw [if_pos rfl, e1, e2, abs_of_pos (by linarith), abs_of_pos (by linarith)]
       linarith
     · rw [if_neg ha, one_mul]
       by_cases hb : b = s
       · subst hb
-        have e1 : lam' a = lam a := by simp [hlam', Pi.single_apply, ha]
+        have e1 : lam' a = lam a := by simp [hlam', ha]
         have e2 : lam' b = lam b - 1 := by simp [hlam']
         rw [e1, e2, abs_of_pos (by linarith), abs_of_pos (by linarith)]
         linarith
-      · have e1 : lam' a = lam a := by simp [hlam', Pi.single_apply, ha]
-        have e2 : lam' b = lam b := by simp [hlam', Pi.single_apply, hb]
+      · have e1 : lam' a = lam a := by simp [hlam', ha]
+        have e2 : lam' b = lam b := by simp [hlam', hb]
         rw [e1, e2]
   have hcount : ∏ a : Fin N, ∏ b ∈ univ.filter (fun b : Fin N => a < b), (if a = s then (2 : ℝ) else 1) ≤
       2 ^ (N - 1) := by
     rw [Finset.prod_eq_single s (fun a _ ha => by simp [ha]) (fun h => absurd (Finset.mem_univ s) h)]
-    simp only [if_pos rfl, Finset.prod_const]
+    simp only [Finset.prod_const]
     apply pow_le_pow_right₀ (by norm_num)
     have hsub : univ.filter (fun b : Fin N => s < b) ⊆ univ.erase s := by
       intro b hb
@@ -425,7 +425,7 @@ theorem hsn_sq_definite {m : ℕ} {ε : Fin m → Bool} (hq : GlobalTheory.Count
         rw [Finset.card_eq_zero.1 h] at this
         simp at this
       ext a b
-      by_cases hab : a = b <;> simp [Jm, Matrix.diagonal_apply, hab, hf, Matrix.one_apply]
+      by_cases hab : a = b <;> simp [Jm, hab, hf]
     · left
       have hf : ∀ a, ε a = true := fun a => by
         by_contra ha
@@ -433,7 +433,7 @@ theorem hsn_sq_definite {m : ℕ} {ε : Fin m → Bool} (hq : GlobalTheory.Count
         rw [Finset.card_eq_zero.1 h] at this
         simp at this
       ext a b
-      by_cases hab : a = b <;> simp [Jm, Matrix.diagonal_apply, hab, hf, Matrix.one_apply]
+      by_cases hab : a = b <;> simp [Jm, hab, hf, Matrix.one_apply]
   have hu : gᴴ * g = 1 := by
     rcases hJc with h | h
     · rw [h, Matrix.mul_one] at hJ; exact hJ
@@ -547,8 +547,8 @@ theorem one_le_hsn {m : ℕ} {ε : Fin m → Bool} (hm : 1 ≤ m) (g : UJ ε) : 
   set a : Fin m := ⟨0, hm⟩
   have h : (umat g)ᴴ * Jm ε * umat g = Jm ε := g.2
   have h2 := congrFun (congrFun h a) a
-  simp only [Jm, Matrix.mul_diagonal, Matrix.diagonal_apply_eq] at h2
-  simp only [Matrix.mul_apply, Matrix.diagonal_apply, mul_ite, mul_zero, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true, Matrix.conjTranspose_apply] at h2
+  simp only [Jm, Matrix.diagonal_apply_eq] at h2
+  simp only [Matrix.mul_apply, Matrix.diagonal_apply, mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true, Matrix.conjTranspose_apply] at h2
   have hn : (1 : ℝ) ≤ ∑ l, ‖umat g l a‖ ^ 2 := by
     have e1 : ‖((if ε a = true then 1 else -1 : ℂ))‖ = 1 := by split_ifs <;> simp
     rw [← e1, ← h2]
@@ -808,7 +808,6 @@ theorem hsn_pos {m : ℕ} (hm : 1 ≤ m) (g : Mat m) (hg : IsUnit g) : 0 < hsn g
     have hs : ∑ a, ∑ b, ‖g a b‖ ^ 2 = 0 := by
       have h0 : 0 ≤ ∑ a, ∑ b, ‖g a b‖ ^ 2 := by positivity
       have := h.symm
-      unfold hsn at this
       rwa [Real.sqrt_eq_zero h0] at this
     have hz : g = 0 := by
       ext a b
@@ -1551,8 +1550,6 @@ theorem UpperTheory.Lit.Branch.realInputE :
     have hX : 0 ≤ colLen e g ^ (-(2 * (n : ℝ) + 7)) := by
       first
         | exact Real.rpow_nonneg hcl _
-        | exact zpow_nonneg hcl _
-        | positivity
     apply mul_le_mul_of_nonneg_right _ hX
     calc ((muG ε') (nbh ε' (1 / 4))).toReal * big C1 n B
         ≤ c * big (C2 + 100 + 100 + 1) n B * big C1 n B :=

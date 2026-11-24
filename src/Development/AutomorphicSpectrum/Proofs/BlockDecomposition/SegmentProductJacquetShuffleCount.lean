@@ -281,7 +281,6 @@ theorem sub_positions_univ {α : Type u} {h : ℕ} (W : List α) (c : Fin W.leng
       have hab' : Fin.cast hlen a < Fin.cast hlen b := by
         first
         | exact hab
-        | simpa [Fin.lt_def] using hab
       exact List.pairwise_iff_get.1 hpw (Fin.cast hlen a) (Fin.cast hlen b) hab'
     · intro j
       constructor
@@ -290,7 +289,6 @@ theorem sub_positions_univ {α : Type u} {h : ℕ} (W : List α) (c : Fin W.leng
         refine ⟨Fin.cast hlen.symm n, ?_⟩
         first
         | exact hn
-        | simpa using hn
       · rintro ⟨a, rfl⟩
         exact (hmem _).1 (List.mem_iff_get.2 ⟨_, rfl⟩)
     · intro a
@@ -518,8 +516,8 @@ theorem sum_map_filter {β : Type*} (p : β → Prop) [DecidablePred p] (f : β 
   | nil => simp
   | cons a l ih =>
     by_cases hp : p a
-    · simp [List.filter_cons, hp, ih]
-    · simp [List.filter_cons, hp, ih]
+    · simp [hp, ih]
+    · simp [hp, ih]
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 

@@ -439,7 +439,7 @@ theorem mulI_of_detMono : DetMono → MulI := by
   · simp only [nI]
     rw [gram_mul_det, Complex.re_ofReal_mul, mul_comm]
   · have h := gram_mul_det (1 : Matrix κ κ ℂ) s
-    simp only [Matrix.one_mul, conjTranspose_one, Matrix.mul_one, det_one, mul_one] at h
+    simp only [Matrix.one_mul, conjTranspose_one, det_one, mul_one] at h
     simp only [nI]
     rw [h, Complex.ofReal_re]
 
@@ -466,7 +466,7 @@ theorem updateRow_submatrix_eq {K ι κ : Type} [DecidableEq ι] [DecidableEq κ
   by_cases h : j = k
   · subst h
     simp [Matrix.updateRow_apply, Function.update_self]
-  · simp [Matrix.updateRow_apply, h, Function.update_of_ne h]
+  · simp [Matrix.updateRow_apply, h]
 
 theorem eq_mul_of_det_ne_zero {K ι κ : Type} [Field K] [DecidableEq ι] [Fintype κ] [DecidableEq κ]
     (U : Matrix ι κ K) (s : κ → ι) (hd : (U.submatrix s id).det ≠ 0) :
@@ -546,7 +546,6 @@ theorem pairF_of_mulF : MulF → PairF := by
       simp only [h, norm_zero]
       first
         | exact Real.iSup_const_zero
-        | simp
     have h1 := (hM K ι κ κ U).1 Wᵀ
     have h2 := (hM K ι κ κ U).2.2 (Wᵀ * U)
     rw [h2, hnU, mul_zero] at h1
@@ -816,7 +815,7 @@ theorem sum_ineq (hF : WedgeF) (hI : WedgeI) (hS : WedgeSub) (hFS : FinSupp)
     have a₃ := f₃ w
     rw [map_fromCols] at a₂ a₃
     rw [map_fromCols, map_fromCols] at a₀
-    simp only [Pi.add_apply]
+    simp only
     rw [map_fromCols, map_fromCols, map_fromCols, map_fromCols]
     exact log_ineq (fun _ _ _ A => nF A) (hF _ _) hS _ _ _ a₀ (f₁ w) a₂ a₃
   linarith

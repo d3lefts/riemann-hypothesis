@@ -700,7 +700,7 @@ theorem REder_X (K : Type) [CommRing K] (k : ℕ) (a b : Fin k) (i j : Fin k) :
   by_cases h : i = b
   · subst h
     simp [Pi.single_apply, mul_ite]
-  · simp [Pi.single_apply, h]
+  · simp [h]
 
 end PI.RL.W
 end -- clump:auto
@@ -740,7 +740,7 @@ theorem keyCov : KeyCov := by
       rw [Matrix.updateRow_self, if_pos rfl]
       by_cases hj : j = Fin.last m
       · subst hj; simp
-      · simp [Pi.single_apply, hj]
+      · simp [hj]
     · rw [Matrix.updateRow_ne hic, hG, REder_X, if_neg hic]
   simp_rw [hrow]
   have hz : ∀ (M : Matrix (Fin (m + 1)) (Fin (m + 1)) (MvPolynomial (Fin (m + 1) × Fin (m + 1)) K))
@@ -763,7 +763,7 @@ theorem keyCov : KeyCov := by
     intro j
     split_ifs <;> rfl
   · intro h; exact absurd (Finset.mem_univ b) h
-  simp only [hbc, if_false, if_true, eq_self_iff_true, ite_true, ite_false]
+  simp only [hbc, if_false, if_true]
   by_cases hab : a = b
   · subst hab
     rw [if_pos rfl, if_neg hbc, sub_zero]
@@ -826,9 +826,8 @@ def rowW {k : ℕ} (a : Fin k) : Fin k × Fin k → ℕ := fun v => if v.1 = a t
 theorem RE_eq_of_hom {K : Type} [CommRing K] {k : ℕ} (a : Fin k)
     (f : MvPolynomial (Fin k × Fin k) K) (d : ℕ)
     (h : IsWeightedHomogeneous (rowW a) f d) : RE K k a a f = (d : K) • f := by
-  have h' := h.sum_weight_X_mul_pderiv
   unfold RE
-  rw [Nat.cast_smul_eq_nsmul K d f, ← h']
+  rw [Nat.cast_smul_eq_nsmul K d f, ← h.sum_weight_X_mul_pderiv]
   symm
   rw [Fintype.sum_prod_type, Finset.sum_eq_single a (fun x _ hx => by simp [rowW, hx])
     (fun h => absurd (Finset.mem_univ a) h)]
@@ -857,8 +856,7 @@ theorem bidet_hom {K : Type} [CommRing K] {k N : ℕ} (a : Fin k) (sz : Fin N �
     (hsz : ∀ j, sz j ≤ k) (I : ∀ j, Fin (sz j) → Fin k) :
     IsWeightedHomogeneous (rowW a) (bideterminant K sz hsz I)
       (∑ j, (Finset.univ.filter fun p => I j p = a).card) := by
-  unfold bideterminant
-  exact IsWeightedHomogeneous.prod _ _ _ fun j _ => minor_hom a (I j) (hsz j)
+  simpa [bideterminant] using IsWeightedHomogeneous.prod _ _ _ fun j _ => minor_hom a (I j) (hsz j)
 
 theorem wt_le {k N : ℕ} (sz : Fin N → ℕ) (I : ∀ j, Fin (sz j) → Fin k)
     (hI : ∀ j, StrictMono (I j)) (a t0 : Fin k) (ht0 : t0.val = 0) :
@@ -1180,7 +1178,7 @@ theorem RE_eq_rowDiv (K : Type) [CommRing K] (k : ℕ) (a b : Fin k) (f : MvPoly
     RE K k a b f = rowDiv K a b 1 f := by
   unfold rowDiv
   induction f using MvPolynomial.induction_on with
-  | C r => rw [RE_C]; simp [rowGen, Polynomial.algebraMap_apply, MvPolynomial.algebraMap_eq, Polynomial.coeff_C]
+  | C r => rw [RE_C]; simp [rowGen, Polynomial.algebraMap_apply, MvPolynomial.algebraMap_eq]
   | add p q hp hq => rw [RE_add, map_add (f := _), Polynomial.coeff_add, hp, hq]
   | mul_X p v hp =>
     rw [RE_mul, map_mul, Polynomial.mul_coeff_one, rowGen_coeff_zero, rowGen_coeff_zero, hp, RE_X]

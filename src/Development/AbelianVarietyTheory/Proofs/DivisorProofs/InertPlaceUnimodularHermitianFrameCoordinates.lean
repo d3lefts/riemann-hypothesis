@@ -165,7 +165,7 @@ theorem mul_incl_mem {v : Pl (F := F)} {s : AE F E} (hs : s ∈ AddSubgroup.clos
   induction hs using AddSubgroup.closure_induction with
   | mem x hx =>
     obtain ⟨a, ha, hev, o', rfl⟩ := hx
-    exact AddSubgroup.subset_closure ⟨a, ha, hev, o' * o, by simp [smul_mul_assoc, map_mul]⟩
+    exact AddSubgroup.subset_closure ⟨a, ha, hev, o' * o, by simp [map_mul]⟩
   | zero => simp
   | add x y _ _ hx hy => rw [add_mul]; exact add_mem hx hy
   | neg x _ hx => rw [neg_mul]; exact neg_mem hx
@@ -209,7 +209,7 @@ theorem mul_latAt {n : ℕ} (X : Spc F E n) {v : Pl (F := F)} {s : AE F E}
     have h := smul_latAt_mem X ha hev (mul_incl_latAt X hs hy)
     convert h using 1
     funext i
-    simp [mul_smul_comm]
+    simp
   | zero => convert (GlobalTheory.InertSph.latAt X v).zero_mem using 1; funext i; simp
   | add x x' _ _ hx hx' => convert add_mem hx hx' using 1; funext i; simp [mul_add]
   | neg x _ hx => convert neg_mem hx using 1; funext i; simp
@@ -771,7 +771,7 @@ theorem mem (σ : E →ₐ[F] E) (v : Pl (F := F)) (σL : L →+* L) (ι : L →
   have hMc : (Mg ι P g).map (cA σ) =
       (1 - ι 1) • (1 : Matrix (Fin n) (Fin n) (_root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E))) + ((Am P g).map σL).map ι := by
     ext i j
-    by_cases h : i = j <;> simp [Mg, h, Matrix.one_apply, ← hσ, hce]
+    by_cases h : i = j <;> simp [Mg, h, ← hσ]
   have hsplit : incM F J = (1 - ι 1) • incM F J + (tJ ι J).map ι := by
     ext i j
     have hex : ∃ x, ι x = ι 1 * inclR (F := F) (AF F) (J i j) := (hsupp _).1 (fun u hu => by
@@ -1252,7 +1252,7 @@ theorem gram_skew_unimodular : ∀ (F E : Type) [Field F] [NumberField F] [Field
       rw [map_inv₀, HeightOneSpectrum.valuation_of_algebraMap,
         HeightOneSpectrum.intValuation_eq_one_iff.mpr hdv, inv_one]
     · rw [Algebra.algebraMap_eq_smul_one (A := E) (algebraMap (𝓞 F) F d)⁻¹, GlobalTheory.InertSelfDual.inclR_smul, smul_smul]
-      first | rfl | simp
+      first | rfl
   have hlift : ∀ a : AF F, At (evFin F v) a → evFin F v a ∈ v.adicCompletionIntegers F →
       ∃ t ∈ Formalism.UG.intL L, ι t = a • (1 : AE F E) := by
     intro a ha hai
@@ -1499,9 +1499,9 @@ theorem mem_KAt_of_frame : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     ext i j
     by_cases hij : i = j
     · subst hij
-      simp [Matrix.one_apply, map_sub]
+      simp [map_sub]
       ring
-    · simp [Matrix.one_apply, hij]
+    · simp [hij]
   rw [hm]
   ext i j
   simp only [Matrix.smul_apply, Matrix.map_apply, Matrix.zero_apply]
@@ -1533,9 +1533,9 @@ theorem uAt_of_local : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     rw [hg]
     by_cases h : i = j
     · subst h
-      simp [Matrix.one_apply, map_sub]
+      simp [map_sub]
       abel
-    · simp [Matrix.one_apply, h, map_sub]
+    · simp [h]
   ext i j
   have h1 : At (evFin F v) ((mat g - 1) i j) := (hι _).2 ⟨_, (hent i j).symm⟩
   simpa using h1 u hu
@@ -1766,7 +1766,7 @@ theorem GlobalTheory.InertLocFrame.frame : ∀ (F E : Type) [Field F] [NumberFie
     rw [_root_.GlobalTheory.InertLocFrame.actAB_xm_frame F E σ a (a + a') G.V G.W L ι hmul PV PW _ _ (iV g) (iW h) (hiV g) (hiW h) x,
       GlobalTheory.InertLocFrame.xm_apply]
     congr 1
-    simp only [Matrix.transpose_mul, Matrix.transpose_transpose, Matrix.mul_assoc, e1, e2]
+    simp only [Matrix.transpose_mul, Matrix.mul_assoc, e1, e2]
   · intro g hg
     refine _root_.GlobalTheory.InertKatFrame.mem_KAt_of_frame F E σ v a G.V L ι hinj him hmul hint PV hPV (iV g)
       (((g : GL (Fin a) L)⁻¹ : GL (Fin a) L) : Matrix (Fin a) (Fin a) L)ᵀ ((g : GL (Fin a) L) : Matrix (Fin a) (Fin a) L)ᵀ

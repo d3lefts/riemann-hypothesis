@@ -110,7 +110,6 @@ theorem gramV_eq_conjTranspose_t8C_mul_t8C (I : AutInst) (x : I.GA) (v : Infinit
     intro a i
     first
       | rfl
-      | (unfold coordV t8C; simp [Matrix.mulVec, dotProduct, Matrix.mul_apply])
   unfold gramV
   ext a c
   simp only [hc, Matrix.mul_apply, Matrix.conjTranspose_apply]
@@ -451,7 +450,7 @@ theorem one_le_norm_embedding_alt (I : AutInst) (a : 𝓞 I.E) (ha : a ≠ 0) :
 
 theorem lattice_common_denominator (I : AutInst) : ∃ b : 𝓞 I.E, b ≠ 0 ∧
     ∀ y ∈ I.L, ∀ i, ∃ c : 𝓞 I.E, (c : I.E) = (b : I.E) * y i := by
-  first | exact UpperTheory.Reformulated.B.LatticeCoordinatesCommonDenominator.lattice_common_denominator .. | (apply UpperTheory.Reformulated.B.LatticeCoordinatesCommonDenominator.lattice_common_denominator <;> assumption) | (intros; apply UpperTheory.Reformulated.B.LatticeCoordinatesCommonDenominator.lattice_common_denominator <;> assumption) | (apply @UpperTheory.Reformulated.B.LatticeCoordinatesCommonDenominator.lattice_common_denominator <;> assumption) | (intros; apply @UpperTheory.Reformulated.B.LatticeCoordinatesCommonDenominator.lattice_common_denominator <;> assumption) | (apply @UpperTheory.Reformulated.B.LatticeCoordinatesCommonDenominator.lattice_common_denominator <;> first | assumption | infer_instance) | exact @UpperTheory.Reformulated.B.LatticeCoordinatesCommonDenominator.lattice_common_denominator I
+  first | exact UpperTheory.Reformulated.B.LatticeCoordinatesCommonDenominator.lattice_common_denominator .. | exact @UpperTheory.Reformulated.B.LatticeCoordinatesCommonDenominator.lattice_common_denominator I
 
 theorem invertible_matrix_lower_bound {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (hA : IsUnit A) :
     ∃ C : ℝ, 0 < C ∧ ∀ (w : Fin n → ℂ) (i : Fin n), ‖w i‖ ^ 2 ≤ C * ∑ k, ‖(A *ᵥ w) k‖ ^ 2 := by
@@ -1034,11 +1033,11 @@ theorem one_mem_sinf : (1 : X.B.I.Ginf) ∈ X.SinfU u := by
   intro v
   have e : uMat ((1 : X.B.I.Ginf) v) = 1 := by simp [uMat]
   rw [e]
-  refine ⟨fun a => ?_, ?_⟩ <;> simp [Submodule.zero_mem]
+  refine ⟨fun a => ?_, ?_⟩ <;> simp
 
 theorem one_mem_sfin : (1 : X.B.I.Gf) ∈ SfinU X u := by
   have e : X.B.I.fmat 1 = 1 := by simp [AutInst.fmat]
-  refine ⟨fun a => ?_, ?_⟩ <;> simp [e, Submodule.zero_mem]
+  refine ⟨fun a => ?_, ?_⟩ <;> simp [e]
 
 theorem mem_sset_of_closure (hS : SGroup X u) {y : X.B.I.GA}
     (hy : y ∈ Subgroup.closure {y : X.B.I.GA | y.1 ∈ X.SinfU u ∧ y.2 ∈ SfinU X u}) :
@@ -1348,7 +1347,7 @@ theorem psiR_norm {n r : ℕ} (ε : Fin n → Bool) (gg : ℕ) (e f : Fin r → 
   unfold psiR
   rw [Complex.norm_exp]
   have him : ((∑ a, (rootCoord ε e f z g a + star (rootCoord ε e f z g a))) / (gg : ℂ)).im = 0 := by
-    simp [Complex.div_im, Complex.im_sum, Complex.star_def]
+    simp [Complex.div_im, Complex.im_sum]
   have hre : (2 * (Real.pi : ℂ) * Complex.I *
       ((∑ a, (rootCoord ε e f z g a + star (rootCoord ε e f z g a))) / (gg : ℂ))).re = 0 := by
     rw [Complex.mul_re, him]

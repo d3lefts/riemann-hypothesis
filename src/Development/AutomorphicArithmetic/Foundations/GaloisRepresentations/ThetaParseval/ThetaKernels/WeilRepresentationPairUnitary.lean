@@ -181,7 +181,7 @@ theorem _root_.GlobalTheory.T.doubled_lagrangian_theta_compatible : ∀ (F E : T
               @IsAddFundamentalDomain (GlobalTheory.WeilUnitaryTransport.ratPair F κ) _ _ _ (borel _) 𝓕' ν' ∧
               ∀ f : (κ → AF F) × (κ → AF F) → ℂ,
                 ∫⁻ w in 𝓕, ‖f (co.e w)‖ₑ ^ 2 ∂ν = ∫⁻ w in 𝓕', ‖f w‖ₑ ^ 2 ∂ν' := by
-  first | exact @_root_.GlobalTheory.RatDarbouxTransferF.haar_fundDomain_transfer_k | exact _root_.GlobalTheory.RatDarbouxTransferF.haar_fundDomain_transfer_k | (intros; apply _root_.GlobalTheory.RatDarbouxTransferF.haar_fundDomain_transfer_k <;> assumption)
+  first | exact @_root_.GlobalTheory.RatDarbouxTransferF.haar_fundDomain_transfer_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -273,7 +273,7 @@ theorem _root_.GlobalTheory.T.weil_representation_pair_unitary : ∀ (F E : Type
               co.e (incM F x) = (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i))) →
             ∀ om : UG (cA σ) (incM F JA) × UG (cA σ) (incM F JB) →* Module.End ℂ ((κ → AF F) → ℂ),
               GlobalTheory.WeilSchrodinger.IsTransportF σ B.ψ co ω om → IsUnitaryOn (adeleClass F) om := by
-  first | exact @_root_.GlobalTheory.WeilUnitaryTransportF.isUnitaryOn_transportF_k | exact _root_.GlobalTheory.WeilUnitaryTransportF.isUnitaryOn_transportF_k | (intros; apply _root_.GlobalTheory.WeilUnitaryTransportF.isUnitaryOn_transportF_k <;> assumption)
+  first | exact @_root_.GlobalTheory.WeilUnitaryTransportF.isUnitaryOn_transportF_k
 end
 end -- clump:auto
 end -- clump:auto

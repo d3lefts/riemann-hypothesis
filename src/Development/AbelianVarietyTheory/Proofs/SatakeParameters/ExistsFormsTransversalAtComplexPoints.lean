@@ -296,7 +296,7 @@ theorem _root_.GlobalTheory.T.ker_evalComplexPoint_le_span_jacobian : ∀ (X : S
       RingHom.ker (GlobalTheory.CxPts.evHom hz) ≤
         Ideal.span (Set.range fun j => φ j - ReciprocityTheory.ChartRestriction.G.DVR.FlatBC.algX p U (GlobalTheory.CxPts.evHom hz (φ j))) ⊔
           RingHom.ker (GlobalTheory.CxPts.evHom hz) ^ 2 := by
-  first | (exact @GlobalTheory.JacSpan.ker_le_span_jac) | (exact GlobalTheory.JacSpan.ker_le_span_jac) | (intros; apply GlobalTheory.JacSpan.ker_le_span_jac  <;> assumption)
+  first | (exact @GlobalTheory.JacSpan.ker_le_span_jac)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.KerEvalComplexPointLeSpanJacobianStatement =====
@@ -375,7 +375,7 @@ theorem _root_.GlobalTheory.T.null_negEval_of_jacobian_det_eq_zero : ∀ (X : Sc
     (φ : Fin d → Γ(X, U)), ∃ E : Set (Fin d → ℂ), MeasureTheory.volume E = 0 ∧
       ∀ z ∈ ch.e.source, ∀ hz : z ∈ GlobalTheory.CxPts.ptsIn p (RingHom.id ℂ) U,
         (ch.jacMat φ z).det = 0 → (fun j => -GlobalTheory.CxPts.evHom hz (φ j)) ∈ E := by
-  first | (exact @GlobalTheory.ChartSard.null_negEv_of_det_eq_zero) | (exact GlobalTheory.ChartSard.null_negEv_of_det_eq_zero) | (intros; apply GlobalTheory.ChartSard.null_negEv_of_det_eq_zero  <;> assumption)
+  first | (exact @GlobalTheory.ChartSard.null_negEv_of_det_eq_zero)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.NullNegEvalOfJacobianDetEqZeroStatement =====
@@ -462,7 +462,7 @@ theorem _root_.GlobalTheory.T.algebraicSard_shifted_functions_regularZeros : ∀
         (∀ j, CxPts.evHom hz (φ j) + c j = 0) →
         RingHom.ker (CxPts.evHom hz) ≤
           Ideal.span (Set.range fun j => φ j + ReciprocityTheory.ChartRestriction.G.DVR.FlatBC.algX p U (c j)) ⊔ RingHom.ker (CxPts.evHom hz) ^ 2 := by
-  first | (exact @GlobalTheory.AlgSard.main) | (exact GlobalTheory.AlgSard.main) | (intros; apply GlobalTheory.AlgSard.main  <;> assumption)
+  first | (exact @GlobalTheory.AlgSard.main)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.AlgebraicSardShiftedFunctionsRegularZerosStatement =====
@@ -553,7 +553,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 
 theorem _root_.GlobalTheory.T.eq_top_of_forall_complexPoints_mem_opens : ∀ (X : Scheme.{0}) (p : X ⟶ Sp ℂ) [LocallyOfFiniteType p] (U : X.Opens),
     (∀ z : CxPts p (RingHom.id ℂ), z ∈ CxPts.ptsIn p (RingHom.id ℂ) U) → U = ⊤ := by
-  first | (exact @GlobalTheory.MaxPt.eq_top_of_forall_cxPts_mem) | (exact GlobalTheory.MaxPt.eq_top_of_forall_cxPts_mem) | (intros; apply GlobalTheory.MaxPt.eq_top_of_forall_cxPts_mem  <;> assumption)
+  first | (exact @GlobalTheory.MaxPt.eq_top_of_forall_cxPts_mem)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.EqTopOfForallComplexPointsMemOpensStatement =====
@@ -578,7 +578,7 @@ theorem _root_.GlobalTheory.T.exists_forms_vanishing_complexPoints_fullJets : �
         GlobalTheory.EtProj.fRatio ι h f₀ hh hf₀ ∈ RingHom.ker (CxPts.evHom hy) ^ 2 ∧
         RingHom.ker (CxPts.evHom hy) ≤ Ideal.span (Set.range fun j => GlobalTheory.EtProj.fRatio ι (g j) f₀ (hg j) hf₀) ⊔
           RingHom.ker (CxPts.evHom hy) ^ 2 := by
-  first | (exact @GlobalTheory.EtProj.Jets.exists_jet_forms) | (exact GlobalTheory.EtProj.Jets.exists_jet_forms) | (intros; apply GlobalTheory.EtProj.Jets.exists_jet_forms  <;> assumption)
+  first | (exact @GlobalTheory.EtProj.Jets.exists_jet_forms)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsFormsVanishingComplexPointsFullJetsStatement =====
@@ -593,7 +593,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 theorem _root_.GlobalTheory.T.exists_projForm_nonvanishing_genericPoint_complexPoints : ∀ (X : Scheme.{0}) [IsIntegral X] (p : X ⟶ Sp ℂ) (N : ℕ) (ι : X ⟶ PSpace ℂ N) (n : ℕ)
     (F : Finset (CxPts p (RingHom.id ℂ))), ∃ f ∈ GlobalTheory.ProjSpace.grading ℂ N n,
       genericPoint X ∈ GlobalTheory.EtProj.fOpen ι f ∧ ∀ z ∈ F, z ∈ CxPts.ptsIn p (RingHom.id ℂ) (GlobalTheory.EtProj.fOpen ι f) := by
-  first | (exact @GlobalTheory.EtProj.exists_form_genericPoint_cxPts) | (exact GlobalTheory.EtProj.exists_form_genericPoint_cxPts) | (intros; apply GlobalTheory.EtProj.exists_form_genericPoint_cxPts  <;> assumption)
+  first | (exact @GlobalTheory.EtProj.exists_form_genericPoint_cxPts)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsProjFormNonvanishingGenericPointComplexPoiStatement =====
@@ -720,7 +720,7 @@ theorem _root_.GlobalTheory.T.finite_complexPoints_transversal_zeros : ∀ (X : 
     ∀ (k : ℕ) (φ : Fin k → Γ(X, U)), {z : CxPts p (RingHom.id ℂ) | ∃ hz : z ∈ CxPts.ptsIn p (RingHom.id ℂ) U,
       (∀ j, CxPts.evHom hz (φ j) = 0) ∧
         RingHom.ker (CxPts.evHom hz) ≤ Ideal.span (Set.range φ) ⊔ RingHom.ker (CxPts.evHom hz) ^ 2}.Finite := by
-  first | (exact @GlobalTheory.TransvZeros.finite_transv_zeros) | (exact GlobalTheory.TransvZeros.finite_transv_zeros) | (intros; apply GlobalTheory.TransvZeros.finite_transv_zeros  <;> assumption)
+  first | (exact @GlobalTheory.TransvZeros.finite_transv_zeros)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.FiniteComplexPointsTransversalZerosStatement =====
@@ -742,7 +742,7 @@ theorem _root_.GlobalTheory.T.ratio_span_cotangent_change_denominator : ∀ (X :
           RingHom.ker (CxPts.evHom hza) ^ 2 →
       RingHom.ker (CxPts.evHom hzb) ≤ Ideal.span (Set.range fun j => GlobalTheory.EtProj.fRatio ι (f j) b (hf j) hb) ⊔
           RingHom.ker (CxPts.evHom hzb) ^ 2 := by
-  first | (exact @GlobalTheory.EtProj.span_ratio_of_span_ratio) | (exact GlobalTheory.EtProj.span_ratio_of_span_ratio) | (intros; apply GlobalTheory.EtProj.span_ratio_of_span_ratio  <;> assumption)
+  first | (exact @GlobalTheory.EtProj.span_ratio_of_span_ratio)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.RatioSpanCotangentChangeDenominatorStatement =====

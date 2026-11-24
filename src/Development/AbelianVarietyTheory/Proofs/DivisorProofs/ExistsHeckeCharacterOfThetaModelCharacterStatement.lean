@@ -171,7 +171,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.continuous_heckeCharacterFinitePart : ∀ {D : D7} {N : ℕ} (c : HeckeU D N), Continuous (GlobalTheory.HeckeUChar.finChar c) := by
-  first | exact @GlobalTheory.HeckeUChar.continuous_finChar | exact GlobalTheory.HeckeUChar.continuous_finChar | (intros; apply GlobalTheory.HeckeUChar.continuous_finChar <;> assumption)
+  first | exact @GlobalTheory.HeckeUChar.continuous_finChar
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousHeckeCharacterFinitePartStatement =====
@@ -305,7 +305,7 @@ theorem _root_.GlobalTheory.T.heckeChar_restricts_eta_pow_of_sign : ∀ (D : D7)
     (∀ (τ : D.what₂.Tau) (x : (AE D)ˣ), finPart D (x : AE D) = 1 → θ τ (infPart D (x : AE D)) = -1 →
       (∀ τ', τ' ≠ τ → θ τ' (infPart D (x : AE D)) = 1) → ((χ x : Circle) : ℂ) = (-1) ^ N) →
     ResEta D χ N := by
-  first | exact @GlobalTheory.HeckeSignEta.resEta_of_sign | exact GlobalTheory.HeckeSignEta.resEta_of_sign | (intros; apply GlobalTheory.HeckeSignEta.resEta_of_sign <;> assumption)
+  first | exact @GlobalTheory.HeckeSignEta.resEta_of_sign
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeckeCharRestrictsEtaPowOfSignStatement =====
@@ -364,7 +364,7 @@ theorem exists_hecke_of_heckeU : ∀ {D : D7} {N : ℕ} (c : HeckeU D N) (e : �
         have hne : θ τ (infPart D (x : AE D)) ≠ 0 := by
           intro h0
           have := congrArg (fun z => θ τ (infPart D z)) (Units.mul_inv x)
-          simp only [RingHom.map_mul, map_mul, h0, zero_mul, RingHom.map_one, map_one] at this
+          simp only [map_mul, h0, zero_mul, map_one] at this
           exact zero_ne_one this
         have hp : 0 < Complex.normSq (θ τ (infPart D (x : AE D))) := Complex.normSq_pos.2 hne
         rw [e1, Complex.norm_real, Real.norm_of_nonneg hp.le]
@@ -416,7 +416,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_heckeCharacter_of_thetaModelCharacter : ∀ {D : D7} {N : ℕ} (c : HeckeU D N) (e : ℤ), (e = 1 ∨ e = -1) →
   ∃ χ : (AE D)ˣ →* Circle, IsHeckeChar D χ ∧ ResEta D χ N ∧ HasFinPart χ c e := by
-  first | exact @GlobalTheory.HeckeUChar.exists_hecke_of_heckeU | exact GlobalTheory.HeckeUChar.exists_hecke_of_heckeU | (intros; apply GlobalTheory.HeckeUChar.exists_hecke_of_heckeU <;> assumption)
+  first | exact @GlobalTheory.HeckeUChar.exists_hecke_of_heckeU
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHeckeCharacterOfThetaModelCharacterStatement =====

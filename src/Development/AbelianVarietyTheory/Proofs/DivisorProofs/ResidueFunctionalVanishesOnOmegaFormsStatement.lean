@@ -92,11 +92,7 @@ variable {F : Type} [Field F] {d : ℕ}
 theorem prod_zpow_add (x : Fin (d + 1) → F) (hx : ∀ i, x i ≠ 0) (m n : Fin (d + 1) → ℤ) :
     ∏ j, x j ^ (m j + n j) = (∏ j, x j ^ m j) * ∏ j, x j ^ n j := by
   first
-  | exact @_root_.GlobalTheory.ProductZpowAdd.prod_zpow_add
-  | exact _root_.GlobalTheory.ProductZpowAdd.prod_zpow_add
   | (apply _root_.GlobalTheory.ProductZpowAdd.prod_zpow_add <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ProductZpowAdd.prod_zpow_add <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ProductZpowAdd.prod_zpow_add <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.ProductZpowAdd.prod_zpow_add ..)
 
 def monoA (x : Fin (d + 1) → F) (hx : ∀ i, x i ≠ 0) (I : Finset (Fin (d + 1))) : Submonoid F where
@@ -184,7 +180,7 @@ section -- clump:auto
 open GlobalTheory.PD GlobalTheory.CechDR KaehlerDifferential
 
 theorem _root_.GlobalTheory.T.residue_functional_vanishes_on_omega_forms : ∀ (k : Type) [Field k] (F : Type) [Field F] [Algebra k F] (d : ℕ) (x : Fin (d + 1) → F), IsPd k x → ∀ ρ : F →ₗ[k] k, IsRes k x ρ → ∀ (i : Fin (d + 1)) (I : Finset (Fin (d + 1))), I.Nonempty → i ∉ I → ∀ y ∈ omA k x I, ρ y = 0 := by
-  first | (exact @GlobalTheory.PD.ResVan.resvan) | (exact GlobalTheory.PD.ResVan.resvan) | (intros; apply GlobalTheory.PD.ResVan.resvan <;> assumption)
+  first | (exact @GlobalTheory.PD.ResVan.resvan)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ResidueFunctionalVanishesOnOmegaFormsStatement =====

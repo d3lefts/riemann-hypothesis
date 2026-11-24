@@ -87,7 +87,7 @@ theorem gram_flagV {M R : Type} [Zero M] [Ring R] (S : AddSubgroup R) (B : M →
     | (exfalso; omega)
     | (rw [sub_zero]; first | exact heb _ _ | exact hez _ | exact hef _ _ | exact hbe _ _ | exact hbz _ | exact hbf _ _ | exact hze _ | exact hzb _ | exact hzf _ | exact hfe _ _ | exact hfb _ _ | exact hfz _)
     | exact hzz
-    | (convert hee _ _ using 2; simp only [Fin.mk.injEq]; split_ifs <;> first | rfl | (exfalso; omega))
+    | (convert hee _ _ using 2; simp only [Fin.mk.injEq]; split_ifs <;> first | rfl)
     | (convert hbb _ _ using 2; simp only [Fin.mk.injEq]; split_ifs <;> first | rfl | (exfalso; omega))
     | (convert hff _ _ using 2; simp only [Fin.mk.injEq]; split_ifs <;> first | rfl | (exfalso; omega))
 
@@ -416,7 +416,7 @@ open scoped TensorProduct Matrix
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.symmetricFrame_reduces_to_basis_mod_place : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D), (∀ x : X.B.I.E, HEq (X.ιE x) x) → ∀ (b : (Σ k : Fin 2, D.nd.PlG k) → Fin D.R.r → Fin X.B.I.n → X.B.I.E), (∀ kv : (Σ k : Fin 2, D.nd.PlG k), IsRedBasis X (D.naut.plGw kv.1 kv.2) (b kv)) → (∀ kv : (Σ k : Fin 2, D.nd.PlG k), ((D.host.g kv.1 : ℕ) : 𝓞 D.host.E) ∈ (D.naut.plGw kv.1 kv.2).asIdeal) → ∀ π : Equiv.Perm (Fin D.R.r), ∃ P : G0g D.nd, ∀ (kv : (Σ k : Fin 2, D.nd.PlG k)) (j : Fin D.R.r), GlobalTheory.Mem.SymFrame.symVec X (D.naut.plGw kv.1 kv.2) (π.symm j) - ∑ i, ((((((P kv : GL (Fin D.R.r) (ZMod (D.host.g kv.1))) : Matrix (Fin D.R.r) (Fin D.R.r) (ZMod (D.host.g kv.1)))) i j).val : ℕ) : X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F) • incl X.B.I (b kv i) ∈ wLf X (D.naut.plGw kv.1 kv.2) := by
-  first | exact @GlobalTheory.Mem.SymFrameRed.symVec_red | exact GlobalTheory.Mem.SymFrameRed.symVec_red | (intros; apply GlobalTheory.Mem.SymFrameRed.symVec_red <;> assumption)
+  first | exact @GlobalTheory.Mem.SymFrameRed.symVec_red
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SymmetricFrameReducesToBasisModPlaceStatement =====

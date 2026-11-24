@@ -230,7 +230,7 @@ open GlobalTheory.BumpMix
 
 
 theorem _root_.GlobalTheory.T.contDiff_poincareSumOverRationalHom_realDirections : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S S₀ T : HSp D) (ρ : ℕ) (d : HypDec S S₀ ρ) (β : Mx D T.rank ρ → ℂ), IsBump β → ∀ (k : ℕ) (L : (Fin k → ℝ) →+ WO S T), Continuous L → (∀ t, (L t).map (finPart D) = 0) → ∀ w, ContDiff ℝ ∞ fun t => poinX ψ d T β (w + L t) := by
-  first | exact @GlobalTheory.BumpMixSmooth.poinX_smooth | exact GlobalTheory.BumpMixSmooth.poinX_smooth | (intros; apply GlobalTheory.BumpMixSmooth.poinX_smooth <;> assumption)
+  first | exact @GlobalTheory.BumpMixSmooth.poinX_smooth
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -333,7 +333,7 @@ open GlobalTheory.BumpMix
 
 
 theorem _root_.GlobalTheory.T.continuous_poincareSumOverRationalHom_bump : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S S₀ T : HSp D) (ρ : ℕ) (d : HypDec S S₀ ρ) (β : Mx D T.rank ρ → ℂ), IsBump β → Continuous (poinX ψ d T β) := by
-  first | exact @GlobalTheory.BumpMix.poinX_continuous | exact GlobalTheory.BumpMix.poinX_continuous | (intros; apply GlobalTheory.BumpMix.poinX_continuous <;> assumption)
+  first | exact @GlobalTheory.BumpMix.poinX_continuous
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -476,7 +476,7 @@ open GlobalTheory.BumpMix
 
 
 theorem _root_.GlobalTheory.T.mixedCoordinate_poincareSum_halfWitt_eq_bump : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S S₀ T : HSp D) (ρ : ℕ) (d : HypDec S S₀ ρ) (v : VolM D T.rank ρ) (β : Mx D T.rank ρ → ℂ), IsBump β → ∀ x, (_root_.I195MixedCoordinates_2b9c4e7ee460bdf0c3844320.source d) T ψ v.μ v.𝓕 (poinX ψ d T β) x 0 = β x := by
-  first | exact @GlobalTheory.BumpMixSum.mixS_poinX | exact GlobalTheory.BumpMixSum.mixS_poinX | (intros; apply GlobalTheory.BumpMixSum.mixS_poinX <;> assumption)
+  first | exact @GlobalTheory.BumpMixSum.mixS_poinX
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -621,7 +621,7 @@ open GlobalTheory.BumpMix
 
 
 theorem _root_.GlobalTheory.T.poincareSumHalfWitt_heisenberg_level_of_zero_core : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S S₀ T : HSp D) (ρ : ℕ) (d : HypDec S S₀ ρ), S₀.rank = 0 → ∀ (β : Mx D T.rank ρ → ℂ), IsBump β → ∃ U : AddSubgroup (WO S T), IsOpen (U : Set (WO S T)) ∧ ∀ u ∈ U, u.map (infPart D) = 0 → heisO ψ S T u (poinX ψ d T β) = poinX ψ d T β := by
-  first | exact @GlobalTheory.BumpMixLevel.poinX_heis_level | exact GlobalTheory.BumpMixLevel.poinX_heis_level | (intros; apply GlobalTheory.BumpMixLevel.poinX_heis_level <;> assumption)
+  first | exact @GlobalTheory.BumpMixLevel.poinX_heis_level
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -739,7 +739,7 @@ open GlobalTheory.BumpMix
 
 
 theorem _root_.GlobalTheory.T.poincareSumOverRationalHom_thetaLaw_zeroCore : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S S₀ T : HSp D) (ρ : ℕ) (d : HypDec S S₀ ρ), S₀.rank = 0 → ∀ (β : Mx D T.rank ρ → ℂ) (γ : Matrix (Fin T.rank) (Fin S.rank) D.host.E) (w : WO S T), poinX ψ d T β (ratW T S γ + w) = ψ (-(symplOH S T (ratW T S γ) w)) * poinX ψ d T β w := by
-  first | exact @GlobalTheory.BumpMixQuasi.poinX_quasi | exact GlobalTheory.BumpMixQuasi.poinX_quasi | (intros; apply GlobalTheory.BumpMixQuasi.poinX_quasi <;> assumption)
+  first | exact @GlobalTheory.BumpMixQuasi.poinX_quasi
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -864,7 +864,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.exists_thetaFunction_mixedCoordinate_bump_mul_core : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S S₀ T : HSp D) (ρ : ℕ) (d : HypDec S S₀ ρ) (v : VolM D T.rank ρ) (β : Mx D T.rank ρ → ℂ) (g : WO S₀ T → ℂ), IsBump β → IsThetaFunO ψ S₀ T g → ∃ Φ, IsThetaFunO ψ S T Φ ∧ ∀ x, (_root_.I195MixedCoordinates_e9b37737007d4cfbb59b997f.source d) T ψ v.μ v.𝓕 Φ x = β x • g := by
-  first | exact @GlobalTheory.BumpMix.bump_mul_theta_mixS | exact GlobalTheory.BumpMix.bump_mul_theta_mixS | (intros; apply GlobalTheory.BumpMix.bump_mul_theta_mixS <;> assumption)
+  first | exact @GlobalTheory.BumpMix.bump_mul_theta_mixS
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsThetaFunctionMixedCoordinateBumpMulCoreStatement =====

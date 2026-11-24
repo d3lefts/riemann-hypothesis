@@ -290,7 +290,7 @@ theorem _root_.GlobalTheory.T.directedSystem_etale_baseChange_polynomial : ∀ (
           h k m hkm y = h l m hlm (h k l hkl y)) ∧
       (∀ k, Function.Injective (e k)) ∧
       (∀ x : E, ∃ k y, e k y = x) := by
-  first | (exact @GlobalTheory.directedSystem_etaleBaseChange) | (exact GlobalTheory.directedSystem_etaleBaseChange) | (intros; apply GlobalTheory.directedSystem_etaleBaseChange <;> assumption)
+  first | (exact @GlobalTheory.directedSystem_etaleBaseChange)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DirectedSystemEtaleBaseChangePolynomialStatement =====
@@ -463,7 +463,7 @@ theorem _root_.GlobalTheory.T.exists_torsor_model_filtered_colimit : ∀ (ι : T
       ∃ (Di : Type) (_ : CommRing Di) (_ : Algebra (R i) Di)
         (acti : Multiplicative (ZMod q) →* (Di ≃ₐ[R i] Di)),
         GlobalTheory.KeyOriginCut.IsZTorsor (R i) Di q acti ∧ Nonempty (TensorProduct (R i) B Di ≃ₐ[B] D) := by
-  first | (exact @GlobalTheory.TorsorColimElem.exists_torsor_model_of_elements) | (exact GlobalTheory.TorsorColimElem.exists_torsor_model_of_elements) | (intros; apply GlobalTheory.TorsorColimElem.exists_torsor_model_of_elements  <;> assumption)
+  first | (exact @GlobalTheory.TorsorColimElem.exists_torsor_model_of_elements)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsTorsorModelFilteredColimitStatement =====
@@ -706,7 +706,7 @@ theorem _root_.GlobalTheory.T.genericFibreLocalization_directedUnion_kernel : �
           (algebraMap (Ek l) (Localization.AtPrime (Q.comap (e l))) (h k l hkl y))) →
     ∀ k (x : GlobalTheory.LocAcyc.GenFib (𝒜 k) (Localization.AtPrime (Q.comap (e k)))), g k x = 0 →
       ∃ l, ∃ hkl : k ≤ l, f k l hkl x = 0 := by
-  first | (exact @GlobalTheory.genFib_colim_ker) | (exact GlobalTheory.genFib_colim_ker) | (intros; apply GlobalTheory.genFib_colim_ker  <;> assumption)
+  first | (exact @GlobalTheory.genFib_colim_ker)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GenericFibreLocalizationDirectedUnionKernelStatement =====
@@ -828,7 +828,7 @@ theorem _root_.GlobalTheory.T.genericFibreLocalization_directedUnion_surjective 
         algebraMap (Localization.AtPrime Q) (GlobalTheory.LocAcyc.GenFib T (Localization.AtPrime Q))
           (algebraMap E (Localization.AtPrime Q) (e k y))) →
     ∀ b : GlobalTheory.LocAcyc.GenFib T (Localization.AtPrime Q), ∃ k x, g k x = b := by
-  first | (exact @GlobalTheory.genFib_colim_surj) | (exact GlobalTheory.genFib_colim_surj) | (intros; apply GlobalTheory.genFib_colim_surj  <;> assumption)
+  first | (exact @GlobalTheory.genFib_colim_surj)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GenericFibreLocalizationDirectedUnionSurjectiveStatement =====
@@ -990,7 +990,7 @@ theorem _root_.GlobalTheory.T.exists_torsor_descent_directedUnion_subring : ∀ 
         ∀ (C : Type) [CommRing C] (ψ : GlobalTheory.LocAcyc.GenFib T (Localization.AtPrime Q) →+* C) (σ : D →+* C),
           σ.comp (algebraMap (GlobalTheory.LocAcyc.GenFib (𝒜 i) (Localization.AtPrime (Q.comap e))) D) = ψ.comp β →
           ∃ σ₁ : D₁ →+* C, σ₁.comp (algebraMap (GlobalTheory.LocAcyc.GenFib T (Localization.AtPrime Q)) D₁) = ψ := by
-  first | (exact @GlobalTheory.TorsorUnionDescent.exists_stage_torsor) | (exact GlobalTheory.TorsorUnionDescent.exists_stage_torsor) | (intros; apply GlobalTheory.TorsorUnionDescent.exists_stage_torsor  <;> assumption)
+  first | (exact @GlobalTheory.TorsorUnionDescent.exists_stage_torsor)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsTorsorDescentDirectedUnionSubringStatement =====
@@ -1181,7 +1181,7 @@ theorem _root_.GlobalTheory.T.exists_noetherian_model_torsor_origin : ∀ (T O :
         ∀ σ : DA →+* GlobalTheory.LocAcyc.GenFib T O,
           σ.comp (algebraMap (GlobalTheory.LocAcyc.GenFib A (Localization.AtPrime QA)) DA) = ψA →
           ∃ σ₁ : D₁ →+* GlobalTheory.LocAcyc.GenFib T O, σ₁.comp (algebraMap (GlobalTheory.LocAcyc.GenFib T (Localization.AtPrime Q)) D₁) = ψ := by
-  first | (exact @GlobalTheory.KeyOriginNoeth.exists_noetherian_model) | (exact GlobalTheory.KeyOriginNoeth.exists_noetherian_model) | (intros; apply GlobalTheory.KeyOriginNoeth.exists_noetherian_model  <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginNoeth.exists_noetherian_model)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNoetherianModelTorsorOriginStatement =====
@@ -1388,7 +1388,7 @@ theorem _root_.GlobalTheory.T.strict_henselisation_prime_eq : ∀ (T O : Type) [
         ∀ σ : D₁ →+* GlobalTheory.LocAcyc.GenFib T O,
           σ.comp (algebraMap (GlobalTheory.LocAcyc.GenFib T (Localization.AtPrime Q)) D₁) = ψ →
           Nonempty (D →ₐ[GlobalTheory.LocAcyc.GenFib T O] GlobalTheory.LocAcyc.GenFib T O) := by
-  first | (exact @GlobalTheory.KeyOriginCut.exists_stage_torsor) | (exact GlobalTheory.KeyOriginCut.exists_stage_torsor) | (intros; apply GlobalTheory.KeyOriginCut.exists_stage_torsor  <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginCut.exists_stage_torsor)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StrictHenselisationPrimeEqStatement =====
@@ -1430,7 +1430,7 @@ section -- clump:auto
 open IsLocalRing Polynomial
 
 theorem _root_.GlobalTheory.T.torsor_trivial_strict_henselisation_origin : GlobalTheory.LocAcyc.KeyOrigin := by
-  first | (exact @GlobalTheory.KeyOriginCut.keyOrigin) | (exact GlobalTheory.KeyOriginCut.keyOrigin) | (intros; apply GlobalTheory.KeyOriginCut.keyOrigin  <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginCut.keyOrigin)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorsorTrivialStrictHenselisationOriginStatement =====

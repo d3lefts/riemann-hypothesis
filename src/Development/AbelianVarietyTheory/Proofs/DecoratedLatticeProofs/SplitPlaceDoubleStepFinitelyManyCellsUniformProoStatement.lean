@@ -81,7 +81,7 @@ namespace GlobalTheory.LocFlat.CellSupport
 theorem det_colE {k : Type} [Field k] {n : Type} [Fintype n] [DecidableEq n] (c p : ℕ) (β : n → k) :
     Matrix.GeneralLinearGroup.det (colE c p β) = 1 := by
   ext
-  simp [Matrix.GeneralLinearGroup.val_det_apply, colE, upU, Matrix.det_fromBlocks_zero₂₁]
+  simp [Matrix.GeneralLinearGroup.val_det_apply, colE, upU]
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
@@ -398,7 +398,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.splitPlaceDoubleStepFinitelyManyCellsUniform_proof : ∀ D : D7, FinOne D := by
-  first | exact @GlobalTheory.QPl.FinOneProof.finOne | exact GlobalTheory.QPl.FinOneProof.finOne | (intros; apply GlobalTheory.QPl.FinOneProof.finOne <;> assumption)
+  first | exact @GlobalTheory.QPl.FinOneProof.finOne
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SplitPlaceDoubleStepFinitelyManyCellsUniformProoStatement =====

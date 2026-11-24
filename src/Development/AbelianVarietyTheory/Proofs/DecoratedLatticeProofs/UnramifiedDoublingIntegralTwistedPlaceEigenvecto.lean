@@ -155,7 +155,7 @@ theorem genVal_map_mul (q r N n : ℕ) (B : Multiset ℂˣ) (c : ℂˣ) :
     genVal q r N (B.map (· * c)) n = (c : ℂ) ^ n * genVal q r N B n := by
   unfold genVal
   have e : ((B.map (· * c)).map fun b : ℂˣ => (b : ℂ)) = (B.map fun b : ℂˣ => (b : ℂ)).map (· * (c : ℂ)) := by
-    simp [Multiset.map_map, Function.comp_def]
+    simp [Multiset.map_map]
   rw [e, esymm_map_mul_const]
   ring
 
@@ -748,11 +748,6 @@ theorem relIndex_parahoric_conj_mtor : ∀ (k : Type) [Field k] [ValuativeRel k]
   first
   | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.ParahoricConjugateOpen.relIndex_conj_parahoric
   | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.ParahoricConjugateOpen.relIndex_conj_parahoric
-  | exact @_root_.GlobalTheory.ParahoricConjugateOpen.relIndex_conj_parahoric
-  | exact _root_.GlobalTheory.ParahoricConjugateOpen.relIndex_conj_parahoric
-  | (apply _root_.GlobalTheory.ParahoricConjugateOpen.relIndex_conj_parahoric <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ParahoricConjugateOpen.relIndex_conj_parahoric <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ParahoricConjugateOpen.relIndex_conj_parahoric <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.ParahoricConjugateOpen.relIndex_conj_parahoric ..)
 
 end GlobalTheory.ParIdx
@@ -1281,7 +1276,6 @@ theorem unramified_doubling_sum : GlobalTheory.Published.UnramifiedDoublingGL �
     have h := cpow_split hq N s (sumAbs_nonneg e.1)
     rw [h]
     simp only [wR, Complex.ofReal_mul]
-    push_cast
     ring
   have hbc : ∀ e, ‖b e‖ ≤ c e := fun e => by
     simp only [b, c, norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (hw0 e)]
@@ -1454,7 +1448,7 @@ theorem zonalInt_one {N : ℕ} [MeasurableSpace (GL (Fin N) k)] [BorelSpace (GL 
     zonalInt μK ψ 1 = 1 := by
   have h1 : ψ 1 = 1 := by
     have hb : (1 : GL (Fin N) k) ∈ borel k (Fin N) := (mem_borel _).2 fun i j hij => by
-      simp [Matrix.one_apply, (ne_of_lt hij).symm]
+      simp [(ne_of_lt hij).symm]
     rw [hψ.2 1 hb (fun _ => 1) (fun i => by simp)]
     have : ord k 1 = 0 := by
       have := ord_mul k 1 1

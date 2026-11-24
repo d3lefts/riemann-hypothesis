@@ -424,13 +424,8 @@ theorem ell_eq_tau (x : (Fin D.T.t → ℕ) × ℕ) (β : Fin r → ℕ) (y : Mv
     intro i
     simp [tau, tauF, scalZ]
   have h4 : tau (O := O) (r := r) D (xiMon (KK O) N r D.T.t β) = xiMon (KK O) N r D.T.t β := by
-    rw [xiMon_prod, map_prod]
-    refine Finset.prod_congr rfl fun c _ => ?_
-    rw [map_pow]
-    simp [tau, tauF, xiVar]
-  rw [ell_apply]
-  unfold base pre
-  simp only [map_mul, map_prod, map_pow, h1, h2, h3, h4, tau_rename]
+    simp [xiMon_prod, tau, tauF, xiVar]
+  simp only [ell_apply, base, pre, map_mul, map_prod, map_pow, h1, h2, h3, h4, tau_rename]
 
 def piF (v : BVar N r D.T.t) : MvPolynomial (Fin (D.T.t + 1) ⊕ Fin r) (MvPolynomial (Fin N × Fin r) (KK O)) :=
   match v with
@@ -466,23 +461,18 @@ theorem ppi_base (x : (Fin D.T.t → ℕ) × ℕ) (β : Fin r → ℕ) (y : MvPo
     intro i
     simp [ppi, piF, scalZ]
   have hXi : ppi (O := O) D (xiMon (KK O) N r D.T.t β) = ∏ c, X (Sum.inr c) ^ β c := by
-    rw [xiMon_prod, map_prod]
-    simp [ppi, piF, xiVar]
-  rw [base]
+    simp [xiMon_prod, ppi, piF, xiVar]
+  rw [base, eExp]
   simp only [map_mul, map_prod, map_pow, hS, hZ, hXi, ppi_rename, one_pow, Finset.prod_const_one, mul_one]
-  rw [eExp]
   simp only [X_pow_eq_monomial, ← monomial_sum_one, C_mul_monomial, monomial_mul, mul_one, one_mul]
 
 theorem eExp_inj {x x' : (Fin D.T.t → ℕ) × ℕ} {β β' : Fin r → ℕ} (h : eExp D x β = eExp D x' β') :
     x = x' ∧ β = β' := by
   have hv : ∀ v, eExp D x β v = eExp D x' β' v := fun v => by rw [h]
   refine ⟨Prod.ext (funext fun i => ?_) ?_, funext fun c => ?_⟩
-  · have hi := hv (Sum.inl (Fin.castSucc i))
-    simpa [eExp, Finsupp.single_apply] using hi
-  · have hi := hv (Sum.inl (Fin.last D.T.t))
-    simpa [eExp, Finsupp.single_apply] using hi
-  · have hi := hv (Sum.inr c)
-    simpa [eExp, Finsupp.single_apply] using hi
+  · simpa [eExp, Finsupp.single_apply] using hv (Sum.inl (Fin.castSucc i))
+  · simpa [eExp, Finsupp.single_apply] using hv (Sum.inl (Fin.last D.T.t))
+  · simpa [eExp, Finsupp.single_apply] using hv (Sum.inr c)
 
 theorem ltot_inj : Function.Injective (Ltot (O := O) (r := r) D) := by
   classical

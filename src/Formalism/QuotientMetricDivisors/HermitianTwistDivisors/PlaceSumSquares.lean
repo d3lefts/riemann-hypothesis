@@ -231,8 +231,7 @@ lemma log_le_near (p q : ℝ) (hp : 0 < p) (hq : 0 < q) :
     Real.log p ≤ Real.log q + (p - q) / q := by
   have h := Real.log_le_sub_one_of_pos (div_pos hp hq)
   rw [Real.log_div hp.ne' hq.ne'] at h
-  have : (p - q) / q = p / q - 1 := by field_simp
-  linarith
+  linarith [show (p - q) / q = p / q - 1 by field_simp]
 
 lemma log_smooth (a b c d : ℕ) :
     Real.log ((2 : ℝ) ^ a * 3 ^ b * 5 ^ c * 7 ^ d) =
@@ -244,9 +243,8 @@ lemma log_smooth (a b c d : ℕ) :
 lemma logp (p : ℝ) (a b c d : ℕ) (e : ℝ) (hp : 0 < p)
     (he : (p - (2 : ℝ) ^ a * 3 ^ b * 5 ^ c * 7 ^ d) / ((2 : ℝ) ^ a * 3 ^ b * 5 ^ c * 7 ^ d) ≤ e) :
     Real.log p ≤ a * Real.log 2 + b * Real.log 3 + c * Real.log 5 + d * Real.log 7 + e := by
-  have h := log_le_near p ((2 : ℝ) ^ a * 3 ^ b * 5 ^ c * 7 ^ d) hp (by positivity)
-  rw [log_smooth] at h
-  linarith
+  linarith [log_le_near p ((2 : ℝ) ^ a * 3 ^ b * 5 ^ c * 7 ^ d) hp (by positivity),
+    log_smooth a b c d]
 
 lemma log_three_le : Real.log 3 ≤ (19 * Real.log 2 + 7153 / 524288) / 12 := by
   have h := logp ((3 : ℝ) ^ 12) 19 0 0 0 (7153 / 524288) (by positivity) (by norm_num)
@@ -256,14 +254,12 @@ lemma log_three_le : Real.log 3 ≤ (19 * Real.log 2 + 7153 / 524288) / 12 := by
 
 lemma log_five_le : Real.log 5 ≤ (7 * Real.log 2 - 3 / 128) / 3 := by
   have h := logp ((5 : ℝ) ^ 3) 7 0 0 0 (-3 / 128) (by positivity) (by norm_num)
-  rw [Real.log_pow] at h
-  push_cast at h
+  simp only [Real.log_pow, Nat.cast_ofNat, Nat.cast_zero, zero_mul, add_zero] at h
   linarith
 
 lemma place_sum_over_primes : Real.log 7 ≤ (4 * Real.log 2 + Real.log 3 + 1 / 48) / 2 := by
   have h := logp ((7 : ℝ) ^ 2) 4 1 0 0 (1 / 48) (by positivity) (by norm_num)
   rw [Real.log_pow] at h
-  push_cast at h
   linarith
 
 lemma head_num :
@@ -376,8 +372,7 @@ set_option maxRecDepth 100000 in
 lemma head_sum :
     ∑ n ∈ Finset.range 240, (if n.Prime then Real.log (n : ℝ) / (n : ℝ) ^ 2 else 0) =
     Real.log 2 / 2 ^ 2 + Real.log 3 / 3 ^ 2 + Real.log 5 / 5 ^ 2 + Real.log 7 / 7 ^ 2 + Real.log 11 / 11 ^ 2 + Real.log 13 / 13 ^ 2 + Real.log 17 / 17 ^ 2 + Real.log 19 / 19 ^ 2 + Real.log 23 / 23 ^ 2 + Real.log 29 / 29 ^ 2 + Real.log 31 / 31 ^ 2 + Real.log 37 / 37 ^ 2 + Real.log 41 / 41 ^ 2 + Real.log 43 / 43 ^ 2 + Real.log 47 / 47 ^ 2 + Real.log 53 / 53 ^ 2 + Real.log 59 / 59 ^ 2 + Real.log 61 / 61 ^ 2 + Real.log 67 / 67 ^ 2 + Real.log 71 / 71 ^ 2 + Real.log 73 / 73 ^ 2 + Real.log 79 / 79 ^ 2 + Real.log 83 / 83 ^ 2 + Real.log 89 / 89 ^ 2 + Real.log 97 / 97 ^ 2 + Real.log 101 / 101 ^ 2 + Real.log 103 / 103 ^ 2 + Real.log 107 / 107 ^ 2 + Real.log 109 / 109 ^ 2 + Real.log 113 / 113 ^ 2 + Real.log 127 / 127 ^ 2 + Real.log 131 / 131 ^ 2 + Real.log 137 / 137 ^ 2 + Real.log 139 / 139 ^ 2 + Real.log 149 / 149 ^ 2 + Real.log 151 / 151 ^ 2 + Real.log 157 / 157 ^ 2 + Real.log 163 / 163 ^ 2 + Real.log 167 / 167 ^ 2 + Real.log 173 / 173 ^ 2 + Real.log 179 / 179 ^ 2 + Real.log 181 / 181 ^ 2 + Real.log 191 / 191 ^ 2 + Real.log 193 / 193 ^ 2 + Real.log 197 / 197 ^ 2 + Real.log 199 / 199 ^ 2 + Real.log 211 / 211 ^ 2 + Real.log 223 / 223 ^ 2 + Real.log 227 / 227 ^ 2 + Real.log 229 / 229 ^ 2 + Real.log 233 / 233 ^ 2 + Real.log 239 / 239 ^ 2 := by
-  simp only [Finset.sum_range_succ, Finset.sum_range_zero]
-  norm_num
+  norm_num [Finset.sum_range_succ, Finset.sum_range_zero]
 
 end W5
 
@@ -385,15 +380,12 @@ namespace W5
 
 lemma tele (u h : ℝ) (hh : 0 < h) (hu : 2 * h ≤ u) (hlog : 2 ≤ Real.log u) :
     h * (Real.log u / u ^ 2) ≤ (Real.log (u - h) + 1) / (u - h) - (Real.log u + 1) / u := by
-  obtain ⟨v, hv⟩ : ∃ v, v = u - h := ⟨_, rfl⟩
+  set v : ℝ := u - h
   have hu' : u = v + h := by linarith
   have hv0 : 0 < v := by linarith
-  have hu0 : 0 < u := by linarith
-  rw [← hv]
-  have h1 := log_le_near u v hu0 hv0
   have h2 : Real.log u - h / v ≤ Real.log v := by
     have : (u - v) / v = h / v := by rw [hu']; ring
-    linarith
+    linarith [log_le_near u v (by linarith) hv0]
   set ℓ := Real.log u with hℓ
   have h3 : (ℓ - h / v + 1) / v ≤ (Real.log v + 1) / v :=
     div_le_div_of_nonneg_right (by linarith) hv0.le
@@ -409,20 +401,16 @@ lemma tele (u h : ℝ) (hh : 0 < h) (hu : 2 * h ≤ u) (hlog : 2 ≤ Real.log u)
   linarith
 
 lemma exp_two_le : Real.exp 2 ≤ 8 := by
-  have h := Real.exp_one_lt_d9
-  have h0 := Real.exp_pos 1
-  have : Real.exp 2 = Real.exp 1 * Real.exp 1 := by rw [← Real.exp_add]; norm_num
-  rw [this]
-  nlinarith
+  rw [show Real.exp 2 = Real.exp 1 * Real.exp 1 by rw [← Real.exp_add]; norm_num]
+  nlinarith [Real.exp_one_lt_d9, Real.exp_pos 1]
 
 lemma anti (u v : ℝ) (hu : 8 ≤ u) (huv : u ≤ v) :
     Real.log v / v ^ 2 ≤ Real.log u / u ^ 2 := by
   have hA := Real.log_div_self_rpow_antitoneOn (a := 2) (by norm_num)
-  have he : Real.exp (2 : ℝ)⁻¹ ≤ 8 := by
-    refine le_trans (Real.exp_le_exp.2 ?_) exp_two_le
-    norm_num
-  have := hA (a := u) (b := v) (Set.mem_Ici.2 (by linarith)) (Set.mem_Ici.2 (by linarith)) huv
-  simpa [Real.rpow_two] using this
+  have he : Real.exp (2 : ℝ)⁻¹ ≤ 8 :=
+    (Real.exp_le_exp.2 (by norm_num)).trans exp_two_le
+  simpa [Real.rpow_two] using
+    hA (a := u) (b := v) (Set.mem_Ici.2 (by linarith)) (Set.mem_Ici.2 (by linarith)) huv
 
 lemma blk (K : ℕ) (hK : 40 ≤ K) :
     ∑ n ∈ Finset.Ico 240 (6 * K),
@@ -552,12 +540,10 @@ lemma lw_nonneg (w : HeightOneSpectrum (𝓞 K)) : 0 ≤ lw w :=
 lemma vw_int (w : HeightOneSpectrum (𝓞 K)) (x : 𝓞 K) :
     vw w (x : K) = FractionalIdeal.count K w
       ((Ideal.span {x} : Ideal (𝓞 K)) : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) := by
-  unfold vw
-  rw [FractionalIdeal.coeIdeal_span_singleton]
+  simp only [vw, FractionalIdeal.coeIdeal_span_singleton]
 
 lemma vw_nat_nonneg (w : HeightOneSpectrum (𝓞 K)) (n : ℕ) : 0 ≤ vw w (n : K) := by
-  have h : ((n : 𝓞 K) : K) = (n : K) := map_natCast _ n
-  rw [← h, vw_int]
+  rw [← map_natCast (algebraMap (𝓞 K) K) n, vw_int]
   exact FractionalIdeal.count_coe_nonneg K w _
 
 end W5

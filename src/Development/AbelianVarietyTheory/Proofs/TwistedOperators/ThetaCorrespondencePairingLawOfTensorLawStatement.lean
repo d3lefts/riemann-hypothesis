@@ -266,11 +266,7 @@ theorem exists_unitary_span (r s : ℕ) (W U I : Type) [AddCommGroup W] [Module 
       LinearMap.range inc = Submodule.span ℂ {y | ∃ i P, y = j i P} ∧
       ∀ Z ∈ upq r s, ∀ y, inc (MM.M.act Z y) = b Z (inc y) := by
   first
-  | exact @_root_.GlobalTheory.RealPartAdjointAction.main
-  | exact _root_.GlobalTheory.RealPartAdjointAction.main
   | (apply _root_.GlobalTheory.RealPartAdjointAction.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.RealPartAdjointAction.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.RealPartAdjointAction.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.RealPartAdjointAction.main ..)
 
 end GlobalTheory.ArchRec.SpanMod
@@ -297,7 +293,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.ArchRec
 
 theorem _root_.GlobalTheory.T.exists_unitary_module_onto_span_of_intertwining : ∀ (r s : ℕ) (W U I : Type) [AddCommGroup W] [Module ℂ W] [NormedAddCommGroup U] [InnerProductSpace ℂ U] (a : Mat r s →ₗ[ℂ] Module.End ℂ W) (b : Mat r s → Module.End ℂ U) (j : I → W →ₗ[ℂ] U), IsGK a → IsUAct b → (∀ i, ∀ Z ∈ upq r s, ∀ P, j i (a Z P) = b Z (j i P)) → ∃ (MM : UGKMod r s) (inc : MM.M.V →ₗ[ℂ] U), Function.Injective inc ∧ LinearMap.range inc = Submodule.span ℂ {y | ∃ i P, y = j i P} ∧ ∀ Z ∈ upq r s, ∀ y, inc (MM.M.act Z y) = b Z (inc y) := by
-  first | exact @GlobalTheory.ArchRec.SpanMod.exists_unitary_span | exact GlobalTheory.ArchRec.SpanMod.exists_unitary_span | (intros; apply GlobalTheory.ArchRec.SpanMod.exists_unitary_span <;> assumption)
+  first | exact @GlobalTheory.ArchRec.SpanMod.exists_unitary_span
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsUnitarySpanStatement =====
@@ -529,7 +525,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.ArchRec
 
 theorem _root_.GlobalTheory.T.thetaCorrespondence_pairingLaw_of_tensorLaw : ∀ (p q r s : ℕ) (T₁ : GrpData p q) (σ : Type) (a₁ : Mat p q →ₗ[ℂ] Module.End ℂ (MvPolynomial σ ℂ)) (a₂ : Mat r s →ₗ[ℂ] Module.End ℂ (MvPolynomial σ ℂ)) (R₁ : DSRep T₁) (T₂ : GrpData r s) (R₂ : DSRep T₂) (Λ₁ : Ix p q → ℚ) (Λ₂ : Ix r s → ℚ), IsGK a₁ → IsGK a₂ → AdmGK R₁.HK → Module.finrank ℂ ↥(hwSub R₁.HK.act Λ₁) = 1 → TensLaw a₁ a₂ R₁ R₂ Λ₁ Λ₂ → PairLaw a₁ a₂ R₁ R₂ Λ₁ Λ₂ := by
-  first | exact @GlobalTheory.ArchRec.PairOfTens.pairLaw_of_tensLaw | exact GlobalTheory.ArchRec.PairOfTens.pairLaw_of_tensLaw | (intros; apply GlobalTheory.ArchRec.PairOfTens.pairLaw_of_tensLaw <;> assumption)
+  first | exact @GlobalTheory.ArchRec.PairOfTens.pairLaw_of_tensLaw
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ThetaCorrespondencePairingLawOfTensorLawStatement =====

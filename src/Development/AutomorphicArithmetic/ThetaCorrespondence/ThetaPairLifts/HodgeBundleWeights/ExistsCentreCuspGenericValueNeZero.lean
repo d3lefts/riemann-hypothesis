@@ -628,7 +628,7 @@ theorem norm_lminor_le {r : ℕ} (g : Matrix (Fin r) (Fin r) ℂ)
     have h := hg (Pi.single b 1)
     have h1 : ReciprocityTheory.MultiplicativeHeights.normSq (Pi.single b 1 : Fin r → ℂ) = 1 := by
       unfold ReciprocityTheory.MultiplicativeHeights.normSq
-      rw [Finset.sum_eq_single b] <;> simp +contextual [Pi.single_apply]
+      rw [Finset.sum_eq_single b] <;> simp +contextual
     have h2 : ‖g a b‖ ^ 2 ≤ ReciprocityTheory.MultiplicativeHeights.normSq (g *ᵥ Pi.single b 1) := by
       unfold ReciprocityTheory.MultiplicativeHeights.normSq
       have := Finset.single_le_sum (f := fun k => ‖(g *ᵥ Pi.single b 1) k‖ ^ 2) (fun _ _ => sq_nonneg _)
@@ -755,7 +755,7 @@ theorem eq_one_of_cong {K : Type} [Field K] [NumberField K] {r M : ℕ} (hM : 5 
         simpa [Matrix.mulVec_mulVec, Matrix.nonsing_inv_mul _ hQu] using this
       have hmap : ((M : K)⁻¹ • (γ - 1)).map σ = (M : ℂ)⁻¹ • (γ.map σ - 1) := by
         ext a b
-        by_cases hab : a = b <;> simp [Matrix.one_apply, hab]
+        by_cases hab : a = b <;> simp [hab]
       have h1 := hb σ u
       rw [hQ, hQ] at h1
       rw [hQ, hQ, hmap, Matrix.smul_mulVec, Matrix.mulVec_smul, Matrix.sub_mulVec, Matrix.one_mulVec,
@@ -1694,7 +1694,7 @@ open NumberField GlobalTheory.AllWt GlobalTheory.CompHt GlobalTheory.DegCmp Glob
 open scoped ENNReal NNReal
 
 theorem _root_.GlobalTheory.T.exists_centre_cusp_generic_value_ne_zero : GlobalTheory.CovTop.HypothesesX → GlobalTheory.Published.GrothendieckDeformation → GlobalTheory.HSCore.Quoted → GlobalTheory.Published.SiegelToroidalIntegral → _root_.GlobalTheory.CovTop.Hypotheses'' → GlobalTheory.Published.NadelVanishingAndNonKltDivisor → GlobalTheory.Published.Principalisation → ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j : ℕ, 1 ≤ (T.Q.Dw j).p → 1 ≤ (T.Q.Dw j).q → ∀ (Y : Deep T.toCore j) (e : ℕ) (o : ℝ), Y.Good e o → ∀ (u : GlobalTheory.AllWt.Weight (T.Q.Dw j)), (∀ τ (a b : Fin ((T.Q.Dw j).p + (T.Q.Dw j).q)), (b : ℕ) = a + 1 → (((dimFlag (T.Q.Dw j) + 3) ^ 2 + 2 * ((T.Q.Dw j).p + (T.Q.Dw j).q) : ℕ) : ℤ) ≤ u τ a - u τ b) → ∀ Z : Comp Y.d.Xo₂ Y.d.c₂, ∃ f ∈ cuspOn Y.U Z (wtOf (T.Q.Dw j) u 0), genVal Z f ≠ 0 := by
-  first | exact @_root_.GlobalTheory.CentreCusp.exists_cusp_with_generic_value_ne_zero | exact _root_.GlobalTheory.CentreCusp.exists_cusp_with_generic_value_ne_zero | (intros; apply _root_.GlobalTheory.CentreCusp.exists_cusp_with_generic_value_ne_zero <;> assumption)
+  first | exact @_root_.GlobalTheory.CentreCusp.exists_cusp_with_generic_value_ne_zero
 end
 end -- clump:auto
 end -- clump:auto

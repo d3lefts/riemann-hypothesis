@@ -70,7 +70,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open Formalism.MainNotions.S
 
 theorem _root_.GlobalTheory.T.exists_intertwiner_of_invariantPairing_admissible : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] (K : Subgroup G), IsOpen (K : Set G) → IsCompact (K : Set G) → ∀ (W W' : Type) [AddCommGroup W] [Module ℂ W] [AddCommGroup W'] [Module ℂ W'] (σ : Representation ℂ G W) (σ' : Representation ℂ G W'), IsAdmissible σ → GlobalTheory.PRep.IsSmooth σ' → ∀ (B : W →ₗ[ℂ] W →ₛₗ[starRingEnd ℂ] ℂ) (C : W →ₗ[ℂ] W' →ₛₗ[starRingEnd ℂ] ℂ), (∀ x, x ≠ 0 → 0 < (B x x).re) → (∀ g x y, B (σ g x) (σ g y) = B x y) → (∀ g x y, C (σ g x) (σ' g y) = C x y) → ∃ φ : W' →ₗ[ℂ] W, (∀ g y, φ (σ' g y) = σ g (φ y)) ∧ ∀ x y, C x y = B x (φ y) := by
-  first | exact @GlobalTheory.InvPairing.exists_intertwiner | exact GlobalTheory.InvPairing.exists_intertwiner | (intros; apply GlobalTheory.InvPairing.exists_intertwiner <;> assumption)
+  first | exact @GlobalTheory.InvPairing.exists_intertwiner
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIntertwinerOfInvariantPairingAdmissibleStatement =====
@@ -108,7 +108,7 @@ theorem exists_clm_of_inner_eq {ι H K : Type} [NormedAddCommGroup H] [InnerProd
     intro f
     have h := congrArg norm (hin f f)
     rw [inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K, norm_mul, norm_pow, norm_pow] at h
-    simp only [RCLike.norm_ofReal, Complex.norm_real, abs_norm, norm_norm] at h
+    simp only [RCLike.norm_ofReal, abs_norm] at h
     rw [← Real.sqrt_sq (norm_nonneg (p' f)), h, Real.sqrt_mul (norm_nonneg c), Real.sqrt_sq (norm_nonneg _)]
   have hker : LinearMap.ker p ≤ LinearMap.ker p' := fun f hf => by
     rw [LinearMap.mem_ker] at hf ⊢

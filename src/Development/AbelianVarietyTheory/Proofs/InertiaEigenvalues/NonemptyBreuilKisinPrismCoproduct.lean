@@ -451,7 +451,7 @@ theorem step (hlJ : (l : C) ∈ J) (n : ℕ) (w : _root_.WittVector l k) :
       rw [ghost_eq]
       refine Finset.sum_congr rfl fun i hi => ?_
       have hi' := Finset.mem_range.mp hi
-      simp only [z, _root_.WittVector.coeff_mk]
+      simp only [z]
       rw [← pow_mul, ← pow_succ']
       congr 3
       omega
@@ -831,7 +831,7 @@ theorem BK.X_pow_eq_sub {l : ℕ} [Fact l.Prime] {K : FinExt l} (bk : BK K) :
   refine ⟨(q : bk.S), ?_⟩
   have := congrArg (Polynomial.coeToPowerSeries.ringHom (R := Wq l bk.a)) hq
   simp only [map_sub, map_pow, map_mul, Polynomial.coeToPowerSeries.ringHom_apply, Polynomial.coe_X,
-    Polynomial.coe_C, map_natCast] at this
+    map_natCast] at this
   linear_combination -this
 
 theorem isHausdorff_quot {l : ℕ} [Fact l.Prime] {R : Type} [CommRing R] (P : Obj l R) (d : P.A)
@@ -1121,11 +1121,7 @@ theorem exists_eq_of_mem_pow_succ_pair (a d : A) (n : ℕ) {x : A}
     (hx : x ∈ (Ideal.span {a} ⊔ Ideal.span {d}) ^ (n + 1)) :
     ∃ u : A, ∃ w ∈ (Ideal.span {a} ⊔ Ideal.span {d}) ^ n, x = a ^ (n + 1) * u + d * w := by
   first
-  | exact @_root_.GlobalTheory.PowerBound.main
-  | exact _root_.GlobalTheory.PowerBound.main
   | (apply _root_.GlobalTheory.PowerBound.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.PowerBound.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.PowerBound.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.PowerBound.main ..)
 
 theorem mem_pow_of_mul_mem_pow_pair (a d : A) (N : ℕ) (hd : d ∈ nonZeroDivisors A)

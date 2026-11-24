@@ -368,10 +368,9 @@ theorem unip_mul_diag_cone : ∀ (E : Type) [Field E] [NumberField E] [_root_.Nu
     ext k l w
     rw [add_mul, mul_add, one_mul, mul_one, Matrix.add_apply, Matrix.add_apply, Matrix.mul_diagonal,
       Matrix.diagonal_mul]
-    congr 1
     simp only [nilM, Matrix.of_apply]
     split_ifs with h
-    · simp only [Pi.add_apply, Pi.mul_apply, Pi.smul_apply, smul_eq_mul, Complex.real_smul, add_right_inj]
+    · simp only [Pi.add_apply, Pi.mul_apply, Pi.smul_apply, Complex.real_smul, add_right_inj]
       have := hr k
       have hk0 : (r k : ℂ) ≠ 0 := by exact_mod_cast this.ne'
       push_cast
@@ -782,7 +781,7 @@ theorem iterated_decay : GlobalTheory.Published.AutomorphicFormsFiniteGL → ∀
       obtain ⟨C1, hC1⟩ := htame (l ++ [Y])
       refine ⟨C1, fun y => ?_⟩
       have e : (l.map (lie E a)).prod (lie E a Y ψ) = ((l ++ [Y]).map (lie E a)).prod ψ := by
-        simp [List.map_append, List.prod_append, Module.End.mul_apply]
+        simp [List.map_append, List.prod_append]
       rw [e]
       exact hC1 y
     choose! CY hCY0 hCY using hY
@@ -1301,7 +1300,7 @@ theorem GlobalTheory.upperCone_conj_compact : ∀ (E : Type) [Field E] [NumberFi
       (hAc.prod (hBc.image MulOpposite.continuous_op))
   intro r d hr hcone hd b hb
   have hN : (fun p q : Fin a => if p ≤ q then r q / r p else 0) ∈ K := by
-    simp only [hK, Set.mem_pi]
+    simp only [hK]
     intro p _ q _
     rw [Set.mem_Icc]
     by_cases hpq : p ≤ q
@@ -1315,7 +1314,7 @@ theorem GlobalTheory.upperCone_conj_compact : ∀ (E : Type) [Field E] [NumberFi
     exact Matrix.blockTriangular_inv_of_blockTriangular (htri b hb)
   refine ⟨?_, ?_⟩
   · refine ⟨(_, b), ⟨hN, hb⟩, ?_⟩
-    simp only [Units.val_mul]
+    simp only
     exact (GlobalTheory.upperCone_conj_diag_eq a r hr d hd b.val (htri b hb)).symm
   · refine ⟨(d⁻¹ * b * d)⁻¹.val, ⟨(_, b), ⟨hN, hb⟩, ?_⟩, rfl⟩
     have : (d⁻¹ * b * d)⁻¹ = d⁻¹ * b⁻¹ * d := by group

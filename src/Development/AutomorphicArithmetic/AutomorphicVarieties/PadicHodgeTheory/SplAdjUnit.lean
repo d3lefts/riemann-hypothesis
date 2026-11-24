@@ -274,7 +274,7 @@ private theorem key {B S : Type} [CommRing B] [HenselianLocalRing B] [CommRing S
       rw [hFψ, Polynomial.eval_mul, Polynomial.eval_sub, Polynomial.eval_X, Polynomial.eval_C, sub_self, zero_mul]
     have hder : (Polynomial.derivative (F.map ψ)).eval c ≠ 0 := by
       rw [hFψ, Polynomial.derivative_mul]
-      simp only [Polynomial.derivative_sub, Polynomial.derivative_X, Polynomial.derivative_C, sub_zero, one_mul, Polynomial.eval_add, Polynomial.eval_mul, Polynomial.eval_sub, Polynomial.eval_X, Polynomial.eval_C, sub_self, zero_mul, add_zero]
+      simp only [Polynomial.derivative_sub, Polynomial.derivative_X, Polynomial.derivative_C, sub_zero, one_mul, Polynomial.eval_add, Polynomial.eval_mul, Polynomial.eval_sub, Polynomial.eval_X, Polynomial.eval_C]
       rw [show c - ∏ i ∈ I0, θb i = 0 from sub_self _, zero_mul, add_zero]
       exact hGc
     have h1 : F.eval A ∈ IsLocalRing.maximalIdeal B := by
@@ -611,7 +611,7 @@ private theorem spl_adj_mul (X Y : M4 R) : adj (X * Y) = adj Y * adj X := by
 
 private theorem spl_adj_one : adj (1 : M4 R) = 1 := by
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [adj_apply, sgn, Fin.rev, Matrix.one_apply]
+  fin_cases i <;> fin_cases j <;> simp [adj_apply, sgn, Fin.rev]
 
 private theorem spl_conj {ν : R} {X : M4 R} (h : IsGSp ν X) (u v : M4 R) (hv : v * u = 1) :
     adj (u * X * v) * (adj v * v) * (u * X * v) = ν • (adj v * v) := by

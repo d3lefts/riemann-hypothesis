@@ -311,7 +311,7 @@ theorem mirProj_eq_one_of_unip (n : ℕ) (u : Mir k n) (v : Multiplicative (Fin 
   ext i j
   show blockMat k n ((u : GL (Fin (n + 1)) k) : Matrix (Fin (n + 1)) (Fin (n + 1)) k) i j = _
   rw [hu]
-  simp [blockMat, unip, colMat, Fin.castSucc_ne_last, one_apply]
+  simp [blockMat, unip, colMat, Fin.castSucc_ne_last]
   change (if i.castSucc = j.castSucc then (1 : k) else 0) = if i = j then 1 else 0
   simp
 
@@ -458,7 +458,7 @@ theorem exists_compactOpen_between_mul_small
   have hLo : IsOpen (L : Set K₀) := Subgroup.isOpen_mono (le_sup_left : M ≤ L) hMo
   have hLc : IsClosed (L : Set K₀) := OpenSubgroup.isClosed ⟨L, hLo⟩
   have himg : ((L.map K₀.subtype : Subgroup G) : Set G) = Subtype.val '' (L : Set K₀) := by
-    ext x; simp [Subgroup.mem_map]
+    ext x; simp
   refine ⟨L.map K₀.subtype, ?_, ?_, ?_, ?_, ?_⟩
   · rw [himg]
     exact hK₀o.isOpenMap_subtype_val _ hLo
@@ -812,7 +812,6 @@ theorem piPerm_last_val (i t : ℕ) : ((piPerm i t (Fin.last ((i + 1) + t)) : Fi
     exact GlobalTheory.CompanionTheory.LeibPhi.blockIndex_false_val (i + 1) t (Fin.last i)
   first
     | (simp only [GlobalTheory.CompanionTheory.BZPhiPG.piPerm, Equiv.trans_apply]; exact key _ rfl)
-    | exact key _ rfl
 
 variable (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 

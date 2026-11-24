@@ -557,12 +557,10 @@ theorem mean_fundamentalDomain_of_le : ∀ (g : ℕ) (Λ Λ₁ : AddSubgroup (Fi
     by_contra h
     rw [integral_undef h] at hab; exact hb hab.symm
   have hD0 : volume D₁ ≠ 0 := fun h => hb (by simp [h])
-  have hinv₁ : ∀ (γ : Λ₁) (x : Fin g → ℂ), f (γ +ᵥ x) = f x := fun γ x => by
-    show f ((γ : Fin g → ℂ) + x) = f x
-    rw [add_comm]; exact hper _ γ.2 x
-  have hinv : ∀ (l : Λ) (x : Fin g → ℂ), f (l +ᵥ x) = f x := fun l x => by
-    show f ((l : Fin g → ℂ) + x) = f x
-    rw [add_comm]; exact hper _ (hle l.2) x
+  have hinv₁ : ∀ (γ : Λ₁) (x : Fin g → ℂ), f (γ +ᵥ x) = f x :=
+    fun γ x => by simpa [AddSubgroup.vadd_def, add_comm] using hper _ γ.2 x
+  have hinv : ∀ (l : Λ) (x : Fin g → ℂ), f (l +ᵥ x) = f x :=
+    fun l x => hinv₁ ⟨(l : Fin g → ℂ), hle l.2⟩ x
   let Q := Λ₁ ⧸ Λ.addSubgroupOf Λ₁
   haveI : Countable Λ := (AddSubgroup.inclusion_injective hle).countable
   haveI : Countable Q := (QuotientAddGroup.mk_surjective (s := Λ.addSubgroupOf Λ₁)).countable
@@ -575,17 +573,9 @@ theorem mean_fundamentalDomain_of_le : ∀ (g : ℕ) (Λ Λ₁ : AddSubgroup (Fi
   let E := ⋃ q, s q
   have key : ∀ (l : Λ) (q : Q), l +ᵥ s q =
       ((⟨(l : Fin g → ℂ) + rep q, Λ₁.add_mem (hle l.2) (rep q).2⟩ : Λ₁) +ᵥ D₁) := by
-    intro l q; ext x
-    simp only [s, Set.mem_vadd_set]
-    constructor
-    · rintro ⟨y, ⟨z, hz, rfl⟩, rfl⟩
-      refine ⟨z, hz, ?_⟩
-      show ((l : Fin g → ℂ) + rep q) + z = (l : Fin g → ℂ) + ((rep q : Fin g → ℂ) + z)
-      abel
-    · rintro ⟨z, hz, rfl⟩
-      refine ⟨(rep q : Fin g → ℂ) +ᵥ z, ⟨z, hz, rfl⟩, ?_⟩
-      show (l : Fin g → ℂ) + ((rep q : Fin g → ℂ) + z) = ((l : Fin g → ℂ) + rep q) + z
-      abel
+    intro l q
+    simp only [s, AddSubgroup.vadd_def]
+    rw [vadd_vadd]
   have hE : IsAddFundamentalDomain Λ E volume := by
     refine ⟨NullMeasurableSet.iUnion fun q => (hs q).nullMeasurableSet, ?_, ?_⟩
     · filter_upwards [hD₁.ae_covers] with x ⟨γ, hγ⟩
@@ -596,7 +586,8 @@ theorem mean_fundamentalDomain_of_le : ∀ (g : ℕ) (Λ Λ₁ : AddSubgroup (Fi
       refine Set.mem_vadd_set.2 ⟨γ +ᵥ x, hγ, ?_⟩
       show (rep (QuotientAddGroup.mk (-γ)) : Fin g → ℂ) + ((γ : Fin g → ℂ) + x) =
         ((γ + rep (QuotientAddGroup.mk (-γ)) : Λ₁) : Fin g → ℂ) + x
-      push_cast; abel
+      push_cast
+      abel
     · intro l l' hne
       simp only [Function.onFun, E, Set.vadd_set_iUnion]
       rw [AEDisjoint.iUnion_left_iff]; intro q
@@ -607,12 +598,11 @@ theorem mean_fundamentalDomain_of_le : ∀ (g : ℕ) (Λ Λ₁ : AddSubgroup (Fi
       have hv : (l : Fin g → ℂ) + rep q = l' + rep q' := congrArg Subtype.val heq
       have hqq : q = q' := by
         rw [← hrep q, ← hrep q', QuotientAddGroup.eq, AddSubgroup.mem_addSubgroupOf]
-        have : ((-rep q + rep q' : Λ₁) : Fin g → ℂ) = (l : Fin g → ℂ) - l' := by
+        have hval : ((-rep q + rep q' : Λ₁) : Fin g → ℂ) = (l : Fin g → ℂ) - l' := by
           push_cast
-          calc -(rep q : Fin g → ℂ) + rep q' = -(rep q : Fin g → ℂ) + rep q' + ((l : Fin g → ℂ) + rep q - (l' + rep q')) := by
-                rw [hv, sub_self, add_zero]
-            _ = (l : Fin g → ℂ) - l' := by abel
-        rw [this]; exact Λ.sub_mem l.2 l'.2
+          linear_combination (norm := abel) -hv
+        rw [hval]
+        exact Λ.sub_mem l.2 l'.2
       subst hqq
       exact hne (Subtype.ext (add_right_cancel hv))
   have hvol : ∀ q, volume (s q) = volume D₁ := fun q => (hs q).measure_eq hD₁
@@ -626,7 +616,6 @@ theorem mean_fundamentalDomain_of_le : ∀ (g : ℕ) (Λ Λ₁ : AddSubgroup (Fi
     rw [not_finite_iff_infinite] at hinf
     exact hfin (by rw [← hEFd, hvolE]; exact ENNReal.tsum_const_eq_top_of_ne_zero hD0)
   haveI := Fintype.ofFinite Q
-  have hn : (Fintype.card Q : ℝ) ≠ 0 := by exact_mod_cast Fintype.card_ne_zero
   have hintE : IntegrableOn f E volume :=
     integrableOn_finite_iUnion.2 fun q => ((hs q).integrableOn_iff hD₁ hinv₁).2 hint
   have hsi : ∀ q, ∫ z in s q, f z = ∫ z in D₁, f z := fun q => (hs q).setIntegral_eq hD₁ hinv₁

@@ -251,7 +251,7 @@ theorem glueTup_proj (X : Fin n → Fin M → AF F ⊗[F] E) :
   refine GlobalTheory.GaugeGlue.tens_ext b fun k => ?_
   simp only [glueTup]
   rw [← Module.Basis.equivFun_apply, LinearEquiv.apply_symm_apply]
-  simp only [projInf, projFin, Module.Basis.equivFun_apply, GlobalTheory.GaugeGlue.repr_map]
+  simp only [projInf, projFin, GlobalTheory.GaugeGlue.repr_map]
   rfl
 
 end GlobalTheory.ProdCont
@@ -361,7 +361,7 @@ open NumberField IsDedekindDomain MeasureTheory Formalism.MainNotions.GlobalTheo
 open scoped TensorProduct ENNReal
 
 theorem _root_.GlobalTheory.T.meanL_tsum_ofReal_eq_ofReal_re_meanC : ∀ (G : Type) [MeasurableSpace G] (μ : Measure G) (𝓕 : Set G) (ι : Type) [Countable ι] (f : ι → G → ℝ), (∀ i, Measurable (f i)) → (∀ i h, 0 ≤ f i h) → μ 𝓕 < ⊤ → ∫⁻ h in 𝓕, ∑' i, ‖((f i h : ℝ) : ℂ)‖ₑ ∂μ < ⊤ → meanL μ 𝓕 (fun h => ∑' i, ENNReal.ofReal (f i h)) = ENNReal.ofReal (meanC μ 𝓕 (fun h => ∑' i, ((f i h : ℝ) : ℂ))).re := by
-  first | exact @GlobalTheory.meanL_eq_ofReal_meanC_re | exact GlobalTheory.meanL_eq_ofReal_meanC_re | (intros; apply GlobalTheory.meanL_eq_ofReal_meanC_re <;> assumption)
+  first | exact @GlobalTheory.meanL_eq_ofReal_meanC_re
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.MeanLEqOfRealMeanCReStatement =====

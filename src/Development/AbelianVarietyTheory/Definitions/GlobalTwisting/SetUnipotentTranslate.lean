@@ -371,10 +371,9 @@ def Over (D : D7) (P : PreCh) (Lv : LevCh P) : Prop :=
 
 theorem Over.host_heq {D : D7} {P : PreCh} {Lv : LevCh P} (h : Over D P Lv) : D.R = P.R ∧ HEq D.host Lv.host := by
   obtain ⟨sp, hT, hY, hA, hV, hz, X, h1, rfl⟩ := h
-  have key : ∀ B : Pre, B = Pre.ofCh P Lv sp hT hY hA hV hz → B.R = P.R ∧ HEq B.host Lv.host := by
-    rintro B rfl
-    exact ⟨rfl, HEq.rfl⟩
-  exact key X.B.toPre h1
+  change X.B.toPre.R = P.R ∧ HEq X.B.toPre.host Lv.host
+  rw [h1]
+  exact ⟨rfl, HEq.rfl⟩
 
 theorem Over.field {D : D7} {P : PreCh} {Lv : LevCh P} (h : Over D P Lv) : HEq D.host.toHostAx P.H.toHostAx := by
   have key : ∀ (R : Ranks) (H : Host R), R = P.R → HEq H Lv.host → HEq H.toHostAx P.H.toHostAx := by
@@ -561,10 +560,8 @@ section Local
 variable {L : SizeData₂ D} (X : G.Inst D L) (K : G.Consts) (a b : G.HH D → ℤ) (p j : ℕ)
 
 theorem VV_tr : G.VV (instTr N h X) K a b p = G.VV X K a b p := by
-  have e1 : G.Cand _ (ledTr N h L) K p = G.Cand D L K p := rfl
-  have e2 : G.goodReps (instTr N h X) p = G.goodReps X p := rfl
-  have e3 : G.Sig (instTr N h X) K a b p = G.Sig X K a b p := rfl
-  unfold G.VV; rw [e1, e2, e3]
+  unfold G.VV
+  rfl
 
 theorem tau_translate : G.tauP (instTr N h X) K a b p = G.tauP X K a b p := by
   unfold G.tauP; rw [VV_tr]; rfl
@@ -586,11 +583,7 @@ theorem fills_tr (w : D.what₂.places.Pl) (H : G.ParametersFill X K w) : G.Para
 theorem NP_tr (Y : G.LatInst D) (u : D.what₂.Word) (w : D.what₂.places.Pl)
     (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w)) :
     G.NP (instTr N h X) (latTr N h Y) K u w hg = G.NP X Y K u w hg := by
-  have e0 : G.aL (ledTr N h L) = G.aL L := rfl
-  have e1 : G.bL (ledTr N h L) = G.bL L := rfl
-  have e2 : ∀ a b p t, G.Sv (instTr N h X) K a b p t = G.Sv X K a b p t := fun _ _ _ _ => rfl
   unfold G.NP
-  simp only [e0, e1, e2, VV_tr, tau_translate]
   rfl
 
 end Local

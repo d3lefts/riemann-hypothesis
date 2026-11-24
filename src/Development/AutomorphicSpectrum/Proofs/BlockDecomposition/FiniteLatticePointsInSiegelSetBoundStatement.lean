@@ -129,7 +129,7 @@ theorem eq_of_act (h : IsCMExt F E σ) (hJ : IsHermND σ J) {X Y : Matrix (Fin n
   have hxP : Ax * P = 0 := by
     simp only [hP, Matrix.mul_sub, Matrix.mul_one, ← Matrix.mul_assoc, xx, xy, Matrix.zero_mul, Matrix.one_mul, sub_zero, sub_self]
   have hyP : Ay * P = 0 := by
-    simp only [hP, Matrix.mul_sub, Matrix.mul_one, ← Matrix.mul_assoc, yx, yy, Matrix.zero_mul, Matrix.one_mul, sub_zero, sub_self]
+    simp only [hP, Matrix.mul_sub, Matrix.mul_one, ← Matrix.mul_assoc, yx, yy, Matrix.zero_mul, Matrix.one_mul, sub_self]
   have hMP : M * P.map τ = P.map τ := by
     ext i j
     have e := hZ (fun a => P a j) (funext fun k => congrFun (congrFun hxP k) j) (funext fun k => congrFun (congrFun hyP k) j)
@@ -304,7 +304,7 @@ theorem _root_.GlobalTheory.T.finite_lattice_points_in_siegel_set_bound : ∀ (D
     ∃ (A : ℕ) (B : ℝ), ∀ t ∈ cone r c, ∀ a : GA D V, IsTorusElt D.sp.cm.sig V.gram X Y t a →
       {δ : GF V | a⁻¹ * rat V δ * a ∈ C}.Finite ∧
       (({δ : GF V | a⁻¹ * rat V δ * a ∈ C}.ncard : ℕ) : ℝ) ≤ B * (∏ i, max (t i) 1) ^ A := by
-  first | exact @GlobalTheory.CompanionTheory.TorusCount.torus_count | exact GlobalTheory.CompanionTheory.TorusCount.torus_count | (intros; apply GlobalTheory.CompanionTheory.TorusCount.torus_count <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.TorusCount.torus_count
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiniteLatticePointsInSiegelSetBoundStatement =====

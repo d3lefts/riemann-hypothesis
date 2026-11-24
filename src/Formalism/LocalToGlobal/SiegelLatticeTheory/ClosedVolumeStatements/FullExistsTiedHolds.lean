@@ -408,9 +408,6 @@ local notation "C" => integralClosure 𝒪[K] L
 theorem tf : Module.IsTorsionFree 𝒪[K] L := by
   first
     | exact Module.IsTorsionFree.trans_faithfulSMul 𝒪[K] K L
-    | (rw [Module.isTorsionFree_iff_faithfulSMul, faithfulSMul_iff_algebraMap_injective,
-        IsScalarTower.algebraMap_eq 𝒪[K] K L]
-       exact (algebraMap K L).injective.comp Subtype.val_injective)
 
 theorem dd : IsDedekindDomain C := integralClosure.isDedekindDomain 𝒪[K] K L
 theorem fr : IsFractionRing C L := integralClosure.isFractionRing_of_finite_extension K L
@@ -428,7 +425,6 @@ attribute [local instance] dd fr mf tfC
 theorem sepFR : Algebra.IsSeparable (FractionRing 𝒪[K]) (FractionRing C) := by
   first
     | infer_instance
-    | exact Algebra.IsAlgebraic.isSeparable_of_perfectField
 
 attribute [local instance] sepFR
 
@@ -786,8 +782,7 @@ private theorem small_lemma_5 (hcont : Continuous (algebraMap ℚ_[l] K)) (y : K
     ∃ N : ℕ, ∀ k ≥ N, algebraMap ℚ_[l] K ((l : ℚ_[l]) ^ k) * y ∈ 𝒪[K] := by
   have h1 : Filter.Tendsto (fun k : ℕ => (l : ℚ_[l]) ^ k) Filter.atTop (nhds 0) :=
     tendsto_pow_atTop_nhds_zero_of_norm_lt_one (by first
-      | exact Padic.norm_p_lt_one
-      | (rw [Padic.norm_p]; exact inv_lt_one_of_one_lt₀ (by exact_mod_cast (Fact.out : l.Prime).one_lt)))
+      | exact Padic.norm_p_lt_one)
   have h2 : Filter.Tendsto (fun k : ℕ => algebraMap ℚ_[l] K ((l : ℚ_[l]) ^ k) * y)
       Filter.atTop (nhds 0) := by
     have := ((hcont.tendsto 0).comp h1).mul_const y
@@ -835,8 +830,7 @@ theorem exists_ne_zero (hcont : Continuous (algebraMap ℚ_[l] K)) : ∃ x : K, 
     exact isCompact_iff_compactSpace.2 h
   obtain ⟨C, hC⟩ := hcpt.exists_bound_of_continuousOn hT.continuousOn
   have hl1 : ‖(l : ℚ_[l])‖ < 1 := (by first
-      | exact Padic.norm_p_lt_one
-      | (rw [Padic.norm_p]; exact inv_lt_one_of_one_lt₀ (by exact_mod_cast (Fact.out : l.Prime).one_lt)))
+      | exact Padic.norm_p_lt_one)
   have hpos : (0 : ℝ) < max C 1 := lt_of_lt_of_le one_pos (le_max_right C 1)
   obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one (inv_pos.2 hpos) hl1
   refine ⟨algebraMap ℚ_[l] K ((l : ℚ_[l]) ^ n), ?_, fun b => ?_⟩
@@ -1347,7 +1341,7 @@ theorem integral_mem_nhds_and_subset_compact_of_finrank_two [Module.Free K V] (h
         exact (hO x).mp hx
       obtain ⟨h1, h2⟩ := key_bound hθr hθ hdO hint
       refine ⟨h.symm x, ⟨(2 * (h.symm x).1, 2 * (h.symm x).2 * d), ⟨h1, h2⟩, ?_⟩, hpx⟩
-      refine Prod.ext ?_ ?_ <;> dsimp only <;> first | (field_simp; done) | (field_simp; ring)
+      refine Prod.ext ?_ ?_ <;> dsimp only <;> first | (field_simp; done)
 
 end None
 
@@ -1378,8 +1372,7 @@ theorem mem_ordR (sg : Formalism.MainNotions.S.Loc.SplitAt A.Fp A.Ep A.cj (Forma
     (h12 : Ideal.Quotient.mk (Ideal.span {sg.q}) ⟨(sg.e x).1, h1⟩ =
       Ideal.Quotient.mk (Ideal.span {sg.q}) ⟨(sg.e x).2, h2⟩) :
     x ∈ PI.LocHaarRR.ordR sg := by
-  simp only [PI.LocHaarRR.ordR]
-  rw [Subring.mem_comap, Subring.mem_map]
+  simp only [PI.LocHaarRR.ordR, Subring.mem_comap, Subring.mem_map]
   exact ⟨(⟨_, h1⟩, ⟨_, h2⟩), h12, rfl⟩
 
 theorem ordR_sub (sg : Formalism.MainNotions.S.Loc.SplitAt A.Fp A.Ep A.cj (Formalism.MainNotions.S.Loc.resChar p)) {x : A.Ep}
@@ -1486,19 +1479,16 @@ theorem resChar_eq {F : Type} [Field F] [NumberField F] (p : HeightOneSpectrum (
     {n : ℕ} (hn : n.Prime) (hp : ((n : ℕ) : 𝓞 F) ∈ p.asIdeal) :
     Formalism.MainNotions.S.Loc.resChar p = n := by
   have : Nontrivial (𝓞 F ⧸ p.asIdeal) := Ideal.Quotient.nontrivial_iff.mpr p.isPrime.ne_top
-  have h0 : ((n : ℕ) : 𝓞 F ⧸ p.asIdeal) = 0 := by
-    rw [← map_natCast (Ideal.Quotient.mk p.asIdeal) n]
-    exact Ideal.Quotient.eq_zero_iff_mem.mpr hp
   show ringChar (𝓞 F ⧸ p.asIdeal) = n
-  exact CharP.ringChar_of_prime_eq_zero (R := 𝓞 F ⧸ p.asIdeal) hn h0
+  exact CharP.ringChar_of_prime_eq_zero hn (by
+    rw [← map_natCast (Ideal.Quotient.mk p.asIdeal) n]
+    exact Ideal.Quotient.eq_zero_iff_mem.mpr hp)
 
 theorem le_exp_neg_one_of_lt_one {a : ℤᵐ⁰} (h : a < 1) : a ≤ exp (-1) := by
   rcases eq_or_ne a 0 with rfl | ha
   · exact zero_le
   · rw [← WithZero.exp_log ha] at h ⊢
-    have h' : WithZero.exp (WithZero.log a) < WithZero.exp (0 : ℤ) := by
-      rwa [WithZero.exp_zero]
-    rw [WithZero.exp_lt_exp] at h'
+    rw [← WithZero.exp_zero, WithZero.exp_lt_exp] at h
     rw [WithZero.exp_le_exp]
     omega
 
@@ -1516,9 +1506,8 @@ theorem vF_eq (x y : F) :
 theorem exists_val (a : A.Fp) (ha : a ≠ 0) :
     ∃ x : F, valuation A.Fp (A.ιF x) = valuation A.Fp a := by
   have := A.lf
-  have hv : ValuativeRel.valuation A.Fp a ≠ 0 := (ValuativeRel.valuation A.Fp).ne_zero_iff.mpr ha
-  obtain ⟨x, hx⟩ := A.dense.mem_nhds ((ValuativeRel.valuation A.Fp).locally_const hv)
-  exact ⟨x, hx⟩
+  exact A.dense.mem_nhds ((ValuativeRel.valuation A.Fp).locally_const
+    ((ValuativeRel.valuation A.Fp).ne_zero_iff.mpr ha))
 
 theorem natVal (n : ℕ) : p.valuation F ((n : ℕ) : F) = p.intValuation ((n : ℕ) : 𝓞 F) := by
   have h := p.valuation_of_algebraMap (K := F) ((n : ℕ) : 𝓞 F)
@@ -1590,9 +1579,7 @@ theorem unit {n : ℕ} (hn : ((n : ℕ) : 𝓞 F) ∉ p.asIdeal) :
     rw [natVal]
     exact HeightOneSpectrum.intValuation_eq_one_iff.mpr hn
   have hv : ValuativeRel.valuation A.Fp (A.ιF ((n : ℕ) : F)) = 1 := by
-    have h := (vF_eq A ((n : ℕ) : F) 1).mpr (by rw [hw, map_one])
-    simp only [map_one] at h
-    exact h
+    simpa using (vF_eq A ((n : ℕ) : F) 1).mpr (by rw [hw, map_one])
   have hmem : A.ιF ((n : ℕ) : F) ∈ 𝒪[A.Fp] := by
     rw [Valuation.mem_integer_iff, hv]
   refine ⟨⟨A.ιF ((n : ℕ) : F), hmem⟩, ?_, rfl⟩

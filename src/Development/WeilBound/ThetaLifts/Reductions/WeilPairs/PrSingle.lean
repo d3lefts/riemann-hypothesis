@@ -192,7 +192,7 @@ theorem cA_cAinv (σ : E →ₐ[F] E) (x : AE F E) : cA σ (cAinv σ x) = x := b
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a y =>
-    simp only [cAinv, cA, Algebra.TensorProduct.map_tmul, AlgHom.id_apply, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe]
+    simp only [cAinv, cA, Algebra.TensorProduct.map_tmul, AlgHom.id_apply, AlgEquiv.coe_toAlgHom]
     congr 1
     exact AlgEquiv.apply_symm_apply (AlgEquiv.ofBijective σ ⟨(σ : E →+* E).injective, sigma_surjective σ⟩) y
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
@@ -207,13 +207,13 @@ theorem at_single {n : ℕ} (k : Fin n) {t : AE F E} (ht : At (evI F) t) :
   funext j
   by_cases hj : j = k
   · subst hj; simp [ht u hu]
-  · simp [Pi.single_apply, hj]
+  · simp [hj]
 
 theorem at_vecMul {n : ℕ} {b : Fin n → AE F E} (hb : At (evI F) b) (A : Matrix (Fin n) (Fin n) (AE F E)) (k : Fin n) :
     At (evI F) ((b ᵥ* A) k) := by
   intro u hu
   have h := hb u hu
-  simp only [Matrix.vecMul, dotProduct, Finset.smul_sum, smul_mul_assoc]
+  simp only [Matrix.vecMul, dotProduct, Finset.smul_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [← smul_mul_assoc]
   have : u • b i = 0 := by simpa using congrFun h i
@@ -242,7 +242,7 @@ theorem eq_zero_of_trace_orth : ∀ {F E : Type} [Field F] [NumberField F] [Fiel
       funext j
       by_cases hj : j = k
       · subst hj; simp [cA_cAinv]
-      · simp [Pi.single_apply, hj]
+      · simp [hj]
     rw [hw, dotProduct_single] at h
     exact h
   calc b = b ᵥ* (incM F X.J * (incM F X.J)⁻¹) := by rw [Matrix.mul_nonsing_inv _ hdet, Matrix.vecMul_one]
@@ -371,8 +371,7 @@ theorem symp_eq (σ : E →ₐ[F] E) {n n₁ d : ℕ} (JX : Matrix (Fin n) (Fin 
   have e3 : vdiff σ c = (fun l => cA σ (c (Sum.inl l))) - fun l => cA σ (c (Sum.inr l)) := rfl
   rw [e1, e2, dbl, Matrix.fromBlocks_mulVec, e3, Matrix.mulVec_sub]
   simp only [dotProduct, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, Matrix.zero_mulVec, add_zero, zero_add,
-    Matrix.neg_mulVec, Pi.neg_apply, Pi.sub_apply, Pi.add_apply, mul_neg, mul_sub, Finset.sum_sub_distrib,
-    Finset.sum_neg_distrib, sub_eq_add_neg]
+    Matrix.neg_mulVec, Pi.neg_apply, Pi.sub_apply, mul_neg, Finset.sum_neg_distrib, sub_eq_add_neg]
   simp only [mul_add, mul_neg, Finset.sum_add_distrib, Finset.sum_neg_distrib]
   rfl
 
@@ -539,7 +538,6 @@ theorem PositivityTheory.ThKW.PhaseFourierInjectivity.finj : ∀ (F E : Type) [F
       ((fun i j => u (finProdFinEquiv (i, j))) : WOF F E nS nT)
     first
       | exact continuous_pi fun i => continuous_pi fun j => continuous_apply _
-      | fun_prop
   haveI : IsTopologicalAddGroup (AF F ⊗[F] E) := IsModuleTopology.topologicalAddGroup (AF F) (AF F ⊗[F] E)
   let E' : WOF F E nS nT ≃ₜ+ (Fin (nT * nS) → AF F ⊗[F] E) :=
     { toAddEquiv := vecE F E nS nT, continuous_toFun := he, continuous_invFun := he' }

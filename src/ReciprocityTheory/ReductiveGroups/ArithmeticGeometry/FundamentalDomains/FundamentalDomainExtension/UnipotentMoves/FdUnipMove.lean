@@ -336,7 +336,7 @@ theorem sFlagMap : SFlagMap E := by
       col (mat (X.lmulC n z) τ) a = (n τ).mulVec (col (mat z τ) a) := by
     intro z a
     funext k
-    simp [col, mat, Data.lmulC, Matrix.of_apply, Matrix.mul_apply, Matrix.mulVec, dotProduct]
+    simp [col, mat, Data.lmulC, Matrix.of_apply, Matrix.mulVec, dotProduct]
     rfl
   simp only [hcol]
   have hr : ∀ z : Frame X.Ψ r, (Set.range fun a : Fin X.p0 =>
@@ -501,7 +501,7 @@ theorem top_of (hemb : SEmb E) (hN1 : RadiusPosLeTenth) (hN2 : KatoClassHeckeEul
     linarith
   rcases Nat.eq_zero_or_pos n' with rfl | hn'pos
   · have hone : X.lmulC (fun _ => (1 : Matrix (Fin r) (Fin r) ℂ)) (X.lmulC h1 z0) = X.lmulC h1 z0 := by
-      funext τ; simp only [Data.lmulC, one_mul, mat, Matrix.of_apply]; rfl
+      funext τ; simp only [Data.lmulC, one_mul, mat]; rfl
     refine ⟨fun _ => 1, Z1, ?_, ?_, ?_, ?_, ?_, hZ1'⟩
     · intro τ u v; simp
     · intro τ; simp

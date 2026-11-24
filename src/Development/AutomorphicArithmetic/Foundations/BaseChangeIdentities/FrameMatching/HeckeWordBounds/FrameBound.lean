@@ -283,7 +283,7 @@ theorem hermInf_holds : HermInf := by
   intro n lam
   refine ⟨Equiv.refl _, fun a => ?_⟩
   simp only [PositivityTheory.RgBcC.infOf, Equiv.refl_apply, Bool.false_eq_true, if_false, if_true, map_mul, map_add (f := _), map_sub,
-    map_div₀, map_one, map_neg, map_intCast, Complex.conj_natCast, map_ofNat]
+    map_div₀, map_one, map_intCast, Complex.conj_natCast, map_ofNat]
   ring
 
 end PositivityTheory.Rg.BcB.F.FBL
@@ -874,7 +874,7 @@ theorem _root_.UpperTheory.BaseChangeIdentities.FrameWordIdentity.psiword_pf :
           ((Sum.inr (F.β i), F.d.betaL (F₀.C.a i) ha) : BGen (F.B i) × LM F.d.kap (F₀.C.a i) (n - F₀.C.a i)) ++
         w.map fun p => (gl F i p, locL F.d (F₀.C.a i) ha (lt F p))).flatten
   have e1 : l.map Prod.fst = Sum.inr (F.t₁ i) :: (ws.map (bw F i)).flatten := by
-    simp only [l, bw, List.map_cons, List.map_flatten, List.map_map, Function.comp_def, List.map_append, List.map_replicate]
+    simp only [l, List.map_cons, List.map_flatten, List.map_map, Function.comp_def, List.map_append, List.map_replicate]
     rfl
   have e2 : (l.map Prod.snd).foldr LM.mul (F.d.eL (F₀.C.a i)) = prodL F.d (UpperTheory.BaseChangeIdentities.FrameWordIdentity.lw F ws) (F₀.C.a i) := by
     have : l.map Prod.snd = F.d.fixL (F₀.C.a i) :: (UpperTheory.BaseChangeIdentities.FrameWordIdentity.lw F ws).map (locL F.d (F₀.C.a i) ha) := by
@@ -1811,12 +1811,12 @@ theorem prodW (hd : d.Ok) {a : ℕ} (ha : a ≤ n) {w : Pl E} (hw : w ∈ d.B) :
       rw [hc]
       exact atW_trans d (atW_mul d (atW_refl d w (d.betaL a ha)) ih) (beta_cw d hd ha w _)
     · have hc : (Sum.inr (Sum.inl u) :: ls : List (LL d)).countP Sum.isLeft = ls.countP Sum.isLeft := by
-        simp [List.countP_cons]
+        simp
       rw [hc]
       exact nb _ (atW_refl d w _)
     · have hc : (Sum.inr (Sum.inr ⟨⟨w', hg⟩, k, intersection_update_fsHerm_neg_one, st⟩) :: ls : List (LL d)).countP Sum.isLeft =
           ls.countP Sum.isLeft := by
-        simp [List.countP_cons]
+        simp
       rw [hc]
       have hG : d.IsGen a ha (d.hL a ha w' k intersection_update_fsHerm_neg_one) := Or.inr ⟨w', k, intersection_update_fsHerm_neg_one, hg, rfl⟩
       cases st

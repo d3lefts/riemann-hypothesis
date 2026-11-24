@@ -167,14 +167,14 @@ def firstOrderKer (η : MvPolynomial σ B →+* O) : Ideal (MvPolynomial σ B) w
   zero_mem' := ⟨by simp, fun l => by simp⟩
   smul_mem' := by
     rintro G F ⟨hF, hF'⟩
-    exact ⟨by simp [hF], fun l => by simp [pderiv_mul, hF, hF' l]⟩
+    exact ⟨by simp [hF], fun l => by simp [hF, hF' l]⟩
 
 theorem pderiv_comb [Fintype σ] (η : MvPolynomial σ B →+* O) (f g : σ → MvPolynomial σ B)
     (hf : ∀ i, η (f i) = 0) (k : MvPolynomial σ B) (hk : k ∈ firstOrderKer η) (l : σ) :
     η (pderiv l (∑ i, g i * f i + k)) = ∑ i, η (g i) * η (pderiv l (f i)) := by
   have := hk.2 l
 
-  simp [map_sum, pderiv_mul, hf, this]
+  simp [map_sum, hf, this]
 
 theorem det_ne_zero_of_mul_eq [Fintype σ] [DecidableEq σ] [IsDomain O] {N J : Matrix σ σ O}
     {c : O} (hc : c ≠ 0) (h : N * J = c • (1 : Matrix σ σ O)) : J.det ≠ 0 := by
@@ -200,7 +200,7 @@ theorem cotangent_map_injective_of_square_presentation : ∀ (O B A σ : Type) [
     rw [pow_two]
     refine Ideal.mul_le.2 fun a ha b' hb' => ?_
     rw [hqmem] at ha hb'
-    exact ⟨by simp [ha, hb'], fun l => by simp [pderiv_mul, ha, hb']⟩
+    exact ⟨by simp [ha, hb'], fun l => by simp [ha, hb']⟩
   have hkerL : RingHom.ker Ψ ≤ Ideal.span (Set.range f) ⊔ q ^ 2 := by
     refine hker.trans (sup_le_sup_left ?_ _)
     rw [pow_two]; exact Ideal.mul_mono_right hkerq
@@ -246,8 +246,8 @@ theorem cotangent_map_injective_of_square_presentation : ∀ (O B A σ : Type) [
     rw [← e1, hF]
     by_cases hjl : j = l
     · subst hjl
-      simp [pderiv_X_self, hη, hΨ, ← IsScalarTower.algebraMap_apply]
-    · simp [hjl, pderiv_X_of_ne (Ne.symm hjl)]
+      simp [hη, hΨ, ← IsScalarTower.algebraMap_apply]
+    · simp [hjl]
   choose g hg using hrow
   let N : Matrix σ σ O := fun j i => η (g j i)
   have hNJ : N * Jac = c • (1 : Matrix σ σ O) := by
@@ -326,10 +326,8 @@ theorem sqloc_present : ∀ (k A : Type) [CommRing k] [CommRing A] [Algebra k A]
     rcases i with i | j
     · simp [hΨ, hκdef, hy]
     · simp [hΨ, hκdef, hh]
-  have hκF : ∀ F, Ideal.Quotient.mk (Ideal.span {1 - e}) (Ψ F) = φ (κ F) := by
-    intro F
-    have := congrArg (fun f => f F) hκ
-    simpa using this
+  have hκF : ∀ F, Ideal.Quotient.mk (Ideal.span {1 - e}) (Ψ F) = φ (κ F) := fun F => by
+    simpa using congrArg (fun f => f F) hκ
   let G : Fin s ⊕ Fin r → MvPolynomial (Fin s ⊕ Fin r) k :=
     Sum.elim (fun i => MvPolynomial.rename Sum.inl (g' i))
       (fun j => MvPolynomial.X (Sum.inr j) - MvPolynomial.rename Sum.inl (h j))
@@ -371,8 +369,7 @@ theorem sqloc_present : ∀ (k A : Type) [CommRing k] [CommRing A] [Algebra k A]
       · simp only [AlgHom.comp_apply, hκdef, MvPolynomial.aeval_X, Sum.elim_inl,
           MvPolynomial.rename_X]
       · simp only [AlgHom.comp_apply, hκX, Ideal.Quotient.mkₐ_eq_mk]
-        rw [Ideal.Quotient.eq]
-        rw [← neg_sub, neg_mem_iff]
+        rw [Ideal.Quotient.eq, ← neg_sub, neg_mem_iff]
         exact Ideal.subset_span ⟨Sum.inr j, rfl⟩
     have h1 : F - MvPolynomial.rename Sum.inl (κ F) ∈ Ideal.span (Set.range G) := by
       have := congrArg (fun f => f F) hq
@@ -392,15 +389,12 @@ theorem sqloc_present : ∀ (k A : Type) [CommRing k] [CommRing A] [Algebra k A]
   have hsplit : F = u * F + (1 - u) * F := by ring
   rw [hsplit]
   refine Submodule.add_mem_sup ?_ ?_
-  · obtain ⟨c, hc⟩ := (Ideal.mem_span_range_iff_exists_fun).mp hFG
-    refine (Ideal.mem_span_range_iff_exists_fun).mpr ⟨c, ?_⟩
-    rw [← hc, Finset.mul_sum]
-    refine Finset.sum_congr rfl fun i _ => ?_
-    ring
-  · apply Ideal.mul_mem_mul
-    · rw [RingHom.mem_ker]
-      simp [hu, he]
-    · exact hF
+  · have h := Ideal.mul_mem_mul (Ideal.mem_span_singleton_self u) hFG
+    rw [Ideal.span_mul_span, Set.singleton_mul, ← Set.range_comp] at h
+    exact h
+  · refine Ideal.mul_mem_mul ?_ hF
+    rw [RingHom.mem_ker]
+    simp [hu, he]
 
 end GlobalTheory
 end -- clump:auto
@@ -1098,34 +1092,28 @@ theorem exists_generators_dual_point_derivations :
   let W : Submodule k A := (I ^ 2).restrictScalars k
   let U : Submodule k (A ⧸ W) := (I.restrictScalars k).map W.mkQ
   let b : Module.Basis (Fin (Module.finrank k U)) k U := Module.finBasis k U
-  have hx : ∀ j, ∃ y, y ∈ I ∧ W.mkQ y = (b j : A ⧸ W) := fun j => by
-    obtain ⟨y, hy, hy'⟩ := Submodule.mem_map.mp (b j).2
-    exact ⟨y, hy, hy'⟩
-  choose x hxI hxq using hx
+  choose x hxI hxq using fun j => Submodule.mem_map.mp (b j).2
   let P : A →ₗ[k] A := LinearMap.id - (Algebra.linearMap k A) ∘ₗ ε.toLinearMap
   have hPa : ∀ a, P a = a - algebraMap k A (ε a) := fun a => rfl
   have hP : ∀ a, P a ∈ I := fun a => by
-    rw [hI, RingHom.mem_ker, hPa, map_sub, AlgHom.commutes]
-    simp
+    simp [hI, hPa]
   let T : A →ₗ[k] U := LinearMap.codRestrict U (W.mkQ ∘ₗ P)
-    (fun a => Submodule.mem_map_of_mem (show P a ∈ I.restrictScalars k from hP a))
+    (fun a => Submodule.mem_map_of_mem (hP a))
   have hT : ∀ a, ((T a : U) : A ⧸ W) = W.mkQ (P a) := fun a => rfl
   let l : Fin (Module.finrank k U) → A →ₗ[k] k := fun i => b.coord i ∘ₗ T
   have hspan : ∀ y ∈ I, ∃ s ∈ Submodule.span k (Set.range x), y - s ∈ I ^ 2 := by
     intro y hy
-    let u : U := ⟨W.mkQ y, Submodule.mem_map_of_mem (show y ∈ I.restrictScalars k from hy)⟩
+    let u : U := ⟨W.mkQ y, Submodule.mem_map_of_mem hy⟩
+    have hq : (∑ j, b.repr u j • (b j : A ⧸ W)) = (u : A ⧸ W) := by
+      have := congrArg Subtype.val (b.sum_repr u)
+      push_cast at this
+      exact this
     refine ⟨∑ j, b.repr u j • x j,
       Submodule.sum_mem _ (fun j _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)), ?_⟩
-    have h1 : W.mkQ (∑ j, b.repr u j • x j) = ∑ j, b.repr u j • (b j : A ⧸ W) := by
-      set_option synthInstance.maxHeartbeats 100000 in
-        simp [map_sum, hxq]
-    have h2 := congrArg Subtype.val (b.sum_repr u)
-    push_cast at h2
-    have hq : W.mkQ (∑ j, b.repr u j • x j) = W.mkQ y := by rw [h1, h2]
-    have h0 : W.mkQ (y - ∑ j, b.repr u j • x j) = 0 := by rw [map_sub, hq, sub_self]
-    have h3 := LinearMap.mem_ker.mpr h0
-    rw [Submodule.ker_mkQ] at h3
-    exact h3
+    have h1 : W.mkQ (y - ∑ j, b.repr u j • x j) = 0 := by
+      rw [map_sub, map_sum]
+      simp [hxq, hq, show W.mkQ y = (u : A ⧸ W) from rfl]
+    exact (Submodule.Quotient.mk_eq_zero W).mp h1
   let S := Algebra.adjoin k (Set.range x)
   have spanS : Submodule.span k (Set.range x) ≤ Subalgebra.toSubmodule S :=
     Submodule.span_le.mpr (fun z hz => Algebra.subset_adjoin hz)
@@ -1137,10 +1125,8 @@ theorem exists_generators_dual_point_derivations :
     induction n with
     | zero =>
       intro z _
-      refine Submodule.mem_sup.mpr ⟨_, S.algebraMap_mem (ε z), P z, ?_, ?_⟩
-      · show P z ∈ I ^ (0 + 1)
-        rw [zero_add, pow_one]; exact hP z
-      · rw [hPa]; abel
+      exact Submodule.mem_sup.mpr ⟨algebraMap k A (ε z), S.algebraMap_mem _, P z,
+        by simpa using hP z, by rw [hPa]; abel⟩
     | succ n ih =>
       intro z hz
       rw [pow_succ'] at hz
@@ -1160,15 +1146,12 @@ theorem exists_generators_dual_point_derivations :
     induction n with
     | zero =>
       intro a
-      refine Submodule.mem_sup.mpr ⟨0, zero_mem _, a, ?_, zero_add a⟩
-      show a ∈ I ^ 0
-      rw [pow_zero, Ideal.one_eq_top]; exact Submodule.mem_top
+      simp
     | succ n ih =>
       intro a
       obtain ⟨s, hs, w, hw, hsw⟩ := Submodule.mem_sup.mp (ih a)
       obtain ⟨t, ht, v, hv, htv⟩ := Submodule.mem_sup.mp (hstep n w hw)
-      refine Submodule.mem_sup.mpr ⟨s + t, add_mem hs ht, v, hv, ?_⟩
-      rw [← hsw, ← htv]; abel
+      exact Submodule.mem_sup.mpr ⟨s + t, add_mem hs ht, v, hv, by rw [← hsw, ← htv]; abel⟩
   refine ⟨Module.finrank k U, x, l, ?_, ?_, ?_⟩
   · intro i a c
     have key : P (a * c) - (ε a • P c + ε c • P a) = P a * P c := by
@@ -1180,30 +1163,20 @@ theorem exists_generators_dual_point_derivations :
     have hTac : T (a * c) = ε a • T c + ε c • T a := by
       apply Subtype.ext
       rw [Submodule.coe_add, Submodule.coe_smul, Submodule.coe_smul, hT, hT, hT]
-      have h0 : W.mkQ (P (a * c) - (ε a • P c + ε c • P a)) = 0 := by
-        rw [← LinearMap.mem_ker, Submodule.ker_mkQ]; exact hmem
-      rw [map_sub, map_add (f := _), map_smul, map_smul, sub_eq_zero] at h0
+      have h0 : W.mkQ (P (a * c) - (ε a • P c + ε c • P a)) = 0 :=
+        (Submodule.Quotient.mk_eq_zero W).mpr hmem
+      rw [map_sub, map_add, map_smul, map_smul, sub_eq_zero] at h0
       exact h0
-    show b.coord i (T (a * c)) = ε a * b.coord i (T c) + ε c * b.coord i (T a)
-    rw [hTac, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul]
+    simp only [l, LinearMap.coe_comp, Function.comp_apply, hTac, map_add, map_smul, smul_eq_mul]
   · intro i j
     have hTx : T (x j) = b j := by
       apply Subtype.ext
-      rw [hT, hPa]
-      have : ε (x j) = 0 := (RingHom.mem_ker).mp (hxI j)
-      rw [this, map_zero, sub_zero, hxq]
-    show b.coord i (T (x j)) = _
-    rw [hTx, Module.Basis.coord_apply, Module.Basis.repr_self, Finsupp.single_apply]
-    by_cases h : i = j
-    · subst h; simp
-    · simp [h, Ne.symm h]
+      rw [hT, hPa, show ε (x j) = 0 from RingHom.mem_ker.mp (hxI j), map_zero, sub_zero, hxq]
+    simp [l, hTx, Finsupp.single_apply, eq_comm]
   · obtain ⟨N, hN⟩ := hnil
-    have hv : (I ^ N).restrictScalars k = ⊥ := by
-      rw [hI, hN, Submodule.zero_eq_bot, Submodule.restrictScalars_bot]
     refine eq_top_iff.mpr (fun a _ => ?_)
     have := hall N a
-    rw [hv, sup_bot_eq] at this
-    exact this
+    rwa [hI, hN, Submodule.zero_eq_bot, Submodule.restrictScalars_bot, sup_bot_eq] at this
 
 end GlobalTheory
 end -- clump:auto
@@ -1470,7 +1443,7 @@ theorem truncMono_deriv_aeval {k A : Type} [Field k] [CommRing A] [Algebra k A] 
     rw [map_mul, aeval_X, h1, hp, pderiv_mul, pderiv_X, map_add (f := _), map_mul, map_mul, aeval_X, hE]
     by_cases h : i = j
     · subst h; simp; ring
-    · simp [h, Pi.single_apply, Ne.symm h]; ring
+    · simp [h, Ne.symm h]; ring
 
 theorem truncMono_eq_zero {p : ℕ} [Fact p.Prime] {k A : Type} [Field k] [CommRing A]
     [Algebra k A] [CharP k p] {d : ℕ}

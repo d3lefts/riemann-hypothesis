@@ -118,8 +118,6 @@ section Bar
 variable {k G : Type u} [CommRing k] [Group G]
 
 
-set_option backward.defeqAttrib.useBackward true in
-set_option backward.isDefEq.respectTransparency false in
 lemma diagonalSuccIsoFree_inv_single (m : ℕ) (f : Fin m → G) (g : G) (r : k) :
     (diagonalSuccIsoFree k G m).inv.hom (Finsupp.single f (MonoidAlgebra.single g r)) =
       MonoidAlgebra.single (g • Fin.partialProd f) r := by
@@ -129,12 +127,7 @@ lemma diagonalSuccIsoFree_inv_single (m : ℕ) (f : Fin m → G) (g : G) (r : k)
       (Finsupp.single f (.single g r)) = .single g 1 ⊗ₜ[k] .single f r :=
     Representation.leftRegularTensorTrivialIsoFree_symm_apply_single_single f g r
   rw [step1]
-  simp only [mkIso_inv, Representation.linearizeOfMulActionIso, Representation.Equiv.mk_symm,
-    LinearEquiv.refl_symm, ConcreteCategory.hom_ofHom, Action.tensorObj_V, Action.trivial_V,
-    Functor.mapIso_inv, tensor_V, tensor_ρ, Iso.symm_inv, Functor.Monoidal.μIso_hom, μ_hom,
-    MonoidalCategory.tensorIso_inv, Representation.linearizeTrivialIso, hom_tensorHom,
-    Representation.IntertwiningMap.tensor_apply, Representation.Equiv.coe_toIntertwiningMap,
-    Representation.Equiv.mk_apply, LinearEquiv.refl_apply]
+  simp only [Action.tensorObj_V, tensor_V, tensor_ρ]
   have key₁ := Representation.linearizeMap_single (k := k)
     (Action.diagonalSuccIsoTensorTrivial G m).inv (g, f) ((1 : k) * r)
   have key₂ := Representation.LinearizeMonoidal.μ_apply_single_single (k := k)

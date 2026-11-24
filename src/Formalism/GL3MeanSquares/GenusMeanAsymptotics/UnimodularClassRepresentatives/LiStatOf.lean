@@ -150,7 +150,7 @@ theorem eq_block_of_fix {H' : Matrix κ κ A} {Y : Matrix (Unit ⊕ κ) (Unit �
 theorem form_col {H X : Matrix (Unit ⊕ κ) (Unit ⊕ κ) A} (hX : Xᴴ * H * X = H)
     (h00 : H (Sum.inl ()) (Sum.inl ()) = 1) : star (X *ᵥ e₀) ⬝ᵥ (H *ᵥ (X *ᵥ e₀)) = 1 := by
   rw [star_mulVec, ← dotProduct_mulVec, mulVec_mulVec, mulVec_mulVec, hX]
-  simp [e₀, mulVec_single_one, dotProduct, Fintype.sum_sum_type, h00]
+  simp [e₀, dotProduct, Fintype.sum_sum_type, h00]
 
 theorem card_split [Finite A] (H' : Matrix κ κ A)
     (htr : ∀ x : Unit ⊕ κ → A, star x ⬝ᵥ (HH H' *ᵥ x) = 1 →
@@ -164,8 +164,6 @@ theorem card_split [Finite A] (H' : Matrix κ κ A)
   have hinv : ∀ x hx, G' x hx * G x hx = 1 := fun x hx => by
     first
       | exact mul_eq_one_comm.mp (hG x hx).2.1
-      | exact Matrix.mul_eq_one_comm_of_equiv (Equiv.refl _) (hG x hx).2.1
-      | exact (Matrix.mul_eq_one_comm (M := G x hx) (N := G' x hx)).mp (hG x hx).2.1
   have hG'form : ∀ x hx, (G' x hx)ᴴ * HH H' * G' x hx = HH H' := by
     intro x hx
     calc (G' x hx)ᴴ * HH H' * G' x hx = (G' x hx)ᴴ * ((G x hx)ᴴ * HH H' * G x hx) * G' x hx := by
@@ -705,7 +703,6 @@ theorem akCount_split (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
       simp only [consBasis_inl, consBasis_inr]
       have e : starRingEnd K (h S.x₀ (S.ι (b' i))) = h (S.ι (b' i)) S.x₀ := by
         first
-          | exact hs S.x₀ (S.ι (b' i))
           | exact hs.eq S.x₀ (S.ι (b' i))
       rw [← e, S.orth]
       simp [Formalism.HermitianLattices.Ext.L3.PinE.HH]
@@ -717,7 +714,7 @@ theorem akCount_split (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
       Formalism.HermitianLattices.Ext.L3.PinE.HH (H'.map (Ideal.Quotient.mk (extP K 𝔭 ^ k))) := by
     ext p q
     rcases p with u | i <;> rcases q with u' | j <;>
-      simp [Formalism.HermitianLattices.Ext.L3.PinE.HH, Matrix.one_apply]
+      simp [Formalism.HermitianLattices.Ext.L3.PinE.HH]
 
   have htr : ∀ x : Unit ⊕ Fin (finrank K V') → 𝓞 K ⧸ extP K 𝔭 ^ k,
       star x ⬝ᵥ (Formalism.HermitianLattices.Ext.L3.PinE.HH (H'.map (Ideal.Quotient.mk (extP K 𝔭 ^ k))) *ᵥ x) = 1 →
@@ -749,7 +746,7 @@ theorem akCount_split (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
       have e := (Formalism.HermitianLattices.Ext.L3.integralBasisSpans.congrP_int h𝔭 k z 1).2 (by rw [map_one]; exact hform.symm)
       rwa [map_one, hz] at e
     obtain ⟨z', hz'L, hz'1, hz'd⟩ :=
-      Formalism.HermitianLattices.Ext.L3.PinF.exists_exact_lift hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi h𝔭 h1 hk hwL hcong
+      Formalism.HermitianLattices.Ext.L3.PinF.exists_exact_lift hK hF hs hd (by first | exact hL) hLi h𝔭 h1 hk hwL hcong
     obtain ⟨g, hg, hgx⟩ :=
       Formalism.HermitianLattices.Ext.L3.PinC.exists_aut_map hK hF hs hd S h1 hL hLi hx h𝔭 hv hz'L hz'1
     rw [← hbb] at hg
@@ -858,7 +855,7 @@ theorem alphaL_smul (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : I
     rw [show (m + vF 𝔭 c) * finrank K V ^ 2 = m * finrank K V ^ 2 + vF 𝔭 c * finrank K V ^ 2 by ring,
       show 2 * vF 𝔭 c * finrank K V ^ 2 = vF 𝔭 c * finrank K V ^ 2 + vF 𝔭 c * finrank K V ^ 2 by ring,
       pow_add, pow_add]
-    field_simp <;> ring
+    field_simp
   exact (tendsto_const_nhds.congr'
     (Filter.eventually_atTop.2 ⟨_, fun k hk => (key k hk).symm⟩)).limUnder_eq
 
@@ -889,7 +886,7 @@ theorem alphaN_smul (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : I
         _ = _ := by ring
     rw [h2, show (m + vF 𝔭 c) * (2 * finrank K V - 1) =
         m * (2 * finrank K V - 1) + vF 𝔭 c * (2 * finrank K V - 1) by ring, pow_add, pow_add]
-    field_simp <;> ring
+    field_simp
   exact (tendsto_const_nhds.congr'
     (Filter.eventually_atTop.2 ⟨_, fun k hk => (key k hk).symm⟩)).limUnder_eq
 
@@ -987,7 +984,7 @@ theorem alphaL_split (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : 
       have : 2 * (finrank K V' + 1) - 1 = 2 * finrank K V' + 1 := by omega
       rw [this]; ring
     rw [e1, pow_add]
-    field_simp <;> ring
+    field_simp
   obtain ⟨hB, -⟩ := key _ le_rfl
   have hl : alphaL h' (S.cut L) 𝔭 = alphaL h L 𝔭 / alphaN h L 𝔭 1 :=
     (tendsto_const_nhds.congr'
@@ -1171,14 +1168,14 @@ theorem main_term (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
     change Submodule.span K ((g : V →ₗ[K] V) '' (L : Set V)) = ⊤
     rw [Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
     exact g.surjective
-  obtain ⟨R, hR⟩ := exists_mReps hK hF hs hd S (by first | exact hL | exact hL.toIsLattice) hLi h𝔭 hn hx hsr
-  have h1 := nkCount_eq_sum hK hF hs hd S (by first | exact hL | exact hL.toIsLattice) hLi h𝔭 hn hx hR
+  obtain ⟨R, hR⟩ := exists_mReps hK hF hs hd S (by first | exact hL) hLi h𝔭 hn hx hsr
+  have h1 := nkCount_eq_sum hK hF hs hd S (by first | exact hL) hLi h𝔭 hn hx hR
   have h2 : ∀ M ∈ R, ∀ᶠ J in atTop, ∀ᶠ k in atTop,
       kap S M 𝔭 n J k = kap S (locF 𝔭 M₂) 𝔭 n J k := by
     intro M hM
     obtain ⟨⟨⟨g, hg, rfl⟩, hxM⟩, -⟩ := hR.1 M hM
     rw [LocalizedFibreSets.gmap_locF] at hxM ⊢
-    exact kap_eq hK hF hs hd S (by first | exact hL_gmap g | exact (hL_gmap g).toIsLattice) (UnimodularLocalization.isIntegralLat_gmap hg hLi) (by first | exact hM₂ | exact hM₂.toIsLattice) hM₂i
+    exact kap_eq hK hF hs hd S (by first | exact hL_gmap g) (UnimodularLocalization.isIntegralLat_gmap hg hLi) (by first | exact hM₂) hM₂i
       h𝔭 hn hx hxM hx₂
   have h3 : ∀ᶠ J in atTop, ∀ᶠ k in atTop, ∀ M ∈ R,
       kap S M 𝔭 n J k = kap S (locF 𝔭 M₂) 𝔭 n J k := by
@@ -1188,25 +1185,25 @@ theorem main_term (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
     exact_mod_cast reductionMapsOfForms.absNorm_pos h𝔭
   filter_upwards [h1, h3] with J hJ1 hJ3
   filter_upwards [hJ1, hJ3] with k hk1 hk3
-  rw [hk1, ← sum_oM hK hF hs hd S (by first | exact hL | exact hL.toIsLattice) hLi h𝔭 hsr hR (fun T => (nu h' T 𝔭)⁻¹), Nat.cast_sum,
+  rw [hk1, ← sum_oM hK hF hs hd S (by first | exact hL) hLi h𝔭 hsr hR (fun T => (nu h' T 𝔭)⁻¹), Nat.cast_sum,
     Finset.mul_sum]
   refine Finset.sum_congr rfl fun M hM => ?_
   rw [← hk3 M hM]
   obtain ⟨⟨⟨g, hg, rfl⟩, hxM⟩, -⟩ := hR.1 M hM
-  obtain ⟨e1, e2⟩ := nu_gmap_locF hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi h𝔭 hg
+  obtain ⟨e1, e2⟩ := nu_gmap_locF hK hF hs hd (by first | exact hL.toIsLattice) hLi h𝔭 hg
   have hν : 0 < nu h L 𝔭 := by
     rw [← e1, LocalizedFibreSets.gmap_locF]
-    exact nu_pos hK hF hs hd (by first | exact hL_gmap g | exact (hL_gmap g).toIsLattice) (UnimodularLocalization.isIntegralLat_gmap hg hLi) h𝔭
+    exact nu_pos hK hF hs hd (by first | exact hL_gmap g) (UnimodularLocalization.isIntegralLat_gmap hg hLi) h𝔭
   have hν' : 0 < nu h' (S.cut (Formalism.HermitianLatticesTheory.gmap g (locF 𝔭 L))) 𝔭 := by
     rw [LocalizedFibreSets.gmap_locF, LocalizedFibreSets.cut_locF]
     exact nu_pos hK hF (S.isSymm hs) (S.isTotPosDef hd)
       (by
         have hcut := StabilizerLattices.isFullLattice_cut S (hL_gmap g)
-        first | exact hcut | exact hcut.toIsLattice)
+        first | exact hcut)
       (UnimodularLocalization.isIntegralLat_cut S (UnimodularLocalization.isIntegralLat_gmap hg hLi)) h𝔭
   have ho : (oM S (Formalism.HermitianLatticesTheory.gmap g (locF 𝔭 L)) : ℝ) ≠ 0 := by
     rw [LocalizedFibreSets.gmap_locF] at hxM ⊢
-    exact_mod_cast oM_ne_zero hs S (by first | exact hL_gmap g | exact (hL_gmap g).toIsLattice) h𝔭 hxM
+    exact_mod_cast oM_ne_zero hs S (by first | exact hL_gmap g) h𝔭 hxM
   unfold kap
   rw [e1, e2]
   have hq' := pow_pos hq (vd h L 𝔭)

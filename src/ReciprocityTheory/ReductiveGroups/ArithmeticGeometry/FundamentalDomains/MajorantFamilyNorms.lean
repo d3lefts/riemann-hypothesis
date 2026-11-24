@@ -104,7 +104,7 @@ theorem det_flw (hG : ∀ a b, τ (G b a) = conj (τ (G a b))) (e : Fin r → �
   congr 1
   rw [Matrix.det_unique]
   simp only [Matrix.add_apply, Matrix.one_apply_eq, Matrix.mul_apply, replicateCol, replicateRow,
-    Matrix.of_apply, Finset.univ_unique, Finset.sum_singleton, GramDeterminantReal.mt, Finset.mul_sum,
+    Matrix.of_apply, GramDeterminantReal.mt, Finset.mul_sum,
     Finset.sum_mul]
   congr 1
   rw [Finset.sum_comm]
@@ -168,10 +168,6 @@ theorem hG_of (τ : X.Ψ) : ∀ a b, τ.1 (X.Gm b a) = conj (τ.1 (X.Gm a b)) :=
   intro a b
   rw [← X.Gm_herm a b]
   first
-    | simp [NumberField.IsCMField.complexEmbedding_complexConj]
-    | rw [NumberField.IsCMField.complexEmbedding_complexConj]
-    | simp [NumberField.IsCMField.complexConj_apply]
-    | simp [NumberField.IsCMField.conj_complexEmbedding]
     | (simp only [cc]
        exact NumberField.IsCMField.complexEmbedding_complexConj ..)
 
@@ -189,8 +185,6 @@ theorem hsg_of {x : Frame X.Ψ r} (hx : x ∈ X.dom) (τ : X.Ψ) :
   have h1 := (hx τ).2 ⟨i, Nat.lt_succ_of_le h⟩
   first
     | exact h1
-    | (unfold dmin lminor gram gramF famN at h1
-       exact h1)
 
 theorem dmin_eq (x : Frame X.Ψ r) (τ : X.Ψ) (i : Fin (r + 1)) :
     dmin X.Gm x τ i = (gramF τ.1 X.Gm (famN (mat x τ) i (Nat.le_of_lt_succ i.isLt))).det := rfl

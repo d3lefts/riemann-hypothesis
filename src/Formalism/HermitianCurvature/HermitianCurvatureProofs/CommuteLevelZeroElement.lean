@@ -198,15 +198,11 @@ variable {A S : Type} [Ring A] [StarRing A] [Algebra ℂ A] [StarModule ℂ A] [
 
 theorem ins_left {b : S} {x : SlopeTestRemainingChoices S A} (hx : FreeOf b x) (M : M2 (SlopeTestRemainingChoices S A)) :
     x * ins b M = ins b (d0 x * M) := by
-  have h := Wd11.ins_sandwich hx M 1
-  rw [Wd11.d0_one, mul_one, mul_one] at h
-  exact h.symm
+  simpa [Wd11.d0_one] using (Wd11.ins_sandwich hx M 1).symm
 
 theorem ins_right (b : S) (M : M2 (SlopeTestRemainingChoices S A)) (y : SlopeTestRemainingChoices S A) :
     ins b M * y = ins b (M * d0 y) := by
-  have h := Wd11.ins_sandwich (Wd11.free_one b) M y
-  rw [Wd11.d0_one, one_mul, one_mul] at h
-  exact h.symm
+  simpa [Wd11.d0_one] using (Wd11.ins_sandwich (Wd11.free_one b) M y).symm
 
 theorem rht_row (b : S) (d : ℂ) (T : M2 (SlopeTestRemainingChoices S A)) (j : Fin 2) :
     (Rht0 b d * T : M2 (SlopeTestRemainingChoices S A)) 1 j =
@@ -260,8 +256,7 @@ theorem star_GG (hS : IsStarLevel L) : star L.GG = L.GG := by
 
 theorem star_GGi (hS : IsStarLevel L) : star L.GGi = L.GGi := by
   have h : star L.GGi * L.GG = 1 := by
-    have := congrArg star L.GG_GGi
-    rwa [star_mul, star_GG hS, star_one] at this
+    simpa [star_mul, star_GG hS, star_one] using congrArg star L.GG_GGi
   calc star L.GGi = star L.GGi * (L.GG * L.GGi) := by rw [L.GG_GGi, mul_one]
     _ = L.GGi := by rw [← mul_assoc, h, one_mul]
 
@@ -282,14 +277,11 @@ theorem io_comm {x y : A} (h : x * y = y * x) : Commute (io x : SlopeTestRemaini
   rw [← Wd11.io_mul, ← Wd11.io_mul, h]
 
 theorem c_wt (h : IsFrame L f) : Commute f.c (wt L) := by
-  unfold wt
-  rw [Wd11.io_mul, Wd11.io_mul]
-  exact ((h.c_fn _ (mζ L)).mul_right (h.c_fn _ (mζb L))).mul_right (h.c_fn _ (mGi L))
+  simpa [wt, Wd11.io_mul] using
+    ((h.c_fn _ (mζ L)).mul_right (h.c_fn _ (mζb L))).mul_right (h.c_fn _ (mGi L))
 
 theorem star_d (hS : IsStarLevel L) (h : IsFrame L f) : star (f.d L) = f.d L := by
-  unfold FrameData.d
-  rw [star_mul, star_pow, star_wt hS, h.c_star]
-  exact ((c_wt h).pow_right _).eq
+  simpa [FrameData.d, star_mul, star_pow, star_wt hS, h.c_star] using ((c_wt h).pow_right _).eq
 
 theorem wti_wt : (wti L : SlopeTestRemainingChoices S A) * wt L = 1 := by
   unfold wti wt
@@ -313,9 +305,8 @@ theorem wt_wti : (wt L : SlopeTestRemainingChoices S A) * wti L = 1 := by
 
 theorem di_d (h : IsFrame L f) : f.di L * f.d L = 1 := by
   unfold FrameData.di FrameData.d
-  have c : Commute (wti L : SlopeTestRemainingChoices S A) (wt L) := by
-    show _ = _
-    rw [wti_wt, wt_wti]
+  have c : Commute (wti L : SlopeTestRemainingChoices S A) (wt L) :=
+    wti_wt.trans wt_wti.symm
   calc f.ci * wti L ^ f.N * (wt L ^ f.N * f.c) = f.ci * (wti L ^ f.N * wt L ^ f.N) * f.c := by
         simp only [mul_assoc]
     _ = 1 := by rw [← c.mul_pow, wti_wt, one_pow, mul_one, h.c_ci.2]
@@ -385,8 +376,7 @@ theorem free_pow {x : SlopeTestRemainingChoices S A} (hx : FreeOf b x) (n : ℕ)
 
 theorem free_star {x : SlopeTestRemainingChoices S A} (hx : FreeOf b x) : FreeOf b (star x) := by
   intro i j
-  have h := (hx j i).star_star
-  rwa [Wd1.star_eU] at h
+  simpa [Wd1.star_eU] using (hx j i).star_star
 
 theorem freeOf2_matrix_entries {p q s t : SlopeTestRemainingChoices S A} (hp : FreeOf b p) (hq : FreeOf b q) (hs : FreeOf b s)
     (ht : FreeOf b t) : FreeOf2 b !![p, q; s, t] := by
@@ -585,14 +575,11 @@ section Ee
 variable {L : LevelData A r} {f : FrameData S A}
 
 theorem comm_kapL {y : SlopeTestRemainingChoices S A} (hy : ∀ g ∈ zfns L, Commute y (io g)) : Commute y (kapL L) := by
-  unfold kapL
-  rw [Wd11.io_mul, Wd11.io_mul]
-  exact ((hy _ (mζb L)).mul_right (hy _ (mζi L))).mul_right (hy _ (mGi L))
+  simpa [kapL, Wd11.io_mul] using ((hy _ (mζb L)).mul_right (hy _ (mζi L))).mul_right (hy _ (mGi L))
 
 theorem commute_level_zero_element {y : SlopeTestRemainingChoices S A} (hy : ∀ g ∈ zfns L, Commute y (io g)) (hn : Commute y (io L.nab)) (Y : ℂ) :
     Commute y (io (L.l0 Y)) := by
-  rw [l0_eq_neg_nabla_sub, io_sub, Wd11.io_neg, io_smul, Wd11.io_mul]
-  exact hn.neg_right.sub_right (((hy _ (mζb L)).mul_right (hy _ (mGi L))).smul_right _)
+  simpa [l0_eq_neg_nabla_sub, io_sub, Wd11.io_neg, io_smul, Wd11.io_mul] using hn.neg_right.sub_right (((hy _ (mζb L)).mul_right (hy _ (mGi L))).smul_right _)
 
 theorem io_fn_comm {g g' : A} (hg : g ∈ zfns L) (hg' : g' ∈ zfns L) : Commute (io g : SlopeTestRemainingChoices S A) (io g') :=
   io_comm (zc L hg hg')

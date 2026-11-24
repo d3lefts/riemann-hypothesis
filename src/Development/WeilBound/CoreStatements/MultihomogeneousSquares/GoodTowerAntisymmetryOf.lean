@@ -197,7 +197,7 @@ noncomputable def pml {σ : Type} [Fintype σ] (n : ℕ) (a : (Fin n → σ) →
 
 theorem pml_apply {σ : Type} [Fintype σ] (n : ℕ) (a : (Fin n → σ) → ℝ) (c : Fin n → σ → ℝ) :
     pml n a c = polar n a c := by
-  simp [pml, polar, MultilinearMap.sum_apply, mul_comm]
+  simp [pml, polar, mul_comm]
 
 theorem pml_symm {σ : Type} [Fintype σ] (n : ℕ) (a : (Fin n → σ) → ℝ)
     (ha : ∀ (π : Equiv.Perm (Fin n)) w, a (w ∘ π) = a w) : IsSymmForm (pml n a) := by
@@ -206,7 +206,7 @@ theorem pml_symm {σ : Type} [Fintype σ] (n : ℕ) (a : (Fin n → σ) → ℝ)
   unfold polar
   refine Fintype.sum_equiv (π.arrowCongr (Equiv.refl σ)) _ _ ?_
   intro w
-  simp only [Equiv.arrowCongr_apply, Equiv.coe_refl, Function.comp_apply, Function.id_comp]
+  simp only [Equiv.arrowCongr_apply, Equiv.coe_refl, Function.comp_apply]
   congr 1
   · exact Fintype.prod_equiv π _ _ (fun r => by simp)
   · have h := ha π (w ∘ π.symm)
@@ -434,7 +434,7 @@ def eY (d : ℕ) : ((Fin d → ℂ) × ℂ) ≃ᵐ (Fin (d + 1) → ℂ) :=
   MeasurableEquiv.prodComm.trans (MeasurableEquiv.piFinSuccAbove (fun _ => ℂ) 0).symm
 
 theorem eY_apply {d : ℕ} (x : (Fin d → ℂ) × ℂ) : eY d x = Fin.cons x.2 x.1 := by
-  first | rfl | (simp [eY, MeasurableEquiv.prodComm, MeasurableEquiv.piFinSuccAbove, Fin.consEquiv]; done) | (simp [eY, MeasurableEquiv.piFinSuccAbove]; rfl)
+  first | (simp [eY, MeasurableEquiv.prodComm, MeasurableEquiv.piFinSuccAbove, Fin.consEquiv]; done)
 
 theorem eY_measurePreserving (d : ℕ) : MeasurePreserving (eY d) volume volume :=
   (Measure.measurePreserving_swap).trans
@@ -448,7 +448,7 @@ def eW (d : ℕ) : ((Fin d → ℂ) × (ℂ × ℂ)) ≃ᵐ (Fin (d + 2) → ℂ
 
 theorem eW_apply {d : ℕ} (x : (Fin d → ℂ) × (ℂ × ℂ)) :
     eW d x = Fin.cons x.2.1 (Fin.cons x.2.2 x.1) := by
-  first | rfl | (simp [eW, MeasurableEquiv.prodComm, MeasurableEquiv.prodAssoc, MeasurableEquiv.prodCongr, MeasurableEquiv.piFinSuccAbove, Fin.consEquiv]; done) | (simp [eW, MeasurableEquiv.piFinSuccAbove]; rfl)
+  first | (simp [eW, MeasurableEquiv.prodComm, MeasurableEquiv.prodAssoc, MeasurableEquiv.prodCongr, MeasurableEquiv.piFinSuccAbove, Fin.consEquiv]; done)
 
 theorem eW_measurePreserving (d : ℕ) : MeasurePreserving (eW d) volume volume :=
   ((Measure.measurePreserving_swap).trans (measurePreserving_prodAssoc volume volume volume)).trans
@@ -506,7 +506,7 @@ theorem ae_ne (d : ℕ) : ∀ᵐ z : Fin (d + 2) → ℂ, z 0 ≠ z 1 := by
   have hs : LinearMap.ker L ≠ ⊤ := by
     intro h
     have h1 : (Pi.single 0 1 : Fin (d + 2) → ℂ) ∈ LinearMap.ker L := by rw [h]; trivial
-    simp [L, LinearMap.mem_ker, Pi.single_apply] at h1
+    simp [L, LinearMap.mem_ker] at h1
   have h0 := Measure.addHaar_submodule (volume : Measure (Fin (d + 2) → ℂ)) (LinearMap.ker L) hs
   refine measure_mono_null ?_ h0
   intro z hz
@@ -1475,7 +1475,7 @@ theorem antisymmetry : Antisymmetry := by
     apply (_root_.GlobalTheory.CompanionTheory.Ar.PB.tsgPoly_linePoly_smul_toWt_injective).2.2 Ψ N
     rw [hS, map_mul, hdeg0]
     congr 1
-    simp [toWt, MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq]
+    simp [toWt, MvPolynomial.algebraMap_eq]
 
   obtain ⟨Cst, hC⟩ := GlobalTheory.T.weighted_polynomial_homogeneous_coeff_bound Ψ N (antisymDegree Ψ N + 1)
   have hhomT : (toWt (Re.PB II)).IsHomogeneous (antisymDegree Ψ N + 1) := by

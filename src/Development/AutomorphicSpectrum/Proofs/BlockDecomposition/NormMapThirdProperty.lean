@@ -177,9 +177,7 @@ theorem main : PositivityTheory.Rg.Tf.Loc.N1 → ∀ (O O' R : Type) [CommRing O
   letI : Algebra (IsLocalRing.ResidueField O) (R ⧸ J) :=
     (Ideal.Quotient.lift (IsLocalRing.maximalIdeal O) (algebraMap O (R ⧸ J)) fun c hc => by
       first
-        | exact Ideal.Quotient.eq_zero_iff_mem.mpr (hmJ (Ideal.mem_map_of_mem _ hc))
-        | (rw [← Ideal.Quotient.mk_algebraMap, Ideal.Quotient.eq_zero_iff_mem]
-           exact hmJ (Ideal.mem_map_of_mem _ hc))).toAlgebra
+        | exact Ideal.Quotient.eq_zero_iff_mem.mpr (hmJ (Ideal.mem_map_of_mem _ hc))).toAlgebra
   haveI : IsScalarTower O (IsLocalRing.ResidueField O) (R ⧸ J) :=
     IsScalarTower.of_algebraMap_eq fun c => rfl
   haveI : Module.Finite O (R ⧸ J) :=
@@ -265,7 +263,6 @@ theorem main : PositivityTheory.Rg.Tf.Loc.N1 → ∀ (O O' R : Type) [CommRing O
       Algebra.TensorProduct.map g (AlgHom.id (IsLocalRing.ResidueField O) (R ⧸ J)) (sb : _)) (hmap j)
   · first
       | rfl
-      | simp [Units.coe_map]
 
 end GlobalTheory.CompanionTheory.FirstApprox
 end -- clump:auto
@@ -466,8 +463,7 @@ theorem map_tw (τ : O' ≃ₐ[O] O') (j : ℕ) (s : O' ⊗[O] R) :
   induction s using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul x y =>
-    simp only [GlobalTheory.CompanionTheory.UnitNorm.tw, Algebra.TensorProduct.map_tmul, AlgEquiv.coe_toAlgHom, AlgHom.coe_coe,
-      AlgHom.id_apply, pow_succ', AlgEquiv.mul_apply]
+    simp only [GlobalTheory.CompanionTheory.UnitNorm.tw, Algebra.TensorProduct.map_tmul, AlgEquiv.coe_toAlgHom, AlgHom.id_apply, pow_succ', AlgEquiv.mul_apply]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem tw_period {ℓ : ℕ} {τ : O' ≃ₐ[O] O'} (hτ : τ ^ ℓ = 1) (s : O' ⊗[O] R) :

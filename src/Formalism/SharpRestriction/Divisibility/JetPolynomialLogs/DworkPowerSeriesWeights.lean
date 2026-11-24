@@ -852,10 +852,9 @@ theorem lpF_eq_Fnum (l d : ℕ) [NeZero d] (D : ZMod d → ℝ) : Formalism.Basi
   rw [hset]
 
 theorem norm_l (l : ℕ) [Fact l.Prime] : ‖(l : ℂ_[l])‖ = (l : ℝ)⁻¹ := by
-  have h1 : ((l : ℕ) : ℂ_[l]) = (((l : ℕ) : PadicAlgCl l) : ℂ_[l]) := by simp
-  rw [h1, PadicComplex.norm_extends]
-  have h2 : ((l : ℕ) : PadicAlgCl l) = algebraMap ℚ_[l] (PadicAlgCl l) (l : ℚ_[l]) := by simp
-  rw [h2, PadicAlgCl.norm_extends, Padic.norm_p]
+  rw [show ((l : ℕ) : ℂ_[l]) =
+      ((algebraMap ℚ_[l] (PadicAlgCl l) (l : ℚ_[l])) : ℂ_[l]) by simp,
+    PadicComplex.norm_extends, PadicAlgCl.norm_extends, Padic.norm_p]
 
 theorem norm_l_rpow (l : ℕ) [Fact l.Prime] (x : ℝ) : ‖(l : ℂ_[l])‖ ^ x = (l : ℝ) ^ (-x) := by
   rw [norm_l, Real.inv_rpow (Nat.cast_nonneg _), Real.rpow_neg (Nat.cast_nonneg _)]
@@ -888,8 +887,7 @@ theorem topTerm_eq (s : ZMod L.d) :
 theorem FD_eq : L.FD = Fnum L.l L.d
     (fun s => (Dl L.d L.TT (fun s => (L.nu s).rowLen 0) (fun s => (L.nu s).cells.card) s : ℝ)) := by
   unfold product_zeroth_first_parts.Loc.FD
-  rw [lpF_eq_Fnum]
-  rfl
+  exact lpF_eq_Fnum L.l L.d _
 
 end Loc
 
@@ -987,8 +985,7 @@ theorem thmOne_of (hB : TieB) (hB0 : KernelFromTwistOneLetter) (hF : TieFrameOne
   obtain ⟨g, U, sgn, ep, hep, hg0, hg, hU, hsg, hTh⟩ := hB0 L ep0 be hep0 h3 h0
   have hp : ∀ c : Fin (L.nu.rowLen 0), L.nu.colLen c ≤ L.N0 := fun c => (yd_colLen_le _ _).trans L.nu_rows
   have hl1 : (1 : ℝ) < L.l := by exact_mod_cast (Fact.out : Nat.Prime L.l).one_lt
-  have ha1 : (1 : ℝ) ≤ a := hl1.le.trans hla
-  have hfl : 1 ≤ ⌊a⌋₊ := Nat.le_floor (by exact_mod_cast ha1)
+  have hfl : 1 ≤ ⌊a⌋₊ := Nat.le_floor (by exact_mod_cast (hl1.le.trans hla))
   have hsum : (∑ c : Fin (L.nu.rowLen 0), L.nu.colLen c) = L.nu.cells.card := (yd_size _).symm
   have hsa : (∑ c : Fin (L.nu.rowLen 0), L.nu.colLen c) ≤ ⌊a⌋₊ := by
     rw [hsum]
@@ -1005,18 +1002,15 @@ theorem thmOne_of (hB : TieB) (hB0 : KernelFromTwistOneLetter) (hF : TieFrameOne
   rw [hsum]
   change -(product_zeroth_first_parts.rho L.l * _ - _) ≤ -(product_zeroth_first_parts.rho L.l * _ - _)
   have hd : 0 ≤ (L.N0 : ℝ) * L.N1 := by positivity
-  have := mul_le_mul_of_nonneg_left hlog hd
-  linarith
+  linarith [mul_le_mul_of_nonneg_left hlog hd]
 
 theorem kval_mono {N0 N1 l : ℕ} [Fact l.Prime] {Lt : Type} [Fintype Lt] [DecidableEq Lt] {nu : Lt → YoungDiagram}
     {Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l]} {B B' : ℝ} (h : product_zeroth_first_parts.KvalGe N0 N1 l nu Th B) (hB : B' ≤ B) :
     product_zeroth_first_parts.KvalGe N0 N1 l nu Th B' := by
   unfold product_zeroth_first_parts.KvalGe at h ⊢
   intro I m
-  refine (h I m).trans ?_
-  apply Real.rpow_le_rpow_of_exponent_le
-  · exact_mod_cast (Fact.out : Nat.Prime l).one_lt.le
-  · linarith
+  exact (h I m).trans (Real.rpow_le_rpow_of_exponent_le
+    (by exact_mod_cast (Fact.out : Nat.Prime l).one_lt.le) (by linarith))
 
 theorem base_term_le_top_term (L : product_zeroth_first_parts.Loc) (s : ZMod L.d) : L.baseTerm s ≤ L.topTerm s := by
   unfold product_zeroth_first_parts.Loc.baseTerm product_zeroth_first_parts.Loc.topTerm product_zeroth_first_parts.Loc.A

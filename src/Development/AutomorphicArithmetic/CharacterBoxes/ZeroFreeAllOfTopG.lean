@@ -158,18 +158,6 @@ noncomputable section
 
 namespace Deduction
 
-theorem windowHypU_of_windowHyp_image (a b : ℝ) :
-    Real.exp '' Icc a b = Icc (Real.exp a) (Real.exp b) := by
-  ext y
-  constructor
-  · rintro ⟨x, ⟨h1, h2⟩, rfl⟩
-    exact ⟨Real.exp_le_exp.2 h1, Real.exp_le_exp.2 h2⟩
-  · rintro ⟨h1, h2⟩
-    have hy : 0 < y := lt_of_lt_of_le (Real.exp_pos a) h1
-    refine ⟨Real.log y, ⟨?_, ?_⟩, Real.exp_log hy⟩
-    · rw [← Real.exp_le_exp, Real.exp_log hy]; exact h1
-    · rw [← Real.exp_le_exp, Real.exp_log hy]; exact h2
-
 theorem windowHypU_of_windowHyp_fun (R : ℝ → ℝ) (θ : ℝ) :
     (fun u : ℝ => |Real.exp u| • (R (Real.exp u) * Real.exp u ^ (-θ - 1))) =
       fun u => R (Real.exp u) * Real.exp (-θ * u) := by
@@ -184,7 +172,7 @@ theorem windowHypU_of_windowHyp (F : CharFamily) {θ δ : ℝ} (hδ : 0 < δ) (h
   obtain ⟨Y, hY, R, hint, hR, hbound⟩ := h η hη (Real.exp U₀)
   have hYpos : 0 < Y := lt_of_lt_of_le (Real.exp_pos _) hY
   have hS : Real.exp '' Icc (Real.log Y) ((1 + δ) * Real.log Y) = Icc Y (Y ^ (1 + δ)) := by
-    rw [windowHypU_of_windowHyp_image, Real.exp_log hYpos, Real.rpow_def_of_pos hYpos, mul_comm]
+    rw [Real.image_exp_Icc, Real.exp_log hYpos, Real.rpow_def_of_pos hYpos, mul_comm]
   have hd : ∀ x ∈ Icc (Real.log Y) ((1 + δ) * Real.log Y),
       HasDerivWithinAt Real.exp (Real.exp x) (Icc (Real.log Y) ((1 + δ) * Real.log Y)) x :=
     fun x _ => (Real.hasDerivAt_exp x).hasDerivWithinAt
@@ -947,7 +935,7 @@ theorem poleData_char {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (adm 
     set g : ℂ → ℂ := Function.update (fun s => (s - 1) * riemannZeta s) 1 1 with hg_def
     have hg_ne : ∀ w : ℂ, w ≠ 1 → g w = (w - 1) * riemannZeta w := by
       intro w hw
-      simp [g, Function.update_apply, hw]
+      simp [g, hw]
     have hg1 : g 1 = 1 := by simp [g]
     have hg : Differentiable ℂ g := by
       rw [← differentiableOn_univ,

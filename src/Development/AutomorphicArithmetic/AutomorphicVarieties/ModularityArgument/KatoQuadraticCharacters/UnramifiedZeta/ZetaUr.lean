@@ -387,7 +387,7 @@ theorem _root_.GlobalTheory.T.exists_admissible_hecke_projection_nonvanishing : 
     (∀ d : ℕ, Nat.Coprime d N → ∀ b, b ∈ X.B N l (2 * e - 1) → pr (X.diam N l d b) = ((χ d : ℤ_[l]) : Qbar l) • pr b) ∧
     (∀ b ∈ X.B N l (2 * e - 1), pr (X.heckeU l b) = ev Letter.U • pr b) ∧
     IsLamFR2 X A N (2 * e - 1) χ j pr cf ((((l : ℕ) : Qbar l) ^ a) • lam) := by
-  first | (exact @GlobalTheory.AdmProj.exists_admissible_hecke_projection_nonvanishing_alt) | (exact GlobalTheory.AdmProj.exists_admissible_hecke_projection_nonvanishing_alt) | (intros; apply GlobalTheory.AdmProj.exists_admissible_hecke_projection_nonvanishing_alt  <;> assumption)
+  first | (exact @GlobalTheory.AdmProj.exists_admissible_hecke_projection_nonvanishing_alt)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsAdmissibleHeckeProjectionNonvanishingStatement =====
@@ -411,7 +411,7 @@ theorem pres_of_vanish (A : ValuationSubring Ω) (c : Coef l) (Z : ∀ r : ℕ, 
     ∃ (ι : Type) (_ : Fintype ι) (P : ι → Polynomial Ω) (o : ι → Qbar l), HTPresNuOfPolys A c m 0 Z ζ P o := by
   refine ⟨Empty, inferInstance, fun i => i.elim, fun i => i.elim, hζ, fun i => i.elim, fun i => i.elim, fun i => i.elim, ?_⟩
   have h := GlobalTheory.Col.kumPres_empty A (n := m - 0) (r := m) (ζ := ζ ^ l ^ 0) (by simpa using hζ) (by omega) (Z m) hZ
-  convert h using 2 <;> exact Empty.elim ‹_›
+  convert h using 2
 
 theorem continuous_of_cg [Algebra.IsAlgebraic ℚ Ω] (f : G ℚ Ω → Qbar l)
     (h : ∀ n : ℕ, ∃ E0 : Finset Ω, ∀ s s' : G ℚ Ω, (∀ z ∈ E0, s' z = z) → Cg n (f (s * s')) (f s)) : Continuous f := by
@@ -699,7 +699,7 @@ theorem smoothed_pres_of_shCoc [IsAlgClosure ℚ Ω] (A : ValuationSubring Ω) (
   · have := congrFun (hY r s u x) 1
     show Y r (s * u) x 1 = Y r s x 1 + (ν s : Qbar l) * Y r u (x * (cycMod ℚ Ω l r s)⁻¹) 1
     rw [this, hν s hs]
-    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two, hD s hs]
+    simp [hD s hs]
   · obtain ⟨E0, hE⟩ := hc r n
     exact ⟨E0, fun s s' h => hE s s' 1 h⟩
   · exact Units.ext (by rw [hν s (Ine_le_Dec A hs), hI s hs, Units.val_one])
@@ -1430,7 +1430,7 @@ theorem fix_sqrt_unit (hl : l ≠ 2) {A : ValuationSubring Ω} (hA : OverL l A) 
   have h4 : ((4 * N : ℤ) : 𝓞 ℚ) ∈ v.asIdeal := by
     rw [← hv]
     convert h3 using 2
-    simp only [map_intCast, Int.cast_mul, Int.cast_ofNat, map_mul, map_ofNat, algebraMap.coe_mul, map_ratCast]
+    simp only [map_intCast, Int.cast_mul, Int.cast_ofNat, map_mul, map_ofNat]
   have hp : Prime (l : ℤ) := Nat.prime_iff_prime_int.mp Fact.out
   have hcop : IsCoprime (l : ℤ) (4 * N) := by
     rw [hp.irreducible.coprime_iff_not_dvd]

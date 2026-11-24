@@ -422,7 +422,7 @@ theorem UpperTheory.V.Z.Sym.So.weakOne :
       exact zero_ne_one hvB
     have hexpr : ((Units.map (algebraMap L (Kw w) : L →* Kw w) (a * ca⁻¹) / x w : (Kw w)ˣ) : Kw w) =
         (algebraMap L (Kw w) a * (((x w)⁻¹ : (Kw w)ˣ) : Kw w)) * (algebraMap L (Kw w) (cj a))⁻¹ := by
-      simp only [Units.val_div_eq_div_val, Units.coe_map, Units.val_mul, Units.val_inv_eq_inv_val, ca,
+      simp only [Units.coe_map, Units.val_mul, Units.val_inv_eq_inv_val, ca,
         Units.val_mk0, MonoidHom.coe_coe, map_mul, map_inv₀, div_eq_mul_inv]
       ring
     rw [hexpr]
@@ -457,13 +457,13 @@ section Comm
 variable {K G : Type} [Field K] [CommGroup G]
 
 private def e12 (x : K) : GL (Fin 2) K :=
-  ⟨!![1, x; 0, 1], !![1, -x; 0, 1], by simp [Matrix.mul_fin_two, Matrix.one_fin_two], by simp [Matrix.mul_fin_two, Matrix.one_fin_two]⟩
+  ⟨!![1, x; 0, 1], !![1, -x; 0, 1], by simp [Matrix.one_fin_two], by simp [Matrix.one_fin_two]⟩
 
 private def e21 (x : K) : GL (Fin 2) K :=
-  ⟨!![1, 0; x, 1], !![1, 0; -x, 1], by simp [Matrix.mul_fin_two, Matrix.one_fin_two], by simp [Matrix.mul_fin_two, Matrix.one_fin_two]⟩
+  ⟨!![1, 0; x, 1], !![1, 0; -x, 1], by simp [Matrix.one_fin_two], by simp [Matrix.one_fin_two]⟩
 
 private def dt (t : K) (h : t ≠ 0) : GL (Fin 2) K :=
-  ⟨!![t, 0; 0, 1], !![t⁻¹, 0; 0, 1], by simp [Matrix.mul_fin_two, Matrix.one_fin_two, h], by simp [Matrix.mul_fin_two, Matrix.one_fin_two, h]⟩
+  ⟨!![t, 0; 0, 1], !![t⁻¹, 0; 0, 1], by simp [Matrix.one_fin_two, h], by simp [Matrix.one_fin_two, h]⟩
 
 private theorem upper_elementary_add (x y : K) : e12 (x + y) = e12 x * e12 y :=
   Units.ext (by simp [e12, Matrix.mul_fin_two, add_comm])
@@ -510,7 +510,7 @@ private theorem D_ne (D : GL (Fin 2) K →* G) (t : K) (h0 : t ≠ 0) (h1 : t �
     ext i j
     fin_cases i <;> fin_cases j <;> simp
     all_goals field_simp
-    all_goals first | ring1 | linear_combination hd | linear_combination -hd | linear_combination 2 * hd | linear_combination -2 * hd
+    all_goals first | ring1 | linear_combination hd | linear_combination -hd
   rw [e, map_mul, map_mul, diagonal_conj_upper_elementary D t h0 h1, diagonal_conj_upper_elementary D t h0 h1, hom_trivial_on_lower_elementary D t h0 h1]
   simp
 
@@ -811,7 +811,7 @@ private theorem dc_tr {H G V : Type} [Group H] [Group G] [AddCommGroup V] [Modul
   let β : H ≃* S := b.trans (MulAut.conjNormal x⁻¹)
   have hβ : ∀ g, ((β g : S) : G) = x⁻¹ * b g * x := by
     intro g
-    simp [β, MulAut.conjNormal_apply]
+    simp [β]
   have hCU' : CU = (U.subgroupOf S).comap β.toMonoidHom := by
     ext g
     rw [hCU, Subgroup.mem_comap, Subgroup.mem_subgroupOf]

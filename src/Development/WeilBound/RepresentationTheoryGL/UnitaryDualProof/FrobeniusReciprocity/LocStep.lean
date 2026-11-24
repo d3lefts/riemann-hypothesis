@@ -715,7 +715,7 @@ private theorem mul_eq_mul_of_ratio_eq_one {n : ℕ} {R : Type} [CommRing R] [Al
 
   simp only [LinearMap.sum_apply, LinearMap.comp_apply, map_sum, Submodule.coe_subtype,
   LinearEquiv.coe_coe]
-  simp only [Submodule.coe_sum, inner]
+  simp only [inner]
   simp
 
   rw [← LinearMap.sum_apply, ← map_sum, hs, map_one]
@@ -749,7 +749,7 @@ theorem isoOfTrace : IsoOfTrace k := by
 
     rw [map_sum, map_one]
     funext x
-    simp [hE, Finset.sum_apply, Pi.single_apply]
+    simp [hE, Finset.sum_apply]
   have hm : ∀ m : MaximalSpectrum R, ∀ a ∈ m.asIdeal, a * e m = 0 := by
     intro m a ha
     apply E.injective
@@ -933,7 +933,7 @@ theorem isNilpotent_of_trace_pow [CharZero k] (A : Matrix (Fin n) (Fin n) k)
     rw [trace_aeval_eq_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rcases i with _ | i
-    · simp [coeff_mul_X_pow']
+    · simp
     · rw [h (i + 1) (by omega), mul_zero]
   have hlin : IsIdempotentElem (Matrix.toLinAlgEquiv' (aeval A (a * X ^ (r + 1)))) :=
     hidem.map _
@@ -969,7 +969,7 @@ theorem trace_pow_eq {Z : Subalgebra k (Matrix (Fin n) (Fin n) k)} {x x₀ : Mat
     calc trace (y ^ i) = trace (((1 : Z) : Matrix (Fin n) (Fin n) k) * y ^ i) := by simp
       _ = _ := by
         rw [h1, Finset.sum_mul, Matrix.trace_sum]
-        simp [pZ, smul_mul_assoc, Matrix.trace_smul]
+        simp [pZ, Matrix.trace_smul]
   rw [key x, key x₀, h]
 
 theorem trace_aeval_eq {Z : Subalgebra k (Matrix (Fin n) (Fin n) k)} {x x₀ : Matrix (Fin n) (Fin n) k}
@@ -1027,7 +1027,7 @@ theorem jcPoly [CharZero k] : JCPoly (k := k) := by
     set T : k[X] := X - b * Q
     have hT : ∀ z : k[X], T.comp z = z + -(b.comp z * Q.comp z) := by
       intro z
-      simp [T, sub_comp, mul_comp, sub_eq_add_neg]
+      simp [T, mul_comp, sub_eq_add_neg]
     have e1 : ∀ p w : k[X], (p.map C).eval w = p.comp w := fun p w => by
       rw [eval_map]
       rfl

@@ -105,7 +105,7 @@ theorem coords_of_derivation_basis : ∀ (R A : Type) [CommRing R] [IsLocalRing 
     { toFun := fun x => dv a x
       map_add' := fun x y => hadd a x y
       map_smul' := fun r x => by
-        simp only [Submodule.coe_smul_of_tower, Algebra.smul_def, RingHom.id_apply, smul_eq_mul]
+        simp only [Submodule.coe_smul_of_tower, Algebra.smul_def, RingHom.id_apply]
         exact hsmul a r x }
   let ℓ : Fin n → Module.Dual R I.Cotangent := fun a => cotFun I (fa a) (fun x hx => hI2 a x hx)
   have hℓ : ∀ a (x : I), ℓ a (I.toCotangent x) = dv a x := fun _ _ => rfl
@@ -158,7 +158,7 @@ theorem coords_of_derivation_basis : ∀ (R A : Type) [CommRing R] [IsLocalRing 
       simp only [D]
       rw [key]
       simp only [map_add (f := _), LinearMap.map_smul_of_tower, hw0,
-        map_zero, add_zero, map_smul, smul_eq_mul]
+        add_zero, map_smul, smul_eq_mul]
     obtain ⟨c, hc, -⟩ := huniq D Dadd Dmul Dalg
     refine ⟨c, ?_⟩
     ext w
@@ -188,7 +188,7 @@ theorem coords_of_derivation_basis : ∀ (R A : Type) [CommRing R] [IsLocalRing 
     rw [this]
     by_cases h : a = i
     · subst h; simp
-    · simp [h, Pi.single_apply, Ne.symm h]
+    · simp [h, Ne.symm h]
   choose y hy using fun i => I.toCotangent_surjective (w i)
   have hzI : ∀ i, (y i : A) ∈ I := fun i => (y i).2
   have hdz : ∀ a i, dv a (y i : A) = if a = i then 1 else 0 := by
@@ -361,7 +361,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CoordsOrigin
 
 theorem _root_.GlobalTheory.T.exists_tangentVector_of_originDerivation : ∀ (R : Type) [CommRing R] [IsLocalRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (D : G.left.presheaf.stalk (origin G) → R), (∀ x y, D (x + y) = D x + D y) → (∀ x y, D (x * y) = evO G x * D y + evO G y * D x) → (∀ r, D (constO G r) = 0) → ∃ v : TanM (𝟙 (Sp R)) G, ∀ f, tanDer G v f = D f := by
-  first | exact @GlobalTheory.CoordsOrigin.exists_tan_of_derivation | exact GlobalTheory.CoordsOrigin.exists_tan_of_derivation | (intros; apply GlobalTheory.CoordsOrigin.exists_tan_of_derivation <;> assumption)
+  first | exact @GlobalTheory.CoordsOrigin.exists_tan_of_derivation
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsTangentVectorOfOriginDerivationStatement =====
@@ -459,7 +459,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CoordsOrigin
 
 theorem _root_.GlobalTheory.T.invariantVectorField_eval_origin_eq_tangentDerivative : ∀ (R : Type) [CommRing R] [IsLocalRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (v : TanM (𝟙 (Sp R)) G) (dd : Fld G.left), IsInv G v dd → ∀ (O : G.left.Opens) (hO : origin G ∈ O) (f : Γ(G.left, O)), evO G ((G.left.presheaf.germ O (origin G) hO).hom (dd O f)) = tanDer G v ((G.left.presheaf.germ O (origin G) hO).hom f) := by
-  first | exact @GlobalTheory.CoordsOrigin.evO_germ_of_isInv | exact GlobalTheory.CoordsOrigin.evO_germ_of_isInv | (intros; apply GlobalTheory.CoordsOrigin.evO_germ_of_isInv <;> assumption)
+  first | exact @GlobalTheory.CoordsOrigin.evO_germ_of_isInv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvariantVectorFieldEvalOriginEqTangentDerivativStatement =====
@@ -500,8 +500,6 @@ theorem constO_eq_strMap : constO G = (GlobalTheory.IndefiniteRowSideFullHecke.H
   first
     | (erw [CommRingCat.comp_apply, TopCat.Presheaf.germ_res_apply]; done)
     | (erw [CommRingCat.comp_apply, TopCat.Presheaf.germ_res_apply]; rfl)
-    | (rw [← CommRingCat.comp_apply, ← CommRingCat.comp_apply, ← CommRingCat.comp_apply, Category.assoc, TopCat.Presheaf.germ_res]; rfl)
-    | (simp only [← CommRingCat.comp_apply, Category.assoc, TopCat.Presheaf.germ_res]; rfl)
 
 theorem free_finite_cotangent_of_eq [Smooth G.hom] (φ : R →+* G.left.presheaf.stalk (origin G))
     (hφ : φ = (GlobalTheory.IndefiniteRowSideFullHecke.HodgeTateCharacterSystems.strMap G).hom) :
@@ -542,7 +540,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CoordsOrigin
 
 theorem _root_.GlobalTheory.T.originLocalRing_noetherian_free_unitSectionConormal : ∀ (R : Type) [CommRing R] [IsLocalRing R] [IsNoetherianRing R] (G : Over (Sp R)) [GrpObj G], Smooth G.hom → IsNoetherianRing (G.left.presheaf.stalk (origin G)) ∧ (letI : Algebra R (G.left.presheaf.stalk (origin G)) := (constO G).toAlgebra; Module.Free R (RingHom.ker (evO G)).Cotangent ∧ Module.Finite R (RingHom.ker (evO G)).Cotangent) := by
-  first | exact @GlobalTheory.CoordsOrigin.noetherian_free_cotangent | exact GlobalTheory.CoordsOrigin.noetherian_free_cotangent | (intros; apply GlobalTheory.CoordsOrigin.noetherian_free_cotangent <;> assumption)
+  first | exact @GlobalTheory.CoordsOrigin.noetherian_free_cotangent
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.OriginLocalRingNoetherianFreeUnitSectionConormalStatement =====
@@ -698,7 +696,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CoordsOrigin
 
 theorem _root_.GlobalTheory.T.tangentDerivativeAtOrigin_add_tangentVector : ∀ (R : Type) [CommRing R] [IsLocalRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (u v : TanM (𝟙 (Sp R)) G) (f : G.left.presheaf.stalk (origin G)), tanDer G (u + v) f = tanDer G u f + tanDer G v f := by
-  first | exact @GlobalTheory.CoordsOrigin.tanDer_add | exact GlobalTheory.CoordsOrigin.tanDer_add | (intros; apply GlobalTheory.CoordsOrigin.tanDer_add <;> assumption)
+  first | exact @GlobalTheory.CoordsOrigin.tanDer_add
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentDerivativeAtOriginAddTangentVectorStatement =====
@@ -774,7 +772,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CoordsOrigin
 
 theorem _root_.GlobalTheory.T.tangentDerivativeAtOrigin_smul_tangentVector : ∀ (R : Type) [CommRing R] [IsLocalRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (r : R) (v : TanM (𝟙 (Sp R)) G) (f : G.left.presheaf.stalk (origin G)), tanDer G (r • v) f = r * tanDer G v f := by
-  first | exact @GlobalTheory.CoordsOrigin.tanDer_smul | exact GlobalTheory.CoordsOrigin.tanDer_smul | (intros; apply GlobalTheory.CoordsOrigin.tanDer_smul <;> assumption)
+  first | exact @GlobalTheory.CoordsOrigin.tanDer_smul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentDerivativeAtOriginSmulTangentVectorStatement =====
@@ -885,7 +883,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CoordsOrigin
 
 theorem _root_.GlobalTheory.T.tangentVector_eq_of_tangentDerivativeAtOrigin_eq : ∀ (R : Type) [CommRing R] [IsLocalRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (u v : TanM (𝟙 (Sp R)) G), (∀ f, tanDer G u f = tanDer G v f) → u = v := by
-  first | exact @GlobalTheory.CoordsOrigin.tanM_eq_of_tanDer | exact GlobalTheory.CoordsOrigin.tanM_eq_of_tanDer | (intros; apply GlobalTheory.CoordsOrigin.tanM_eq_of_tanDer <;> assumption)
+  first | exact @GlobalTheory.CoordsOrigin.tanM_eq_of_tanDer
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentVectorEqOfTangentDerivativeAtOriginEqStatement =====
@@ -976,7 +974,7 @@ open GlobalTheory.Heat GlobalTheory.FormalOrigin
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.smooth_commGroup_local_coordinates_at_origin : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] [IsNoetherianRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G], Smooth G.hom → ∀ (n : ℕ) (v : Module.Basis (Fin n) R (TanM (𝟙 (Sp R)) G)) (dd : Fin n → Fld G.left), (∀ a, IsInv G (v a) (dd a)) → ∀ δ : Fin n → Derivation ℤ (G.left.presheaf.stalk (origin G)) (G.left.presheaf.stalk (origin G)), (∀ a O (hO : origin G ∈ O) f, δ a ((G.left.presheaf.germ O (origin G) hO).hom f) = (G.left.presheaf.germ O (origin G) hO).hom (dd a O f)) → ∃ z : Fin n → G.left.presheaf.stalk (origin G), (∀ i, evO G (z i) = 0) ∧ (∀ a i, evO G (δ a (z i)) = if a = i then 1 else 0) ∧ maximalIdeal (G.left.presheaf.stalk (origin G)) = (maximalIdeal R).map (constO G) ⊔ Ideal.span (Set.range z) := by
-  first | exact @GlobalTheory.CoordsOrigin.coords_at_origin | exact GlobalTheory.CoordsOrigin.coords_at_origin | (intros; apply GlobalTheory.CoordsOrigin.coords_at_origin <;> assumption)
+  first | exact @GlobalTheory.CoordsOrigin.coords_at_origin
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothCommGroupLocalCoordinatesAtOriginStatement =====

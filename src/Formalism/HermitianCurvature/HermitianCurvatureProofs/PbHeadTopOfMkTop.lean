@@ -259,7 +259,7 @@ private theorem wP_mul_wP_symm_eq_one {p : ℕ} (σ : Equiv.Perm (Fin p)) : U.wP
     if_true, Equiv.symm_apply_eq, Matrix.one_apply]
   by_cases hab : a = b
   · subst hab; simp
-  · simp [hab, Ne.symm hab]
+  · simp [hab]
 
 private theorem lhOf_mul_hMat_eq_wP_mul_lowW_mul_diagonal (h : C.LPt) (v : PBQ.XH h) :
     LeftFubiniLemmas.lhOf (D.ptPerm h) v * U.hMat (D.ptPerm h) (D.ptDiag h) =
@@ -321,7 +321,7 @@ theorem head_bound (h : C.LPt) (j : ℕ) (hh : D.IsLocPt h j) (K1 : Set (Fin j �
   have hinv : (U.wP (D.ptPerm h))⁻¹ = U.wP (D.ptPerm h).symm := Matrix.inv_eq_right_inv hmul
   have hz : PBQ.zxH h (D.ptSize h) rfl v =
       U.wP (D.ptPerm h) * (U.lowW (D.ptPerm h) v * Matrix.diagonal (D.ptDiag h)) := by
-    simp only [PBQ.zxH, LeftFubiniLemmas.lhOf, U.hMat, finCongr_refl, Matrix.reindex_refl_refl, Equiv.refl_apply, hinv]
+    simp only [PBQ.zxH, LeftFubiniLemmas.lhOf, U.hMat, finCongr_refl, Matrix.reindex_refl_refl, hinv]
     simp only [Matrix.mul_assoc]
     rw [← Matrix.mul_assoc (U.wP (D.ptPerm h).symm), hmul', Matrix.one_mul]
   rw [hz] at hmem
@@ -1365,7 +1365,7 @@ theorem frame_dframe (S : B.RealPlaceData k r Wp Wq) (hr : r = 0) {ν' : Fin (2 
   subst hr
   obtain ⟨hB1, hB2, hB3⟩ := hB
   refine ⟨hB1, hB2, fun a v hv => ?_⟩
-  simp only [List.mem_cons, List.mem_singleton] at hv
+  simp only [List.mem_cons] at hv
   rcases hv with rfl | rfl | hv
   · obtain ⟨-, ⟨α, -, hα⟩, -⟩ := hD
     have hcof : Formalism.FourierDecayAlt.D.cofL S γ = S.z := by
@@ -1769,7 +1769,7 @@ theorem ptMatN_one (ζ : ℂ) : D.ptMatN [(1, ζ)] (0 + 1) = Matrix.of fun _ _ =
   ext a b
   have ha : a.val = 0 := by have := a.isLt; omega
   have hb : b.val = 0 := by have := b.isLt; omega
-  simp [D.ptMatN, D.ptEntry, ha, hb]
+  simp [D.ptMatN, D.ptEntry]
 
 theorem ptMatN_append_head (h : C.LPt) (ζ : ℂ) (R : ℕ) (hR : D.ptSize h = R) :
     D.ptMatN (h ++ [(1, ζ)]) R = D.ptMatN h R := by

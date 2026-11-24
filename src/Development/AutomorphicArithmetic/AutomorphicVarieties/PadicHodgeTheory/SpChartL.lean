@@ -99,7 +99,7 @@ private theorem adj_adj' (X : M4 R) : adj (adj X) = X := by
 
 private theorem adj_one' : adj (1 : M4 R) = 1 := by
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [adj_apply, sgn, Fin.rev, Matrix.one_apply]
+  fin_cases i <;> fin_cases j <;> simp [adj_apply, sgn, Fin.rev]
 
 private theorem adj_add' (X Y : M4 R) : adj (X + Y) = adj X + adj Y := by
   ext i j
@@ -385,7 +385,7 @@ theorem UpperTheory.V.Loc.cocLift (hP : LocalPublishedTheorems) {v l : ℕ} [Fac
         rw [hJ] at ha ⊢
         simp [ha]
       map_one' := by ext a; simp
-      map_mul' := fun g h => by ext a; simp [mul_assoc] }
+      map_mul' := fun g h => by ext a; simp }
   have hρ : ∀ g (a : J), (ρ g a : B) = χ g * a := fun _ _ => rfl
   have hρc : ContAction ρ := by
     unfold ReciprocityTheory.Gal.ContAction
@@ -614,7 +614,7 @@ private theorem nonres {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω
       rw [← map_zpow, ← map_mul] at h
       exact congrArg Units.val h)
   have h4 : R (D.al (D.sg l)) = R (D.ξ (D.sg l)) := by
-    simp only [Raw.al, MonoidHom.mul_apply, MonoidHom.inv_apply, map_mul, map_inv, h1, h2, map_one, inv_one, one_mul]
+    simp only [Raw.al, MonoidHom.mul_apply, MonoidHom.inv_apply, map_mul, map_inv, h1, h2, inv_one, one_mul]
   refine ⟨⟨⟨_, hs⟩, fun h => h3 0 ?_⟩, ⟨⟨_, hs⟩, fun h => h3 (-1) ?_⟩, ⟨D.s0, fun h => hD.decompSigma_ord ?_⟩,
     ⟨_, hs⟩, fun h => h3 1 ?_⟩
   · rw [zpow_zero, mul_one, ← h4, h, h1, map_one]

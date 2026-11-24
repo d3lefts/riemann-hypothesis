@@ -166,13 +166,13 @@ theorem dualform : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype
     { toFun := fun u =>
         { toFun := fun x => ℓ (∑ k, x k * u k)
           map_add' := by intro x y; simp [add_mul, Finset.sum_add_distrib]
-          map_smul' := by intro c x; simp [smul_mul_assoc, ← Finset.smul_sum] }
+          map_smul' := by intro c x; simp [← Finset.smul_sum] }
       map_add' := by
         intro u v; refine LinearMap.ext fun x => ?_
         simp [mul_add, Finset.sum_add_distrib]
       map_smul' := by
         intro c u; refine LinearMap.ext fun x => ?_
-        simp [mul_smul_comm, ← Finset.smul_sum] }
+        simp [← Finset.smul_sum] }
   have hinj : Function.Injective Φ := by
     rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
     intro u hu
@@ -184,7 +184,7 @@ theorem dualform : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype
     simp only [Φ, LinearMap.coe_mk, AddHom.coe_mk, LinearMap.zero_apply] at this
     rw [Finset.sum_eq_single k] at this
     · simpa [mul_comm] using this
-    · intro b _ hb; simp [Pi.single_apply, hb]
+    · intro b _ hb; simp [hb]
     · simp
   have hsurj : Function.Surjective Φ := by
     have : Module.finrank ℝ (κ → M) = Module.finrank ℝ (Module.Dual ℝ (κ → M)) :=
@@ -270,7 +270,7 @@ theorem iteratedFDeriv_apply_eq_foldr_fderiv :
       exact (ih (Fin.tail m) z).symm
     simp only [hfun]
     have hd : DifferentiableAt ℝ (iteratedFDeriv ℝ n g) x :=
-      (hg.differentiable_iteratedFDeriv (by first | exact_mod_cast ENat.coe_lt_top n | simp | exact WithTop.coe_lt_coe.2 (ENat.coe_lt_top n))) x
+      (hg.differentiable_iteratedFDeriv (by first | exact_mod_cast ENat.coe_lt_top n)) x
     rw [fderiv_continuousMultilinear_apply_const_apply hd]
 
 end GlobalTheory
@@ -519,7 +519,7 @@ theorem slice_word_mul_fderivs : ∀ (F : Type) [Field F] [NumberField F] [Inver
     let L : (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] ℝ :=
       ℓ ∘ₗ ∑ k, (LinearMap.mulRight ℝ (u k)) ∘ₗ LinearMap.proj k
     have hLe : (fun x : κ → mixedEmbedding.mixedSpace F => ℓ (∑ k, x k * u k)) = L := by
-      funext x; simp [L, LinearMap.sum_apply]
+      funext x; simp [L]
     rw [hLe]
     exact (LinearMap.toContinuousLinearMap L).contDiff
   have hc : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞)
@@ -673,7 +673,7 @@ theorem _root_.GlobalTheory.T.adelic_schwartz_l2_word_bound_exists : ∀ (F : Ty
     ∃ (L : List (List ((κ → mixedEmbedding.mixedSpace F) × (κ → mixedEmbedding.mixedSpace F)))) (C : ℝ), ∀ Φ ∈ GlobalTheory.WeilM.schA F κ, ∀ y : (κ → FiniteAdeleRing (𝓞 F) F),
       ENNReal.ofReal (∫ x, (‖x‖ ^ i * ‖iteratedFDeriv ℝ j (fun x => Φ (GlobalTheory.WeilCont.adeleJoin F x y)) x‖) ^ 2) ≤
         ENNReal.ofReal C * (L.map fun w => ∫⁻ x, ‖GlobalTheory.WeilL2Words.word F ψ w Φ (GlobalTheory.WeilCont.adeleJoin F x y)‖ₑ ^ 2).sum := by
-  first | exact @GlobalTheory.WeilL2Words.adelic_schwartz_slice_l2_word_bound | exact GlobalTheory.WeilL2Words.adelic_schwartz_slice_l2_word_bound | (intros; apply GlobalTheory.WeilL2Words.adelic_schwartz_slice_l2_word_bound <;> assumption)
+  first | exact @GlobalTheory.WeilL2Words.adelic_schwartz_slice_l2_word_bound
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicSchwartzL2WordBoundExistsStatement =====
@@ -697,7 +697,7 @@ theorem _root_.GlobalTheory.T.archDerivative_keeps_sums_fixed_finite_parts : ∀
     ∀ (m : ℕ) (g : Fin m → (κ → FiniteAdeleRing (𝓞 F) F) → ℂ) (f : Fin m → SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ) (h : (κ → mixedEmbedding.mixedSpace F) × (κ → mixedEmbedding.mixedSpace F)),
       ∃ f' : Fin m → SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ,
         GlobalTheory.WeilL2Words.dS F ψ h (∑ i, GlobalTheory.WeilM.pureA F (f i) (g i)) = ∑ i, GlobalTheory.WeilM.pureA F (f' i) (g i) := by
-  first | exact @GlobalTheory.WeilL2Words.dS_sum_pureA | exact GlobalTheory.WeilL2Words.dS_sum_pureA | (intros; apply GlobalTheory.WeilL2Words.dS_sum_pureA <;> assumption)
+  first | exact @GlobalTheory.WeilL2Words.dS_sum_pureA
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ArchDerivativeKeepsSumsFixedFinitePartsStatement =====
@@ -721,7 +721,7 @@ theorem _root_.GlobalTheory.T.exists_finite_l2A_bound_words : ∀ (F : Type) [Fi
     ∀ (μ : @MeasureTheory.Measure (κ → FiniteAdeleRing (𝓞 F) F) (borel _)), @MeasureTheory.Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
     ∀ (n : ℕ) (R : ℝ), ∃ B : ENNReal, B ≠ ⊤ ∧ ∀ ws : List ((κ → mixedEmbedding.mixedSpace F) × (κ → mixedEmbedding.mixedSpace F)), ws.length = n → (∀ h ∈ ws, ‖h‖ ≤ R) →
       GlobalTheory.WeilL2Words.l2A F μ (GlobalTheory.WeilL2Words.word F ψ ws Φ) ≤ B := by
-  first | exact @GlobalTheory.WeilL2Words.l2A_word_le | exact GlobalTheory.WeilL2Words.l2A_word_le | (intros; apply GlobalTheory.WeilL2Words.l2A_word_le <;> assumption)
+  first | exact @GlobalTheory.WeilL2Words.l2A_word_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteL2ABoundWordsStatement =====
@@ -749,7 +749,7 @@ theorem enorm_sum_mul_sq_le {m : ℕ} (a b : Fin m → ℂ) :
     ‖∑ i, a i * b i‖ₑ ^ 2 ≤ (∑ i, ‖b i‖ₑ ^ 2) * ∑ i, ‖a i‖ₑ ^ 2 := by
   have h1 : ‖∑ i, a i * b i‖₊ ≤ ∑ i, ‖b i‖₊ * ‖a i‖₊ := by
     refine (nnnorm_sum_le _ _).trans (le_of_eq ?_)
-    simp [nnnorm_mul, mul_comm]
+    simp [mul_comm]
   have h2 : ‖∑ i, a i * b i‖₊ ^ 2 ≤ (∑ i, ‖b i‖₊ ^ 2) * ∑ i, ‖a i‖₊ ^ 2 :=
     (pow_le_pow_left₀ (by positivity) h1 2).trans (Finset.sum_mul_sq_le_sq_mul_sq _ _ _)
   simp only [enorm_eq_nnnorm]
@@ -851,7 +851,7 @@ theorem _root_.GlobalTheory.T.finite_adelic_dual_basis_integral : ∀ (F : Type)
     ∀ y : (κ → FiniteAdeleRing (𝓞 F) F), ∃ C : ENNReal, C ≠ ⊤ ∧ ∀ f : Fin m → SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ,
       ∫⁻ x, ‖(∑ i, GlobalTheory.WeilM.pureA F (f i) (g i)) (GlobalTheory.WeilCont.adeleJoin F x y)‖ₑ ^ 2 ≤
         C * GlobalTheory.WeilL2Words.l2A F μ (∑ i, GlobalTheory.WeilM.pureA F (f i) (g i)) := by
-  first | exact @GlobalTheory.WeilL2Words.slice_le_l2A | exact GlobalTheory.WeilL2Words.slice_le_l2A | (intros; apply GlobalTheory.WeilL2Words.slice_le_l2A <;> assumption)
+  first | exact @GlobalTheory.WeilL2Words.slice_le_l2A
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteAdelicDualBasisIntegralStatement =====
@@ -945,7 +945,7 @@ open scoped Classical
 
 
 theorem _root_.GlobalTheory.T.isStandardArchimedeanAddChar_of_standardChar : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → GlobalTheory.WeilL2Words.IsStdInf D.host.F ψ := by
-  first | exact @GlobalTheory.WeilL2Words.StdTheta.isStdInf_of_isStdChar | exact GlobalTheory.WeilL2Words.StdTheta.isStdInf_of_isStdChar | (intros; apply GlobalTheory.WeilL2Words.StdTheta.isStdInf_of_isStdChar <;> assumption)
+  first | exact @GlobalTheory.WeilL2Words.StdTheta.isStdInf_of_isStdChar
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsStandardArchimedeanAddCharOfStandardCharStatement =====
@@ -1029,7 +1029,7 @@ theorem _root_.GlobalTheory.T.l2A_transport_gram_transpose : ∀ (D : D7) (ψ : 
                        GlobalTheory.WeilSchrodinger.IsTransport ψ co ω om →
     ∃ μ : @MeasureTheory.Measure (κ → FiniteAdeleRing (𝓞 D.host.F) D.host.F) (borel _), @MeasureTheory.Measure.IsAddHaarMeasure _ _ _ (borel _) μ ∧
       ∀ p, ∀ Φ ∈ GlobalTheory.WeilM.schA D.host.F κ, GlobalTheory.WeilL2Words.l2A D.host.F μ (om p Φ) = GlobalTheory.WeilL2Words.l2A D.host.F μ Φ := by
-  first | exact @GlobalTheory.WeilL2Transport.l2A_transport | exact GlobalTheory.WeilL2Transport.l2A_transport | (intros; apply GlobalTheory.WeilL2Transport.l2A_transport <;> assumption)
+  first | exact @GlobalTheory.WeilL2Transport.l2A_transport
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.L2ATransportGramTransposeStatement =====
@@ -1101,7 +1101,7 @@ theorem _root_.GlobalTheory.T.transported_archHeisenbergDirections_continuous : 
         om p (GlobalTheory.WeilM.schr ψ (GlobalTheory.WeilL2Words.archPair D.host.F (M p h)) φ) =
           GlobalTheory.WeilM.schr ψ (GlobalTheory.WeilL2Words.archPair D.host.F h) (om p φ)) ∧
       ∀ h, Continuous fun p => M p h := by
-  first | exact @GlobalTheory.ArchTransportHost.archDir_transport_host | exact GlobalTheory.ArchTransportHost.archDir_transport_host | (intros; apply GlobalTheory.ArchTransportHost.archDir_transport_host <;> assumption)
+  first | exact @GlobalTheory.ArchTransportHost.archDir_transport_host
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TransportedArchHeisenbergDirectionsContinuousStatement =====
@@ -1194,7 +1194,7 @@ open scoped Classical
 theorem _root_.GlobalTheory.T.adelic_l2_eq_zero_imp_eq_zero : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ]
     (μ : @MeasureTheory.Measure (κ → FiniteAdeleRing (𝓞 F) F) (borel _)), @MeasureTheory.Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
     ∀ D ∈ GlobalTheory.WeilM.schA F κ, GlobalTheory.WeilL2Words.l2A F μ D = 0 → D = 0 := by
-  first | exact @GlobalTheory.WeilL2Words.eq_zero_of_l2A_eq_zero | exact GlobalTheory.WeilL2Words.eq_zero_of_l2A_eq_zero | (intros; apply GlobalTheory.WeilL2Words.eq_zero_of_l2A_eq_zero <;> assumption)
+  first | exact @GlobalTheory.WeilL2Words.eq_zero_of_l2A_eq_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicL2EqZeroImpEqZeroStatement =====
@@ -1285,7 +1285,7 @@ theorem _root_.GlobalTheory.T.adelic_l2_limit_zero : ∀ (F : Type) [Field F] [N
     (D : (κ → AdeleRing (𝓞 F) F) → ℂ) (G : ℕ → (κ → AdeleRing (𝓞 F) F) → ℂ), (∀ n, G n ∈ GlobalTheory.WeilM.schA F κ) →
     (∀ a, Filter.Tendsto (fun n => G n a) Filter.atTop (nhds (D a))) →
     Filter.Tendsto (fun n => GlobalTheory.WeilL2Words.l2A F μ (G n)) Filter.atTop (nhds 0) → GlobalTheory.WeilL2Words.l2A F μ D = 0 := by
-  first | exact @GlobalTheory.WeilL2Words.l2A_eq_zero_of_tendsto | exact GlobalTheory.WeilL2Words.l2A_eq_zero_of_tendsto | (intros; apply GlobalTheory.WeilL2Words.l2A_eq_zero_of_tendsto <;> assumption)
+  first | exact @GlobalTheory.WeilL2Words.l2A_eq_zero_of_tendsto
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicL2LimitZeroStatement =====
@@ -1531,7 +1531,7 @@ theorem _root_.GlobalTheory.T.adelic_schwartz_haar_weil : ∀ (F : Type) [Field 
       Filter.Tendsto (fun n : ℕ => GlobalTheory.WeilL2Words.l2A F μ (fun a => ((n : ℂ) + 1) *
         (GlobalTheory.WeilM.schr ψ (GlobalTheory.WeilL2Words.archPair F (((n : ℝ) + 1)⁻¹ • h)) φ a - φ a) - GlobalTheory.WeilL2Words.dS F ψ h φ a))
         Filter.atTop (nhds 0) := by
-  first | exact @GlobalTheory.WeilL2Convergence.tendsto_l2A_diffQuot | exact GlobalTheory.WeilL2Convergence.tendsto_l2A_diffQuot | (intros; apply GlobalTheory.WeilL2Convergence.tendsto_l2A_diffQuot <;> assumption)
+  first | exact @GlobalTheory.WeilL2Convergence.tendsto_l2A_diffQuot
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicSchwartzHaarWeilStatement =====
@@ -1608,7 +1608,7 @@ theorem _root_.GlobalTheory.T.schroedingerOperator_archimedean_mem_adelicSchwart
     (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ), GlobalTheory.WeilL2Words.IsStdInf F ψ →
     ∀ (h : (κ → mixedEmbedding.mixedSpace F) × (κ → mixedEmbedding.mixedSpace F)), ∀ φ ∈ GlobalTheory.WeilM.schA F κ,
       GlobalTheory.WeilM.schr ψ (GlobalTheory.WeilL2Words.archPair F h) φ ∈ GlobalTheory.WeilM.schA F κ := by
-  first | exact @GlobalTheory.WeilL2Words.schr_archPair_mem_schA | exact GlobalTheory.WeilL2Words.schr_archPair_mem_schA | (intros; apply GlobalTheory.WeilL2Words.schr_archPair_mem_schA <;> assumption)
+  first | exact @GlobalTheory.WeilL2Words.schr_archPair_mem_schA
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchroedingerOperatorArchimedeanMemAdelicSchwartzStatement =====
@@ -1727,7 +1727,7 @@ theorem _root_.GlobalTheory.T.weilRep_derivative_law_of_L2Isometric : ∀ (F : T
       ∀ (μ : @MeasureTheory.Measure (κ → FiniteAdeleRing (𝓞 F) F) (borel _)), @MeasureTheory.Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
       (∀ p, ∀ φ ∈ GlobalTheory.WeilM.schA F κ, GlobalTheory.WeilL2Words.l2A F μ (om p φ) = GlobalTheory.WeilL2Words.l2A F μ φ) →
       ∀ p h, ∀ φ ∈ GlobalTheory.WeilM.schA F κ, GlobalTheory.WeilL2Words.dS F ψ h (om p φ) = om p (GlobalTheory.WeilL2Words.dS F ψ (M p h) φ) := by
-  first | exact @GlobalTheory.WeilL2Words.dS_om_eq | exact GlobalTheory.WeilL2Words.dS_om_eq | (intros; apply GlobalTheory.WeilL2Words.dS_om_eq <;> assumption)
+  first | exact @GlobalTheory.WeilL2Words.dS_om_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilRepDerivativeLawOfL2IsometricStatement =====

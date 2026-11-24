@@ -668,7 +668,7 @@ lemma ch_pt (p m : ℕ) (ν : Fin (p + 2) → ℝ) (y : TDom p m) :
     simp [bco, tailPt, Fin.sum_univ_succ]
     ring
   have hL1 : Lsq (tailPt ((a, b, r) : TDom p m)) 1 = 1 + ‖a 0‖ ^ 2 := by
-    simp [Lsq, tailPt, Fin.sum_univ_succ]
+    simp [Lsq, tailPt]
   have hd1 : de (tailPt ((a, b, r) : TDom p m)) 1 ^ 2 =
       (1 + ‖a 0‖ ^ 2) * rhoSq (tailPt ((a, b, r) : TDom p m)) 1 + ‖bco (tailPt ((a, b, r) : TDom p m)) 1‖ ^ 2 := by
     rw [de, Real.sq_sqrt (add_nonneg (mul_nonneg (by linarith [one_le_lsq (tailPt ((a, b, r) : TDom p m)) 1])
@@ -769,7 +769,7 @@ lemma sum_Ioi {n : ℕ} (g : Fin (n + 1) → ℝ) (l : Fin (n + 1)) :
 
 lemma iic_zero {n : ℕ} (g : Fin (n + 1) → ℝ) : ∑ j ∈ Finset.Iic 0, g j = g 0 := by
   rw [sum_Iic]
-  simp [Fin.le_zero_iff]
+  simp
 
 lemma upd_eq {p : ℕ} (ν : Fin (p + 2) → ℝ) :
     Function.update (Fin.tail ν) 0 (ν 0 + Fin.tail ν 0) = fun j => ν j.succ + if j = 0 then ν 0 else 0 := by

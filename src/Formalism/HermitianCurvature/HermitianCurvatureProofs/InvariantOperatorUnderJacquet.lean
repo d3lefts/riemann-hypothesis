@@ -604,7 +604,7 @@ theorem ld_left (hD : IsDom k r z z' (Fin.last r) D) (hπ : IsCRepOn (UWset k r 
       ((B.comp (dOp π X)).comp (J g)) 0 := by
     have h2 := L.hasFDerivAt.comp_hasDerivAt (0 : ℝ) hd
     convert h2 using 1
-    all_goals first | rfl | (ext; rfl)
+    all_goals first | rfl
   exact key.deriv
 
 theorem lz_left (hD : IsDom k r z z' (Fin.last r) D) (hπ : IsCRepOn (UWset k r z) π)
@@ -853,23 +853,20 @@ def LD (f : ℂ → ℂ) (c A B : ℂ) : Prop := HasFDerivAt f (f c • logD A B
 
 theorem LD.mul {f g : ℂ → ℂ} {c A B A' B' : ℂ} (hf : LD f c A B) (hg : LD g c A' B') :
     LD (fun x => f x * g x) c (A + A') (B + B') := by
-  have h := HasFDerivAt.mul hf hg
-  refine h.congr_fderiv (ContinuousLinearMap.ext fun x => ?_)
+  refine (HasFDerivAt.mul hf hg).congr_fderiv (ContinuousLinearMap.ext fun x => ?_)
   simp [logD_apply]
   ring
 
 theorem LD.star {f : ℂ → ℂ} {c A B : ℂ} (hf : LD f c A B) :
     LD (fun x => star (f x)) c (star B) (star A) := by
-  have h := (Complex.conjCLE : ℂ →L[ℝ] ℂ).hasFDerivAt.comp c hf
-  refine h.congr_fderiv (ContinuousLinearMap.ext fun x => ?_)
+  refine ((Complex.conjCLE : ℂ →L[ℝ] ℂ).hasFDerivAt.comp c hf).congr_fderiv (ContinuousLinearMap.ext fun x => ?_)
   simp only [ContinuousLinearMap.comp_apply, _root_.smul_apply, logD_apply, smul_eq_mul,
     ContinuousLinearEquiv.coe_coe, Complex.conjCLE_apply, map_mul, map_add, map_div₀, Complex.star_def,
     Complex.conj_conj]
   ring
 
 theorem LD_zpow (n : ℤ) {c : ℂ} (hc : c ≠ 0) : LD (fun x => x ^ n) c n 0 := by
-  have h := ((hasDerivAt_zpow n c (Or.inl hc)).hasFDerivAt).restrictScalars ℝ
-  refine h.congr_fderiv (ContinuousLinearMap.ext fun x => ?_)
+  refine (((hasDerivAt_zpow n c (Or.inl hc)).hasFDerivAt).restrictScalars ℝ).congr_fderiv (ContinuousLinearMap.ext fun x => ?_)
   simp [logD_apply, zpow_sub_one₀ hc]
   field_simp
 
@@ -963,9 +960,8 @@ def WD (l : Fin r) (F : (Fin r → ℂ) → E) (c : Fin r → ℂ) (P Pb : E) : 
 theorem WD.pOp {F : (Fin r → ℂ) → E} {c : Fin r → ℂ} {P Pb : E} (h : WD l F c P Pb) (hc : c ∈ OmX r) :
     pOp l F c = P ∧ pbOp l F c = Pb := by
   obtain ⟨F', hF, h1, h2⟩ := h
-  constructor
-  · simp only [Formalism.QuantumDeterminants.pOp, if_pos hc, wirt, hF.fderiv, h1]
-  · simp only [Formalism.QuantumDeterminants.pbOp, if_pos hc, wirtBar, hF.fderiv, h2]
+  exact ⟨by simp only [Formalism.QuantumDeterminants.pOp, if_pos hc, wirt, hF.fderiv, h1],
+    by simp only [Formalism.QuantumDeterminants.pbOp, if_pos hc, wirtBar, hF.fderiv, h2]⟩
 
 theorem WD.add {F G : (Fin r → ℂ) → E} {c : Fin r → ℂ} {P Pb Q Qb : E} (hF : WD l F c P Pb) (hG : WD l G c Q Qb) :
     WD l (fun x => F x + G x) c (P + Q) (Pb + Qb) := by
@@ -1047,8 +1043,7 @@ variable {k r : ℕ} {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
 variable (β : ℂ) (n : ℤ) (l : Fin r)
 
 theorem isOpen_omX (r : ℕ) : IsOpen (OmX r) := by
-  have h : OmX r = ⋂ l, {x : Fin r → ℂ | x l ≠ 0} := by ext; simp [OmX]
-  rw [h]
+  rw [show OmX r = ⋂ l, {x : Fin r → ℂ | x l ≠ 0} by ext; simp [OmX]]
   exact isOpen_iInter_of_finite fun l => isOpen_ne.preimage (continuous_apply l)
 
 def Rep (G : Set (Mx k r)) (Φ : Fn k r E) (L : List (Term k r E)) : Prop :=
@@ -1065,36 +1060,30 @@ def AllP (P : (Mx k r → E) → Prop) (L : List (Term k r E)) : Prop := ∀ t �
 
 theorem AllP.sc {P : (Mx k r → E) → Prop} {L : List (Term k r E)} (h : AllP P L) (κ : ℕ → ℕ → ℂ) :
     AllP P (sc κ L) := by
-  intro t ht
-  simp only [Qx7.sc, List.mem_map] at ht
-  obtain ⟨t', ht', rfl⟩ := ht
+  simp only [AllP, Qx7.sc, List.mem_map]
+  rintro t ⟨t', ht', rfl⟩
   exact h t' ht'
 
 theorem AllP.shS {P : (Mx k r → E) → Prop} {L : List (Term k r E)} (h : AllP P L) : AllP P (shS L) := by
-  intro t ht
-  simp only [Qx7.shS, List.mem_map] at ht
-  obtain ⟨t', ht', rfl⟩ := ht
+  simp only [AllP, Qx7.shS, List.mem_map]
+  rintro t ⟨t', ht', rfl⟩
   exact h t' ht'
 
 theorem AllP.shS' {P : (Mx k r → E) → Prop} {L : List (Term k r E)} (h : AllP P L) : AllP P (shS' L) := by
-  intro t ht
-  simp only [Qx7.shS', List.mem_map] at ht
-  obtain ⟨t', ht', rfl⟩ := ht
+  simp only [AllP, Qx7.shS', List.mem_map]
+  rintro t ⟨t', ht', rfl⟩
   exact h t' ht'
 
 theorem AllP.opQ {P : (Mx k r → E) → Prop} {L : List (Term k r E)} (h : AllP P L)
     {T : (Mx k r → E) → Mx k r → E} (hT : ∀ f, P f → P (T f)) : AllP P (opQ T L) := by
-  intro t ht
-  simp only [Qx7.opQ, List.mem_map] at ht
-  obtain ⟨t', ht', rfl⟩ := ht
+  simp only [AllP, Qx7.opQ, List.mem_map]
+  rintro t ⟨t', ht', rfl⟩
   exact hT _ (h t' ht')
 
 theorem AllP.append {P : (Mx k r → E) → Prop} {L L' : List (Term k r E)} (h : AllP P L) (h' : AllP P L') :
     AllP P (L ++ L') := by
   intro t ht
-  rcases List.mem_append.1 ht with h1 | h1
-  · exact h t h1
-  · exact h' t h1
+  exact (List.mem_append.1 ht).elim (h t) (h' t)
 
 variable {β n l}
 
@@ -1171,9 +1160,8 @@ theorem LL_ev {i : Fin (r + 1)} {D : Set (Mx k r)} {T : (Mx k r → E) → Mx k 
     (hg : g ∈ Glev k r i ∩ D) : T (fun x => ev β n l L c x) g = ev β n l (opQ T L) c g := by
   induction L with
   | nil =>
-    have h := hT.lin (fun _ => 0) (fun _ => 0) 1 Qx2.smooth_zero Qx2.smooth_zero g hg
-    simp only [smul_zero, add_zero, one_smul] at h
-    simpa [opQ] using h
+    simpa [opQ, smul_zero, add_zero, one_smul] using
+      hT.lin (fun _ => 0) (fun _ => 0) 1 Qx2.smooth_zero Qx2.smooth_zero g hg
   | cons t L ih =>
     have hL' : AllP (SmoothLev k r i D) L := fun t' ht' => hL t' (by simp [ht'])
     have e : (fun x => ev β n l (t :: L) c x) =
@@ -1278,9 +1266,7 @@ lemma eI_ne_esI (a b : Fin r) : eI k r a ≠ esI k r b := by
   intro h; have := congrArg Fin.val h; simp only [eI, esI] at this; omega
 
 lemma eI_inj {a b : Fin r} : eI k r a = eI k r b ↔ a = b := by
-  constructor
-  · intro h; have := congrArg Fin.val h; simp only [eI] at this; exact Fin.ext this
-  · rintro rfl; rfl
+  exact ⟨fun h => Fin.ext (by simpa [eI] using congrArg Fin.val h), by rintro rfl; rfl⟩
 
 lemma esI_inj {a b : Fin r} : esI k r a = esI k r b ↔ a = b := by
   constructor
@@ -1310,16 +1296,12 @@ local notation "𝐬" => bvec (esI k r l)
 lemma weyl_cell_apply_dual_basis (c : ℂ) (q : Fin (2 * r + k + 1)) :
     w1 k r l c (esI k r l) q = if q = eI k r l then c else 0 := by
   unfold w1
-  by_cases h : q = eI k r l
-  · simp [h]
-  · simp [h, (eI_ne_esI l l).symm]
+  by_cases h : q = eI k r l <;> simp [h, (eI_ne_esI l l).symm]
 
 lemma weyl_cell_apply_basis (c : ℂ) (q : Fin (2 * r + k + 1)) :
     w1 k r l c (eI k r l) q = if q = esI k r l then (star c)⁻¹ else 0 := by
   unfold w1
-  by_cases h : q = esI k r l
-  · simp [h, eI_ne_esI l l]
-  · simp [h, eI_ne_esI l l]
+  by_cases h : q = esI k r l <;> simp [h, eI_ne_esI l l]
 
 lemma weyl_cell_apply_other (c : ℂ) {p : Fin (2 * r + k + 1)} (h1 : p ≠ eI k r l) (h2 : p ≠ esI k r l)
     (q : Fin (2 * r + k + 1)) : w1 k r l c p q = if q = p then 1 else 0 := by
@@ -1463,9 +1445,7 @@ theorem LL_sum {k r : ℕ} {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E
     T (fun y => ∑ j ∈ Finset.range N, a j • c j y) x = ∑ j ∈ Finset.range N, a j • T (c j) x := by
   induction N with
   | zero =>
-    have h := hT.lin (fun _ => 0) (fun _ => 0) 1 Qx2.smooth_zero Qx2.smooth_zero x hx
-    simp only [smul_zero, add_zero, one_smul] at h
-    simpa using h
+    simpa using hT.lin (fun _ => 0) (fun _ => 0) 1 Qx2.smooth_zero Qx2.smooth_zero x hx
   | succ N ih =>
     simp only [Finset.sum_range_succ]
     rw [hT.lin _ _ (a N) (Qx2.smooth_lin_sum a hc N) (hc N) x hx, ih]

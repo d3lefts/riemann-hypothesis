@@ -154,7 +154,7 @@ theorem stab_iff (i : ClassSet H K') (g : Gp) (γ : G)
     · intro h
       exact K'.mul_mem (K'.mul_mem (K'.inv_mem hjg) h) hjg
   rw [h1]
-  simp only [map_mul, map_inv, X.pr_j, hp, inv_one, one_mul, mul_one, mul_assoc]
+  simp only [map_mul, map_inv, X.pr_j, hp, inv_one, one_mul, mul_assoc]
 
 end Fib
 
@@ -185,8 +185,6 @@ theorem castGL_symm_apply {a b : ℕ} (h : a = b) (R : Type) [CommRing R] (g : G
     ((castGL h R).symm g : Matrix (Fin a) (Fin a) R) x y = (g : Matrix (Fin b) (Fin b) R) (Fin.cast h x) (Fin.cast h y) := by
   first
   | rfl
-  | (subst h; rfl)
-  | simp [castGL]
 
 variable {R : Ranks} {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
     [StarRing E] [Algebra F E] {sp : Spaces R F E} {gp : Fin 2 → ℕ}

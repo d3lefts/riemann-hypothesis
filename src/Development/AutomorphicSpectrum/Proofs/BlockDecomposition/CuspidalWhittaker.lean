@@ -195,12 +195,12 @@ theorem blkEmb_mul {d j : ℕ} (hjd : j ≤ d) (A B : Matrix (Fin j) (Fin j) K) 
     · have hl' : j ≤ (l : ℕ) := not_lt.1 hl
       rw [GlobalTheory.CompanionTheory.TyFin.BlockEmbeddingGL.blkEmb_col_ge K _ i l hl']
       simp only [GlobalTheory.CompanionTheory.TyFin.BlockEmbeddingGL.blkEmb_col_ge K B _ l hl', mul_ite, mul_one, mul_zero,
-        Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true,
+        Finset.sum_ite_eq', Finset.mem_univ, if_true,
         GlobalTheory.CompanionTheory.TyFin.BlockEmbeddingGL.blkEmb_col_ge K A i l hl']
   · have hi' : j ≤ (i : ℕ) := not_lt.1 hi
     rw [GlobalTheory.CompanionTheory.TyFin.BlockEmbeddingGL.blkEmb_row_ge K _ i l hi']
     simp only [GlobalTheory.CompanionTheory.TyFin.BlockEmbeddingGL.blkEmb_row_ge K A i _ hi', ite_mul, one_mul, zero_mul,
-      Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true,
+      Finset.sum_ite_eq, Finset.mem_univ, if_true,
       GlobalTheory.CompanionTheory.TyFin.BlockEmbeddingGL.blkEmb_row_ge K B i l hi']
 
 theorem exists_gl_blkEmb : ∀ (K : Type) [Field K] [Fintype K] [DecidableEq K] (d j : ℕ), j ≤ d →
@@ -829,7 +829,7 @@ theorem mem_patSet_succ_iff {d j : ℕ} (hj : j < d) (u : GL (Fin d) K) :
     have hi : (⟨i, i.2.trans hj⟩ : Fin d) ≠ ⟨j, hj⟩ := by
       intro h'
       have h3 := congrArg Fin.val h'
-      simp only [Fin.val_mk] at h3
+      simp only at h3
       omega
     exact (h _ _).2 hi (fun hc => by
       have h2 := hc.2
@@ -1250,7 +1250,7 @@ theorem colGeR_single (K : Type) [Field K] (d j : ℕ) (hj : 1 ≤ j) :
       have hij : (⟨(i : ℕ), hlt⟩ : Fin j) = ⟨j - 1, by omega⟩ := Fin.ext (by simp; omega)
       simp only [colGeR, colGeE]
       rw [dite_eq_left ⟨hl, hlt⟩, hij]
-      simp [hl, hi]
+      simp [hl]
       omega
     · simp only [colGeR, colGeE]
       by_cases hlt : (i : ℕ) < j

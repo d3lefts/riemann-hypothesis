@@ -105,7 +105,7 @@ section -- clump:auto
 open GlobalTheory.W1 GlobalTheory.PD GlobalTheory.CechDR KaehlerDifferential
 
 theorem _root_.GlobalTheory.T.deRhamFormTrace_projection_formula : ∀ (k K L : Type) [Field k] [CharZero k] [Field K] [Field L] [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L] [FiniteDimensional K L], ∀ (α : DR k K) (β : DR k L), trDR k K L (mapDR k K L α * β) = α * trDR k K L β ∧ trDR k K L (β * mapDR k K L α) = trDR k K L β * α := by
-  first | (exact @GlobalTheory.W1.trDR_projection) | (exact GlobalTheory.W1.trDR_projection) | (intros; apply GlobalTheory.W1.trDR_projection <;> assumption)
+  first | (exact @GlobalTheory.W1.trDR_projection)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.DeRhamFormTraceProjectionFormulaStatement =====
@@ -132,7 +132,7 @@ private theorem kahlerMap_volumeForm {F K K' : Type} [Field F] [Field K] [Field 
     simp [mapDR]
   have h2 : ∀ a : K, map1 ℂ K K' (D ℂ K a) = ExteriorAlgebra.ι K' (D ℂ K' (algebraMap K K' a)) := fun a => by
     simp [map1, ι1, KaehlerDifferential.map_D]
-  simp only [Function.comp, h1, map_smul, h2, map_inv₀]
+  simp only [Function.comp, h1, map_smul, h2]
   rw [← algebraMap_smul K' ((algebraMap F K (x j.succ / x 0))⁻¹), map_inv₀, ← IsScalarTower.algebraMap_apply]
 
 theorem UpperTheory.Gal.productCup_of_system.trTop_of :

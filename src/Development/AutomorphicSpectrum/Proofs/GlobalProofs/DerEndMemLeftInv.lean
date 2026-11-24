@@ -170,7 +170,7 @@ theorem exp_sandwich' {n d : ℕ} (U : Matrix (Fin n) (Fin d) ℂ) (V : Matrix (
       map_mul' := fun p q => by
         simp only [Prod.fst_mul, Prod.snd_mul, Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.mul_smul,
           Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_assoc, h', Matrix.one_mul, Matrix.mul_one, sub_self, smul_zero,
-          smul_smul, sub_zero, add_zero, zero_add]
+          add_zero]
         module
       map_zero' := by simp
       map_add' := fun p q => by
@@ -449,7 +449,7 @@ namespace GlobalTheory.CompanionTheory.BlockEntry
 
 theorem sandwich_single_apply {A B : Type} [Fintype A] {d : ℕ} (U : Matrix A (Fin d) ℂ) (W : Matrix (Fin d) B ℂ)
     (i j : Fin d) (z : ℂ) (a : A) (c : B) : (U * Matrix.single i j z * W) a c = U a i * z * W j c := by
-  simp [Matrix.mul_apply, Matrix.single_apply, Finset.sum_mul, ite_and]
+  simp [Matrix.mul_apply, Matrix.single_apply, ite_and]
 
 theorem rows_of_adapted {n m : ℕ} {H P : Matrix (Fin n) (Fin n) ℂ} {X Y : Matrix (Fin n) (Fin m) ℂ}
     (hxx : Xᴴ * H * X = 0) (hyy : Yᴴ * H * Y = 0) (hxy : Xᴴ * H * Y = 1) (hyx : Yᴴ * H * X = 1) (hle : 2 * m ≤ n)
@@ -618,7 +618,7 @@ theorem _root_.GlobalTheory.T.block_embedding_adapted_basis : ∀ (D : D7) [_roo
       (GlobalTheory.CuspRep.lieS D.host.E d i j (GlobalTheory.CuspRep.atEmb (tauE D τ) z) f).1 x =
         (GlobalTheory.Mem.RealTranslate.derEnd hθ τ (z • (C.1.map (tauE D τ) * Matrix.single p q 1 * (C.1.map (tauE D τ))⁻¹) -
           (starRingEnd ℂ z) • (C.1.map (tauE D τ) * Matrix.single p' q' 1 * (C.1.map (tauE D τ))⁻¹)) F).1 (ι x) := by
-  first | exact @GlobalTheory.CompanionTheory.BlockEntry.lieS_eq_derEnd | exact GlobalTheory.CompanionTheory.BlockEntry.lieS_eq_derEnd | (intros; apply GlobalTheory.CompanionTheory.BlockEntry.lieS_eq_derEnd <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.BlockEntry.lieS_eq_derEnd
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GlobalProofs.AdaptedBasisBlockEntriesStatement =====
@@ -699,7 +699,7 @@ theorem _root_.GlobalTheory.T.automorphic_function_restrict_block : ∀ (D : D7)
     IsWittFrame D.sp.cm.sig V.gram X Y → ∀ (l d : ℕ) (h : l + d ≤ m)
     (ι : GlobalTheory.CuspRep.GA D.host.E d →* GA D V), GlobalTheory.BlockForms.IsBlockEmb D.sp.cm.sig V.gram X Y h ι →
     ∀ F : GlobalTheory.Mem.AutSpace.SmFun θ V, (fun x => F.1 (ι x)) ∈ GlobalTheory.CuspRep.Sm D.host.E d := by
-  first | exact @GlobalTheory.CompanionTheory.CuspSmooth.mem_Sm_blockEmb_smFun | exact GlobalTheory.CompanionTheory.CuspSmooth.mem_Sm_blockEmb_smFun | (intros; apply GlobalTheory.CompanionTheory.CuspSmooth.mem_Sm_blockEmb_smFun <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.CuspSmooth.mem_Sm_blockEmb_smFun
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GlobalProofs.BlockEmbeddingAdaptedBasisStatement =====
@@ -817,7 +817,7 @@ theorem parts_mem {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ) (hH : Hᴴ = H) (hu
     rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, mul_nonsing_inv _ hu, Matrix.one_mul]
   have hc' : star c = s * c := hc
   simp only [conjTranspose_smul, conjTranspose_add, conjTranspose_neg, Matrix.add_mul, Matrix.smul_mul, Matrix.neg_mul,
-    Matrix.mul_smul, Matrix.mul_add, Matrix.mul_neg, e1, e2, hss, hc', smul_add, smul_neg, smul_smul]
+    Matrix.mul_smul, Matrix.mul_add, Matrix.mul_neg, e1, e2, hc', smul_add, smul_neg, smul_smul]
   have hcs : star (c * s) = c := by
     rw [star_mul', hc', hss, mul_comm (s * c), ← mul_assoc, h2, one_mul]
   rw [hcs, mul_comm c s]
@@ -1146,7 +1146,7 @@ theorem monic_block : ∀ (D : D7) [_root_.NumberField.IsTotallyComplex D.host.E
     · have e' : τ = NumberField.ComplexEmbedding.conjugate (tauE D τ') := by
         rw [e]
         ext x
-        simp [NumberField.ComplexEmbedding.conjugate_coe_eq]
+        simp
       subst e'
       refine core hθ T ι hN hsm τ' _ (c τ') (fun p q => -(P * Matrix.single q.rev p.rev 1 * Q)) (glRel_conj_rev P Q hQP)
         (span_conj_rev P Q hPQ hQP) (fun p q hpq H hH x => ?_)

@@ -265,7 +265,7 @@ theorem unitU_liftH_of_norm_le_one {F E : Type} [NontriviallyNormedField F] [Non
   simp only [e]
   by_cases h1 : ‖l‖ ≤ 1 <;>
     by_cases h2 : (∀ i j, ‖X.1.1 i j‖ ≤ 1) ∧ (∀ i, ‖X.2.1 i‖ ≤ 1) ∧ ‖X.2.2‖ ≤ 1 <;>
-    simp only [h1, h2, if_true, if_false, true_and, false_and, and_self, mul_one, mul_zero, zero_mul, implies_true]
+    simp only [h1, h2, if_true, if_false, true_and, false_and, and_self, mul_one, mul_zero, implies_true]
 
 end GlobalTheory.JR.Step
 end -- clump:auto
@@ -295,7 +295,7 @@ theorem actU_uEmb_liftH {F E : Type} [NontriviallyNormedField F] [NontriviallyNo
     simp only [embHom, full, Hn.toGl, actU, MonoidHom.coe_mk, OneHom.coe_mk, Matrix.reindex_apply,
       Matrix.submatrix_mul_equiv, Matrix.fromBlocks_multiply]
     congr 2
-    all_goals (ext i j; simp [Matrix.mul_apply, Matrix.mulVec, dotProduct, Matrix.vecMul, Finset.sum_apply, star_sum, mul_comm, Matrix.star_apply])
+    all_goals (ext i j; simp [Matrix.mul_apply, Matrix.mulVec, dotProduct, star_sum, mul_comm, Matrix.star_apply])
   · show embHom r E s.1 *ᵥ (ν • eL r E) = ν • eL r E
     ext i
     refine Fin.lastCases ?_ (fun i => ?_) i
@@ -605,11 +605,7 @@ theorem pivot_w {E : Type} [NormedField E] [IsUltrametricDist E] [StarRing E]
     (hGd : ‖G.det‖ = 1) :
     ∃ i, ∃ w : n → E, (∀ a, ‖w a‖ ≤ 1) ∧ w i = 1 ∧ ‖star w ⬝ᵥ (G *ᵥ w)‖ = 1 := by
   first
-  | exact @_root_.GlobalTheory.UnitValueExistence.main
-  | exact _root_.GlobalTheory.UnitValueExistence.main
   | (apply _root_.GlobalTheory.UnitValueExistence.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.UnitValueExistence.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.UnitValueExistence.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.UnitValueExistence.main ..)
 
 end Piv
@@ -755,7 +751,7 @@ theorem uO_transitive_of_last_unit (F E : Type) [NontriviallyNormedField F] [Non
     apply Matrix.IsHermitian.ext; intro i j; rw [hGe, hGe]
     by_cases h : i = j
     · subst h; simp [mul_comm]
-    · simp [Matrix.one_apply, h, Ne.symm h, mul_comm]
+    · simp [h, Ne.symm h, mul_comm]
   have hGi : ∀ i j, ‖G i j‖ ≤ 1 := by
     intro i j; rw [hGe]; refine (nsub _ _).trans (max_le ?_ ?_)
     · by_cases h : i = j <;> simp [Matrix.one_apply, h]
@@ -803,7 +799,7 @@ theorem uO_transitive_of_last_unit (F E : Type) [NontriviallyNormedField F] [Non
       induction b using Fin.lastCases with
       | last =>
         rw [cl, cs, star_sub, star_smul, sub_dotProduct, smul_dotProduct, d3, h1]
-        simp [Matrix.one_apply, (Fin.castSucc_ne_last m)]
+        simp [(Fin.castSucc_ne_last m)]
       | cast m' =>
         rw [cs, cs, star_sub, star_smul, sub_dotProduct, smul_dotProduct, dotProduct_sub, dotProduct_sub,
           dotProduct_smul, dotProduct_smul, d2, d3, d4, h1]
@@ -946,7 +942,7 @@ theorem actU_liftH_support {r : ℕ} (X : Hn r F E) (ν : E) (l : F) (hν : ‖�
   have hv : ∀ i, ‖(g.1 *ᵥ (ν • eL r E)) i‖ ≤ 1 := hmem.2.1
   set v : Fin (r + 1) → E := fun i => g.1 i (Fin.last r) with hvdef
   have hgv : g.1 *ᵥ eL r E = v := by
-    funext i; simp [eL, Matrix.mulVec_single_one, v]
+    funext i; simp [eL, v]
   have hint : ∀ i, ‖v i‖ ≤ 1 := by
     intro i
     have := hv i

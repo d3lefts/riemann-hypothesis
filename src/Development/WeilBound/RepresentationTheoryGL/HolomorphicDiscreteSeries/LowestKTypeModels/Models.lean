@@ -230,7 +230,7 @@ theorem lowestKTypeModel : Seed := by
   have h7 : ∀ a, ⟪ξ0, a⟫_ℂ = ∫ h, φ h * ⟪η, ρ h a⟫_ℂ ∂ν := fun a => by
     rw [← inner_conj_symm, hj'2 a, ← integral_conj, ← integral_inv_eq_self (fun h => φ h * ⟪η, ρ h a⟫_ℂ) ν]
     refine integral_congr_ae (.of_forall fun h => ?_)
-    simp only [map_mul, hsym, inner_conj_symm, hρ.adj, hφd]
+    simp only [map_mul, inner_conj_symm, hρ.adj, hφd]
     rw [u_adj hσ.2.2.1, inv_inv]
   have hbξ : b' = ξ0 := ext_inner_right ℂ fun a => by rw [hb1, h7]
   rw [hbξ] at hb2
@@ -313,7 +313,7 @@ theorem models_holds : Models := by
     · have e1 : UH.symm (σ (um h) x) = σ0 (um h) (UH.symm x) := by
         apply UH.injective
         rw [hUH _ (umat_mem h), LinearIsometryEquiv.apply_symm_apply, LinearIsometryEquiv.apply_symm_apply]
-      simp only [ContinuousLinearMap.comp_apply, LinearIsometryEquiv.coe_coe'', ContinuousLinearEquiv.coe_coe]
+      simp only [ContinuousLinearMap.comp_apply, ContinuousLinearEquiv.coe_coe]
       show UG (j0 (UH.symm (σ (um h) x))) = π (emb e (um h)) (UG (j0 (UH.symm x)))
       have m1 : emb e (um h) ∈ UJset ε := umat_mem (embU hG.fits h)
       rw [e1, hj0, hUG _ m1]

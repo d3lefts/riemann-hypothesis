@@ -231,9 +231,8 @@ theorem nuJ_sigLam_coe (hgap : StdGap ε lam) (hP : IsPsiFor ε lam T Ψ) (hv₀
     {Ws : List (List (Matrix (Fin n) (Fin n) ℂ))} (hWs : ∀ w ∈ Ws, ∀ X ∈ w, inG ε X) (y : Hlam ε Ψ v₀) :
     nuJ (rreg ε) Ws (y : L2 ε) = nuJ (sigLam ε Ψ v₀) Ws y := by
   unfold nuJ
-  congr 1
-  refine List.map_congr_left fun w hw => ?_
-  rw [← dSW_sigLam_coe hgap hP hv₀ w (hWs w hw) y, Submodule.coe_norm]
+  exact congrArg List.sum (List.map_congr_left fun w hw => by
+    rw [← dSW_sigLam_coe hgap hP hv₀ w (hWs w hw) y, Submodule.coe_norm])
 
 end ReciprocityTheory.ChartRestriction.DS.DecInf
 end -- clump:auto
@@ -348,11 +347,10 @@ theorem approx_id {K : Type} [Group K] [TopologicalSpace K] [CompactSpace K] [T2
 
 theorem finAlg_sep_KG {n : ℕ} (ε : Fin n → Bool) : (Mult1.Down.KF.finAlg (S7.KG ε)).SeparatesPoints := by
   intro k k' hne
-  have hne' : S7.toMK k ≠ S7.toMK k' := fun h => hne (Subtype.ext (Subtype.ext (Units.ext h)))
   obtain ⟨i, j, hij⟩ : ∃ i j, S7.toMK k i j ≠ S7.toMK k' i j := by
     by_contra hc
     push Not at hc
-    exact hne' (Matrix.ext hc)
+    exact hne (Subtype.ext (Subtype.ext (Units.ext (Matrix.ext hc))))
   have hcont : ∀ a b : Fin n, Continuous fun κ : S7.KG ε => S7.toMK κ a b := fun a b =>
     (continuous_apply b).comp ((continuous_apply a).comp S7.IdA.continuous_toMK)
   refine ⟨_, ⟨⟨fun κ => S7.toMK κ i j, hcont i j⟩, ?_, rfl⟩, hij⟩
@@ -406,18 +404,13 @@ theorem exists_kfin_near {ε : Fin n → Bool} {lam : Fin n → ℝ} {T : S7.KTy
   have hterm : ∀ w ∈ Ws, ‖dSW (sigLam ε Ψ v₀) w (u - x)‖ ≤ e / (Ws.length + 1) := by
     intro w hw
     obtain ⟨i, rfl⟩ := List.get_of_mem hw
-    have hxs' : IsSmoothVecU ε (sigLam ε Ψ v₀) (∫ k, α k • sigLam ε Ψ v₀ (S7.toMK k) u ∂(S7.muK ε)) := by
-      rw [← hxdef]; exact hxs
     rw [dSW_sub hσ (hWg i) hu hxs, hxdef]
-    erw [dSW_integral hσ (fun z hz => sigLam_sep z hz) (hWg i) hu α hxs']
+    erw [dSW_integral hσ (fun z hz => sigLam_sep z hz) (hWg i) hu α (hxdef ▸ hxs)]
     rw [norm_sub_rev]
     have h1 : sigLam ε Ψ v₀ (S7.toMK (1 : S7.KG ε)) u = u := by
       rw [show S7.toMK (1 : S7.KG ε) = 1 from rfl, hσ.1.1]
       rfl
-    have h2 := hαF i
-    beta_reduce at h2
-    rw [h1] at h2
-    exact h2.le
+    simpa [h1] using (hαF i).le
   unfold nuJ
   calc (Ws.map fun w => ‖dSW (sigLam ε Ψ v₀) w (u - x)‖).sum
       ≤ (Ws.map fun w => ‖dSW (sigLam ε Ψ v₀) w (u - x)‖).length • (e / (Ws.length + 1)) :=
@@ -458,11 +451,9 @@ theorem exists_near_smooth {ε : Fin n → Bool} {lam : Fin n → ℝ} {T : S7.K
         nuJ (sigLam ε Ψ v₀) Ws (u - ⟨((x : smD ε (rreg ε)) : L2 ε), hx⟩) < e := by
   obtain ⟨x, hxK, hxe⟩ := exists_kfin_near hlam hgap hP hv₀ Ws hWs u hu he
   obtain ⟨y, hy, hyx⟩ := kfin_mem_genSub hlam hgap hP hv₀ x hxK
-  have hyH : ((y : smD ε (rreg ε)) : L2 ε) ∈ Hlam ε Ψ v₀ := by rw [hyx]; exact x.2
-  refine ⟨y, hy, hyH, ?_⟩
+  have hyH : ((y : smD ε (rreg ε)) : L2 ε) ∈ Hlam ε Ψ v₀ := hyx.symm ▸ x.2
   have hxy : (⟨((y : smD ε (rreg ε)) : L2 ε), hyH⟩ : Hlam ε Ψ v₀) = x := Subtype.ext hyx
-  rw [hxy]
-  exact hxe
+  exact ⟨y, hy, hyH, hxy.symm ▸ hxe⟩
 
 end ReciprocityTheory.ChartRestriction.DS.DecInf
 end -- clump:auto
@@ -974,7 +965,7 @@ theorem hs_eq_of_compact {n : ℕ} {ε : Fin n → Bool} (hpq : pOf ε = 0 ∨ q
         simpa using h0
       have hd : (Matrix.diagonal fun a => if ε a = true then (1 : ℂ) else -1) = -1 := by
         ext i j
-        by_cases h : i = j <;> simp [Matrix.diagonal_apply, Matrix.one_apply, hall, h]
+        by_cases h : i = j <;> simp [hall, h]
       rw [hd] at h2
       simpa using h2
     · have hall : ∀ a, ε a = true := by
@@ -983,7 +974,7 @@ theorem hs_eq_of_compact {n : ℕ} {ε : Fin n → Bool} (hpq : pOf ε = 0 ∨ q
         simpa using h0
       have hd : (Matrix.diagonal fun a => if ε a = true then (1 : ℂ) else -1) = 1 := by
         ext i j
-        by_cases h : i = j <;> simp [Matrix.diagonal_apply, Matrix.one_apply, hall, h]
+        by_cases h : i = j <;> simp [Matrix.one_apply, hall, h]
       rw [hd] at h2
       simpa using h2
   delta S7.hs

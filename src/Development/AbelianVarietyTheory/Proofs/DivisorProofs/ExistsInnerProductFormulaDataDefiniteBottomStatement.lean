@@ -195,7 +195,7 @@ open GlobalTheory.Core.Rk.IP (Pair Unram SphFun openOff integrand wcoef rcoef up
 
 theorem _root_.GlobalTheory.T.const_one_mem_cuspForms_definiteBottom : GBig fun {D} T Lc _ G _ _ _ _ => ∀ (W : G.Weil) (i j : Fin D.R.m) (A A' WW : HSp D) (X : Tri T A A' WW),
   IsBottomTri W i j X → ∀ t : T, ∀ cA : CptF (GlobalTheory.Grid.neg A), HidaSetting W.θ (GlobalTheory.Grid.neg A) WW (fun τ => -X.rA.s τ) X.rW.s A'.rank cA → (fun _ => (1 : ℂ)) ∈ A0 W.θ (GlobalTheory.Grid.neg A) cA := by
-  first | exact @GlobalTheory.BottomCusp.one_mem_A0_of_isBottomTri | exact GlobalTheory.BottomCusp.one_mem_A0_of_isBottomTri | (intros; apply GlobalTheory.BottomCusp.one_mem_A0_of_isBottomTri <;> assumption)
+  first | exact @GlobalTheory.BottomCusp.one_mem_A0_of_isBottomTri
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConstOneMemCuspFormsDefiniteBottomStatement =====
@@ -956,7 +956,7 @@ private theorem pt_ne_zero (hX : IsBottomTri W i j X) (t : T) {P : PolF D WW.ran
       simp [Matrix.one_apply, Matrix.diagonal_apply, apply_ite]
     · rw [(hX.std.2.2 τ).1, (hX.std.2.2 τ).2]
       ext a b
-      simp [Matrix.one_apply, Matrix.diagonal_apply, apply_ite]
+      simp [Matrix.one_apply, apply_ite]
   have hinj := GlobalTheory.FockPolyInj.pureTensorO_injective_of_on W.ψ W.θ (GlobalTheory.Grid.neg A) WW h.isVac.1 h.isVac.2.inf
     (fun τ => -X.rA.s τ) X.rA.B X.rW.s X.rW.B (fun _ => 0) pW hA hpW (X.f t) (f_theta hX t) (f_fock hX t) (f_ne_zero hX t)
   exact fun h0 => hP (hinj (h0.trans (map_zero _).symm))
@@ -1142,7 +1142,7 @@ open GlobalTheory.Core.Rk.IP (Pair Unram SphFun openOff integrand wcoef rcoef up
 
 theorem _root_.GlobalTheory.T.exists_satakeParameters_const_one_definiteBottom : GBig fun {D} T Lc _ G _ _ _ _ => ∀ (W : G.Weil) (i j : Fin D.R.m) (A A' WW : HSp D) (X : Tri T A A' WW),
   IsBottomTri W i j X → ∀ t : T, ∃ par : GlobalTheory.LFun.Fam D.host.E, GlobalTheory.LFun.IsParamFun D.sp.cm.sig (GlobalTheory.Grid.neg A).gram X.rA.Λ ((GlobalTheory.BottomIPData.sfB G t : Finset (FinPl D)) : Set (FinPl D)) (fun _ => (1 : ℂ)) par := by
-  first | exact @GlobalTheory.BottomIPData.isParamFun_one_bottom | exact GlobalTheory.BottomIPData.isParamFun_one_bottom | (intros; apply GlobalTheory.BottomIPData.isParamFun_one_bottom <;> assumption)
+  first | exact @GlobalTheory.BottomIPData.isParamFun_one_bottom
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSatakeParametersConstOneDefiniteBottomStatement =====
@@ -1213,7 +1213,7 @@ theorem jpq_mul_negFrame (A : HSp D) (τ : D.what₂.Tau) :
       · rw [show negFrame A τ (Sum.inl x) c = 0 from rfl, mul_zero]
       · simp [Formalism.UG.Jpq]
   · simp only [Formalism.UG.Jpq, Matrix.mul_apply, Fintype.sum_sum_type, Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂,
-      negFrame_inl, negFrame_inr, mul_zero, Finset.sum_const_zero, Matrix.neg_apply, Matrix.zero_apply, zero_mul, zero_add,
+      Finset.sum_const_zero, Matrix.neg_apply, Matrix.zero_apply, zero_mul, zero_add,
       Matrix.one_apply, neg_mul, ite_mul, one_mul, Finset.sum_neg_distrib, Finset.sum_ite_eq, Finset.mem_univ, if_true]
 
 open GlobalTheory.Grid (neg neg_gram) in
@@ -1352,7 +1352,7 @@ open GlobalTheory.Core.Rk.IP (Pair Unram SphFun openOff integrand wcoef rcoef up
 
 theorem _root_.GlobalTheory.T.hermitianWittIndex_eq_zero_definiteBottom : GBig fun {D} T Lc _ G _ _ _ _ => ∀ (W : G.Weil) (i j : Fin D.R.m) (A A' WW : HSp D) (X : Tri T A A' WW),
   IsBottomTri W i j X → ∀ t : T, wittIndex WW = 0 := by
-  first | exact @GlobalTheory.BottomWitt.wittIndex_eq_zero | exact GlobalTheory.BottomWitt.wittIndex_eq_zero | (intros; apply GlobalTheory.BottomWitt.wittIndex_eq_zero <;> assumption)
+  first | exact @GlobalTheory.BottomWitt.wittIndex_eq_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianWittIndexEqZeroDefiniteBottomStatement =====
@@ -1420,7 +1420,7 @@ open GlobalTheory.Core.Rk.IP (Pair Unram SphFun openOff integrand wcoef rcoef up
 
 theorem _root_.GlobalTheory.T.isPolynomialFockThetaVector_definiteBottom : GBig fun {D} T Lc _ G _ _ _ _ => ∀ (W : G.Weil) (i j : Fin D.R.m) (A A' WW : HSp D) (X : Tri T A A' WW),
   IsBottomTri W i j X → ∀ t : T, ∀ P : PolF D WW.rank A.rank, IsFockVec W.ψ W.θ (GlobalTheory.Grid.neg A) WW (fun τ => -X.rA.s τ) X.rW.s (pureTensorO W.ψ W.θ (GlobalTheory.Grid.neg A) WW (fun τ => -X.rA.s τ) X.rW.s X.rA.B X.rW.B (X.f t) P) := by
-  first | exact @GlobalTheory.BottomIPData.isFockVec_bottom | exact GlobalTheory.BottomIPData.isFockVec_bottom | (intros; apply GlobalTheory.BottomIPData.isFockVec_bottom <;> assumption)
+  first | exact @GlobalTheory.BottomIPData.isFockVec_bottom
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsPolynomialFockThetaVectorDefiniteBottomStatement =====
@@ -1655,7 +1655,7 @@ open GlobalTheory.Core.Rk.IP (Pair Unram SphFun openOff integrand wcoef rcoef up
 
 theorem _root_.GlobalTheory.T.partialNormalizingFactor_ne_zero_definiteBottom : GBig fun {D} T Lc _ G _ _ _ _ => ∀ (W : G.Weil) (i j : Fin D.R.m) (A A' WW : HSp D) (X : Tri T A A' WW),
   IsBottomTri W i j X → ∀ t : T, GlobalTheory.LFun.dSfun D.host.E ((GlobalTheory.BottomIPData.sfB G t : Finset (FinPl D)) : Set (FinPl D)) (GlobalTheory.Grid.neg A).rank WW.rank ((A'.rank : ℂ) / 2) ≠ 0 := by
-  first | exact @GlobalTheory.BottomIPData.dSfun_bottom_ne_zero | exact GlobalTheory.BottomIPData.dSfun_bottom_ne_zero | (intros; apply GlobalTheory.BottomIPData.dSfun_bottom_ne_zero <;> assumption)
+  first | exact @GlobalTheory.BottomIPData.dSfun_bottom_ne_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PartialNormalizingFactorNeZeroDefiniteBottomStatement =====
@@ -1755,7 +1755,7 @@ theorem _root_.GlobalTheory.T.exists_innerProductFormula_data_definite_bottom : 
       (∃ s₁ : ℝ, s₁ < (A'.rank : ℝ) / 2 ∧ IntegrableOn
         (integrand ((X.ω t).toSgn true) m νW 𝓕W LA a (pureTensorO W.ψ W.θ (GlobalTheory.Grid.neg A) WW (fun τ => -X.rA.s τ) X.rW.s X.rA.B X.rW.B (X.f t) P) (pureTensorO W.ψ W.θ (GlobalTheory.Grid.neg A) WW (fun τ => -X.rA.s τ) X.rW.s X.rA.B X.rW.B (X.f t) P) (fun _ => 1) (fun _ => 1) s₁) (openOff (GlobalTheory.Grid.neg A) LA Sf) m) ∧
       ∫ g in openOff (GlobalTheory.Grid.neg A) LA Sf, wcoef ((X.ω t).toSgn true) νW 𝓕W (pureTensorO W.ψ W.θ (GlobalTheory.Grid.neg A) WW (fun τ => -X.rA.s τ) X.rW.s X.rA.B X.rW.B (X.f t) P) (pureTensorO W.ψ W.θ (GlobalTheory.Grid.neg A) WW (fun τ => -X.rA.s τ) X.rW.s X.rA.B X.rW.B (X.f t) P) g * rcoef m (fun _ => 1) (fun _ => 1) g ∂m ≠ 0 := by
-  first | exact @GlobalTheory.BottomIPData.data_exists | exact GlobalTheory.BottomIPData.data_exists | (intros; apply GlobalTheory.BottomIPData.data_exists <;> assumption)
+  first | exact @GlobalTheory.BottomIPData.data_exists
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsInnerProductFormulaDataDefiniteBottomStatement =====

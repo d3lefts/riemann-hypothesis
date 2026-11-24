@@ -1,5 +1,6 @@
 import gzip,hashlib,importlib.util,json
 from pathlib import Path
+import shutil
 import tempfile,unittest,sys
 ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('small_quick',ROOT/'quick-check.py');q=importlib.util.module_from_spec(spec);spec.loader.exec_module(q)
@@ -10,6 +11,25 @@ class QuickChecks(unittest.TestCase):
   p=self.root/'src'/(name.replace('.','/')+'.lean');p.parent.mkdir(parents=True,exist_ok=True);p.write_text(text);return p
  def test_changed_root_closure(self):
   self.source('A','module\npublic import B\n@[expose] public section\ndef x := 1\n');self.source('B','module\nimport Mathlib\n');self.assertEqual(q.dependency_closure(self.root,['A']),['A','B'])
+ def test_plan_selects_unicode_changed_root(self):
+  def git(*args):
+   return q.ci.git(self.root, '-c', 'user.name=Test', '-c', 'user.email=test@example.org', *args)
+  git('init', '-q')
+  git('config', 'core.quotePath', 'true')
+  for name in ('lakefile.toml', 'lean-toolchain', 'lake-manifest.json'):
+   shutil.copyfile(ROOT.parent / name, self.root / name)
+  self.source('DataParams₂', 'def n := 1\n')
+  git('add', '.')
+  git('commit', '-qm', 'base')
+  base = git('rev-parse', 'HEAD')
+  self.source('DataParams₂', 'def n := 2\n')
+  git('commit', '-qam', 'edit one module')
+  head = git('rev-parse', 'HEAD')
+  plan = q.plan(self.root, {'base_ref': 'main', 'base_head': base, 'pr_head': head,
+                            'expected': {'candidate_head': head}})
+  self.assertEqual(plan['status'], 'ready')
+  self.assertEqual(plan['targets'], ['DataParams₂'])
+  self.assertEqual(plan['closure'], ['DataParams₂'])
  def test_big_cone_deferred(self):
   for i in range(4):self.source('A'+str(i),'import A'+str(i+1)+'\n')
   with self.assertRaisesRegex(ValueError,'ancestor cone'):q.dependency_closure(self.root,['A0'],maximum=2)
@@ -65,7 +85,7 @@ class QueuePolicy(unittest.TestCase):
   with self.assertRaisesRegex(ValueError,'main as base'):q.plan(Path('/unused'),{'expected':{},'base_ref':'feature'})
  def test_many_roots_rejected_before_elaboration(self):
   from unittest.mock import patch
-  with patch.object(q.ci,'git',side_effect=['a'*40,'\n'.join('src/A'+str(i)+'.lean'for i in range(9))]),patch.object(q.ci,'validate_inputs'),patch.object(q.ci,'sha256',return_value='same'):
+  with patch.object(q.ci,'git',side_effect=['a'*40,'\0'.join('src/A'+str(i)+'.lean'for i in range(9))+'\0']),patch.object(q.ci,'validate_inputs'),patch.object(q.ci,'sha256',return_value='same'):
    with self.assertRaisesRegex(ValueError,'eight changed'):q.plan(Path('/unused'),{'expected':{'candidate_head':'a'*40},'base_ref':'main','base_head':'b'*40})
 
 if __name__=='__main__':unittest.main()

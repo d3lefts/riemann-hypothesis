@@ -205,7 +205,7 @@ theorem map_aeval_commute_of_commute {K R : Type} [Field K] [CommRing R] [Algebr
       have h2 : ((algebraMap K R).mapMatrix (m := Fin n)) (algebraMap K (Matrix (Fin n) (Fin n) K) a)
           = (algebraMap K R a) • (1 : Matrix (Fin n) (Fin n) R) := by
         ext i j
-        simp [Matrix.algebraMap_matrix_apply, Matrix.one_apply, Algebra.algebraMap_eq_smul_one]
+        simp [Matrix.one_apply, Algebra.algebraMap_eq_smul_one]
       rw [h2]
       exact (Commute.one_right X).smul_right _
   exact key h
@@ -655,7 +655,7 @@ theorem vecMul_map_single (hs : ∀ j, (Pi.single j 1 : Fin n → K) = v ᵥ* ae
   rw [← this, ← hs j]
   by_cases hij : i = j
   · subst hij; simp
-  · simp [Pi.single_apply, hij]
+  · simp [hij]
 
 theorem vecMul_Ph (hs : ∀ j, (Pi.single j 1 : Fin n → K) = v ᵥ* aeval γ (h j)) (z : Fin n → R) :
     (algebraMap K R ∘ v) ᵥ* Ph h γ z = z := by
@@ -1587,7 +1587,7 @@ theorem iso_range_iff_sg_mul (E : Type) [Field E] [NumberField E] [IsCMField E] 
       funext k
       by_cases hk : k = i
       · subst hk; simp
-      · simp [Pi.single_apply, hk]
+      · simp [hk]
     rw [hc, single_one_dotProduct, Matrix.mulVec_single_one] at h3
     simpa using h3
   · rintro h _ ⟨b, rfl⟩
@@ -1815,12 +1815,12 @@ theorem torusChar : DegAdelic → TorusChar := by
         by_cases hij : i = j
         · subst hij
           by_cases hx : x = 0
-          · simp [sMeet, Pi.single_apply, hjk, hx]
-          · simp [sMeet, Pi.single_apply, hjk, hx]
+          · simp [sMeet, hjk, hx]
+          · simp [sMeet, hjk, hx]
         · by_cases hik : i = k
           · subst hik
-            simp [sMeet, Pi.single_apply, hij]
-          · simp [sMeet, Pi.single_apply, hij, hik]
+            simp [sMeet, hij]
+          · simp [sMeet, hij, hik]
       rw [h1, hπ0]
     rw [hsum' e, lam_sum Finset.univ _ (fun j _ => hπi _) (fun j _ k _ hjk => horth j k _ _ hjk) t
       (fun j _ => hcm t ht _), sdot]

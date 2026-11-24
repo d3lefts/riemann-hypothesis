@@ -110,7 +110,7 @@ theorem _root_.GlobalTheory.T.archimedean_siegel_weil_integral_identity : ∀ (F
   ∀ ν : Measure (HermR (Ainf F) σ n), ν.IsAddHaarMeasure →
   ∀ P : (Fin n → Fin M → Ainf F ⊗[F] E) → ℂ, GlobalTheory.Published.SiegelOneVector.IsSchwartzArch P →
     Integrable (starLoc (Ainf F) σ J (psiInf F ψ) μ P) ν := by
-  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Arch.integrable_starLoc_inf | exact GlobalTheory.CompanionTheory.SiegelND.Integ.Arch.integrable_starLoc_inf | (intros; apply GlobalTheory.CompanionTheory.SiegelND.Integ.Arch.integrable_starLoc_inf <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Arch.integrable_starLoc_inf
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ArchimedeanSiegelWeilIntegralIdentityStatement =====
@@ -142,7 +142,7 @@ theorem repr_tmap (f : R →ₐ[F] S) {ι : Type} (b : Module.Basis ι F E) (z :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e =>
-    simp [Algebra.TensorProduct.basis_repr_tmul, Finsupp.mapRange_apply, Algebra.smul_def]
+    simp [Algebra.TensorProduct.basis_repr_tmul, Finsupp.mapRange_apply]
   | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 theorem trace_tmap [Module.Finite F E] (f : R →ₐ[F] S) (z : R ⊗[F] E) :
@@ -245,7 +245,7 @@ theorem _root_.GlobalTheory.T.character_trace_pairing_eq_inner_psi : ∀ (F E : 
     psiFin F ψ (algebraMap F (Af F) (1 / 2) * Algebra.trace (Af F) (Af F ⊗[F] E)
       (Matrix.trace (((hermFin σ b : HermR (Af F) σ n) : Matrix (Fin n) (Fin n) (Af F ⊗[F] E)) *
         gramR (Af F) σ J (projFin X)))) := by
-  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Phase.adelic_phase_split | exact GlobalTheory.CompanionTheory.SiegelND.Integ.Phase.adelic_phase_split | (intros; apply GlobalTheory.CompanionTheory.SiegelND.Integ.Phase.adelic_phase_split <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Phase.adelic_phase_split
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CharacterTracePairingEqInnerPsiStatement =====
@@ -509,7 +509,7 @@ theorem _root_.GlobalTheory.T.finite_adelic_integral_invariant_open_subgroup : �
     ∃ U : AddSubgroup (HermR (Af F) σ n), IsOpen (U : Set (HermR (Af F) σ n)) ∧
       IsCompact (U : Set (HermR (Af F) σ n)) ∧
       ∀ b, ∀ u ∈ U, starLoc (Af F) σ J (psiFin F ψ) μ Q (b + u) = starLoc (Af F) σ J (psiFin F ψ) μ Q b := by
-  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Period.starLoc_periodic | exact GlobalTheory.CompanionTheory.SiegelND.Integ.Period.starLoc_periodic | (intros; apply GlobalTheory.CompanionTheory.SiegelND.Integ.Period.starLoc_periodic <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Period.starLoc_periodic
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiniteAdelicIntegralInvariantOpenSubgroupStatement =====
@@ -580,7 +580,7 @@ theorem denseRange_inclR (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
   rw [Function.comp_apply, Homeomorph.apply_symm_apply]
   funext k
   show (Algebra.TensorProduct.basis R b).repr ((1 : R) ⊗ₜ[F] (b.equivFun.symm a)) k = _
-  simp [Algebra.TensorProduct.basis_repr_tmul, Finsupp.single_apply, apply_ite]
+  simp [Algebra.TensorProduct.basis_repr_tmul, Finsupp.single_apply]
 
 theorem hermE_dense_finite : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E),
     IsCMExt F E σ → ∀ (n : ℕ) (U : AddSubgroup (HermR (Af F) σ n)), IsOpen (U : Set (HermR (Af F) σ n)) →
@@ -658,7 +658,7 @@ open NumberField
 theorem _root_.GlobalTheory.T.hermitian_finite_adeles_dense_rational : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E),
     IsCMExt F E σ → ∀ (n : ℕ) (U : AddSubgroup (HermR (Af F) σ n)), IsOpen (U : Set (HermR (Af F) σ n)) →
     ∀ g : HermR (Af F) σ n, ∃ c : hermE σ n, g - hermIn (Af F) σ n c ∈ U := by
-  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.hermE_dense_finite | exact GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.hermE_dense_finite | (intros; apply GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.hermE_dense_finite <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.hermE_dense_finite
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HermitianFiniteAdelesDenseRationalStatement =====
@@ -821,7 +821,7 @@ theorem exists_smul_mem_open : ∀ (F E : Type) [Field F] [NumberField F] [Field
     have hentry : (hermIn (Af F) σ n ((((D₁ * D₂ * N : ℕ) : F) / t) • c)).1 a a' =
         (1 : Af F) ⊗ₜ[F] (((((D₁ * D₂ * N : ℕ) : F) / t) • c).1 a a') := rfl
     rw [hentry, Algebra.TensorProduct.basis_repr_tmul]
-    simp only [Finsupp.smul_apply, one_smul, Finsupp.mapRange_apply]
+    simp only [one_smul, Finsupp.mapRange_apply]
     rfl
   have hfin : hermIn (Af F) σ n ((((D₁ * D₂ * N : ℕ) : F) / t) • c) ∈ (U : Set (HermR (Af F) σ n)) := by
     rw [← hU']
@@ -853,7 +853,7 @@ open NumberField
 theorem _root_.GlobalTheory.T.scaled_integral_hermitian_in_open_subgroup : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E),
     IsCMExt F E σ → ∀ (n : ℕ) (U : AddSubgroup (HermR (Af F) σ n)), IsOpen (U : Set (HermR (Af F) σ n)) →
     ∀ t : F, t ≠ 0 → ∃ τ : ℕ, 0 < τ ∧ ∀ c ∈ hermO σ n, hermIn (Af F) σ n (((τ : F) / t) • c) ∈ U := by
-  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.Commens.exists_smul_mem_open | exact GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.Commens.exists_smul_mem_open | (intros; apply GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.Commens.exists_smul_mem_open <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.Commens.exists_smul_mem_open
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ScaledIntegralHermitianInOpenSubgroupStatement =====
@@ -940,7 +940,7 @@ theorem integrable_of_summable_quotient_periodic :
   refine ⟨hcont.aestronglyMeasurable, ?_⟩
   have hsum : ∑' x, ‖f (r x)‖ₑ < ⊤ := by
     have h1 : ∑' x, ‖f (r x)‖ₑ = ∑' x, ENNReal.ofReal ‖f (r x)‖ := by
-      simp [ofReal_norm_eq_enorm]
+      simp
     rw [h1]
     exact hs.tsum_ofReal_lt_top
   have hint : ∫⁻ g, ‖f g‖ₑ ∂ν = (∑' x, ‖f (r x)‖ₑ) * ν (U : Set G) := by
@@ -981,7 +981,7 @@ theorem _root_.GlobalTheory.T.summable_over_lattice_quotient_locally_constant : 
     IsOpen (U : Set G) → IsCompact (U : Set G) → ∀ ι : H →+ G, (∀ g, ∃ h, g - ι h ∈ U) →
     ∀ f : G → ℂ, (∀ g, ∀ u ∈ U, f (g + u) = f g) →
     Summable (fun x : H ⧸ U.comap ι => ‖f (ι (Quotient.out x))‖) → Integrable f ν := by
-  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.integrable_of_summable_quotient_periodic | exact GlobalTheory.CompanionTheory.SiegelND.Integ.integrable_of_summable_quotient_periodic | (intros; apply GlobalTheory.CompanionTheory.SiegelND.Integ.integrable_of_summable_quotient_periodic <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.integrable_of_summable_quotient_periodic
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SummableOverLatticeQuotientLocallyConstantStatement =====
@@ -1173,7 +1173,7 @@ theorem _root_.GlobalTheory.T.summable_periodic_bound_by_denominator : ∀ (F E 
     ∀ C s : ℝ, (∀ c, g c ≤ C * (delta (t • c).1 : ℝ) ^ (-s)) →
     Summable (fun x : hermE σ n ⧸ hermO σ n => (delta (Quotient.out x).1 : ℝ) ^ (-s)) →
     Summable (fun x : hermE σ n ⧸ Λ => g (Quotient.out x)) := by
-  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.summable_quot_of_le_delta_rpow | exact GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.summable_quot_of_le_delta_rpow | (intros; apply GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.summable_quot_of_le_delta_rpow <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.summable_quot_of_le_delta_rpow
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SummablePeriodicBoundByDenominatorStatement =====
@@ -1252,7 +1252,7 @@ theorem _root_.GlobalTheory.T.finite_adelic_siegel_weil_integral_identity : ∀ 
   ∀ ν : Measure (HermR (Af F) σ n), ν.IsAddHaarMeasure →
   ∀ Q : (Fin n → Fin M → Af F ⊗[F] E) → ℂ, IsSB Q →
     Integrable (starLoc (Af F) σ J (psiFin F ψ) μ Q) ν := by
-  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.integrable_starLoc_fin | exact GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.integrable_starLoc_fin | (intros; apply GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.integrable_starLoc_fin <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.integrable_starLoc_fin
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiniteAdelicSiegelWeilIntegralIdentityStatement =====
@@ -1358,7 +1358,7 @@ theorem _root_.GlobalTheory.T.siegel_weil_convergent_range : ∀ (F E : Type) [F
   ∀ db : Measure (HermR (AF F) σ n), SdHerm F E σ (AF F) ψ n db →
   ∀ Φ : (Fin n → Fin M → AF F ⊗[F] E) → ℂ, GlobalTheory.Published.SiegelOneVector.IsSchwartzBruhat Φ →
     Integrable (starN σ J ψ dx Φ) db := by
-  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.integrable_starN | exact GlobalTheory.CompanionTheory.SiegelND.Integ.integrable_starN | (intros; apply GlobalTheory.CompanionTheory.SiegelND.Integ.integrable_starN <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.integrable_starN
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SiegelWeilConvergentRangeStatement =====

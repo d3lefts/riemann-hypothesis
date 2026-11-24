@@ -407,7 +407,7 @@ theorem bk_unr_gr : Loc.LocalPublishedTheorems → ∀ (l : ℕ) [Fact l.Prime] 
   have hf : ∀ σ x, f (((Loc.colRep W).comp ι) σ x) = Loc.chRep κ σ (f x) := fun σ x => by
     have h := hup σ
     simp only [mat] at h
-    simp [f, Loc.chRep, hcol, Matrix.mulVec, dotProduct, Fin.sum_univ_two, hκ, mat, h]
+    simp [f, Loc.chRep, hcol, hκ, mat, h]
   have hc := Loc.z1fCoef (MonoidHom.id (GQ l)) _ _ f (continuous_apply 1) hf _ hιZ
   obtain ⟨c, hcO⟩ := hN.int
   obtain ⟨m, hm1, hm⟩ := hN.wt
@@ -427,7 +427,7 @@ theorem bk_unr_gr : Loc.LocalPublishedTheorems → ∀ (l : ℕ) [Fact l.Prime] 
       rw [IsScalarTower.algebraMap_apply ℤ_[l] ℚ_[l] (Qbar l)]
       rfl
     apply Units.ext
-    simp only [Units.val_pow_eq_pow_val, Units.val_mul, Units.val_zpow_eq_zpow_val, zpow_natCast, Units.val_one, hκ, hcy]
+    simp only [Units.val_pow_eq_pow_val, Units.val_mul, zpow_natCast, Units.val_one, hκ, hcy]
     rw [hdet] at hd
     calc (mat W (ι σ) 1 1 * eps l (ι σ) ^ e) ^ (2 * m) = (mat W (ι σ) 1 1) ^ (2 * m) * (eps l (ι σ) ^ (e * m)) ^ 2 := by ring
       _ = ((mat W (ι σ) 0 0 * mat W (ι σ) 1 1) ^ 2) ^ m := by rw [← h0]; ring
@@ -1067,11 +1067,7 @@ theorem exists_bound_of_mem_span {K E ι : Type} [NormedField K] [AddCommGroup E
     (f : E →ₗ[K] K) (hf : f ∈ Submodule.span K (Set.range φ)) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ (p : E) (r : ℝ), 0 ≤ r → (∀ j, ‖φ j p‖ ≤ r) → ‖f p‖ ≤ C * r := by
   first
-  | exact @_root_.GlobalTheory.NormBoundOfSpan.norm_le_of_mem_span
-  | exact _root_.GlobalTheory.NormBoundOfSpan.norm_le_of_mem_span
   | (apply _root_.GlobalTheory.NormBoundOfSpan.norm_le_of_mem_span <;> assumption)
-  | (intros; apply _root_.GlobalTheory.NormBoundOfSpan.norm_le_of_mem_span <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.NormBoundOfSpan.norm_le_of_mem_span <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.NormBoundOfSpan.norm_le_of_mem_span ..)
 
 theorem exists_bound_multiplier {K Γ : Type} [NormedField K] (M : Γ → Matrix (Fin 2) (Fin 2) K) (Y : Γ → Fin 2 → K)

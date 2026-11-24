@@ -147,12 +147,21 @@ def setting (jK : F.K →* alg F.O N lam)
     [sT : @IsScalarTower F.O F.T (Forms F.O (A := alg F.O N lam) F.Γ jK (NablaT F.O N lam)) _ mT.toSMul _]
     (m : Ideal F.T) [m.IsPrime] : HidaSetting ι N lam where
   O := F.O
+  cO := F.cO
+  dO := F.dO
+  zO := F.zO
   A := alg F.O N lam
+  rA := (alg F.O N lam).toRing
+  aA := (alg F.O N lam).algebra
   G := F.G
+  gG := F.gG
   Γ := F.Γ
   K := F.K
   jK := jK
+  mA := (alg F.O N lam).moduleLeft
   T := F.T
+  cT := AddMonoidAlgebra.commRing
+  aT := AddMonoidAlgebra.algebra
   mT := mT
   sT := sT
   S := m.primeCompl

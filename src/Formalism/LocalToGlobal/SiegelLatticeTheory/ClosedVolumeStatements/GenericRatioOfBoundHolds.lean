@@ -23,8 +23,8 @@ public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ScalarConvolutio
 public import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ScalarConvolutionTrace.Reindex
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.PermRepApply
-public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.GamOneReal
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.IrreducibleOfMinimal
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.GamOneReal
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IdentityCellTrace.TraceOneHolds
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IdentityCellTrace.TermIdIffInSOf
 public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RelevantCarrierNonempty.InSCarrierNonempty
@@ -305,8 +305,7 @@ theorem Hp_le_orth (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsFullLattice 
 theorem Ylift'_le_orth (Λ : Submodule (𝓞 E) S.V) {T T' : E}
     (F : LFlag S r T) (F' : LFlag S r T') : Ylift' Λ F F' ≤ orth S (Xsp F') := by
   intro v hv
-  have hX : Xsp F' ≤ Xplus F' := (le_sup_left : F'.fl.X ≤ F'.fl.X ⊔ Submodule.span E {F'.fl.z})
-  exact orth_anti hX hv.2
+  exact orth_anti (le_sup_left : F'.fl.X ≤ F'.fl.X ⊔ Submodule.span E {F'.fl.z}) hv.2
 
 theorem mem_ThPairs (Λ : Submodule (𝓞 E) S.V) {T T' : E} (F : LFlag S r T) (F' F'' : LFlag S r T')
     (β : S.V ≃ₗ[E] S.V) (p : S.V × S.V) :
@@ -539,7 +538,6 @@ theorem charSum {F : Type} [Field F] [Fintype F] (ψ₀ : AddChar F ℂ) (hψ : 
   have hps : ∑ c : Fin m → F, ∏ i, ψ₀ (ν i * c i) = ∏ i, ∑ t : F, ψ₀ (ν i * t) := by
     first
       | exact (Fintype.prod_sum (fun i t => ψ₀ (ν i * t))).symm
-      | (rw [Finset.prod_univ_sum]; simp)
   simp_rw [addChar_sum ψ₀]
   rw [hps]
   simp_rw [charSum_one ψ₀ hψ]
@@ -780,15 +778,12 @@ theorem whit_mem {F : Type} [Field F] [Fintype F] {k : ℕ} (ψ₀ : AddChar F �
 
 theorem whitFunctDual_main : PI.WhitFunctDual := by
   intro hGG F _ _ k ψ₀ hψ V _ _ _ π hπ ℓ₁ ℓ₂ h1 h2 hne
-  have hψ' : ψ₀⁻¹ ≠ 1 := inv_ne_one.mpr hψ
-  have hirr := isIrr_dual π hπ
-  have hdim := hGG F (Module.Dual ℂ V) k ψ₀⁻¹ (Representation.dual π) hψ' hirr
-  have m1 : ℓ₁ ∈ Formalism.IrreducibleCountingLemmas.GaloisIrreducibility.besselSpace (Representation.dual π) ψ₀⁻¹ 0 0 := whit_mem ψ₀ π ℓ₁ h1
-  have m2 : ℓ₂ ∈ Formalism.IrreducibleCountingLemmas.GaloisIrreducibility.besselSpace (Representation.dual π) ψ₀⁻¹ 0 0 := whit_mem ψ₀ π ℓ₂ h2
-  have hne' : (⟨ℓ₁, m1⟩ : Formalism.IrreducibleCountingLemmas.GaloisIrreducibility.besselSpace (Representation.dual π) ψ₀⁻¹ 0 0) ≠ 0 :=
-    fun h0 => hne (congrArg Subtype.val h0)
-  have hpos : 0 < Module.finrank ℂ (Formalism.IrreducibleCountingLemmas.GaloisIrreducibility.besselSpace (Representation.dual π) ψ₀⁻¹ 0 0) :=
-    Module.finrank_pos_iff_exists_ne_zero.mpr ⟨_, hne'⟩
+  let B : Submodule ℂ (Module.Dual ℂ V) := Formalism.IrreducibleCountingLemmas.GaloisIrreducibility.besselSpace (Representation.dual π) ψ₀⁻¹ 0 0
+  have hdim : Module.finrank ℂ B ≤ 1 := hGG F (Module.Dual ℂ V) k ψ₀⁻¹ (Representation.dual π) (inv_ne_one.mpr hψ) (isIrr_dual π hπ)
+  have m1 : ℓ₁ ∈ B := whit_mem ψ₀ π ℓ₁ h1
+  have m2 : ℓ₂ ∈ B := whit_mem ψ₀ π ℓ₂ h2
+  have hne' : (⟨ℓ₁, m1⟩ : B) ≠ 0 := fun h0 => hne (congrArg Subtype.val h0)
+  have hpos : 0 < Module.finrank ℂ B := Module.finrank_pos_iff_exists_ne_zero.mpr ⟨_, hne'⟩
   obtain ⟨c, hc⟩ := (finrank_eq_one_iff_of_nonzero' _ hne').mp (le_antisymm hdim hpos) ⟨ℓ₂, m2⟩
   exact ⟨c, (congrArg Subtype.val hc).symm⟩
 
@@ -819,8 +814,7 @@ theorem uniMat_upper (f : Pairs k → F) : (uniMat f).IsUpperTriangular := by
   simp [uniMat, ne_of_gt hji, not_lt.mpr hji.le]
 
 theorem uniMat_det (f : Pairs k → F) : (uniMat f).det = 1 := by
-  rw [Matrix.det_of_upperTriangular (uniMat_upper f)]
-  simp [uniMat]
+  simpa [uniMat] using Matrix.det_of_upperTriangular (uniMat_upper f)
 
 noncomputable def uniGL (f : Pairs k → F) : GL (Fin k) F :=
   GeneralLinearGroup.mkOfDetNeZero (uniMat f) (by rw [uniMat_det]; exact one_ne_zero)
@@ -829,9 +823,8 @@ theorem uniGL_coe (f : Pairs k → F) : ((uniGL f : GL (Fin k) F) : Matrix (Fin 
 
 theorem isUni_uniGL (f : Pairs k → F) : IsUni k (uniGL f) := by
   unfold IsUni
-  refine ⟨fun i => ?_, fun i j h => ?_⟩
-  · simp [uniGL_coe, uniMat]
-  · simp [uniGL_coe, uniMat, ne_of_gt h, not_lt.mpr h.le]
+  exact ⟨fun i => by simp [uniGL_coe, uniMat],
+    fun i j h => by simp [uniGL_coe, uniMat, ne_of_gt h, not_lt.mpr h.le]⟩
 
 noncomputable def uniEquiv : {x : GL (Fin k) F // IsUni k x} ≃ (Pairs k → F) where
   toFun x p := (x.1 : Matrix (Fin k) (Fin k) F) p.1.1 p.1.2
@@ -861,8 +854,7 @@ theorem card_pairs (k : ℕ) : Fintype.card (Pairs k) = k * (k - 1) / 2 := by
     exact Fin.card_Iio j
   rw [Fintype.card_subtype, Finset.card_filter, Fintype.sum_prod_type_right]
   simp only [hI]
-  have h3 : ∑ j : Fin k, (j : ℕ) = ∑ j ∈ Finset.range k, j := Fin.sum_univ_eq_sum_range (fun i => i) k
-  rw [h3, Finset.sum_range_id]
+  rw [Fin.sum_univ_eq_sum_range (fun i => i) k, Finset.sum_range_id]
 
 theorem cardUni : CardUni := by
   intro F _ _ k
@@ -1194,11 +1186,6 @@ theorem generic_ratio_bound : Formalism.L2.SG.GGMirabolic.GenericRatioOfBound :=
     field_simp
   rw [hR, Nat.cast_pow]
   gcongr
-  all_goals first
-    | exact hPD
-    | exact hP.le
-    | exact hP
-    | positivity
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Formalism.PeriodIntegrals.OrbitalBoundsConclusion.GGGenRatio =====
@@ -1208,168 +1195,80 @@ end -- clump:auto
 section -- clump:auto
 @[expose] public section
 
-open Finset Matrix
-
-open scoped ComplexConjugate ComplexOrder
-
-noncomputable section
-
-open Classical
+open Matrix Classical Formalism.L2.SG.GGMirabolic
+open scoped ComplexOrder
 
 namespace PI.GGMatBoundW
 
-open Formalism.L2.SG.GGMirabolic
-
-theorem ggMatrixBound_of (hM : MatrixEq) (hH : TotHerm) (hE : EigBound) (hS : SpecPSD)
-    (hC : ConvScalar) (hR : GenericRatio) : GGMatrixBound := by
-  intro ι _ Fq _ _ k ψ hψ hq X _ _ hfree d hd
+theorem ggMatrixBoundOfLit_of (hM : MatrixEq) (hH : TotHerm) (hE : EigBound) (hS : SpecPSD)
+    (hCL : ConvScalarOfLit) (hRB : GenericRatioOfBound) (hCU : CardUni) : GGMatrixBoundOfLit := by
+  intro hGG hMB ι _ Fq _ _ k ψ hψ hq X _ _ hfree d hd
   obtain ⟨hA, hAt⟩ := hM ι Fq k ψ X hfree d hd
-  set A := LinearMap.toMatrix' (totOp ψ (permRep (∀ v, GL (Fin k) (Fq v)) X)) with hAdef
-  have hherm : A.IsHermitian := hH ι Fq k ψ X
-  have hspec := hS X A _ hherm (fun w μ hw hAw =>
-    hE hC hR ι Fq k ψ hψ hq (X → ℂ) (permRep (∀ v, GL (Fin k) (Fq v)) X) w μ hw
-      (by rw [← hAw, hAdef, ← Matrix.toLin'_apply, Matrix.toLin'_toMatrix']))
+  have hspec := hS X _ _ (hH ι Fq k ψ X) fun w μ hw hAw =>
+    hE (hCL hGG) (hRB hMB hCU) ι Fq k ψ hψ hq (X → ℂ) (permRep _ X) w μ hw
+      (by rw [← hAw, ← toLin'_apply, toLin'_toMatrix'])
   rw [hAt, hA]
   exact ⟨hspec.1.transpose, hspec.2⟩
 
-theorem ggMatrixBoundOfLit_of (hM : MatrixEq) (hH : TotHerm) (hE : EigBound) (hS : SpecPSD)
-    (hCL : ConvScalarOfLit) (hRB : GenericRatioOfBound) (hCU : CardUni) : GGMatrixBoundOfLit :=
-  fun hGG hMB => ggMatrixBound_of hM hH hE hS (hCL hGG) (hRB hMB hCU)
-
 end PI.GGMatBoundW
-end -- clump:auto
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.GgMatrixBoundOfLitOf =====
 
 -- ===== clump member: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.JointEigenvectorExists =====
--- clump-header: {"m": "Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.JointEigenvectorExists", "h": "module\n\npublic import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.PermRepApply\npublic import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ScalarConvolutionTrace.Reindex\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\npublic import Mathlib.LinearAlgebra.Eigenspace.Triangularizable\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.PiTensorProduct\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\n\n"}
+-- clump-header: {"m": "Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.JointEigenvectorExists", "h": "module\n\npublic import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.PermRepApply\npublic import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ScalarConvolutionTrace.Reindex\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\npublic import Mathlib.LinearAlgebra.Eigenspace.Triangularizable\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.PiTensorProduct\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\npublic import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.IrreducibleOfMinimal\n\n"}
 section -- clump:auto
 @[expose] public section
 
-noncomputable section
-
-open Classical
+open Classical Formalism.L2.SG.GGMirabolic
 
 namespace PI.GGMatBoundW
 
-open Formalism.L2.SG.GGMirabolic
+variable {ι : Type} {Fq : ι → Type} [∀ v, Field (Fq v)] [∀ v, Fintype (Fq v)] {k : ℕ}
+  (ψ : ∀ v, AddChar (Fq v) ℂ) {V : Type} [AddCommGroup V] [Module ℂ V]
+  (π : Representation ℂ (∀ v, GL (Fin k) (Fq v)) V)
 
-variable {ι : Type} [Fintype ι] {Fq : ι → Type} [∀ v, Field (Fq v)] [∀ v, Fintype (Fq v)] {k : ℕ}
-
-theorem gamProd_conj (ψ : ∀ v, AddChar (Fq v) ℂ) (g x : ∀ v, GL (Fin k) (Fq v)) :
-    gamProd ψ (g * x * g⁻¹) = gamProd ψ x := by
-  unfold gamProd
-  refine Finset.prod_congr rfl fun v _ => ?_
-  exact PI.GGConvScalarW.gam_conj (ψ v) (g v) (x v)
-
-theorem totOp_comm (ψ : ∀ v, AddChar (Fq v) ℂ) {V : Type} [AddCommGroup V] [Module ℂ V]
-    (π : Representation ℂ (∀ v, GL (Fin k) (Fq v)) V) (g : ∀ v, GL (Fin k) (Fq v)) :
-    π g ∘ₗ totOp ψ π = totOp ψ π ∘ₗ π g := by
-  unfold totOp
-  show π g * (∑ x, gamProd ψ x • π x) = (∑ x, gamProd ψ x • π x) * π g
+theorem sum_conj_comm {H G : Type} [Group H] [Fintype H] [Group G] (ρ : Representation ℂ G V)
+    (φ : H →* G) (f : H → ℂ) (hf : ∀ a x, f (a * x * a⁻¹) = f x) (g : G) (a : H)
+    (hg : ∀ x, g * φ x * g⁻¹ = φ (a * x * a⁻¹)) :
+    ρ g ∘ₗ ∑ x, f x • ρ (φ x) = (∑ x, f x • ρ (φ x)) ∘ₗ ρ g := by
+  show ρ g * _ = _ * ρ g
   rw [Finset.mul_sum, Finset.sum_mul]
-  refine Fintype.sum_equiv (MulAut.conj g).toEquiv _ _ (fun x => ?_)
-  simp only [mul_smul_comm, smul_mul_assoc, MulEquiv.toEquiv_eq_coe, MulEquiv.coe_toEquiv,
-    MulAut.conj_apply]
-  rw [gamProd_conj]
-  congr 1
-  rw [← map_mul, ← map_mul]
-  congr 1
-  group
+  refine Fintype.sum_equiv (MulAut.conj a).toEquiv _ _ fun x => ?_
+  simp only [MulEquiv.toEquiv_eq_coe, MulEquiv.coe_toEquiv, MulAut.conj_apply, hf, ← hg,
+    mul_smul_comm, smul_mul_assoc, ← map_mul, inv_mul_cancel_right]
 
-theorem mulSingle_conj (v : ι) (g : ∀ v, GL (Fin k) (Fq v)) (y : GL (Fin k) (Fq v)) :
-    g * Pi.mulSingle v y * g⁻¹ = Pi.mulSingle v (g v * y * (g v)⁻¹) := by
-  funext w
-  by_cases h : w = v
-  · subst h; simp
-  · simp [Pi.mulSingle_eq_of_ne h]
+theorem totOp_comm [Fintype ι] (g : ∀ v, GL (Fin k) (Fq v)) :
+    π g ∘ₗ totOp ψ π = totOp ψ π ∘ₗ π g :=
+  sum_conj_comm π (MonoidHom.id _) (gamProd ψ)
+    (fun a x => Finset.prod_congr rfl fun v _ => PI.GGConvScalarW.gam_conj (ψ v) (a v) (x v))
+    g g fun _ => rfl
 
-theorem placeOp_comm (ψ : ∀ v, AddChar (Fq v) ℂ) {V : Type} [AddCommGroup V] [Module ℂ V]
-    (π : Representation ℂ (∀ v, GL (Fin k) (Fq v)) V) (v : ι) (g : ∀ v, GL (Fin k) (Fq v)) :
+theorem placeOp_comm (v : ι) (g : ∀ v, GL (Fin k) (Fq v)) :
     π g ∘ₗ placeOp ψ π v = placeOp ψ π v ∘ₗ π g := by
-  unfold placeOp
-  show π g * (∑ y, gam (ψ v) y • π (Pi.mulSingle v y)) = (∑ y, gam (ψ v) y • π (Pi.mulSingle v y)) * π g
-  rw [Finset.mul_sum, Finset.sum_mul]
-  refine Fintype.sum_equiv (MulAut.conj (g v)).toEquiv _ _ (fun y => ?_)
-  simp only [mul_smul_comm, smul_mul_assoc, MulEquiv.toEquiv_eq_coe, MulEquiv.coe_toEquiv,
-    MulAut.conj_apply]
-  rw [PI.GGConvScalarW.gam_conj]
-  congr 1
-  rw [← map_mul, ← map_mul, ← mulSingle_conj]
-  congr 1
-  group
-
-theorem placeOp_mem (ψ : ∀ v, AddChar (Fq v) ℂ) {V : Type} [AddCommGroup V] [Module ℂ V]
-    (π : Representation ℂ (∀ v, GL (Fin k) (Fq v)) V) (v : ι) (W : Submodule ℂ V)
-    (hW : ∀ g, ∀ x ∈ W, π g x ∈ W) (x : V) (hx : x ∈ W) : placeOp ψ π v x ∈ W := by
-  unfold placeOp
-  rw [LinearMap.sum_apply]
-  exact Submodule.sum_mem _ fun y _ => Submodule.smul_mem _ _ (hW _ x hx)
+  refine sum_conj_comm π (MonoidHom.mulSingle _ v) (gam (ψ v))
+    (PI.GGConvScalarW.gam_conj (ψ v)) g (g v) fun y => funext fun w => ?_
+  rcases eq_or_ne w v with rfl | h <;> simp [Pi.mulSingle_eq_of_ne, *]
 
 theorem joint_eigenvector_exists : JointEig := by
   intro ι _ Fq _ _ k ψ V _ _ _ π w μ hw hμ
-  let E : Submodule ℂ V := LinearMap.ker (totOp ψ π - μ • LinearMap.id)
-  have memE : ∀ x, x ∈ E ↔ totOp ψ π x = μ • x := by
-    intro x
-    show x ∈ LinearMap.ker _ ↔ _
-    rw [LinearMap.mem_ker, LinearMap.sub_apply, sub_eq_zero]
-    simp
-  have Einv : ∀ g, ∀ x ∈ E, π g x ∈ E := by
-    intro g x hx
-    rw [memE] at hx ⊢
-    have h1 := congrArg (fun e : V →ₗ[ℂ] V => e x) (totOp_comm ψ π g)
-    simp only [LinearMap.comp_apply] at h1
-    rw [← h1, hx, map_smul]
-  have hex : ∃ n, ∃ W : Submodule ℂ V, W ≠ ⊥ ∧ W ≤ E ∧ (∀ g, ∀ x ∈ W, π g x ∈ W) ∧
-      Module.finrank ℂ W = n := by
-    refine ⟨_, E, ?_, le_rfl, Einv, rfl⟩
-    intro h
-    apply hw
-    have : w ∈ E := (memE w).2 hμ
-    rw [h] at this
-    exact (Submodule.mem_bot ℂ).1 this
-  obtain ⟨W, hW, hWE, hWinv, hWn⟩ := Nat.find_spec hex
-  have hmin : ∀ W' : Submodule ℂ V, W' ≠ ⊥ → W' ≤ W → (∀ g, ∀ x ∈ W', π g x ∈ W') → W' = W := by
-    intro W' hW' hle hinv
-    have h1 : Nat.find hex ≤ Module.finrank ℂ W' :=
-      Nat.find_min' hex ⟨W', hW', hle.trans hWE, hinv, rfl⟩
-    exact Submodule.eq_of_le_of_finrank_le hle (by omega)
-  refine ⟨W, hW, hWinv, fun x hx => (memE x).1 (hWE hx), fun v => ?_⟩
-  have hmaps : ∀ x ∈ W, placeOp ψ π v x ∈ W := fun x hx => placeOp_mem ψ π v W hWinv x hx
-  let A : W →ₗ[ℂ] W := (placeOp ψ π v).restrict hmaps
-  have : Nontrivial W := Submodule.nontrivial_iff_ne_bot.2 hW
-  obtain ⟨c, hc⟩ := Module.End.exists_eigenvalue A
-  obtain ⟨u, hu⟩ := hc.exists_hasEigenvector
-  refine ⟨c, ?_⟩
-  let W' : Submodule ℂ V := W ⊓ LinearMap.ker (placeOp ψ π v - c • LinearMap.id)
-  have memW' : ∀ x, x ∈ W' ↔ x ∈ W ∧ placeOp ψ π v x = c • x := by
-    intro x
-    simp only [W', Submodule.mem_inf, LinearMap.mem_ker, LinearMap.sub_apply, sub_eq_zero,
-      LinearMap.smul_apply, LinearMap.id_apply]
-  have hu' : (u : V) ∈ W' := by
-    rw [memW']
-    refine ⟨u.2, ?_⟩
-    have h2 := congrArg Subtype.val hu.apply_eq_smul
-    exact h2
-  have hW'ne : W' ≠ ⊥ := by
-    intro h
-    rw [h] at hu'
-    exact hu.2 (Subtype.ext ((Submodule.mem_bot ℂ).1 hu'))
-  have hW'inv : ∀ g, ∀ x ∈ W', π g x ∈ W' := by
-    intro g x hx
-    rw [memW'] at hx ⊢
-    refine ⟨hWinv g x hx.1, ?_⟩
-    have h1 := congrArg (fun e : V →ₗ[ℂ] V => e x) (placeOp_comm ψ π v g)
-    simp only [LinearMap.comp_apply] at h1
-    rw [← h1, hx.2, map_smul]
-  have heq := hmin W' hW'ne inf_le_left hW'inv
-  intro x hx
-  have hx' : x ∈ W' := heq ▸ hx
-  exact ((memW' x).1 hx').2
+  obtain ⟨W, hWE, hW0, hmin⟩ := exists_minimal_le (eigenSubrep _ (totOp_comm ψ π) μ)
+    (ne_bot_of_mem (mem_eigenSubrep.2 hμ) hw)
+  have hW0' := toSubmodule_ne_bot.2 hW0
+  refine ⟨W.toSubmodule, hW0', W.apply_mem_toSubmodule, fun x hx => mem_eigenSubrep.1 (hWE hx),
+    fun v => ?_⟩
+  have hmaps : ∀ x ∈ W.toSubmodule, placeOp ψ π v x ∈ W.toSubmodule := fun x hx => by
+    rw [placeOp, LinearMap.sum_apply]
+    exact Submodule.sum_mem _ fun y _ => Submodule.smul_mem _ _ (W.apply_mem_toSubmodule _ hx)
+  have := Submodule.nontrivial_iff_ne_bot.2 hW0'
+  obtain ⟨c, hc⟩ := Module.End.exists_eigenvalue ((placeOp ψ π v).restrict hmaps)
+  obtain ⟨u, hev⟩ := hc.exists_hasEigenvector
+  have hu : (u : V) ∈ (W ⊓ eigenSubrep _ (placeOp_comm ψ π v) c).toSubmodule :=
+    Submodule.mem_inf.2 ⟨u.2, mem_eigenSubrep.2 (congrArg Subtype.val hev.apply_eq_smul)⟩
+  have hle := hmin _ (ne_bot_of_mem hu fun h0 => hev.2 (Subtype.ext h0)) inf_le_left
+  exact ⟨c, fun x hx => mem_eigenSubrep.1 (inf_eq_left.1 hle hx)⟩
 
 end PI.GGMatBoundW
-end -- clump:auto
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.JointEigenvectorExists =====
@@ -1379,35 +1278,31 @@ end -- clump:auto
 section -- clump:auto
 @[expose] public section
 
-open Finset
-
+open Classical Formalism.L2.SG.GGMirabolic PI.GGConvScalarW
 open scoped ComplexConjugate
-
-noncomputable section
-
-open Classical
 
 namespace PI.GGMatBoundW
 
-open Formalism.L2.SG.GGMirabolic PI.GGConvScalarW
+variable {F : Type} [Field F] [Fintype F] {k : ℕ} (ψ₀ : AddChar F ℂ)
 
-theorem addChar_inv_eq_conj {F : Type} [Field F] [Fintype F] (ψ₀ : AddChar F ℂ) (a : F) :
-    (ψ₀ a)⁻¹ = conj (ψ₀ a) := by
-  rw [← AddChar.map_neg_eq_inv, AddChar.map_neg_eq_conj]
-
-theorem psiNat_inv {F : Type} [Field F] [Fintype F] {k : ℕ} (ψ₀ : AddChar F ℂ) (u : GL (Fin k) F) :
-    psiNat ψ₀ u⁻¹ = conj (psiNat ψ₀ u) := by
+theorem psiNat_inv (u : GL (Fin k) F) : psiNat ψ₀ u⁻¹ = conj (psiNat ψ₀ u) := by
   unfold psiNat
   by_cases hu : IsUni k u
-  · rw [if_pos (isUni_inv hu), if_pos hu]
-    rw [eq_inv_of_mul_eq_one_left (psiU_inv_mul ψ₀ hu)]
-    unfold psiU
-    exact addChar_inv_eq_conj ψ₀ _
-  · have hu' : ¬ IsUni k u⁻¹ := fun h => hu (by simpa using isUni_inv h)
-    rw [if_neg hu', if_neg hu, map_zero]
+  · rw [ite_eq_left (isUni_inv hu), ite_eq_left hu,
+      eq_inv_of_mul_eq_one_left (psiU_inv_mul ψ₀ hu), psiU, ← AddChar.map_neg_eq_inv,
+      AddChar.map_neg_eq_conj]
+  · rw [ite_eq_right fun h => hu (by simpa using isUni_inv h), ite_eq_right hu, map_zero]
+
+theorem gam_inv (x : GL (Fin k) F) : gam ψ₀ x⁻¹ = conj (gam ψ₀ x) := by
+  simp only [gam, map_mul, map_inv₀, map_natCast, map_sum, ← psiNat_inv, mul_inv_rev, inv_inv,
+    mul_assoc]
+
+theorem gamProd_inv {ι : Type} [Fintype ι] {Fq : ι → Type} [∀ v, Field (Fq v)]
+    [∀ v, Fintype (Fq v)] (ψ : ∀ v, AddChar (Fq v) ℂ) (x : ∀ v, GL (Fin k) (Fq v)) :
+    gamProd ψ x⁻¹ = conj (gamProd ψ x) := by
+  simp only [gamProd, map_prod, Pi.inv_apply, gam_inv]
 
 end PI.GGMatBoundW
-end -- clump:auto
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.GammaMatrixInverse =====
@@ -1417,125 +1312,55 @@ end -- clump:auto
 section -- clump:auto
 @[expose] public section
 
-open Finset Matrix
-
-open scoped ComplexConjugate
-
-noncomputable section
-
-open Classical
+open Matrix Classical Formalism.L2.SG.GGMirabolic
 
 namespace PI.GGMatBoundW
 
-open Formalism.L2.SG.GGMirabolic
-
-section General
-
-variable {G : Type} [Group G] {X : Type} [MulAction Gᵐᵒᵖ X]
-
-theorem eq_of_smul_eq_of_free (hfree : ∀ (x : Gᵐᵒᵖ) (j : X), x • j = j → x = 1) {a b : Gᵐᵒᵖ} {j : X}
-    (h : a • j = b • j) : a = b := by
-  have h1 : (b⁻¹ * a) • j = j := by rw [mul_smul, h, inv_smul_smul]
-  exact (inv_mul_eq_one.mp (hfree _ _ h1)).symm
-
-theorem exists_smul_comm (i j : X) : (∃ x : Gᵐᵒᵖ, x • j = i) ↔ ∃ x : Gᵐᵒᵖ, x • i = j :=
-  ⟨fun ⟨x, hx⟩ => ⟨x⁻¹, by rw [← hx, inv_smul_smul]⟩, fun ⟨x, hx⟩ => ⟨x⁻¹, by rw [← hx, inv_smul_smul]⟩⟩
-
-theorem sum_orbit [Fintype G] (hfree : ∀ (x : Gᵐᵒᵖ) (j : X), x • j = j → x = 1) (d : X → X → G)
+theorem sum_orbit {G X : Type} [Group G] [Fintype G] [MulAction Gᵐᵒᵖ X]
+    (hfree : ∀ (x : Gᵐᵒᵖ) (j : X), x • j = j → x = 1) (d : X → X → G)
     (hd : ∀ i j, (∃ x : Gᵐᵒᵖ, x • j = i) → MulOpposite.op (d i j) • j = i) (f : G → ℂ) (i j : X) :
     (∑ x : G, if MulOpposite.op x • j = i then f x else 0) =
       if ∃ x : Gᵐᵒᵖ, x • j = i then f (d i j) else 0 := by
-  by_cases h : ∃ x : Gᵐᵒᵖ, x • j = i
-  · rw [if_pos h]
-    have hdij := hd i j h
-    rw [Finset.sum_eq_single (d i j)]
-    · rw [if_pos hdij]
-    · intro b _ hb
-      rw [if_neg]
-      intro hbj
-      exact hb (MulOpposite.op_injective (eq_of_smul_eq_of_free hfree (hbj.trans hdij.symm)))
-    · intro hn
-      exact absurd (Finset.mem_univ _) hn
-  · rw [if_neg h]
-    refine Finset.sum_eq_zero fun x _ => ?_
-    rw [if_neg]
-    intro hx
-    exact h ⟨_, hx⟩
+  split_ifs with h
+  · rw [Finset.sum_eq_single (d i j), ite_eq_left (hd i j h)]
+    · refine fun b _ hb => ite_eq_right fun hbj => hb (MulOpposite.op_injective ?_).symm
+      refine inv_mul_eq_one.1 (hfree _ j ?_)
+      rw [mul_smul, inv_smul_eq_iff, hbj, hd i j h]
+    · simp
+  · exact Finset.sum_eq_zero fun x _ => ite_eq_right fun hx => h ⟨_, hx⟩
 
-end General
-
-section Prod
-
-variable {ι : Type} [Fintype ι] {Fq : ι → Type} [∀ v, Field (Fq v)] [∀ v, Fintype (Fq v)] {k : ℕ}
-
-private theorem gam_inv_eq_conj {F : Type} [Field F] [Fintype F] {k : ℕ} (ψ₀ : AddChar F ℂ)
-    (x : GL (Fin k) F) : gam ψ₀ x⁻¹ = conj (gam ψ₀ x) := by
-  unfold gam
-
-  simp only [map_mul, map_inv₀, map_natCast, map_sum]
-  congr 1
-  refine Finset.sum_congr rfl fun y _ => ?_
-  rw [← psiNat_inv]
-  congr 1
-  group
-
-theorem gamProd_inv (ψ : ∀ v, AddChar (Fq v) ℂ) (x : ∀ v, GL (Fin k) (Fq v)) :
-    gamProd ψ x⁻¹ = conj (gamProd ψ x) := by
-  unfold gamProd
-  rw [map_prod]
-  refine Finset.prod_congr rfl fun v _ => ?_
-  rw [Pi.inv_apply, gam_inv_eq_conj]
-
-theorem toMatrix'_totOp_apply (ψ : ∀ v, AddChar (Fq v) ℂ) (X : Type) [Fintype X]
+theorem toMatrix'_totOp_apply {ι : Type} [Fintype ι] {Fq : ι → Type} [∀ v, Field (Fq v)]
+    [∀ v, Fintype (Fq v)] {k : ℕ} (ψ : ∀ v, AddChar (Fq v) ℂ) (X : Type) [Fintype X]
     [MulAction (∀ v, GL (Fin k) (Fq v))ᵐᵒᵖ X] (i j : X) :
     LinearMap.toMatrix' (totOp ψ (permRep (∀ v, GL (Fin k) (Fq v)) X)) i j =
       ∑ x : (∀ v, GL (Fin k) (Fq v)), if MulOpposite.op x • i = j then gamProd ψ x else 0 := by
   rw [LinearMap.toMatrix'_apply]
   simp [totOp, permRep, LinearMap.funLeft, Finset.sum_apply, Pi.single_apply, mul_ite]
 
-end Prod
-
 theorem totally_hermitian_form : TotHerm := by
   intro ι _ Fq _ _ k ψ X _ _
-  refine Matrix.IsHermitian.ext fun i j => ?_
+  refine IsHermitian.ext fun i j => ?_
   rw [toMatrix'_totOp_apply, toMatrix'_totOp_apply, star_sum]
   refine Fintype.sum_equiv (Equiv.inv _) _ _ fun x => ?_
   have hiff : MulOpposite.op x • j = i ↔ MulOpposite.op x⁻¹ • i = j := by
-    rw [MulOpposite.op_inv]
-    constructor
-    · intro h
-      rw [← h, inv_smul_smul]
-    · intro h
-      rw [← h, smul_inv_smul]
-  simp only [Equiv.inv_apply]
-  split_ifs with h1 h2 h2
-  · rw [gamProd_inv]
-    rfl
-  · exact absurd (hiff.mp h1) h2
-  · exact absurd (hiff.mpr h2) h1
-  · exact star_zero _
+    rw [MulOpposite.op_inv, inv_smul_eq_iff, eq_comm]
+  simp only [hiff, Equiv.inv_apply, gamProd_inv]
+  split_ifs <;> simp
 
 theorem matrix_coefficient_equation : MatrixEq := by
   intro ι _ Fq _ _ k ψ X _ _ hfree d hd
-  constructor
-  · ext i j
-    rw [Matrix.of_apply, toMatrix'_totOp_apply, sum_orbit hfree d hd,
-      exists_smul_comm (G := ∀ v, GL (Fin k) (Fq v)) i j]
-    split_ifs with h
-    · have h1 := hd j i h
-      have h3 := hd i j ((exists_smul_comm (G := ∀ v, GL (Fin k) (Fq v)) i j).mpr h)
-      have hdd : d j i = (d i j)⁻¹ := by
-        apply MulOpposite.op_injective
-        apply eq_of_smul_eq_of_free hfree (j := i)
-        rw [h1, MulOpposite.op_inv]
-        exact eq_inv_smul_iff.mpr h3
-      rw [hdd, gamProd_inv]
-    · rfl
-  · ext i j
-    rw [Matrix.of_apply, Matrix.transpose_apply, toMatrix'_totOp_apply, sum_orbit hfree d hd]
+  have hT : (of fun i j => if ∃ x : (∀ v, GL (Fin k) (Fq v))ᵐᵒᵖ, x • j = i then gamProd ψ (d i j)
+      else 0) = (LinearMap.toMatrix' (totOp ψ (permRep (∀ v, GL (Fin k) (Fq v)) X)))ᵀ := by
+    ext i j
+    rw [of_apply, transpose_apply, toMatrix'_totOp_apply, sum_orbit hfree d hd]
+  refine ⟨?_, hT⟩
+  ext i j
+  have h := congrFun (congrFun hT i) j
+  rw [of_apply, transpose_apply] at h
+  rw [of_apply, ← (totally_hermitian_form ι Fq k ψ X).apply i j, ← h]
+  split_ifs <;> simp
 
 end PI.GGMatBoundW
-end -- clump:auto
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.MatrixCoefficientEquation =====
@@ -1545,125 +1370,57 @@ end -- clump:auto
 section -- clump:auto
 @[expose] public section
 
-open Finset
-
-noncomputable section
-
-open Classical
+open Classical Formalism.L2.SG.GGMirabolic
 
 namespace PI.GGMatBoundW
 
-open Formalism.L2.SG.GGMirabolic
-
-section Prod
-
 variable {ι : Type} [Fintype ι] {Fq : ι → Type} [∀ v, Field (Fq v)] [∀ v, Fintype (Fq v)] {k : ℕ}
+  (ψ : ∀ v, AddChar (Fq v) ℂ) {V : Type} [AddCommGroup V] [Module ℂ V]
+  (π : Representation ℂ (∀ v, GL (Fin k) (Fq v)) V)
 
-def beta (ψ : ∀ v, AddChar (Fq v) ℂ) (s : Finset ι) (x : ∀ v, GL (Fin k) (Fq v)) : ℂ :=
-  if ∀ w, w ∉ s → x w = 1 then ∏ v ∈ s, gam (ψ v) (x v) else 0
+noncomputable def beta (s : Finset ι) (x : ∀ v, GL (Fin k) (Fq v)) : ℂ :=
+  if ∀ w ∉ s, x w = 1 then ∏ v ∈ s, gam (ψ v) (x v) else 0
 
-theorem beta_insert (ψ : ∀ v, AddChar (Fq v) ℂ) {a : ι} {s : Finset ι} (ha : a ∉ s)
-    (z : ∀ v, GL (Fin k) (Fq v)) :
-    beta ψ (insert a s) z =
-      ∑ y : GL (Fin k) (Fq a), gam (ψ a) y * beta ψ s ((Pi.mulSingle a y)⁻¹ * z) := by
-  have hz : ∀ w, ((Pi.mulSingle a (z a))⁻¹ * z : ∀ v, GL (Fin k) (Fq v)) w = if w = a then 1 else z w := by
-    intro w
-    by_cases hw : w = a
-    · subst hw
-      simp
-    · simp [hw, Pi.mulSingle_eq_of_ne hw]
-  rw [Finset.sum_eq_single (z a)]
-  · unfold beta
-    have hcond : (∀ w, w ∉ insert a s → z w = 1) ↔
-        (∀ w, w ∉ s → ((Pi.mulSingle a (z a))⁻¹ * z : ∀ v, GL (Fin k) (Fq v)) w = 1) := by
-      constructor
-      · intro h w hw
-        rw [hz]
-        by_cases hwa : w = a
-        · rw [if_pos hwa]
-        · rw [if_neg hwa]
-          exact h w (by simp [hwa, hw])
-      · intro h w hw
-        simp only [Finset.mem_insert, not_or] at hw
-        have := h w hw.2
-        rwa [hz, if_neg hw.1] at this
-    have hprod : ∏ v ∈ s, gam (ψ v) (((Pi.mulSingle a (z a))⁻¹ * z : ∀ v, GL (Fin k) (Fq v)) v) =
-        ∏ v ∈ s, gam (ψ v) (z v) := by
-      refine Finset.prod_congr rfl fun v hv => ?_
-      rw [hz, if_neg (fun (h : v = a) => ha (h ▸ hv))]
-    by_cases h : ∀ w, w ∉ insert a s → z w = 1
-    · rw [if_pos h, if_pos (hcond.mp h), hprod, Finset.prod_insert ha]
-    · rw [if_neg h, if_neg (fun h' => h (hcond.mpr h')), mul_zero]
+theorem beta_insert {a : ι} {s : Finset ι} (ha : a ∉ s) (z : ∀ v, GL (Fin k) (Fq v)) :
+    beta ψ (insert a s) z = ∑ y, gam (ψ a) y * beta ψ s ((Pi.mulSingle a y)⁻¹ * z) := by
+  have hz : (Pi.mulSingle a (z a))⁻¹ * z = Function.update z a 1 := by
+    funext w
+    rcases eq_or_ne w a with rfl | hw <;> simp [Pi.mulSingle_eq_of_ne, *]
+  rw [Finset.sum_eq_single (z a), hz]
+  · have hs : ∏ v ∈ s, gam (ψ v) (Function.update z a 1 v) = ∏ v ∈ s, gam (ψ v) (z v) :=
+      Finset.prod_congr rfl fun v hv => by rw [Function.update_of_ne (ne_of_mem_of_not_mem hv ha)]
+    have hc : (∀ w ∉ insert a s, z w = 1) ↔ ∀ w ∉ s, Function.update z a 1 w = 1 :=
+      forall_congr' fun w => by rcases eq_or_ne w a with rfl | hw <;> simp [*]
+    simp only [beta, ← hc, hs, Finset.prod_insert ha, mul_ite, mul_zero]
   · intro y _ hy
-    unfold beta
-    rw [if_neg, mul_zero]
-    intro h
-    apply hy
-    have := h a ha
-    simp only [Pi.mul_apply, Pi.inv_apply, Pi.mulSingle_eq_same] at this
-    exact inv_mul_eq_one.mp this
-  · intro h
-    exact absurd (Finset.mem_univ _) h
+    rw [beta, ite_eq_right fun h => hy ?_, mul_zero]
+    simpa [inv_mul_eq_one] using h a ha
+  · simp
 
-theorem beta_univ (ψ : ∀ v, AddChar (Fq v) ℂ) (x : ∀ v, GL (Fin k) (Fq v)) :
-    beta ψ Finset.univ x = gamProd ψ x := by
-  unfold beta gamProd
-  rw [if_pos (fun w hw => absurd (Finset.mem_univ w) hw)]
-
-variable {V : Type} [AddCommGroup V] [Module ℂ V]
-
-theorem placeOp_apply (ψ : ∀ v, AddChar (Fq v) ℂ) (π : Representation ℂ (∀ v, GL (Fin k) (Fq v)) V)
-    (v : ι) (w : V) : placeOp ψ π v w = ∑ y, gam (ψ v) y • π (Pi.mulSingle v y) w := by
-  simp only [placeOp, LinearMap.sum_apply, LinearMap.smul_apply]
-
-theorem totOp_apply (ψ : ∀ v, AddChar (Fq v) ℂ) (π : Representation ℂ (∀ v, GL (Fin k) (Fq v)) V)
-    (w : V) : totOp ψ π w = ∑ x, gamProd ψ x • π x w := by
-  simp only [totOp, LinearMap.sum_apply, LinearMap.smul_apply]
-
-theorem sum_beta_empty (ψ : ∀ v, AddChar (Fq v) ℂ) (π : Representation ℂ (∀ v, GL (Fin k) (Fq v)) V)
-    (w : V) : ∑ x, beta ψ ∅ x • π x w = w := by
-  rw [Finset.sum_eq_single 1]
-  · unfold beta
-    simp
-  · intro b _ hb
-    unfold beta
-    rw [if_neg, zero_smul]
-    intro h
-    exact hb (funext fun v => h v (by simp))
-  · intro h
-    exact absurd (Finset.mem_univ _) h
-
-theorem sum_beta_insert (ψ : ∀ v, AddChar (Fq v) ℂ) (π : Representation ℂ (∀ v, GL (Fin k) (Fq v)) V)
-    {a : ι} {s : Finset ι} (ha : a ∉ s) (w : V) :
+theorem sum_beta_insert {a : ι} {s : Finset ι} (ha : a ∉ s) (w : V) :
     ∑ x, beta ψ (insert a s) x • π x w = placeOp ψ π a (∑ x, beta ψ s x • π x w) := by
-  rw [placeOp_apply]
-
-  simp_rw [beta_insert ψ ha, Finset.sum_smul, map_sum, map_smul, Finset.smul_sum]
-  conv_lhs => rw [Finset.sum_comm]
+  simp_rw [placeOp, LinearMap.sum_apply, LinearMap.smul_apply, beta_insert ψ ha, Finset.sum_smul,
+    map_sum, map_smul, Finset.smul_sum]
+  rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun y _ => ?_
   refine Fintype.sum_equiv (Equiv.mulLeft (Pi.mulSingle a y)⁻¹) _ _ fun z => ?_
   simp only [Equiv.coe_mulLeft]
-  have hπ : π (Pi.mulSingle a y) (π ((Pi.mulSingle a y)⁻¹ * z) w) = π z w := by
-    have h2 := congrArg (fun f => f w) (map_mul π (Pi.mulSingle a y) ((Pi.mulSingle a y)⁻¹ * z))
-    simp only [mul_inv_cancel_left] at h2
-    exact h2.symm
-  rw [hπ, mul_smul]
-
-end Prod
+  rw [mul_smul, ← mul_apply_eq_comp (F := Module.End ℂ V), ← map_mul, mul_inv_cancel_left]
 
 theorem prod_formula' : ProdFormula := by
   intro ι _ Fq _ _ k ψ V _ _ π μ w hμ
-  have key : ∀ s : Finset ι, ∑ x, beta ψ s x • π x w = (∏ v ∈ s, μ v) • w := by
-    intro s
+  have key (s : Finset ι) : ∑ x, beta ψ s x • π x w = (∏ v ∈ s, μ v) • w := by
     induction s using Finset.induction_on with
-    | empty => rw [sum_beta_empty, Finset.prod_empty, one_smul]
+    | empty =>
+      rw [Finset.sum_eq_single 1 (fun b _ hb => ?_) (by simp)]
+      · simp [beta]
+      · rw [beta, ite_eq_right fun h => hb (funext fun v => h v (by simp)), zero_smul]
     | @insert a s ha ih =>
       rw [sum_beta_insert ψ π ha w, ih, map_smul, hμ, smul_smul, Finset.prod_insert ha, mul_comm]
-  rw [totOp_apply, ← key Finset.univ]
-  simp_rw [beta_univ]
+  rw [← key]
+  simp [totOp, beta, gamProd]
 
 end PI.GGMatBoundW
-end -- clump:auto
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.ProdFormula =====
@@ -1673,59 +1430,32 @@ end -- clump:auto
 section -- clump:auto
 @[expose] public section
 
-open Matrix
-
+open Matrix Classical
 open scoped ComplexOrder
-
-noncomputable section
-
-open Classical
 
 namespace PI.GGMatBoundW
 
 theorem spectrum_positive_semidefinite : SpecPSD := by
   intro X _ M c hM hev
-  have gen : ∀ (A : Matrix X X ℂ) (hA : A.IsHermitian) (b : ℝ),
-      (∀ (w : X → ℂ) (μ : ℂ), w ≠ 0 → A *ᵥ w = μ • w → ∃ r : ℝ, μ = r ∧ b ≤ r) →
-      ∀ j, b ≤ hA.eigenvalues j := by
-    intro A hA b h j
-    have hv := hA.mulVec_eigenvectorBasis j
+  have psd (A : Matrix X X ℂ) (hA : A.IsHermitian)
+      (h : ∀ (w : X → ℂ) (μ : ℂ), w ≠ 0 → A *ᵥ w = μ • w → ∃ r : ℝ, μ = r ∧ 0 ≤ r) :
+      A.PosSemidef := by
+    refine hA.posSemidef_iff_eigenvalues_nonneg.mpr fun j => ?_
     have hne := hA.eigenvectorBasis.orthonormal.ne_zero j
-    have key : ∀ v : X → ℂ, v ≠ 0 → A *ᵥ v = hA.eigenvalues j • v → b ≤ hA.eigenvalues j := by
-      intro v hv0 hAv
-      obtain ⟨r, hr, hbr⟩ := h v (hA.eigenvalues j : ℂ) hv0 (by rw [hAv]; ext i; simp)
-      have hre : hA.eigenvalues j = r := by exact_mod_cast hr
-      rw [hre]
-      exact hbr
-    exact key _ (fun h0 => hne (by ext i; simpa using congrFun h0 i)) hv
-  have h1 : ((c : ℂ) • (1 : Matrix X X ℂ)).IsHermitian := by
-    simp [Matrix.IsHermitian, Matrix.conjTranspose_smul]
-  have hN : ((c : ℂ) • (1 : Matrix X X ℂ) - M).IsHermitian := h1.sub hM
-  have hNev : ∀ (w : X → ℂ) (μ : ℂ), w ≠ 0 → ((c : ℂ) • (1 : Matrix X X ℂ) - M) *ᵥ w = μ • w →
-      ∃ r : ℝ, μ = r ∧ 0 ≤ r := by
-    intro w μ hw h
-    have hMw : M *ᵥ w = ((c : ℂ) - μ) • w := by
-      rw [Matrix.sub_mulVec] at h
-      first
-        | rw [Matrix.smul_mulVec] at h
-        | rw [Matrix.smul_mulVec_assoc] at h
-        | simp only [Matrix.smul_mulVec_assoc] at h
-      rw [Matrix.one_mulVec] at h
-      rw [sub_smul, ← h]
-      abel
-    obtain ⟨r, hr, _, hrc⟩ := hev w ((c : ℂ) - μ) hw hMw
-    refine ⟨c - r, ?_, by linarith⟩
-    push_cast
-    linear_combination -hr
-  constructor
-  · refine hM.posSemidef_iff_eigenvalues_nonneg.mpr fun j => gen M hM 0 ?_ j
-    intro w μ hw h
-    obtain ⟨r, hr, h0, _⟩ := hev w μ hw h
+    obtain ⟨r, hr, h0⟩ := h _ (hA.eigenvalues j)
+      (fun h0 => hne (by ext i; simpa using congrFun h0 i))
+      (by rw [hA.mulVec_eigenvectorBasis j]; ext i; simp)
+    exact h0.trans (Complex.ofReal_injective hr).ge
+  have hN : ((c : ℂ) • (1 : Matrix X X ℂ) - M).IsHermitian :=
+    IsHermitian.sub (by simp [IsHermitian, conjTranspose_smul]) hM
+  refine ⟨psd M hM fun w μ hw h => ?_, psd _ hN fun w μ hw h => ?_⟩
+  · obtain ⟨r, hr, h0, -⟩ := hev w μ hw h
     exact ⟨r, hr, h0⟩
-  · exact hN.posSemidef_iff_eigenvalues_nonneg.mpr fun j => gen _ hN 0 hNev j
+  · obtain ⟨r, hr, -, hrc⟩ := hev w (c - μ) hw <| by
+      rw [sub_smul, ← h, sub_mulVec, smul_mulVec, one_mulVec]; abel
+    exact ⟨c - r, by push_cast; linear_combination -hr, by linarith⟩
 
 end PI.GGMatBoundW
-end -- clump:auto
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MatrixCoefficientBound.SpectrumPositiveSemidefinite =====

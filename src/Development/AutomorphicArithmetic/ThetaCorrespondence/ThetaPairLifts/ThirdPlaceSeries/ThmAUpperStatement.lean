@@ -186,7 +186,7 @@ open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.BigTop GlobalTheo
 open GlobalTheory.FunObj.SqNum (nuH halfRank IsTor)
 
 theorem _root_.GlobalTheory.T.qn_not_mem_asIdeal_of_mu_ne : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts} {Y : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y cX} {Csz : ℝ} (p : PtAt ex Csz) (CF : ℝ) (d : FunIn p CF), p.PointConditions' → Fitted (@Comparison₂) p CF d → ∀ w : HeightOneSpectrum (𝓞 D.what₂.LL), p.R.mu w ≠ p.P.A3.A.μ0 → ((Qn d.G (p.R.mu w) : ℕ) : 𝓞 D.what₂.LL) ∉ w.asIdeal := by
-  first | exact @_root_.GlobalTheory.ThmAUpper.qn_not_mem_alt | exact _root_.GlobalTheory.ThmAUpper.qn_not_mem_alt | (intros; apply _root_.GlobalTheory.ThmAUpper.qn_not_mem_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.ThmAUpper.qn_not_mem_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -848,7 +848,7 @@ theorem _root_.GlobalTheory.T.toric_ratio_field_data_abelian_alt : ∀ {D : D7} 
             ∀ a : ℤ, jk (BlochKatoReduction.Gen.thEval D.ntw (ex.nch.twI w) (ex.nch.Q w) lam (ex.nch.k' w) (BlochKatoReduction.Gen.psiAt (D.ntw.sideL (ex.nch.twI w) lam) (ex.nch.psi' w ^ a))) *
                 GlobalTheory.ToricDenom.atSide D.ntw b ι T₀ =
               jk (BlochKatoReduction.Gen.kMap D.ntw (ex.nch.twI w) (ex.nch.k' w) (∑ δ, D.ntw.th (ex.nch.twI w) ∅ lam δ)) * GlobalTheory.ToricDenom.atSide D.ntw b ι (T (ψc ^ (c * a)))) := by
-  first | exact @_root_.GlobalTheory.ThmAUpper.read_twisted_alt | exact _root_.GlobalTheory.ThmAUpper.read_twisted_alt | (intros; apply _root_.GlobalTheory.ThmAUpper.read_twisted_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.ThmAUpper.read_twisted_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1554,7 +1554,7 @@ theorem _root_.GlobalTheory.T.toric_ratio_field_data_conjugate_alt : ∀ {D : D7
       IsToricSum (GlobalTheory.FunObj.SqNum.cmPhi D) s (GlobalTheory.FunObj.SqNum.kap D 1 i j s) (GlobalTheory.FunObj.SqNum.condF d.G.pl) (nuH d.G p.P.A3.A.μ0 i j * p.R.C.delAt (D.what₂.places.resChar w)) T₀ ∧ T₀ ≠ 0 ∧ Λd s = T₀ ∧
       (∀ y, finPart (p.Tp.psi w) y = ψc (QuotientGroup.mk y)) ∧
       (∀ ψ, GlobalTheory.IndefiniteRowSideFullHecke.ToricSymbols.IsTwistedSum (GlobalTheory.FunObj.SqNum.cmPhi D) s (GlobalTheory.FunObj.SqNum.kap D 1 i j s) (condQ (GlobalTheory.FunObj.SqNum.condF d.G.pl) (GlobalTheory.ToricDenom.belowSet (ex.nch.Q w))) (nuH d.G p.P.A3.A.μ0 i j * p.R.C.delAt (D.what₂.places.resChar w)) ψ (T ψ)) ∧ Λ s = T ψc := by
-  first | exact @_root_.GlobalTheory.ThmARatio.values_as_toric_sums_alt | exact _root_.GlobalTheory.ThmARatio.values_as_toric_sums_alt | (intros; apply _root_.GlobalTheory.ThmARatio.values_as_toric_sums_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.ThmARatio.values_as_toric_sums_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1615,7 +1615,7 @@ theorem _root_.GlobalTheory.T.cm_abelian_field_data_of_toric_ratio_alt : ∀ {D 
     GlobalTheory.CMVal.IsHeckeL (nuH d.G p.P.A3.A.μ0 i j * p.R.C.delAt (D.what₂.places.resChar w)) Λd →
     D.what₂.embLL z * Λd s = Λ s →
     (Formalism.DivisionValues.vw (D.plEq w) z : ℝ) ≤ (Formalism.DivisionValues.vw (D.plEq w) ((D.what₂.places.resChar w : ℕ) : D.what₂.LL) : ℝ) / ((D.what₂.places.resChar w : ℕ) : ℝ) ^ 2 := by
-  first | exact @_root_.GlobalTheory.ThmAUpper.val_bound_twisted_alt | exact _root_.GlobalTheory.ThmAUpper.val_bound_twisted_alt | (intros; apply _root_.GlobalTheory.ThmAUpper.val_bound_twisted_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.ThmAUpper.val_bound_twisted_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1664,7 +1664,7 @@ section
 open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.BigTop GlobalTheory.BigTop.Fun GlobalTheory.SqTop
 
 theorem _root_.GlobalTheory.T.toric_ratio_family_estimate' : GlobalTheory.IndefiniteRowSideFullHecke.ToricSymbols.ToricRatioConjugates → _root_.GlobalTheory.BigTop.Fun.SettingAtPoint → (Closed FamHyp fun Fm _ => _root_.GlobalTheory.BigTop.EventuallyAtPoints Fm fun x _ i _ => |(Fm.L x i).logDerivativeAtOne| ≤ (Fm.L x i).sc.x ^ (Fm.L x i).sc.eps) → FieldDat → TorEx → (_root_.GlobalTheory.BigTop.Fun.LeafConditions (Fitted @Comparison₂) fun p _ d _ _ => ThA d.G p.P.A3.A.μ0 p.R.mu) := by
-  first | exact @_root_.GlobalTheory.ThmAUpper.thmA_upper_alt | exact _root_.GlobalTheory.ThmAUpper.thmA_upper_alt | (intros; apply _root_.GlobalTheory.ThmAUpper.thmA_upper_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.ThmAUpper.thmA_upper_alt
 end
 end -- clump:auto
 end -- clump:auto

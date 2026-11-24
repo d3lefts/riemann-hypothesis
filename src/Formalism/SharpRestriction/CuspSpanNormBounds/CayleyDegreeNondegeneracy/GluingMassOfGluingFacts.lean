@@ -176,7 +176,7 @@ theorem card_orbit_mul_card_stabilizer (A : Subgroup Γ) (x : 𝒳) (hle : stabi
     Nat.card_congr (orbitEquivQuotientStabilizer A x)
   have h2 : stabilizer A x = (stabilizer Γ x).subgroupOf A := by
     ext a
-    simp [mem_stabilizer_iff, Subgroup.mem_subgroupOf, Subgroup.smul_def]
+    simp [mem_stabilizer_iff, Subgroup.smul_def]
   have h3 : Nat.card (stabilizer A x) = Nat.card (stabilizer Γ x) := by
     rw [h2]
     exact Nat.card_congr (Subgroup.subgroupOfEquivOfLe hle).toEquiv
@@ -329,15 +329,13 @@ theorem partInW_gmap_extendByOne (γ : (D.sp.X 0).V ≃ₗ[D.host.E] (D.sp.X 0).
     intersectFirstSummand D (gmap (extendByOne D γ) 𝓛) = gmap γ (intersectFirstSummand D 𝓛) := by
   ext w
   rw [isomAct_mem_gmap]
-  unfold intersectFirstSummand
-  rw [Submodule.mem_comap, Submodule.mem_comap, isomAct_mem_gmap]
+  simp only [intersectFirstSummand, Submodule.mem_comap, isomAct_mem_gmap]
   rfl
 
 theorem z_orth_embedding (u : D.what₂.Word) (w : (D.sp.X 0).V) : (VS D).hT (D.zmOf u) (D.sp.iXY 0 w) = 0 := by
-  have h1 : (VS D).hT D.sp.zm (D.sp.iXY 0 w) = 0 := by
-    rw [← (VS D).herm.eq (D.sp.iXY 0 w) D.sp.zm, D.sp.zm_orth w, map_zero]
   unfold D7.zmOf
-  rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, h1, smul_zero]
+  rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+    ← (VS D).herm.eq (D.sp.iXY 0 w) D.sp.zm, D.sp.zm_orth w, map_zero, smul_zero]
 
 theorem partInW_latticeWithZ (u : D.what₂.Word) {T : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (hz : F0.z = D.zmOf u) (Λ : LatV D) :
     intersectFirstSummand D (latticeWithZ D F0 Λ) = L0X D Λ (lf D F0) := by
@@ -349,10 +347,7 @@ theorem partInW_latticeWithZ (u : D.what₂.Word) {T : D.host.E} (F0 : FlagG (VS
   rw [e]
   constructor
   · intro h
-    refine ⟨h, ?_⟩
-    change (VS D).hT F0.z (D.sp.iXY 0 w) = 0
-    rw [hz]
-    exact z_orth_embedding D u w
+    exact ⟨h, by simpa [hz] using z_orth_embedding D u w⟩
   · exact fun h => h.1
 
 end Dat

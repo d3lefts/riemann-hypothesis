@@ -185,7 +185,7 @@ private theorem permDet_twist {X : Type} [Fintype X] [DecidableEq X] (π : Equiv
   have key : Matrix.diagonal c * (a • (1 : Matrix X X ℂ) - ζ • π.permMatrix ℂ) =
       (a • (1 : Matrix X X ℂ) - π.permMatrix ℂ) * Matrix.diagonal c := by
     ext i j
-    simp [Matrix.mul_sub, Matrix.sub_mul, Matrix.diagonal_mul, Matrix.mul_diagonal, Equiv.Perm.permMatrix,
+    simp [Matrix.diagonal_mul, Matrix.mul_diagonal, Equiv.Perm.permMatrix,
       PEquiv.toMatrix_apply, Matrix.one_apply]
     by_cases h2 : π i = j
     · subst h2
@@ -371,7 +371,7 @@ private theorem extS_log {F : Type} [Field F] [NumberField F] [_root_.NumberFiel
   classical
   by_cases h : w = w₀
   · subst h
-    simp only [extS, LinearMap.coe_mk, AddHom.coe_mk, dif_pos rfl, logEmbedding_component, mult_two, dite_true]
+    simp only [extS, LinearMap.coe_mk, AddHom.coe_mk, logEmbedding_component, mult_two, dite_true]
     have hs := NumberField.Units.sum_mult_mul_log u
     have e : (algebraMap (𝓞 F) F) (u : 𝓞 F) = ((u : 𝓞 F) : F) := rfl
     simp only [mult_two, e] at hs

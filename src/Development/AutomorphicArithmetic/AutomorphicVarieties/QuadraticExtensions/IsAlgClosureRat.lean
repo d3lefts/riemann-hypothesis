@@ -447,7 +447,7 @@ private theorem apply_eq_pow_val_galChar_of_isPrimitiveRoot (Ω : Type) [Field �
     haveI : IsAlgClosed Ω := IsAlgClosure.isAlgClosed ℚ
     haveI : CharZero Ω := algebraRat.charZero Ω
     exact HasEnoughRootsOfUnity.natCard_rootsOfUnity Ω n) σ.toRingEquiv (t := (hω.toRootsOfUnity : Ωˣ)) (SetLike.coe_mem _)
-  simp only [IsPrimitiveRoot.val_toRootsOfUnity_coe, Units.val_pow_eq_pow_val] at this
+  simp only [IsPrimitiveRoot.val_toRootsOfUnity_coe] at this
   exact this
 
 private theorem coe_galChar_eq_val_galChar_of_dvd (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ Ω] (k m : ℕ) [NeZero k] [NeZero m]
@@ -1035,7 +1035,7 @@ private theorem root_of_hasMu (l : ℕ) (A : AbF) (L : Type) [Field L] [NumberFi
 private theorem unitsMap_nat {m n a : ℕ} (h : m ∣ n) (u : (ZMod n)ˣ) (e : (u : ZMod n) = (a : ZMod n)) :
     ((ZMod.unitsMap h u : (ZMod m)ˣ) : ZMod m) = (a : ZMod m) := by
   rw [ZMod.unitsMap_def]
-  simp [Units.coe_map, ZMod.castHom_apply, e, ZMod.cast_natCast h]
+  simp [Units.coe_map, e]
 
 private theorem ker_sup {A B : AbF} {a : ℕ} (h : (A.sup B).ker a) : A.ker a ∧ B.ker a := by
   obtain ⟨u, ⟨hu1, hu2⟩, e⟩ := h
@@ -1475,7 +1475,6 @@ theorem UpperTheory.V.Two.idxAdic :
     have d3 : ¬ (2 : ℤ) ^ 3 ∣ ((8 * k + 3 : ℕ) : ℤ) - 1 := by
       rintro ⟨t, ht⟩
       push_cast at ht
-      norm_num at ht
       omega
     obtain ⟨h0, h⟩ := index_closed_dyadic_subgroup H u (8 * k + 3) 3 hH hu hp (by norm_num) d1 d2 d3
     refine ⟨h0, ?_⟩
@@ -1500,7 +1499,6 @@ theorem UpperTheory.V.Two.idxAdic :
     have d3 : ¬ (2 : ℤ) ^ 4 ∣ ((16 * k + 7 : ℕ) : ℤ) - 1 := by
       rintro ⟨t, ht⟩
       push_cast at ht
-      norm_num at ht
       omega
     obtain ⟨h0, h⟩ := index_closed_dyadic_subgroup H u (16 * k + 7) 4 hH hu hp (by norm_num) d1 d2 d3
     refine ⟨h0, ?_⟩

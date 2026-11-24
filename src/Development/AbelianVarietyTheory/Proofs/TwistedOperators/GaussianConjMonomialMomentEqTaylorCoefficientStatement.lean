@@ -96,7 +96,7 @@ theorem volume_eq_smul_map (r : ι → ℝ) (hr : ∀ τ, 0 < r τ) :
   have e : (scaleEquiv r hr) ⁻¹' Set.univ.pi s = Set.univ.pi fun τ => Set.univ.pi fun β => Set.univ.pi fun α =>
       (fun w : ℂ => r τ • w) ⁻¹' s (τ, β, α) := by
     ext z
-    simp [scaleEquiv_apply, scalePt, Set.mem_univ_pi, Prod.forall, Complex.real_smul]
+    simp [scaleEquiv_apply, scalePt, Prod.forall, Complex.real_smul]
   rw [e, volume_pi, Measure.pi_pi]
   simp_rw [volume_pi, Measure.pi_pi]
   rw [ENNReal.ofReal_prod_of_nonneg (fun x _ => sq_nonneg _)]
@@ -212,7 +212,7 @@ open GlobalTheory.FockTransl
 open Formalism.L2.Ker (VCx DVar derivAt0)
 
 theorem _root_.GlobalTheory.T.gaussian_conjMonomial_moment_eq_taylor_coefficient : ∀ (ι : Type) [Fintype ι] (a b : ℕ) (c : ι → ℝ), (∀ τ, 0 < c τ) → ∀ G : VCx ι a b → ℂ, Differentiable ℂ G → (∃ M : ℝ, ∀ z, ‖G z‖ ≤ M * Real.exp (gq c z / 2)) → ∀ m : DVar ι a b →₀ ℕ, ∫ z, conjMono m z * (Real.exp (-gq c z) : ℂ) * G z = ((∏ τ, (Real.pi / c τ) ^ (a * b) : ℝ) : ℂ) * ((m.prod fun k n => (c k.1)⁻¹ ^ n : ℝ) : ℂ) * derivAt0 G m := by
-  first | exact @GlobalTheory.FockMoment.gaussMoment | exact GlobalTheory.FockMoment.gaussMoment | (intros; apply GlobalTheory.FockMoment.gaussMoment <;> assumption)
+  first | exact @GlobalTheory.FockMoment.gaussMoment
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.GaussianConjMonomialMomentEqTaylorCoefficientStatement =====

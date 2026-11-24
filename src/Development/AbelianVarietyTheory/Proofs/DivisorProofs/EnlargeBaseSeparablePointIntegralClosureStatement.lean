@@ -106,11 +106,7 @@ theorem tensor_ringHom_ext {R S B C : Type} [CommRing R] [CommRing S] [CommRing 
     (h₁ : ∀ s : S, φ (s ⊗ₜ[R] (1 : B)) = ψ (s ⊗ₜ[R] (1 : B)))
     (h₂ : ∀ b : B, φ ((1 : S) ⊗ₜ[R] b) = ψ ((1 : S) ⊗ₜ[R] b)) : φ = ψ := by
   first
-  | exact @_root_.GlobalTheory.TensorRingHomExtensionality.ringHom_ext_tensor
-  | exact _root_.GlobalTheory.TensorRingHomExtensionality.ringHom_ext_tensor
   | (apply _root_.GlobalTheory.TensorRingHomExtensionality.ringHom_ext_tensor <;> assumption)
-  | (intros; apply _root_.GlobalTheory.TensorRingHomExtensionality.ringHom_ext_tensor <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.TensorRingHomExtensionality.ringHom_ext_tensor <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.TensorRingHomExtensionality.ringHom_ext_tensor ..)
 
 theorem one_tmul_algebraMap {R S B : Type} [CommRing R] [CommRing S] [CommRing B]
@@ -192,7 +188,6 @@ theorem exists_mul_mem_span_X {A EA : Type} [CommRing A] [IsNoetherianRing A] [C
       have h2 := Ideal.mul_mem_left N c this
       rw [smul_eq_mul]
       convert h2 using 1
-      push_cast
       ring
     | sup J₁ J₂ _ _ h₁ h₂ =>
       intro hle
@@ -471,7 +466,7 @@ theorem _root_.GlobalTheory.T.exists_baseChange_retract_alt : ∀ (T O : Type) [
       (∀ x : EA₁, algebraMap T O (i₁ (ρ' x)) - jA₁ (algebraMap EA₁ (Localization.AtPrime QA₁) x) ∈
         Ideal.span {algebraMap (Polynomial T) O Polynomial.X}) ∧
       (∀ x : EA₁, ρ' x = 0 → ∃ s ∉ QA₁, s * x ∈ Ideal.span {algebraMap (Polynomial A₁) EA₁ Polynomial.X}) := by
-  first | (exact @GlobalTheory.KeyOriginBaseChangeCons.exists_baseChange_retract) | (exact GlobalTheory.KeyOriginBaseChangeCons.exists_baseChange_retract) | (intros; apply GlobalTheory.KeyOriginBaseChangeCons.exists_baseChange_retract <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginBaseChangeCons.exists_baseChange_retract)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBaseChangeRetractStatement =====
@@ -558,7 +553,7 @@ theorem _root_.GlobalTheory.T.generic_fibre_compatibility : ∀ (T O A A₁ R R�
       ψA₁.comp (algebraMap R₁ (GlobalTheory.LocAcyc.GenFib A₁ R₁)) = (algebraMap O (GlobalTheory.LocAcyc.GenFib T O)).comp jA₁ ∧
       ψA₁.comp β = ψA ∧
       β.comp (algebraMap R (GlobalTheory.LocAcyc.GenFib A R)) = (algebraMap R₁ (GlobalTheory.LocAcyc.GenFib A₁ R₁)).comp γ := by
-  first | (exact @GlobalTheory.GenFibBaseChange.exists_genFib_maps) | (exact GlobalTheory.GenFibBaseChange.exists_genFib_maps) | (intros; apply GlobalTheory.GenFibBaseChange.exists_genFib_maps  <;> assumption)
+  first | (exact @GlobalTheory.GenFibBaseChange.exists_genFib_maps)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GenericFibreCompatibility =====
@@ -673,7 +668,7 @@ theorem _root_.GlobalTheory.T.keyOrigin_retraction_localises : ∀ (T O A₁ EA�
     ∃ ρ₁ : Localization.AtPrime QA₁ →+* A₁,
       GlobalTheory.KeyOriginEnlarge.Retracts T O A₁ i₁ EA₁ QA₁ jA₁ ρ₁ ∧
       ρ₁.comp (algebraMap EA₁ (Localization.AtPrime QA₁)) = ρ' := by
-  first | (exact @GlobalTheory.KeyOriginEnlargeLoc.retract_localises) | (exact GlobalTheory.KeyOriginEnlargeLoc.retract_localises) | (intros; apply GlobalTheory.KeyOriginEnlargeLoc.retract_localises  <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginEnlargeLoc.retract_localises)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.KeyOriginRetractionLocalisesStatement =====
@@ -786,7 +781,7 @@ theorem _root_.GlobalTheory.T.zmodTorsor_baseChange_transport_point : ∀ (A A�
         ∃ σ₁ : DA₁ →+* FractionRing A₁,
           (σ₁.comp (algebraMap (GlobalTheory.LocAcyc.GenFib A₁ R₁) DA₁)).comp (algebraMap R₁ (GlobalTheory.LocAcyc.GenFib A₁ R₁)) =
             (algebraMap A₁ (FractionRing A₁)).comp ρ₁ := by
-  first | (exact @GlobalTheory.KeyOriginCut.torsor_baseChange_point) | (exact GlobalTheory.KeyOriginCut.torsor_baseChange_point) | (intros; apply GlobalTheory.KeyOriginCut.torsor_baseChange_point  <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginCut.torsor_baseChange_point)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ZmodTorsorBaseChangeTransportPointStatement =====
@@ -942,7 +937,7 @@ theorem _root_.GlobalTheory.T.exists_baseChange_fittingDatum_retraction : ∀ (T
             (σ₁.comp (algebraMap (GlobalTheory.LocAcyc.GenFib A₁ (Localization.AtPrime QA₁)) DA₁)).comp
                 (algebraMap (Localization.AtPrime QA₁) (GlobalTheory.LocAcyc.GenFib A₁ (Localization.AtPrime QA₁))) =
               (algebraMap A₁ (FractionRing A₁)).comp ρ₁ := by
-  first | (exact @GlobalTheory.KeyOriginEnlarge.exists_baseChange_fits) | (exact GlobalTheory.KeyOriginEnlarge.exists_baseChange_fits) | (intros; apply GlobalTheory.KeyOriginEnlarge.exists_baseChange_fits <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginEnlarge.exists_baseChange_fits)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBaseChangeFittingDatumRetractionStatement =====
@@ -1037,11 +1032,7 @@ theorem isIntegrallyClosed_of_absIntClosed (T : Type) [CommRing T] [IsDomain T]
 theorem isAlgClosed_fractionRing (T : Type) [CommRing T] [IsDomain T]
     (hT : GlobalTheory.LocAcyc.AbsIntClosed T) : IsAlgClosed (FractionRing T) := by
   first
-  | exact @_root_.GlobalTheory.MonicRootRange.isAlgClosed_fractionRing
-  | exact _root_.GlobalTheory.MonicRootRange.isAlgClosed_fractionRing
   | (apply _root_.GlobalTheory.MonicRootRange.isAlgClosed_fractionRing <;> assumption)
-  | (intros; apply _root_.GlobalTheory.MonicRootRange.isAlgClosed_fractionRing <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.MonicRootRange.isAlgClosed_fractionRing <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.MonicRootRange.isAlgClosed_fractionRing ..)
 
 end GlobalTheory.LocAcycEmbed
@@ -1204,7 +1195,7 @@ theorem _root_.GlobalTheory.T.exists_normal_local_between_alt : ∀ (T : Type) [
       ∃ κ : L →+* FractionRing A₁,
         κ.comp ((algebraMap (FractionRing A) L).comp (algebraMap A (FractionRing A))) =
           (algebraMap A₁ (FractionRing A₁)).comp j := by
-  first | (exact @GlobalTheory.LocAcycEmbed.exists_normal_local_between) | (exact GlobalTheory.LocAcycEmbed.exists_normal_local_between) | (intros; apply GlobalTheory.LocAcycEmbed.exists_normal_local_between  <;> assumption)
+  first | (exact @GlobalTheory.LocAcycEmbed.exists_normal_local_between)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNormalLocalBetweenStatement =====
@@ -1221,7 +1212,7 @@ theorem _root_.GlobalTheory.T.zmodTorsor_exists_point_finite_separable : ∀ (B 
     GlobalTheory.KeyOriginCut.IsZTorsor B D q act →
     ∃ (L : Type) (_ : Field L) (_ : Algebra K L) (_ : FiniteDimensional K L) (_ : Algebra.IsSeparable K L)
       (σ : D →+* L), σ.comp (algebraMap B D) = (algebraMap K L).comp f := by
-  first | (exact @GlobalTheory.TorsorFieldPoint.exists_point_finite_separable) | (exact GlobalTheory.TorsorFieldPoint.exists_point_finite_separable) | (intros; apply GlobalTheory.TorsorFieldPoint.exists_point_finite_separable  <;> assumption)
+  first | (exact @GlobalTheory.TorsorFieldPoint.exists_point_finite_separable)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ZmodTorsorExistsPointFiniteSeparableStatement =====
@@ -1343,7 +1334,7 @@ theorem _root_.GlobalTheory.T.enlarge_base_separable_point_integralClosure : ∀
       ∃ (β : GlobalTheory.LocAcyc.GenFib A (Localization.AtPrime QA) →+* GlobalTheory.LocAcyc.GenFib A' (Localization.AtPrime QA')) (h : DA →+* DA'),
         ψA'.comp β = ψA ∧
         h.comp (algebraMap (GlobalTheory.LocAcyc.GenFib A (Localization.AtPrime QA)) DA) = (algebraMap (GlobalTheory.LocAcyc.GenFib A' (Localization.AtPrime QA')) DA').comp β := by
-  first | (exact @GlobalTheory.KeyOriginEnlargePoint.enlarge_point) | (exact GlobalTheory.KeyOriginEnlargePoint.enlarge_point) | (intros; apply GlobalTheory.KeyOriginEnlargePoint.enlarge_point  <;> assumption)
+  first | (exact @GlobalTheory.KeyOriginEnlargePoint.enlarge_point)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EnlargeBaseSeparablePointIntegralClosureStatement =====

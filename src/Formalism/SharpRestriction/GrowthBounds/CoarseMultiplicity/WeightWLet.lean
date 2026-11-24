@@ -241,11 +241,9 @@ theorem weight_wLet (X : Loc) (x : X.TT × Bool) (μ : (X.TT × Bool) × Fin (X.
   classical
   rw [Finsupp.weight_apply, Finsupp.sum_fintype μ (fun v k => k • wLet X x v) (fun _ => zero_smul _ _),
     Fintype.sum_prod_type, Finset.sum_eq_single x]
-  · unfold multideg wLet
-    simp
+  · simp [multideg, wLet]
   · intro y _ hy
-    unfold wLet
-    simp [hy]
+    simp [wLet, hy]
   · intro h
     exact absurd (Finset.mem_univ _) h
 
@@ -302,7 +300,7 @@ theorem TD_wLet (x : X.TT × Bool) (b : SegBlock (segS X.TT j) X.m)
         omega
       · have w1 : ∀ c, wLet X (topOdd X j i, true) ((topOdd X j i, true), c) = 1 := fun c => if_pos rfl
         have w2 : ∀ c, wLet X (topOdd X j i, true) ((topOdd X j i, false), c) = 0 := fun c => if_neg (by simp)
-        simp only [w1, w2, mul_zero, mul_one, zero_add, add_zero]
+        simp only [w1, w2, mul_zero, mul_one, add_zero]
         have hd := hk.1.2.1 i
         have hPA : (X.seg C0 CE1 CE2 j).P X.p i * coarseA X.p (X.seg C0 CE1 CE2 j) b i =
             (X.seg C0 CE1 CE2 j).bTop i - ∑ c, b.rz i c := Nat.mul_div_cancel' hd.2

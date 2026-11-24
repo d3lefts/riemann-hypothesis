@@ -324,7 +324,7 @@ theorem d_phi {N : ℕ} {U : Scheme.{0}} (x : Sx E N U) (s t : ℤ) (hst : s + 1
     Sec.map (K.d s t) (phi μ hk α.1 β.1 x s c) = ((k.negOnePow : ℤˣ) : ℤ) • phi μ hk α.1 β.1 x t (Pr.d N c) := by
   rw [phi_eq, phi_eq]
   refine Finsupp.induction_linear c ?_ ?_ ?_
-  · simp only [map_zero, secmap_zero', smul_zero]
+  · simp only [map_zero, smul_zero]
   · intro f g hf hg
     rw [map_add (f := _), map_add (f := _), map_add (f := _), secmap_add', hf, hg, smul_add]
   · intro z a
@@ -769,7 +769,7 @@ theorem LateralTheory.EtaleFoundations.simplicial_subinterval_of_subinterval_alo
       first
         | (have hm := ConcreteCategory.congr_hom hn x
            simp only [ConcreteCategory.comp_apply] at hm
-           first | exact hm | exact hm.symm)
+           first | exact hm.symm)
         | exact (congrFun hn x).symm
         | (rw [← types_comp_apply, ← hn]; rfl)
   · intro p r a b
@@ -1038,8 +1038,7 @@ theorem dT_dT (I J : Cx R) (U : Scheme.{0}) (w : ℤ) (x : Tens I J U w) :
   apply DirectSum.linearMap_ext; intro p; apply TensorProduct.ext'; intro a b
   simp only [LinearMap.comp_apply, LinearMap.zero_apply]
   rw [dT_lof, map_add (f := _), map_zsmul, dT_lof, dT_lof]
-  simp only [sec_dd, TensorProduct.zero_tmul, TensorProduct.tmul_zero, map_zero, zero_add, add_zero, smul_add,
-    smul_zero, Int.negOnePow_succ, Units.val_neg, neg_smul, smul_smul]
+  simp only [sec_dd, TensorProduct.zero_tmul, TensorProduct.tmul_zero, map_zero, zero_add, add_zero, smul_zero, Int.negOnePow_succ, Units.val_neg, neg_smul]
   exact neg_add_cancel _
 
 theorem tensorDifferential_comp_eq_zero (I J : Cx R) (w : ℤ) : dP I J w ≫ dP I J (w + 1) = 0 := by

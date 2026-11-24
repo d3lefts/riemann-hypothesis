@@ -849,7 +849,7 @@ theorem _root_.GlobalTheory.T.eisenstein_terms_uniformly_summable : ∀ {D : D7}
     LeftInv (P D n ⊓ GF D n) f ∧
     (∀ q ∈ P D n, ∀ a : GL (Fin n) (AE D), blkA (mat q) = a.1 → Matrix.GeneralLinearGroup.det a = 1 → ∀ g, f (q * g) = f g) ∧
     ∀ C : Set (G D n), IsCompact C → ∃ u : Cosets (P D n) (GF D n) → ℝ, Summable u ∧ ∀ q, ∀ g ∈ C, ‖term (P D n) (GF D n) f g q‖ ≤ u q := by
-  first | exact @GlobalTheory.CompanionTheory.ZUnf.law_facts | exact GlobalTheory.CompanionTheory.ZUnf.law_facts | (intros; apply GlobalTheory.CompanionTheory.ZUnf.law_facts <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ZUnf.law_facts
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -1060,7 +1060,7 @@ theorem _root_.GlobalTheory.T.fundamental_domain_unfolding_two_sums : ∀ {A X Y
     (_ : ∀ y, y ≠ y0 → ∃ ν, ch ν ≠ 1 ∧ ∀ q, c q = y → ∀ b, F q (ν + b) = F q b),
     (∀ u, Integrable (F0 u) lam ∧ ∫ b, ‖F0 u b‖ ∂lam ≤ ∑' l : Λ, Um (e (l, u))) ∧
     HasSum (fun u => ∫ b, F0 u b * ch b ∂lam) (∫ b in 𝓖, (∑' q, F q b) * ch b ∂lam) := by
-  first | exact @GlobalTheory.CompanionTheory.UnfoldFam.unfold_fam | exact GlobalTheory.CompanionTheory.UnfoldFam.unfold_fam | (intros; apply GlobalTheory.CompanionTheory.UnfoldFam.unfold_fam <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.UnfoldFam.unfold_fam
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -1232,7 +1232,7 @@ theorem _root_.GlobalTheory.T.nondegenerate_centre_character_cell : ∀ {D : D7}
     ∀ (γ u : G D n), γ ∈ GF D n → ∀ x : Matrix (Fin (n + n)) (Fin (n + n)) D.host.E, mat γ = x.map (incA D) → zKer hn x = W →
       mat u = blk4 1 (bl hn ν.1 0 0 0) 0 1 →
       ∃ q ∈ P D n, ∃ a : GL (Fin n) (AE D), blkA (mat q) = a.1 ∧ Matrix.GeneralLinearGroup.det a = 1 ∧ γ * u = q * γ := by
-  first | exact @GlobalTheory.CompanionTheory.ZUnf.SmallZ.small | exact GlobalTheory.CompanionTheory.ZUnf.SmallZ.small | (intros; apply GlobalTheory.CompanionTheory.ZUnf.SmallZ.small <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ZUnf.SmallZ.small
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -1397,7 +1397,7 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.AdelicU GlobalTheory.Doublin
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.fourier_zero_holds : PositivityTheory.PfSWUS.FourierZero := by
-  first | exact @GlobalTheory.CompanionTheory.FourierN.fourierZero | exact GlobalTheory.CompanionTheory.FourierN.fourierZero | (intros; apply GlobalTheory.CompanionTheory.FourierN.fourierZero <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.FourierN.fourierZero
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto

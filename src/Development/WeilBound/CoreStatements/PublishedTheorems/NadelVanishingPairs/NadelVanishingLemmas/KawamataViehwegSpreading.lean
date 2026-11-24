@@ -285,7 +285,6 @@ theorem exists_numberField_of_finiteType_rat (R : Type) [CommRing R] [Nontrivial
     convert hfin
     first
       | exact (congrArg (@Algebra.toModule ℚ (R ⧸ m) _ _) e).symm
-      | (rw [← e]; rfl)
   haveI : NumberField (R ⧸ m) := ⟨⟩
   exact ⟨R ⧸ m, inferInstance, inferInstance, Ideal.Quotient.mk m, trivial⟩
 
@@ -567,7 +566,7 @@ theorem nonempty_closure_ringHom_of_mul_mem : ∀ (K : Type) [Field K] [CharZero
     refine ⟨IsLocalization.mk' B (⟨(N : K) * s, hS s hs⟩ : O) (⟨(N : O), 1, pow_one _⟩ : Submonoid.powers (N : O)), ?_⟩
     have h1 := congrArg φ (IsLocalization.mk'_spec B (⟨(N : K) * s, hS s hs⟩ : O) (⟨(N : O), 1, pow_one _⟩ : Submonoid.powers (N : O)))
     rw [map_mul, hφa, hφa] at h1
-    simp only [map_natCast] at h1
+    simp only at h1
     exact mul_right_cancel₀ hNK (h1.trans (mul_comm _ _))
   have hψN : IsUnit (ψ (N : O)) := by rw [map_natCast]; exact hu
   let χ : B →+* R := IsLocalization.Away.lift (N : O) hψN
@@ -796,7 +795,7 @@ theorem resG_oBundle_g (K : CanonLB f d) (a b : OIdx e K)
           ((K.bundle.g a.1 b.1 : Γ(X, K.bundle.U a.1 ⊓ K.bundle.U b.1))) := by
   simp only [oBundle, ZH.UFib.refinePull, res, pullU, Units.coe_map, MonoidHom.coe_coe]
   erw [← CommRingCat.comp_apply, ← CommRingCat.comp_apply]
-  simp only [Scheme.Hom.appLE, Category.assoc, resG]
+  simp only [Scheme.Hom.appLE]
   rw [← Functor.map_comp]
   rfl
 

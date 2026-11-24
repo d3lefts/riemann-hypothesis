@@ -1197,7 +1197,7 @@ private theorem gsp_diag {R : Type} [CommRing R] (ν : R) (d : Fin 4 → R) (h :
     IsGSp ν (Matrix.diagonal d) := by
   have e : adj (Matrix.diagonal d) = Matrix.diagonal fun i => d i.rev := by
     ext i j
-    fin_cases i <;> fin_cases j <;> simp [adj_apply, sgn, Fin.rev, Matrix.diagonal_apply]
+    fin_cases i <;> fin_cases j <;> simp [adj_apply, sgn, Fin.rev]
   unfold IsGSp
   rw [e, Matrix.diagonal_mul_diagonal]
   ext i j
@@ -1450,13 +1450,13 @@ theorem UpperTheory.V.Ws.spaceEx :
     have hr : ∀ g i j, D.r g i j = (D'.r g i j : R) := by
       subst hmap
       intro g i j
-      first | rfl | simp [RD.map]
+      first | rfl
     have hψ : ∀ v i t, D.ψ v i t = (D'.ψ v i t : R) := by
       subst hmap
       intro v i t
-      first | rfl | simp [RD.map]
+      first | rfl
     set S := Algebra.adjoin (W.gr 0) (Set.range fun x : Γ × Fin 4 × Fin 4 => D'.r x.1 x.2.1 x.2.2) with hS
-    have hbA : ∀ b : W.gr 0, algebraMap (W.gr 0) W.A b = (b : W.A) := fun b => by first | rfl | simp
+    have hbA : ∀ b : W.gr 0, algebraMap (W.gr 0) W.A b = (b : W.A) := fun b => by first | rfl
     have hgr : ∀ x : W.A, (x : R) ∈ W.part 0 → x ∈ S := by
       intro x hx
       have h := Subalgebra.algebraMap_mem S (⟨x, hx⟩ : W.gr 0)
@@ -1468,9 +1468,7 @@ theorem UpperTheory.V.Ws.spaceEx :
         have := (algebraMap Λ (W.gr 0) c).2
         first
           | exact this
-          | (have e : ((algebraMap Λ (W.gr 0) c : W.A) : R) = algebraMap Λ R c := by first | rfl | simp
-             rw [← e]; exact this)
-      first | exact h0 | simpa using h0
+      first | exact h0
     have hr' : ∀ g i j, D'.r g i j ∈ S := fun g i j => Algebra.subset_adjoin ⟨(g, i, j), rfl⟩
     have hz : ∀ s, W.zA s ∈ S := by
       intro s

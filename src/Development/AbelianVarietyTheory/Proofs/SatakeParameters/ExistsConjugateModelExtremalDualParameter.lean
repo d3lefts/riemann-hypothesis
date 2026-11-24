@@ -115,16 +115,16 @@ theorem columns_indepMod :
     by_cases hk : 0 < a k
     · rw [Finset.sum_eq_single ⟨k, hk⟩]
       · obtain ⟨m, hm⟩ : ∃ m, a k = m + 1 := Nat.exists_eq_succ_of_ne_zero hk.ne'
-        simp [hc, hk, hm]; ring
+        simp [hc, hm]; ring
       · intro b _ hb
         have : k ≠ (b : Fin n) := fun h => hb (Subtype.ext h.symm)
-        simp [Pi.single_apply, this]
+        simp [this]
       · simp
     · rw [Finset.sum_eq_zero]
       · simp [hc, hk]
       · intro i _
         have : k ≠ (i : Fin n) := fun h => hk (h ▸ i.2)
-        simp [Pi.single_apply, this]
+        simp [this]
   have hlin : ϖ • (x *ᵥ (V *ᵥ c)) = ∑ i : {j : Fin n // 0 < a j}, d i • (x *ᵥ (V *ᵥ Pi.single (i : Fin n) (ϖ ^ a (i : Fin n)))) := by
     rw [← Matrix.mulVec_smul, ← Matrix.mulVec_smul, hsum, Matrix.mulVec_sum, Matrix.mulVec_sum]
     simp [Matrix.mulVec_smul]
@@ -292,7 +292,7 @@ theorem mulVec_single_int {n : ℕ} (V : Matrix (Fin n) (Fin n) L) (hV : ∀ i j
 theorem single_eq_smul {n : ℕ} (i : Fin n) (c : L) : (Pi.single i c : Fin n → L) = c • Pi.single i (1 : L) := by
   ext r; by_cases h : r = i
   · subst h; simp
-  · simp [Pi.single_apply, h]
+  · simp [h]
 
 theorem gram_class_columns : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] (ϖ : L) (σ : L →+* L) (q : ℕ),
     Formalism.UG.IsUnramInv ϖ σ q → ∀ (n n' : ℕ) (JT : GL (Fin n') L) (x y : Matrix (Fin n') (Fin n) L)
@@ -316,7 +316,7 @@ theorem gram_class_columns : ∀ (L : Type) [Field L] [Valued L (WithZero (Multi
     have hI : ∀ t, (Pi.single l c : Fin n → L) t ∈ Formalism.UG.intL L := by
       intro t; by_cases h : t = l
       · subst h; simpa using hcI
-      · simp [Pi.single_apply, h, (Formalism.UG.intL L).zero_mem]
+      · simp [h, (Formalism.UG.intL L).zero_mem]
     have := (hiff (Pi.single l c) hI).mpr (by
       intro t; by_cases h : t = l
       · subst h
@@ -465,7 +465,7 @@ theorem exists_intUnitary_of_gramClass : ∀ (L : Type) [Field L] [Valued L (Wit
     intro j k
     by_cases h : k = j
     · subst h; simpa [ej] using (Formalism.UG.intL L).pow_mem hϖint (a k)
-    · simp [ej, Pi.single_apply, h]
+    · simp [ej, h]
   have hej_dvd : ∀ j k, GlobalTheory.Hk3.IntWitt.DvdPow ϖ (a k) (ej j k) := by
     intro j k
     by_cases h : k = j
@@ -1262,9 +1262,9 @@ theorem GlobalTheory.Hk3.HoweG.selfDual_lattice_of_gram_int : ∀ (L : Type) [Fi
     intro j
     refine (ha _).mpr ⟨Pi.single j 1, fun i => ?_, ?_⟩
     · by_cases h : i = j
-      · subst h; simp [Subring.one_mem]
-      · simp [h, Subring.zero_mem]
-    · funext k; simp [Matrix.mulVec_single_one]
+      · subst h; simp
+      · simp [h]
+    · funext k; simp
   have hN : ∀ u : Fin n → L, (∀ i, u i ∈ Formalism.UG.intL L) → (∀ i, (x *ᵥ u) i ∈ Formalism.UG.intL L) →
       ∃ t : Fin n → L, (∀ i, t i ∈ Formalism.UG.intL L) ∧ u = (a : Matrix (Fin n) (Fin n) L) *ᵥ t := by
     intro u hu hxu
@@ -1272,7 +1272,7 @@ theorem GlobalTheory.Hk3.HoweG.selfDual_lattice_of_gram_int : ∀ (L : Type) [Fi
   have hY : ∀ w : Fin n' → L, (∀ i, w i ∈ Formalism.UG.intL L) →
       ∃ t : Fin n → L, (∀ i, t i ∈ Formalism.UG.intL L) ∧ y *ᵥ w = (a : Matrix (Fin n) (Fin n) L) *ᵥ t := by
     intro w hw
-    exact (ha _).mp ⟨0, w, fun _ => Subring.zero_mem _, by simp [Subring.zero_mem], hw, by simp⟩
+    exact (ha _).mp ⟨0, w, fun _ => Subring.zero_mem _, by simp, hw, by simp⟩
   have hformM : ∀ (M : Matrix (Fin n) (Fin n) L) (t : Fin n → L) (V : Matrix (Fin n) (Fin n) L) (j : Fin n),
       Formalism.UG.hform σ (JS : Matrix (Fin n) (Fin n) L) (M *ᵥ t) (fun l => V l j) =
         ∑ k, σ (t k) * (Formalism.UG.cT σ M * (JS : Matrix (Fin n) (Fin n) L) * V) k j := by

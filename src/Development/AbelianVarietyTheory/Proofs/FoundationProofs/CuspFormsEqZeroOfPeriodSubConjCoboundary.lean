@@ -1106,7 +1106,7 @@ theorem evalDiag_T_step (w n : ℕ) (V : ℍ → ℂ[X]) (hV : ∀ τ, V τ ∈ 
     push_cast; ring
   rw [← hT τ, eval_polySlash w _ _ _ (hV _), hm, hc]
   · simp only [Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
-      Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons, Matrix.head_fin_const]
+      Matrix.empty_val', Matrix.cons_val_fin_one]
     push_cast
     simp
   · rw [hm]
@@ -1163,7 +1163,7 @@ private theorem norm_eval_le_sum_of_mem_degreeLT {w : ℕ} {p : ℂ[X]} (hp : p 
     (x : ℂ) : ‖p.eval x‖ ≤ ∑ j ∈ Finset.range (w + 1), ‖p.coeff j‖ * ‖x‖ ^ j := by
   rw [eval_eq_sum_range' (natDegree_lt_of_mem_degreeLT hp)]
   refine (norm_sum_le _ _).trans (le_of_eq ?_)
-  simp [norm_mul, norm_pow]
+  simp [norm_pow]
 
 open Polynomial UpperHalfPlane in
 open scoped MatrixGroups ModularForm in
@@ -1486,7 +1486,7 @@ theorem per_cov (Γ : Subgroup SL(2, ℤ)) (w : ℕ) (U : ℍ → ℂ[X]) (hU : 
   rw [h2] at h1
   rw [← h1]
   have hm' : ((⟨_, hγ⟩ : Γ) : SL(2, ℤ)) * σ = σ * ModularGroup.T ^ (n : ℤ) := by
-    simp only [Subgroup.coe_mk]; group
+    simp only; group
   have e1 : slP w (mat (ModularGroup.T ^ (n : ℤ))) (slP w (mat σ) (U (σ • ModularGroup.T ^ (n : ℤ) • τ))) =
       slP w (mat (σ * ModularGroup.T ^ (n : ℤ))) (U (σ • ModularGroup.T ^ (n : ℤ) • τ)) := by
     rw [show mat (σ * ModularGroup.T ^ (n : ℤ)) = mat σ * mat (ModularGroup.T ^ (n : ℤ)) from

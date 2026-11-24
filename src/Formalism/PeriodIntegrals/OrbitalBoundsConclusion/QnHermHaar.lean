@@ -116,8 +116,7 @@ private theorem exp_entry_lemma_2 {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ) (j 
     (ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin n => ℂ) l).comp
       (ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin n => Fin n → ℂ) j)
   have h2 := (L.hasFDerivAt.comp_hasDerivAt _ hE).comp_ofReal
-  simp only [L, Function.comp_apply, ContinuousLinearMap.comp_apply, ContinuousLinearMap.proj_apply,
-    Complex.ofReal_zero, zero_smul, NormedSpace.exp_zero, one_mul] at h2
+  simp only [L, Function.comp_apply, Complex.ofReal_zero, zero_smul, NormedSpace.exp_zero, one_mul] at h2
   exact h2
 
 private theorem smul_mulVec_lemma {n : ℕ} (c : ℂ) (M : Matrix (Fin n) (Fin n) ℂ) (v : Fin n → ℂ) :
@@ -203,7 +202,7 @@ lemma tst_ZH_fix {n : ℕ} (W H : Matrix (Fin n) (Fin n) ℂ) (a' b' p : Fin n) 
   rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec]
   have h0 : (Matrix.single a' b' (1 : ℂ))ᴴ *ᵥ (H *ᵥ bvec p) = 0 := by
     ext x
-    simp [bvec, Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply, Matrix.single_apply, Pi.single_apply, h]
+    simp [bvec, Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply, Matrix.single_apply, Pi.single_apply]
     by_cases hb : b' = x <;> simp [hb, h]
   rw [h0, Matrix.mulVec_zero]
 
@@ -619,18 +618,13 @@ theorem hermitian_algebra_generation : HermAlgFrom := by
     have hQP : star P * P = 1 := by
       first
         | exact Matrix.mem_unitaryGroup_iff'.mp hH.eigenvectorUnitary.2
-        | exact unitary.star_mul_self_of_mem hH.eigenvectorUnitary.2
-        | exact Unitary.star_mul_self_of_mem hH.eigenvectorUnitary.2
     have hPQ : P * star P = 1 := by
       first
         | exact Matrix.mem_unitaryGroup_iff.mp hH.eigenvectorUnitary.2
-        | exact unitary.mul_star_self_of_mem hH.eigenvectorUnitary.2
-        | exact Unitary.mul_star_self_of_mem hH.eigenvectorUnitary.2
     set d : Fin m → ℂ := fun b => ((hH.eigenvalues b : ℝ) : ℂ) with hd
     have hspec : Hm = P * Matrix.diagonal d * star P := by
       first
         | exact hH.spectral_theorem
-        | exact Matrix.IsHermitian.spectral_theorem hH
     have hHP : Hm * P = P * Matrix.diagonal d := by
       rw [hspec]
       simp only [Matrix.mul_assoc, hQP, Matrix.mul_one]

@@ -1001,7 +1001,7 @@ theorem core (J P D : Matrix (Fin n) (Fin n) ℂ) (j1 : J * J = 1) (j2 : Jᴴ = 
   rw [← hB] at d2
   have hBJP : B * (J * P) = 0 := by
     rw [hB]
-    simp only [mul_assoc, sub_mul, mul_sub, one_mul, mul_one, hJJ, p2, hPP, sub_self, mul_zero]
+    simp only [mul_assoc, sub_mul, mul_sub, mul_one, hJJ, p2, sub_self]
   have hBJB : B * (J * B) = 0 := by
     calc B * (J * B) = B * (J * (P * B)) := by rw [d2]
       _ = B * (J * P) * B := by simp only [mul_assoc]
@@ -1011,8 +1011,7 @@ theorem core (J P D : Matrix (Fin n) (Fin n) ℂ) (j1 : J * J = 1) (j2 : Jᴴ = 
     rwa [conjTranspose_mul, p1] at h
   have hPBh : P * Bᴴ = 0 := by
     rw [hB]
-    simp only [conjTranspose_mul, conjTranspose_sub, conjTranspose_one, j2, p1, mul_sub, sub_mul,
-      one_mul, mul_one, mul_assoc, hPJP, hPDh, sub_zero, sub_self]
+    simp only [conjTranspose_mul, conjTranspose_sub, j2, p1, mul_sub, mul_one, mul_assoc, hPJP, hPDh, sub_self]
   have hPBhX : ∀ X : Matrix (Fin n) (Fin n) ℂ, P * (Bᴴ * X) = 0 := fun X => by
     rw [← mul_assoc, hPBh, zero_mul]
   have hPJB : P * (J * B) = 0 := by
@@ -1537,7 +1536,7 @@ theorem exists_rat (x : I.GA) (g : ℕ) (R : Submodule (𝓞 I.E) (Fin I.n → I
         ← mulVec_mulVec]
       simp only [← Nat.cast_smul_eq_nsmul I.E]
       push_cast
-      match_scalars <;> first | ring1 | field_simp
+      match_scalars <;> first | ring1
   have hN : InNil (starRingEnd I.E) I.J (Submodule.span I.E (R : Set (Fin I.n → I.E)))
       ((2 * g : I.E) • Y₀ + (g : I.E) • Z₀) :=
     nil_add (nil_smul (by simp [map_ofNat]) hY.1) (cen_smul (by simp) hZ.1).1
@@ -1559,7 +1558,7 @@ theorem exists_rat (x : I.GA) (g : ℕ) (R : Submodule (𝓞 I.E) (Fin I.n → I
     congr 2
     ext i j
     by_cases hij : i = j <;>
-      simp [γ, ex, Matrix.mul_apply, Matrix.one_apply, hij, map_ofNat]
+      simp [γ, ex, Matrix.mul_apply, hij, map_ofNat]
 
 end Point
 

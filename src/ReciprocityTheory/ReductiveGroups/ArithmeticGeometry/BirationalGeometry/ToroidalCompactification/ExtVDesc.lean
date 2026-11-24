@@ -181,8 +181,8 @@ theorem exists_defect (hL : L.IsLB) (hL' : L'.IsLB) (w : LB.Iso L' (L.pull F)) (
         rw [e, Category.assoc, Category.assoc, hc k]
       simp only [hW]
       apply Additive.ofMul.injective
-      simp only [ofMul_mul, ofMul_inv, ofMul_prod, ofMul_zpow, inv_zpow', Finset.sum_add_distrib,
-        smul_add, smul_neg, Finset.sum_neg_distrib, smul_eq_mul, neg_one_mul, neg_smul]
+      simp only [ofMul_mul, ofMul_inv, ofMul_prod, ofMul_zpow, Finset.sum_add_distrib,
+        smul_add, smul_neg, Finset.sum_neg_distrib]
       abel)
   refine ⟨s, fun Z r z p q hp hq => ?_⟩
   have hz : r z ∈ O (p, q) := (memO (p, q) (r z)).2 ⟨fun k => by rw [← pt]; exact hp k, hq⟩
@@ -374,12 +374,12 @@ theorem pullCubDescent (hExt : extendGenSt.{0}) (hGF : GlobalFnsDvrSt) : PullCub
       rw [← Over.comp_left, eta_eq_one, eta_eq_one]
       congr 1
       apply CartesianMonoidalCategory.hom_ext
-      · simp only [Category.assoc, tensorHom_fst, tensorHom_fst_assoc, tensorHom_snd_assoc]
+      · simp only [Category.assoc, tensorHom_fst]
         simp only [← Category.assoc, MonObj.one_comp]
       · apply CartesianMonoidalCategory.hom_ext
-        · simp only [Category.assoc, tensorHom_fst, tensorHom_snd, tensorHom_fst_assoc, tensorHom_snd_assoc]
+        · simp only [Category.assoc, tensorHom_fst, tensorHom_snd]
           simp only [← Category.assoc, MonObj.one_comp]
-        · simp only [Category.assoc, tensorHom_fst, tensorHom_snd, tensorHom_fst_assoc, tensorHom_snd_assoc]
+        · simp only [Category.assoc, tensorHom_snd]
           simp only [← Category.assoc, MonObj.one_comp]
     have hsum : (∑ I : thK.{0}, thε I) = 0 := by decide
     have key : ∀ z : (𝟙_ (Over (Sp V))).left, gm (eSec (G3 t.G)) z ⊤ u = 1 := by

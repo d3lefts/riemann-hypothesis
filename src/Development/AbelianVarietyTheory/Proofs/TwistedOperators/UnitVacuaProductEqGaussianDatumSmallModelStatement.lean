@@ -93,7 +93,7 @@ theorem _root_.GlobalTheory.T.fockVacuum_thetaFunction_derivative_complex_struct
     ∀ x x' : WO S T, (∀ τ, compAt θ τ x' = cplxO (sS τ) (sT τ) (compAt θ τ x)) → ∀ w : WO S T, ∃ a : ℂ,
       HasDerivAt (fun t : ℝ => heisO ψ S T (realAd D.host.F t • x) f w) a 0 ∧
       HasDerivAt (fun t : ℝ => heisO ψ S T (realAd D.host.F t • x') f w) (Complex.I * a) 0 := by
-  first | exact @GlobalTheory.FockLineJ.fock_line_J | exact GlobalTheory.FockLineJ.fock_line_J | (intros; apply GlobalTheory.FockLineJ.fock_line_J <;> assumption)
+  first | exact @GlobalTheory.FockLineJ.fock_line_J
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockVacuumThetaFunctionDerivativeComplexStructurStatement =====
@@ -118,7 +118,7 @@ theorem _root_.GlobalTheory.T.hasDerivAt_thetaTransform_heisenberg_real_line : �
     (co : Darboux B κ) (ψ : AddChar (AF F) ℂ), IsTotallyReal F → IsCharAF F ψ → ∀ (u : U), ∀ Φ ∈ schA F κ, ∀ Φ' ∈ schA F κ,
     (∀ x, HasDerivAt (fun t : ℝ => co.rho ψ (realAd F t • u) Φ x) (Φ' x) 0) →
     ∀ w : U, HasDerivAt (fun t : ℝ => thetaSum F (co.rho ψ w (co.rho ψ (realAd F t • u) Φ))) (thetaSum F (co.rho ψ w Φ')) 0 := by
-  first | exact @GlobalTheory.ThetaLineDeriv.hasDerivAt_thetaSum_rho | exact GlobalTheory.ThetaLineDeriv.hasDerivAt_thetaSum_rho | (intros; apply GlobalTheory.ThetaLineDeriv.hasDerivAt_thetaSum_rho <;> assumption)
+  first | exact @GlobalTheory.ThetaLineDeriv.hasDerivAt_thetaSum_rho
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HasDerivAtThetaTransformHeisenbergRealLineStatement =====
@@ -366,8 +366,6 @@ theorem exists_vacS (hL : L.Is μ₀) (h : IsTripleOf W M t i j e Bs Γ X) (hT :
           IsDedekindDomain.HeightOneSpectrum.valuedAdicCompletion_eq_valuation', map_inv₀, hπ]
         first
         | decide
-        | simp
-        | (intro hle; have := (inv_le_one₀ (by simp)).1 hle; simp at this)
       have hall := (hsdl ((fun _ => c⁻¹ * ((π⁻¹ : D.host.F) : v.adicCompletion D.host.F)), 0)).2
         (fun l _ => by rw [h1, AddChar.one_apply])
       obtain ⟨γ, hγ, hγe⟩ := AddSubgroup.mem_map.1 hall
@@ -462,7 +460,7 @@ theorem _root_.GlobalTheory.T.unitVacua_product_eq_gaussianDatum_smallModel : �
     (om : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep D.sp.cm.sig Γ.V Γ.W) (om' : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep D.sp.cm.sig Γ.V' Γ.W) (h : IsTripleOf W M t i j e Bs Γ X), IsTriple Bs Γ X om om' → IsDoublyCompatible t i j e Bs Γ X →
     ∃ f₀, f₀ ≠ 0 ∧ Γ.M'.IsGauss Bs.ψ Bs.emb f₀ ∧
       IsDatumB (t := t) W e Γ (Finsupp.single (((), ρ.vT i j), ρ.vX i j) 1) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f₀ Γ.M'.vac) := by
-  first | exact @GlobalTheory.SmallVac.vac_datumB | exact GlobalTheory.SmallVac.vac_datumB | (intros; apply GlobalTheory.SmallVac.vac_datumB <;> assumption)
+  first | exact @GlobalTheory.SmallVac.vac_datumB
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnitVacuaProductEqGaussianDatumSmallModelStatement =====

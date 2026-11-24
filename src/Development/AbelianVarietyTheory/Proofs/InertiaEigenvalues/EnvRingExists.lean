@@ -724,7 +724,7 @@ theorem GlobalTheory.BSP.exists_topBasis_of_levels (A : Type) [CommRing A] (L : 
       exact uniq _ k _ fun n => ⟨_, single_approx n k, by simp⟩
     c_ne := fun j k hjk => by
       simp only [AddMonoidHom.mk'_apply]
-      exact uniq _ j _ fun n => ⟨_, single_approx n k, by simp [Finsupp.single_apply, Ne.symm hjk]⟩
+      exact uniq _ j _ fun n => ⟨_, single_approx n k, by simp [Ne.symm hjk]⟩
     fin := fun x n => by
       obtain ⟨c, hc⟩ := exA n x
       refine c.support.finite_toSet.subset fun k hk => ?_
@@ -996,7 +996,7 @@ theorem delta_Iio (D : Delta l A) (J : Ideal A) (hlJ : (l : A) ∈ J) (i : ℕ) 
     refine ⟨C_mem_supp _ _, 0, Subalgebra.zero_mem _, MvPolynomial.C (D.δ c), C_mem_supp _ _, ?_⟩
     simp
   | succ i =>
-    have h1 : Set.Iio (i+1) = Set.Iic i := by ext; simp [Nat.lt_succ_iff]
+    have h1 : Set.Iio (i+1) = Set.Iic i := by ext; simp
     rw [h1] at hs ⊢
     obtain ⟨h2, a, ha, b, hb, h3⟩ := _root_.GlobalTheory.BSP.polyDelta_supported_linear_mod l A D i s hs
     have hl' : (l : MvPolynomial ℕ A) ∈ J.map (MvPolynomial.C : A →+* MvPolynomial ℕ A) := by
@@ -1022,7 +1022,7 @@ theorem shape (D : Delta l A) (J : Ideal A) (d p : A) (hlJ : (l : A) ∈ J) (hd 
   | zero => exact ⟨d, hd, hu, MvPolynomial.C p, C_mem_supp _ _, by simp [add_comm]⟩
   | succ k ih =>
     obtain ⟨e, he, heu, s, hs, hk⟩ := ih
-    have hIic : Set.Iic k = Set.Iio (k+1) := by ext; simp [Nat.lt_succ_iff]
+    have hIic : Set.Iic k = Set.Iio (k+1) := by ext; simp
     have hX : MvPolynomial.X k ∈ MvPolynomial.supported A (Set.Iio (k+1)) :=
       by rw [MvPolynomial.supported_eq_adjoin_X]; exact Algebra.subset_adjoin ⟨k, by simp, rfl⟩
     have hδ := (delta_Iio D J hlJ k s hs).1

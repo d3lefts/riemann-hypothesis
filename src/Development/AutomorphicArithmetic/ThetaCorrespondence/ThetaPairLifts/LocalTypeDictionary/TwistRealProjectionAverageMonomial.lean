@@ -712,7 +712,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.RowEx MeasureTheory
 
 theorem _root_.GlobalTheory.T.exists_int_eq_exponent_add_half_index : ∀ (D : D7) (χ : (AE D)ˣ →* Circle) (n : ℕ) (τ : D.what₂.Tau) (a : ℚ), IsHeckeChar D χ → ResEta D χ n → HasInfExp D χ τ a → ∃ e : ℤ, (e : ℚ) = a + (n : ℚ) / 2 := by
-  first | exact @GlobalTheory.SplitParity.exists_int_add_half | exact GlobalTheory.SplitParity.exists_int_add_half | (intros; apply GlobalTheory.SplitParity.exists_int_add_half <;> assumption)
+  first | exact @GlobalTheory.SplitParity.exists_int_add_half
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsIntEqExponentAddHalfIndexStatement =====
@@ -796,7 +796,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.RowEx MeasureTheory
 
 theorem _root_.GlobalTheory.T.realUnitaryFockColumnAction_surjective : ∀ {D : D7} {θ : InfFam D} (hθ : IsInfFam θ) (V : HSp D) (hV : HSpace.gram V = 1), Function.Surjective (GlobalTheory.RealColAct.realCol θ hθ V hV) := by
-  first | exact @GlobalTheory.RealColAct.realCol_surjective | exact GlobalTheory.RealColAct.realCol_surjective | (intros; apply GlobalTheory.RealColAct.realCol_surjective <;> assumption)
+  first | exact @GlobalTheory.RealColAct.realCol_surjective
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RealUnitaryFockColumnActionSurjectiveStatement =====
@@ -875,7 +875,7 @@ theorem boundary_real_group_action : ∀ {D : D7} {T : Type} [Finite T] {L : Lev
       rw [GlobalTheory.RealColAct.gramAt_of_gram_one hVW]; simp
     have key0 := GlobalTheory.RealFockPos.om_pureTensorO_pos D W.ψ W.θ A' WW _ _ (X.ω' t) (hW t) hθ (fun _ => 1) (fun _ => 1) hBS hBT
       a b ha (hbt t) e₁ (fun τ => -k τ) he₁ (fun τ => by push_cast; rw [hk τ]) (X.f' t) hf hv (g : GA D A') g.2 1 (one_mem _) P
-    simp only [inv_one, Matrix.one_mul, Matrix.mul_one, GlobalTheory.StdUnn.CartanMove.compAt_mt_one, Matrix.det_one, one_zpow, mul_one]
+    simp only [inv_one, Matrix.one_mul, GlobalTheory.StdUnn.CartanMove.compAt_mt_one, Matrix.det_one, one_zpow, mul_one]
       at key0
     have hinv : ∀ τ, (compAt W.θ τ (Formalism.L2.Theta.mt A' (g : GA D A')))⁻¹ =
         compAt W.θ τ (Formalism.L2.Theta.mt A' (g : GA D A')⁻¹) := fun τ =>
@@ -923,7 +923,7 @@ theorem _root_.GlobalTheory.T.twist_boundary_real_action : ∀ {D : D7} {T : Typ
         X.ker' W.ψ W.θ t P h (x * (g : GA D A')) =
           (∏ τ, (ρ g τ : Matrix (Fin A'.rank) (Fin A'.rank) ℂ).det ^ (m τ)) *
             X.ker' W.ψ W.θ t (GlobalTheory.MinorFrame.colSub (fun τ => (ρ g τ : Matrix (Fin A'.rank) (Fin A'.rank) ℂ)) P) h x := by
-  first | exact @_root_.GlobalTheory.BottomRealAct.boundary_real_group_action | exact _root_.GlobalTheory.BottomRealAct.boundary_real_group_action | (intros; apply _root_.GlobalTheory.BottomRealAct.boundary_real_group_action <;> assumption)
+  first | exact @_root_.GlobalTheory.BottomRealAct.boundary_real_group_action
 end
 end -- clump:auto
 end -- clump:auto
@@ -989,7 +989,7 @@ theorem _root_.GlobalTheory.T.twist_realProjection_average_monomial : ∀ {D : D
         ∃ (m : ℕ) (r : Fin m → ℂ) (U : Fin m → GlobalTheory.NormSum.Tup D A'.rank WW.rank n), (∀ p, IsAlgebraic ℚ (r p)) ∧
           ∫ g, X.ker' W.ψ W.θ t (MvPolynomial.monomial k 1) h (x * (g : GA D A')) ∂κ =
             ∑ p, r p * X.ker' W.ψ W.θ t (GlobalTheory.NormSum.minorPol D (U p)) h x := by
-  first | exact @_root_.GlobalTheory.RealProj.realProjection_average_monomial | exact _root_.GlobalTheory.RealProj.realProjection_average_monomial | (intros; apply _root_.GlobalTheory.RealProj.realProjection_average_monomial <;> assumption)
+  first | exact @_root_.GlobalTheory.RealProj.realProjection_average_monomial
 end
 end -- clump:auto
 end -- clump:auto

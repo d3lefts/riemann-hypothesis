@@ -221,7 +221,7 @@ theorem _root_.GlobalTheory.T.weil_pair_central_character : ∀ (F E : Type) [Fi
               co.e (incM F x) = (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i))) →
             ∀ om : UG (cA σ) (incM F JA) × UG (cA σ) (incM F JB) →* Module.End ℂ ((κ → AF F) → ℂ),
               GlobalTheory.WeilSchrodinger.IsTransportF σ B.ψ co ω om → ∀ Φ ∈ schA F κ, ∀ z : κ → AF F, Continuous fun p => om p Φ z := by
-  first | exact @_root_.GlobalTheory.WeilContF.continuous_transportF_apply_k | exact _root_.GlobalTheory.WeilContF.continuous_transportF_apply_k | (intros; apply _root_.GlobalTheory.WeilContF.continuous_transportF_apply_k <;> assumption)
+  first | exact @_root_.GlobalTheory.WeilContF.continuous_transportF_apply_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -301,7 +301,7 @@ theorem _root_.GlobalTheory.T.weil_representation_pair_equivariant : ∀ (F E : 
               co.e (incM F x) = (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i))) →
             ∀ om : UG (cA σ) (incM F JA) × UG (cA σ) (incM F JB) →* Module.End ℂ ((κ → AF F) → ℂ),
               GlobalTheory.WeilSchrodinger.IsTransportF σ B.ψ co ω om → IsContOn (adeleClass F) om := by
-  first | exact @_root_.GlobalTheory.WeilContF.continuous_transportF_k | exact _root_.GlobalTheory.WeilContF.continuous_transportF_k | (intros; apply _root_.GlobalTheory.WeilContF.continuous_transportF_k <;> assumption)
+  first | exact @_root_.GlobalTheory.WeilContF.continuous_transportF_k
 end
 end -- clump:auto
 end -- clump:auto

@@ -225,7 +225,7 @@ theorem one_le_mul_norm_rowMap (R : Subring E) [Nonempty ι] (ε : ι → E →+
     · subst h; simpa [hB, updateRow_self] using hvint c
     · simpa [hB, updateRow_ne h] using hint (s r) c
   have hz' : z = (n₀ : E) ^ a * B.det := by
-    simp [hz, det_smul]
+    simp [hz]
   have hz0 : z ≠ 0 := by
     rw [hz']; exact mul_ne_zero (pow_ne_zero _ hn0E) hdet
   have hbound : ∀ i, ‖ε i z‖ ≤ L := by
@@ -472,7 +472,7 @@ theorem fullRank_col (D : D7) (a n n₀ : ℕ) (hn₀ : 0 < n₀) (f : SchwartzM
        right_inv := fun ξ => Subtype.ext (Matrix.transpose_transpose _) }, fun _ => rfl⟩
   rw [← T.tsum_eq]
   refine le_trans (le_of_eq (tsum_congr fun γ => ?_)) (hC (fun τ => (B τ)ᵀ) hBt)
-  simp only [SchwartzMap.compCLMOfContinuousLinearEquiv_apply, Function.comp_apply]
+  simp only [SchwartzMap.compCLMOfContinuousLinearEquiv_apply]
   congr 2
   funext τ i j
   rw [LinearEquiv.coe_toContinuousLinearEquiv']
@@ -810,7 +810,7 @@ theorem latBound : LatBound := by
     obtain ⟨C₁, h₁, hf⟩ := hf
     refine ⟨‖c‖ₑ * C₁, ENNReal.mul_lt_top enorm_lt_top h₁, fun h => ?_⟩
     calc _ = ∑' x : {x : Matrix (Fin V.rank) (Fin n) D.host.E // x.rank = V.rank}, ‖c‖ₑ * ‖f (mm (mt V h⁻¹) (rat x.1))‖ₑ :=
-          tsum_congr fun x => by simp [enorm_mul]
+          tsum_congr fun x => by simp
       _ = _ := ENNReal.tsum_mul_left
       _ ≤ _ := by gcongr; exact hf h
 

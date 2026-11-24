@@ -54,6 +54,7 @@ import Mathlib.RingTheory.Coalgebra.IsFrobenius
 import Mathlib.RingTheory.Etale.Weakly
 import Mathlib.RingTheory.HopfAlgebra.Basic
 import Mathlib.RingTheory.TotallySplit
+import Mathlib.RingTheory.PicardGroup
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
@@ -138,8 +139,7 @@ theorem siegel_relations (σ : K →+* K) (hσ : ∀ x, σ (σ x) = x) {p : ℕ}
   unfold PositivityTheory.GramSchwartzFunctions.EC.IsUnitary at hU
   rw [cTBlk, blkMul, blkMul] at hU
   obtain ⟨-, h12, h21, h22⟩ := blkInj hU
-  simp only [cTZero, neg_zero, mul_zero, zero_mul, add_zero, zero_add, mul_one, one_mul, Matrix.mul_neg,
-    Matrix.neg_mul, mul_neg, neg_mul] at h12 h21 h22
+  simp only [cTZero, neg_zero, mul_zero, zero_mul, add_zero, zero_add, mul_one, mul_neg, neg_mul] at h12 h21 h22
   have e2 : PositivityTheory.GramSchwartzFunctions.EC.cT σ Dd * A = 1 := neg_injective h21
   have e3 : PositivityTheory.GramSchwartzFunctions.EC.cT σ B * Dd = PositivityTheory.GramSchwartzFunctions.EC.cT σ Dd * B := by
     exact (neg_add_eq_zero.mp h22).symm
@@ -214,7 +214,7 @@ theorem _root_.GlobalTheory.T.parabolic_factorization_rows : ∀ {K : Type} [Fie
     ∀ (ζ : Matrix (Fin ρ) (Fin ρ) K) (η : Matrix (Fin ρ) (Fin p) K), cT σ ζ = ζ →
     ∃ (ζ₂ : Matrix (Fin ρ) (Fin ρ) K) (η₂ : Matrix (Fin ρ) (Fin p) K) (T : Matrix (Fin n) (Fin n) K),
       cT σ ζ₂ = ζ₂ ∧ rowC hn η a c = T * rowC hn η₂ a₂ c₂ ∧ rowD hn σ ζ η b d = T * rowD hn σ ζ₂ η₂ b₂ d₂ := by
-  first | exact @GlobalTheory.CompanionTheory.ZUnf.ClassRep.exists_change_rep | exact GlobalTheory.CompanionTheory.ZUnf.ClassRep.exists_change_rep | (intros; apply GlobalTheory.CompanionTheory.ZUnf.ClassRep.exists_change_rep <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ZUnf.ClassRep.exists_change_rep
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -306,7 +306,7 @@ open GlobalTheory.CompanionTheory.ZUnf GlobalTheory.Eis
 theorem _root_.GlobalTheory.T.rows_of_weyl_heisenberg_product : ∀ {K : Type} [Field K] (σ : K →+* K), (∀ x, σ (σ x) = x) → ∀ {n ρ p : ℕ} (hn : ρ + p = n) (a b c d : Matrix (Fin p) (Fin p) K) (ζ : Matrix (Fin ρ) (Fin ρ) K) (η : Matrix (Fin ρ) (Fin p) K),
     lowerC (wM hn * nM hn ζ * sM hn σ η * eM hn a b c d) = rowC hn η a c ∧
     GlobalTheory.CompanionTheory.RatPtsUnn.blkD (wM hn * nM hn ζ * sM hn σ η * eM hn a b c d) = rowD hn σ ζ η b d := by
-  first | exact @GlobalTheory.CompanionTheory.ZUnf.LowerRows.lower_rows | exact GlobalTheory.CompanionTheory.ZUnf.LowerRows.lower_rows | (intros; apply GlobalTheory.CompanionTheory.ZUnf.LowerRows.lower_rows <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ZUnf.LowerRows.lower_rows
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -393,8 +393,7 @@ theorem lowerRows_determine : ∀ {K : Type} [Field K] (σ : K →+* K), (∀ x,
   have hT₂₁ : T₂₁ = 0 := by
     simpa using e₃.symm
   subst hT₁₁ hT₂₁
-  simp only [Matrix.zero_mul, Matrix.mul_zero, Matrix.one_mul, Matrix.mul_neg, zero_add, add_zero,
-    neg_zero] at e₂ e₄ f₁ f₂ f₃ f₄
+  simp only [Matrix.zero_mul, Matrix.one_mul, Matrix.mul_neg, zero_add, neg_zero] at e₂ e₄ f₁ f₂ f₃ f₄
   refine ⟨⟨T₂₂, e₄, f₄⟩, ?_⟩
   intro hy ha hb hc hd
   subst ha hb hc hd
@@ -447,7 +446,7 @@ theorem _root_.GlobalTheory.T.rows_proportional_of_transform : ∀ {K : Type} [F
     rowC hn η₂ a₂ c₂ = T * rowC hn η a c → rowD hn σ ζ₂ η₂ b₂ d₂ = T * rowD hn σ ζ η b d →
     (∃ T' : Matrix (Fin p) (Fin p) K, c₂ = T' * c ∧ d₂ = T' * d) ∧
     (IsUnit (blk4 a b c d).det → a₂ = a → b₂ = b → c₂ = c → d₂ = d → ζ₂ = ζ ∧ η₂ = η) := by
-  first | exact @GlobalTheory.CompanionTheory.ZUnf.lowerRows_determine | exact GlobalTheory.CompanionTheory.ZUnf.lowerRows_determine | (intros; apply GlobalTheory.CompanionTheory.ZUnf.lowerRows_determine <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ZUnf.lowerRows_determine
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -552,7 +551,7 @@ open GlobalTheory.CompanionTheory.ZUnf GlobalTheory.Eis
 theorem _root_.GlobalTheory.T.siegel_parabolic_quotient_iff_rows : ∀ {K : Type} [Field K] (σ : K →+* K), (∀ x, σ (σ x) = x) → ∀ {n : ℕ} (x r : Matrix (Fin (n + n)) (Fin (n + n)) K),
     IsUnit r.det → IsUnitary σ (blk4 0 1 (-1) 0) x → IsUnitary σ (blk4 0 1 (-1) 0) r →
     (IsSiegelP (x * r⁻¹) ↔ ∃ T : Matrix (Fin n) (Fin n) K, lowerC x = T * lowerC r ∧ GlobalTheory.CompanionTheory.RatPtsUnn.blkD x = T * GlobalTheory.CompanionTheory.RatPtsUnn.blkD r) := by
-  first | exact @GlobalTheory.CompanionTheory.ZUnf.siegel_mul_inv_iff_rows | exact GlobalTheory.CompanionTheory.ZUnf.siegel_mul_inv_iff_rows | (intros; apply GlobalTheory.CompanionTheory.ZUnf.siegel_mul_inv_iff_rows <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ZUnf.siegel_mul_inv_iff_rows
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -789,14 +788,14 @@ theorem herm_zeta (σ : K →+* K) (hσ : ∀ x, σ (σ x) = x) {Z : Matrix (Fin
           - T * ((d * cT σ a - c * cT σ b - 1) * W) + T * ((c * cT σ d - d * cT σ c) * cT σ T) := by
       rw [hX, hY]
       simp only [cTa, cTm, cTc σ hσ, Matrix.add_mul, Matrix.mul_add, Matrix.mul_sub, Matrix.sub_mul,
-        Matrix.mul_assoc, Matrix.one_mul, Matrix.mul_one]
+        Matrix.mul_assoc, Matrix.one_mul]
       abel
     rw [sub_eq_zero.2 r2, sub_eq_zero.2 r1, sub_eq_zero.2 r1', sub_eq_zero.2 r3] at e
     simp only [Matrix.zero_mul, Matrix.mul_zero, add_zero, sub_zero] at e
     exact sub_eq_zero.1 e
   have e : cT σ (-Z + T * W) - (-Z + T * W) =
       ((-cT σ Z + X * cT σ Y) - (-Z + Y * cT σ X)) - ((X * cT σ Y - Y * cT σ X) - (cT σ W * cT σ T - T * W)) := by
-    simp only [cTa, cTn, cTm, cTc σ hσ]
+    simp only [cTa, cTn, cTm]
     abel
   rw [sub_eq_zero.2 h1, sub_eq_zero.2 key, sub_zero] at e
   exact sub_eq_zero.1 e
@@ -818,7 +817,7 @@ theorem normal_form : ∀ {K : Type} [Field K] (σ : K →+* K), (∀ x, σ (σ 
   obtain ⟨-, -, h6, h5⟩ := injB hn f2
   obtain ⟨h1, h2, -, h4⟩ := injB hn f3
   simp only [hm1, cTz, Matrix.mul_zero, Matrix.zero_mul, Matrix.mul_neg, Matrix.neg_mul, Matrix.one_mul, Matrix.mul_one,
-    add_zero, zero_add] at h1 h2 h4 h5 h6 h7
+    zero_add] at h1 h2 h4 h5 h6 h7
   have r1 := rel_ad σ h2 h5
   have r2 := rel_ab σ hσ h1 h6 h7
   generalize a₄ + a₃ * X = a' at r1 r2 ⊢
@@ -833,7 +832,7 @@ theorem normal_form : ∀ {K : Type} [Field K] (σ : K →+* K), (∀ x, σ (σ 
     simp only [Matrix.one_mul, Matrix.zero_mul, Matrix.mul_zero, Matrix.neg_mul, neg_neg, add_zero, zero_add]
     rw [← hX]
   · rw [rowD, mulB, hη]
-    simp only [Matrix.one_mul, Matrix.zero_mul, Matrix.neg_mul, neg_neg, add_zero, zero_add]
+    simp only [Matrix.one_mul, Matrix.zero_mul, Matrix.neg_mul, neg_neg, zero_add]
     have e1 : -(-Z + T * W) + T * W = Z := by abel
     rw [e1, ← hY]
 
@@ -867,14 +866,14 @@ theorem _root_.GlobalTheory.T.unitary_block_invertible_criterion : ∀ {K : Type
     ∃ (ζ : Matrix (Fin ρ) (Fin ρ) K) (η : Matrix (Fin ρ) (Fin p) K) (T : Matrix (Fin n) (Fin n) K),
       IsUnit (blk4 (a₄ + a₃ * X) (b₄ + a₃ * Y) c' d').det ∧ IsUnitary σ (blk4 0 1 (-1) 0) (blk4 (a₄ + a₃ * X) (b₄ + a₃ * Y) c' d') ∧
       cT σ ζ = ζ ∧ bl hn (-1) X 0 c' = T * rowC hn η (a₄ + a₃ * X) c' ∧ bl hn Z Y W d' = T * rowD hn σ ζ η (b₄ + a₃ * Y) d' := by
-  first | exact @GlobalTheory.CompanionTheory.ZUnf.NormalRow.normal_form | exact GlobalTheory.CompanionTheory.ZUnf.NormalRow.normal_form | (intros; apply GlobalTheory.CompanionTheory.ZUnf.NormalRow.normal_form <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ZUnf.NormalRow.normal_form
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnitaryBlockInvertibleCriterionStatement =====
 
 -- ===== clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnitaryCellBlockNormalForm =====
--- clump-header: {"m": "Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnitaryCellBlockNormalForm", "h": "module\n\npublic import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RowD\npublic import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EisensteinRationalPoints\nimport Development.AbelianVarietyTheory.PublishedTheorems.SiegelWeil₂.AdelicConjTransposeBlockMatrixTwoByTwoFin\npublic import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BigCellCosetsHermitianParam\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Coalgebra.CoassocSimps\nimport Mathlib.RingTheory.Coalgebra.IsFrobenius\nimport Mathlib.RingTheory.Etale.Weakly\nimport Mathlib.RingTheory.HopfAlgebra.Basic\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.TotallySplit\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\n\n"}
+-- clump-header: {"m": "Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnitaryCellBlockNormalForm", "h": "module\n\npublic import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RowD\npublic import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EisensteinRationalPoints\nimport Development.AbelianVarietyTheory.PublishedTheorems.SiegelWeil₂.AdelicConjTransposeBlockMatrixTwoByTwoFin\npublic import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BigCellCosetsHermitianParam\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Coalgebra.CoassocSimps\nimport Mathlib.RingTheory.Coalgebra.IsFrobenius\nimport Mathlib.RingTheory.Etale.Weakly\nimport Mathlib.RingTheory.HopfAlgebra.Basic\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.TotallySplit\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\nimport Mathlib.RingTheory.PicardGroup\n\n"}
 section -- clump:auto
 @[expose] public section
 
@@ -1070,7 +1069,7 @@ theorem _root_.GlobalTheory.T.unitary_cell_block_normal_form : ∀ {K : Type} [F
       IsUnitary σ (blk4 0 1 (-1) 0) (blk4 (bl hn a₁ a₂ a₃ a₄) (bl hn b₁ b₂ b₃ b₄) (bl hn (-1) X 0 c') (bl hn Z Y W d')) ∧
       IsUnit (blk4 (bl hn a₁ a₂ a₃ a₄) (bl hn b₁ b₂ b₃ b₄) (bl hn (-1) X 0 c') (bl hn Z Y W d')).det ∧
       lowerC x = T₀ * bl hn (-1) X 0 c' ∧ GlobalTheory.CompanionTheory.RatPtsUnn.blkD x = T₀ * bl hn Z Y W d' := by
-  first | exact @GlobalTheory.CompanionTheory.ZUnf.rowReduce_lowerC | exact GlobalTheory.CompanionTheory.ZUnf.rowReduce_lowerC | (intros; apply GlobalTheory.CompanionTheory.ZUnf.rowReduce_lowerC <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ZUnf.rowReduce_lowerC
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -1215,7 +1214,7 @@ theorem _root_.GlobalTheory.T.weyl_heisenberg_levi_rational : ∀ {D : D7} {n ρ
     M.w * M.nzx z 0 * M.sh (η.map (incA D)) * M.emb (γ : G D p) ∈ GF D n ∧
     mat (M.w * M.nzx z 0 * M.sh (η.map (incA D)) * M.emb (γ : G D p)) =
       (wM hn * nM hn ζ * sM hn (D.sp.cm.sig : D.host.E →+* D.host.E) η * eM hn a b c d).map (incA D) := by
-  first | exact @GlobalTheory.CompanionTheory.ZUnf.Rat.rat_cell | exact GlobalTheory.CompanionTheory.ZUnf.Rat.rat_cell | (intros; apply GlobalTheory.CompanionTheory.ZUnf.Rat.rat_cell <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ZUnf.Rat.rat_cell
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -1486,7 +1485,7 @@ theorem _root_.GlobalTheory.T.heisenberg_cosets_param_rational : ∀ {D : D7} {n
       ∀ f : G D n → ℂ, LeftInv (P D n ⊓ GF D n) f → ∀ (l : ratHerm D ρ) u (y : G D n),
         term (P D n) (GF D n) f y (e (l, u)) =
           f (M.w * M.nzx l.1 0 * M.sh (u.2.map (incA D)) * M.emb (u.1.out : GF D p) * y) := by
-  first | exact @GlobalTheory.CompanionTheory.ZUnf.CellGlue.cell | exact GlobalTheory.CompanionTheory.ZUnf.CellGlue.cell | (intros; apply GlobalTheory.CompanionTheory.ZUnf.CellGlue.cell <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ZUnf.CellGlue.cell
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto

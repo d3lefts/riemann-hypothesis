@@ -245,7 +245,7 @@ theorem UpperTheory.V.Z.Sym.Glob.sideGTerm :
     rfl
   have e2 : (⊥ : Subgroup C).comap φ = i.ker := by
     ext h
-    simp [φ, MonoidHom.mem_ker, Subtype.ext_iff]
+    simp [φ, MonoidHom.mem_ker]
   rw [e1, e2, hidx] at key
   have e3 : gqOn (B.ι.comp i) i.ker B.U (fun y => f (y.out⁻¹ * B.ι δ * s.θ y.out)) =
       gqOn (B.ι.comp i) i.ker B.U (s.ker f δ) := rfl
@@ -389,7 +389,7 @@ private theorem charpoly_three {R : Type} [CommRing R] (N : Matrix (Fin 3) (Fin 
     N.charpoly = X ^ 3 - C N.trace * X ^ 2 + C N.adjugate.trace * X - C N.det := by
   simp only [Matrix.charpoly, Matrix.det_fin_three, Matrix.charmatrix_apply, Matrix.adjugate_fin_three,
     Matrix.trace_fin_three]
-  simp [Matrix.diagonal_apply, Matrix.det_fin_three]
+  simp
   ring
 
 end UpperTheory.V.Z.Sym.Glob
@@ -679,7 +679,7 @@ variable {R : Type} [CommRing R] [StarRing R]
 private theorem map_star_mulVec (M : Matrix (Fin 3) (Fin 3) R) (v : Fin 3 → R) :
     M.map star *ᵥ star v = star (M *ᵥ v) := by
   ext i
-  simp [Matrix.mulVec, dotProduct, star_sum, mul_comm]
+  simp [Matrix.mulVec, dotProduct, star_sum]
 
 private theorem dot_unitary {X : Matrix (Fin 3) (Fin 3) R} (hX : star X * X = 1) (p q : Fin 3 → R) :
     ∑ i, (X *ᵥ p) i * star ((X *ᵥ q) i) = ∑ i, p i * star (q i) := by
@@ -822,7 +822,7 @@ private theorem shape [CharZero K] {c₁ c₂ t₁ t₂ : K} {d m n : EL Δ τ} 
     have q1 : Q (0, n) = (0, e * n) := Prod.ext (h2 n) (h3 n)
     have q2 : Q (0, 1) = (0, e) := Prod.ext (h2 1) (by rw [h3, mul_one])
     rw [q1, q2] at h
-    simp only [herm, mul_zero, zero_mul, star_zero, zero_add, sigL_one, star_one, mul_one] at h
+    simp only [herm, mul_zero, star_zero, zero_add, sigL_one, star_one, mul_one] at h
     have l1 : t₂ • m * (e * n) * star (sigL e) = (t₂ * QuadraticAlgebra.norm z) • (1 : EL Δ τ) := by
       rw [mul_smul, ← hee]
       simp only [smul_mul_assoc]
@@ -914,7 +914,7 @@ theorem conjG : ConjG := by
       field_simp
     · rw [map_inv]
       apply Units.ext
-      simp only [Units.val_inv_eq_inv_val, Units.coe_map, IsUnit.unit_spec, Units.val_div_eq_div_val, MonoidHom.coe_coe]
+      simp only [Units.val_inv_eq_inv_val, Units.coe_map, IsUnit.unit_spec, Units.val_div_eq_div_val]
       rw [e2]
       have := t'.ne_zero
       field_simp
@@ -927,7 +927,7 @@ theorem conjG : ConjG := by
       field_simp
     have T : (t' : K) = t * QuadraticAlgebra.norm (z : Etau K τ) := by
       have := congrArg Units.val hz
-      simp only [Units.val_div_eq_div_val, Units.coe_map, MonoidHom.coe_coe] at this
+      simp only [Units.val_div_eq_div_val, Units.coe_map] at this
       rw [this]
       have := t.ne_zero
       field_simp
@@ -1052,14 +1052,14 @@ theorem exG_land {Δ : F} (hΔ : ∀ σ : F →+* ℝ, σ Δ < 0) (g : Fin 3 →
       by_cases h : a = b
       · subst h
         simp
-      · simp [Matrix.one_apply, h, Ne.symm h])
+      · simp [h, Ne.symm h])
     (by
       intro a b
       rw [hcc]
       by_cases h : a = b
       · subst h
         simp [hG', hstar]
-      · simp [hG', Matrix.diagonal_apply, h, Ne.symm h])
+      · simp [hG', h, Ne.symm h])
     (by simp)
     (by
       rw [hdet]
@@ -1080,7 +1080,7 @@ theorem exG_land {Δ : F} (hΔ : ∀ σ : F →+* ℝ, σ Δ < 0) (g : Fin 3 →
             Matrix.diagonal_apply, Matrix.one_apply]
           simp [hσ']
           rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hg a σ).le]
-        · simp [hG', Matrix.diagonal_apply, h, Ne.symm h, Matrix.mul_apply, Matrix.one_apply])
+        · simp [hG', Matrix.diagonal_apply, h, Matrix.mul_apply])
     (by
       refine ⟨y⁻¹, ?_⟩
       rw [hcc, det_one, hdet, hy, star_inv₀, one_div, mul_inv])
@@ -1261,7 +1261,7 @@ private theorem norm_pos_part {Δ : F} (hneg : ∀ σ : F →+* ℝ, σ Δ < 0) 
     0 ≤ σ (QuadraticAlgebra.norm y) := by
   have h := hneg σ
   rw [QuadraticAlgebra.norm_def]
-  simp only [map_add (f := _), map_sub, map_mul, map_zero, zero_mul, add_zero]
+  simp only [map_sub, map_mul, zero_mul, add_zero]
   nlinarith [sq_nonneg (σ y.re), sq_nonneg (σ y.im), mul_nonneg (neg_nonneg.mpr h.le) (sq_nonneg (σ y.im))]
 
 end Main
@@ -1286,7 +1286,7 @@ theorem exG : ExG := by
     simp at h1
   have hx1 : herm c m (0, ⟨1, 0⟩) (0, ⟨1, 0⟩) = algebraMap F (Lsq F Δ) g := by
     rw [hg, herm, tr_form]
-    simp only [star_zero, star_one, mul_zero, zero_mul, mul_one, add_zero, zero_add, map_zero]
+    simp only [star_zero, star_one, mul_zero, mul_one, add_zero, zero_add]
     rfl
   have hgpos : TPos g := by
     have h1 := hpos _ hx1ne
@@ -1363,8 +1363,6 @@ theorem exG : ExG := by
     have e1 : ∀ z, Pe z = P *ᵥ Co z := fun z => by
       first
         | rfl
-        | (simp only [Pe, LinearEquiv.trans_apply]; rw [← Matrix.toLin'_apply]; rfl)
-        | (simp only [Pe, LinearEquiv.trans_apply, ← LinearEquiv.coe_toLinearMap, Matrix.toLinearEquiv'_apply, Matrix.toLin'_apply])
     rw [e1, e1, diag_sum P (fun i => algebraMap F (Lsq F Δ) (gi i)) hPe, Fin.sum_univ_three, hform]
     simp [Co, gi]
   obtain ⟨δ, ι', hM⟩ := exG_models hdat Pe hherm

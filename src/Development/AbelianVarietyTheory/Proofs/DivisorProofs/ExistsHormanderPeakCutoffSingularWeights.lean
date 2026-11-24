@@ -394,7 +394,7 @@ theorem adjEnt_rmul {Ψ : Finset (E →+* ℂ)} (k b : Frame Ψ r) (hb : b ∈ B
     (hca : c < a) : adjEnt k (rmul k b) τ a c = 0 := by
   have h1 : mat (rmul k b) τ = mat k τ * mat b τ := rfl
   rw [adjEnt, h1, ← Matrix.mul_assoc, Matrix.adjugate_mul]
-  simp [Matrix.smul_mul, mat, (hb τ).2 a c hca]
+  simp [mat, (hb τ).2 a c hca]
 
 
 omit [NumberField E] [IsCMField E] in
@@ -906,8 +906,7 @@ theorem levi_cutLog_lower : ∀ (χ : ℝ → ℝ) (A : ℝ), ContDiff ℝ ∞ �
   have hρC : (ρ : ℂ) ≠ 0 := by exact_mod_cast hρ.ne'
   have hv : ∀ y : V n, ‖y‖ ^ 2 / ρ ^ 2 = v y := by
     intro y
-    simp only [hvdef, hLapp, Complex.normSq_mul, Complex.normSq_inv, Complex.normSq_ofReal,
-      EuclideanSpace.norm_sq_eq, Complex.normSq_eq_norm_sq, Finset.sum_div]
+    simp only [hvdef, hLapp, EuclideanSpace.norm_sq_eq, Complex.normSq_eq_norm_sq, Finset.sum_div]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Complex.norm_mul, norm_inv, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hρ]
     field_simp

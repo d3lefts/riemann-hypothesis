@@ -358,7 +358,7 @@ open Formalism.L2.DIV (kP Pl LevelP)
 
 
 theorem _root_.GlobalTheory.T.latticeLevel_eq_unitary_inf_frame_stabilizer : ∀ (D : D7) (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)), Formalism.IndefR.Lev.IsBaseFrame V β Λ 1 → GlobalTheory.Mass.Levels.latLev V = Formalism.L2.DIV.UA D.sp.cm V.gram ⊓ Formalism.L2.DIV.St β := by
-  first | exact @GlobalTheory.LatLevEq.latLev_eq_UA_inf_St | exact GlobalTheory.LatLevEq.latLev_eq_UA_inf_St | (intros; apply GlobalTheory.LatLevEq.latLev_eq_UA_inf_St <;> assumption)
+  first | exact @GlobalTheory.LatLevEq.latLev_eq_UA_inf_St
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.LatticeLevelEqUnitaryInfFrameStabilizerStatement =====
@@ -448,7 +448,7 @@ open Classical
 
 
 theorem _root_.GlobalTheory.T.levelPlaces_union_twistPlaces_split_disjoint : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.Hk3.Core R F → ∀ t : T, Formalism.L2.DIV.IsSplitSet (R.Pg ∪ R.Q t) ∧ Disjoint R.Pg (R.Q t) := by
-  first | exact @GlobalTheory.TwistTypePlaces.isSplitSet_union | exact GlobalTheory.TwistTypePlaces.isSplitSet_union | (intros; apply GlobalTheory.TwistTypePlaces.isSplitSet_union <;> assumption)
+  first | exact @GlobalTheory.TwistTypePlaces.isSplitSet_union
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.LevelPlacesUnionTwistPlacesSplitDisjointStatement =====

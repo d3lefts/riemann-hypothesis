@@ -229,7 +229,7 @@ theorem charpolyRev_map {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (
   rw [← Polynomial.coe_mapRingHom, RingHom.map_det]
   congr 1
   ext i j : 1
-  by_cases h : i = j <;> simp [Matrix.one_apply, h]
+  by_cases h : i = j <;> simp [h]
 
 theorem charpolyRev_smul {A : Type} [CommRing A] (c : A) (M : Matrix r r A) :
     (c • M).charpolyRev = M.charpolyRev.comp (Polynomial.C c * Polynomial.X) := by
@@ -237,7 +237,7 @@ theorem charpolyRev_smul {A : Type} [CommRing A] (c : A) (M : Matrix r r A) :
   rw [← Polynomial.coe_compRingHom_apply, RingHom.map_det]
   congr 1
   ext i j : 1
-  by_cases h : i = j <;> simp [Matrix.one_apply, h] <;> ring
+  by_cases h : i = j <;> simp [h] <;> ring
 
 theorem aeval_chernPoly (c : ℂ) (G : V n → Matrix r r ℂ) (v : V n) (k : ℕ) :
     aeval (fun y => C c * X y) (chernPoly G v k) = c ^ k • chernPoly G v k := by
@@ -1147,10 +1147,7 @@ theorem exists_goodPatch_of_mem : ∀ {F : Type} [Field F] {σ : F →+* ℂ} {X
   have h2 : ((0 : WithTop ℕ∞) + 2) ≤ ∞ := by
     rw [zero_add]
     first
-    | exact (WithTop.coe_le_coe (a := (2 : ℕ∞)) (b := ⊤)).2 le_top
     | exact ENat.LEInfty.out
-    | simp
-    | decide
   have hconn : ∀ (a : Fin X.dim) (i j : Fin m),
       ContinuousAt (fun z => conn G (ch.e z) (coordVec a) i j) y := fun a i j =>
     ((hsm.conn hu h1 (coordVec a)) i j).continuousAt.comp (ch.e.continuousAt hc)

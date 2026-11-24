@@ -273,8 +273,8 @@ def splitE (a : ι) (T : Finset ι) (ha : a ∉ T) :
     refine Prod.ext (Subtype.ext ?_) ?_
     · ext w
       by_cases h : w = a
-      · subst h; simp [Finsupp.erase_apply, hpa]
-      · simp [Finsupp.update_apply, Finsupp.erase_apply, h]
+      · subst h; simp [hpa]
+      · simp [h]
     · simp [Finsupp.update_apply]
 
 theorem Φ_split (F : ι → L → ℂ) (h0 : ∀ w, F w 0 = 1) (a : ι) (T : Finset ι) (ha : a ∉ T)
@@ -284,7 +284,7 @@ theorem Φ_split (F : ι → L → ℂ) (h0 : ∀ w, F w 0 = 1) (a : ι) (T : Fi
   congr 1
   refine Finset.prod_congr rfl fun w hw => ?_
   have hwa : w ≠ a := fun e => ha (e ▸ hw)
-  simp [splitE, Finsupp.erase_apply, hwa]
+  simp [splitE, hwa]
 
 variable (F : ι → L → ℂ) (h0 : ∀ w, F w 0 = 1) (hs : ∀ w, Summable fun l => ‖F w l‖)
 include h0 hs
@@ -500,7 +500,7 @@ theorem evalAt_alternant_nat (z : Fin m → ℂˣ) (μ : Fin m → ℕ) :
   rw [evalAt_monomial_eq_prod_zpow, Fintype.prod_eq_single a]
   · simp
   · intro i hi
-    simp [Pi.single_apply, hi]
+    simp [hi]
 
 theorem staircase_eq : staircase m = fun i => ((stair m i : ℕ) : ℤ) := by
   funext i

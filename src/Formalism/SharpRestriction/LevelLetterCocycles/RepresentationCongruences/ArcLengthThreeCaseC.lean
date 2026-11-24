@@ -117,9 +117,6 @@ theorem dv_succ (T : LocLat G Qp LL O) (e : ℕ) {d : ℕ} (b : Fin d → W.DD T
     dv W T (e + 1) b c₀ = φVB PD (LL := LL) (V := T.V) (dv W T e b c₀) := by
   first
   | (simp only [dv, pow_succ', Module.End.mul_apply, map_sum, map_smul]; done)
-  | (simp only [dv, pow_succ', LinearMap.mul_apply, map_sum, map_smul]; done)
-  | (simp [dv, LinearMap.pow_apply, Function.iterate_succ_apply']; done)
-  | (simp [dv, pow_succ']; exact (trivial : True))
 
 theorem dv_add (T : LocLat G Qp LL O) (e : ℕ) {d : ℕ} (b : Fin d → W.DD T) (c₀ c₁ : Fin d → LL) :
     dv W T e b (c₀ + c₁) = dv W T e b c₀ + dv W T e b c₁ := by
@@ -150,7 +147,6 @@ theorem dvO_eq (T : LocLat G Qp LL O) (e : ℕ) {d : ℕ} (b : Fin d → W.DD T)
     dvO W T e b c₀ = ∑ m, algebraMap O LL (c₀ m) • dv W T e b (Pi.single m 1) := by
   first
   | (unfold dvO; exact dv_eq_sum W T e b _)
-  | (simp only [dvO]; exact dv_eq_sum W T e b _)
 
 theorem dvO_single (T : LocLat G Qp LL O) (e : ℕ) {d : ℕ} (b : Fin d → W.DD T) (k : Fin d) :
     dvO W T e b (Pi.single k 1) = dv W T e b (Pi.single k 1) := by
@@ -178,8 +174,7 @@ theorem filS_anti (T : LocLat G Qp LL O) (a : ZMod n) (s : ℕ) {u u' : ℤ} (h 
 theorem filS_zero_iff (T : LocLat G Qp LL O) (a : ZMod n) (u : ℤ) (x : T.V ⊗[Qp] B) :
     x ∈ FilS W T a 0 u ↔ x ∈ FilCris PD T.ρ u ⊓ DcrisL PD T.ρ (W.emb a) := by
   unfold FilS
-  simp [pow_zero, Submodule.map_id]
-  try rfl
+  simp [pow_zero]
 
 theorem filS_one_of (T : LocLat G Qp LL O) (a : ZMod n) (u : ℤ) (x : T.V ⊗[Qp] B)
     (hx : x ∈ FilS W T a 0 u) : φVB PD (LL := LL) (V := T.V) x ∈ FilS W T (a + 1) 1 u := by
@@ -1080,7 +1075,6 @@ theorem arc_length_three_case_c [NeZero n] [Fintype (K →ₐ[Qp] LL)] [IsDomain
     rw [ha2, hty2]
     intro x hx
     simp only [Formalism.MainNotions.LocalTheoryWindows.LT.win, Set.mem_union, Set.mem_Icc, arcOf] at hx
-    push_cast at hu
     rcases hx with ⟨-, h2⟩ | ⟨-, h2⟩ <;> omega
   have hGap : ∀ (c₀ : Fin d₁ → O) (u : ℤ), (η : ℤ) + 1 ≤ u → dvO W T₁ 2 b₁ c₀ ∈ FilS W T₁ a 0 u →
       dvO W T₁ 2 b₁ c₀ ∈ FilS W T₁ a 0 (size (c - 1)) := by
@@ -1134,7 +1128,6 @@ theorem arc_length_three_case_c [NeZero n] [Fintype (K →ₐ[Qp] LL)] [IsDomain
         Fser * PowerSeries.C ((Pi.single k₀ (1 : O) : Fin d → O) k))) := by
     have h := TypesA.RepVV_add W hRep₂ (TypesA.RepVV_neg W hRep₂')
     refine TypesA.RepVV_congr W h (by rw [hmap, add_neg_cancel]) (fun k => ?_)
-    beta_reduce
     rw [hcomp k, ArcLengthThreeFiltration.ea_sub, ArcLengthThreeFiltration.ea_sum, sub_eq_add_neg]
     congr 1
     exact Finset.sum_congr rfl fun m _ => by rw [ArcLengthThreeFiltration.ea_C_mul, mul_comm]

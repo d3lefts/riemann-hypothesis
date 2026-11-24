@@ -101,7 +101,7 @@ theorem UpperTheory.V.FW.frobEig :
   have hs : ∀ (x : G) (b : k), r (MonoidAlgebra.single x b) ^ q = b ^ q • r (MonoidAlgebra.of k G (x ^ q)) := by
     intro x b
     have e1 : MonoidAlgebra.single x b = b • MonoidAlgebra.of k G x := by
-      simp [MonoidAlgebra.of_apply, MonoidAlgebra.smul_single']
+      simp [MonoidAlgebra.of_apply]
     rw [e1, map_smul, smul_pow, map_pow (MonoidAlgebra.of k G), map_pow r]
   induction θ using MonoidAlgebra.induction_linear with
   | zero => simp
@@ -157,7 +157,6 @@ private theorem UpperTheory.V.FW.phiDvd_nil (k A : Type) [Field k] [CommRing A] 
     have hc : IsUnit (algebraMap k A (q.coeff 0)) := (Ne.isUnit hnd).map _
     rw [hev]
     first
-      | exact hnil.isUnit_add_right_of_commute hc (Commute.all _ _)
       | (rw [add_comm]; exact hnil.isUnit_add_right_of_commute hc (Commute.all _ _))
   have hφ : Polynomial.aeval T f = T ^ Polynomial.rootMultiplicity 0 f * Polynomial.aeval T q := by
     conv_lhs => rw [hq]
@@ -395,7 +394,7 @@ private theorem UpperTheory.V.FW.descZ_mul {k F G : Type} [CommRing k] [CommRing
   | single g n =>
     ext h
     simp only [toK, MonoidAlgebra.mapRingHom_single, eq_intCast, MonoidAlgebra.coeff_map,
-      Finsupp.mapRange_apply, MonoidAlgebra.mul_single_apply, AddMonoidHom.coe_coe]
+      Finsupp.mapRange_apply, MonoidAlgebra.mul_single_apply]
     rw [← zsmul_eq_mul', map_zsmul, zsmul_eq_mul']
 
 private theorem UpperTheory.V.FW.descZ_ker (l : ℕ) {G : Type} [CommGroup G] (y : MonoidAlgebra ℤ G)

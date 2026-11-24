@@ -78,26 +78,16 @@ theorem UpperTheory.Reformulated.B.Ydb1.main :
                         (0 : ℕ) < l →
                           (∀ (U : Set G), IsOpen U → (1 : G) ∈ U → ∃ (m₀ : ℕ), ∀ m ≥ m₀, ∀ x ∈ S, φ^[l * m] x ∈ U) →
                             ∃ v ∈ K, Ψ v = v := by
-  intro G _ _ _ _ K S hK hSK h1 Ψ φ hΨ hΨS hφS hrel l _ hconv
-  have hφ1 : φ 1 = 1 := by
-    have := hrel 1 1
-    rw [inv_mul_cancel, inv_one, one_mul] at this
-    exact this.symm
+  intro G _ _ _ _ K S hK hSK h1 Ψ φ hΨ hΨS _ hrel l _ hconv
+  have hφ1 : φ 1 = 1 := by simpa using (hrel 1 1).symm
   have hΨx : ∀ y, Ψ y = Ψ 1 * φ y := fun y => by
-    have := hrel 1 y
-    rw [inv_one, one_mul] at this
-    rw [← this, mul_inv_cancel_left]
+    simpa only [inv_one, one_mul] using inv_mul_eq_iff_eq_mul.1 (hrel 1 y)
   have hd : ∀ x y, φ (x⁻¹ * y) = (φ x)⁻¹ * φ y := fun x y => by
     rw [← hrel x y, hΨx x, hΨx y, mul_inv_rev, mul_assoc, inv_mul_cancel_left]
   have hmul : ∀ p q, φ (p * q) = φ p * φ q := by
     intro p q
-    have hinv : φ p⁻¹ = (φ p)⁻¹ := by
-      have := hd p 1
-      rw [mul_one, hφ1, mul_one] at this
-      exact this
-    have := hd p⁻¹ q
-    rw [inv_inv, hinv, inv_inv] at this
-    exact this
+    have hinv : φ p⁻¹ = (φ p)⁻¹ := by simpa [hφ1] using hd p 1
+    simpa [hinv] using hd p⁻¹ q
   have hit : ∀ n x, Ψ^[n] x = Ψ^[n] 1 * φ^[n] x := by
     intro n
     induction n with
@@ -108,7 +98,6 @@ theorem UpperTheory.Reformulated.B.Ydb1.main :
         ih x, hΨx (Ψ^[n] 1 * φ^[n] x), hΨx (Ψ^[n] 1), hmul, mul_assoc]
   have ha : Ψ 1 ∈ S := hΨS 1 h1
   have hPS : ∀ n, Ψ^[n] 1 ∈ S := fun n => (Set.MapsTo.iterate (f := Ψ) hΨS n) h1
-  have hφa : ∀ n, φ^[n] (Ψ 1) ∈ S := fun n => (Set.MapsTo.iterate (f := φ) hφS n) ha
   have hstep : ∀ n, Ψ (Ψ^[n] 1) = Ψ^[n] 1 * φ^[n] (Ψ 1) := fun n => by
     rw [← Function.iterate_succ_apply' Ψ n 1, Function.iterate_succ_apply, hit]
   have hlim : Tendsto (fun m : ℕ => φ^[l * m] (Ψ 1)) atTop (𝓝 1) := by
@@ -122,13 +111,8 @@ theorem UpperTheory.Reformulated.B.Ydb1.main :
       rw [le_principal_iff, mem_map]
       exact univ_mem' fun m => hSK (hPS (l * m)))
   obtain ⟨𝒰, h𝒰, hu⟩ := mapClusterPt_iff_ultrafilter.1 hv
-  refine ⟨v, hvK, ?_⟩
-  have h₁ : Tendsto (fun m : ℕ => Ψ (Ψ^[l * m] 1)) 𝒰 (𝓝 (Ψ v)) := (hΨ.tendsto v).comp hu
-  have h₂ : Tendsto (fun m : ℕ => Ψ (Ψ^[l * m] 1)) 𝒰 (𝓝 (v * 1)) := by
-    simp_rw [hstep]
-    exact hu.mul (hlim.mono_left h𝒰)
-  rw [mul_one] at h₂
-  exact tendsto_nhds_unique h₁ h₂
+  refine ⟨v, hvK, tendsto_nhds_unique ((hΨ.tendsto v).comp hu) ?_⟩
+  simpa only [hstep, mul_one, Function.comp_def] using hu.mul (hlim.mono_left h𝒰)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraExtra =====
@@ -636,7 +620,7 @@ private theorem eq_one_of_blocks {R : Type} [CommRing R] {α n : Type} {m : α �
     rw [h1]
     simp [Matrix.one_apply]
   · rw [h0 _ _ (by simpa [UpperTheory.Reformulated.B.Qf33.blk] using hab)]
-    simp [Matrix.one_apply, hab]
+    simp [hab]
 
 theorem UpperTheory.Reformulated.B.Qf33.uniq :
     ∀ {R : Type} [inst : CommRing R] {α n : Type} {m : α → Type} [inst_1 : Fintype α] [inst_2 : LinearOrder α]

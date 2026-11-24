@@ -177,11 +177,11 @@ private lemma blk_eq {a b n : ℕ} (h : a + b = n) (w : Pl E) (m : GLw a w × GL
   have hAB : Matrix.fromBlocks m.1.val (m.1.val * X) 0 m.2.val *
       Matrix.fromBlocks (m.1⁻¹).val (-(X * (m.2⁻¹).val)) 0 (m.2⁻¹).val = 1 := by
     rw [Matrix.fromBlocks_multiply]
-    simp [h1, h2, Matrix.mul_assoc]
+    simp [Matrix.mul_assoc]
   have hBA : Matrix.fromBlocks (m.1⁻¹).val (-(X * (m.2⁻¹).val)) 0 (m.2⁻¹).val *
       Matrix.fromBlocks m.1.val (m.1.val * X) 0 m.2.val = 1 := by
     rw [Matrix.fromBlocks_multiply]
-    simp [h1', h2', Matrix.mul_assoc, ← Matrix.mul_assoc (m.1⁻¹).val]
+    simp [Matrix.mul_assoc, ← Matrix.mul_assoc (m.1⁻¹).val]
   have hMN : Matrix.reindex e e (Matrix.fromBlocks m.1.val (m.1.val * X) 0 m.2.val) *
       Matrix.reindex e e (Matrix.fromBlocks (m.1⁻¹).val (-(X * (m.2⁻¹).val)) 0 (m.2⁻¹).val) = 1 := by
     simp only [Matrix.reindex_apply, Matrix.submatrix_mul_equiv, hAB, Matrix.submatrix_one_equiv]
@@ -678,7 +678,7 @@ private theorem satEig_scale (q n : ℕ) (B : Multiset ℂˣ) (c : ℂˣ) (i : �
     satEig q n (B.map (· * c)) i = (c : ℂ) ^ i * satEig q n B i := by
   have e : ((B.map (· * c)).map fun b : ℂˣ => (b : ℂ)) =
       (B.map fun b : ℂˣ => (b : ℂ)).map (· * (c : ℂ)) := by
-    simp [Multiset.map_map, Function.comp_def]
+    simp [Multiset.map_map]
   simp only [satEig]
   rw [e, esymm_scale]
   ring

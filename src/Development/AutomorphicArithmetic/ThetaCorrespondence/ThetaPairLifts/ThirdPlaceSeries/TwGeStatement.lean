@@ -235,7 +235,7 @@ theorem _root_.GlobalTheory.T.realization_embedding_compatible_alt : _root_.Glob
     (n : ℕ) (a : Fin n → (Fm.ex x hx i).nch.Oe w) (y : Fin n → Fin ((R2 p).nW j) → (Fm.D x i).what₂.LL), (∀ k, y k ∈ Submodule.span (Fm.D x i).what₂.LL ((p.nexp.fi j).e '' ((p.Sx.A ((j : ℕ) + 1)).WK : Set _))) →
     rdK (rdAt p w j hρ ν) hρ ((Fm.ex x hx i).nch.k' w) z = ∑ k, (e (algebraMap ((Fm.ex x hx i).nch.Oe w) (FractionRing ((Fm.ex x hx i).nch.Oe w)) (a k)) * ν⁻¹) • adForm (R2 p) j (y k) (p.v₀ j (sg0 (Fm.D x i) p.P.A3.A)) →
     incl (Fm.D x i).nexp ((Fm.ex x hx i).nch.twI w) _ ((Fm.ex x hx i).nch.sd w) ((Fm.ex x hx i).nch.Oe w) ((Fm.ex x hx i).nch.k' w) z = ∑ k, a k • rd (y k) := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.descent_of_reading_alt | exact _root_.GlobalTheory.BigOn.Exp.descent_of_reading_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.descent_of_reading_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.descent_of_reading_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -411,7 +411,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.twisted_character_rational_values' : _root_.GlobalTheory.BigOn.Exp.TwistConditions fun Fm x hx i p w j => ∀ k, ∃ a : (Fm.D x i).what₂.LL,
   (Fm.D x i).what₂.embLL a = (((GlobalTheory.TraceIncl.envV (R2 p) j ((R2 p).mu ((Fm.D x i).plEq w))).χ k : ℂˣ) : ℂ) := by
-  first | exact @_root_.GlobalTheory.BigOn.LevVal.chi_val_alt | exact _root_.GlobalTheory.BigOn.LevVal.chi_val_alt | (intros; apply _root_.GlobalTheory.BigOn.LevVal.chi_val_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.LevVal.chi_val_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -467,7 +467,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_isLevelLift_at_twisted_points : _root_.GlobalTheory.BigOn.Exp.TwistConditions fun Fm x hx i p w j => ∀ g0 : G0 (R2 p).Pg (Fm.D x i).R.r,
   ∃ κ', Formalism.IndefR.Lev.IsLevelLift (Wc (Fm.D x i) j) ((R2 p).βW j) ((R2 p).datWp j (R2 p).triv) g0 κ' := by
-  first | exact @_root_.GlobalTheory.TieLift.lift_principal_alt | exact _root_.GlobalTheory.TieLift.lift_principal_alt | (intros; apply _root_.GlobalTheory.TieLift.lift_principal_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.TieLift.lift_principal_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -522,8 +522,6 @@ theorem adForm_eq_levelTrace_singleSeries' : GlobalTheory.Published.CuspRapidDec
   refine Submodule.subset_span ⟨(p.nexp.fi j).e.symm (b k), ((p.nexp.fi j).wk _).2 ?_, hk⟩
   first
     | exact hk.symm ▸ hbK k
-    | exact (congrArg (fun z => z ∈ (p.R.FW j).WK) hk).mpr (hbK k)
-    | (rw [hk]; exact hbK k)
 end GlobalTheory.BigOn.Exp
 end
 end
@@ -552,7 +550,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.adForm_eq_levelTrace_singleSeries : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.SerStd.SeriesRatS → _root_.GlobalTheory.BigOn.Exp.TwistConditions fun Fm x hx i p w j => ∀ h ∈ GfC (Vc (Fm.D x i) j), ∀ w' : ((R2 p).cV j).W, InCoefLat (R2 p) j h w' →
   ∃ y ∈ Submodule.span (Fm.D x i).what₂.LL ((p.nexp.fi j).e '' ((p.Sx.A ((j : ℕ) + 1)).WK : Set _)), ∀ v : ∀ τ, lowT ((R2 p).MW j (sg0 (Fm.D x i) p.P.A3.A)) τ, adForm (R2 p) j y (fun τ => v τ) = levelTrace (R2 p) j (F2 p).P0 (F2 p).ψ0⁻¹ (singleSeries (R2 p) j ((R2 p).ωP j ((R2 p).mu ((Fm.D x i).plEq w))) ((R2 p).vP j ((R2 p).mu ((Fm.D x i).plEq w))) h w' v) := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.adForm_eq_levelTrace_singleSeries' | exact _root_.GlobalTheory.BigOn.Exp.adForm_eq_levelTrace_singleSeries' | (intros; apply _root_.GlobalTheory.BigOn.Exp.adForm_eq_levelTrace_singleSeries' <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.adForm_eq_levelTrace_singleSeries'
 end
 end -- clump:auto
 end -- clump:auto
@@ -833,7 +831,7 @@ theorem _root_.GlobalTheory.T.schroedinger_ext_zero_product_vacuum_alt : _root_.
     (∀ k, y k ∈ Submodule.span (Fm.D x i).what₂.LL ((p.nexp.fi j).e '' ((p.Sx.A ((j : ℕ) + 1)).WK : Set _))) → IsUnit ((N : ℕ) : (Fm.ex x hx i).nch.Oe w) → (∃ m : ℕ, IsIntegral ℤ ((N : ℂ) ^ m * κ)) →
     rdK (rdAt p w j hρ ν) hρ ((Fm.ex x hx i).nch.k' w) z = κ • ∑ k, (e (algebraMap ((Fm.ex x hx i).nch.Oe w) (FractionRing ((Fm.ex x hx i).nch.Oe w)) (a k)) * ν⁻¹) • adForm (R2 p) j (y k) (p.v₀ j (sg0 (Fm.D x i) p.P.A3.A)) →
     ∃ b : (Fm.ex x hx i).nch.Oe w, rdK (rdAt p w j hρ ν) hρ ((Fm.ex x hx i).nch.k' w) z = ∑ k, (e (algebraMap ((Fm.ex x hx i).nch.Oe w) (FractionRing ((Fm.ex x hx i).nch.Oe w)) (b * a k)) * ν⁻¹) • adForm (R2 p) j (y k) (p.v₀ j (sg0 (Fm.D x i) p.P.A3.A)) := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.scalar_of_reading_alt | exact _root_.GlobalTheory.BigOn.Exp.scalar_of_reading_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.scalar_of_reading_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.scalar_of_reading_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1062,7 +1060,7 @@ theorem _root_.GlobalTheory.T.twisted_embedding_compatibility_rows_alt : GlobalT
     ∀ y : Fin n → Fin ((R2 p).nW j) → (Fm.D x i).what₂.LL,
       (∀ k, ∀ v : ∀ τ, lowT ((R2 p).MW j (sg0 (Fm.D x i) p.P.A3.A)) τ, adForm (R2 p) j (y k) (fun τ => v τ) = levelTrace (R2 p) j (F2 p).P0 (F2 p).ψ0⁻¹ (singleSeries (R2 p) j ((R2 p).ωP j ((R2 p).mu ((Fm.D x i).plEq w))) ((R2 p).vP j ((R2 p).mu ((Fm.D x i).plEq w))) (h k) (w' k) v)) →
       rdK (rdAt p w j hρ ν) hρ ((Fm.ex x hx i).nch.k' w) z = κ • ∑ k, (e (algebraMap ((Fm.ex x hx i).nch.Oe w) (FractionRing ((Fm.ex x hx i).nch.Oe w)) (a k)) * ν⁻¹) • adForm (R2 p) j (y k) (p.v₀ j (sg0 (Fm.D x i) p.P.A3.A)) := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.TwCx.twGen_cx_alt | exact _root_.GlobalTheory.BigOn.Exp.TwCx.twGen_cx_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.TwCx.twGen_cx_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.TwCx.twGen_cx_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1135,7 +1133,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.twist_lower_bound_of_prints : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.SerStd.SeriesRatS → _root_.GlobalTheory.BigOn.Exp.TwAdmAlt → _root_.GlobalTheory.BigOn.Exp.TwistCharacter → _root_.GlobalTheory.BigOn.Exp.TwistLowerBound := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.twGe_alt | exact _root_.GlobalTheory.BigOn.Exp.twGe_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.twGe_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.twGe_alt
 end
 end -- clump:auto
 end -- clump:auto

@@ -346,7 +346,7 @@ theorem lowU_conj_blocks {k : Type} [Field k] {A D : Type} [Fintype A] [Decidabl
     fromBlocks 1 0 0 M * fromBlocks 1 0 (-ν) 1 * fromBlocks a b c e * fromBlocks 1 0 0 W =
       fromBlocks a (b * W) (M * (c - ν * a)) (M * (e - ν * b) * W) := by
   simp only [fromBlocks_multiply]
-  congr 1 <;> simp [Matrix.mul_sub, sub_eq_add_neg, Matrix.mul_add, Matrix.add_mul, Matrix.mul_assoc, Matrix.mul_neg, Matrix.neg_mul] <;> abel
+  congr 1 <;> simp [sub_eq_add_neg, Matrix.mul_add, Matrix.add_mul, Matrix.mul_assoc, Matrix.mul_neg, Matrix.neg_mul] <;> abel
 
 end GlobalTheory.LowerHecke
 
@@ -758,7 +758,7 @@ theorem genVal_shift (q a N : ℕ) (B : Multiset ℂˣ) (u : ℂˣ) (n : ℕ) :
     genVal q a N B n = genVal q 0 N (B.map (· * u⁻¹)) n * ((u : ℂ) ^ n * ((Real.sqrt q : ℝ) : ℂ) ^ (a * n)) := by
   have e : (B.map (· * u⁻¹)).map (fun b : ℂˣ => (b : ℂ)) =
       (B.map (fun b : ℂˣ => (b : ℂ))).map (fun z => z * ((u⁻¹ : ℂˣ) : ℂ)) := by
-    simp [Multiset.map_map, Function.comp_def]
+    simp [Multiset.map_map]
   simp only [genVal, e, esymm_map_mul_right', zero_mul, zero_add, pow_add, Units.val_inv_eq_inv_val, inv_pow]
   have := u.ne_zero
   field_simp

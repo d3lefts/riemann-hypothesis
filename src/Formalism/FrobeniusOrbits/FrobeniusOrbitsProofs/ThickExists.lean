@@ -64,7 +64,7 @@ namespace Formalism.FrobeniusOrbits.ThickExists
 
 lemma coeff_zero (B : ℤ) : ∀ {S : ℕ} (c : Fin S → ℤ), (∀ m, |c m| < B) →
     ∑ m, c m * B ^ (m : ℕ) = 0 → ∀ m, c m = 0 := by
-  first | exact Bl.general_b_fact_second_last.goal1 .. | (apply Bl.general_b_fact_second_last.goal1 <;> assumption) | (intros; apply Bl.general_b_fact_second_last.goal1 <;> assumption)
+  first | (apply Bl.general_b_fact_second_last.goal1 <;> assumption)
 
 lemma map_lt (B : ℕ) : ∀ {S : ℕ} (v : Fin S → ℕ), (∀ m, v m < B) → Behrend.map B v < B ^ S := by
   intro S
@@ -84,8 +84,7 @@ lemma map_lt (B : ℕ) : ∀ {S : ℕ} (v : Fin S → ℕ), (∀ m, v m < B) →
     rw [hsplit, pow_succ]
     have h2 : B * (Behrend.map B (fun m : Fin S => v m.succ) + 1) ≤ B * B ^ S :=
       Nat.mul_le_mul_left B h1
-    have h3 := hv 0
-    nlinarith
+    nlinarith [h2, hv 0]
 
 lemma sphere_rel {S : ℕ} (v₁ v₂ v₃ : Fin S → ℤ) (k : ℤ) (h₁ : ∑ m, v₁ m ^ 2 = k)
     (h₂ : ∑ m, v₂ m ^ 2 = k) (h₃ : ∑ m, v₃ m ^ 2 = k) (i j : ℤ) (hj : j ≠ 0) (hij : i ≠ j)
@@ -127,14 +126,11 @@ lemma sphere_rel {S : ℕ} (v₁ v₂ v₃ : Fin S → ℤ) (k : ℤ) (h₁ : �
 
 lemma cast_map (B : ℕ) {S : ℕ} (v : Fin S → ℕ) :
     ((Behrend.map B v : ℕ) : ℤ) = ∑ m, (v m : ℤ) * (B : ℤ) ^ (m : ℕ) := by
-  rw [Behrend.map_apply, Nat.cast_sum]
-  refine Finset.sum_congr rfl (fun m _ => ?_)
-  rw [Nat.cast_mul, Nat.cast_pow]
+  simp [Behrend.map_apply]
 
 private lemma sphere_mem_lemma {S d k : ℕ} {v : Fin S → ℕ} (hv : v ∈ Behrend.sphere S d k) :
     (∀ i, v i < d) ∧ ∑ i, v i ^ 2 = k := by
-  simp only [Behrend.sphere, Finset.mem_filter, Behrend.mem_box] at hv
-  exact hv
+  simpa only [Behrend.sphere, Finset.mem_filter, Behrend.mem_box] using hv
 
 lemma noRel_image (L S d k : ℕ) (hL : 1 ≤ L) :
     NoRel ((Behrend.sphere S d k).image (Behrend.map (4 * L * d))) L := by
@@ -213,7 +209,6 @@ lemma card_image (L S d k : ℕ) (hL : 1 ≤ L) :
     have a2 : (w m : ℤ) < d := by exact_mod_cast hbw m
     have z1 : (0 : ℤ) ≤ v m := by positivity
     have z2 : (0 : ℤ) ≤ w m := by positivity
-    have z3 : (0 : ℤ) ≤ d := by positivity
     have hL' : (1 : ℤ) ≤ L := by exact_mod_cast hL
     push_cast
     rw [abs_lt]
@@ -223,8 +218,7 @@ lemma card_image (L S d k : ℕ) (hL : 1 ≤ L) :
     rw [hc, sub_self]
   have hz := coeff_zero ((4 * L * d : ℕ) : ℤ) (fun m => (v m : ℤ) - w m) hbound hsum
   funext m
-  have h0 : (v m : ℤ) - w m = 0 := hz m
-  omega
+  exact Nat.cast_injective (sub_eq_zero.mp (hz m))
 
 end Formalism.FrobeniusOrbits.ThickExists
 

@@ -37,6 +37,7 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 
@@ -84,15 +85,15 @@ theorem tens_inc_pr_facts (R : Type) [CommRing R] [IsDomain R] (D D' : DegPre R)
     by_cases h : i = i₀
     · subst h
       rw [if_pos rfl, Category.comp_id, Finset.prod_eq_single i]
-      · simp [Matrix.single_apply]
+      · simp
       · intro j _ hj
-        simp [Matrix.single_apply, Ne.symm hj]
+        simp [Ne.symm hj]
       · simp
     · rw [if_neg h, comp_one]
       symm
       apply Finset.prod_eq_one
       intro j _
-      simp [Matrix.single_apply, Ne.symm h]
+      simp [Ne.symm h]
   · intro y
     apply Fan.IsLimit.hom_ext T.lim
     intro i
@@ -102,6 +103,6 @@ theorem tens_inc_pr_facts (R : Type) [CommRing R] [IsDomain R] (D D' : DegPre R)
     · subst h
       simp [Tens.xi]
     · rw [if_neg h, comp_one]
-      simp [Tens.xi, Pi.single_apply, h, degPre_c_zero]
+      simp [Tens.xi, h, degPre_c_zero]
 
 end GlobalTheory.Mum

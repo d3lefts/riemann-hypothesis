@@ -450,7 +450,7 @@ theorem UpperTheory.V.Z.J.dualZero :
     have htheta : ∀ (Y : Matrix (Fin 3) (Fin 3) (Ok l O k)) (i j : Fin 3),
         thetaLie Y i j = -Y j.rev i.rev := by
       intro Y i j
-      fin_cases i <;> fin_cases j <;> simp [thetaLie, Jmat, Matrix.mul_apply, Fin.sum_univ_three] <;> rfl
+      fin_cases i <;> fin_cases j <;> simp [thetaLie, Jmat, Matrix.mul_apply, Fin.sum_univ_three]
     have hc : ∀ Y : Matrix (Fin 3) (Fin 3) (Ok l O k), adK B k F.c Y = thetaLie Y := by
       intro Y
       have h1 : (B.r F.c).left = 1 := Units.ext hB.atc
@@ -686,7 +686,7 @@ private theorem ad_cj {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsLocalR
   show GG.adFun (m := 3) (R := Ok l O k) _ _ = _
   simp only [GG.adFun, GG.mat, SemidirectProduct.map_left, SemidirectProduct.map_right, MonoidHom.id_apply, hr,
     if_true, map_mul, map_inv, _root_.mul_inv_rev, inv_inv, Units.val_mul, Matrix.mul_assoc,
-    Units.inv_mul_cancel_left, Units.mul_inv_cancel_left, Units.inv_mul, Units.mul_inv, Matrix.mul_one]
+    Units.inv_mul_cancel_left, Units.inv_mul, Matrix.mul_one]
 
 theorem UpperTheory.V.Z.J.zvCnt :
     ∀ (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [IsCoef l O] [Algebra ℤ_[l] O] (F : Frame l (ResidueField O)) (C₀ : ℕ), F.Ok C₀ → (l : O) ≠ 0 → ∀ (ρ : NRep F 3 O) (B : Box F 3 O), UpperTheory.V.Fr.IsLift O ρ → B.Of ρ → B.Cont (maximalIdeal O) → ∀ k, 0 < k → ∀ v, (ZF (l := l) (F.Iv v) k (triOf B v)).Finite → ∃ Z : AddSubgroup (F.Gv v → Matrix (Fin 3) (Fin 3) (Ok l O k)), (Z : Set _) = Zv B k v ∧ (Z : Set _) ⊆ Zc ((adK B k).comp (F.loc v)) ∧ (∀ Y, (fun s => adK B k (F.loc v s) Y - Y) ∈ Z) ∧ (ZF (l := l) (F.Iv v) k (triOf B v)).ncard * Nat.card (Ok l O k) ^ 9 ≤ Nat.card Z * Nat.card (Ok l O k) ^ 6 := by
@@ -876,7 +876,7 @@ private theorem ent_surj (A : Type) [AddCommGroup A] (i : Fin 2) : Function.Surj
     rw [Matrix.single_apply, if_neg]
     rintro ⟨rfl, rfl⟩
     exact absurd h (not_lt.mpr hlt.le)
-  · simp [Matrix.single_apply, hlt.ne, hlt.ne']
+  · simp [hlt.ne, hlt.ne']
   · show Matrix.single i.castSucc i.succ a i.castSucc i.succ = a
     simp
 
@@ -1314,7 +1314,6 @@ theorem UpperTheory.V.Z.J.yEx :
     have hp : (t s : Matrix (Fin 3) (Fin 3) O) i.castSucc i.castSucc
         * (((t s)⁻¹ : GL (Fin 3) O) : Matrix (Fin 3) (Fin 3) O) i.succ i.succ = algebraMap ℤ_[l] O (ε s) := by
       rw [hdiag s, mul_assoc, (hinv s).2, mul_one]
-    beta_reduce
     rw [hp, hβc, Algebra.smul_def, Algebra.smul_def, Ideal.Quotient.algebraMap_eq]
     simp only [map_add (f := _), map_sub, map_mul]
   obtain ⟨y, ⟨hylc, hycoc⟩, hy⟩ := lift l D ε d k hk hLE (Matrix (Fin 3) (Fin 3) (Ok l O k)) ρ
@@ -1444,7 +1443,7 @@ namespace UpperTheory.V.Z.J
 private theorem jtj {R : Type} [CommRing R] (X : Matrix (Fin 3) (Fin 3) R) (i j : Fin 3) :
     (Jmat R 3 * Xᵀ * Jmat R 3) i j = X j.rev i.rev := by
   fin_cases i <;> fin_cases j <;>
-    simp [Matrix.mul_apply, Fin.sum_univ_three, Jmat, Matrix.transpose_apply] <;> decide
+    simp [Matrix.mul_apply, Fin.sum_univ_three, Jmat, Matrix.transpose_apply]
 
 private theorem count {A Q : Type} [AddCommGroup A] [AddCommGroup Q] [Finite Q] (S T : Set A) (H : AddSubgroup A)
     (hH : (H : Set A) = S) (hS : S.Finite) (hT : T ⊆ S) (f : A →+ Q) (hf : ∀ x ∈ S, f x = 0 → x ∈ T) :
@@ -1675,7 +1674,6 @@ theorem UpperTheory.V.Z.J.selLow :
   have hop : IsOpen ((adK B k).ker : Set F.Γ) := by
     first
       | exact adOpen l O F C₀ hF hl B k hc
-      | exact (adOpen l O F C₀ hF hl ρ B hρ hB hc k).1
   have hmain : (ZL F (adK B k) fun w => Z w).Finite ∧
       Nat.card (Matrix (Fin 3) (Fin 3) (Ok l O k)) * ∏ w, Nat.card (Z w) ≤
         (ZL F (adK B k) fun w => Z w).ncard * (HomMu l k F.eps (adK B k)).ncard *

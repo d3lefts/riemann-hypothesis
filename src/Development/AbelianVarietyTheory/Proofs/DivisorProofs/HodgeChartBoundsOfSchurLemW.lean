@@ -213,7 +213,7 @@ theorem entry_le_of_mulVec (P : Matrix (Fin g) (Fin g) ℝ) {W : ℝ} (hW : 0 �
     (pi_norm_le_iff_of_nonneg zero_le_one).2 fun i => by
       by_cases hi : i = k
       · subst hi; simp
-      · simp [Pi.single_apply, hi]
+      · simp [hi]
   rw [mulVec_single_one] at h1
   calc |P j k| = ‖Pᵀ k j‖ := by simp [Real.norm_eq_abs]
     _ ≤ ‖Pᵀ k‖ := norm_le_pi_norm _ j
@@ -506,7 +506,7 @@ theorem quad_abs_le {m : Type} [Fintype m] (A : Matrix m m ℝ) (E : ℝ)
           intro j
           rw [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, nsmul_eq_mul,
             Finset.mul_sum]
-        simp only [h5, Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, nsmul_eq_mul,
+        simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, nsmul_eq_mul,
           ← Finset.mul_sum, dotProduct, sq]
         ring
 

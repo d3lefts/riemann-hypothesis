@@ -451,7 +451,7 @@ theorem mul_lattice_one {E : Type} [Field E] [NumberField E] {n : ℕ} (L : Subm
   · rintro ⟨y, hy, rfl⟩
     simpa [Matrix.one_mulVec] using hy
   · intro hx
-    exact ⟨x, hx, by simp [Matrix.one_mulVec]⟩
+    exact ⟨x, hx, by simp⟩
 
 variable {D : D7} {u : D.what₂.Word}
 
@@ -1416,7 +1416,7 @@ theorem upSame_one (T : Forms0 D u) (v : (D.mem u).A.vT) (a : ((D.mem u).A.Fv v)
   have hε : ∀ v', v' ≠ (T.atT.eV v).1 → bc (prV (E := D.host.E) v') ε.1 = 1 := by
     intro v' hv'
     rw [hε1]
-    simp only [map_mul, map_inv, h1 v' hv', hδ.1 v' hv', inv_one, mul_one, one_mul, mul_inv_cancel]
+    simp only [map_mul, map_inv, h1 v' hv', hδ.1 v' hv', inv_one, mul_one, mul_inv_cancel]
   have h1ε : bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) (γd⁻¹ * γ.1 * γ') * (T.cls0.y c1').1 = (T.cls0.y c2).1 * ε.1 * κε.1 := by
     have eγ : bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) γ.1 = (T.cls0.y c).1 * η.1 * κ.1 * (T.cls0.y c1).1⁻¹ := by rw [← h2]; group
     have hx' : (T.cls0.y c).1 * δ.1 = bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F)) γd * (T.cls0.y c2).1 * κd.1 := hx
@@ -1634,12 +1634,10 @@ namespace SameDiaZero
 theorem diamond_same_place_matchings : Formalism.L2.GlobalTheoryTheory.UnramifiedDiagonal.SameAll := by
   intro D u T
   refine ⟨?_, ?_, ?_⟩
-  · apply upSame <;> assumption
-  · apply dnDiaSame0F_holds <;> assumption
+  · apply upSame
+  · apply dnDiaSame0F_holds
   · first
       | (apply eSame <;> assumption)
-      | (apply e_main <;> assumption)
-      | (apply eDiaSame0F <;> assumption)
 
 end SameDiaZero
 end -- clump:auto

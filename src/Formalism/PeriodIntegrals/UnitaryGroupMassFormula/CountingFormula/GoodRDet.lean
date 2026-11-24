@@ -94,11 +94,11 @@ theorem det_updateRow_last_single (A : Matrix (Fin (k + 1)) (Fin (k + 1)) R) :
   · have hs : (A.updateRow (Fin.last k) (Pi.single (Fin.last k) 1)).submatrix (Fin.last k).succAbove
         (Fin.last k).succAbove = A.submatrix Fin.castSucc Fin.castSucc := by
       ext i j
-      simp [Fin.succAbove_last, Matrix.updateRow_ne (Fin.castSucc_lt_last i).ne]
+      simp [Fin.succAbove_last]
     rw [hs]
     simp
   · intro j _ hj
-    simp [Pi.single_apply, hj]
+    simp [hj]
   · simp
 
 theorem det_updateRow_last_zero (A : Matrix (Fin (k + 1)) (Fin (k + 1)) R) :
@@ -119,7 +119,7 @@ theorem det_N (Z Y : Matrix (Fin (k + 1)) (Fin (k + 1)) R) (s t : R) :
       (D0.updateRow i (D0 i + s • Pi.single j 1)).updateRow j (D0 j + t • Pi.single i 1) := by
     ext (a | a) (b | b) <;>
       by_cases ha : a = Fin.last k <;> by_cases hb : b = Fin.last k <;>
-      simp [hD0, hi, hj, cornerM, Matrix.updateRow_apply, Pi.single_apply, ha, hb]
+      simp [hD0, hi, hj, cornerM, Matrix.updateRow_apply, ha, hb]
 
   have hlin2 : ∀ r1 u v : (Fin (k + 1) ⊕ Fin (k + 1)) → R, ∀ c : R,
       f r1 (u + c • v) = f r1 u + c * f r1 v := by
@@ -145,7 +145,7 @@ theorem det_N (Z Y : Matrix (Fin (k + 1)) (Fin (k + 1)) R) (s t : R) :
         Matrix.fromBlocks (Z.updateRow (Fin.last k) 0) (cornerM k 1) 0 Y := by
       ext (a | a) (b | b) <;>
         by_cases ha : a = Fin.last k <;> by_cases hb : b = Fin.last k <;>
-        simp [hD0, hi, hj, cornerM, Matrix.updateRow_apply, Pi.single_apply, ha, hb]
+        simp [hD0, hi, hj, cornerM, Matrix.updateRow_apply, ha, hb]
     rw [this, Matrix.det_fromBlocks_zero₂₁, det_updateRow_last_zero, zero_mul]
   have h01 : f (D0 i) (Pi.single i 1) = 0 := by
     simp only [hf, Matrix.updateRow_eq_self]
@@ -153,7 +153,7 @@ theorem det_N (Z Y : Matrix (Fin (k + 1)) (Fin (k + 1)) R) (s t : R) :
         Matrix.fromBlocks Z 0 (cornerM k 1) (Y.updateRow (Fin.last k) 0) := by
       ext (a | a) (b | b) <;>
         by_cases ha : a = Fin.last k <;> by_cases hb : b = Fin.last k <;>
-        simp [hD0, hi, hj, cornerM, Matrix.updateRow_apply, Pi.single_apply, ha, hb]
+        simp [hD0, hi, hj, cornerM, Matrix.updateRow_apply, ha, hb]
     rw [this, Matrix.det_fromBlocks_zero₁₂, det_updateRow_last_zero, mul_zero]
   have h11 : f (Pi.single j 1) (Pi.single i 1) =
       -((Z.submatrix Fin.castSucc Fin.castSucc).det * (Y.submatrix Fin.castSucc Fin.castSucc).det) := by
@@ -164,7 +164,7 @@ theorem det_N (Z Y : Matrix (Fin (k + 1)) (Fin (k + 1)) R) (s t : R) :
           (Y.updateRow (Fin.last k) (Pi.single (Fin.last k) 1)) := by
       ext (a | a) (b | b) <;>
         by_cases ha : a = Fin.last k <;> by_cases hb : b = Fin.last k <;>
-        simp [hD0, hi, hj, Matrix.updateRow_apply, Pi.single_apply, Equiv.swap_apply_def, ha, hb]
+        simp [hD0, hi, hj, Matrix.updateRow_apply, Equiv.swap_apply_def, ha, hb]
     have h := Matrix.det_permute (Equiv.swap i j) ((D0.updateRow i (Pi.single j 1)).updateRow j (Pi.single i 1))
     rw [hsw, Matrix.det_fromBlocks_zero₂₁, det_updateRow_last_single, det_updateRow_last_single,
       Equiv.Perm.sign_swap hij] at h
@@ -200,7 +200,6 @@ theorem det_Ga (D : Formalism.BasicNotions.D7) (T T' : D.host.E) (Z : MatZ D) :
       GZ T T' Z := by
   rw [ga_eq_submatrix, Matrix.det_permute', det_N, GZ, leadMinorE_full, leadMinorE_prev,
     Matrix.det_conjTranspose, ← Matrix.conjTranspose_submatrix, Matrix.det_conjTranspose]
-  push_cast
   ring
 
 end PI.UnitaryGroupMassFormula.CntFormula.DetGa
@@ -210,9 +209,8 @@ namespace PI.UnitaryGroupMassFormula.CntFormula
 theorem gram_determinant_ne_zero : DetGaNe := by
   intro D T T' Z hG
   rw [DetGa.det_Ga]
-  refine mul_ne_zero ?_ hG
-  rcases Int.units_eq_one_or (Equiv.Perm.sign (Equiv.sumComm (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)))) with h | h <;>
-    rw [h] <;> simp
+  exact mul_ne_zero (Int.cast_ne_zero.mpr (Units.ne_zero
+    (Equiv.Perm.sign (Equiv.sumComm (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)))))) hG
 
 end PI.UnitaryGroupMassFormula.CntFormula
 end -- clump:auto

@@ -65,7 +65,7 @@ open scoped CategoryTheory.Obj TensorProduct ContDiff
 open GlobalTheory.KS
 
 theorem _root_.GlobalTheory.T.cohomology_logDerivative_adjoint_endomorphisms : ∀ (K : Type) [Field K] (P₀ : Out.PolAV (Sp K)) (g : ℕ) (v : Fin g → (epsR K ⟶ P₀.A)) (dd : Fin g → ∀ O : P₀.A.left.Opens, Γ(P₀.A.left, O) → Γ(P₀.A.left, O)), IsLieBasis v → (∀ a, IsInvDer (v a) (dd a)) → ∀ (X : Scheme.{0}) (m : P₀.A.left ⟶ X) (L : LB X) φ (f₀ f₀' : P₀.A ⟶ P₀.A) (F' : Matrix (Fin g) (Fin g) K), L.IsLB → LBIso P₀.L (L.pull m) → IsDlog m L dd φ → IsMonHom f₀ → IsMonHom f₀' → LBIso (cubeLB P₀.A ![fst P₀.A P₀.A ≫ f₀, snd P₀.A P₀.A] P₀.L) (cubeLB P₀.A ![fst P₀.A P₀.A, snd P₀.A P₀.A ≫ f₀'] P₀.L) → (∀ j, IsLieComb (fun i => F' i j) v (v j ≫ f₀')) → ∀ x, Cohom f₀.left _ (lc P₀.A.hom (fun y => F' y x) φ) (φ x) := by
-  first | exact @GlobalTheory.KS.AdjDlog.cohom_dlog_of_adjoint | exact GlobalTheory.KS.AdjDlog.cohom_dlog_of_adjoint | (intros; apply GlobalTheory.KS.AdjDlog.cohom_dlog_of_adjoint <;> assumption)
+  first | exact @GlobalTheory.KS.AdjDlog.cohom_dlog_of_adjoint
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.ModuliProofs.CohomologyLogDerivativeAdjointEndomorphismsStatement =====
@@ -517,7 +517,7 @@ open scoped CategoryTheory.Obj TensorProduct ContDiff
 open GlobalTheory.KS
 
 theorem _root_.GlobalTheory.T.kodairaSpencerClass_cohomologous_along_endomorphism : ∀ (K : Type) [Field K] (A₀ : Over (Sp K)) [GrpObj A₀] (g : ℕ) (v : Fin g → (epsR K ⟶ A₀)) (dd : Fin g → ∀ O : A₀.left.Opens, Γ(A₀.left, O) → Γ(A₀.left, O)), Smooth A₀.hom → IsLieBasis v → (∀ a, IsInvDer (v a) (dd a)) → ∀ (R : Type) [CommRing R] (x₀ : R →+* K) (X : Scheme.{0}) (p : X ⟶ Sp R) (m : A₀.left ⟶ X), IsPullback m A₀.hom p (spMap x₀) → ∀ (I : Type) (W : I → X.Opens) (D : R → K) d θ (f : X ⟶ X) (f₀ : A₀ ⟶ A₀) (F : Matrix (Fin g) (Fin g) K), KSCoc A₀.hom p m D W dd d θ → IsMonHom f₀ → f ≫ p = p → f₀.left ≫ m = m ≫ f → (∀ j, IsLieComb (fun i => F i j) v (v j ≫ f₀)) → ∀ x, Cohom f₀.left _ (lc A₀.hom (F x) θ) (θ x) := by
-  first | exact @GlobalTheory.KS.cohom_ksCoc_of_endomorphism | exact GlobalTheory.KS.cohom_ksCoc_of_endomorphism | (intros; apply GlobalTheory.KS.cohom_ksCoc_of_endomorphism <;> assumption)
+  first | exact @GlobalTheory.KS.cohom_ksCoc_of_endomorphism
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.ModuliProofs.KodairaSpencerClassCohomologousAlongEndomorphismStatement =====

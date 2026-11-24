@@ -93,8 +93,7 @@ private lemma sgn_eq_one_iff_apply_eq {M : Type*} [Field M] [Algebra ℚ M] (σ 
     Formalism.TwoAdicCyclotomicDecomposition.sgn σ x = 1 ↔ σ x = x := by
   unfold Formalism.TwoAdicCyclotomicDecomposition.sgn
   by_cases hx : σ x = x
-  · rw [if_pos hx]
-    exact iff_of_true rfl hx
+  · simp [hx]
   · rw [if_neg hx]
     exact iff_of_false (by decide) hx
 
@@ -288,16 +287,14 @@ def conjE (hqd : HypOdd q d) (h : IsLayer (e + 2) q d ζ a b) : hostE ζ a b ≃
 
 theorem galE_conjE (hqd : HypOdd q d) (h : IsLayer (e + 2) q d ζ a b) :
     galE e ζ a b (conjE hqd h) = cc e := by
-  rw [← galEquiv_apply hqd h]
-  exact (galEquiv hqd h).apply_symm_apply (cc e)
+  simpa only [conjE, galEquiv_apply] using (galEquiv hqd h).apply_symm_apply (cc e)
 
 theorem eq_conjE_iff (hqd : HypOdd q d) (h : IsLayer (e + 2) q d ζ a b)
     (σ : hostE ζ a b ≃ₐ[ℚ] hostE ζ a b) : σ = conjE hqd h ↔ galE e ζ a b σ = cc e := by
   constructor
   · rintro rfl
     exact galE_conjE hqd h
-  · intro hs
-    exact galE_injective hqd h (hs.trans (galE_conjE hqd h).symm)
+  · exact fun hs => galE_injective hqd h (hs.trans (galE_conjE hqd h).symm)
 
 theorem conjE_apply (hqd : HypOdd q d) (h : IsLayer (e + 2) q d ζ a b)
     (φ : hostE ζ a b →+* ℂ) (x : hostE ζ a b) :
@@ -337,8 +334,7 @@ theorem conjE_mem_hostF_iff (hqd : HypOdd q d) (h : IsLayer (e + 2) q d ζ a b)
   · intro hx
     exact hx _ (galE_conjE hqd h)
   · intro hx σ hσ
-    rw [(eq_conjE_iff hqd h σ).2 hσ]
-    exact hx
+    rwa [(eq_conjE_iff hqd h σ).2 hσ]
 
 theorem mem_hostF_iff_adjoin (hqd : HypOdd q d) (h : IsLayer (e + 2) q d ζ a b)
     (x : hostE ζ a b) : x ∈ hostF ζ a b ↔ (x : L) ∈ ℚ⟮a * b, ζ + ζ⁻¹⟯ := ((hostReal_at hqd h).2 x).2

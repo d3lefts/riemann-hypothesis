@@ -395,7 +395,7 @@ open GlobalTheory.ToricTransport (coordIn)
 open scoped nonZeroDivisors
 
 theorem _root_.GlobalTheory.T.modF_finiteIdeleUpToExtension : ∀ {K E : Type} [Field K] [NumberField K] [Field E] [NumberField E] [Algebra K E] (t : (Af K)ˣ), modF (upIdele K E t) = modF t ^ Module.finrank K E := by
-  first | exact @GlobalTheory.UpIdeleMod.modF_upIdele | exact GlobalTheory.UpIdeleMod.modF_upIdele | (intros; apply GlobalTheory.UpIdeleMod.modF_upIdele <;> assumption)
+  first | exact @GlobalTheory.UpIdeleMod.modF_upIdele
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModFFiniteIdeleUpToExtensionStatement =====
@@ -993,7 +993,7 @@ theorem locEps_tame_twist : ∀ (E : Type) [Field E] [NumberField E] (K : Type) 
       rfl
     rw [locEps, locEps, if_neg one_ne_zero, if_pos rfl, gaussSumAt_unr_mul hχ one_ne_zero, hqw, e1, e2, map_mul, map_mul,
       hx1, hgG, map_pow σ, map_natCast σ]
-    simp only [Units.val_mul, Units.val_pow_eq_pow_val]
+    simp only [Units.val_mul]
     ring
 
 end GlobalTheory.TameTwistEps

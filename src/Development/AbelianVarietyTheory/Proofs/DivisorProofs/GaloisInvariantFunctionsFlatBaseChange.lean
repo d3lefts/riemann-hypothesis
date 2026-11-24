@@ -37,6 +37,7 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 
@@ -86,7 +87,7 @@ theorem alg_inv {R A R' B : Type} [CommRing R] [CommRing A] [CommRing R'] [CommR
       intro w i
       induction w with
       | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]; ring
-      | tmul a r => simp [d, he, htA, htR, mul_sub, tmul_sub]
+      | tmul a r => simp [d, he, htA, htR, tmul_sub]
     have h0 : d.lTensor A w = 0 := by
       apply (TensorProduct.piRight R R A (fun _ : J => R')).injective
       ext i

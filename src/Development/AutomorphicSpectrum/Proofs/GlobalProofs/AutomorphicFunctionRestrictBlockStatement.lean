@@ -84,9 +84,9 @@ theorem linOf_single {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (E : Fin n �
   change ∑ i, ∑ j, (Matrix.single a b (1 : ℂ)) i j • E i j = E a b
   rw [Finset.sum_eq_single a, Finset.sum_eq_single b]
   · simp
-  · intro j _ hj; simp [Matrix.single_apply, Ne.symm hj]
+  · intro j _ hj; simp [Ne.symm hj]
   · simp
-  · intro i _ hi; exact Finset.sum_eq_zero fun j _ => by simp [Matrix.single_apply, Ne.symm hi]
+  · intro i _ hi; exact Finset.sum_eq_zero fun j _ => by simp [Ne.symm hi]
   · simp
 
 theorem glRel_linOf {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} {E : Fin n → Fin n → A} (hE : Formalism.REAL.GlRel E)
@@ -242,7 +242,7 @@ theorem _root_.GlobalTheory.T.gelfand_eigenvalue_casimir_scalar : ∀ (D : D7) (
     Submodule.span ℂ (Set.range fun p : Fin V.rank × Fin V.rank => M p.1 p.2) = ⊤ → ∀ (c : ℕ → ℂ) (v : ℂ), ∃ s : ℂ,
       ∀ f : GlobalTheory.Mem.AutSpace.SmFun θ V, (∀ k, gelf θ V τ k f.1 = c k • f.1) →
         Formalism.REAL.qdet (fun i j => GlobalTheory.Mem.RealTranslate.derEnd hθ τ (M i j)) v f = s • f := by
-  first | exact @GlobalTheory.CompanionTheory.CoreGL.qdet_scalar_of_gelf | exact GlobalTheory.CompanionTheory.CoreGL.qdet_scalar_of_gelf | (intros; apply GlobalTheory.CompanionTheory.CoreGL.qdet_scalar_of_gelf <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.CoreGL.qdet_scalar_of_gelf
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GlobalProofs.AutomorphicFunctionRestrictBlockStatement =====

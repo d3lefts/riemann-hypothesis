@@ -240,9 +240,7 @@ def HNeZero {R : Ranks} (H : Host R) (p : ℕ) : Prop :=
 theorem HNeZero.ne_one {R : Ranks} {H : Host R} {p : ℕ} (h : HNeZero H p) (P : Ideal (𝓞 H.E)) [P.IsPrime]
     [P.LiesOver (Ideal.span {(p : ℤ)})] (σ : H.E ≃ₐ[ℚ] H.E) (hσ : IsArithFrobAt ℤ σ P) : (H.galE σ).2 ≠ 1 := by
   intro h1
-  have := h P σ hσ
-  rw [h1, orderOf_one] at this
-  exact Nat.not_even_one this
+  exact Nat.not_even_one (by simpa [h1, orderOf_one] using h P σ hσ)
 
 def FactRd : Prop := ∀ (R : Ranks) (H : Host R),
   (2 : ℝ) ^ ((R.e : ℝ) + 1 - (2 : ℝ) ^ (-(R.e : ℝ))) * Real.sqrt H.d ≤ H.rdE ∧

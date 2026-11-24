@@ -798,13 +798,12 @@ private theorem ladder {X Y : Type} [DecidableEq X] [DecidableEq Y] (f : (X →�
         rw [TensorProduct.finsuppScalarRight_apply_tmul_apply]
         by_cases hx : x = x'
         · subst hx; simp
-        · simp [Finsupp.single_apply, hx]
+        · simp [hx]
       have e2 : Finsupp.single x n = n • Finsupp.single x (1 : ℤ) := by simp
       ext y
       rw [e1, map_smul, LinearMap.lTensor_tmul, TensorProduct.finsuppScalarRight_apply_tmul_apply, e2, map_smul,
         Finsupp.smul_apply, Finsupp.smul_apply, h]
       simp only [smul_eq_mul, zsmul_eq_mul, Int.cast_mul]
-      push_cast
       ring
 
 theorem UpperTheory.exactBase_integral_to_complex :
@@ -1418,7 +1417,7 @@ theorem UpperTheory.perm_split_fin_succ :
   refine ⟨?_, fun k => cycle_range_conjugate_succAbove i j τ k⟩
   show ((Equiv.Perm.sign (F (i, τ)) : ℤ) : _) = _
   simp only [F, map_mul, map_inv, Fin.sign_cycleRange,
-    Equiv.Perm.decomposeFin.symm_sign, if_pos rfl, one_mul, inv_pow, Int.units_inv_eq_self]
+    Equiv.Perm.decomposeFin.symm_sign, Int.units_inv_eq_self]
   push_cast
   ring
 end -- clump:auto
@@ -1572,7 +1571,7 @@ theorem UpperTheory.projPerm_of_liftEquiv :
     simp [UpperTheory.V.Af.BA.permC_single, hψ]
   · apply UpperTheory.V.Af.BA.PC_ext
     intro x
-    simp [Rep.hom_comp, Rep.hom_ofHom, hψe]
+    simp [Rep.hom_comp, hψe]
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.AutomorphicVarieties.BuildingsResidueChars.ProjPermOfLiftEquiv =====
@@ -1809,7 +1808,7 @@ theorem UpperTheory.rep_hom_alternating_sum_eq_zero :
     intro x
     rw [key 0 x]
     have hre : K.re (id : Fin 1 → Fin 1) x = x := Subtype.ext rfl
-    simp [Fintype.sum_unique, hre]
+    simp [hre]
   · intro p hp
     apply PC_ext
     intro t

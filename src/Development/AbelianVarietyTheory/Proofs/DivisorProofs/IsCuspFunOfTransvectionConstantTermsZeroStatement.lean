@@ -222,7 +222,7 @@ open scoped TensorProduct InnerProductSpace ContDiff
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.isCuspFun_of_transvection_constantTerms_zero : ∀ (D : D7) (θ : InfFam D) (V : HSp D), IsInfFam θ → ∀ φ : GA D V → ℂ, IsAutFun V φ → ZCusp V φ → IsCuspFun V φ := by
-  first | exact @GlobalTheory.TransvCusp.isCuspFun_of_zCusp | exact GlobalTheory.TransvCusp.isCuspFun_of_zCusp | (intros; apply GlobalTheory.TransvCusp.isCuspFun_of_zCusp <;> assumption)
+  first | exact @GlobalTheory.TransvCusp.isCuspFun_of_zCusp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCuspFunOfTransvectionConstantTermsZeroStatement =====

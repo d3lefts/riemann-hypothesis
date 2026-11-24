@@ -82,7 +82,7 @@ open GlobalTheory.SquareComm GlobalTheory.SquareAgree
 theorem _root_.GlobalTheory.T.archimedeanLine_eq_realScalar_smul_supported : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ {m n : ℕ} (τ : D.what₂.Tau) (z : Matrix (Fin m) (Fin n) ℂ),
     (∀ t : ℝ, lineAt θ τ z t = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.realAd D.host.F t • lineAt θ τ z 1) ∧
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F) (lineAt θ τ z 1) := by
-  first | exact @GlobalTheory.LineRealAd.lineAt_realAd_smul | exact GlobalTheory.LineRealAd.lineAt_realAd_smul | (intros; apply GlobalTheory.LineRealAd.lineAt_realAd_smul <;> assumption)
+  first | exact @GlobalTheory.LineRealAd.lineAt_realAd_smul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ArchimedeanLineEqRealScalarSmulSupportedStatement =====
@@ -108,7 +108,7 @@ theorem _root_.GlobalTheory.T.hasDerivAt_thetaSum_heisenbergLine : ∀ {F : Type
       (∀ x, HasDerivAt (fun t : ℝ => d.rho ψ (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.realAd F t • u) Φ x) (Φ' x) 0) →
       ∀ u' : W, HasDerivAt (fun t : ℝ => GlobalTheory.WeilM.thetaSum F (d.rho ψ u' (d.rho ψ (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.realAd F t • u) Φ)))
         (GlobalTheory.WeilM.thetaSum F (d.rho ψ u' Φ')) 0 := by
-  first | exact @GlobalTheory.HeisLineTheta.hasDerivAt_thetaSum_line | exact GlobalTheory.HeisLineTheta.hasDerivAt_thetaSum_line | (intros; apply GlobalTheory.HeisLineTheta.hasDerivAt_thetaSum_line <;> assumption)
+  first | exact @GlobalTheory.HeisLineTheta.hasDerivAt_thetaSum_line
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.HasDerivAtThetaSumHeisenbergLineStatement =====
@@ -228,7 +228,7 @@ theorem _root_.GlobalTheory.T.schrodingerModel_symplectic_eq_orientedPair : ∀ 
       (∀ u, cS u = (HMul.hMul (uᵀ.submatrix e id) (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM ((if ε then -1 else 1 : D.host.E) • S.gram)) : Matrix (Fin X.rank) (Fin S.rank) (AE D))) →
       ∀ u v, GlobalTheory.WeilM.symp (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (-1) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Vs.J)
         (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Ws.J) u v = symplO (sgn ε S) X (cS u) (cS v) := by
-  first | exact @GlobalTheory.SquareAgree.SympForm.symp_model_eq_symplO | exact GlobalTheory.SquareAgree.SympForm.symp_model_eq_symplO | (intros; apply GlobalTheory.SquareAgree.SympForm.symp_model_eq_symplO <;> assumption)
+  first | exact @GlobalTheory.SquareAgree.SympForm.symp_model_eq_symplO
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SchrodingerModelSymplecticEqOrientedPairStatement =====

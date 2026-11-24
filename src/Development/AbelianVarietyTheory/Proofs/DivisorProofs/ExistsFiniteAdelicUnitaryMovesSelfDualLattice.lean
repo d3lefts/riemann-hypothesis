@@ -86,7 +86,7 @@ theorem _root_.GlobalTheory.T.adelicCompletion_comap_rational_matrix : ∀ (F E 
     (Λ : Submodule (𝓞 E) (Fin n → E)) (w : Fin n → GlobalTheory.AdLat.RA F E),
     GlobalTheory.UnRep.fm F A.1 *ᵥ w ∈ GlobalTheory.AdLat.hat F (Λ : Set (Fin n → E)) ↔
       w ∈ GlobalTheory.AdLat.hat F ((Λ.comap ((Matrix.mulVecLin A.1).restrictScalars (𝓞 E)) : Submodule (𝓞 E) (Fin n → E)) : Set (Fin n → E)) := by
-  first | exact @GlobalTheory.HatPullback.main | exact GlobalTheory.HatPullback.main | (intros; apply GlobalTheory.HatPullback.main <;> assumption)
+  first | exact @GlobalTheory.HatPullback.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicCompletionComapRationalMatrixStatement =====
@@ -104,7 +104,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.columnLattice_comap_eq_standardLattice : ∀ {K : Type} [Field K] {n : ℕ} (B : GL (Fin n) K),
     (Formalism.L2.DIV.colLat B).comap ((Matrix.mulVecLin B.1).restrictScalars (𝓞 K)) = Formalism.L2.Pj.stdLat K n := by
-  first | exact @GlobalTheory.ColStd.colLat_comap_eq_stdLat | exact GlobalTheory.ColStd.colLat_comap_eq_stdLat | (intros; apply GlobalTheory.ColStd.colLat_comap_eq_stdLat <;> assumption)
+  first | exact @GlobalTheory.ColStd.colLat_comap_eq_stdLat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ColumnLatticeComapEqStandardLatticeStatement =====
@@ -161,7 +161,7 @@ theorem sg_single (c : E ≃ₐ[F] E) (j : Fin n) :
   funext b
   by_cases h : b = j
   · subst h; simp
-  · simp [Pi.single_apply, h]
+  · simp [h]
 
 theorem mat_eq_of_dot (c : E ≃ₐ[F] E) {K K' : Matrix (Fin n) (Fin n) (RA F E)}
     (h : ∀ x y : Fin n → RA F E, x ⬝ᵥ (K *ᵥ fun b => sg (FiniteAdeleRing (𝓞 F) F) c (y b)) =
@@ -258,7 +258,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem _root_.GlobalTheory.T.isUnitaryAdelicMatrix_conj_orthonormalFrame : ∀ (D : D7) (V : HSp D) (fr : GL (Fin V.rank) D.host.E) (g : Matrix (Fin V.rank) (Fin V.rank) (GlobalTheory.AdLat.RA D.host.F D.host.E)),
     Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) fr.1 * V.gram * fr.1 = 1 → GlobalTheory.UnRep.IsUnA (GlobalTheory.Member.cF D) 1 g →
     GlobalTheory.UnRep.IsUnA (GlobalTheory.Member.cF D) V.gramᵀ (GlobalTheory.UnRep.fm D.host.F fr.1 * g * GlobalTheory.UnRep.fm D.host.F (fr⁻¹).1) := by
-  first | exact @GlobalTheory.UnitConjFrame.isUnA_frame_conj | exact GlobalTheory.UnitConjFrame.isUnA_frame_conj | (intros; apply GlobalTheory.UnitConjFrame.isUnA_frame_conj <;> assumption)
+  first | exact @GlobalTheory.UnitConjFrame.isUnA_frame_conj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUnitaryAdelicMatrixConjOrthonormalFrameStatement =====
@@ -344,7 +344,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem _root_.GlobalTheory.T.selfDual_comap_orthonormalFrame_unimodular : ∀ (D : D7) (V : HSp D) (fr : GL (Fin V.rank) D.host.E) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)),
     Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) fr.1 * V.gram * fr.1 = 1 → IsSelfDualC V Λ →
     (Formalism.L2.Pj.GenLat.mk (Λ.comap ((Matrix.mulVecLin fr.1).restrictScalars (𝓞 D.host.E)))).Unimod := by
-  first | exact @GlobalTheory.FramePull.unimod_comap_frame | exact GlobalTheory.FramePull.unimod_comap_frame | (intros; apply GlobalTheory.FramePull.unimod_comap_frame <;> assumption)
+  first | exact @GlobalTheory.FramePull.unimod_comap_frame
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SelfDualComapOrthonormalFrameUnimodularStatement =====

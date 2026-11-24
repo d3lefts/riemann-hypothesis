@@ -577,9 +577,7 @@ lemma fib_set_eq (A : Set (Fin n → ℝ)) (y : {i : Fin n // ¬ (i : ℕ) < j} 
 private theorem measure_eq_of_measurePreserving_symm_preimage {α β : Type*} [MeasurableSpace α] [MeasurableSpace β]
     {μ : Measure α} {ν : Measure β} (e : α ≃ᵐ β) (he : MeasurePreserving e μ ν) (S : Set α) :
     μ S = ν (e.symm ⁻¹' S) := by
-  have h : Measure.map e μ (e.symm ⁻¹' S) = μ (e ⁻¹' (e.symm ⁻¹' S)) := e.map_apply _
-  rw [he.map_eq] at h
-  rw [h]
+  rw [← he.map_eq, e.map_apply]
   congr 1
   ext x
   simp

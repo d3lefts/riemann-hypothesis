@@ -153,14 +153,14 @@ theorem contDiffOn_param_nat (m : ℕ) : ∀ {E' E : Type} [NormedAddCommGroup E
   induction m with
   | zero =>
     intro E' E _ _ _ _ _ _ f L hf hL
-    have hf1 : ContDiffOn ℂ 1 f Ω := hf.of_le (by first | exact WithTop.coe_le_coe.mpr le_top | simp | decide : (1 : WithTop ℕ∞) ≤ ∞)
+    have hf1 : ContDiffOn ℂ 1 f Ω := hf.of_le (by first | exact WithTop.coe_le_coe.mpr le_top | decide : (1 : WithTop ℕ∞) ≤ ∞)
     have h0 : ContDiffOn ℂ 0 (fun x => ∫ k, L k (f (c k x)) ∂ν) U :=
       contDiffOn_zero.mpr fun x hx =>
         (hasFDerivAt_param ν c hc hU hΩ hUΩ f L hf1 hL hx).continuousAt.continuousWithinAt
     exact_mod_cast h0
   | succ m ih =>
     intro E' E _ _ _ _ _ _ f L hf hL
-    have hf1 : ContDiffOn ℂ 1 f Ω := hf.of_le (by first | exact WithTop.coe_le_coe.mpr le_top | simp | decide : (1 : WithTop ℕ∞) ≤ ∞)
+    have hf1 : ContDiffOn ℂ 1 f Ω := hf.of_le (by first | exact WithTop.coe_le_coe.mpr le_top | decide : (1 : WithTop ℕ∞) ≤ ∞)
     have hd := fun x (hx : x ∈ U) => hasFDerivAt_param ν c hc hU hΩ hUΩ f L hf1 hL hx
     have hf' : ContDiffOn ℂ ∞ (fderiv ℂ f) Ω := ((contDiffOn_infty_iff_fderiv_of_isOpen hΩ).mp hf).2
     rw [Nat.cast_succ, contDiffOn_succ_iff_fderiv_of_isOpen hU]
@@ -212,9 +212,8 @@ lemma continuous_conjK (ε : Fin n → Bool) : Continuous (conjK ε) := by
   have h1 : Continuous (fun k : KG ε => toMK k) := by
     unfold toMK
     fun_prop
-  have h2 : Continuous (fun k : KG ε => toMK k⁻¹) := h1.comp continuous_inv
   show Continuous (fun k : KG ε => toMK k⁻¹ * (show Matrix (Fin n) (Fin n) ℂ from y) * toMK k)
-  exact (h2.matrix_mul continuous_const).matrix_mul h1
+  exact ((h1.comp continuous_inv).matrix_mul continuous_const).matrix_mul h1
 
 def Lop {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KType ε Λ) (k : KG ε) : ℂ →L[ℂ] (T.V →L[ℂ] T.V) :=
   (ContinuousLinearMap.lsmul ℂ ℂ).flip (T.op k * projW T * T.op k⁻¹)
@@ -232,20 +231,18 @@ theorem psM_contDiffOn {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KType ε 
   have hΩ : IsOpen (OmegaSet n : Set 𝕄) := isOpen_omega
   have h := GelfandGB.contDiffOn_param (muK ε) (conjK ε) (continuous_conjK ε) hU hΩ
     (fun x hx k => hx k) (Ps1.PhiP μ) (Lop T) hφ hL
-  have h' : ContDiffOn ℂ ∞ (fun x : 𝕄 => psM T μ x) (Ps1.Uset ε : Set 𝕄) :=
-    (h.const_smul ((Module.finrank ℂ T.V : ℂ) / ((muK ε Set.univ).toReal : ℂ))).congr fun x _ => rfl
-  exact h'
+  exact (h.const_smul ((Module.finrank ℂ T.V : ℂ) / ((muK ε Set.univ).toReal : ℂ))).congr
+    fun x _ => rfl
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
 
 lemma lhol_contDiffOn {U : Set (Matrix (Fin n) (Fin n) ℂ)} (hU : IsOpen U)
     {F : Matrix (Fin n) (Fin n) ℂ → E} (hF : ContDiffOn ℂ ∞ F U) (X : Matrix (Fin n) (Fin n) ℂ) :
     ContDiffOn ℂ ∞ (Lhol X F) U := by
-  have hlin : ContDiff ℂ ∞ (fun z : Matrix (Fin n) (Fin n) ℂ => X * z) := by
-    have h := (LinearMap.toContinuousLinearMap
+  have hlin : ContDiff ℂ ∞ (fun z : Matrix (Fin n) (Fin n) ℂ => X * z) :=
+    (LinearMap.toContinuousLinearMap
       (LinearMap.mulLeft ℂ X : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] Matrix (Fin n) (Fin n) ℂ)).contDiff
       (n := ∞)
-    exact h
   unfold Lhol
   exact ((contDiffOn_infty_iff_fderiv_of_isOpen hU).1 hF).2.clm_apply hlin.contDiffOn
 
@@ -263,8 +260,7 @@ lemma opPow_contDiffOn {U : Set (Matrix (Fin n) (Fin n) ℂ)} (hU : IsOpen U)
     · exact contDiffOn_const
   | succ k ih =>
     intro a b
-    simp only [opPow]
-    rw [Finset.sum_fn]
+    simp only [opPow, Finset.sum_fn]
     exact ContDiffOn.sum fun c _ => lhol_contDiffOn hU (ih c b) (Y a c)
 
 end GelfandGA

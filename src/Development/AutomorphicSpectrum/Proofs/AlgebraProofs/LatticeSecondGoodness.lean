@@ -291,7 +291,7 @@ theorem smul_mem_stdLat_of_mem_hh {o Ω : Type} [CommRing o] [Field Ω] [Algebra
   simp only [AddSubgroup.mem_iInf] at hv
   have h2 : (w • (Pi.single j 1 : Fin n → Ω)) ⬝ᵥ v ∈ R := hv _ hl
   have h3 : (w • (Pi.single j 1 : Fin n → Ω)) ⬝ᵥ v = (w • v) j := by
-    simp [smul_dotProduct, single_one_dotProduct]
+    simp [smul_dotProduct]
   rwa [h3] at h2
 
 theorem main : ∀ {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {F : Type} [Zero F] [One F] [Fintype F] {n : ℕ} {Sg : Type} {r s : Sg → ℕ} (D : LieLatticeData Ω F n Sg r s) (R : Subalgebra o Ω) (p : ℕ) (w : Ω) (χ : Sg → F → Ω), CharData R p w χ → D.Base R p w → D.Good₁ R p χ → D.Good₂ R p χ → (∀ τ, mulLat w (stdLat R _) ≤ D.af R p (χ τ)) → ∀ (C : Type) [Field C] [Algebra o C] [Algebra Ω C] [IsScalarTower o Ω C] (RC : Subalgebra o C), (∀ a ∈ R, algebraMap Ω C a ∈ RC) → ∀ τ, (D.bc RC).kerH RC p τ (fun a => algebraMap Ω C (χ τ a)) = spanOver RC (bcMap Ω C _ '' D.kerH R p τ (χ τ)) := by
@@ -366,7 +366,7 @@ section -- clump:auto
 open GlobalTheory.CompanionTheory.Ar.Num
 
 theorem _root_.GlobalTheory.T.character_lattice_base_change_free : ∀ {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {F : Type} [Zero F] [One F] [Fintype F] {n : ℕ} {Sg : Type} {r s : Sg → ℕ} (D : LieLatticeData Ω F n Sg r s) (R : Subalgebra o Ω) (p : ℕ) (w : Ω) (χ : Sg → F → Ω), CharData R p w χ → D.Base R p w → D.Good₁ R p χ → D.Good₂ R p χ → (∀ τ, mulLat w (stdLat R _) ≤ D.af R p (χ τ)) → ∀ (C : Type) [Field C] [Algebra o C] [Algebra Ω C] [IsScalarTower o Ω C] (RC : Subalgebra o C), (∀ a ∈ R, algebraMap Ω C a ∈ RC) → ∀ τ, (D.bc RC).kerH RC p τ (fun a => algebraMap Ω C (χ τ a)) = spanOver RC (bcMap Ω C _ '' D.kerH R p τ (χ τ)) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Num.LatticeGoodness.KerBC.main | exact GlobalTheory.CompanionTheory.Ar.Num.LatticeGoodness.KerBC.main | (intros; apply GlobalTheory.CompanionTheory.Ar.Num.LatticeGoodness.KerBC.main <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Num.LatticeGoodness.KerBC.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.CharacterLatticeBaseChangeFreeStatement =====
@@ -399,7 +399,7 @@ theorem stepCoord_surjective {n : ℕ} (i : Fin n) : Function.Surjective (stepCo
   intro c
   refine ⟨⟨Pi.single i c, mem_annSub_iff.2 fun j hj => ?_⟩, by simp [stepCoord_apply]⟩
   have : j ≠ i := by rintro rfl; exact lt_irrefl _ hj
-  simp [Pi.single_apply, this]
+  simp [this]
 
 theorem mem_ker_stepCoord {n : ℕ} (i : Fin n) (v : annSub Ω n i) :
     v ∈ LinearMap.ker (stepCoord Ω i) ↔ (v : Fin n → Ω) ∈ annSub Ω n ((i : ℕ) + 1) := by
@@ -658,7 +658,7 @@ private theorem loc_free_base_change {o Ω C : Type} [CommRing o] [Field Ω] [Fi
     (hiff (b q)).2 ⟨Pi.single q 1, fun q' => ⟨0, by
       rcases eq_or_ne q' q with rfl | h
       · simp [one_mem]
-      · simp [Pi.single_apply, h]⟩, by simp [Pi.single_apply]⟩
+      · simp [h]⟩, by simp [Pi.single_apply]⟩
   refine ⟨fun q => bcMap Ω C ι (b q), by rw [← hB']; exact B'.linearIndependent,
     by rw [← hB']; exact B'.span_eq, fun e => ?_⟩
   beta_reduce

@@ -126,8 +126,7 @@ theorem leastSplitAuxiliaryPrimeThetaChain_spec : (AbsolutelyIrreducibleSpan.q0 
   exact ⟨(AbsolutelyIrreducibleSpan.auxiliary_prime_mem (D := D)).1, (AbsolutelyIrreducibleSpan.auxiliary_prime_mem (D := D)).2.1⟩
 
 theorem split_prime_mod_divisor_eq_one {m : ℕ} (hm : m ∣ AbsolutelyIrreducibleSpan.rPr D * LevelStarExponents.condE D) (h2 : 2 ≤ m) : AbsolutelyIrreducibleSpan.q0 D % m = 1 := by
-  have h1 := (AbsolutelyIrreducibleSpan.auxiliary_prime_mem (D := D)).2.1
-  rw [← Nat.mod_mod_of_dvd _ hm, h1]
+  rw [← Nat.mod_mod_of_dvd _ hm, (AbsolutelyIrreducibleSpan.auxiliary_prime_mem (D := D)).2.1]
   exact Nat.mod_eq_of_lt (by omega)
 
 theorem q0_mod_eq_one_of_dvd_condE {m : ℕ} (hm : m ∣ LevelStarExponents.condE D) (h2 : 2 ≤ m) : AbsolutelyIrreducibleSpan.q0 D % m = 1 := by
@@ -176,8 +175,7 @@ theorem split_prime_jacobi_of_three_mod_four {m : ℕ} (hm : m.Prime) (hm4 : m %
   have h2 : AbsolutelyIrreducibleSpan.q0 D ≠ 2 := (q0_ne_two_and_ne_q_and_ne_d D).1
   have hv : ((1 : (ZMod m)ˣ) : ZMod m) = (AbsolutelyIrreducibleSpan.q0 D : ZMod m) := by
     rw [Units.val_one, ← ZMod.natCast_mod (AbsolutelyIrreducibleSpan.q0 D) m, hq, Nat.cast_one]
-  rw [← sqSign_eq_jacobi hm hq0 hm4 h2 1 hv]
-  simp [sqSign]
+  simpa [sqSign] using (sqSign_eq_jacobi hm hq0 hm4 h2 1 hv).symm
 
 theorem split_prime_jacobi_neg_d : jacobiSym (-(D.host.d : ℤ)) (AbsolutelyIrreducibleSpan.q0 D) = 1 := by
   have hh := D.host.hyp
@@ -188,12 +186,11 @@ theorem split_prime_jacobi_neg_d : jacobiSym (-(D.host.d : ℤ)) (AbsolutelyIrre
 
 theorem split_prime_mod_conductor_eq_one : AbsolutelyIrreducibleSpan.q0 D % D.host.condN = 1 := by
   have hh := D.host.hyp
-  have hq2 := hh.1.two_le
   have hdv : D.host.q ∣ LevelStarExponents.condE D := by
     unfold LevelStarExponents.condE
     exact dvd_mul_of_dvd_left (dvd_mul_left _ _) _
-  have h2 : 2 ≤ LevelStarExponents.condE D := le_trans hq2 (Nat.le_of_dvd (condE_pos D) hdv)
-  exact q0_mod_eq_one_of_dvd_condE D dvd_rfl h2
+  exact q0_mod_eq_one_of_dvd_condE D dvd_rfl
+    (le_trans hh.1.two_le (Nat.le_of_dvd (condE_pos D) hdv))
 
 theorem split_prime_splits_completely : (placesOver D.host.E (AbsolutelyIrreducibleSpan.q0 D)).ncard = Module.finrank ℚ D.host.E := by
   haveI : Fact (AbsolutelyIrreducibleSpan.q0 D).Prime := ⟨(AbsolutelyIrreducibleSpan.auxiliary_prime_mem (D := D)).1⟩

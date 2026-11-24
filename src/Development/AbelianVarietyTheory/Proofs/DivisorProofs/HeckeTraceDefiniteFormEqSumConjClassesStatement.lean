@@ -139,7 +139,7 @@ def cosetEquiv (Γ K : Subgroup G) (x g : G) (γ₀ : Γ) (h₀ : γ₀ ∈ cose
     have h1 : x⁻¹ * ((((γ : Γ)) : G)⁻¹ * g) ∈ K := γ.2
     have := K.mul_mem h0 (K.inv_mem h1)
     convert this using 1
-    simp only [Subgroup.coe_mul, Subgroup.coe_inv]
+    simp only [Subgroup.coe_inv]
     group⟩⟩
   left_inv δ := by ext; simp
   right_inv γ := by ext; simp
@@ -734,7 +734,7 @@ theorem _root_.GlobalTheory.T.finsum_stabilizer_weighted_pair_orbits_conjClass :
       ∑ᶠ b : MulAction.orbitRel.Quotient (Γ ⊓ Subgroup.centralizer {(γ₀ : G)} : Subgroup G) X,
         (1 / (Nat.card (MulAction.stabilizer (Γ ⊓ Subgroup.centralizer {(γ₀ : G)} : Subgroup G)
           (Quotient.out b)) : ℂ)) * Φ γ₀ (Quotient.out b) := by
-  first | (exact @GlobalTheory.MassConj.finsum_pairOrbit_fibre) | (exact GlobalTheory.MassConj.finsum_pairOrbit_fibre) | (intros; apply GlobalTheory.MassConj.finsum_pairOrbit_fibre  <;> assumption)
+  first | (exact @GlobalTheory.MassConj.finsum_pairOrbit_fibre)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinsumStabilizerWeightedPairOrbitsConjClassStatement =====
@@ -1354,7 +1354,7 @@ theorem locPart_map_eq (ι₁ : Γ →* G₁) (ι₂ : Γ →* G₂) (K₁ : Sub
     GlobalTheory.LKLoc.locPart (C.map (ι₁.prod ι₂)) (K₁.prod K₂) x = (stab ι₁ ι₂ K₁ K₂ x ⊓ C).map (ι₁.prod ι₂) := by
   ext δ
   rw [GlobalTheory.FinTF.mem_locPart_iff]
-  simp only [Subgroup.mem_map, Subgroup.mem_inf, stab, Subgroup.mem_comap, mem_map_conj, Subgroup.mem_prod]
+  simp only [Subgroup.mem_map, Subgroup.mem_inf, stab, Subgroup.mem_comap, Subgroup.mem_prod]
   constructor
   · rintro ⟨⟨w, hw, rfl⟩, h1, h2⟩
     exact ⟨w, ⟨⟨(mem_map_conj _ _ _).2 (by simpa using h1), (mem_map_conj _ _ _).2 (by simpa using h2)⟩, hw⟩, rfl⟩
@@ -1464,7 +1464,7 @@ theorem _root_.GlobalTheory.T.heckeTrace_definiteForm_eq_sum_conjClasses : ∀ (
           LinearMap.trace ℂ V (ξ (Quotient.out c : GlobalTheory.LKCx.grp G B.β).1) *
             centSum (GlobalTheory.LKCx.toAfF G B.β B.trivAf.choose B.trivAf.choose_spec.choose B.trivAf.choose_spec.choose_spec)
               (GlobalTheory.LKCx.toP1 G B.β) (MonoidHom.id (Gr G 1)) L.K.toSubgroup K' 1 f f' (Quotient.out c) := by
-  first | (exact @GlobalTheory.HeckeTrace.dform_trace_eq) | (exact GlobalTheory.HeckeTrace.dform_trace_eq) | (intros; apply GlobalTheory.HeckeTrace.dform_trace_eq <;> assumption)
+  first | (exact @GlobalTheory.HeckeTrace.dform_trace_eq)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeckeTraceDefiniteFormEqSumConjClassesStatement =====

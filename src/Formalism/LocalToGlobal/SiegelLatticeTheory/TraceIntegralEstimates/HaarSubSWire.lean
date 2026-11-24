@@ -198,10 +198,6 @@ theorem isHaarSub_comap (Φ : G ≃* H) (hΦ : Continuous Φ) (hΦ' : Continuous
     show SigmaFinite (μ.map M.symm)
     first
       | exact M.symm.sigmaFinite_map
-      | exact MeasurableEquiv.sigmaFinite_map M.symm
-      | (refine SigmaFinite.of_map _ M.measurable.aemeasurable ?_
-         rw [Measure.map_map M.measurable M.symm.measurable, M.self_comp_symm, Measure.map_id]
-         exact hσ)
   · intro h
     exact h0 ((Measure.map_eq_zero_iff hs.aemeasurable).1 h)
   · rw [hmap]
@@ -577,7 +573,7 @@ theorem hermitian_scaled_right {n : ℕ} (ε : Fin n → Bool) (T : ℝ) (x z : 
 theorem hermitian_scaled_left {n : ℕ} (ε : Fin n → Bool) (T : ℝ) (x z : Fin n → ℂ) :
     hJ ε (z0v T z) x = (((Real.sqrt T)⁻¹ : ℝ) : ℂ) * hJ ε z x := by
   unfold z0v hJ
-  simp [Matrix.mulVec_smul, smul_dotProduct, star_smul]
+  simp [smul_dotProduct, star_smul]
 
 theorem folner_of_haar {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (u : D.what₂.Word)
     (hμ : IsHaarSub (X.SinfU u) (Formalism.L2.SG.RealObj.muS X u)) :

@@ -331,7 +331,7 @@ theorem exists_form_of_compatible_fractions : ∀ (A : Type) [CommRing A] [IsNoe
         have e2 : ({a, j} : Finset (Fin (n + 1))).erase a = {j} := by
           ext k; simp only [Finset.mem_erase, Finset.mem_insert, Finset.mem_singleton]; aesop
         rw [e1, e2]
-        simp only [xProd, Finset.prod_singleton, Finset.prod_pair hab]
+        simp only [xProd, Finset.prod_singleton]
         rw [awayFrac_eq_iff]
         obtain ⟨L, hL⟩ := hc a j
         refine ⟨L, ?_⟩
@@ -443,7 +443,7 @@ theorem comp_lift (e e' : ℕ) (P : MvPolynomial σ R) (hP : ∀ m, AddMonoidAlg
   rw [Polynomial.coeff_monomial]
   by_cases h : e' = e
   · subst h; simp
-  · simp [Finsupp.single_apply, h, Ne.symm h]
+  · simp [h]
 
 theorem comp_sub (e : ℕ) (Q₁ Q₂ : MvPolynomial σ (reesAlgebra I)) :
     comp e (Q₁ - Q₂) = comp e Q₁ - comp e Q₂ := by

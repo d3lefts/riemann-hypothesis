@@ -136,7 +136,7 @@ theorem _root_.GlobalTheory.T.dvr_exists_unit_pow_eq_mul_uniformizer : ∀ (T V 
     ∀ (α : V) (ϖ u : T) (m k : ℕ), Irreducible ϖ → IsUnit u → 0 < k →
     α ^ (m * k) = algebraMap T V (u * ϖ ^ k) →
     ∃ γ : V, IsUnit γ ∧ α ^ m = γ * algebraMap T V ϖ ∧ γ ^ k = algebraMap T V u := by
-  first | (exact @GlobalTheory.dvr_pow_mul_eq_unit_mul_pow_unif) | (exact GlobalTheory.dvr_pow_mul_eq_unit_mul_pow_unif) | (intros; apply GlobalTheory.dvr_pow_mul_eq_unit_mul_pow_unif  <;> assumption)
+  first | (exact @GlobalTheory.dvr_pow_mul_eq_unit_mul_pow_unif)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DvrExistsUnitPowEqMulUniformizerStatement =====
@@ -156,7 +156,7 @@ theorem kummer_residue_aeval (T V : Type) [CommRing T] [IsLocalRing T] [CommRing
   induction p using Polynomial.induction_on with
   | C a => simp
   | add p q hp hq => simp [hp, hq]
-  | monomial n a hp => simp [hp, pow_succ, ← mul_assoc]
+  | monomial n a hp => simp [pow_succ, ← mul_assoc]
 
 theorem kummer_step_one (T V : Type) [CommRing T] [IsDomain T] [IsDiscreteValuationRing T]
     [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Algebra T V]
@@ -277,7 +277,7 @@ theorem _root_.GlobalTheory.T.kummer_aeval_valuation_dvr : ∀ (T V : Type) [Com
     ∀ h : Polynomial T, Polynomial.aeval γ h = 0 ∨
       ∃ (a : ℕ) (h' c : Polynomial T), IsUnit (Polynomial.aeval γ c) ∧ IsUnit (Polynomial.aeval γ h') ∧
         Polynomial.aeval γ c * Polynomial.aeval γ h = algebraMap T V ϖ ^ a * Polynomial.aeval γ h' := by
-  first | (exact @GlobalTheory.kummer_valuation) | (exact GlobalTheory.kummer_valuation) | (intros; apply GlobalTheory.kummer_valuation  <;> assumption)
+  first | (exact @GlobalTheory.kummer_valuation)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.KummerAevalValuationDvrStatement =====
@@ -310,25 +310,16 @@ theorem kummer_residue_mem_adjoin (T V : Type) [CommRing T] [IsDomain T] [IsDisc
     intro p
     induction p using Polynomial.induction_on with
     | C a =>
-      rw [aeval_C]
-      have : residue V (algebraMap T V a) =
-          algebraMap (ResidueField T) (ResidueField V) (residue T a) :=
-        (ResidueField.map_residue _ a).symm
-      rw [this]; exact K.algebraMap_mem _
-    | add p q hp hq => rw [map_add (f := _), map_add (f := _)]; exact K.add_mem hp hq
+      rw [aeval_C, ← ResidueField.map_residue (algebraMap T V) a]
+      exact K.algebraMap_mem _
+    | add p q hp hq => rw [aeval_add, RingHom.map_add]; exact K.add_mem hp hq
     | monomial n a ih =>
-      rw [pow_succ, ← mul_assoc, map_mul, aeval_X, map_mul]
+      rw [pow_succ, ← mul_assoc, aeval_mul, RingHom.map_mul, aeval_X]
       exact K.mul_mem ih hγK
-  have hϖ0 : algebraMap T V ϖ ≠ 0 := by
-    rw [Ne, ← map_zero (algebraMap T V)]; exact fun h => hϖ.ne_zero (hinj h)
-  have hα0 : α ≠ 0 := by
-    rintro rfl
-    rw [zero_pow hm.ne'] at hα
-    exact mul_ne_zero hγ.ne_zero hϖ0 hα.symm
-  have hαnu : ¬ IsUnit α := by
-    intro h
-    have h1 : IsUnit (γ * algebraMap T V ϖ) := hα ▸ h.pow m
-    exact hϖ.not_isUnit ((isUnit_map_iff (algebraMap T V) ϖ).1 (isUnit_of_mul_isUnit_right h1))
+  have hϖ0 : algebraMap T V ϖ ≠ 0 := by simpa using hinj.ne hϖ.ne_zero
+  have hα0 : α ≠ 0 := fun h => mul_ne_zero hγ.ne_zero hϖ0 (hα ▸ by rw [h, zero_pow hm.ne'])
+  have hαnu : ¬ IsUnit α := fun h => hϖ.not_isUnit ((isUnit_map_iff (algebraMap T V) ϖ).1
+    (isUnit_of_mul_isUnit_right (hα ▸ h.pow m)))
   have hsmall : ∀ k : ℕ, 0 < k → ∀ x : V, residue V (α ^ k * x) = 0 := by
     intro k hk x
     rw [residue_eq_zero_iff]
@@ -336,7 +327,7 @@ theorem kummer_residue_mem_adjoin (T V : Type) [CommRing T] [IsDomain T] [IsDisc
   have hcomb : ∀ (u u' : V) (k : ℕ), 0 < k → IsUnit u → residue V u ∈ K →
       IsUnit (u + α ^ k * u') ∧ residue V (u + α ^ k * u') ∈ K := by
     intro u u' k hk hu huK
-    have e : residue V (u + α ^ k * u') = residue V u := by rw [map_add (f := _), hsmall k hk, add_zero]
+    have e : residue V (u + α ^ k * u') = residue V u := by rw [RingHom.map_add, hsmall k hk, add_zero]
     refine ⟨?_, e ▸ huK⟩
     rw [← residue_ne_zero_iff_isUnit, e, residue_ne_zero_iff_isUnit]; exact hu
   let Good : Finset ℕ → V → Prop := fun s x =>
@@ -347,12 +338,12 @@ theorem kummer_residue_mem_adjoin (T V : Type) [CommRing T] [IsDomain T] [IsDisc
     induction p using Polynomial.induction_on' with
     | add p q hp hq =>
       obtain ⟨a, ha⟩ := hp; obtain ⟨b, hb⟩ := hq
-      exact ⟨a + b, by simp only [map_add (f := _), ha, hb, Pi.add_apply, add_mul, Finset.sum_add_distrib]⟩
+      exact ⟨a + b, by simp only [aeval_add, ha, hb, Pi.add_apply, add_mul, Finset.sum_add_distrib]⟩
     | monomial n t =>
       refine ⟨fun j => if j = n % m then C t * (C ϖ * X) ^ (n / m) else 0, ?_⟩
       simp only [apply_ite (aeval γ), ite_mul, map_zero, zero_mul, Finset.sum_ite_eq',
-        Finset.mem_range, Nat.mod_lt _ hm, if_true]
-      rw [aeval_monomial, map_mul, aeval_C, map_pow, map_mul, aeval_C, aeval_X]
+        Finset.mem_range, Nat.mod_lt _ hm, ite_true]
+      rw [aeval_monomial, aeval_mul, aeval_C, map_pow, aeval_mul, aeval_C, aeval_X]
       conv_lhs => rw [← Nat.div_add_mod n m, pow_add, pow_mul, hα]
       ring
   have hterm : ∀ (a : T[X]) (j : ℕ), j < m → Good {j} (aeval γ a * α ^ j) := by
@@ -362,14 +353,12 @@ theorem kummer_residue_mem_adjoin (T V : Type) [CommRing T] [IsDomain T] [IsDisc
     · right
       refine ⟨m * b + j, ((hγ.unit⁻¹ ^ b * hc.unit⁻¹ : Vˣ) : V) * aeval γ h',
         (Units.isUnit _).mul hh', ?_, ?_, ?_⟩
-      · rw [map_mul, Units.val_mul, map_mul, Units.val_pow_eq_pow_val, map_pow, map_units_inv,
-          map_units_inv, IsUnit.unit_spec, IsUnit.unit_spec]
+      · rw [RingHom.map_mul, Units.val_mul, map_mul, Units.val_pow_eq_pow_val, map_pow,
+          map_units_inv, map_units_inv, IsUnit.unit_spec, IsUnit.unit_spec]
         exact K.mul_mem (K.mul_mem (pow_mem (K.inv_mem hγK) b) (K.inv_mem (hres c))) (hres h')
       · rw [Finset.mem_singleton, Nat.mul_add_mod, Nat.mod_eq_of_lt hj]
-      · have e1 : (γ * ((hγ.unit⁻¹ : Vˣ) : V)) ^ b = 1 := by
-          rw [IsUnit.mul_val_inv hγ, one_pow]
-        have e2 : aeval γ c * ((hc.unit⁻¹ : Vˣ) : V) = 1 := by
-          exact IsUnit.mul_val_inv hc
+      · have e1 : (γ * ((hγ.unit⁻¹ : Vˣ) : V)) ^ b = 1 := by rw [IsUnit.mul_val_inv hγ, one_pow]
+        have e2 := IsUnit.mul_val_inv hc
         rw [pow_add, pow_mul, hα, Units.val_mul, Units.val_pow_eq_pow_val]
         linear_combination (-(aeval γ a * α ^ j)) * e2 + (((hc.unit⁻¹ : Vˣ) : V) * α ^ j) * hrel
           + (-(algebraMap T V ϖ ^ b * aeval γ h' * ((hc.unit⁻¹ : Vˣ) : V) * α ^ j)) * e1
@@ -405,10 +394,8 @@ theorem kummer_residue_mem_adjoin (T V : Type) [CommRing T] [IsDomain T] [IsDisc
   · obtain ⟨f, g, hg0, hfg⟩ := hgen v
     obtain ⟨a, ha⟩ := hdec g
     obtain ⟨b, hb⟩ := hdec f
-    have Gg := hsum a _ subset_rfl
-    have Gf := hsum b _ subset_rfl
-    rw [← ha] at Gg
-    rw [← hb] at Gf
+    have Gg : Good (Finset.range m) (aeval α g) := ha ▸ hsum a _ subset_rfl
+    have Gf : Good (Finset.range m) (aeval α f) := hb ▸ hsum b _ subset_rfl
     rcases Gg with h | ⟨n, u, hu, huK, -, he⟩
     · exact absurd h hg0
     rcases Gf with h | ⟨n', u', hu', hu'K, -, he'⟩
@@ -417,27 +404,22 @@ theorem kummer_residue_mem_adjoin (T V : Type) [CommRing T] [IsDomain T] [IsDisc
     have key : n = n' := by
       rcases lt_trichotomy n n' with h | h | h
       · exfalso
-        have h2 : α ^ n * (u * v) = α ^ n * (α ^ (n' - n) * u') := by
-          rw [← mul_assoc, hfg, ← mul_assoc, ← pow_add, Nat.add_sub_cancel' h.le]
-        have h3 := mul_left_cancel₀ (pow_ne_zero n hα0) h2
-        have h4 := hsmall (n' - n) (Nat.sub_pos_of_lt h) u'
-        rw [← h3] at h4
-        exact (residue_ne_zero_iff_isUnit _).2 (hu.mul hv) h4
+        obtain h2 : u * v = α ^ (n' - n) * u' := mul_left_cancel₀ (pow_ne_zero n hα0) (by
+          rw [← mul_assoc, hfg, ← mul_assoc, ← pow_add, Nat.add_sub_cancel' h.le])
+        exact (residue_ne_zero_iff_isUnit _).2 (hu.mul hv)
+          (h2 ▸ hsmall (n' - n) (Nat.sub_pos_of_lt h) u')
       · exact h
       · exfalso
-        have h2 : α ^ n' * (α ^ (n - n') * (u * v)) = α ^ n' * u' := by
-          rw [← hfg, ← mul_assoc, ← pow_add, Nat.add_sub_cancel' h.le, mul_assoc]
-        have h3 := mul_left_cancel₀ (pow_ne_zero n' hα0) h2
-        have h4 := hsmall (n - n') (Nat.sub_pos_of_lt h) (u * v)
-        rw [h3] at h4
-        exact (residue_ne_zero_iff_isUnit _).2 hu' h4
+        obtain h2 : u' = α ^ (n - n') * (u * v) := mul_left_cancel₀ (pow_ne_zero n' hα0) (by
+          rw [← hfg, ← mul_assoc, ← pow_add, Nat.add_sub_cancel' h.le, mul_assoc])
+        exact (residue_ne_zero_iff_isUnit _).2 hu'
+          (h2 ▸ hsmall (n - n') (Nat.sub_pos_of_lt h) (u * v))
     subst key
     have huv : u * v = u' := mul_left_cancel₀ (pow_ne_zero n hα0) (by rw [← mul_assoc, hfg])
-    have hr : residue V u * residue V v = residue V u' := by rw [← map_mul, huv]
+    have hr : residue V u * residue V v = residue V u' := by rw [← RingHom.map_mul, huv]
     have hru : residue V u ≠ 0 := (residue_ne_zero_iff_isUnit _).2 hu
-    have : residue V v = residue V u' / residue V u := by
-      rw [← hr]; field_simp
-    rw [this]; exact K.div_mem hu'K huK
+    rw [show residue V v = residue V u' / residue V u by rw [eq_div_iff hru, mul_comm]; exact hr]
+    exact K.div_mem hu'K huK
   · rw [(residue_eq_zero_iff v).2 ((mem_maximalIdeal _).2 hv)]; exact K.zero_mem
 
 end GlobalTheory
@@ -462,7 +444,7 @@ theorem _root_.GlobalTheory.T.kummer_residue_mem_adjoin_unit : ∀ (T V : Type) 
     (∀ v : V, ∃ f g : Polynomial T, Polynomial.aeval α g ≠ 0 ∧ Polynomial.aeval α g * v = Polynomial.aeval α f) →
     ∀ v : V, IsLocalRing.residue V v ∈
       IntermediateField.adjoin (IsLocalRing.ResidueField T) {IsLocalRing.residue V γ} := by
-  first | (exact @GlobalTheory.kummer_residue_mem_adjoin) | (exact GlobalTheory.kummer_residue_mem_adjoin) | (intros; apply GlobalTheory.kummer_residue_mem_adjoin  <;> assumption)
+  first | (exact @GlobalTheory.kummer_residue_mem_adjoin)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.KummerResidueMemAdjoinUnitStatement =====
@@ -586,7 +568,7 @@ theorem _root_.GlobalTheory.T.kummer_uniformiser_adjoinRoot_tensor_isReduced : �
     [FiniteDimensional K L] [Algebra.IsSeparable K L] (π : S) (e : ℕ) (D : Type) [CommRing D] [Algebra S D],
     Nonempty (D ≃ₐ[S] AdjoinRoot (Polynomial.X ^ e - Polynomial.C π)) → Irreducible π → IsUnit (e : S) →
     IsReduced (TensorProduct S D L) := by
-  first | (exact @GlobalTheory.kummer_uniformiser_tensor_isReduced) | (exact GlobalTheory.kummer_uniformiser_tensor_isReduced) | (intros; apply GlobalTheory.kummer_uniformiser_tensor_isReduced  <;> assumption)
+  first | (exact @GlobalTheory.kummer_uniformiser_tensor_isReduced)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.KummerUniformiserAdjoinRootTensorIsReducedStatement =====
@@ -626,7 +608,7 @@ theorem idempotent_mul_aeval_mul {R A : Type} [CommRing R] [CommRing A] [Algebra
 theorem isIntegral_of_isIdempotentElem {R A : Type} [CommRing R] [CommRing A] [Algebra R A] {e : A}
     (he : IsIdempotentElem e) : IsIntegral R e :=
   ⟨X * (X - C 1), monic_X.mul (monic_X_sub_C 1), by
-    simp only [eval₂_mul, eval₂_X, eval₂_sub, eval₂_C, eval₂_one, map_one, mul_sub, mul_one,
+    simp only [eval₂_mul, eval₂_X, eval₂_sub, map_one, mul_sub, mul_one,
       he.eq, sub_self]⟩
 
 theorem localization_integralClosure_isDomain_isIntegrallyClosed
@@ -908,7 +890,7 @@ theorem _root_.GlobalTheory.T.localization_normalization_rootAdjoin_isDVR : ∀ 
     Nonempty (D ≃ₐ[S] AdjoinRoot (Polynomial.X ^ e - Polynomial.C π)) → Irreducible π → IsUnit (e : S) →
     ∀ [IsDomain D] [IsDiscreteValuationRing D] (Q : Ideal (integralClosure D (TensorProduct S D L))) [Q.IsMaximal],
     ∃ _ : IsDomain (Localization.AtPrime Q), IsDiscreteValuationRing (Localization.AtPrime Q) := by
-  first | (exact @GlobalTheory.LocNormDVR.main) | (exact GlobalTheory.LocNormDVR.main) | (intros; apply GlobalTheory.LocNormDVR.main  <;> assumption)
+  first | (exact @GlobalTheory.LocNormDVR.main)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalizationNormalizationRootAdjoinIsDVRStatement =====
@@ -949,7 +931,7 @@ theorem tensor_exists_smul_eq_eval₂ (S K L : Type) [CommRing S] [IsDomain S]
     obtain ⟨p, hp⟩ := AdjoinRoot.mk_surjective (φ d)
     have hd : d = aeval t p := by
       rw [aeval_algHom_apply, AdjoinRoot.aeval_eq, hp]
-      simp [t]
+      simp
     refine ⟨C ⟨s • l, hint⟩ * p.map (algebraMap S (integralClosure S L)), s, hs, ?_⟩
     rw [eval₂_mul, eval₂_C, eval₂_map]
     have : (gA.toRingHom.comp (algebraMap S (integralClosure S L))) =
@@ -991,7 +973,7 @@ theorem normalisation_mul_eq_aeval_root (S K L : Type) [CommRing S] [IsDomain S]
       (φ.symm (AdjoinRoot.root (Polynomial.X ^ e - Polynomial.C π))))
   simp only [AlgHom.toRingHom_eq_coe, AlgHom.coe_toRingHom, Subalgebra.coe_val] at hc
   rw [hc]
-  convert h using 2 <;> first | rfl | exact RingHom.ext fun _ => rfl
+  convert h using 2 <;> first | rfl
 end GlobalTheory
 end -- clump:auto
 end -- clump:auto
@@ -1015,7 +997,7 @@ theorem _root_.GlobalTheory.T.exists_mul_eq_aeval_root_normalisation : ∀ (S K 
       algebraMap S (integralClosure D (TensorProduct S D L)) s * b =
         Polynomial.aeval (algebraMap D (integralClosure D (TensorProduct S D L))
           (φ.symm (AdjoinRoot.root (Polynomial.X ^ e - Polynomial.C π)))) f := by
-  first | (exact @GlobalTheory.normalisation_mul_eq_aeval_root) | (exact GlobalTheory.normalisation_mul_eq_aeval_root) | (intros; apply GlobalTheory.normalisation_mul_eq_aeval_root  <;> assumption)
+  first | (exact @GlobalTheory.normalisation_mul_eq_aeval_root)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormalisationMulEqAevalRootStatement =====
@@ -1030,7 +1012,7 @@ open IsLocalRing
 theorem _root_.GlobalTheory.T.uniformizer_eq_pow_ramificationIdx_mul_unit_integralClosure : ∀ (S K L : Type) [CommRing S] [IsDomain S] [IsDiscreteValuationRing S]
     [Field K] [Algebra S K] [IsFractionRing S K] [Field L] [Algebra K L] [Algebra S L] [IsScalarTower S K L]
     [FiniteDimensional K L] [Algebra.IsSeparable K L] (π : S) (e : ℕ) (D : Type) [CommRing D] [Algebra S D] (P : Ideal (integralClosure S L)) [P.IsMaximal], Irreducible π → algebraMap S (integralClosure S L) π ∈ P → ∃ ϖ : Localization.AtPrime P, Irreducible ϖ ∧ ∃ u : (Localization.AtPrime P)ˣ, algebraMap S (Localization.AtPrime P) π = ϖ ^ P.ramificationIdx S * (u : Localization.AtPrime P) := by
-  first | (exact @GlobalTheory.pi_eq_pow_ramificationIdx_mul_unit) | (exact GlobalTheory.pi_eq_pow_ramificationIdx_mul_unit) | (intros; apply GlobalTheory.pi_eq_pow_ramificationIdx_mul_unit  <;> assumption)
+  first | (exact @GlobalTheory.pi_eq_pow_ramificationIdx_mul_unit)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UniformizerEqPowRamificationIdxMulUnitIntegralClStatement =====
@@ -1302,7 +1284,7 @@ theorem _root_.GlobalTheory.T.abhyankar_residueField_isSeparable_alt : ∀ (S K 
     ∀ [IsDomain D] [IsDiscreteValuationRing D] (Q : Ideal (integralClosure D (TensorProduct S D L))) [Q.IsMaximal],
     ∀ [Q.LiesOver (maximalIdeal D)],
     Algebra.IsSeparable (D ⧸ maximalIdeal D) (integralClosure D (TensorProduct S D L) ⧸ Q) := by
-  first | (exact @GlobalTheory.abhyankar_residueField_isSeparable) | (exact GlobalTheory.abhyankar_residueField_isSeparable) | (intros; apply GlobalTheory.abhyankar_residueField_isSeparable  <;> assumption)
+  first | (exact @GlobalTheory.abhyankar_residueField_isSeparable)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbhyankarResidueFieldIsSeparableStatement =====

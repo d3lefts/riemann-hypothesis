@@ -109,7 +109,7 @@ theorem exists_quat (n : ℕ) : ∃ α : Matrix (Fin 4) (Fin 4) ℤ,
   · rw [hn]
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [Matrix.mul_apply, Fin.sum_univ_four, Matrix.one_apply] <;> ring
+      simp [Matrix.mul_apply, Fin.sum_univ_four] <;> ring
 
 end PositivityTheory.PrwZar
 end -- clump:auto
@@ -257,7 +257,7 @@ theorem relAmple_lPart (hA : IsAbelianScheme A) (hB : IsAbelianScheme B) (mu : B
   rw [one_smul, cls_pull hboxLB, GlobalTheory.PosDefAmple.pull_cls_boxLB p.pr hL']
   simp only [lPart]
   simp only [cls_linComb hL, Fintype.sum_prod_type, Fin.sum_univ_four, Fin.sum_univ_eight, Fin.sum_univ_two,
-    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, one_smul, map_add, Over.id_left, pull_id]
+    Matrix.cons_val_zero, Matrix.cons_val_one, one_smul, map_add, pull_id]
   simp only [p, ← Functor.map_comp, XB.pr8]
   simp only [← Category.assoc, hq]
   simp only [Category.assoc, tensorHom_fst, tensorHom_snd, Category.comp_id, phiL]
@@ -573,7 +573,7 @@ theorem ceLam_zb_pt (hA : IsAbelianScheme A) (hB : IsAbelianScheme B) {P : LB (A
     simp only [← pull_comp, hφP]
     change evc hD.isLB _ _ - evc hD.isLB _ _ - evc hD.isLB _ _ + evc hD.isLB _ _ = _
     simp only [toBase_mul, toBase_one, MonObj.mul_comp, MonObj.one_comp, evc_mul_left hD,
-      evc_mul_right hD hD', hl1, hr1]
+      evc_mul_right hD hD', hl1]
     abel
   have hA0 : ∀ i, lam (pull (pA (B := B) s i).left (cls L hL)) a u =
       evc hD.isLB (toBase _ s a ≫ prj _ i ≫ fst A B) (toBase _ s u ≫ prj _ i ≫ fst A B ≫ l) := by
@@ -656,12 +656,12 @@ theorem ceEMap_fst (mu : B ⟶ A) [IsMonHom mu] (α : Matrix (Fin 4) (Fin 4) ℤ
     a ≫ eMap mu α m ≫ prj _ i ≫ fst A B =
       (a ≫ prj _ i ≫ fst A B) * (∏ j, (a ≫ prj _ j ≫ snd A B ≫ mu) ^ (α i j))⁻¹ := by
   simp only [eMap, g4lift_prj'_assoc, lift_fst, MonObj.comp_mul, GrpObj.comp_inv, Fin.prod_univ_four,
-    GrpObj.comp_zpow, Category.assoc]
+    GrpObj.comp_zpow]
 
 theorem ceEMap_snd (mu : B ⟶ A) (α : Matrix (Fin 4) (Fin 4) ℤ) (m : ℕ) {Y : Over S}
     (a : Y ⟶ G4 (A ⊗ B)) (i : Fin 4) :
     a ≫ eMap mu α m ≫ prj _ i ≫ snd A B = (a ≫ prj _ i ≫ snd A B) ^ (2 * m) := by
-  simp only [eMap, g4lift_prj'_assoc, lift_snd, MonObj.comp_pow, Category.assoc]
+  simp only [eMap, g4lift_prj'_assoc, lift_snd, MonObj.comp_pow]
 
 theorem ceEMap_mul (mu : B ⟶ A) [IsMonHom mu] (α : Matrix (Fin 4) (Fin 4) ℤ) (m : ℕ) {Y : Over S}
     (a b : Y ⟶ G4 (A ⊗ B)) : (a * b) ≫ eMap mu α m = (a ≫ eMap mu α m) * (b ≫ eMap mu α m) := by
@@ -730,7 +730,7 @@ private theorem ceZc_alg_lemma {GA GB Q : Type*} [AddCommGroup GA] [AddCommGroup
     intro j k hne
     simpa [Matrix.one_apply, hne] using hjk j k
 
-  simp only [map_sub, map_sum, map_zsmul, map_nsmul, AddMonoidHom.sub_apply, Finset.sum_apply,
+  simp only [map_sub, map_zsmul, map_nsmul, AddMonoidHom.sub_apply, Finset.sum_apply,
   AddMonoidHom.smul_apply, hml, hs, Fin.sum_univ_four, map_add, AddMonoidHom.add_apply]
   linear_combination (norm := module)
       ((-2 : ℤ) * (m : ℤ)) • ((hd 0) • E (mu (z' 0)) (z 0)) +
@@ -917,7 +917,7 @@ theorem two_cls_eMap {Ω : Type} [Field Ω] [IsAlgClosed Ω] (hA : IsAbelianSche
       ceZcPair_eMap hD hD' l mu α m hm h₂ hα (fun x y => ceEvc_sym hA hD.isLB l s L hL e x y), hLsum,
       lam_eq_lamHom]
 
-    simp only [map_sum, map_zsmul, one_smul, ← lam_eq_lamHom]
+    simp only [map_sum, one_smul, ← lam_eq_lamHom]
     rw [Fintype.sum_prod_type]
     simp only [Fin.sum_univ_four, line_bundle_pairing_zeroth hD l mu s L hL e, line_bundle_pairing_first hD hD' l mu s L hL e,
       line_bundle_pairing_second hD l mu s L hL e, line_bundle_pairing_third hD hD' l mu s L hL e, two_nsmul]
@@ -1232,7 +1232,7 @@ theorem zcPair_positionA (hD : IsDual A B P) (l : A ⟶ B) [IsMonHom l] (mu : B 
   have e : ∀ k : Fin 4, (if k = i then x' else (1 : Y ⟶ A)) ≫ l = if k = i then x' ≫ l else 1 := by
     intro k; split_ifs <;> simp [c1]
   simp only [zcPair, eightfold_fst, eightfold_snd, eightfold_fst_assoc, eightfold_snd_assoc, e, c2, r1, add_zero, smul_zero,
-    Finset.sum_const_zero, apply_ite (evc hD.isLB _), l1]
+    Finset.sum_const_zero, apply_ite (evc hD.isLB _)]
   simp
   rw [Finset.sum_eq_single i (fun k _ hk => by simp [hk, l1]) (by simp)]
   simp
@@ -1255,7 +1255,7 @@ theorem zcPair_positionB (hD : IsDual A B P) (l : A ⟶ B) [IsMonHom l] (mu : B 
   simp only [zcPair, eightfold_fst, eightfold_snd, eightfold_fst_assoc, eightfold_snd_assoc, c1, r1, l1, add_zero, zero_add, smul_zero,
     Finset.sum_const_zero]
   rw [Finset.sum_comm]
-  simp only [apply_ite (evc hD.isLB _), r1, smul_ite, smul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  simp only [apply_ite (evc hD.isLB _), r1, smul_ite, smul_zero]
   congr 1
   · rw [Finset.sum_eq_single j (fun k _ hk => by simp [hk, e, e', r1]) (by simp)]
     simp
@@ -1676,7 +1676,7 @@ theorem zc_rigid {P : LB (A ⊗ B).left} (hD : IsDual A B P) (l : A ⟶ B) [IsMo
   constructor <;>
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [zc, zcPair, map_add (f := _), map_sum, map_nsmul, map_zsmul, pull_evc, lift_fst_assoc, lift_snd_assoc,
-      Category.id_comp, o1, o2, e1, e2, smul_zero, add_zero, zero_add, Finset.sum_const_zero]
+      Category.id_comp, o1, o2, e1, e2, smul_zero, add_zero, Finset.sum_const_zero]
 
 end PositivityTheory.PrwZar
 end -- clump:auto

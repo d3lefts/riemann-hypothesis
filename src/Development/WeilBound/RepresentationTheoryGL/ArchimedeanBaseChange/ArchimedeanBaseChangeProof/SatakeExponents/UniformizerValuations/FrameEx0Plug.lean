@@ -488,7 +488,7 @@ theorem blk_mem {a b n : ℕ} (h : a + b = n) (w : Pl E) (m : ℕ) (y : GLw a w 
     have hone : ∀ p q, (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)) (CtLevel.blkEq h p) (CtLevel.blkEq h q) =
         (1 : Matrix (Fin a ⊕ Fin b) (Fin a ⊕ Fin b) (w.adicCompletion E)) p q := by
       intro p q
-      simp [Matrix.one_apply, (CtLevel.blkEq h).injective.eq_iff]
+      simp [Matrix.one_apply]
     rw [hone]
     rcases i' with i' | i' <;> rcases j' with j' | j'
     · rw [(GlobalTheory.CompanionTheory.GL3BlockMatrixLocal.dgM_entries h w y).1]
@@ -1127,7 +1127,6 @@ theorem hecke_phi {w : Pl E} (hw : ¬ IsSplitAt w) (a b m : ℕ) (r c : ℂ) :
     have hb := GlobalTheory.LFun.SatCompare.isOpen_isCompact_KGL w b
     refine HasCompactSupport.intro' (ha.2.prod hb.2)
       ((Subgroup.isClosed_of_isOpen _ ha.1).prod (Subgroup.isClosed_of_isOpen _ hb.1)) fun y hy => ?_
-    beta_reduce
     rw [if_neg fun h => hy ⟨h.1, h.2.2.1⟩, mul_zero, mul_zero]
   · obtain ⟨h1, h2⟩ := Subgroup.mem_prod.1 hk
     obtain ⟨e1, f1⟩ := cnd_iff hw a m h1 x.1

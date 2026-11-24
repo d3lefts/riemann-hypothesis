@@ -148,7 +148,7 @@ theorem GlobalTheory.QLog.small_first_of_frob : ∀ (p : ℕ) [Fact p.Prime] (C 
         by_cases h : i' = i
         · subst h; simp
         · have h' : i ≠ i' := Ne.symm h
-          simp [Pi.single_apply, h', h]
+          simp [h', h]
       have hsum : ∑ l, algebraMap F.B F.Q ((U * blk d k (p : F.B) 1) l (Sum.inl i')) * coeff α (e l) =
           algebraMap F.B F.Q (∑ l, U l (Sum.inl i') * cc l) := by
         rw [key, Finset.mul_sum]
@@ -271,7 +271,7 @@ theorem dIn_comb {B Q σ ι : Type} [CommRing B] [CommRing Q] [Algebra B Q] [Fin
   choose c _ hc using fun i => he i α j
   refine ⟨∑ i, b i * c i, trivial, ?_⟩
 
-  simp only [comb, map_sum, coeff_smul, smul_eq_mul, Finset.mul_sum, map_mul]
+  simp only [comb, map_sum, coeff_smul, Finset.mul_sum, map_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← hc i]; ring
 
@@ -797,8 +797,8 @@ theorem linear_coeff_law (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) O) (hμ
     simp only [map_mul, constantCoeff_subst_of yZero_const] at h2
 
     simp only [Fintype.sum_sum_type, yZero,
-    Sum.elim_inl, Sum.elim_inr, map_zero, mul_zero, Finset.sum_const_zero, add_zero, pderiv_X, map_sum, map_mul] at h2
-    simp only [Pi.single_apply, apply_ite, map_one, map_zero, mul_ite, mul_one, mul_zero,
+    Sum.elim_inl, Sum.elim_inr, map_zero, mul_zero, Finset.sum_const_zero, add_zero, pderiv_X] at h2
+    simp only [Pi.single_apply, apply_ite, map_one, map_zero, mul_one, mul_zero,
       Finset.sum_ite_eq', Finset.mem_univ, if_true] at h2
     split_ifs at h2 ⊢ <;> exact h2
   have hsw : ∀ k : Fin d ⊕ Fin d, constantCoeff ((Sum.elim (fun i => (X (Sum.inr i) : MvPowerSeries (Fin d ⊕ Fin d) O))
@@ -811,8 +811,7 @@ theorem linear_coeff_law (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) O) (hμ
   rw [ReciprocityTheory.ChartRestriction.G.TB.ChartChgPfTP.pderiv_subst _ hsw, map_sum] at h2
   simp only [map_mul, constantCoeff_subst_of hsw] at h2
   simp only [Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, pderiv_X, Pi.single_apply, Sum.inr.injEq,
-    reduceCtorEq, if_false, map_zero, mul_zero, Finset.sum_const_zero, add_zero, apply_ite, map_one, mul_ite,
-    mul_one, Finset.sum_ite_eq', Finset.mem_univ, if_true] at h2
+    reduceCtorEq, if_false, map_zero, mul_zero, Finset.sum_const_zero, add_zero, apply_ite, map_one, mul_one, Finset.sum_ite_eq', Finset.mem_univ, if_true] at h2
   rw [← h2, hx]
 
 end GlobalTheory.Katz.SmallDeriv

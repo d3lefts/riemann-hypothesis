@@ -374,7 +374,7 @@ private lemma selfDual_isFullLattice (V : HSp D) (Λ : Submodule (𝓞 D.host.E)
       refine ⟨b + c, ?_⟩
       change (b : D.host.E) + c = _
       rw [hb, hc]
-      simp [f, map_add, add_mul, Finset.sum_add_distrib, mul_add]
+      simp [f, add_mul, Finset.sum_add_distrib, mul_add]
     smul_mem' := by
       rintro c x ⟨b, hb⟩
       refine ⟨RingOfIntegers.mapRingHom (starRingEnd D.host.E) c * b, ?_⟩
@@ -432,11 +432,11 @@ theorem eq_iota_cw {h : w.under (𝓞 D.host.F) = q} {ι : w.adicCompletion D.ho
 
 theorem gl_cancel {k : Type} [Field k] {m n : ℕ} (b : GL (Fin m) k) (a : GL (Fin n) k) (Y : Matrix (Fin m) (Fin n) k) :
     b.1 * ((b⁻¹).1 * Y * a.1) * (a⁻¹).1 = Y := by
-  simp only [Matrix.mul_assoc, ← Matrix.mul_assoc b.1, Units.mul_inv, Matrix.one_mul, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.mul_one]
+  simp only [Matrix.mul_assoc, ← Matrix.mul_assoc b.1, Matrix.one_mul, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.mul_one]
 
 theorem gl_cancel' {k : Type} [Field k] {m n : ℕ} (b : GL (Fin m) k) (a : GL (Fin n) k) (Y : Matrix (Fin m) (Fin n) k) :
     (b⁻¹).1 * (b.1 * Y * (a⁻¹).1) * a.1 = Y := by
-  simp only [Matrix.mul_assoc, ← Matrix.mul_assoc (b⁻¹).1, Units.inv_mul, Matrix.one_mul, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.mul_one]
+  simp only [Matrix.mul_assoc, ← Matrix.mul_assoc (b⁻¹).1, Matrix.one_mul, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.mul_one]
 
 end GlobalTheory.DivPtLocalCard
 
@@ -547,7 +547,7 @@ open GlobalTheory.LevelSeries
 
 
 theorem _root_.GlobalTheory.T.card_divisionPoints_splitPlace_local_matrices : ∀ (D : D7) (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)), IsSelfDualC S ΛS → IsSelfDualC T ΛT → ∀ (P : Formalism.L2.DIV.Pl D.host.E), Formalism.MainNotions.SchurIrreducible.IsSplit (E := D.host.E) (P.under (𝓞 D.host.F)) → ∀ ι : P.adicCompletion D.host.E →+ AE D, GlobalTheory.DivPtLocal.IsIotaAt (rfl : P.under (𝓞 D.host.F) = P.under (𝓞 D.host.F)) ι → ∀ N : ℕ, 0 < N → Nat.card (GlobalTheory.DivPtFourier.DQ (latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun v => v = P.under (𝓞 D.host.F)) (ι 1) N) = Nat.card (GlobalTheory.DivPtLocal.LocQ P N T.rank S.rank) := by
-  first | exact @GlobalTheory.DivPtLocalCard.card_DQ_eq | exact GlobalTheory.DivPtLocalCard.card_DQ_eq | (intros; apply GlobalTheory.DivPtLocalCard.card_DQ_eq <;> assumption)
+  first | exact @GlobalTheory.DivPtLocalCard.card_DQ_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CardDivisionPointsSplitPlaceLocalMatricesStatement =====
@@ -899,7 +899,7 @@ open GlobalTheory.LevelSeries
 
 
 theorem _root_.GlobalTheory.T.splitPlace_idempotent_eq_completionEmbedding_one : ∀ (D : D7) (P : Formalism.L2.DIV.Pl D.host.E) (e : AE D), Formalism.L2.NTheta.IsIdemAt e P → ∀ ι : P.adicCompletion D.host.E →+ AE D, GlobalTheory.DivPtLocal.IsIotaAt (rfl : P.under (𝓞 D.host.F) = P.under (𝓞 D.host.F)) ι → e = ι 1 := by
-  first | exact @GlobalTheory.IdemIota.idemAt_eq_iota_one | exact GlobalTheory.IdemIota.idemAt_eq_iota_one | (intros; apply GlobalTheory.IdemIota.idemAt_eq_iota_one <;> assumption)
+  first | exact @GlobalTheory.IdemIota.idemAt_eq_iota_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SplitPlaceIdempotentEqCompletionEmbeddingOneStatement =====

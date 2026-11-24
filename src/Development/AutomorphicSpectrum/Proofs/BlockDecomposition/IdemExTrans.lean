@@ -139,7 +139,7 @@ theorem exists_lift {m : Type} [Fintype m] [DecidableEq m] (c : A →+* A) (s : 
     by_cases hij : i = j
     · subst hij
       simp [hQs, hce]
-    · simp [hQs, hce, Matrix.one_apply_ne hij, Matrix.one_apply_ne (Ne.symm hij)]
+    · simp [hQs, Matrix.one_apply_ne hij, Matrix.one_apply_ne (Ne.symm hij)]
   refine ⟨g.map Q + (1 - e) • 1, g'.map Q + (1 - e) • 1, hinv _ _ hgg', hinv _ _ hg'g, ?_, ?_, ?_⟩
   · rw [hstar]
     have hJ : ((g.map s)ᵀ).map Q * J * g.map Q = e • J := by
@@ -524,7 +524,7 @@ theorem gram_three {G : Matrix ι ι A} {κ₁ κ₂ κ₃ : Type*} [Fintype κ�
       fromBlocks (fromBlocks (xᴴ * (G * x)) (xᴴ * (G * u)) (uᴴ * (G * x)) (uᴴ * (G * u)))
         (fromRows (xᴴ * (G * w)) (uᴴ * (G * w)))
         (fromCols (wᴴ * (G * x)) (wᴴ * (G * u))) (wᴴ * (G * w)) := by
-  ext (( i | i) | i) ((j | j) | j) <;> simp [Matrix.mul_apply, Fintype.sum_sum_type, conjTranspose_apply]
+  ext (( i | i) | i) ((j | j) | j) <;> simp [Matrix.mul_apply, conjTranspose_apply]
 
 end Abstract
 

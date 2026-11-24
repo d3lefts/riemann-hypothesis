@@ -60,6 +60,7 @@ import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 import Std.Tactic.BVDecide.Normalize.Prop
+import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
 import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Tactic.Lemma
@@ -68,7 +69,7 @@ import Mathlib.Tactic.Lemma
 -- Members: GroundTheory.HeightsAndTheta.Heights.FubiniStudyIntegral, GroundTheory.HeightsAndTheta.Heights.FubiniStudy
 
 -- ===== clump member: GroundTheory.HeightsAndTheta.Heights.FubiniStudyIntegral =====
--- clump-header: {"m": "GroundTheory.HeightsAndTheta.Heights.FubiniStudyIntegral", "h": "module\n\npublic import Mathlib.LinearAlgebra.Complex.FiniteDimensional\npublic import Mathlib.MeasureTheory.Integral.Bochner.Basic\npublic import Mathlib.MeasureTheory.Integral.IntegrableOn\npublic import Mathlib.MeasureTheory.Measure.Haar.OfBasis\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.CStarAlgebra.Classes\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.LocallyConvex.AbsConvexOpen\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Bernstein\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\npublic import Mathlib.MeasureTheory.Constructions.HaarToSphere\npublic import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\nimport Std.Tactic.BVDecide.Normalize.Prop\npublic import Mathlib.Analysis.Calculus.Deriv.Add\npublic import Mathlib.Analysis.Calculus.Deriv.Inv\npublic import Mathlib.Analysis.Calculus.Deriv.Mul\npublic import Mathlib.Analysis.Calculus.Deriv.Pow\npublic import Mathlib.MeasureTheory.Integral.IntegralEqImproper\n\n"}
+-- clump-header: {"m": "GroundTheory.HeightsAndTheta.Heights.FubiniStudyIntegral", "h": "module\n\npublic import Mathlib.LinearAlgebra.Complex.FiniteDimensional\npublic import Mathlib.MeasureTheory.Integral.Bochner.Basic\npublic import Mathlib.MeasureTheory.Integral.IntegrableOn\npublic import Mathlib.MeasureTheory.Measure.Haar.OfBasis\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.CStarAlgebra.Classes\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.LocallyConvex.AbsConvexOpen\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Bernstein\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\npublic import Mathlib.MeasureTheory.Constructions.HaarToSphere\npublic import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\nimport Std.Tactic.BVDecide.Normalize.Prop\npublic import Mathlib.Analysis.Calculus.Deriv.Add\npublic import Mathlib.Analysis.Calculus.Deriv.Inv\npublic import Mathlib.Analysis.Calculus.Deriv.Mul\npublic import Mathlib.Analysis.Calculus.Deriv.Pow\npublic import Mathlib.MeasureTheory.Integral.IntegralEqImproper\nimport Mathlib.Analysis.SpecialFunctions.Gamma.Beta\n\n"}
 section -- clump:auto
 @[expose] public section
 
@@ -78,126 +79,66 @@ namespace GroundTheory.Heights₂.Heights
 
 open MeasureTheory Set Filter Topology Real
 
+/-- The Euler beta integral at positive integer arguments. -/
+private theorem integral_Ioo_pow_mul_one_sub_pow (k b : ℕ) :
+    ∫ u in Ioo (0 : ℝ) 1, u ^ k * (1 - u) ^ b =
+      ((k.factorial * b.factorial : ℕ) : ℝ) / (k + b + 1).factorial := by
+  have hbeta : Complex.betaIntegral (k + 1) (b + 1) =
+      ((∫ u in Ioo (0 : ℝ) 1, u ^ k * (1 - u) ^ b : ℝ) : ℂ) := by
+    rw [Complex.betaIntegral, intervalIntegral.integral_of_le zero_le_one,
+      integral_Ioc_eq_integral_Ioo, ← integral_complex_ofReal]
+    simp only [add_sub_cancel_right, Complex.cpow_natCast, Complex.ofReal_mul,
+      Complex.ofReal_pow, Complex.ofReal_sub, Complex.ofReal_one]
+  apply Complex.ofReal_injective
+  rw [← hbeta, Complex.betaIntegral_eq_Gamma_mul_div _ _
+    (by simp [Nat.cast_add_one_pos]) (by simp [Nat.cast_add_one_pos])]
+  have hsum : (k : ℂ) + 1 + (b + 1) = ((k + b + 1 : ℕ) : ℂ) + 1 := by
+    push_cast
+    ring
+  simp only [hsum, Complex.Gamma_nat_eq_factorial, Nat.cast_mul, Complex.ofReal_div,
+    Complex.ofReal_mul, Complex.ofReal_natCast]
+
 theorem integral_Ioi_pow_div_add_pow (c : ℝ) (hc : 0 < c) (k : ℕ) : ∀ b : ℕ,
     IntegrableOn (fun t : ℝ => t ^ b / (c + t) ^ (b + 2 + k)) (Ioi 0) ∧
     ∫ t in Ioi (0:ℝ), t ^ b / (c + t) ^ (b + 2 + k) =
       ((b.factorial * k.factorial : ℕ) : ℝ) / (b + k + 1).factorial / c ^ (k + 1) := by
   intro b
-  induction b with
-  | zero =>
-    have hderiv : ∀ x ∈ Ici (0:ℝ), HasDerivAt (fun t : ℝ => -(1 / ((k + 1 : ℝ) * (c + t) ^ (k + 1))))
-        ((fun t : ℝ => t ^ 0 / (c + t) ^ (0 + 2 + k)) x) x := by
-      intro x hx
-      have hx' : 0 < c + x := by have := mem_Ici.mp hx; linarith
-      have h1 : HasDerivAt (fun t : ℝ => (k + 1 : ℝ) * (c + t) ^ (k + 1))
-          ((k + 1 : ℝ) * ((k + 1 : ℕ) * (c + x) ^ k * 1)) x := by
-        exact ((((hasDerivAt_id x).const_add c).pow (k + 1))).const_mul _
-      have h2 := (h1.inv (by positivity)).neg
-      have hfun : (fun t : ℝ => -(1 / ((k + 1 : ℝ) * (c + t) ^ (k + 1)))) =
-          -(fun t : ℝ => (k + 1 : ℝ) * (c + t) ^ (k + 1))⁻¹ := by
-        funext t; simp [one_div]
-      rw [hfun]
-      refine h2.congr_deriv ?_
-      have hne : (c + x) ≠ 0 := hx'.ne'
-      simp only [pow_zero]
-      field_simp
-      push_cast
-      ring
-    have hpos : ∀ x ∈ Ioi (0:ℝ), 0 ≤ (fun t : ℝ => t ^ 0 / (c + t) ^ (0 + 2 + k)) x := by
-      intro x hx
-      have : 0 < c + x := by have := mem_Ioi.mp hx; linarith
-      positivity
-    have hlim : Tendsto (fun t : ℝ => -(1 / ((k + 1 : ℝ) * (c + t) ^ (k + 1)))) atTop (𝓝 0) := by
-      have h0 : Tendsto (fun t : ℝ => (k + 1 : ℝ) * (c + t) ^ (k + 1)) atTop atTop := by
-        refine Tendsto.const_mul_atTop (by positivity) ?_
-        exact (tendsto_pow_atTop (by omega)).comp (tendsto_atTop_add_const_left _ c tendsto_id)
-      have := (tendsto_inv_atTop_zero.comp h0).neg
-      simpa [one_div] using this
-    refine ⟨integrableOn_Ioi_deriv_of_nonneg' hderiv hpos hlim, ?_⟩
-    rw [integral_Ioi_of_hasDerivAt_of_nonneg' hderiv hpos hlim]
-    simp only [Nat.factorial_zero, one_mul, zero_add, add_zero]
-    have hk : ((k + 1).factorial : ℝ) = (k + 1) * k.factorial := by
-      push_cast [Nat.factorial_succ]; ring
-    rw [hk]
-    have : (k.factorial : ℝ) ≠ 0 := by positivity
-    field_simp
-    ring
-  | succ b ih =>
-    obtain ⟨hint, hval⟩ := ih
-    have hint' : IntegrableOn (fun t : ℝ => t ^ (b + 1) / (c + t) ^ (b + 1 + 2 + k)) (Ioi 0) := by
-      refine hint.mono' ?_ ?_
-      · refine ContinuousOn.aestronglyMeasurable ?_ measurableSet_Ioi
-        intro x hx
-        have : 0 < c + x := by have := mem_Ioi.mp hx; linarith
-        exact ((continuous_pow _).continuousAt.div (by fun_prop) (by positivity)).continuousWithinAt
-      · refine (ae_restrict_iff' measurableSet_Ioi).mpr (Eventually.of_forall fun x hx => ?_)
-        have hx0 : 0 < x := hx
-        have hcx : 0 < c + x := by linarith
-        rw [Real.norm_eq_abs, abs_of_nonneg (by positivity)]
-        rw [div_le_div_iff₀ (by positivity) (by positivity)]
-        have e1 : (c + x) ^ (b + 1 + 2 + k) = (c + x) ^ (b + 2 + k) * (c + x) := by ring
-        rw [e1, pow_succ]
-        have := mul_le_mul_of_nonneg_left (show x ≤ c + x by linarith)
-            (show 0 ≤ x ^ b * (c + x) ^ (b + 2 + k) by positivity)
-        nlinarith
-    refine ⟨hint', ?_⟩
-    set G : ℝ → ℝ := fun t => t ^ (b + 1) / (c + t) ^ (b + 2 + k) with hG
-    set G' : ℝ → ℝ := fun t => (b + 1 : ℝ) * (t ^ b / (c + t) ^ (b + 2 + k)) -
-      (b + 2 + k : ℝ) * (t ^ (b + 1) / (c + t) ^ (b + 1 + 2 + k)) with hG'
-    have hderiv : ∀ x ∈ Ici (0:ℝ), HasDerivAt G (G' x) x := by
-      intro x hx
-      have hcx : 0 < c + x := by have := mem_Ici.mp hx; linarith
-      have h0 : HasDerivAt (fun t : ℝ => c + t) 1 x := (hasDerivAt_id x).const_add c
-      have h1 : HasDerivAt G (((b + 1 : ℕ) * x ^ b * (c + x) ^ (b + 2 + k) -
-          x ^ (b + 1) * ((b + 2 + k : ℕ) * (c + x) ^ (b + 2 + k - 1) * 1)) /
-          ((c + x) ^ (b + 2 + k)) ^ 2) x :=
-        (hasDerivAt_pow (b + 1) x).div (h0.pow (b + 2 + k)) (pow_pos hcx _).ne'
-      refine h1.congr_deriv ?_
-      simp only [hG']
-      have hne : (c + x) ≠ 0 := hcx.ne'
-      rw [show b + 2 + k - 1 = b + 1 + k by omega]
-      field_simp
-      push_cast
-      ring
-    have hG'int : IntegrableOn G' (Ioi 0) :=
-      (hint.const_mul _).sub (hint'.const_mul _)
-    have hlim : Tendsto G atTop (𝓝 0) := by
-      have hup : Tendsto (fun t : ℝ => 1 / (c + t) ^ (k + 1)) atTop (𝓝 0) := by
-        have h0 : Tendsto (fun t : ℝ => (c + t) ^ (k + 1)) atTop atTop :=
-          (tendsto_pow_atTop (by omega)).comp (tendsto_atTop_add_const_left _ c tendsto_id)
-        simpa [one_div, Function.comp_def] using tendsto_inv_atTop_zero.comp h0
-      refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hup ?_ ?_
-      · filter_upwards [eventually_ge_atTop 0] with t ht
-        have : 0 < c + t := by linarith
-        positivity
-      · filter_upwards [eventually_ge_atTop 0] with t ht
-        have hct : 0 < c + t := by linarith
-        simp only [hG]
-        rw [div_le_div_iff₀ (by positivity) (by positivity), one_mul]
-        have h1 : t ^ (b + 1) ≤ (c + t) ^ (b + 1) := pow_le_pow_left₀ ht (by linarith) _
-        have h2 : (c + t) ^ (b + 1) * (c + t) ^ (k + 1) = (c + t) ^ (b + 2 + k) := by
-          rw [← pow_add]; congr 1; omega
-        rw [← h2]
-        exact mul_le_mul_of_nonneg_right h1 (by positivity)
-    have key := integral_Ioi_of_hasDerivAt_of_tendsto' hderiv hG'int hlim
-    simp only [hG, hG'] at key
-    rw [integral_sub (hint.const_mul _) (hint'.const_mul _), integral_const_mul,
-      integral_const_mul, hval] at key
-    simp only [ne_eq, Nat.add_eq_zero_iff, one_ne_zero, and_false, not_false_eq_true, zero_pow,
-      zero_div, sub_zero] at key
-    have hb2 : (b + 2 + k : ℝ) ≠ 0 := by positivity
-    have e : ∫ t in Ioi (0:ℝ), t ^ (b + 1) / (c + t) ^ (b + 1 + 2 + k) =
-        (b + 1 : ℝ) * (((b.factorial * k.factorial : ℕ) : ℝ) / (b + k + 1).factorial / c ^ (k + 1))
-          / (b + 2 + k) := by
-      rw [eq_div_iff hb2]; linear_combination -key
-    rw [e]
-    have hf : ((b + 1 + k + 1).factorial : ℝ) = (b + k + 2) * (b + k + 1).factorial := by
-      rw [show b + 1 + k + 1 = (b + k + 1) + 1 by ring, Nat.factorial_succ]; push_cast; ring
-    rw [hf, show (b + 1).factorial = (b + 1) * b.factorial from Nat.factorial_succ b]
-    push_cast
-    have : ((b + k + 1).factorial : ℝ) ≠ 0 := by positivity
-    field_simp
-    ring
+  -- The substitution t = c / u - c sends (0, 1) onto the positive half-line.
+  let f (u : ℝ) := c / u - c
+  let g (t : ℝ) := t ^ b / (c + t) ^ (b + 2 + k)
+  have hderiv (u : ℝ) (hu : u ∈ Ioo 0 1) :
+      HasDerivWithinAt f (-(c / u ^ 2)) (Ioo 0 1) u := by
+    simpa [f, neg_div] using
+      (((hasDerivAt_const u c).fun_div (hasDerivAt_id u) hu.1.ne').sub_const c).hasDerivWithinAt
+  have hinj : InjOn f (Ioo 0 1) := by
+    intro u _ v _ h
+    simpa [f, div_eq_mul_inv, hc.ne'] using h
+  have himage : f '' Ioo 0 1 = Ioi 0 := by
+    ext t
+    constructor
+    · rintro ⟨u, hu, rfl⟩
+      exact sub_pos.mpr ((lt_div_iff₀ hu.1).mpr (mul_lt_of_lt_one_right hc hu.2))
+    · intro ht
+      have hct : 0 < c + t := add_pos hc ht
+      refine ⟨c / (c + t), ⟨div_pos hc hct,
+        (div_lt_one hct).mpr (lt_add_of_pos_right _ ht)⟩, ?_⟩
+      simp [f, hc.ne']
+  have hweight : EqOn (fun u => |-(c / u ^ 2)| • g (f u))
+      (fun u => u ^ k * (1 - u) ^ b / c ^ (k + 1)) (Ioo 0 1) := by
+    intro u hu
+    have hsub : c / u - c = c / u * (1 - u) := by field_simp [hu.1.ne']
+    dsimp only [f, g, smul_eq_mul]
+    rw [add_sub_cancel, hsub, abs_neg, abs_of_pos (div_pos hc (sq_pos_of_pos hu.1))]
+    simp only [mul_pow, div_pow, pow_add, pow_one]
+    field_simp [hu.1.ne', hc.ne']
+  change IntegrableOn g (Ioi 0) ∧ ∫ t in Ioi 0, g t = _
+  rw [← himage, integrableOn_image_iff_integrableOn_abs_deriv_smul measurableSet_Ioo hderiv hinj,
+    integral_image_eq_integral_abs_deriv_smul measurableSet_Ioo hderiv hinj,
+    integrableOn_congr_fun hweight measurableSet_Ioo,
+    setIntegral_congr_fun measurableSet_Ioo hweight]
+  constructor
+  · exact (Continuous.integrableOn_Icc (by fun_prop)).mono_set Ioo_subset_Icc_self
+  · rw [integral_div, integral_Ioo_pow_mul_one_sub_pow, Nat.add_comm k b, Nat.mul_comm k.factorial]
 
 theorem integral_complex_norm_pow_div (c : ℝ) (hc : 0 < c) (k b : ℕ) :
     Integrable (fun w : ℂ => ‖w‖ ^ (2 * b) / (c + ‖w‖ ^ 2) ^ (b + 2 + k)) ∧

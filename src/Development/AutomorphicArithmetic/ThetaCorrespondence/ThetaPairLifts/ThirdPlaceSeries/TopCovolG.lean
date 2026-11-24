@@ -299,7 +299,7 @@ section
 open GlobalTheory.CovTop GlobalTheory.BigTop
 
 theorem _root_.GlobalTheory.T.coreLe_of_gram_meas_liftRational : _root_.GlobalTheory.CovTop.GramCondition → _root_.GlobalTheory.CovTop.MeasureCondition → _root_.GlobalTheory.CovTop.LiftRational → _root_.GlobalTheory.CovTop.CoreBound' := by
-  first | exact @_root_.GlobalTheory.CoreSlope.coreLe_of_gram_meas_rat_alt | exact _root_.GlobalTheory.CoreSlope.coreLe_of_gram_meas_rat_alt | (intros; apply _root_.GlobalTheory.CoreSlope.coreLe_of_gram_meas_rat_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CoreSlope.coreLe_of_gram_meas_rat_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -371,7 +371,7 @@ open GlobalTheory.BadCount
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.coverDegree_of_grothendieck_deformation : GlobalTheory.CovTop.HypothesesX → _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → GlobalTheory.Published.SiegelToroidalIntegral → GlobalTheory.Published.ToroidalForFanKS → GlobalTheory.Published.GrothendieckDeformation → GlobalTheory.HSCore.Quoted → GlobalTheory.Published.SemiAbelianLieSeminegative → _root_.GlobalTheory.CovTop.DeepGoodness → _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.FlatDegreeCondition → _root_.GlobalTheory.CovTop.CoverDegree := by
-  first | exact @_root_.GlobalTheory.CovTop.DegProof.covering_degree_eq_alt | exact _root_.GlobalTheory.CovTop.DegProof.covering_degree_eq_alt | (intros; apply _root_.GlobalTheory.CovTop.DegProof.covering_degree_eq_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.DegProof.covering_degree_eq_alt
 end
 end
 end -- clump:auto
@@ -643,7 +643,7 @@ open GlobalTheory.BadCount
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.covering_gmin_of_prints_gram_deep_size : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → _root_.GlobalTheory.CovTop.GramCondition → _root_.GlobalTheory.CovTop.DeepGoodness → _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.MinimalGenerator := by
-  first | exact @_root_.GlobalTheory.CovGminTop.covering_gmin_of_gram_deep_size | exact _root_.GlobalTheory.CovGminTop.covering_gmin_of_gram_deep_size | (intros; apply _root_.GlobalTheory.CovGminTop.covering_gmin_of_gram_deep_size <;> assumption)
+  first | exact @_root_.GlobalTheory.CovGminTop.covering_gmin_of_gram_deep_size
 end
 end
 end -- clump:auto
@@ -694,7 +694,7 @@ open GlobalTheory.BadCount
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.coverRank_of_coverDegree_and_share : GlobalTheory.CovTop.HypothesesX → _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → GlobalTheory.Published.GrothendieckDeformation → GlobalTheory.HSCore.Quoted → GlobalTheory.Published.SiegelToroidalIntegral → GlobalTheory.Published.ToroidalForFanKS → GlobalTheory.Published.SemiAbelianLieSeminegative → _root_.GlobalTheory.CovTop.DeepGoodness → _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.FlatDegreeCondition → _root_.GlobalTheory.CovTop.CoverDegree → _root_.GlobalTheory.CovTop.ShareCondition → _root_.GlobalTheory.CovTop.CoverRank := by
-  first | exact @_root_.GlobalTheory.CovTop.covering_rank_of_descent_steps_alt | exact _root_.GlobalTheory.CovTop.covering_rank_of_descent_steps_alt | (intros; apply _root_.GlobalTheory.CovTop.covering_rank_of_descent_steps_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.covering_rank_of_descent_steps_alt
 end
 end
 end -- clump:auto
@@ -768,7 +768,6 @@ theorem selfAdj_of_pyth (hv : v.IsComplex) (e : V →ₗ[K] V)
     push_neg at hcon
     apply InfinitePlace.isComplex_iff.mp hv
     first
-    | exact fun t => Complex.conj_eq_iff_im.mpr (hcon t)
     | (rw [ComplexEmbedding.isReal_iff]; ext t; exact Complex.conj_eq_iff_im.mpr (hcon t))
   have hzero : ∀ x y, majAt b X v (e x) (y - e y) = 0 := by
     intro x y
@@ -1000,7 +999,7 @@ section
 open GlobalTheory.CovTop GlobalTheory.BigTop
 
 theorem _root_.GlobalTheory.T.covolX_of_truncation_badSet_lambda_lowBound : _root_.GlobalTheory.CovTop.GramCondition → _root_.GlobalTheory.CovTop.LiftRecursive → _root_.GlobalTheory.CovTop.LiftTruncation → _root_.GlobalTheory.CovTop.LiftBadSet → _root_.GlobalTheory.CovTop.LiftLambdaBound → _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.CoreBound' → _root_.GlobalTheory.CovTop.LiftLowBound → _root_.GlobalTheory.CovTop.CovolumeBoundOfX := by
-  first | exact @_root_.GlobalTheory.CovTop.Assembly.covolX_of_lift_bounds_and_coreLe | exact _root_.GlobalTheory.CovTop.Assembly.covolX_of_lift_bounds_and_coreLe | (intros; apply _root_.GlobalTheory.CovTop.Assembly.covolX_of_lift_bounds_and_coreLe <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.Assembly.covolX_of_lift_bounds_and_coreLe
 end
 end -- clump:auto
 end -- clump:auto
@@ -1259,7 +1258,7 @@ section
 open GlobalTheory.CovTop GlobalTheory.BigTop
 
 theorem _root_.GlobalTheory.T.covering_deepEx_of_prints : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → _root_.GlobalTheory.CovTop.DeepExistence := by
-  first | exact @_root_.GlobalTheory.CovTop.DeepExist.exists_deep_covering_level_alt | exact _root_.GlobalTheory.CovTop.DeepExist.exists_deep_covering_level_alt | (intros; apply _root_.GlobalTheory.CovTop.DeepExist.exists_deep_covering_level_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.DeepExist.exists_deep_covering_level_alt
 end
 end
 end -- clump:auto
@@ -1544,7 +1543,7 @@ section
 open GlobalTheory.CovTop GlobalTheory.BigTop
 
 theorem _root_.GlobalTheory.T.flat_of_prints_deepGood_flatDeg_anchor : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → _root_.GlobalTheory.CovTop.DeepGoodness → _root_.GlobalTheory.CovTop.FlatDegreeCondition → _root_.GlobalTheory.CovTop.AnchorCondition → _root_.GlobalTheory.CovTop.FlatnessCondition := by
-  first | exact @_root_.GlobalTheory.FlatSplit.flat_alt_alt | exact _root_.GlobalTheory.FlatSplit.flat_alt_alt | (intros; apply _root_.GlobalTheory.FlatSplit.flat_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.FlatSplit.flat_alt_alt
 end
 end
 end -- clump:auto
@@ -1698,7 +1697,7 @@ section
 open GlobalTheory.CovTop GlobalTheory.BigTop
 
 theorem _root_.GlobalTheory.T.sum_c_of_deep_good : _root_.GlobalTheory.CovTop.DeepGoodness → _root_.GlobalTheory.CovTop.SumBoundCondition := by
-  first | exact @_root_.GlobalTheory.CovTop.sumC_of_deepGood_alt | exact _root_.GlobalTheory.CovTop.sumC_of_deepGood_alt | (intros; apply _root_.GlobalTheory.CovTop.sumC_of_deepGood_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.sumC_of_deepGood_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1814,7 +1813,7 @@ section
 open GlobalTheory.CovTop GlobalTheory.BigTop
 
 theorem _root_.GlobalTheory.T.uniform_lower_bound_of_sums' : _root_.GlobalTheory.CovTop.DeepGoodness → _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.CoverDegree → _root_.GlobalTheory.CovTop.ShareCondition → _root_.GlobalTheory.CovTop.HeightCondition → _root_.GlobalTheory.CovTop.CoverHeightSum → _root_.GlobalTheory.CovTop.SumBoundCondition → _root_.GlobalTheory.CovTop.UniformLowerBound := by
-  first | exact @_root_.GlobalTheory.CovTop.FromComp.u_low_of_cover_hyps | exact _root_.GlobalTheory.CovTop.FromComp.u_low_of_cover_hyps | (intros; apply _root_.GlobalTheory.CovTop.FromComp.u_low_of_cover_hyps <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.FromComp.u_low_of_cover_hyps
 end
 end -- clump:auto
 end -- clump:auto

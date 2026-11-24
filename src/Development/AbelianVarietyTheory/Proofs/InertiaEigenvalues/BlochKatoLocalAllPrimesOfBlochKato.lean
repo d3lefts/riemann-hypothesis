@@ -309,7 +309,7 @@ theorem lattice_basis (l : ℕ) [Fact l.Prime] (LL : Type) [Field LL] [Algebra �
       intro h0; exact hr.ne_zero (hinj (h0.trans (map_zero _).symm))
     apply Subtype.ext
     have h1 := congrArg (fun s : S => (s : LL)) hac
-    simp only [Subalgebra.coe_smul, Algebra.smul_def] at h1
+    simp only [Algebra.smul_def] at h1
     exact mul_left_cancel₀ hr0 h1⟩
   haveI : Module.Free ℤ_[l] S := Module.free_of_finite_type_torsion_free'
   haveI : IsLocalization (Algebra.algebraMapSubmonoid S (nonZeroDivisors ℤ_[l])) LL :=
@@ -824,11 +824,9 @@ theorem bkBCore_of_integralDuality : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime 
   let PQ : A.V →ₗ[ℚ_[l]] A'.V →ₗ[ℚ_[l]] ℚ_[l] := LinearMap.mk₂ ℚ_[l] (fun x y => lam (Pr x y))
     (fun x x' y => by beta_reduce; rw [map_add (f := _), LinearMap.add_apply, map_add (f := _)])
     (fun c x y => by
-      beta_reduce
       rw [← algebraMap_smul LL c x, map_smul, LinearMap.smul_apply, smul_eq_mul, ← Algebra.smul_def, map_smul])
     (fun x y y' => by beta_reduce; rw [map_add (f := _), map_add (f := _)])
     (fun c x y => by
-      beta_reduce
       rw [← algebraMap_smul LL c y, map_smul, smul_eq_mul, ← Algebra.smul_def, map_smul])
   have hPQ : ∀ x y, PQ x y = lam (Pr x y) := fun _ _ => rfl
   have hdRQ : IsDR (P.PD K) (GlobalTheory.PstCoeff.resQ A.ρ) := (GlobalTheory.PstCoeff.isDR_resQ_iff P A.ρ).mpr hdR
@@ -1310,7 +1308,7 @@ theorem pair_shift {V' : Type} [AddCommGroup V'] [Module LL V'] (m : V →ₗ[LL
     (hk : c * π = k) (hu : m a (f (w - c • y)) = u) (hv : m t (f y) = v) :
     u - k * v = m a (f w) - c * m â (f y) := by
   subst hâ hk hu hv
-  simp only [map_sub, map_add (f := _), map_smul, LinearMap.sub_apply, LinearMap.add_apply,
+  simp only [map_sub, map_add (f := _), map_smul, LinearMap.add_apply,
     LinearMap.smul_apply, smul_eq_mul]
   ring
 
@@ -1673,7 +1671,7 @@ theorem cup_coboundary_right (hopen : IsOpen (Set.range (algebraMap O LL))) (c :
     cupModuloIntegers PD hd L1 hL1 c d (g, h)
   rw [cup_apply_alt]
   simp only [hcg, map_neg, ← torsionPairing_equivariant, lattice_cocycle_mul, map_mul, Module.End.mul_apply, map_add (f := _),
-    map_sub, LinearMap.add_apply, LinearMap.sub_apply]
+    map_sub, LinearMap.sub_apply]
   abel
 
 end Gen

@@ -95,7 +95,7 @@ theorem cc_jac (i b : Fin d) : constantCoeff (Jac G i b) = if i = b then 1 else 
   simp only [Fin.isValue, Prod.mk.injEq, true_and, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
     Finset.mem_univ, if_true] at h
   rw [h, pderiv_X]
-  simp [Pi.single_apply, eq_comm]
+  simp [Pi.single_apply]
 
 def JM : Matrix (Fin d) (Fin d) (PS k 1 d) := Matrix.of (Jac G)
 
@@ -216,7 +216,7 @@ theorem om_key (i a b : Fin d) :
   rw [pderiv_ev_zero czX _ _ (fun j l => by fin_cases j; simp [pderiv_pt]), ev_zero' cz1] at hP
 
   simp only [map_sum, Derivation.leibniz, smul_eq_mul, d_evF, ev_sum cz1, ev_add cz1, ev_mul cz1, ez_F, ez_dx,
-  ez_dy, Ar, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true] at hQ hP
+  ez_dy, Ar, mul_ite, mul_one, mul_zero] at hQ hP
   rw [Finset.sum_add_distrib] at hQ hP
   have hR : ∑ j, Om G i j * ev (n := 1) ![pt k d 0, 0] (pderiv (R := k) ((0 : Fin 2), a) (pderiv (R := k) ((1 : Fin 2), b) (G.F j))) =
       ∑ j, Om G i j * ev (n := 1) ![pt k d 0, 0] (pderiv (R := k) ((1 : Fin 2), b) (pderiv (R := k) ((0 : Fin 2), a) (G.F j))) := by
@@ -282,7 +282,7 @@ theorem pderiv_prim (ω : τ → MvPowerSeries τ k)
         set p := n - Finsupp.single w 1 with hp
         have hpn : p + Finsupp.single w 1 = n := tsub_add_cancel_of_le hle
         have hpv : p v = n v := by
-          simp [hp, Finsupp.tsub_apply, Finsupp.single_apply, hwv]
+          simp [hp, Finsupp.tsub_apply, hwv]
         have hpw : p w + 1 = n w := by
           simp only [hp, Finsupp.tsub_apply, Finsupp.single_eq_same]; omega
         have h1 : n + Finsupp.single v 1 - Finsupp.single w 1 = p + Finsupp.single v 1 := by

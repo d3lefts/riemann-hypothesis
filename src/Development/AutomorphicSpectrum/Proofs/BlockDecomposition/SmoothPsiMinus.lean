@@ -519,7 +519,7 @@ theorem UpperTheory.Reformulated.B.DYhc8.glEmb_mem_mirabolic :
   intro k _ n g
   change Matrix.vecMul (UpperTheory.Reformulated.B.DYhc8.eLast k n) (UpperTheory.Reformulated.B.DYhc8.glEmbMat k n (↑g)) = UpperTheory.Reformulated.B.DYhc8.eLast k n
   ext j
-  simp only [UpperTheory.Reformulated.B.DYhc8.eLast, Matrix.single_one_vecMul, UpperTheory.Reformulated.B.DYhc8.glEmbMat, Fin.lastCases_last]
+  simp only [UpperTheory.Reformulated.B.DYhc8.eLast, Matrix.single_one_vecMul]
   induction j using Fin.lastCases with
   | last => simp [UpperTheory.Reformulated.B.DYhc8.glEmbMat]
   | cast j => simp [UpperTheory.Reformulated.B.DYhc8.glEmbMat]
@@ -706,7 +706,7 @@ theorem continuous_levi (n : ℕ) : Continuous (levi k n) := by
   exact h.subtype_mk _
 
 theorem smPsiMinus : SmPsiMinus k :=
-  by apply _root_.UpperTheory.Reformulated.B.DYhc8.main <;> assumption
+  by apply _root_.UpperTheory.Reformulated.B.DYhc8.main
 
 end GlobalTheory.CompanionTheory.BZMirFun
 end -- clump:auto

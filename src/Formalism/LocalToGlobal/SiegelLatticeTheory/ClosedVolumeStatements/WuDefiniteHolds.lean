@@ -98,7 +98,6 @@ theorem σA_ιA (e : I.E) : σA I (ιA I e) = ιA I (starRingEnd I.E e) := by
         (starRingEnd I.E e) ⊗ₜ[I.F] (1 : Formalism.MainNotions.S.Af I.F)
      rw [Algebra.TensorProduct.map_tmul]
      rfl)
-  | (simp [sigR, inclE]; rfl)
 
 theorem cT_map {p q : Type} (M : Matrix p q I.E) :
     cT (σA I) (M.map (ιA I)) = (cT (starRingEnd I.E) M).map (ιA I) := by
@@ -112,7 +111,7 @@ theorem cT_one' {p : Type} [DecidableEq p] {A : Type} [CommRing A] (σ : A →+*
   by_cases hij : i = j
   · subst hij
     simp [cT]
-  · simp [cT, Matrix.one_apply, hij, Ne.symm hij]
+  · simp [cT, hij, Ne.symm hij]
 
 theorem cT_zero' {p q : Type} {A : Type} [CommRing A] (σ : A →+* A) :
     cT σ (0 : Matrix p q A) = 0 := by
@@ -207,7 +206,7 @@ theorem Frame.MA_11 (h : HfinS I S) : (fr.MA h).toBlocks₁₁ = 1 := by
 
 theorem Frame.MA_21 (h : HfinS I S) : (fr.MA h).toBlocks₂₁ = 0 := by
   ext i j
-  simp [Matrix.toBlocks₂₁, fr.MA_inl, Matrix.one_apply]
+  simp [Matrix.toBlocks₂₁, fr.MA_inl]
 
 theorem Frame.MA_unitary (h : HfinS I S) :
     cT (σA I) (fr.MA h) * fr.Jt.map (ιA I) * fr.MA h = fr.Jt.map (ιA I) := by
@@ -245,8 +244,7 @@ theorem Frame.MA_eq (h : HfinS I S) :
   rw [fr.JtA_blocks, hM, cT_fromBlocks, cT_one', cT_zero', Matrix.fromBlocks_multiply,
     Matrix.fromBlocks_multiply] at hU
   obtain ⟨-, h12, -, h22⟩ := Matrix.fromBlocks_inj.1 hU
-  simp only [Matrix.one_mul, Matrix.zero_mul, Matrix.mul_zero, add_zero, zero_add,
-    Matrix.mul_one] at h12 h22
+  simp only [Matrix.one_mul, Matrix.zero_mul, Matrix.mul_zero, add_zero, zero_add] at h12 h22
   have hX0 : (fr.MA h).toBlocks₁₂ = 0 := unit_cancel fr fr.Jt.toBlocks₁₁ hdet _ h12
   refine ⟨?_, ?_⟩
   · rw [hM, hX0]
@@ -254,7 +252,7 @@ theorem Frame.MA_eq (h : HfinS I S) :
     simpa [cT_zero'] using h22
 
 theorem Frame.MA_mul (h₁ h₂ : HfinS I S) : fr.MA (h₁ * h₂) = fr.MA h₁ * fr.MA h₂ := by
-  simp only [Frame.MA, Subgroup.coe_mul, Units.val_mul, Matrix.mul_assoc]
+  simp only [Frame.MA, Subgroup.coe_mul, Matrix.mul_assoc]
   rw [← Matrix.mul_assoc fr.BA fr.BiA, fr.BA_BiA, Matrix.one_mul,
     show I.fmat ((h₁ : I.Gf) * (h₂ : I.Gf)) = I.fmat h₁ * I.fmat h₂ from rfl, Matrix.mul_assoc]
 
@@ -679,8 +677,7 @@ theorem lvA_princ_form {ι : Type} [Fintype ι] [DecidableEq ι] (d : S) (u : GL
   have hent : ∀ i j, ∃ a : S, a * d = (u' : Matrix ι ι S) i j - (1 : Matrix ι ι S) i j := by
     intro i j
     have h2 := congrArg (fun g : GL ι (S ⧸ Ideal.span {d}) => (g : Matrix ι ι (S ⧸ Ideal.span {d})) i j) h1
-    simp only [Formalism.UG.redGL, Formalism.UG.bc, Units.coe_map, MonoidHom.coe_coe, RingHom.mapMatrix_apply,
-      Matrix.map_apply, Units.val_one] at h2
+    simp only [Formalism.UG.redGL, Formalism.UG.bc, Units.coe_map, Units.val_one] at h2
     have h3 : (u' : Matrix ι ι S) i j - (1 : Matrix ι ι S) i j ∈ Ideal.span {d} := by
       rw [← Ideal.Quotient.eq]
       have h2' : Ideal.Quotient.mk (Ideal.span {d}) ((u' : Matrix ι ι S) i j) =
@@ -786,7 +783,7 @@ theorem lvB_lat_up (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.FG) :
 
 theorem lvB_span_int (L : Submodule (𝓞 E) (Fin n → E)) (v : Fin n → E)
     (hv : v ∈ Submodule.span E (L : Set (Fin n → E))) : ∃ m : ℤ, m ≠ 0 ∧ m • v ∈ L := by
-  first | exact Bl.IntegerMulIntegral.goal1 .. | (apply Bl.IntegerMulIntegral.goal1 <;> assumption) | (intros; apply Bl.IntegerMulIntegral.goal1 <;> assumption) | (apply @Bl.IntegerMulIntegral.goal1 <;> assumption) | (intros; apply @Bl.IntegerMulIntegral.goal1 <;> assumption) | (apply @Bl.IntegerMulIntegral.goal1 <;> first | assumption | infer_instance)
+  first | (apply Bl.IntegerMulIntegral.goal1 <;> assumption)
 
 theorem lvB_lat_down (L : Submodule (𝓞 E) (Fin n → E))
     (hspan : Submodule.span E (L : Set (Fin n → E)) = ⊤) :
@@ -1053,7 +1050,6 @@ variable {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (u : D.what₂
 theorem WuDefinite_holds : Formalism.L2.SG.PoincareInHH.Cut.WuDefinite X u := by
   first
   | exact Formalism.L2.SG.PoincareInHH.Cut.wuDefinite_holds X u
-  | exact Formalism.L2.SG.PoincareInHH.Cut.wuDefinite_holds (X := X) (u := u)
 
 theorem ClassFin_holds (hK : X.LevelSubgroupCharacter) : Formalism.L2.SG.PoincareInHH.Cut.ClassFin X u hK := by
   have hg : 1 ≤ X.B.g := by
@@ -1065,12 +1061,10 @@ theorem ClassFin_holds (hK : X.LevelSubgroupCharacter) : Formalism.L2.SG.Poincar
 theorem ColBound_holds (hK : X.LevelSubgroupCharacter) : Formalism.L2.SG.Pf.ColBound X u hK := by
   first
   | exact Formalism.L2.SG.Pf.colBound_of X u hK (ClassFin_holds X u hK)
-  | exact Formalism.L2.SG.Pf.colBound_of (X := X) (u := u) hK (ClassFin_holds X u hK)
 
 theorem OmCover_holds (I : AutInst) : Formalism.L2.SG.Pf.OmCover I := by
   first
   | exact Formalism.L2.SG.Pf.omCover_holds I
-  | exact Formalism.L2.SG.Pf.omCover_holds (I := I)
 
 theorem MultPoly_holds : Formalism.L2.SG.PoincareInHH.Cut.MultPoly X :=
   Formalism.L2.SG.Pf.multPoly_holds_of'' X (OmCover_holds _)

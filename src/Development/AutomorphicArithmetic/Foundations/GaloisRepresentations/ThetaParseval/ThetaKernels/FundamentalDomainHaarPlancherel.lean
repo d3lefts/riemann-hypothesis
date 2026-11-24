@@ -129,7 +129,7 @@ theorem _root_.GlobalTheory.T.lagrangian_integral_theta_model : ∀ (F E : Type)
       ∀ (ν : Measure (WOF F E nS nT)) (𝓕 : Set (WOF F E nS nT)), ν.IsAddHaarMeasure →
         IsAddFundamentalDomain (ratLF F E nS nT) 𝓕 ν →
       ∃ l₂ ∈ (adeleClass F).adm κ, ∀ Φ ∈ schA F κ, l₂ Φ = GlobalTheory.LagrTheta.lagrInt ν 𝓕 ((diagCols (Fin nT) : Matrix (Fin nT ⊕ Fin nT) (Fin nT) (AF F ⊗[F] E)).submatrix finSumFinEquiv.symm id) (GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ Φ) := by
-  first | exact @_root_.GlobalTheory.LagrThetaAdm.exists_admissible_eq_lagrangian_integral | exact _root_.GlobalTheory.LagrThetaAdm.exists_admissible_eq_lagrangian_integral | (intros; apply _root_.GlobalTheory.LagrThetaAdm.exists_admissible_eq_lagrangian_integral <;> assumption)
+  first | exact @_root_.GlobalTheory.LagrThetaAdm.exists_admissible_eq_lagrangian_integral
 end
 end -- clump:auto
 end -- clump:auto
@@ -567,7 +567,7 @@ theorem lam_formula_k {σ : E →ₐ[F] E} {B : Base F E} (hB : _root_.UpperTheo
     congr 1
     funext ξ
     subst ha hch hemb
-    simp only [symV, dotProduct_zero, zero_dotProduct, zero_sub]
+    simp only [symV, dotProduct_zero, zero_sub]
     exact psi_cancel B.ψ _ _ _
   have hFint : ∀ ξ, Integrable (fun u => a ξ * ch ξ u) (ν.restrict 𝓕) := fun ξ =>
     (Integrable.of_bound (hch_cont _).aestronglyMeasurable 1 (ae_of_all _ fun u => (hch_norm _ _).le)).const_mul _
@@ -1104,7 +1104,6 @@ theorem PositivityTheory.ThKW.PhaseFourierInjectivity.finj_k : ∀ (F E : Type) 
       ((fun i j => u (finProdFinEquiv (i, j))) : WOF F E nS nT)
     first
       | exact continuous_pi fun i => continuous_pi fun j => continuous_apply _
-      | fun_prop
   haveI : IsTopologicalAddGroup (AF F ⊗[F] E) := IsModuleTopology.topologicalAddGroup (AF F) (AF F ⊗[F] E)
   let E' : WOF F E nS nT ≃ₜ+ (Fin (nT * nS) → AF F ⊗[F] E) :=
     { toAddEquiv := vecE F E nS nT, continuous_toFun := he, continuous_invFun := he' }
@@ -1467,7 +1466,7 @@ theorem _root_.GlobalTheory.T.fundamental_domain_haar_plancherel : ∀ (F E : Ty
           mtF σ (GlobalTheory.WeilSchrodinger.DblTargetF.dblG JT) h * ((diagCols (Fin nT) : Matrix (Fin nT ⊕ Fin nT) (Fin nT) (AF F ⊗[F] E)).submatrix finSumFinEquiv.symm id) = ((diagCols (Fin nT) : Matrix (Fin nT ⊕ Fin nT) (Fin nT) (AF F ⊗[F] E)).submatrix finSumFinEquiv.symm id) * t.1 →
           ∀ f, IsThetaFunOF σ JS (GlobalTheory.WeilSchrodinger.DblTargetF.dblG JT) ξ₀ B.ψ f →
             GlobalTheory.LagrTheta.lagrInt ν 𝓕 ((diagCols (Fin nT) : Matrix (Fin nT ⊕ Fin nT) (Fin nT) (AF F ⊗[F] E)).submatrix finSumFinEquiv.symm id) (ωd (1, h) f) = (α t : ℂ) * ((((adeleClass F).modu (Units.map (Algebra.norm (AF F) : AF F ⊗[F] E →* AF F) (Matrix.GeneralLinearGroup.det t)) : ℝ) ^ ((Fintype.card (Fin nS) : ℝ) / 2) : ℝ) : ℂ) * GlobalTheory.LagrTheta.lagrInt ν 𝓕 ((diagCols (Fin nT) : Matrix (Fin nT ⊕ Fin nT) (Fin nT) (AF F ⊗[F] E)).submatrix finSumFinEquiv.symm id) f := by
-  first | exact @_root_.PositivityTheory.ThKW.fundamental_domain_plancherel_global | exact _root_.PositivityTheory.ThKW.fundamental_domain_plancherel_global | (intros; apply _root_.PositivityTheory.ThKW.fundamental_domain_plancherel_global <;> assumption)
+  first | exact @_root_.PositivityTheory.ThKW.fundamental_domain_plancherel_global
 end
 end -- clump:auto
 end -- clump:auto

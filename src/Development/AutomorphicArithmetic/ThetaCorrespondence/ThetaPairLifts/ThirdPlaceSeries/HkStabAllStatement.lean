@@ -336,7 +336,7 @@ theorem exists_integral_descent {LL : Type} [Field LL] [NumberField LL] (L0 : In
   refine ⟨c, fun a => B.repr.injective (Finsupp.ext fun k => ?_), fun t => hs _⟩
   have h1 := congrArg (fun z : 𝓞 L0 => (z : L0)) (hc (a, k))
 
-  simp only [RingOfIntegers.coe_eq_algebraMap, map_sum, map_mul, map_zero] at h1
+  simp only [map_sum, map_mul, map_zero] at h1
   simp only [← RingOfIntegers.coe_eq_algebraMap, hA'] at h1
   have h2 : ∑ t, (c t : L0) * α (t, a, k) = 0 := by
     apply mul_left_cancel₀ hd0
@@ -591,7 +591,7 @@ open scoped TensorProduct
 theorem _root_.GlobalTheory.T.hkStab_of_subset_of_star_closed : ∀ (D : D7) (cf : CharFrame D) (jE : D.host.E →+* Qb) (A : _root_.GlobalTheory.HeightCounting.CharFrameHostEmbedding D cf jE) (S : RatDat D.ntw)
     (In : RatIn D S) (b0 b1 : Big D) (Sx : Finset (PlE D.host)) (T : TwR D.LL0 D.nd) (Sp : RingSpec D cf b0 b1 Sx T),
     In.Sb ⊆ Sx → (∀ x : D.LL0, star (x : D.what₂.LL) ∈ D.LL0) → HkStab D T S In := by
-  first | exact @_root_.GlobalTheory.HeightCounting.FormsStep.hkStab_of_ringSpec_of_subset | exact _root_.GlobalTheory.HeightCounting.FormsStep.hkStab_of_ringSpec_of_subset | (intros; apply _root_.GlobalTheory.HeightCounting.FormsStep.hkStab_of_ringSpec_of_subset <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.FormsStep.hkStab_of_ringSpec_of_subset
 end
 end -- clump:auto
 end -- clump:auto

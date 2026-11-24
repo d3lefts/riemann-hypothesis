@@ -642,7 +642,7 @@ theorem UpperTheory.Gal.crystallineComparison.charAnn_of :
   set M' : Matrix (Fin n) (Fin n) L := M.map f
   have hchar : M'.charpoly = M.charpoly.map f := Matrix.charpoly_map M f
   have hpmap : (rootPol s).map f = (Multiset.map (fun a => Polynomial.X - Polynomial.C a) (s.map f)).prod := by
-    simp [rootPol, Polynomial.map_multiset_prod, Multiset.map_map, Function.comp_def]
+    simp [rootPol, Polynomial.map_multiset_prod, Multiset.map_map]
   have hannL : Polynomial.aeval M' (rootPol s) = 0 := by
     have h1 : M' = (Algebra.ofId K L).mapMatrix M := by
       rw [AlgHom.mapMatrix_apply]; rfl
@@ -1805,7 +1805,7 @@ private theorem scal_mem (a : ℕ) (y : Ideles E) (h : UpperTheory.Gal.Int.Div.c
   show (((Matrix.GeneralLinearGroup.scalar (Fin a) y : GA E a) : Matrix (Fin a) (Fin a) (Ad E)).map (conjAd E)).transpose * 1 *
     ((Matrix.GeneralLinearGroup.scalar (Fin a) y : GA E a) : Matrix (Fin a) (Fin a) (Ad E)) = 1
   rw [e, Matrix.mul_one, Matrix.diagonal_map (map_zero _), Matrix.diagonal_transpose, Matrix.diagonal_mul_diagonal]
-  simp only [Function.comp_apply, hy]
+  simp only [hy]
   exact Matrix.diagonal_one
 
 private theorem continuous_scal (a : ℕ) :
@@ -1880,7 +1880,7 @@ private theorem map_scalar' {R S : Type} [CommRing R] [CommRing S] (f : R →+* 
   ext i j
   by_cases h : i = j
   · subst h; simp [Matrix.GeneralLinearGroup.scalar]
-  · simp [Matrix.GeneralLinearGroup.scalar, Matrix.diagonal_apply, h]
+  · simp [Matrix.GeneralLinearGroup.scalar, h]
 
 section
 

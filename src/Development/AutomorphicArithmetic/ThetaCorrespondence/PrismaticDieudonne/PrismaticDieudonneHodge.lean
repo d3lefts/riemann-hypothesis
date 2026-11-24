@@ -143,8 +143,7 @@ def datumOf (ε : PreTilt O p) {d k h : ℕ} (hdk : d + k = h)
   F_act := by
     intro a
     refine Matrix.ext fun i j => ?_
-    simp [Algebra.ofId_apply, Matrix.algebraMap_matrix_apply, Matrix.mul_apply, Matrix.one_apply,
-      apply_ite (ofPadic p O), mul_ite, ite_mul, mul_comm]
+    simp [Algebra.ofId_apply, Matrix.algebraMap_matrix_apply, Matrix.mul_apply, apply_ite (ofPadic p O), mul_ite, mul_comm]
 
 end GlobalTheory.DatumOfMatrices
 
@@ -523,7 +522,7 @@ theorem dvd_of_eq_zero (x y : Ainf p O) (h : a ε x + τ ε * a ε y = 0) :
   simp only [coeff_add, coeff_sub, coeff_C_zero, coeff_mul_X_zero, coeff_mul_C,
     coeff_mul_X_pow', coeff_C_succ] at e0 e1
   rw [show (1 : ℕ) = 0 + 1 from rfl, coeff_mul_X, coeff_mul_X, coeff_mul_C, coeff_C_zero] at e1
-  simp only [coeff_C_succ, zero_add, Nat.one_lt_ofNat, if_neg (by norm_num : ¬ (2 ≤ 1)),
+  simp only [zero_add, if_neg (by norm_num : ¬ (2 ≤ 1)),
     if_neg (by norm_num : ¬ (2 ≤ 0)), add_zero, zero_sub] at e0 e1
   refine ⟨-(h1.coeff 1), ?_⟩
   rw [e0, e1]; ring
@@ -1008,7 +1007,7 @@ theorem iota_exists : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
     intro i; funext j
     by_cases hij : j = i
     · subst hij; simp [toO]
-    · simp [toO, Pi.single_apply, hij]
+    · simp [toO, hij]
   have hext : ∀ f₁ f₂ : G.dual.omega →ₗ[O] O,
       (∀ t, f₁ (hodgeTate G t) = f₂ (hodgeTate G t)) → f₁ = f₂ := by
     intro f₁ f₂ hf

@@ -409,8 +409,7 @@ structure QuadAlg : Prop where
 variable {T t n}
 
 theorem QuadAlg.span' (hQ : QuadAlg T t n) (z : A) : ∃ x y : K, z = algebraMap K A x + algebraMap K A y * T := by
-  obtain ⟨x, y, hz⟩ := hQ.span z
-  exact ⟨x, y, by rw [hz, Algebra.smul_def, Algebra.smul_def, mul_one]⟩
+  simpa only [Algebra.smul_def, mul_one] using hQ.span z
 
 theorem QuadAlg.indep' (hQ : QuadAlg T t n) (x y : K) (h : algebraMap K A x + algebraMap K A y * T = 0) :
     x = 0 ∧ y = 0 := hQ.indep x y (by rw [Algebra.smul_def, Algebra.smul_def, mul_one]; exact h)
@@ -521,8 +520,7 @@ theorem field_iff_noRoot (hQ : QuadAlg T t n) :
   constructor
   · rintro hu ⟨β, hβ⟩
     obtain ⟨e, he, he0, he1⟩ := idem_of_root hQ hβ
-    have h1e : e * (1 - e) = 0 := by rw [mul_sub, mul_one, he, sub_self]
-    have h2 : 1 - e = 0 := ((hu e he0).mul_right_eq_zero).1 h1e
+    have h2 : 1 - e = 0 := ((hu e he0).mul_right_eq_zero).1 (by rw [mul_sub, mul_one, he, sub_self])
     exact he1 (sub_eq_zero.1 h2).symm
   · exact unit_of_noRoot hQ
 
@@ -540,7 +538,6 @@ theorem mem_OOv (x : K) :
       x = algebraMap R K a * (algebraMap R K s)⁻¹ := by
   first
   | exact Iff.rfl
-  | exact Localization.subalgebra.mem_range_mapToFractionRing_iff_ofField K _ _ (Localization v.asIdeal.primeCompl) x
 
 theorem alg_ne_zero {s : R} (hs : s ∉ v.asIdeal) : algebraMap R K s ≠ 0 := by
   intro h0
@@ -645,15 +642,13 @@ theorem norm_int_lt_one (x : 𝓞 F) : ‖iotaR v x‖ < 1 ↔ x ∈ v.asIdeal :
   rw [Valued.toNormedField.norm_lt_one_iff, val_int, IsDedekindDomain.HeightOneSpectrum.intValuation_lt_one_iff_mem]
 
 theorem norm_int_le_one (x : 𝓞 F) : ‖iotaR v x‖ ≤ 1 := by
-  rw [Valued.toNormedField.norm_le_one_iff, val_int]
-  exact v.intValuation_le_one x
+  simpa only [Valued.toNormedField.norm_le_one_iff, val_int] using v.intValuation_le_one x
 
 theorem norm_int_eq_one (x : 𝓞 F) (hx : x ∉ v.asIdeal) : ‖iotaR v x‖ = 1 :=
   le_antisymm (norm_int_le_one v x) (not_lt.1 fun h => hx ((norm_int_lt_one v x).1 h))
 
 theorem norm_four_le : ‖(4 : v.adicCompletion F)‖ ≤ 1 := by
-  have h := IsUltrametricDist.norm_natCast_le_one (v.adicCompletion F) 4
-  exact_mod_cast h
+  exact IsUltrametricDist.norm_natCast_le_one (v.adicCompletion F) 4
 
 theorem approx_one (β : v.adicCompletion F) (hβ : ‖β‖ ≤ 1) : ∃ b : 𝓞 F, ‖β - iotaR v b‖ < 1 := by
   have hβ' : Valued.v β ≤ 1 := Valued.toNormedField.norm_le_one_iff.1 hβ
@@ -665,8 +660,7 @@ theorem approx_one (β : v.adicCompletion F) (hβ : ‖β‖ ≤ 1) : ∃ b : �
 end Compl
 
 theorem nsub_le {K : Type*} [NormedField K] [IsUltrametricDist K] (a b : K) : ‖a - b‖ ≤ max ‖a‖ ‖b‖ := by
-  rw [sub_eq_add_neg]
-  simpa [norm_neg] using IsUltrametricDist.norm_add_le_max a (-b)
+  simpa [sub_eq_add_neg, norm_neg] using IsUltrametricDist.norm_add_le_max a (-b)
 
 theorem root_norm_le {K : Type*} [NormedField K] [IsUltrametricDist K] {tr nm β : K} (htr : ‖tr‖ ≤ 1)
     (hnm : ‖nm‖ ≤ 1) (h : β ^ 2 - tr * β + nm = 0) : ‖β‖ ≤ 1 := by
@@ -676,9 +670,8 @@ theorem root_norm_le {K : Type*} [NormedField K] [IsUltrametricDist K] {tr nm β
   have hn : ‖β‖ ^ 2 ≤ max (‖tr‖ * ‖β‖) ‖nm‖ := by
     rw [← norm_pow, h1, ← norm_mul]
     exact nsub_le _ _
-  have hb0 : 0 ≤ ‖β‖ := norm_nonneg β
-  have ht0 : 0 ≤ ‖tr‖ := norm_nonneg tr
-  rcases le_max_iff.1 hn with h2 | h2 <;> nlinarith
+  rcases le_max_iff.1 hn with h2 | h2 <;>
+    nlinarith [norm_nonneg β, norm_nonneg tr]
 
 section Host
 
@@ -738,8 +731,7 @@ theorem c_eq_O (h : ThetaAt p θ c tr nm) :
   rfl
 
 theorem sigO_sigO (x : 𝓞 D.host.E) : sigO (sigO x) = x := by
-  apply RingOfIntegers.coe_injective
-  simp [sigO]
+  exact RingOfIntegers.coe_injective (by simp [sigO])
 
 theorem not_prime_of_root (h : ThetaAt p θ c tr nm) (β : p.adicCompletion D.host.F)
     (hβ : β ^ 2 - iotaR p tr * β + iotaR p nm = 0) :
@@ -963,8 +955,7 @@ theorem idem_iff_notPrime (p : PlF D) :
     IdemNT (p.adicCompletion D.host.F ⊗[D.host.F] D.host.E) ↔
       ¬ (p.asIdeal.map (algebraMap (𝓞 D.host.F) (𝓞 D.host.E))).IsPrime := by
   obtain ⟨θ, c, tr, nm, h⟩ := thetaAt_exists p
-  rw [idem_iff_root (quadAlg_tens h)]
-  exact root_iff h
+  exact (idem_iff_root (quadAlg_tens h)).trans (root_iff h)
 
 theorem unit_iff_prime (p : PlF D) :
     (∀ z : p.adicCompletion D.host.F ⊗[D.host.F] D.host.E, z ≠ 0 → IsUnit z) ↔

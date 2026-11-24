@@ -392,7 +392,6 @@ theorem dict_frames {D : D7} {T : Type} {A A' WW : HSp D} (X : Tri T A A' WW) (�
   refine ⟨f1, f2, fun P g h => ?_, fun P g h => ?_⟩
   · unfold fockF GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.Tri.ker
     rw [e1, ← hW, hσ _ f1.1]
-    try rfl
   · unfold fockF GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.Tri.ker'
     rw [e2, ← hW, hσ' _ f2.1]
     try rfl
@@ -451,7 +450,7 @@ theorem _root_.GlobalTheory.T.theta_parameter_dictionary_bijective : _root_.Glob
       IsFinF W.ψ W.θ true A (frSum AV AV₁) (X.f t) ∧ IsFinF W.ψ W.θ false A₁ (frSum AV AV₁) (X.f' t) ∧
       (∀ P g h, X.ker W.ψ W.θ t P h g = thetaKO (X.ω t) g h (fockF W.ψ W.θ true A (frSum AV AV₁) (X.f t) (σ P))) ∧
       ∀ P g h, X.ker' W.ψ W.θ t P h g = thetaKO (X.ω' t) g h (fockF W.ψ W.θ false A₁ (frSum AV AV₁) (X.f' t) (σ' P)) := by
-  first | exact @_root_.GlobalTheory.TopDict.theta_parameter_dictionary | exact _root_.GlobalTheory.TopDict.theta_parameter_dictionary | (intros; apply _root_.GlobalTheory.TopDict.theta_parameter_dictionary <;> assumption)
+  first | exact @_root_.GlobalTheory.TopDict.theta_parameter_dictionary
 end
 end -- clump:auto
 end -- clump:auto

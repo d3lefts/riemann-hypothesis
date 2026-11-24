@@ -68,7 +68,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.O
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.isFinite_mulByNat_abelianVariety : ∀ (K : Type) [Field K] [IsAlgClosed K] (A : Over (Sp K)) [GrpObj A], IsAbelianScheme A → ∀ n : ℕ, 1 ≤ n → IsFinite (𝟙 A ^ n : A ⟶ A).left := by
-  first | exact @GlobalTheory.MulFinite.isFinite_mul | exact GlobalTheory.MulFinite.isFinite_mul | (intros; apply GlobalTheory.MulFinite.isFinite_mul <;> assumption)
+  first | exact @GlobalTheory.MulFinite.isFinite_mul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFiniteMulByNatAbelianVarietyStatement =====
@@ -155,7 +155,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.O
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.exists_quotient_abelianVariety_finite_subgroupScheme : ∀ (K : Type) [Field K] [IsAlgClosed K] (A : Over (Sp K)) [GrpObj A], IsAbelianScheme A → ∀ (H : Over (Sp K)) [GrpObj H] (i : H ⟶ A), IsMonHom i → Mono i → IsFinite H.hom → ∃ (A' : Over (Sp K)) (_ : GrpObj A'), IsAbelianScheme A' ∧ ∃ q : A ⟶ A', IsMonHom q ∧ IsFinite q.left ∧ Flat q.left ∧ Surjective q.left ∧ IsPullback i (toUnit H) q η[A'] := by
-  first | exact @GlobalTheory.AbelianQuotientField.exists_quotient | exact GlobalTheory.AbelianQuotientField.exists_quotient | (intros; apply GlobalTheory.AbelianQuotientField.exists_quotient <;> assumption)
+  first | exact @GlobalTheory.AbelianQuotientField.exists_quotient
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsQuotientAbelianVarietyFiniteSubgroupSchemeStatement =====

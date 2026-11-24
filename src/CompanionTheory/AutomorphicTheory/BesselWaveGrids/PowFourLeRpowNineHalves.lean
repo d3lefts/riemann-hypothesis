@@ -629,32 +629,8 @@ private theorem sum_natAbs_le_ball_local {n : ℕ} : ∀ e, ∀ ν ∈ ball n e,
       exact Finset.sum_le_sum fun i _ => Int.natAbs_add_le _ _
     omega
 
-def gapY (k r : ℕ) : ℝ :=
-  ((2 * r + 2 : ℕ) : ℝ) ^ ((9 : ℝ) / 2) *
-    (((3 * (r + 1) : ℕ) : ℝ) * ((2 * r + k + 1 : ℕ) : ℝ) ^ 2 + ((2 * r + k + 1 : ℕ) : ℝ) ^ 3)
-
-theorem pow_four_le_rpow_nine_halves (r : ℕ) : ((2 * r + 2 : ℕ) : ℝ) ^ 4 ≤ ((2 * r + 2 : ℕ) : ℝ) ^ ((9 : ℝ) / 2) := by
-  rw [← Real.rpow_natCast]
-  exact Real.rpow_le_rpow_of_exponent_le (by exact_mod_cast (by omega : 1 ≤ 2 * r + 2)) (by norm_num)
-
-theorem thrX_le_gapY (k r : ℕ) : thrX k r ≤ gapY k r := by
-  unfold thrX gapY
-  have h1 : ((r : ℝ) + 1) ^ 4 ≤ ((2 * r + 2 : ℕ) : ℝ) ^ 4 :=
-    pow_le_pow_left₀ (by positivity) (by push_cast; linarith [(Nat.cast_nonneg r : (0 : ℝ) ≤ r)]) 4
-  have e : ((2 * r + k + 1 : ℕ) : ℝ) = 2 * (r : ℝ) + k + 1 := by push_cast; ring
-  rw [e]
-  exact mul_le_mul_of_nonneg_right (h1.trans (pow_four_le_rpow_nine_halves r)) (by positivity)
-
-theorem mul_le_gapY (k r : ℕ) : ((2 * r + 2 : ℕ) : ℝ) ^ 4 * ((2 * r + k + 1 : ℕ) : ℝ) ^ 3 ≤ gapY k r :=
-  mul_le_mul (pow_four_le_rpow_nine_halves r) (le_add_of_nonneg_left (by positivity)) (by positivity) (by positivity)
-
-theorem fourth_power_le_gap (k r : ℕ) : ((2 * r + 2 : ℕ) : ℝ) ^ 4 ≤ gapY k r :=
-  le_trans (le_mul_of_one_le_right (by positivity)
-    (one_le_pow₀ (by exact_mod_cast (by omega : 1 ≤ 2 * r + k + 1)))) (mul_le_gapY k r)
-
-theorem cube_le_gap (k r : ℕ) : ((2 * r + k + 1 : ℕ) : ℝ) ^ 3 ≤ gapY k r :=
-  le_trans (le_mul_of_one_le_left (by positivity)
-    (one_le_pow₀ (by exact_mod_cast (by omega : 1 ≤ 2 * r + 2)))) (mul_le_gapY k r)
+export _root_.CompanionTheory.WaveGrid.Coef.GapBounds (gapY pow_four_le_rpow_nine_halves thrX_le_gapY mul_le_gapY
+  fourth_power_le_gap cube_le_gap)
 
 theorem num_of {k r : ℕ} (hk : 1 ≤ k) {lam : Fin (2 * r + k + 1) → ℝ} {u : ℕ → ℝ} {b bv ga h : ℝ} {q0 : ℕ}
     (hlam : IsHCParam lam) (hu : HypType k r lam u b)

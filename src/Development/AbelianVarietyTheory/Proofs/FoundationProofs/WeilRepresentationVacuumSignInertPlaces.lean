@@ -197,11 +197,7 @@ theorem exists_int_smul_mem {K V : Type*} [Field K] [NumberField K] [AddCommGrou
     [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (L : Submodule (𝓞 K) V)
     (hL : Submodule.span K (L : Set V) = ⊤) (y : V) : ∃ m : ℤ, m ≠ 0 ∧ m • y ∈ L := by
   first
-  | exact @_root_.GlobalTheory.IntegerScalarIntegral.main
-  | exact _root_.GlobalTheory.IntegerScalarIntegral.main
   | (apply _root_.GlobalTheory.IntegerScalarIntegral.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.IntegerScalarIntegral.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.IntegerScalarIntegral.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.IntegerScalarIntegral.main ..)
 
 theorem exists_nearer : ∀ (D : D7) (n : ℕ) (L₀ L : Lat D n), SD D L₀ → SD D L → L₀ ≠ L → ∃ (P : Ideal (𝓞 D.host.E)) (q : ℕ) (x : Fin n → D.host.E), P.IsMaximal ∧ q.Prime ∧ (q : 𝓞 D.host.E) ∈ P ∧ x ∈ L₀ ∧ NbD D P L x ∧ lenQ D L₀ (nbr D L x) + 1 = lenQ D L₀ L := by
@@ -1062,7 +1058,7 @@ theorem Hf_ptH (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (N : ℕ) {N' : 
   rw [phiH, AddMonoidHom.mk'_apply]
 
   simp only [Hf, ptH_apply, pt_apply, mat, Algebra.smul_def,
-  RingOfIntegers.coe_eq_algebraMap, map_sum, map_mul, h1, embT_conj, Finset.sum_mul]
+  map_sum, map_mul, h1, embT_conj, Finset.sum_mul]
   congr 1
   refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
   ring

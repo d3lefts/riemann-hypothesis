@@ -99,7 +99,7 @@ theorem charpolyRev_map {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) {
   rw [← Polynomial.coe_mapRingHom, RingHom.map_det]
   congr 1
   ext i j : 2
-  by_cases h : i = j <;> simp [Matrix.one_apply, h]
+  by_cases h : i = j <;> simp [h]
 
 theorem measurable_curv {n : ℕ} {r : Type} [Fintype r] [DecidableEq r] (G : V n → Matrix r r ℂ) (ξ η : V n) (i j : r) :
     Measurable fun v => curv G v ξ η i j := by
@@ -477,8 +477,7 @@ theorem GlobalTheory.GoodMetric.hasChernIntegral_of_eq_sum : ∀ (F : Type) [Fie
     ENNReal.toReal_sum fun j _ => ENNReal.add_ne_top.2
       ⟨ENNReal.mul_ne_top ENNReal.ofReal_ne_top (hq1 j), ENNReal.mul_ne_top ENNReal.ofReal_ne_top (hq2 j)⟩] at hr
   simp only [ENNReal.toReal_add (ENNReal.mul_ne_top ENNReal.ofReal_ne_top (hq1 _))
-      (ENNReal.mul_ne_top ENNReal.ofReal_ne_top (hq2 _)), ENNReal.toReal_mul,
-    ENNReal.toReal_ofReal (le_max_right _ _)] at hr
+      (ENNReal.mul_ne_top ENNReal.ofReal_ne_top (hq2 _)), ENNReal.toReal_mul] at hr
   have hap : ∀ j, (ENNReal.ofReal (ap j)).toReal = ap j := fun j => ENNReal.toReal_ofReal (le_max_right _ _)
   have han : ∀ j, (ENNReal.ofReal (an j)).toReal = an j := fun j => ENNReal.toReal_ofReal (le_max_right _ _)
   simp only [hap, han] at hr

@@ -419,7 +419,7 @@ theorem toPoly_quad (p : ℕ) : ∃ s : Polynomial (MRing ι),
   have h : toPoly (C (p : ℤ) : MRing (Tb ι)) =
       Polynomial.C (Polynomial.C (C (p : ℤ) : MRing ι)) := by
     simpa [inc] using toPoly_inc (ι := ι) (C (p : ℤ) : MRing ι)
-  simp [quad, toPoly_xN, toPoly_yN, h]
+  simp [quad, toPoly_xN, toPoly_yN]
 
 theorem flat_quad (p : ℕ) :
     ((Ideal.Quotient.mk (Ideal.span {quad p})).comp inc :
@@ -530,8 +530,7 @@ theorem toA_quad (p : ℕ) (W : Ideal (MRing ι)) : toA p W (quad p) = 0 := by
       Polynomial.C (Polynomial.C ((p : ℤ) : MRing ι ⧸ W) * Polynomial.X ^ 2)) = 0 :=
     AdjoinRoot.mk_self
   set_option synthInstance.maxHeartbeats 200000 in
-  simp only [map_add (f := _), map_pow, map_mul, AdjoinRoot.mk_X, AdjoinRoot.mk_C, map_intCast,
-    Int.cast_natCast, map_natCast] at h
+  simp only [map_add (f := _), map_pow, map_mul, AdjoinRoot.mk_X, AdjoinRoot.mk_C, Int.cast_natCast, map_natCast] at h
   have hC : toA p W (MvPolynomial.C (p : ℤ)) = (p : AdjoinRoot (quadP p W)) := by
     rw [map_natCast MvPolynomial.C p, map_natCast]
   simp only [quad, map_add (f := toA p W), map_mul, map_pow, toA_xN, toA_yN, hC]
@@ -604,8 +603,7 @@ theorem baseMap_isIntegralElem_xN (p : ℕ) (W : Ideal (MRing ι)) :
       (p : MRing (Tb ι) ⧸ twist p W) := by
     rw [map_natCast MvPolynomial.C p, map_natCast]
   simp only [quadP, quad, Polynomial.eval₂_add, Polynomial.eval₂_mul, Polynomial.eval₂_pow,
-    Polynomial.eval₂_X, Polynomial.eval₂_C, map_mul, map_pow, map_add, baseP_X, map_intCast,
-    Int.cast_natCast, hp, map_natCast, Polynomial.eval₂_natCast]
+    Polynomial.eval₂_X, Polynomial.eval₂_C, map_mul, map_pow, map_add, baseP_X, Int.cast_natCast, map_natCast, Polynomial.eval₂_natCast]
 
 theorem baseMap_isIntegralElem_X (p : ℕ) (W : Ideal (MRing ι)) (q : Σ o, Tb ι o) :
     (baseP p W).IsIntegralElem (Ideal.Quotient.mk (twist p W) (X q)) := by
@@ -1401,7 +1399,7 @@ section -- clump:auto
 open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo MeasureTheory GlobalTheory.CompanionTheory.Ar.Tw
 
 theorem _root_.GlobalTheory.T.twist_isPrime_of_isPrime_of_noRoot : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (p : ℕ) (W : Ideal (MRing ι)), W.IsPrime → NoRoot p W → (twist p W).IsPrime := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Tw.twist_isPrime | exact GlobalTheory.CompanionTheory.Ar.Tw.twist_isPrime | (intros; apply GlobalTheory.CompanionTheory.Ar.Tw.twist_isPrime <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Tw.twist_isPrime
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.MetricProofs.TwistIsPrimeStatement =====
@@ -1557,7 +1555,7 @@ theorem twist_integral (hI : PtsIntegrableStatement) (hD : PtsIndepStatement)
       rw [Set.disjoint_left]
       rintro _ ⟨w, hw, rfl⟩ ⟨w', hw', he⟩
       have hc : cRoot p ≠ 0 := by
-        simp [cRoot, Real.sqrt_eq_zero', hp, Nat.pos_of_ne_zero hp]
+        simp [cRoot, hp]
       have hww : w' = w := by
         funext j
         have := congrFun he (fun o => match o with | none => (1 : Fin 2) | some k => j k)

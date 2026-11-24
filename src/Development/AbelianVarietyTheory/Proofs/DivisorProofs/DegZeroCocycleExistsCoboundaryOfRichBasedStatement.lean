@@ -124,8 +124,8 @@ theorem exists_second_order_nbhd : ∀ (O : Type) [CommRing O] [Algebra ℂ O] (
   · exact Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)
   · intro x; ext <;> simp [i, j, e₁]
   · intro x; ext <;> simp [i, j, e₂]
-  · intro x; ext <;> simp [i, j, e₂]
-  · intro x; ext <;> simp [i, j, e₁, h]
+  · intro x; ext <;> simp [j, e₂]
+  · intro x; ext <;> simp [i, e₁, h]
   · intro x hx
     have := congrArg (fun z : DualNumber (DualNumber O) => z.snd.snd) hx
     simpa [i, j, e₁, e₂] using this
@@ -736,7 +736,7 @@ section -- clump:auto
 open CategoryTheory GlobalTheory.CatCoh GlobalTheory.AnPer GlobalTheory.AnPer.Charts TopologicalSpace
 
 theorem _root_.GlobalTheory.T.degZeroCocycle_exists_coboundary_of_rich_based : ∀ {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup Λ] {F : Fam I g Λ} (K : Charts F), K.Rich → K.Based → ∀ (h : C1 K.Oc), (∀ (T T' T'' : K.Obj) (φ : T ⟶ T') (ψ : T' ⟶ T''), φ.deg = 0 → ψ.deg = 0 → h T T'' (φ ≫ ψ) = ψ.φ (h T T' φ) + h T' T'' ψ) → ∃ G : C0 K.Oc, ∀ (T T' : K.Obj) (φ : T ⟶ T'), φ.deg = 0 → h T T' φ = G T' - φ.φ (G T) := by
-  first | exact @GlobalTheory.AnPer.Charts.DegZero.exists_gauge | exact GlobalTheory.AnPer.Charts.DegZero.exists_gauge | (intros; apply GlobalTheory.AnPer.Charts.DegZero.exists_gauge <;> assumption)
+  first | exact @GlobalTheory.AnPer.Charts.DegZero.exists_gauge
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DegZeroCocycleExistsCoboundaryOfRichBasedStatement =====

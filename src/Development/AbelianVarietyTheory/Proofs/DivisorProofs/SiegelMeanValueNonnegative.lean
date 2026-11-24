@@ -132,7 +132,7 @@ section -- clump:auto
 open Matrix
 
 theorem _root_.GlobalTheory.T.semilocal_conjugate_same_charpoly : ∀ (R : Type) [CommRing R], Set.Finite {I : Ideal R | I.IsMaximal} → ∀ (n : ℕ) (γ δ : Matrix (Fin n) (Fin n) R), γ.charpoly = δ.charpoly → γ.charpoly.Separable → ∃ u : GL (Fin n) R, (u : Matrix (Fin n) (Fin n) R) * δ = γ * u := by
-  first | (exact @GlobalTheory.SemilocalConj.conj_of_charpoly_eq_of_separable) | (exact GlobalTheory.SemilocalConj.conj_of_charpoly_eq_of_separable) | (intros; apply GlobalTheory.SemilocalConj.conj_of_charpoly_eq_of_separable <;> assumption)
+  first | (exact @GlobalTheory.SemilocalConj.conj_of_charpoly_eq_of_separable)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SemilocalConjugateSameCharpoly =====
@@ -169,7 +169,7 @@ theorem eventually_isIntV_map (G : HTGroup p) (y : AfP p ⊗[ℚ] G.C) :
         algebraMap ℚ (Qv v) ((Module.finBasis ℚ G.C).repr c i) ∈ v.1.adicCompletionIntegers ℚ := by
       simp only [Filter.eventually_all]; intro i; exact eventually_rat_mem_integers _
     filter_upwards [h1, h2] with v hv1 hv2 i
-    simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, IsIntV, basV,
+    simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, basV,
       Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul]
     exact Subring.mul_mem _ hv1 (hv2 i)
   | add y z hy hz =>

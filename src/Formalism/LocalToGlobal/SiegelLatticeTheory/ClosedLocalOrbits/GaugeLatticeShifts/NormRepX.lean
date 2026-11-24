@@ -63,7 +63,6 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem star_emb (D : D7) (x : D.host.E) : D.host.φ₀ (star x) = conj (D.host.φ₀ x) := by
   haveI := D.host.isCMField_hostE
-  show D.host.φ₀ (NumberField.IsCMField.complexConj D.host.E x) = _
   exact NumberField.IsCMField.complexEmbedding_complexConj D.host.E D.host.φ₀ x
 
 theorem star_sqrtMinusD (D : D7) : star D.host.sqrtMinusD = -D.host.sqrtMinusD := by

@@ -94,7 +94,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.eventually_auxiliary_places_split_distinct : EvLgG fun K B f _ => KPx B f → ∀ (T : TwDat B) (w : ColW B f T) (Z : w.Lt), ∃ w0, GlobalTheory.LamTie.PlacesOk (w.D Z).host (AbsolutelyIrreducibleSpan.q0 (w.D Z)) w0 := by
-  first | exact @GlobalTheory.TwInputs.PlacesAt.evLgG_placesOk | exact GlobalTheory.TwInputs.PlacesAt.evLgG_placesOk | (intros; apply GlobalTheory.TwInputs.PlacesAt.evLgG_placesOk <;> assumption)
+  first | exact @GlobalTheory.TwInputs.PlacesAt.evLgG_placesOk
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EventuallyAuxiliaryPlacesSplitDistinctStatement =====
@@ -135,7 +135,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.eventually_baseChangeHypotheses_columnChoices : EvLgG fun K B f _ => KPx B f → ∀ (T : TwDat B) (w : ColW B f T) (Z : w.Lt), SphericalInertData.HypCM (w.D Z) := by
-  first | exact @GlobalTheory.Mem.HypCMRec.hypCM_at_record | exact GlobalTheory.Mem.HypCMRec.hypCM_at_record | (intros; apply GlobalTheory.Mem.HypCMRec.hypCM_at_record <;> assumption)
+  first | exact @GlobalTheory.Mem.HypCMRec.hypCM_at_record
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EventuallyBaseChangeHypothesesColumnChoicesStatement =====
@@ -187,7 +187,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.eventually_coeffField_contains_rootOfUnity_groupOrder : EvLgG fun K B f _ => KPx B f → ∀ (T : TwDat B) (w : ColW B f T) (Z : w.Lt), RootsLL (w.D Z) := by
-  first | exact @GlobalTheory.HeightCounting.Up.rootsLL_evLgG | exact GlobalTheory.HeightCounting.Up.rootsLL_evLgG | (intros; apply GlobalTheory.HeightCounting.Up.rootsLL_evLgG <;> assumption)
+  first | exact @GlobalTheory.HeightCounting.Up.rootsLL_evLgG
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EventuallyCoeffFieldContainsRootOfUnityGroupOrdeStatement =====
@@ -219,7 +219,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.eventually_host_eq_compositum_totallyReal_imagQuadratic : EvLgG fun K B f _ => KPx B f → ∀ (T : TwDat B) (w : ColW B f T) (Z : w.Lt), SphericalInertData.HypEFK (w.D Z) := by
-  first | exact @GlobalTheory.Mem.HostEFK.hypEFK_ev | exact GlobalTheory.Mem.HostEFK.hypEFK_ev | (intros; apply GlobalTheory.Mem.HostEFK.hypEFK_ev <;> assumption)
+  first | exact @GlobalTheory.Mem.HostEFK.hypEFK_ev
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EventuallyHostEqCompositumTotallyRealImagQuadratStatement =====
@@ -271,7 +271,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.eventually_hundred_le_hermitianRank_columnChoices : EvLgG fun K B f _ => KPx B f → ∀ (T : TwDat B) (w : ColW B f T) (Z : w.Lt), 100 ≤ (w.D Z).R.r := by
-  first | exact @GlobalTheory.Mem.RankSize.rank_ge_hundred | exact GlobalTheory.Mem.RankSize.rank_ge_hundred | (intros; apply GlobalTheory.Mem.RankSize.rank_ge_hundred <;> assumption)
+  first | exact @GlobalTheory.Mem.RankSize.rank_ge_hundred
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EventuallyHundredLeHermitianRankColumnChoicesStatement =====
@@ -314,7 +314,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.eventually_spacesV_definite_columnChoices : EvLgG fun K B f _ => KPx B f → ∀ (T : TwDat B) (w : ColW B f T) (Z : w.Lt), ∀ j, 1 ≤ j → j ≤ (w.D Z).R.m → ((w.D Z).sp.V j).IsDefinite := by
-  first | exact @GlobalTheory.Mem.DefSpaces.v_isDefinite | exact GlobalTheory.Mem.DefSpaces.v_isDefinite | (intros; apply GlobalTheory.Mem.DefSpaces.v_isDefinite <;> assumption)
+  first | exact @GlobalTheory.Mem.DefSpaces.v_isDefinite
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EventuallySpacesVDefiniteColumnChoicesStatement =====
@@ -373,7 +373,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.eventually_two_mul_rank_le_levelPrime : EvLgG fun K B f _ => KPx B f → ∀ (T : TwDat B) (w : ColW B f T) (Z : w.Lt), ∀ k, 2 * (w.D Z).R.r ≤ (w.D Z).host.g k := by
-  first | exact @GlobalTheory.Mem.Top.Bl.two_mul_r_le_g_level | exact GlobalTheory.Mem.Top.Bl.two_mul_r_le_g_level | (intros; apply GlobalTheory.Mem.Top.Bl.two_mul_r_le_g_level <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.Bl.two_mul_r_le_g_level
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EventuallyTwoMulRankLeLevelPrimeStatement =====

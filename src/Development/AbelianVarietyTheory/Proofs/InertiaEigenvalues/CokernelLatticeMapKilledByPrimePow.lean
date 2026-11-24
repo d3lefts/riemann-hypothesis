@@ -331,7 +331,7 @@ theorem climb {R S V : Type} [Ring R] [Ring S] [AddCommGroup V] [Module R V] [Mo
       have := hstep _ hj _ hy
       rw [← add_assoc]
       convert this using 1
-      simp [Polynomial.aeval_X, Polynomial.aeval_C, sub_eq_add_neg]
+      simp [Polynomial.aeval_X, sub_eq_add_neg]
       rw [add_smul]
       abel
     · have hT' : T ⊆ Finset.Ico m (m + k) := fun i hi => by
@@ -832,8 +832,7 @@ theorem sum_isoProj : ∀ (O K : Type) [CommRing O] [NormedField K] [IsUltrametr
   classical
   rw [Finset.sum_eq_single (1 : rootsOfUnity e K)]
   · ext1 τ
-    simp only [map_one, TameGal.root_one, inv_one, one_pow, Pi.smul_apply, Finset.sum_apply,
-      diagScale_apply, one_smul, Module.End.one_apply, Finset.sum_const, Finset.card_univ, ZMod.card]
+    simp only [map_one, TameGal.root_one, inv_one, one_pow, Pi.smul_apply, diagScale_apply, one_smul, Module.End.one_apply, Finset.sum_const, Finset.card_univ, ZMod.card]
     rw [← Nat.cast_smul_eq_nsmul K, smul_smul, inv_mul_cancel₀ he, one_smul]
   · intro ζ _ hζ
     ext1 τ
@@ -1317,7 +1316,7 @@ theorem GlobalTheory.LiftCoker.vPow_mem_imL_add_lPow : ∀ (O K : Type) [CommRin
     have h2 := congrFun hm' τ
     simp only [LinearMap.restrictScalars_apply, BK.Hom.app_apply] at h2
     rw [h2]
-    simp [Submodule.coe_smul, Subalgebra.smul_def]
+    simp [Subalgebra.smul_def]
   have key := _root_.GlobalTheory.frobenius_ideal_degree_bound (O := O) l hl2 (PowerSeries.expand l (Fact.out : l.Prime).ne_zero)
     (fun f m => PowerSeries.coeff_expand _ _ f) a e (H + η) b (fun τ => colon O K (F.mat τ)) hb hlb
     (fun τ => ⟨n, Ideal.mem_sup_left (hX τ)⟩)

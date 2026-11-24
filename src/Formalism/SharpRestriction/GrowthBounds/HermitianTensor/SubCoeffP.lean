@@ -85,7 +85,7 @@ theorem multiInv {A S : Type} [CommRing A] [CommRing S] [Algebra A S] (r : ℕ)
       by_cases hw : w.2 = midI r j0
       · simp [hw, hf, Finset.sum_insert hj0, hz]
         try ring
-      · simp [hw, hf, Finset.sum_insert hj0, hz]
+      · simp [hw, hf, Finset.sum_insert hj0]
         try ring
     rw [← hφ, AlgHom.comp_apply, h0, MvPolynomial.aeval_rename]
     exact ih
@@ -100,7 +100,7 @@ theorem caseC (j0 : Fin r) (c : K) (b : Bool) (v : MvPolynomial (Fin (r + 1 + 1)
   have hmidOf_midI : ∀ j : Fin r, midOf (midI r j) = some j := by
     intro j
     unfold midOf midI
-    rw [dite_eq_left (by first | (simp [Fin.val_succ]; done) | (simp [Fin.val_succ]; omega))]
+    rw [dite_eq_left (by first | (simp [Fin.val_succ]; done))]
     exact congrArg some (Fin.ext (by simp [Fin.val_succ]))
   have hsome : ∀ (t : Fin (r + 1 + 1)) (j : Fin r), midOf t = some j → t = midI r j := by
     intro t j h
@@ -108,7 +108,7 @@ theorem caseC (j0 : Fin r) (c : K) (b : Bool) (v : MvPolynomial (Fin (r + 1 + 1)
     split_ifs at h with h1
     cases h
     apply Fin.ext
-    simp [midI, Fin.val_succ]
+    simp [midI]
     omega
   have hnone : ∀ (t : Fin (r + 1 + 1)) (j : Fin r), midOf t = none → t ≠ midI r j := by
     intro t j h ht
@@ -165,7 +165,7 @@ theorem caseC (j0 : Fin r) (c : K) (b : Bool) (v : MvPolynomial (Fin (r + 1 + 1)
           simp only [psiB, map_mul, coe_eval₂Hom, eval₂_C, eval₂_X, Formalism.GradedWeylDivisibility.colAdd, aeval_X]
           by_cases hi : i = j0
           · subst hi
-            simp [e, MvPolynomial.algebraMap_apply, MvPolynomial.algebraMap_eq]
+            simp [e, MvPolynomial.algebraMap_eq]
             ring
           · simp [hmid i hi, hi]
 
@@ -210,7 +210,7 @@ theorem caseN (t0 : Fin (r + 1 + 1)) (h0 : midOf t0 = none) (c : K) (b : Bool)
     ((th K r b).toRingHom.comp (scCol K (r + 1 + 1) t0 c).toRingHom) ?_ ?_ v
   · simpa using key
   · intro a
-    simp [th_C, psiB_C]
+    simp [psiB_C]
   · rintro ⟨a, t⟩
     rcases midOf_cases t with ⟨j, rfl⟩ | ⟨ht, -⟩
     · have hne : ∀ i : Fin r, midI r i ≠ t0 := fun i => midOf_none_ne h0 i
@@ -255,7 +255,7 @@ theorem caseM (ψ : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) K →ₐ[K
   · intro a
     simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, th_C]
     rw [psiB_C]
-    simp only [thR, AlgHom.comp_apply, subY_C, mAH_C, AlgHom.commutes]
+    simp only [thR, AlgHom.comp_apply, subY_C, mAH_C]
     simp
   · rintro ⟨a, t⟩
     rcases midOf_cases t with ⟨j, rfl⟩ | ⟨ht, -⟩
@@ -312,7 +312,7 @@ theorem lam_scaleM (L : MvPolynomial (Bool × (Fin r × Fin r)) K →ₗ[K] K) (
     refine Finset.sum_congr rfl fun i _ => ?_
 
     simp only [scCol_X, midI_inj, rowAct, aeval_X, Matrix.diagonal_apply, blockEmb, map_mul, map_C, map_X,
-    ite_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true, map_sum, rename_C, rename_X]
+    map_sum, rename_C, rename_X]
     rw [Finset.sum_eq_single i (fun x _ hx => by simp [Ne.symm hx]) (by simp)]
     simp only [if_true, MvPolynomial.algebraMap_eq]
     ring
@@ -337,7 +337,7 @@ theorem rowAct_transv (l j : Fin r) (c : K) (i t : Fin r) :
       simp [Ne.symm hb]
     · simp
   · have h' : ¬ l = i := fun e => h e.symm
-    simp [Matrix.single_apply, h, h']
+    simp [h, h']
 
 theorem lam_addM (L : MvPolynomial (Bool × (Fin r × Fin r)) K →ₗ[K] K) (N : ℕ) (α α' : Fin r → ℕ)
     (hInv : PhInv K r N α α' L) (l j : Fin r) (hlj : l ≠ j) (c : K)
@@ -359,8 +359,7 @@ theorem lam_addM (L : MvPolynomial (Bool × (Fin r × Fin r)) K →ₗ[K] K) (N 
       intro i
       split_ifs <;> simp
     simp only [e, map_add (f := _), map_mul, map_C, map_X, blockEmb, rename_X, rename_C, mul_add, add_mul,
-      Finset.sum_add_distrib, apply_ite, map_zero, mul_ite, ite_mul, mul_zero, zero_mul,
-      Finset.sum_ite_eq', Finset.mem_univ, if_true]
+      apply_ite, map_zero, ite_mul, mul_zero, zero_mul]
     have hs : ∀ (k : Fin r)
         (f g : Fin r → MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) (MvPolynomial (Bool × (Fin r × Fin r)) K)),
         (∑ x : Fin r, if x = k then f x + g x else f x + 0) = (∑ x : Fin r, f x) + g k := by

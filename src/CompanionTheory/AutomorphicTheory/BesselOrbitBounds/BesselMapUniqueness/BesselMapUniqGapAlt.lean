@@ -394,7 +394,7 @@ theorem ex_mul_eq {y : Mat n} (hy : IsUnit y) (X : Mat n) (t : ℝ) :
     ex X t * y = y * ex (y⁻¹ * X * y) t := by
   have hd : IsUnit y.det := (Matrix.isUnit_iff_isUnit_det y).1 hy
   have h1 : (t : ℂ) • (y⁻¹ * X * y) = y⁻¹ * ((t : ℂ) • X) * y := by
-    simp [Matrix.mul_smul, Matrix.smul_mul]
+    simp
   unfold ex
   rw [h1, Matrix.exp_conj' _ _ hy, ← Matrix.mul_assoc, ← Matrix.mul_assoc, Matrix.mul_nonsing_inv _ hd,
     Matrix.one_mul]
@@ -660,7 +660,7 @@ theorem expMem : ExpMem := by
     have hX' : Xᴴ * Formalism.QuantumDeterminants.Hpk k r = -(Formalism.QuantumDeterminants.Hpk k r * X) := eq_neg_of_add_eq_zero_left hX
     have hAH : ((t : ℂ) • X)ᴴ * Formalism.QuantumDeterminants.Hpk k r = Formalism.QuantumDeterminants.Hpk k r * (-((t : ℂ) • X)) := by
       rw [Matrix.conjTranspose_smul, Matrix.smul_mul, hX', Matrix.mul_neg, Matrix.mul_smul, smul_neg]
-      simp [Complex.star_def, Complex.conj_ofReal]
+      simp [Complex.conj_ofReal]
     show (NormedSpace.exp ((t : ℂ) • X))ᴴ * Formalism.QuantumDeterminants.Hpk k r * NormedSpace.exp ((t : ℂ) • X) =
       Formalism.QuantumDeterminants.Hpk k r
     rw [← Matrix.exp_conjTranspose, hint _ _ _ hAH, mul_assoc,
@@ -1752,7 +1752,7 @@ private theorem ex_mem_UH_of_lie {n : ℕ} {Hm X : Mat n} (hsq : Hm * Hm = 1) (h
       _ = Hm * (-X) * Hm := by rw [h1, Matrix.mul_neg]
   have hconj : ((t : ℂ) • X)ᴴ = Hm * (-((t : ℂ) • X)) * Hm⁻¹ := by
     rw [Matrix.conjTranspose_smul, hXH, hinv]
-    simp [Matrix.mul_smul, Matrix.smul_mul, Complex.conj_ofReal]
+    simp [Complex.conj_ofReal]
   show (NormedSpace.exp ((t : ℂ) • X))ᴴ * Hm * NormedSpace.exp ((t : ℂ) • X) = Hm
   rw [← Matrix.exp_conjTranspose, hconj, Matrix.exp_conj _ _ hU, hinv, mul_assoc (Hm * _) Hm Hm, hsq,
     mul_one, mul_assoc, ← Matrix.exp_add_of_commute _ _ (Commute.neg_left (Commute.refl ((t : ℂ) • X))),

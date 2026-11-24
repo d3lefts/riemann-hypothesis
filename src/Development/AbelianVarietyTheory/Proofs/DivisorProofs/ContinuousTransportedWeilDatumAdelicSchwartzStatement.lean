@@ -161,7 +161,7 @@ theorem _root_.GlobalTheory.T.thetaTransform_transportedWeil_continuous : ∀ (D
       GlobalTheory.WeilM.UG (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (incM D.host.F JB) →* Module.End ℂ ((κ → AF D.host.F) → ℂ),
                        GlobalTheory.WeilSchrodinger.IsTransport ψ co ω om →
   ∀ Φ ∈ GlobalTheory.WeilM.schA D.host.F κ, ∀ w, Continuous fun p => GlobalTheory.WeilSchrodinger.thetaTr D.host.F co ψ (om p Φ) w := by
-  first | exact @GlobalTheory.ThetaTransportCont.thetaTr_om_continuous | exact GlobalTheory.ThetaTransportCont.thetaTr_om_continuous | (intros; apply GlobalTheory.ThetaTransportCont.thetaTr_om_continuous <;> assumption)
+  first | exact @GlobalTheory.ThetaTransportCont.thetaTr_om_continuous
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaTransformTransportedWeilContinuousStatement =====
@@ -299,7 +299,7 @@ theorem _root_.GlobalTheory.T.continuous_transportedWeilOperator_groupVariable :
       GlobalTheory.WeilM.UG (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (incM D.host.F JB) →* Module.End ℂ ((κ → AF D.host.F) → ℂ),
                        GlobalTheory.WeilSchrodinger.IsTransport ψ co ω om →
   ∀ Φ ∈ GlobalTheory.WeilM.schA D.host.F κ, ∀ z : κ → AF D.host.F, Continuous fun p => om p Φ z := by
-  first | exact @GlobalTheory.WeilCont.continuous_transport_apply | exact GlobalTheory.WeilCont.continuous_transport_apply | (intros; apply GlobalTheory.WeilCont.continuous_transport_apply <;> assumption)
+  first | exact @GlobalTheory.WeilCont.continuous_transport_apply
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousTransportedWeilOperatorGroupVariableStatement =====
@@ -384,7 +384,7 @@ theorem _root_.GlobalTheory.T.continuous_transported_weilDatum_adelicSchwartz : 
  ∀ om : GlobalTheory.WeilM.UG (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (incM D.host.F JA) ×
       GlobalTheory.WeilM.UG (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (incM D.host.F JB) →* Module.End ℂ ((κ → AF D.host.F) → ℂ),
                        GlobalTheory.WeilSchrodinger.IsTransport ψ co ω om → GlobalTheory.WeilM.IsContOn (GlobalTheory.WeilM.adeleClass D.host.F) om := by
-  first | exact @GlobalTheory.WeilCont.continuous_transport | exact GlobalTheory.WeilCont.continuous_transport | (intros; apply GlobalTheory.WeilCont.continuous_transport <;> assumption)
+  first | exact @GlobalTheory.WeilCont.continuous_transport
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousTransportedWeilDatumAdelicSchwartzStatement =====

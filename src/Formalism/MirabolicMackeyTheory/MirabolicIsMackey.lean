@@ -376,11 +376,7 @@ theorem ggE_apply {P : Type} [Group P] (ρ : Representation K P Z) (U : Subgroup
 theorem gg_mem_eig {P : Type} [Group P] (ρ : Representation K P Z) (U : Subgroup P)
     (ψ : P → 𝓞 K) (z : Z) :
     z ∈ eig ρ U ψ ↔ ∀ u : U, ρ (u : P) z = ((ψ (u : P) : 𝓞 K) : K) • z := by
-  unfold eig
-  rw [Submodule.mem_iInf]
-  refine forall_congr' (fun u => ?_)
-  rw [LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.id_apply,
-    sub_eq_zero]
+  simp [eig, sub_eq_zero]
 
 theorem ggE_mem_eig {P : Type} [Group P] (ρ : Representation K P Z) (U : Subgroup P) [Fintype U]
     (ψ : P → 𝓞 K) (hMk : IsMackey U ψ) (x : Z) : ggE ρ U ψ x ∈ eig ρ U ψ := by
@@ -407,8 +403,7 @@ theorem ggE_eig {P : Type} [Group P] (ρ : Representation K P Z) (U : Subgroup P
     intro u
     rw [(gg_mem_eig ρ U ψ z).mp hz u, smul_smul, ← map_mul, ← hmul _ (U.inv_mem u.2) _ u.2,
       inv_mul_cancel, hone, map_one, one_smul]
-  rw [Finset.sum_congr rfl (fun u _ => this u)]
-  simp [Nat.cast_smul_eq_nsmul]
+  simp [this, Nat.cast_smul_eq_nsmul]
 
 theorem ggE_stable {P : Type} [Group P] (ρ : Representation K P Z) (U : Subgroup P) [Fintype U]
     (ψ : P → 𝓞 K) (L : Submodule (𝓞 K) Z)
@@ -427,9 +422,8 @@ theorem mapsTo_locP {R W : Type*} [CommRing R] [AddCommGroup W] [Module R W] (p 
 
 theorem gg_lix_of_le (w : HeightOneSpectrum (𝓞 K)) (A B : Submodule (𝓞 K) Z) (h : B ≤ A) :
     lix w A B = (Formalism.HermitianLatticesTheory.locLen w.asIdeal A B : ℤ) := by
-  unfold lix Formalism.HermitianLatticesTheory.lidx
-  rw [inf_eq_right.mpr h, Formalism.HermitianLatticesTheory.indexBasic_locLen_self]
-  simp
+  simp [lix, Formalism.HermitianLatticesTheory.lidx, inf_eq_right.mpr h,
+    Formalism.HermitianLatticesTheory.indexBasic_locLen_self]
 
 theorem gg_isLatIn_cut [FiniteDimensional K Z] (W : Submodule K Z) (B : Submodule (𝓞 K) Z)
     (hB : IsLatIn ⊤ B) : IsLatIn W (cut W B) := by

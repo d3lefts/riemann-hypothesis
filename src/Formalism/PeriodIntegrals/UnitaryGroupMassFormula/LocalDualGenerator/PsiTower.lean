@@ -163,22 +163,16 @@ theorem assemble (hK : PsiKer) (A : LocAt F E sig p) (d : A.Fp)
     intro y hy
     rw [← hd]
     intro b
-    have hyb : y * algebraMap A.Fp A.Ep (b : A.Fp) ∈ A.O :=
-      A.O.mul_mem hy (Part2.alg_mem_O A b)
-    have := H _ hyb
+    have := H _ (A.O.mul_mem hy (Part2.alg_mem_O A b))
     rwa [← mul_assoc, tr_smul] at this
   · intro hx y hy
-    have ha := (hE x).2 hx y hy
-    have := (hd _).2 ha 1
-    simpa using this
+    simpa using (hd _).2 ((hE x).2 hx y hy) 1
 
 theorem stmt_of (hK : PsiKer) (h1 : FpDual) (h2 : FpDualUnram) (h3 : EpSelfDual) :
     PI.LocDualGen.Stmt := by
   intro F E _ _ _ _ _ sig p A
   haveI := A.ellPrime
-  have hE : IsReduced A.Ep → UnramL A → ∀ x : A.Ep,
-      (∀ y ∈ A.O, Algebra.trace A.Fp A.Ep (x * y) ∈ 𝒪[A.Fp]) ↔ x ∈ A.O :=
-    fun hr hu => h3 A.Fp A.Ep A.lf A.char0 A.free A.rank hr A.O A.O_def hu
+  have hE := fun hr hu => h3 A.Fp A.Ep A.lf A.char0 A.free A.rank hr A.O A.O_def hu
   refine ⟨fun hr hu => ?_, fun δ u hu h => Part2.dualAtL_mul_unit A δ u hu h, fun hr hu hl => ?_⟩
   · obtain ⟨d, hd0, hd⟩ := h1 A.Fp (resChar p) A.lf A.char0 A.qlCont A.qlFin
     exact ⟨d, hd0, assemble hK A d hd (hE hr hu)⟩

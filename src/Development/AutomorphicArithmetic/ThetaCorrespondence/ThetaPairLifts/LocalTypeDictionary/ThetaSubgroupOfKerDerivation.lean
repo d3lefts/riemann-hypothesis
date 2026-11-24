@@ -196,7 +196,7 @@ theorem _root_.GlobalTheory.T.exists_algebraicDatum_not_matched_zero_by_localMap
     (om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ G.V G.W) (om' : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ G.V' G.W) (R : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.RealMaps F a a')
     (Rf : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.FinMaps F a a'), GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsMatched B G X om om' R Rf →
     ∃ Φ ∈ GlobalTheory.SquareAgree.algD G.M' B.ψ B.emb, ¬ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.PolMatch B G X R Rf 0 Φ := by
-  first | exact @GlobalTheory.SquareAgree.exists_algD_not_polMatch_zero | exact GlobalTheory.SquareAgree.exists_algD_not_polMatch_zero | (intros; apply GlobalTheory.SquareAgree.exists_algD_not_polMatch_zero <;> assumption)
+  first | exact @GlobalTheory.SquareAgree.exists_algD_not_polMatch_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsAlgebraicDatumNotMatchedZeroByLocalMapsStatement =====
@@ -215,7 +215,7 @@ theorem _root_.GlobalTheory.T.polynomialFockSpace_stable_archimedeanMaximalCompa
     (n d : ℕ) (Y : Spc F E n) (W : Spc F E d) (M : Model σ Y W) (om : Rep σ Y W) (χ₁ χ₂ : Chr F E),
     B.IsGood σ → M.IsGood B.ψ → M.IsWeil B.ψ χ₁ χ₂ om → ∀ k ∈ KInf σ W B.emb,
     ∀ f ∈ M.Pol B.ψ B.emb, ∀ f₁ : SInf F (Fin n × Fin d), Acts (evI F) (om (1, k)) (⇑f) (⇑f₁) → f₁ ∈ M.Pol B.ψ B.emb := by
-  first | exact @GlobalTheory.KInfPol.pol_stable_kInf | exact GlobalTheory.KInfPol.pol_stable_kInf | (intros; apply GlobalTheory.KInfPol.pol_stable_kInf <;> assumption)
+  first | exact @GlobalTheory.KInfPol.pol_stable_kInf
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolynomialFockSpaceStableArchimedeanMaximalCompaStatement =====
@@ -465,7 +465,7 @@ theorem _root_.GlobalTheory.T.line_polarization_match_derivative : _root_.Global
     (∀ x, HasDerivAt (fun t : ℝ => om (1, γ (Multiplicative.ofAdd t)) Φ x) (Φ₁ x) 0) →
     (∀ x, HasDerivAt (fun t : ℝ => om' (1, γ (Multiplicative.ofAdd t)) Φ' x) (Φ₁' x) 0) →
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.PolMatch B G X R Rf Φ₁ Φ₁' := by
-  first | exact @_root_.GlobalTheory.LineMatch.polarization_match_deriv | exact _root_.GlobalTheory.LineMatch.polarization_match_deriv | (intros; apply _root_.GlobalTheory.LineMatch.polarization_match_deriv <;> assumption)
+  first | exact @_root_.GlobalTheory.LineMatch.polarization_match_deriv
 end
 end -- clump:auto
 end -- clump:auto
@@ -568,7 +568,7 @@ theorem _root_.GlobalTheory.T.thetaSubgroup_of_ker_derivation : _root_.GlobalThe
     ∃ N : Submodule ℂ ((Fin a' × Fin (a + a') → AF F) → ℂ),
       (∀ Φ, Φ ∈ N ↔ Φ ∈ algD Γ.M' Bs.ψ Bs.emb ∧ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.PolMatch Bs Γ Xc R Rf 0 Φ) ∧
       IsThetaSubG Γ.M' Bs.ψ Bs.emb om' N ∧ N ≠ algD Γ.M' Bs.ψ Bs.emb := by
-  first | exact @_root_.GlobalTheory.KerDSub.ker_derivation_isThetaSubgroup | exact _root_.GlobalTheory.KerDSub.ker_derivation_isThetaSubgroup | (intros; apply _root_.GlobalTheory.KerDSub.ker_derivation_isThetaSubgroup <;> assumption)
+  first | exact @_root_.GlobalTheory.KerDSub.ker_derivation_isThetaSubgroup
 end
 end -- clump:auto
 end -- clump:auto

@@ -236,7 +236,6 @@ theorem prod_univ_ite {ι R : Type} [Fintype ι] [CommMonoid R] (A : Finset ι) 
     ∏ v, (if v ∈ A then g v else 1) = ∏ v ∈ A, g v := by
   rw [← Finset.prod_filter]
   congr 1
-  ext v
   simp
 
 theorem rhs_eval (S : C.HidaSetting E Wp Wq) (ε : ℝ) (i : ℕ) (hi : i - 1 ≤ S.G.r + 1) (Y : Finset (TB.Pt E))

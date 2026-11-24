@@ -818,7 +818,7 @@ theorem prod_isBigO : ∀ (ι : Type) [Fintype ι] (g : ι → ℝ → ℂ) (b :
 
 theorem fourier_prod (ι : Type) [Fintype ι] (f : ι → ℝ → ℂ) (x : EuclideanSpace ℝ ι) :
     𝓕 (fun ξ : EuclideanSpace ℝ ι => ∏ i, f i (ξ i)) x = ∏ i, 𝓕 (f i) (x i) := by
-  simp only [Real.fourier_eq', Real.fourier_real_eq]
+  simp only [Real.fourier_eq']
   rw [← integral_fintype_prod_volume_eq_prod,
     ← (PiLp.volume_preserving_toLp ι).integral_comp (MeasurableEquiv.toLp 2 (ι → ℝ)).measurableEmbedding]
   refine integral_congr_ae (Filter.Eventually.of_forall fun ξ => ?_)
@@ -841,7 +841,7 @@ theorem hTrans_eq_fourier (σ : ℂ) (y : ℝ) :
   rw [Real.fourier_real_eq]
   unfold hTrans
   refine integral_congr_ae (Filter.Eventually.of_forall fun t => ?_)
-  simp only [smul_eq_mul, Real.fourierChar_apply]
+  simp only
   rw [mul_comm]
   congr 2
   push_cast
@@ -883,7 +883,6 @@ theorem fourier_mod (σ : ℂ) (hσ : 0 < σ.re) (y : ℝ) (hy : y ≠ 0) (c s :
   rw [Real.fourierInv_eq_fourier_neg, neg_neg] at h3
   rw [h3, hf]
   congr 2
-  push_cast
   ring
 
 theorem poisson : ∀ (F : Type) [Field F] [NumberField F] [NumberField.IsTotallyReal F] (𝔞 : GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization.Frac F) (σ : ℂ),
@@ -1040,7 +1039,7 @@ theorem norm_gEmb_F (a b : F) : Algebra.norm F (gEmb F (a, b)) = a ^ 2 + b ^ 2 :
   simp only [Algebra.leftMulMatrix_apply, LinearMap.toMatrix_apply, Algebra.coe_lmul_eq_mul,
     LinearMap.mul_apply']
   rw [basisOneI_zero, mul_one, basisOneI_one, gEmb_mul_ii, gEmb_eq]
-  simp [Module.Basis.repr_self, Finsupp.single_apply]
+  simp [Module.Basis.repr_self]
   ring
 
 theorem norm_gEmb (a b : F) :
@@ -1069,7 +1068,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.OmegaFactorization GlobalTheory.Hec
 
 
 theorem _root_.GlobalTheory.T.algebraNorm_rat_gaussianExtensionOfPair : ∀ (F : Type) [Field F] [NumberField F] [NumberField.IsTotallyReal F] (a b : F), ((Algebra.norm ℚ (GlobalTheory.GaussExt.gEmb F (a, b)) : ℚ) : ℝ) = ∏ τ : F →+* ℝ, ((τ a) ^ 2 + (τ b) ^ 2) := by
-  first | exact @GlobalTheory.GaussExt.norm_gEmb | exact GlobalTheory.GaussExt.norm_gEmb | (intros; apply GlobalTheory.GaussExt.norm_gEmb <;> assumption)
+  first | exact @GlobalTheory.GaussExt.norm_gEmb
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AlgebraNormRatGaussianExtensionOfPairStatement =====

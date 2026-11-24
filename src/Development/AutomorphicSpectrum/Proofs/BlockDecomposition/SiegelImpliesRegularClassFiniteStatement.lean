@@ -95,7 +95,7 @@ theorem UpperTheory.Reformulated.B.Yla6.main :
   have h1 : ‖(A * M * B) i j‖ ≤ ∑ l : c, ∑ k : b, ‖A i k‖ * ‖M k l‖ * ‖B l j‖ := by
     simp_rw [Matrix.mul_apply, Finset.sum_mul]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun l _ => (norm_sum_le _ _).trans ?_)
-    simp [norm_mul]
+    simp
   have h2 : ∀ l : c, ∀ k : b, ‖A i k‖ * ‖M k l‖ * ‖B l j‖ ≤ α * μ * β := by
     intro l k
     have ha : 0 ≤ α := (norm_nonneg _).trans (hA i k)
@@ -704,7 +704,7 @@ theorem exists_coords {K : Type} [Field K] {n : ℕ} (S : Submodule K (Fin n →
   have hZ : ∀ w, Z *ᵥ w = ((∑ k, w k • b k : S) : Fin n → K) := by
     intro w
     ext i
-    simp [Z, Matrix.mulVec, dotProduct, mul_comm, Submodule.coe_sum, Finset.sum_apply]
+    simp [Z, Matrix.mulVec, dotProduct, mul_comm, Finset.sum_apply]
   let L : (Fin n → K) →ₗ[K] S := P.mulVecLin.codRestrict S hP
   let c : (Fin n → K) →ₗ[K] (Fin (Module.finrank K S) → K) := b.equivFun.toLinearMap ∘ₗ L
   refine ⟨_, Z, LinearMap.toMatrix' c, fun w => by rw [hZ]; exact Subtype.property _, ?_, ?_⟩
@@ -1193,7 +1193,7 @@ theorem block_tri (L : Type) [Field L] (s : L →+* L) (n r m : ℕ)
         have := cnt_le S l'
         simp only [lx, ly] at hw hlv
         omega
-      · simp [hrow, Matrix.one_apply, hc]
+      · simp [hrow, hc]
   · rw [lz] at hw
     omega
   · have := cnt_le S l'
@@ -1739,7 +1739,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.Chamber GlobalTheory.TruncKer GlobalTheory.Cusp
 
 theorem _root_.GlobalTheory.T.siegel_implies_regular_class_finite : PositivityTheory.ThKR.SiegelCore → MainStatements.RegularCuspidalTrace.RegClassFin := by
-  first | exact @GlobalTheory.CompanionTheory.CFin.regClassFin | exact GlobalTheory.CompanionTheory.CFin.regClassFin | (intros; apply GlobalTheory.CompanionTheory.CFin.regClassFin <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.CFin.regClassFin
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SiegelImpliesRegularClassFiniteStatement =====

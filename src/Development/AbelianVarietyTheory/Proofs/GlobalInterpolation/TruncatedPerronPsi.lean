@@ -15,6 +15,7 @@ public import Mathlib.NumberTheory.LSeries.DirichletContinuation
 public import Mathlib.Analysis.Complex.ExponentialBounds
 public import Mathlib.NumberTheory.Harmonic.Bounds
 public import Mathlib.Analysis.SumIntegralComparisons
+import Formalism.LFunctionBounds.LFunctionBoundsProofs.RectResidue
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -72,7 +73,7 @@ import Std.Tactic.BVDecide.Normalize.Prop
 -- Members: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.TruncatedPerronKernel, Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.TruncatedPerronPsi
 
 -- ===== clump member: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.TruncatedPerronKernel =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.TruncatedPerronKernel", "h": "module\n\npublic import Mathlib.Analysis.CStarAlgebra.Classes\npublic import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan\npublic import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Algebra.Order.Star.Real\npublic import Mathlib.Analysis.Complex.RemovableSingularity\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.LocallyConvex.AbsConvexOpen\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\npublic import Mathlib.Analysis.Real.Pi.Bounds\nimport Mathlib.Analysis.SpecialFunctions.Bernstein\nimport Mathlib.Analysis.SpecialFunctions.Complex.Arctan\nimport Mathlib.Analysis.SpecialFunctions.Gamma.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Lemma\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\npublic import Mathlib.Analysis.Calculus.DSlope\npublic import Mathlib.Analysis.Calculus.Deriv.Comp\npublic import Mathlib.Analysis.Calculus.Deriv.Inv\npublic import Mathlib.Analysis.Calculus.Deriv.Mul\npublic import Mathlib.Analysis.Calculus.Deriv.Pow\npublic import Mathlib.Analysis.Complex.CauchyIntegral\nimport Mathlib.NumberTheory.DirichletCharacter.Basic\n\n"}
+-- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.TruncatedPerronKernel", "h": "module\n\npublic import Mathlib.Analysis.CStarAlgebra.Classes\nimport Formalism.LFunctionBounds.LFunctionBoundsProofs.RectResidue\npublic import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan\npublic import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Algebra.Order.Star.Real\npublic import Mathlib.Analysis.Complex.RemovableSingularity\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.LocallyConvex.AbsConvexOpen\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\npublic import Mathlib.Analysis.Real.Pi.Bounds\nimport Mathlib.Analysis.SpecialFunctions.Bernstein\nimport Mathlib.Analysis.SpecialFunctions.Complex.Arctan\nimport Mathlib.Analysis.SpecialFunctions.Gamma.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Lemma\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\npublic import Mathlib.Analysis.Calculus.DSlope\npublic import Mathlib.Analysis.Calculus.Deriv.Comp\npublic import Mathlib.Analysis.Calculus.Deriv.Inv\npublic import Mathlib.Analysis.Calculus.Deriv.Mul\npublic import Mathlib.Analysis.Calculus.Deriv.Pow\npublic import Mathlib.Analysis.Complex.CauchyIntegral\nimport Mathlib.NumberTheory.DirichletCharacter.Basic\n\n"}
 section -- clump:auto
 @[expose] public section
 
@@ -232,55 +233,19 @@ lemma rect_left (L : ℝ) {a b T : ℝ} (ha : a < 0) (hb : 0 < b) (hT : 0 < T) :
     simp only [mul_zero, Complex.exp_zero, sub_zero]
     field_simp
     ring
-  have hTn : -T ≠ 0 := by linarith
-  have ha0 : a ≠ 0 := ha.ne
-  have hb0 : b ≠ 0 := hb.ne'
-  have hDc : Continuous D := hDd.continuous
-  have sb : (∫ x in a..b, cexp (L * ((x : ℂ) + ((-T : ℝ) : ℂ) * I)) / ((x : ℂ) + ((-T : ℝ) : ℂ) * I))
-      = (∫ x in a..b, D ((x : ℂ) + ((-T : ℝ) : ℂ) * I)) + ∫ x in a..b, ((x : ℂ) + ((-T : ℝ) : ℂ) * I)⁻¹ := by
-    have i1 : IntervalIntegrable (fun x : ℝ => D ((x : ℂ) + ((-T : ℝ) : ℂ) * I)) MeasureTheory.volume a b :=
-      (hDc.comp (by fun_prop : Continuous fun x : ℝ => ((x : ℂ) + ((-T : ℝ) : ℂ) * I))).intervalIntegrable _ _
-    rw [← intervalIntegral.integral_add i1 ((cont_hinv hTn).intervalIntegrable _ _)]
-    exact intervalIntegral.integral_congr fun x _ => hsplit _ (ne_zero_of_im hTn)
-  have st : (∫ x in a..b, cexp (L * ((x : ℂ) + T * I)) / ((x : ℂ) + T * I))
-      = (∫ x in a..b, D ((x : ℂ) + T * I)) + ∫ x in a..b, ((x : ℂ) + T * I)⁻¹ := by
-    have i1 : IntervalIntegrable (fun x : ℝ => D ((x : ℂ) + T * I)) MeasureTheory.volume a b :=
-      (hDc.comp (by fun_prop : Continuous fun x : ℝ => ((x : ℂ) + T * I))).intervalIntegrable _ _
-    rw [← intervalIntegral.integral_add i1 ((cont_hinv hT.ne').intervalIntegrable _ _)]
-    exact intervalIntegral.integral_congr fun x _ => hsplit _ (ne_zero_of_im hT.ne')
-  have sr : (∫ t in (-T)..T, cexp (L * ((b : ℂ) + t * I)) / ((b : ℂ) + t * I))
-      = (∫ t in (-T)..T, D ((b : ℂ) + t * I)) + ∫ t in (-T)..T, ((b : ℂ) + t * I)⁻¹ := by
-    have i1 : IntervalIntegrable (fun t : ℝ => D ((b : ℂ) + t * I)) MeasureTheory.volume (-T) T :=
-      (hDc.comp (by fun_prop : Continuous fun t : ℝ => ((b : ℂ) + t * I))).intervalIntegrable _ _
-    rw [← intervalIntegral.integral_add i1 ((cont_vinv hb0).intervalIntegrable _ _)]
-    exact intervalIntegral.integral_congr fun t _ => hsplit _ (ne_zero_of_re hb0)
-  have sl : (∫ t in (-T)..T, cexp (L * ((a : ℂ) + t * I)) / ((a : ℂ) + t * I))
-      = (∫ t in (-T)..T, D ((a : ℂ) + t * I)) + ∫ t in (-T)..T, ((a : ℂ) + t * I)⁻¹ := by
-    have i1 : IntervalIntegrable (fun t : ℝ => D ((a : ℂ) + t * I)) MeasureTheory.volume (-T) T :=
-      (hDc.comp (by fun_prop : Continuous fun t : ℝ => ((a : ℂ) + t * I))).intervalIntegrable _ _
-    rw [← intervalIntegral.integral_add i1 ((cont_vinv ha0).intervalIntegrable _ _)]
-    exact intervalIntegral.integral_congr fun t _ => hsplit _ (ne_zero_of_re ha0)
-  have h1 : ((a : ℂ) + ((-T : ℝ) : ℂ) * I).re = a := by simp
-  have h2 : ((a : ℂ) + ((-T : ℝ) : ℂ) * I).im = -T := by simp
-  have h3 : ((b : ℂ) + (T : ℂ) * I).re = b := by simp
-  have h4 : ((b : ℂ) + (T : ℂ) * I).im = T := by simp
-  have hrect := Complex.integral_boundary_rect_eq_zero_of_differentiableOn
-    D ((a : ℂ) + ((-T : ℝ) : ℂ) * I) ((b : ℂ) + T * I) hDd.differentiableOn
-  rw [h1, h2, h3, h4] at hrect
-  simp only [smul_eq_mul] at hrect
-  have e1 := hinv hT.ne' a b
-  have e2 := vinv hb0 T
-  have e3 := vinv ha0 T
-  have r2 : Real.arctan (T / b) = Real.pi / 2 - Real.arctan (b / T) := by
-    rw [← inv_div, Real.arctan_inv_of_pos (div_pos hb hT)]
-  have r3 : Real.arctan (T / a) = -(Real.pi / 2) - Real.arctan (a / T) := by
-    rw [← inv_div, Real.arctan_inv_of_neg (div_neg_of_neg_of_pos ha hT)]
-  rw [r2] at e2
-  rw [r3] at e3
-  rw [sb, st, sr, sl]
-  linear_combination (norm := skip) hrect + e1 + I * e2 - I * e3
-  push_cast
-  ring
+  have hres := Formalism.FX.rectangle_residue (fun z : ℂ => cexp (L * z) / z)
+    D {0} (fun _ => 1) a b (-T) T (ha.trans hb) (by linarith)
+    (by
+      intro p hp
+      simp only [Finset.mem_singleton] at hp
+      subst p
+      exact ⟨ha, hb, by simpa using neg_neg_of_pos hT, hT⟩)
+    ⟨Set.univ, isOpen_univ, Set.subset_univ _, hDd.differentiableOn⟩
+    (by
+      intro w hw
+      have hw0 : w ≠ 0 := by simpa using hw
+      simpa using hsplit w hw0)
+  simpa [Formalism.FX.rectInt] using hres
 
 lemma le_of_forall_large {x B K c : ℝ} (hc : 0 < c) (hK : 0 ≤ K)
     (h : ∀ U : ℝ, c ≤ U → x ≤ B + K / U) : x ≤ B := by
@@ -791,7 +756,7 @@ lemma far_term {u T C E : ℝ} {n : ℕ} (hu : 2 ≤ u) (hT : 0 < T) (hn : 0 < n
     have h2 : 2 * L * a = 1 := by rw [ha]; field_simp
     calc Real.log n = 2 * L * (a * Real.log n) := by rw [← mul_assoc, h2, one_mul]
       _ ≤ 2 * L * ((n : ℝ) ^ a - 1) := mul_le_mul_of_nonneg_left h1 (by linarith)
-      _ ≤ 2 * L * (n : ℝ) ^ a := by nlinarith
+      _ ≤ 2 * L * (n : ℝ) ^ a := by linarith [hL0]
   have he : Real.exp 1 < 3 := by have := Real.exp_one_lt_d9; linarith
   have hgoal : C * (12 * u * L / T * (1 / (n : ℝ) ^ (1 + a)))
       = (12 * C * u * L) / (T * (n : ℝ) ^ (1 + a)) := by
@@ -804,7 +769,7 @@ lemma far_term {u T C E : ℝ} {n : ℕ} (hu : 2 ≤ u) (hT : 0 < T) (hn : 0 < n
         exact mul_le_mul key3 key1 (mul_nonneg hE hT.le) (mul_nonneg (by linarith) hQ.le)
     _ = 4 * C * L * ((u / n) ^ (1 + 1 / L) * ((n : ℝ) ^ (1 + a) * (n : ℝ) ^ a)) := by ring
     _ = 4 * C * L * (u * Real.exp 1) := by rw [key2]
-    _ ≤ 12 * C * u * L := by nlinarith
+    _ ≤ 12 * C * u * L := by linarith [mul_le_mul_of_nonneg_left he.le h0]
 
 lemma near_term {u T C E : ℝ} {n : ℕ} (hu : 2 ≤ u) (hT : 0 < T) (hC : 0 ≤ C)
     (hE : 0 ≤ E) (h0 : E ≤ C * (u / n) ^ (1 + 1 / Real.log u))
@@ -850,7 +815,7 @@ lemma near_term {u T C E : ℝ} {n : ℕ} (hu : 2 ≤ u) (hT : 0 < T) (hC : 0 �
     intro hw1
     have h1 : Real.log n * E ≤ 2 * L * (6 * C) :=
       mul_le_mul hlogn (h0.trans hCM) hE (by linarith)
-    nlinarith [mul_le_mul_of_nonneg_left hw1 hCL]
+    linarith [hCL, mul_le_mul_of_nonneg_left hw1 hCL]
   have core : ∀ k : ℝ, 0 < k → k / (2 * u) ≤ |Real.log (u / n)| → B * (1 / k) ≤ w N B n →
       Real.log n * E ≤ C * (16 * L * w N B n) := by
     intro k hk hlog hwk
@@ -869,7 +834,7 @@ lemma near_term {u T C E : ℝ} {n : ℕ} (hu : 2 ≤ u) (hT : 0 < T) (hC : 0 �
       rw [show 12 * C * L * (B * (1 / k)) = (12 * C * L * B) / k by ring, le_div_iff₀ hk]
       linarith
     have hbk : 0 ≤ B * (1 / k) := mul_nonneg hB0 (by positivity)
-    nlinarith [mul_le_mul_of_nonneg_left hwk hCL, mul_nonneg hCL hbk]
+    linarith [mul_le_mul_of_nonneg_left hwk hCL, mul_nonneg hCL hbk]
   have hNu : (N : ℝ) ≤ u := Nat.floor_le hu0.le
   have huN : u < (N : ℝ) + 1 := Nat.lt_floor_add_one u
   rcases lt_trichotomy n N with hlt | heq | hgt
@@ -1081,7 +1046,7 @@ theorem truncated_perron_psi : ∃ C : ℝ, 0 < C ∧ ∀ (q : ℕ) [NeZero q] (
   have b3 : 12 * u * L / T * (1 + 2 * L) + 16 * L * (2 + B * (2 * (1 + L)))
       ≤ 240 * (u * L ^ 2 / T + L) := by
     rw [e1, e2, e3]
-    nlinarith [mul_nonneg (mul_nonneg hL0.le hX.le) (show (0 : ℝ) ≤ 2 * L - 1 by linarith),
+    linarith [hL0, mul_nonneg (mul_nonneg hL0.le hX.le) (show (0 : ℝ) ≤ 2 * L - 1 by linarith),
       mul_nonneg (mul_nonneg hL0.le hL0.le) hX.le]
   have b4 : 12 * u * L / T * ∑' n : ℕ, 1 / (n : ℝ) ^ (1 + 1 / (2 * L))
       + 16 * L * ∑ n ∈ Finset.range (N + 1 + (N + 1)), w N B n ≤ 240 * (u * L ^ 2 / T + L) := by

@@ -85,7 +85,7 @@ theorem _root_.GlobalTheory.T.compactPart_centralizer_le_conj_integralUnitary : 
     ∀ γ : UL n w, γ.1.val.charpoly = P₀.map (algebraMap (w.adicCompletionIntegers E) (w.adicCompletion E)) →
     ∀ g : UL n w, g⁻¹ * γ * g ∈ KL n w →
     cptPart (twCent (MonoidHom.id (UL n w)) γ) ≤ (KL n w).map (MulAut.conj g).toMonoidHom := by
-  first | exact @GlobalTheory.CptCent.cptPart_le_conj_KL | exact GlobalTheory.CptCent.cptPart_le_conj_KL | (intros; apply GlobalTheory.CptCent.cptPart_le_conj_KL <;> assumption)
+  first | exact @GlobalTheory.CptCent.cptPart_le_conj_KL
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CompactPartCentralizerLeConjIntegralUnitaryStatement =====
@@ -161,7 +161,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 
 theorem _root_.GlobalTheory.T.localSign_full_charpoly_eq_one : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (w : Pl E),
     (∀ x, Valued.v (cj w x) = Valued.v x) → ∀ γ : GLw n w, kapSign n w γ.val.charpoly γ = 1 := by
-  first | exact @GlobalTheory.BCT.KapSignFull.kapSign_charpoly_eq_one | exact GlobalTheory.BCT.KapSignFull.kapSign_charpoly_eq_one | (intros; apply GlobalTheory.BCT.KapSignFull.kapSign_charpoly_eq_one <;> assumption)
+  first | exact @GlobalTheory.BCT.KapSignFull.kapSign_charpoly_eq_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalSignFullCharpolyEqOneStatement =====
@@ -270,7 +270,7 @@ theorem aeval_conj {K : Type} [Field K] {n : ℕ} (γ g : GL (Fin n) K) (Q : K[X
         congr 2
         rw [← Matrix.mul_assoc g.val, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.one_mul]
     rw [this]
-    simp [Algebra.algebraMap_eq_smul_one, Matrix.mul_smul, Matrix.smul_mul]
+    simp [Algebra.algebraMap_eq_smul_one]
 
 end GlobalTheory.BCT.ConjugationGramUnitary
 
@@ -374,7 +374,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 theorem _root_.GlobalTheory.T.localSign_kernel_charFactor_conj_invariant : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (w : Pl E),
     (∀ x, Valued.v (cj w x) = Valued.v x) →
     ∀ (Q₁ : (w.adicCompletion E)[X]) (γ g : UL n w), kapSign n w Q₁ (g⁻¹ * γ * g).1 = kapSign n w Q₁ γ.1 := by
-  first | exact @GlobalTheory.BCT.kapSign_conj | exact GlobalTheory.BCT.kapSign_conj | (intros; apply GlobalTheory.BCT.kapSign_conj <;> assumption)
+  first | exact @GlobalTheory.BCT.kapSign_conj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalSignKernelCharFactorConjInvariantStatement =====
@@ -440,7 +440,7 @@ theorem _root_.GlobalTheory.T.dvd_integral_monic_coprime_derivative_bezout_facto
     Q₁ ∣ P₀.map (algebraMap (w.adicCompletionIntegers E) (w.adicCompletion E)) →
     ∃ (Q₁₀ Q₂₀ A B : (w.adicCompletionIntegers E)[X]) (c : w.adicCompletion E), c ≠ 0 ∧ P₀ = Q₁₀ * Q₂₀ ∧
       A * Q₁₀ + B * Q₂₀ = 1 ∧ Q₁ = C c * Q₁₀.map (algebraMap (w.adicCompletionIntegers E) (w.adicCompletion E)) := by
-  first | exact @GlobalTheory.monic_dvd_integral_factor_bezout | exact GlobalTheory.monic_dvd_integral_factor_bezout | (intros; apply GlobalTheory.monic_dvd_integral_factor_bezout <;> assumption)
+  first | exact @GlobalTheory.monic_dvd_integral_factor_bezout
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DvdIntegralMonicCoprimeDerivativeBezoutFactorStatement =====
@@ -460,7 +460,7 @@ theorem _root_.GlobalTheory.T.even_ordL_conjGramDet_of_unit_gram_adicCompletion 
     (c : Module.Basis κ (w.adicCompletion E) V),
     Valued.v (Matrix.of fun i j => ∑ k, σ ((c i : Fin n → w.adicCompletion E) k) * (c j : Fin n → w.adicCompletion E) k).det = 1 →
     (-1 : ℂ) ^ ordL (Matrix.of fun i j => ∑ k, σ ((b i : Fin n → w.adicCompletion E) k) * (b j : Fin n → w.adicCompletion E) k).det = 1 := by
-  first | exact @GlobalTheory.GramParity.gram_det_parity | exact GlobalTheory.GramParity.gram_det_parity | (intros; apply GlobalTheory.GramParity.gram_det_parity <;> assumption)
+  first | exact @GlobalTheory.GramParity.gram_det_parity
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EvenOrdLConjGramDetOfUnitGramAdicCompletionStatement =====
@@ -622,7 +622,7 @@ theorem _root_.GlobalTheory.T.orthogonal_projection_integral_adic : ∀ (E : Typ
     (∀ x ∈ V, e *ᵥ x = x) → (∀ x ∈ V, ∀ y, ∑ k, σ (x k) * (y - e *ᵥ y) k = 0) →
     ∃ (s : ℕ) (f : Module.Basis (Fin s) (w.adicCompletion E) V),
       Valued.v (Matrix.of fun i j => ∑ k, σ ((f i : Fin n → w.adicCompletion E) k) * (f j : Fin n → w.adicCompletion E) k).det = 1 := by
-  first | exact @GlobalTheory.IdempotentUnimodular.main | exact GlobalTheory.IdempotentUnimodular.main | (intros; apply GlobalTheory.IdempotentUnimodular.main <;> assumption)
+  first | exact @GlobalTheory.IdempotentUnimodular.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.OrthogonalProjectionIntegralAdicStatement =====
@@ -797,7 +797,7 @@ theorem _root_.GlobalTheory.T.unitary_aeval_kernels_orthogonal_of_coprime : ∀ 
     ∀ {ι : Type} [Fintype ι] [DecidableEq ι] (bs : Module.Basis ι K V),
     (Matrix.of fun i j => ∑ k, σ ((bs i : Fin n → K) k) * (bs j : Fin n → K) k).det ≠ 0 →
     ∀ x ∈ V, ∀ y : Fin n → K, aeval γ q₂ *ᵥ y = 0 → ∑ k, σ (x k) * y k = 0 := by
-  first | exact @GlobalTheory.UnitaryOrth.ker_orthogonal_of_coprime | exact GlobalTheory.UnitaryOrth.ker_orthogonal_of_coprime | (intros; apply GlobalTheory.UnitaryOrth.ker_orthogonal_of_coprime <;> assumption)
+  first | exact @GlobalTheory.UnitaryOrth.ker_orthogonal_of_coprime
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryAevalKernelsOrthogonalOfCoprimeStatement =====
@@ -908,7 +908,7 @@ theorem _root_.GlobalTheory.T.unitaryLocalSign_eq_one_of_integral_separable_redu
     ∀ γ : UL n w, γ.1.val.charpoly = P₀.map (algebraMap (w.adicCompletionIntegers E) (w.adicCompletion E)) →
     γ ∈ KL n w → ∀ Q₁ : (w.adicCompletion E)[X],
     Q₁ ∣ P₀.map (algebraMap (w.adicCompletionIntegers E) (w.adicCompletion E)) → kapSign n w Q₁ γ.1 = 1 := by
-  first | exact @GlobalTheory.BCT.kapSign_eq_one_of_integral | exact GlobalTheory.BCT.kapSign_eq_one_of_integral | (intros; apply GlobalTheory.BCT.kapSign_eq_one_of_integral <;> assumption)
+  first | exact @GlobalTheory.BCT.kapSign_eq_one_of_integral
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryLocalSignEqOneOfIntegralSeparableReductioStatement =====

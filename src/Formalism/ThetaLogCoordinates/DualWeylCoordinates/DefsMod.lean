@@ -137,8 +137,7 @@ namespace Formalism.InvariantFactorPaths.ColumnFamilies
 
 lemma genMat_map_eval {n : ℕ} {R : Type} [CommRing R] (f : ℤ →+* R) (g : Matrix (Fin n) (Fin n) R) :
     (MvPolynomial.eval₂Hom f (fun ab : Fin n × Fin n => g ab.1 ab.2)).mapMatrix (genMat ℤ n) = g := by
-  ext a b
-  simp [genMat]
+  ext a b; simp [genMat]
 
 def evGL {n : ℕ} {R : Type} [CommRing R] (g : GL (Fin n) R) : GLCoord ℤ n →+* R :=
   IsLocalization.Away.lift (genMat ℤ n).det
@@ -147,8 +146,7 @@ def evGL {n : ℕ} {R : Type} [CommRing R] (g : GL (Fin n) R) : GLCoord ℤ n �
 
 lemma genMat_map_coord {n : ℕ} (F : Type) [CommRing F] :
     (MvPolynomial.map (Int.castRingHom F)).mapMatrix (genMat ℤ n) = genMat F n := by
-  ext a b
-  simp [genMat]
+  ext a b; simp [genMat]
 
 def mapCoord {n : ℕ} (F : Type) [CommRing F] : GLCoord ℤ n →+* GLCoord F n :=
   IsLocalization.Away.lift (genMat ℤ n).det
@@ -214,8 +212,7 @@ attribute [instance] ColFam.fJ ColFam.dJ
 lemma genMat_map_evalR {n : ℕ} {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R']
     (g : Matrix (Fin n) (Fin n) R') :
     (MvPolynomial.eval₂Hom (algebraMap R R') (fun ab : Fin n × Fin n => g ab.1 ab.2)).mapMatrix (genMat R n) = g := by
-  ext a b
-  simp [genMat]
+  ext a b; simp [genMat]
 
 def evGLR {n : ℕ} {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R'] (g : GL (Fin n) R') : GLCoord R n →+* R' :=
   IsLocalization.Away.lift (genMat R n).det

@@ -1,7 +1,7 @@
 module
 
+import Mathlib
 public import Lean.Meta.Basic
-public import Mathlib
 public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.Statements
 public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PowerSums
 public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.FlagBasic
@@ -44,6 +44,7 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Topology.Sheaves.Init
+import Mathlib.Algebra.CharP.Algebra
 
 -- This file was produced by scripts/clump.py from the modules listed below.
 -- Members: GroundTheory.HeightsAndTheta.Heights.RemainderTerms.Inhabitants, GroundTheory.HeightsAndTheta.Heights.RemainderTerms.StatementsFlag
@@ -75,7 +76,7 @@ end -- clump:auto
 -- ===== end clump member: GroundTheory.HeightsAndTheta.Heights.RemainderTerms.Inhabitants =====
 
 -- ===== clump member: GroundTheory.HeightsAndTheta.Heights.RemainderTerms.StatementsFlag =====
--- clump-header: {"m": "GroundTheory.HeightsAndTheta.Heights.RemainderTerms.StatementsFlag", "h": "module\n\npublic import Mathlib\npublic import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.Statements\npublic import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.Inhabitants\npublic import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PowerSums\npublic import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.FlagBasic\n\n"}
+-- clump-header: {"m": "GroundTheory.HeightsAndTheta.Heights.RemainderTerms.StatementsFlag", "h": "module\n\nimport Mathlib\nimport Mathlib.Algebra.CharP.Algebra\npublic import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.Statements\npublic import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.Inhabitants\npublic import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PowerSums\npublic import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.FlagBasic\n\n"}
 section -- clump:auto
 @[expose] public section
 

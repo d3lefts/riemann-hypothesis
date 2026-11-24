@@ -377,7 +377,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem _root_.GlobalTheory.T.definiteBottomTriple_constants_eq_of_same_lattices : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (W : G.Weil) (i j : Fin D.R.m)
     (A A' WW : HSp D) (X Y : Tri T A A' WW), IsBottomTri W i j X → IsBottomTri W i j Y →
     X.rA = Y.rA → X.rA' = Y.rA' → X.rW = Y.rW → ∀ c : T → ℂ, Y.IsConst W.ψ W.θ c → X.IsConst W.ψ W.θ c := by
-  first | exact @GlobalTheory.BotSameRig.const_of_sameRig | exact GlobalTheory.BotSameRig.const_of_sameRig | (intros; apply GlobalTheory.BotSameRig.const_of_sameRig <;> assumption)
+  first | exact @GlobalTheory.BotSameRig.const_of_sameRig
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DefiniteBottomTripleConstantsEqOfSameLatticesStatement =====
@@ -693,7 +693,7 @@ theorem _root_.GlobalTheory.T.definiteBottomTriple_transport_same_ranks_constant
     (A A' WW : HSp D) (X : Tri T A A' WW) (B B' WW₁ : HSp D) (Y : Tri T B B' WW₁),
     IsBottomTri W i j X → IsBottomTri W i j Y →
     ∃ X₁ : Tri T B B' WW₁, IsBottomTri W i j X₁ ∧ ∀ c : T → ℂ, X₁.IsConst W.ψ W.θ c → X.IsConst W.ψ W.θ c := by
-  first | exact @GlobalTheory.SpaceMove.bottom_transport | exact GlobalTheory.SpaceMove.bottom_transport | (intros; apply GlobalTheory.SpaceMove.bottom_transport <;> assumption)
+  first | exact @GlobalTheory.SpaceMove.bottom_transport
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DefiniteBottomTripleTransportSameRanksConstantsStatement =====
@@ -855,7 +855,7 @@ theorem _root_.GlobalTheory.T.definite_bottom_triple_basis_change_factor_mem_fie
       ((splitFacO (GlobalTheory.BotFrames.botAlpha L i j t) (GlobalTheory.BotFrames.botAlpha L i j t / GlobalTheory.BotFrames.botBeta G i j) x' y : Circle)
         : ℂ) /
       ((splitFacO (GlobalTheory.BotFrames.botBeta G i j) (GlobalTheory.BotFrames.botBeta G i j / GlobalTheory.BotFrames.botAlpha L i j t) x y : Circle) : ℂ) := by
-  first | exact @GlobalTheory.BotFrames.factor_mem_field | exact GlobalTheory.BotFrames.factor_mem_field | (intros; apply GlobalTheory.BotFrames.factor_mem_field <;> assumption)
+  first | exact @GlobalTheory.BotFrames.factor_mem_field
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DefiniteBottomTripleBasisChangeFactorMemFieldStatement =====
@@ -889,7 +889,7 @@ theorem compAt_mt_of_suppAt {e : AE D} (he : infPart D e = 0) (hce : infPart D (
     rw [h1, Matrix.sub_apply, sub_add_cancel]
   simp only [compAt, Matrix.map_apply]
   rw [e1]
-  simp only [map_add, map_mul, he, hce, add_zero, zero_mul, map_zero, zero_add]
+  simp only [map_add, map_mul, he, hce, add_zero, zero_mul, zero_add]
   rcases eq_or_ne i j with rfl | hij
   · simp
   · simp [Matrix.one_apply_ne hij]
@@ -1054,7 +1054,7 @@ theorem _root_.GlobalTheory.T.definiteBottomTriple_weilMove_rightTranslate : ∀
     ∀ c : T → ℂ, Y.IsConst W.ψ W.θ c →
       (GlobalTheory.BotFrames.reRig Y X.rA X.rA' X.rW (fun t => κ t • Y.ω t ((g t)⁻¹, (h t)⁻¹) (Y.f t))
         (fun t => κ' t • Y.ω' t ((g' t)⁻¹, (h t)⁻¹) (Y.f' t))).IsConst W.ψ W.θ fun t => κ t / κ' t * c t := by
-  first | exact @GlobalTheory.BotTranslate.translate | exact GlobalTheory.BotTranslate.translate | (intros; apply GlobalTheory.BotTranslate.translate <;> assumption)
+  first | exact @GlobalTheory.BotTranslate.translate
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DefiniteBottomTripleWeilMoveRightTranslateStatement =====
@@ -1076,7 +1076,7 @@ theorem _root_.GlobalTheory.T.exists_theta_lift_idempotent_form : ∀ {D : D7} (
     ∃ g : GA D V,
       Formalism.L2.Theta.mt V g = (1 - e - cA D e) • (1 : Matrix (Fin V.rank) (Fin V.rank) (AE D)) + e • P + cA D e • (Q.map (cA D)).transpose ∧
       Formalism.L2.Theta.mt V g⁻¹ = (1 - e - cA D e) • (1 : Matrix (Fin V.rank) (Fin V.rank) (AE D)) + e • Q + cA D e • (P.map (cA D)).transpose := by
-  first | exact @GlobalTheory.UnitaryMove.exists_blockUnit | exact GlobalTheory.UnitaryMove.exists_blockUnit | (intros; apply GlobalTheory.UnitaryMove.exists_blockUnit <;> assumption)
+  first | exact @GlobalTheory.UnitaryMove.exists_blockUnit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsThetaLiftIdempotentFormStatement =====
@@ -1213,7 +1213,7 @@ theorem _root_.GlobalTheory.T.unitaryFinitePart_idempotentBlend_mem_latticeStabi
     (Formalism.L2.Theta.mt V g⁻¹).map (toEAf D) = (1 - ε - φ) • (1 : Matrix (Fin V.rank) (Fin V.rank) (Lev.EAf D)) +
       ε • (β₀ * β₁⁻¹).val + φ • ((β₁ * β₀⁻¹).val.map (GlobalTheory.AdelicLatMove.cF D)).transpose →
     Formalism.IndefR.Lev.finE V g ∈ Formalism.L2.DIV.St β₁ := by
-  first | exact @GlobalTheory.StabMove.finE_mem_St | exact GlobalTheory.StabMove.finE_mem_St | (intros; apply GlobalTheory.StabMove.finE_mem_St <;> assumption)
+  first | exact @GlobalTheory.StabMove.finE_mem_St
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryFinitePartIdempotentBlendMemLatticeStabilStatement =====
@@ -1493,7 +1493,7 @@ theorem _root_.GlobalTheory.T.exists_supported_unitaries_moving_bottomTriples : 
       (∀ u : WO A WW, IsHalf (Y.e t) u → frMapO A WW Y.rA.β Y.rW.β (actO A WW g h u) = frMapO A WW X.rA.β X.rW.β u) ∧
       ∀ u : WO A' WW, IsHalf (cA D (Y.e t)) u →
         frMapAdj A' WW Y.rA'.β Y.rW.β (actO A' WW g' h u) = frMapAdj A' WW X.rA'.β X.rW.β u := by
-  first | exact @GlobalTheory.BotUnitMove.move_elts | exact GlobalTheory.BotUnitMove.move_elts | (intros; apply GlobalTheory.BotUnitMove.move_elts <;> assumption)
+  first | exact @GlobalTheory.BotUnitMove.move_elts
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSupportedUnitariesMovingBottomTriplesStatement =====
@@ -1611,7 +1611,7 @@ theorem _root_.GlobalTheory.T.standardPairFirstMember_movedDatum_splittingScale 
         X.rA.β X.rW.β)
       (((splitFacO (GlobalTheory.BotFrames.botBeta G i j) (GlobalTheory.BotFrames.botBeta G i j / GlobalTheory.BotFrames.botAlpha L i j t) x y : Circle) : ℂ) •
         Y.ω t (g⁻¹, h⁻¹) (Y.f t)) := by
-  first | exact @GlobalTheory.BotFrames.move_fst | exact GlobalTheory.BotFrames.move_fst | (intros; apply GlobalTheory.BotFrames.move_fst <;> assumption)
+  first | exact @GlobalTheory.BotFrames.move_fst
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardPairFirstMemberMovedDatumSplittingScaleStatement =====
@@ -1731,7 +1731,7 @@ theorem _root_.GlobalTheory.T.standard_pair_second_eq_moved_bottom_datum : ∀ {
         A.rank A' WW X.rA'.β X.rW.β)
       (((splitFacO (GlobalTheory.BotFrames.botAlpha L i j t) (GlobalTheory.BotFrames.botAlpha L i j t / GlobalTheory.BotFrames.botBeta G i j) x' y : Circle)
         : ℂ) • Y.ω' t (g'⁻¹, h⁻¹) (Y.f' t)) := by
-  first | exact @GlobalTheory.BotFrames.isThetaAt_stdSnd_move | exact GlobalTheory.BotFrames.isThetaAt_stdSnd_move | (intros; apply GlobalTheory.BotFrames.isThetaAt_stdSnd_move <;> assumption)
+  first | exact @GlobalTheory.BotFrames.isThetaAt_stdSnd_move
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardPairSecondEqMovedBottomDatumStatement =====
@@ -1817,7 +1817,7 @@ theorem _root_.GlobalTheory.T.exists_definiteBottomTriple_transferred_frames : �
     (X Y : Tri T A A' WW), IsBottomTri W i j X → IsBottomTri W i j Y →
     ∃ Y₁ : Tri T A A' WW, IsBottomTri W i j Y₁ ∧ Y₁.rA = X.rA ∧ Y₁.rA' = X.rA' ∧ Y₁.rW = X.rW ∧
       ∀ c : T → ℂ, Y.IsConst W.ψ W.θ c → ∃ u : T → D.what₂.LLˣ, Y₁.IsConst W.ψ W.θ fun t => D.what₂.embLL (u t) * c t := by
-  first | exact @GlobalTheory.BotFrames.frames_transfer | exact GlobalTheory.BotFrames.frames_transfer | (intros; apply GlobalTheory.BotFrames.frames_transfer <;> assumption)
+  first | exact @GlobalTheory.BotFrames.frames_transfer
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDefiniteBottomTripleTransferredFramesStatement =====
@@ -1859,7 +1859,7 @@ theorem _root_.GlobalTheory.T.witt_tower_bottom_constant_transfer : _root_.Globa
       NumbersIn D.what₂.embLL S μ₀ → ∀ (i j : Fin D.R.m) (A A' WW : HSp D) (X : Tri T A A' WW) (B B' WW₁ : HSp D)
       (Y : Tri T B B' WW₁) (c : T → ℂ), IsBottomTri W i j X → IsBottomTri W i j Y → Y.IsConst W.ψ W.θ c →
       ∃ u : T → D.what₂.LLˣ, X.IsConst W.ψ W.θ fun t => D.what₂.embLL (u t) * c t := by
-  first | exact @_root_.GlobalTheory.BotTransfer.bottom_constant_transfer_along_tower | exact _root_.GlobalTheory.BotTransfer.bottom_constant_transfer_along_tower | (intros; apply _root_.GlobalTheory.BotTransfer.bottom_constant_transfer_along_tower <;> assumption)
+  first | exact @_root_.GlobalTheory.BotTransfer.bottom_constant_transfer_along_tower
 end
 end -- clump:auto
 end -- clump:auto
@@ -1923,7 +1923,7 @@ theorem _root_.GlobalTheory.T.bottom_constant_ratio_eq_local_factor_ratio : _roo
       IsStdChar D W.ψ (-1) → NumbersIn D.what₂.embLL S μ₀ → ∀ (i j : Fin D.R.m) (t : T) (A A' WW : HSp D)
       (X : Tri T A A' WW) (c0 : T → ℂ), IsBottomTri W i j X → X.IsConst W.ψ W.θ c0 →
       c0 t ≠ 0 ∧ c0 μ₀ ≠ 0 ∧ ∃ γ : D.what₂.LL, D.what₂.embLL γ * c0 μ₀ = c0 t := by
-  first | exact @_root_.GlobalTheory.BotRatio.bottom_theta_constant_ratio_eq | exact _root_.GlobalTheory.BotRatio.bottom_theta_constant_ratio_eq | (intros; apply _root_.GlobalTheory.BotRatio.bottom_theta_constant_ratio_eq <;> assumption)
+  first | exact @_root_.GlobalTheory.BotRatio.bottom_theta_constant_ratio_eq
 end
 end -- clump:auto
 end -- clump:auto

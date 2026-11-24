@@ -136,7 +136,7 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.AdelicU GlobalTheory.Doublin
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.height_K_invariance : PositivityTheory.PfSWUS.HeightKInv := by
-  first | exact @GlobalTheory.CompanionTheory.PfSWUS.height_mul_K | exact GlobalTheory.CompanionTheory.PfSWUS.height_mul_K | (intros; apply GlobalTheory.CompanionTheory.PfSWUS.height_mul_K <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.PfSWUS.height_mul_K
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -610,7 +610,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.StdUnn PositivityTheory.GramSchwartzFunctions PositivityTheory.GramSchwartzFunctions.BC
 
 theorem _root_.GlobalTheory.T.hermitian_measure_conjugation : ∀ (D : D7) (n : ℕ) (lam : Measure (hermA D n)), lam.IsAddHaarMeasure → ∀ (a : GL (Fin n) (AE D)) (f : hermA D n → ℂ), ∫ c, f (GlobalTheory.CompanionTheory.IwaAd.cg a c) ∂lam = npow (absA D (Matrix.GeneralLinearGroup.det a)) (-(n : ℂ)) * ∫ c, f c ∂lam := by
-  first | exact @GlobalTheory.CompanionTheory.CgMod.integral_cg | exact GlobalTheory.CompanionTheory.CgMod.integral_cg | (intros; apply GlobalTheory.CompanionTheory.CgMod.integral_cg <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.CgMod.integral_cg
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto

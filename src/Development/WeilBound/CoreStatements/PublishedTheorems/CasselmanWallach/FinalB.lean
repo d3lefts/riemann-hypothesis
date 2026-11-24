@@ -399,9 +399,9 @@ lemma adj' (ε : Fin n → Bool) (E : Fin n → Fin n → Module.End ℂ V) (hu 
 lemma act_single (A : Matrix (Fin n) (Fin n) (Module.End ℂ V)) (e a : Fin n) (v : V) :
     act A (PiLp.single 2 e v) a = A a e v := by
   rw [act_apply, Finset.sum_eq_single e]
-  · simp [PiLp.single_apply]
+  · simp
   · intro b _ hb
-    simp [PiLp.single_apply, hb]
+    simp [hb]
   · intro h
     exact absurd (Finset.mem_univ e) h
 
@@ -701,7 +701,7 @@ theorem repr_fc (b : Module.Basis ι ℂ V) (μ : ι → ℝ) (φ : ℝ → ℝ)
       LinearMap.smul_apply, Module.Basis.repr_self]
     by_cases hji : j = i
     · subst hji; simp
-    · simp [Finsupp.single_apply, hji]
+    · simp [hji]
   exact LinearMap.congr_fun key v
 
 theorem inner_basis_left (b : Module.Basis ι ℂ V) (hb : Orthonormal ℂ b) (i : ι) (y : V) :
@@ -713,7 +713,7 @@ theorem inner_basis_left (b : Module.Basis ι ℂ V) (hb : Orthonormal ℂ b) (i
     rw [Module.Basis.repr_self, orthonormal_iff_ite.mp hb i j]
     by_cases hij : i = j
     · subst hij; simp
-    · simp [hij, Ne.symm hij]
+    · simp [hij]
   exact LinearMap.congr_fun key y
 
 theorem inner_eq_sum (b : Module.Basis ι ℂ V) (hb : Orthonormal ℂ b) (x y : V) (s : Finset ι)
@@ -967,7 +967,7 @@ variable {n : ℕ}
 lemma actM_Xp {M : Type*} [AddCommGroup M] [Module ℂ M] (E : Fin n → Fin n → Module.End ℂ M) (a b : Fin n) :
     actM E (Xp a b) = ((1 + Complex.I) / 2) • E a b + ((1 - Complex.I) / 2) • E b a := by
   simp only [actM, Xp, Matrix.add_apply, add_smul, Finset.sum_add_distrib, Matrix.single_apply, ite_smul, zero_smul, ite_and]
-  simp [Finset.sum_ite_eq, Finset.sum_ite_eq']
+  simp [Finset.sum_ite_eq]
 
 lemma sum_nc_swap {β : Type*} [AddCommMonoid β] (ε : Fin n → Bool) (g : Fin n × Fin n → β) :
     ∑ p ∈ nc ε, g p.swap = ∑ p ∈ nc ε, g p := by
@@ -991,17 +991,17 @@ lemma inP_Xp (ε : Fin n → Bool) (a b : Fin n) (h : ε a ≠ ε b) : inP ε (X
   refine ⟨?_, ?_⟩
   · unfold inG
     ext i j
-    simp [Jm, Xp, Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.conjTranspose_apply, Matrix.single_apply, ← sub_eq_add_neg]
+    simp [Jm, Xp, Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.single_apply, ← sub_eq_add_neg]
     by_cases h1 : a = i ∧ b = j
     · obtain ⟨h1a, h1b⟩ := h1
       subst h1a
       subst h1b
-      cases ha : ε a <;> cases hb : ε b <;> simp_all <;> ring
+      cases ha : ε a <;> cases hb : ε b <;> simp_all
     · by_cases h2 : b = i ∧ a = j
       · obtain ⟨h2a, h2b⟩ := h2
         subst h2a
         subst h2b
-        cases ha : ε a <;> cases hb : ε b <;> simp_all <;> ring
+        cases ha : ε a <;> cases hb : ε b <;> simp_all
       · simp [h1, h2]
   · ext i j
     simp [Jm, Xp, Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.single_apply]
@@ -1009,12 +1009,12 @@ lemma inP_Xp (ε : Fin n → Bool) (a b : Fin n) (h : ε a ≠ ε b) : inP ε (X
     · obtain ⟨h1a, h1b⟩ := h1
       subst h1a
       subst h1b
-      cases ha : ε a <;> cases hb : ε b <;> simp_all <;> ring
+      cases ha : ε a <;> cases hb : ε b <;> simp_all
     · by_cases h2 : b = i ∧ a = j
       · obtain ⟨h2a, h2b⟩ := h2
         subst h2a
         subst h2b
-        cases ha : ε a <;> cases hb : ε b <;> simp_all <;> ring
+        cases ha : ε a <;> cases hb : ε b <;> simp_all
       · simp [h1, h2]
 
 end GrowthPolynomialOperator

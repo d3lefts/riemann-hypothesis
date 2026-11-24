@@ -239,7 +239,6 @@ theorem UpperTheory.V.Pa.Det.z1Fg :
     obtain ⟨m, rfl⟩ := Submodule.mkQ_surjective _ m
     first
       | exact hρ 1 m
-      | (convert hρ 1 m using 1; funext g; simp [ρbar])
   let Ψ := (Ideal.span {(PowerSeries.X : PowerSeries K)} • (⊤ : Submodule (PowerSeries K) C)).liftQ Φ hle
   have hinj : Function.Injective Ψ := by
     rw [← LinearMap.ker_eq_bot]
@@ -337,7 +336,7 @@ theorem UpperTheory.V.Pa.Det.matFg :
       map_mul' := by
         intro g h
         ext m : 1
-        simp [Matrix.mul_smul, Matrix.smul_mul, smul_smul, Matrix.mul_assoc, mul_comm] }
+        simp [smul_smul, Matrix.mul_assoc] }
   have hinv : ∀ i j, AdicCont (Ideal.span {algebraMap (PowerSeries K) R PowerSeries.X}) fun g => r g⁻¹ i j :=
     fun i j N => (hr i j N).comp_continuous continuous_inv
   refine Det.z1Fg l ρ Z hφ ?_ ?_

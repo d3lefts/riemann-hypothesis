@@ -171,7 +171,7 @@ theorem exists_local_dbasis (k K : Type) [Field k] [Field K] [Algebra k K] (B : 
     refine ⟨c, ?_⟩
     have := congrArg (KaehlerDifferential.map k k B K) hc
 
-    simp only [map_sum, LinearMap.map_smul, KaehlerDifferential.map_D, Subalgebra.smul_def] at this
+    simp only [map_sum, LinearMap.map_smul, KaehlerDifferential.map_D] at this
     exact this.symm
   let W : Submodule K Ω[K⁄k] := Submodule.span K (Set.range fun j => D k K (u j : K))
   have hB : ∀ v : B, D k K (v : K) ∈ W := by
@@ -228,7 +228,7 @@ section -- clump:auto
 open GlobalTheory.PD GlobalTheory.CechDR KaehlerDifferential
 
 theorem _root_.GlobalTheory.T.exists_local_kaehlerD_basis_smooth_subalgebra : ∀ (k K : Type) [Field k] [Field K] [Algebra k K] (B : Subalgebra k K) [IsFractionRing B K] [Algebra.Smooth k B] (d : ℕ), Module.finrank K Ω[K⁄k] = d → ∀ (P : Ideal B) [P.IsPrime], ∃ (f : B) (u : Fin d → B) (b : Module.Basis (Fin d) K Ω[K⁄k]), f ∉ P ∧ (∀ j, b j = D k K (u j : K)) ∧ ∀ (v : B) (j : Fin d), ∃ c : B, (f : K) * b.repr (D k K (v : K)) j = c := by
-  first | (exact @GlobalTheory.PD.exists_local_dbasis) | (exact GlobalTheory.PD.exists_local_dbasis) | (intros; apply GlobalTheory.PD.exists_local_dbasis  <;> assumption)
+  first | (exact @GlobalTheory.PD.exists_local_dbasis)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLocalKaehlerDBasisSmoothSubalgebraStatement =====

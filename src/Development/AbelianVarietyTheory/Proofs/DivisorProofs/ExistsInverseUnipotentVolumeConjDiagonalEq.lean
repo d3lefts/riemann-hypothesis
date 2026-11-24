@@ -125,7 +125,7 @@ theorem colE_mem_symN_KO {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace
       have hlt : ordL c r < ordL c (Sum.inl a0 : n ⊕ Fin c) := by
         by_contra h; exact hr (hz r h)
       cases r with
-      | inl a => simp [ordL, lev] at hlt ⊢
+      | inl a => simp [ordL] at hlt ⊢
       | inr i => simp [ordL, lev] at hlt ⊢; omega
   · refine (mem_KO_iff _).2 ⟨fun i j => ?_, fun i j => ?_⟩
     · show (1 + E) i j ∈ 𝒪[k]
@@ -450,7 +450,7 @@ theorem conj_diag_val (ϖ : kˣ) (t : ι) (z : GL ι k) (r s : ι) :
       (if r = t then (ϖ : k)⁻¹ else 1) * z.val r s * (if s = t then (ϖ : k) else 1) := by
   have hi : ((diagGL (Pi.mulSingle t ϖ))⁻¹).val = diagonal fun i => ((((Pi.mulSingle t ϖ : ι → kˣ) i)⁻¹ : kˣ) : k) := rfl
   rw [Units.val_mul, Units.val_mul, hi, diagGL_val, mul_diagonal, diagonal_mul]
-  by_cases hr : r = t <;> by_cases hs : s = t <;> simp [hr, hs, Pi.mulSingle_apply]
+  by_cases hr : r = t <;> by_cases hs : s = t <;> simp [hr, hs]
 
 theorem conj_int_iff {ϖ : kˣ} (hϖ : IsUnif ϖ) (t : ι) (z : GL ι k) (hz : ∀ r s, z.val r s ∈ 𝒪[k]) :
     (∀ r s, ((diagGL (Pi.mulSingle t ϖ))⁻¹ * z * diagGL (Pi.mulSingle t ϖ)).val r s ∈ 𝒪[k]) ↔
@@ -505,12 +505,12 @@ theorem mem_conj_iff_row {ϖ : kˣ} (hϖ : IsUnif ϖ) {H : Subgroup (GL ι k)} (
       · subst hs; exact red_row_off hHK hrow w s htS
       · show (red (Subgroup.inclusion hHK w)).val t s = _
         rw [red_incl_val hHK w t s (hint w t s), (residue_eq_zero_iff_of_isUnif hϖ _ _).2 (h s hs)]
-        simp [Matrix.one_apply, Ne.symm hs]
+        simp [Ne.symm hs]
     · intro h s hs
       have h1 := congrFun h s
       have h2 : (red (Subgroup.inclusion hHK w)).val t s = 0 := by
         rw [show (red (Subgroup.inclusion hHK w)).val t s = (ρ w).val t s from rfl, h1]
-        simp [Matrix.one_apply, Ne.symm hs]
+        simp [Ne.symm hs]
       rw [red_incl_val hHK w t s (hint w t s)] at h2
       exact (residue_eq_zero_iff_of_isUnif hϖ _ _).1 h2
   rw [mem_map_conj_iff, mem_KO_iff]
@@ -572,7 +572,7 @@ theorem relIndex_rowCong : ∀ {k : Type} [Field k] [ValuativeRel k] [Topologica
       apply Subtype.ext
       show z.val t s = _
       rw [hz]
-      simp [y, Matrix.one_apply, hst, s.2]
+      simp [y, hst, s.2]
     rw [e, hlift]
   have hcard : Nat.card (H ⧸ A.subgroupOf H) = Nat.card (S → 𝓀[k]) := by
     refine Nat.card_congr (Equiv.ofBijective (Quotient.lift F fun a b hab => (hF a b).2 ?_) ⟨?_, ?_⟩)

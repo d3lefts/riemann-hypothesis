@@ -250,7 +250,7 @@ open scoped TensorProduct InnerProductSpace
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.orthogonal_hyperbolicFrame_anisotropic_mem_span_transported : ∀ (D : D7) (X : HidaSetting D) (u : D.what₂.Word) (wt : (VS D).V ≃ₗ[D.host.E] (VS D).V), WittX X u wt → ∀ y : (VS D).V, (∀ a, (VS D).hT (X.eX a) y = 0 ∧ (VS D).hT (X.fY a) y = 0) → (VS D).hT (X.zu u) y = 0 → ∃ d : Fin (D.R.N 0) → D.host.E, Fintype.linearCombination D.host.E (qFr wt) d = y := by
-  first | exact @GlobalTheory.St.orth_mem_span_qFr | exact GlobalTheory.St.orth_mem_span_qFr | (intros; apply GlobalTheory.St.orth_mem_span_qFr <;> assumption)
+  first | exact @GlobalTheory.St.orth_mem_span_qFr
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.OrthogonalHyperbolicFrameAnisotropicMemSpanTransStatement =====
@@ -311,7 +311,7 @@ theorem mlat_perp (hW : WittX X u wt) (j : Fin (D.R.N 0)) :
   · rw [← hW.1, hW.2.1, mlat_symm]; simp [qFr, xFr, (D.sp.hyp_orthX a _).1]
   · rw [← hW.1, hW.2.2.1, mlat_symm]; simp [qFr, xFr, (D.sp.hyp_orthX a _).2]
   · rw [← hW.1, hW.2.2.2, mlat_symm]
-    simp only [qFr, LinearEquiv.apply_symm_apply, xFr, D7.zmOf, map_smul, map_smulₛₗ]
+    simp only [qFr, LinearEquiv.apply_symm_apply, xFr, D7.zmOf, map_smul]
     simp [D.sp.zm_orth]
 
 end GlobalTheory.St.G
@@ -445,7 +445,7 @@ theorem mlat_main (D : D7) (X : HidaSetting D) (u : D.what₂.Word) (wt : (VS D)
       have hx' : x = m + c • x₀ := by simp [m]
       rw [hx']
       have e : h (m + c • x₀) Y' = h m Y := by
-        simp only [Y', map_add (f := _), map_smulₛₗ, map_sub, map_smul, LinearMap.add_apply, LinearMap.smul_apply,
+        simp only [Y', map_add (f := _), map_smulₛₗ, map_sub, LinearMap.add_apply, LinearMap.smul_apply,
           hmz', hx₀z', smul_eq_mul, RingHom.id_apply]
         ring
       rw [e]; exact h1
@@ -474,7 +474,7 @@ theorem mlat_main (D : D7) (X : HidaSetting D) (u : D.what₂.Word) (wt : (VS D)
     refine (VS D).L0.add_mem ?_ hzL0
     rw [Nat.cast_smul_eq_nsmul]; exact nsmul_mem hx0L0 T
   have hw0w0 : h w₀ w₀ = h x₀ x₀ + (T : D.host.E)⁻¹ := by
-    simp only [w₀, map_add (f := _), map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, map_smul, hx₀z, hx₀z', hzz,
+    simp only [w₀, map_add (f := _), map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, hx₀z, hx₀z', hzz,
       hTstar, smul_eq_mul]
     field_simp; ring
 
@@ -616,7 +616,7 @@ open scoped TensorProduct InnerProductSpace
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.transported_column_lattice_has_level_and_dual_generator : ∀ (D : D7) (X : HidaSetting D) (u : D.what₂.Word) (wt : (VS D).V ≃ₗ[D.host.E] (VS D).V), WittX X u wt → TLat (Formalism.L2.Forms.sigD D) (Formalism.L2.Forms.gramN D 0 (Nat.zero_le _)) (D.mem u).A.T D.R.f (Mq wt) ∧ ∃ x₀ ∈ X.Lb, (VS D).hT (X.zu u) x₀ = 1 ∧ ∃ d ∈ dualL (Formalism.L2.Forms.sigD D) (Formalism.L2.Forms.gramN D 0 (Nat.zero_le _)) (Mq wt), Fintype.linearCombination D.host.E (qFr wt) d = x₀ + (((D.mem u).A.T : D.host.E))⁻¹ • X.zu u ∧ ∀ y ∈ dualL (Formalism.L2.Forms.sigD D) (Formalism.L2.Forms.gramN D 0 (Nat.zero_le _)) (Mq wt), ∃ a : 𝓞 D.host.E, y - (a : D.host.E) • d ∈ Mq wt := by
-  first | exact @GlobalTheory.St.G.mlat_main | exact GlobalTheory.St.G.mlat_main | (intros; apply GlobalTheory.St.G.mlat_main <;> assumption)
+  first | exact @GlobalTheory.St.G.mlat_main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.TransportedColumnLatticeHasLevelAndDualGeneratorStatement =====

@@ -540,8 +540,8 @@ theorem block (L : ℕ) (f : ℤ → ℂ) (N : ℕ) :
   have hL' : (0:ℤ) < L := by exact_mod_cast hL
   refine Finset.sum_nbij' (fun d => ((d % L).toNat, d / L)) (fun p => (p.1 : ℤ) + p.2 * L) ?_ ?_ ?_ ?_ ?_
   · intro d hd
-    simp only [Finset.mem_coe, Finset.mem_Ico] at hd
-    simp only [Finset.mem_coe, Finset.mem_product, Finset.mem_range, Finset.mem_Icc]
+    simp only [Finset.mem_Ico] at hd
+    simp only [Finset.mem_product, Finset.mem_range, Finset.mem_Icc]
     have h1 := Int.emod_nonneg d hL'.ne'
     have h2 := Int.emod_lt_of_pos d hL'
     have h3 := Int.emod_add_mul_ediv d L
@@ -557,8 +557,8 @@ theorem block (L : ℕ) (f : ℤ → ℂ) (N : ℕ) :
         apply mul_le_mul_of_nonneg_left (by omega) hL'.le
       nlinarith
   · intro p hp
-    simp only [Finset.mem_coe, Finset.mem_product, Finset.mem_range, Finset.mem_Icc] at hp
-    simp only [Finset.mem_coe, Finset.mem_Ico]
+    simp only [Finset.mem_product, Finset.mem_range, Finset.mem_Icc] at hp
+    simp only [Finset.mem_Ico]
     obtain ⟨h1, h2, h3⟩ := hp
     have h1' : (p.1 : ℤ) < L := by exact_mod_cast h1
     have h0 : (0:ℤ) ≤ p.1 := by positivity
@@ -570,7 +570,7 @@ theorem block (L : ℕ) (f : ℤ → ℂ) (N : ℕ) :
     have := Int.emod_add_mul_ediv d L
     linarith
   · intro p hp
-    simp only [Finset.mem_coe, Finset.mem_product, Finset.mem_range] at hp
+    simp only [Finset.mem_product, Finset.mem_range] at hp
     have h1' : (p.1 : ℤ) < L := by exact_mod_cast hp.1
     ext
     · simp only
@@ -641,7 +641,7 @@ theorem lipschitz_one : ∀ (L : ℕ) (φ : ZMod L → ℂ) (z : ℂ), 0 < L →
           rw [Int.add_mul_ediv_right _ _ hLz, Int.ediv_eq_zero_of_lt (by positivity) hr', zero_add]
           congr 1
           push_cast
-          simp [ZMod.natCast_self]
+          simp
       _ = 0 := by rw [← Finset.sum_mul, hsum0, zero_mul]
   have hb : ∀ N : ℕ, ∑ d ∈ Finset.Ico (-(N * L : ℤ)) ((N + 1) * L), φ d * (z + d)⁻¹ =
       ∑ r ∈ Finset.range L, φ r * ∑ n ∈ Finset.Icc (-(N:ℤ)) N, (z + r + n * L)⁻¹ := by
@@ -732,7 +732,6 @@ lemma symS_shift_tendsto (r : ℕ) : ∀ f : ℤ → ℂ, Tendsto f cofinite (�
     refine (tendsto_congr fun R => ?_).1 this
     have e : (fun d : ℤ => f (d + ((r + 1 : ℕ) : ℤ))) = fun d => f (d + (r : ℤ) + 1) := by
       funext d; push_cast; ring_nf
-    beta_reduce
     rw [e]; ring
 
 noncomputable def mean (L : ℕ) (k : ℤ → ℂ) (d : ℤ) : ℂ := (L : ℂ)⁻¹ * ∑ r ∈ Finset.range L, k (d + r)
@@ -1032,7 +1031,6 @@ theorem lat_qexp : ∀ (j L : ℕ) (b : ℤ → ℂ) (φ : ZMod L → ℂ), 1 �
     (fun n => by rw [← hκdef]; exact row_pos j L b φ hj hL h0 τ n) hq
   have e : (2 * (-2 * π * Complex.I / L) ^ j / (j - 1).factorial : ℂ) = 2 * κ := by rw [← hκdef]; ring
   rw [e, lat, hs.tsum_prod, hrows]
-  beta_reduce
   rw [hK τ]
   field_simp
   ring

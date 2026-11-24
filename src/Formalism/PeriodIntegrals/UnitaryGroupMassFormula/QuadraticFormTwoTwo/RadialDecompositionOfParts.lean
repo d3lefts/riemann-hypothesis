@@ -114,7 +114,6 @@ theorem ad_herm_symm (v w : Fin (2 * r + k + 1) → ℂ) :
   unfold herm
   first
     | rw [star_dotProduct]
-    | rw [Matrix.star_dotProduct]
   rw [Matrix.star_mulVec, ← Matrix.dotProduct_mulVec, GBasic.Hpk_herm]
 
 theorem ad_unitB_mulVec {m : ℕ} (Bs : Fin m → Fin (2 * r + k + 1) → ℂ) (a b : Fin m)
@@ -262,7 +261,7 @@ theorem adK_smul {F : Mx k r → (Wq →L[ℂ] Wp)} (hF : F ∈ AdK k r z π D) 
     intro g hg hgl
     simp [hE₁ g hg hgl]
   · intro x hx h hh
-    simp [hF.2 x hx h hh, ContinuousLinearMap.comp_smul]
+    simp [hF.2 x hx h hh]
 
 theorem adK_zero : (0 : Mx k r → (Wq →L[ℂ] Wp)) ∈ AdK k r z π D := by
   refine ⟨?_, ?_⟩
@@ -284,7 +283,6 @@ theorem adK_rd (hD : IsOpen D) {X : Mx k r} (hX : inLieLev k r (Fin.last r) X)
   have hc : Continuous (fun t : ℝ => x * NormedSpace.exp ((t : ℂ) • X)) := by
     first
       | exact (Formalism.FourierDecayAlt.P.B5.curve_contDiff x X).continuous
-      | fun_prop
   have hD0 : ∀ᶠ t : ℝ in 𝓝 0, x * NormedSpace.exp ((t : ℂ) • X) ∈ D :=
     hc.continuousAt.preimage_mem_nhds (by simpa using hD.mem_nhds hx.2)
   have hev : (fun t : ℝ => F (h * x * NormedSpace.exp ((t : ℂ) • X))) =ᶠ[𝓝 0]
@@ -301,12 +299,10 @@ theorem adK_RZ (hD : IsOpen D) {Z : Mx k r} (h1 : inLieLev k r (Fin.last r) (hpa
 
 private theorem mul_mem_uh {n : Type*} [Fintype n] [DecidableEq n] {H a b : Matrix n n ℂ}
     (ha : a ∈ UH H) (hb : b ∈ UH H) : a * b ∈ UH H := by
-  have ha' : aᴴ * H * a = H := ha
-  have hb' : bᴴ * H * b = H := hb
   show (a * b)ᴴ * H * (a * b) = H
   rw [Matrix.conjTranspose_mul]
   calc bᴴ * aᴴ * H * (a * b) = bᴴ * (aᴴ * H * a) * b := by simp only [Matrix.mul_assoc]
-    _ = H := by rw [ha', hb']
+    _ = H := by rw [show aᴴ * H * a = H from ha, show bᴴ * H * b = H from hb]
 
 theorem ad_rd_point {F : Mx k r → (Wq →L[ℂ] Wp)} (hF : F ∈ AdK k r z π D) {g : Mx k r}
     (hg : g ∈ Glev k r (Fin.last r) ∩ D) (hgi : g⁻¹ * g = 1) (hgi' : g * g⁻¹ = 1) (hgU : IsUnit g)
@@ -323,8 +319,6 @@ theorem ad_rd_point {F : Mx k r → (Wq →L[ℂ] Wp)} (hF : F ∈ AdK k r z π 
     rw [e1]
     first
       | rw [Matrix.exp_conj g _ hgU]
-      | rw [Matrix.exp_conj ℂ g _ hgU]
-      | rw [Matrix.exp_conj ℝ g _ hgU]
     rw [Matrix.mul_assoc, hgi, Matrix.mul_one]
   have hginvfix : ∀ w, g *ᵥ w = w → g⁻¹ *ᵥ w = w := by
     intro w hw
@@ -452,9 +446,7 @@ theorem left_ad (hz : inWb k r z) (hz' : inWb k r z') (hD : IsDom k r z z' (Fin.
     refine ⟨?_, fun a => ⟨?_, ?_⟩, ?_⟩ <;> simp [UH]
   have hJ' : J ∈ AdK k r z π D := by
     refine ⟨hJ.1, fun x hx h hh => ?_⟩
-    have e := hJ.2.2.2 x hx h hh 1 h1W
-    rw [mul_one, hπ'1] at e
-    simpa [ContinuousLinearMap.one_def] using e
+    simpa [ContinuousLinearMap.one_def, mul_one, hπ'1] using hJ.2.2.2 x hx h hh 1 h1W
   unfold capR capRep qmF
   simp only [Finset.sum_apply, ContinuousLinearMap.sum_apply, Pi.smul_apply,
     ContinuousLinearMap.smul_apply]

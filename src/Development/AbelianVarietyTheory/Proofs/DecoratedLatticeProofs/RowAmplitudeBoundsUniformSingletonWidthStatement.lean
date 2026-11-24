@@ -300,7 +300,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S Global
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.ampleTheta_wideRange_large_constants : ∀ Cg cb Cu cT CT C0 : ℝ, ∃ C : ℝ, ∀ Cn : ℝ, ∃ thr : ℝ, ∀ (D : D7) (large₂ : SizeData₂ D) (C' Cl : ℝ), thr ≤ C' → thr ≤ Cl → Ties D → Formalism.L2.SG.RowsConc.TFrameAt D → VanishingOnXAndXPlusBranching.adm1 D large₂ C' Cl Cg cb Cu cT CT C0 Cn 1 C := by
-  first | exact @GlobalTheory.Core.Deg.ptWide_at_record_gap | exact GlobalTheory.Core.Deg.ptWide_at_record_gap | (intros; apply GlobalTheory.Core.Deg.ptWide_at_record_gap <;> assumption)
+  first | exact @GlobalTheory.Core.Deg.ptWide_at_record_gap
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.AmpleThetaWideRangeLargeConstantsStatement =====
@@ -480,7 +480,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S Global
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.realPlaceAmplitude_norm_le_const_div_formalDegree : ∀ Cg cb Cu cT CT C0 : ℝ, ∀ Cn : ℝ, ∃ thr : ℝ, ∀ (D : D7) (large₂ : SizeData₂ D) (C' Cl : ℝ), thr ≤ C' → thr ≤ Cl → Ties D → VanishingOnXAndXPlusBranching.adm9 D large₂ C' Cl Cg cb Cu cT CT C0 Cn 1 := by
-  first | exact @GlobalTheory.AmpRec.exists_threshold_adm9_of_ties | exact GlobalTheory.AmpRec.exists_threshold_adm9_of_ties | (intros; apply GlobalTheory.AmpRec.exists_threshold_adm9_of_ties <;> assumption)
+  first | exact @GlobalTheory.AmpRec.exists_threshold_adm9_of_ties
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.RealPlaceAmplitudeNormLeConstDivFormalDegreeStatement =====
@@ -495,7 +495,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.dataNW_of_standingNumericalData : ∀ (D : D7) (C0 : ℝ), 1 ≤ C0 → StandingNumericalData D C0 → DataNW D := by
-  first | exact @GlobalTheory.Core.Deg.rowColumnShape_of_windowData_width_ge_one | exact GlobalTheory.Core.Deg.rowColumnShape_of_windowData_width_ge_one | (intros; apply GlobalTheory.Core.Deg.rowColumnShape_of_windowData_width_ge_one <;> assumption)
+  first | exact @GlobalTheory.Core.Deg.rowColumnShape_of_windowData_width_ge_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.RowColumnShapeOfWindowDataWidthGeOneStatement =====
@@ -802,7 +802,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.formalDegree_ratio_eq_vandermonde_ratio_along_line : ∀ Cn : ℝ, ∃ thr : ℝ, ∀ (D : D7) (large₂ : SizeData₂ D) (C' Cl Cg cb Cu cT CT C0 C1 : ℝ), thr ≤ C' → thr ≤ Cl → Ties D → BridgeLemma₂.deg_VandLine D large₂ C' Cl Cg cb Cu cT CT C0 Cn C1 := by
-  first | exact @GlobalTheory.DegLine.deg_VandLine_of_gap | exact GlobalTheory.DegLine.deg_VandLine_of_gap | (intros; apply GlobalTheory.DegLine.deg_VandLine_of_gap <;> assumption)
+  first | exact @GlobalTheory.DegLine.deg_VandLine_of_gap
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.FormalDegreeRatioEqVandermondeRatioAlongLineStatement =====
@@ -899,7 +899,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.S Global
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.rowAmplitudeBoundsUniform_singleton_width : ∀ c : ℝ, AmpOn {c} := by
-  first | exact @GlobalTheory.AmpRecordGap.ampOn_singleton | exact GlobalTheory.AmpRecordGap.ampOn_singleton | (intros; apply GlobalTheory.AmpRecordGap.ampOn_singleton <;> assumption)
+  first | exact @GlobalTheory.AmpRecordGap.ampOn_singleton
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.RowAmplitudeBoundsUniformSingletonWidthStatement =====

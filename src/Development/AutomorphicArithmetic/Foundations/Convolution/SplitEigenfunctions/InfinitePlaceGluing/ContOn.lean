@@ -123,7 +123,7 @@ theorem infOne_em {k : GL (Fin 2) (A ℚ)} (h : ∀ i j, (k.val i j).1 = ((1 : M
   have e2 : (AdeleBaseChange.adeleMap ℚ E (k.val i j)).1 = (AdeleBaseChange.adeleMap ℚ E ((1 : Matrix (Fin 2) (Fin 2) (A ℚ)) i j)).1 := by
     rw [AdeleBaseChange.adeleMap_apply, AdeleBaseChange.adeleMap_apply, h]
   rw [e, e2]
-  fin_cases i <;> fin_cases j <;> simp [Matrix.one_apply]
+  fin_cases i <;> fin_cases j <;> simp
 
 variable [_root_.NumberField.IsTotallyComplex E]
 
@@ -172,7 +172,6 @@ theorem Gd_translate {D : Dat ℚ E} {P : CuspSub E 2} {L N : ℕ} {φ : GL (Fin
       rw [e]
       exact hE (g * hU D u)
   · intro k hk g
-    change φ (g * em E k * hU D u) = φ (g * hU D u)
     rw [mul_assoc, comm_of (finOne_hU D u) (infOne_em hk.1), ← mul_assoc]
     exact hG.lev k hk _
   · intro y x hne v hv
@@ -250,7 +249,7 @@ private lemma UpperTheory.fourier_vanishing_homogeneous (F : ℝ → ℂ) (hc : 
   have hpow : cexp (s * (2 * k) * (t * I)) = cexp (s * (t * I)) ^ (2 * k) := by
     rw [← exp_nat_mul]; congr 1; push_cast; ring
   simp only [map_pow, map_add (f := _), map_mul, MvPolynomial.eval_X, MvPolynomial.eval_C,
-    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one, Matrix.head_cons]
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one]
   rw [hpow, he]
 
 theorem UpperTheory.eq_zero_of_orthogonal_even_homogeneous_trig :

@@ -113,7 +113,7 @@ theorem UpperTheory.V.Th.Sp.chi :
   by_cases h : p = p'
   · subst h
     simp [f1]
-  · simp [h, Pi.mulSingle_eq_of_ne h]
+  · simp [h]
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.AutomorphicVarieties.TheoremsMuLinked.SpectralEigenvalues.Imports =====

@@ -490,8 +490,6 @@ def iF (F : Type) [Field F] [NumberField F] : Af F →ₗ[F] AF F where
     · show (0 : Ainf F) = (c • ((0, x) : AF F)).1
       first
         | (show (0 : Ainf F) = c • (0 : Ainf F); simp)
-        | (show (0 : Ainf F) = algebraMap F (Ainf F) c * 0; simp)
-        | (show (0 : Ainf F) = (algebraMap F (AF F) c * ((0, x) : AF F)).1; show (0 : Ainf F) = (algebraMap F (AF F) c).1 * 0; simp)
     · show c • x = (c • ((0, x) : AF F)).2
       rfl
 
@@ -1174,7 +1172,7 @@ theorem _root_.GlobalTheory.T.rationalForms_detTwist_mul_rational : GlobalTheory
       ∀ (δ : Formalism.L2.Host.HChar D.host.E) (δc : (AE D)ˣ →* Circle), IsTwist C.d.pd C.σ₂ δ δc →
       ∀ dd : GA D (Wc D i) → ℂ, MuVal (Wc D i) δc dd ∨ MuVal (Wc D i) δc⁻¹ dd →
       ∀ φ : GA D (Wc D i) → ℂ, IsRat T i hV C (κ i) φ → IsRat T i hV C (κ i) (fun g => dd g * φ g) := by
-  first | exact @GlobalTheory.TwistRat.isRat_twist | exact GlobalTheory.TwistRat.isRat_twist | (intros; apply GlobalTheory.TwistRat.isRat_twist <;> assumption)
+  first | exact @GlobalTheory.TwistRat.isRat_twist
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -1224,7 +1222,7 @@ section -- clump:auto
 
 
 theorem _root_.GlobalTheory.T.thetaSeriesRationalOnGoodCovers_of_untwisted : GlobalTheory.Published.RayClassFieldSt → GlobalTheory.SerStd.UntwRatS → GlobalTheory.SerStd.SeriesRatS := by
-  first | exact @GlobalTheory.SerStdTwist.seriesRatS_of_untwRatS | exact GlobalTheory.SerStdTwist.seriesRatS_of_untwRatS | (intros; apply GlobalTheory.SerStdTwist.seriesRatS_of_untwRatS <;> assumption)
+  first | exact @GlobalTheory.SerStdTwist.seriesRatS_of_untwRatS
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ThetaSeriesRationalOnGoodCoversOfUntwistedStatement =====

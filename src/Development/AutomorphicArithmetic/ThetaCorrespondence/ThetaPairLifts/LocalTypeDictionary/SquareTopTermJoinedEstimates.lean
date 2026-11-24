@@ -687,7 +687,7 @@ open NumberField IsDedekindDomain
 open Classical
 
 theorem _root_.GlobalTheory.T.square_nu_twisted_tuple_isCMValueHeckeCharacter : ∀ {D : Formalism.BasicNotions.D7} {T : Type} {L : Formalism.IndefR.Links.LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} (G : GlobalTheory.ChiGrid.GridData L sc) {μ₀ : T}, L.Is μ₀ → ∀ (t : T) (i j : Fin D.R.m) {s : ℕ}, s ≤ GlobalTheory.FunObj.SqNum.halfRank D i j → GlobalTheory.CMVal.IsValChar (GlobalTheory.FunObj.SqNum.cmPhi D) s (GlobalTheory.FunObj.SqNum.kap D sc.cGap i j s) (GlobalTheory.FunObj.SqNum.condF G.pl) ((GlobalTheory.SqTop.twPl G t).image fun P => P.under (𝓞 D.host.F)) (GlobalTheory.FunObj.SqNum.nuH G t i j) := by
-  first | exact @GlobalTheory.SqTop.TwVal.isValChar_nu_twist | exact GlobalTheory.SqTop.TwVal.isValChar_nu_twist | (intros; apply GlobalTheory.SqTop.TwVal.isValChar_nu_twist <;> assumption)
+  first | exact @GlobalTheory.SqTop.TwVal.isValChar_nu_twist
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareNuTwistedTupleIsCMValueHeckeCharacterStatement =====
@@ -1218,7 +1218,7 @@ theorem htLe_of_real [StarRing K] (g : Formalism.PairingDivisionLocalBalance.Pl 
   · intro h; apply hw
     have := hb w
     have h0 : 0 ≤ lw w * |((vw w z + g w : ℤ) : ℝ)| := mul_nonneg (lw_nonneg w) (abs_nonneg _)
-    simp only [Function.mem_support, ne_eq, not_not] at h ⊢
+    simp only at h ⊢
     linarith
   · calc ∑ᶠ w, lw w * |((vw w z + g w : ℤ) : ℝ)| ≤ ∑ᶠ w, (lw w * |y' w| + lw w * |y w|) :=
           finsum_le_finsum' (hfin.subset fun w hw => by
@@ -1788,7 +1788,7 @@ open GlobalTheory.SqTop
 theorem _root_.GlobalTheory.T.big_theta_lift_ne_zero_of_petersson_norm : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → GlobalTheory.SqTop.LNe → GlobalTheory.SqTop.GBig fun {D} _ _ _ G _ _ _ _ =>
   ∀ (δ t0 : ℂ) (i j : Fin D.R.m) t (Q : ℕ) (P P' : GlobalTheory.NormSum.Pair D ⊤ δ t0 Q),
     GlobalTheory.FunObj.SqNum.IsBottom G t i j (GlobalTheory.SqTop.modT G t) P P' → P.norm ≠ 0 := by
-  first | exact @_root_.GlobalTheory.NormBigNe.big_theta_petersson_norm_ne_zero | exact _root_.GlobalTheory.NormBigNe.big_theta_petersson_norm_ne_zero | (intros; apply _root_.GlobalTheory.NormBigNe.big_theta_petersson_norm_ne_zero <;> assumption)
+  first | exact @_root_.GlobalTheory.NormBigNe.big_theta_petersson_norm_ne_zero
 end
 end -- clump:auto
 end -- clump:auto
@@ -1840,7 +1840,7 @@ section
 open GlobalTheory.SqTop
 
 theorem _root_.GlobalTheory.T.normBig_of_lNe : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → LNe → NormBig := by
-  first | exact @_root_.GlobalTheory.NormBigProof.normBig_alt | exact _root_.GlobalTheory.NormBigProof.normBig_alt | (intros; apply _root_.GlobalTheory.NormBigProof.normBig_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.NormBigProof.normBig_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1881,7 +1881,7 @@ end
 
 section
 theorem _root_.GlobalTheory.T.square_leading_term_bound : GlobalTheory.Published.HoweDualityReal → _root_.GlobalTheory.FunPr.ThetaLocalInputs → GlobalTheory.Published.HeckeFunctionalEquationAbs → GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds.ToricDenominator → GlobalTheory.IndefiniteRowSideFullHecke.LatticeNormTransport.Transport → GlobalTheory.IndefiniteRowSideFullHecke.ZetaValueIdeals.ZetaDenominators → GlobalTheory.SqTop.Refl → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ThetaIntegralsAgree → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.LocalMatching → GlobalTheory.SqTop.DenSum ∧ GlobalTheory.SqTop.ThbSt ∧ GlobalTheory.SqTop.OneSqSt ∧ GlobalTheory.SqTop.BotSmall ∧ GlobalTheory.SqTop.BotNe ∧ GlobalTheory.SqTop.FieldDat ∧ GlobalTheory.SqTop.TorEx ∧ GlobalTheory.SqTop.DenEx ∧ GlobalTheory.SqTop.BotEx ∧ GlobalTheory.SqTop.LNe ∧ GlobalTheory.SqTop.TriEx ∧ GlobalTheory.SqTop.Tower := by
-  first | exact @_root_.GlobalTheory.SqTop.square_top_term_joined_estimates | exact _root_.GlobalTheory.SqTop.square_top_term_joined_estimates | (intros; apply _root_.GlobalTheory.SqTop.square_top_term_joined_estimates <;> assumption)
+  first | exact @_root_.GlobalTheory.SqTop.square_top_term_joined_estimates
 end
 end -- clump:auto
 end -- clump:auto

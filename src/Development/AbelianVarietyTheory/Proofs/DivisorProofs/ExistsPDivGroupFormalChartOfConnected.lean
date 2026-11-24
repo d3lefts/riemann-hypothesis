@@ -191,7 +191,7 @@ theorem assoc_eval (p : ℕ) (O A : Type) [CommRing O] [CommRing A] [Bialgebra O
           intro c
           induction c using TensorProduct.induction_on with
           | zero => simp
-          | tmul a b => simp [Φ₁, Algebra.TensorProduct.one_def]
+          | tmul a b => simp [Φ₁]
           | add a b ha hb => rw [map_add (f := _), ha, hb, TensorProduct.add_tmul, map_add (f := _)]
         rw [key]
         simp [Φ₂]
@@ -278,8 +278,6 @@ theorem constantCoeff_eq_zero_of_eval_eq_comul : ∀ (p : ℕ) (O A : Type) [Com
       commutes' := fun r => by
         first
         | exact constantCoeff_C r
-        | (rw [MvPowerSeries.algebraMap_apply]; simp)
-        | (show constantCoeff (C r) = r; simp)
         | simp [MvPowerSeries.algebraMap_apply'] }
   have hc : ∀ f, c f = constantCoeff f := fun _ => rfl
   have hnil : ∀ j : Fin d ⊕ Fin d, ∃ N : ℕ, (p : O) ∣ (fun _ => (0 : O)) j ^ N :=
@@ -637,7 +635,7 @@ theorem der_aeval {R B : Type} [CommRing R] [CommRing B] [Algebra R B] {d : ℕ}
     · exact Finset.sum_congr rfl fun j _ => by ring
     · rw [Finset.sum_eq_single i]
       · simp
-      · intro j _ hj; simp [Pi.single_apply, hj]
+      · intro j _ hj; simp [hj]
       · simp
 
 theorem coeff_iterPD {R : Type} [CommRing R] {d : ℕ} :
@@ -894,7 +892,7 @@ theorem quotient_base_change_invariant_derivations :
         rw [Algebra.TensorProduct.tmul_mul_tmul, hεt, hεt]
         rw [LinearMap.liftBaseChange_tmul, LinearMap.liftBaseChange_tmul,
           LinearMap.liftBaseChange_tmul, hl]
-        simp only [smul_eq_mul, smul_add, Algebra.smul_def]
+        simp only [smul_eq_mul, Algebra.smul_def]
         ring
       | add y₁ y₂ ih₁ ih₂ =>
         rw [mul_add, map_add (f := _), ih₁, ih₂, map_add (f := _), map_add (f := _)]
@@ -1260,7 +1258,7 @@ theorem exists_series_of_compatible : ∀ (p : ℕ) (O σ : Type) [CommRing O] [
   let R := μ - h (m + N + n) - (p : O) ^ m • Q
   have hR : ∀ α : σ →₀ ℕ, α.degree < N → coeff α R = 0 := by
     intro α hα
-    simp only [R, map_sub, MvPowerSeries.coeff_smul, hQ α hα, smul_eq_mul, hq α hα, sub_self]
+    simp only [R, map_sub, MvPowerSeries.coeff_smul, hQ α hα, hq α hα, sub_self]
   have hER := hN R hR
   have hsplit : E n μ - t n = E n R + (p : A n) ^ m * E n Q := by
     have hμeq : μ = h (m + N + n) + ((p : O) ^ m • Q + R) := by simp only [R]; abel

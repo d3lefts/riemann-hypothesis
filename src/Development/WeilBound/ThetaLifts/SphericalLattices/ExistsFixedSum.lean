@@ -75,9 +75,8 @@ theorem UpperTheory.Reformulated.B.InvariantSumOfTranslates.main :
               ∑ i : Fin (m + (1 : ℕ)), ((ω : K → Module.End ℂ S) (k i) : S → S) f₀ := by
   intro K S _ _ _ _ _ _ ω f₀ h
   obtain ⟨U, hU, hfix⟩ := h
-  have hmul : ∀ (a b : K) (v : S), ω (a * b) v = ω a (ω b v) := by
-    intro a b v
-    rw [map_mul, Module.End.mul_apply]
+  have hmul : ∀ (a b : K) (v : S), ω (a * b) v = ω a (ω b v) := fun a b v => by
+    simp [map_mul]
 
   let H : Subgroup K :=
     { carrier := {k | ω k f₀ = f₀}
@@ -88,13 +87,10 @@ theorem UpperTheory.Reformulated.B.InvariantSumOfTranslates.main :
         rw [hmul, hb, ha]
       inv_mem' := by
         intro a ha
-        simp only [Set.mem_setOf_eq] at ha ⊢
-        have h1 : ω a⁻¹ (ω a f₀) = f₀ := by
-          rw [← hmul]; simp
+        have h1 : ω a⁻¹ (ω a f₀) = f₀ := by rw [← hmul]; simp
         rwa [ha] at h1 }
-  have hmem : ∀ k, k ∈ H ↔ ω k f₀ = f₀ := fun k => Iff.rfl
   have hopen : IsOpen (H : Set K) :=
-    H.isOpen_of_mem_nhds (g := 1) (Filter.mem_of_superset hU (fun k hk => hfix k hk))
+    H.isOpen_of_mem_nhds (Filter.mem_of_superset hU hfix)
   haveI : Finite (K ⧸ H) := Subgroup.quotient_finite_of_isOpen H hopen
   haveI : Fintype (K ⧸ H) := Fintype.ofFinite _
 
@@ -104,12 +100,10 @@ theorem UpperTheory.Reformulated.B.InvariantSumOfTranslates.main :
     have hq : ((g * q.out : K) : K ⧸ H) = g • q := by
       conv_rhs => rw [← QuotientGroup.out_eq' q]
       rfl
-    have hq' : (((g • q).out : K) : K ⧸ H) = ((g * q.out : K) : K ⧸ H) := by
-      rw [hq, QuotientGroup.out_eq']
-    have hh : ((g • q).out)⁻¹ * (g * q.out) ∈ H := QuotientGroup.eq.mp hq'
+    have hh : ((g • q).out)⁻¹ * (g * q.out) ∈ H := by
+      rw [← QuotientGroup.eq, QuotientGroup.out_eq', hq]
     have h2 : g * q.out = (g • q).out * (((g • q).out)⁻¹ * (g * q.out)) := by group
-    change ω g (ω q.out f₀) = ω (g • q).out f₀
-    rw [← hmul, h2, hmul, (hmem _).mp hh]
+    rw [← hmul, h2, hmul, hh]
   obtain ⟨m, hm⟩ : ∃ m, Fintype.card (K ⧸ H) = m + 1 :=
     Nat.exists_eq_succ_of_ne_zero Fintype.card_ne_zero
   let e : Fin (m + 1) ≃ K ⧸ H := (Fintype.equivFinOfCardEq hm).symm

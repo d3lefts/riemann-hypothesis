@@ -82,7 +82,7 @@ open GlobalTheory.Published GlobalTheory.ContraPair
 open GlobalTheory.CuspRep.InfType GlobalTheory.CuspRep.AlgExpo
 
 theorem _root_.GlobalTheory.T.cmField_prod_embeddings_regroup_maximalReal : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (k : (E →+* ℂ) → ℤ), (∀ τ, k (ComplexEmbedding.conjugate τ) = k τ) → ∃ n : (maximalRealSubfield E →+* ℂ) → ℤ, ∀ g : (maximalRealSubfield E →+* ℂ) → ℂ, ∏ τ : E →+* ℂ, g (τ.comp (algebraMap (maximalRealSubfield E) E)) ^ k τ = ∏ φ, g φ ^ (2 * n φ) := by
-  first | exact @GlobalTheory.cm_prod_regroup_maximalReal | exact GlobalTheory.cm_prod_regroup_maximalReal | (intros; apply GlobalTheory.cm_prod_regroup_maximalReal <;> assumption)
+  first | exact @GlobalTheory.cm_prod_regroup_maximalReal
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.CmFieldProdEmbeddingsRegroupMaximalRealStatement =====
@@ -172,7 +172,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 open GlobalTheory.Published GlobalTheory.ContraPair
 
 theorem _root_.GlobalTheory.T.heckeChar_realSubfield_algebraic_of_comp_norm_integral : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (χ : HChar (maximalRealSubfield E)), (∀ τ : E →+* ℂ, ∃ k : ℤ, expo (compNorm E χ) τ = k) → ∃ n : (maximalRealSubfield E →+* ℂ) → ℤ, IsAlgPos χ n := by
-  first | exact @GlobalTheory.CMRealAlg.isAlgPos_of_compNorm | exact GlobalTheory.CMRealAlg.isAlgPos_of_compNorm | (intros; apply GlobalTheory.CMRealAlg.isAlgPos_of_compNorm <;> assumption)
+  first | exact @GlobalTheory.CMRealAlg.isAlgPos_of_compNorm
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.HeckeCharRealSubfieldAlgebraicOfCompNormIntegralStatement =====

@@ -196,7 +196,7 @@ theorem classSum_gram_posDef (s : K →+* ℂ) {W : Type} [AddCommGroup W] [Modu
 
         simp only [dotProduct, Matrix.mulVec, Matrix.map_apply, CSD.H, Matrix.of_apply, hc, map_sum, LinearMap.sum_apply,
         LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul, Finset.mul_sum, Finset.sum_mul, Pi.star_apply,
-        starRingEnd_apply, RingHom.id_apply]
+        starRingEnd_apply]
         rw [Finset.sum_comm]
         conv_rhs => rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun j _ => ?_
@@ -305,7 +305,7 @@ section -- clump:auto
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV Formalism.L2.Forms GlobalTheory.Mem.Col2
 
 theorem _root_.GlobalTheory.T.lawNorm_classSum_fock : ∀ {E K ι : Type} [Field E] [NumberField E] [StarRing E] [Field K] [NumberField K] [StarRing K] [Fintype ι] {n : ℕ} (S : GStep E K n) (emb : ι → E →+* K) (σ : K →+* ℂ) (lam : ι → DomWeight n), FOk emb σ → S.Ok → ∀ h [Fintype S.Cl], S.LawNorm emb σ lam h := by
-  first | exact @GlobalTheory.Mem.Col2.GStep.lawNorm | exact GlobalTheory.Mem.Col2.GStep.lawNorm | (intros; apply GlobalTheory.Mem.Col2.GStep.lawNorm <;> assumption)
+  first | exact @GlobalTheory.Mem.Col2.GStep.lawNorm
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LawNormClassSumFockStatement =====
@@ -545,7 +545,7 @@ section -- clump:auto
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV Formalism.L2.Forms GlobalTheory.Mem.Col2
 
 theorem _root_.GlobalTheory.T.levelPrimeDiamond_preserves_integralForms : ∀ {E K ι : Type} [Field E] [NumberField E] [StarRing E] [Field K] [NumberField K] [StarRing K] [Fintype ι] {R : Ranks} (I : ChainIn E K ι R) (J : AtIn I) (emb : ι → E →+* K) (σ : K →+* ℂ) (hc : ι → HCParam R), FOk emb σ → ∀ (hI : I.Ok), J.Ok → ∀ (hF : ((I.S 0).fam emb (lamT hc 0)).Ok) P a x, x ∈ ((I.S 0).hlat emb (lamT hc 0) hF).L → ∃ y ∈ ((I.S 0).hlat emb (lamT hc 0) hF).L, (I.S 0).embF emb σ (lamT hc 0) hF y = J.diaLin emb σ P a ((I.S 0).embF emb σ (lamT hc 0) hF x) := by
-  first | exact @GlobalTheory.Mem.Col2.DiaLat.dia_lat | exact GlobalTheory.Mem.Col2.DiaLat.dia_lat | (intros; apply GlobalTheory.Mem.Col2.DiaLat.dia_lat <;> assumption)
+  first | exact @GlobalTheory.Mem.Col2.DiaLat.dia_lat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LevelPrimeDiamondPreservesIntegralFormsStatement =====
@@ -692,11 +692,7 @@ theorem exists_smul_mem {K V : Type} [Field K] [NumberField K] [AddCommGroup V] 
     [IsScalarTower (𝓞 K) K V] {M : Submodule (𝓞 K) V} {x : V} (hx : x ∈ Submodule.span K (M : Set V)) :
     ∃ d : 𝓞 K, d ≠ 0 ∧ d • x ∈ M := by
   first
-  | exact @_root_.GlobalTheory.NonzeroSmulMem.exists_ne_zero_smul_mem
-  | exact _root_.GlobalTheory.NonzeroSmulMem.exists_ne_zero_smul_mem
   | (apply _root_.GlobalTheory.NonzeroSmulMem.exists_ne_zero_smul_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.NonzeroSmulMem.exists_ne_zero_smul_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.NonzeroSmulMem.exists_ne_zero_smul_mem <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.NonzeroSmulMem.exists_ne_zero_smul_mem ..)
 
 theorem smul_mem_of_dvd {A V : Type} [CommRing A] [AddCommGroup V] [Module A V] {M : Submodule A V} {a b : A} {x : V}
@@ -784,7 +780,7 @@ section -- clump:auto
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formalism.L2.DIV Formalism.L2.Forms GlobalTheory.Mem.Col2
 
 theorem _root_.GlobalTheory.T.local_lattice_span_at_place : ∀ {E K ι : Type} [Field E] [NumberField E] [StarRing E] [Field K] [NumberField K] [StarRing K] [Fintype ι] {R : Ranks} (I : ChainIn E K ι R) (J : AtIn I) (emb : ι → E →+* K) (σ : K →+* ℂ) (hc : ι → HCParam R), FOk emb σ → ∀ (hI : I.Ok), J.Ok → ∀ (Pl : Rows.Places K) i (hF : ((I.S i).fam emb (lamT hc i)).Ok) (w : Pl.Pl) P, Submodule.span K (locW Pl w (BLat J emb hc i hF P) : Set ((I.S i).hlat emb (lamT hc i) hF).V) = ⊤ := by
-  first | exact @GlobalTheory.Mem.BSpan.span_locW_BLat | exact GlobalTheory.Mem.BSpan.span_locW_BLat | (intros; apply GlobalTheory.Mem.BSpan.span_locW_BLat <;> assumption)
+  first | exact @GlobalTheory.Mem.BSpan.span_locW_BLat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LocalLatticeSpanAtPlaceStatement =====

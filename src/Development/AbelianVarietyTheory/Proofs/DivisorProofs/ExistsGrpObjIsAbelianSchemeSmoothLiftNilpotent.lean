@@ -76,7 +76,7 @@ theorem _root_.GlobalTheory.T.eq_comp_section_of_proper_smooth_nilpotent_rigidit
     Smooth P.hom → IsProper P.hom → GeometricallyConnected P.hom →
     ∀ (ε : Sp R ⟶ P.left), ε ≫ P.hom = 𝟙 _ → ∀ (f : P ⟶ X) (s₀ : Sp R₀ ⟶ X.left), l ≫ f.left = P₀.hom ≫ s₀ →
     f.left = P.hom ≫ ε ≫ f.left := by
-  first | exact @GlobalTheory.Rigidity.eq_comp_section | exact GlobalTheory.Rigidity.eq_comp_section | (intros; apply GlobalTheory.Rigidity.eq_comp_section <;> assumption)
+  first | exact @GlobalTheory.Rigidity.eq_comp_section
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqCompSectionOfProperSmoothNilpotentRigidityStatement =====
@@ -205,7 +205,7 @@ theorem _root_.GlobalTheory.T.eq_of_shear_automorphism_lift_nilpotent : ∀ (R R
     ∀ (P : Over (Sp R)) (P₀ : Over (Sp R₀)) (k : P₀.left ⟶ P.left), IsPullback k P₀.hom P.hom (spMap π) →
     Smooth P.hom → IsProper P.hom → GeometricallyConnected P.hom →
     ∀ (ε : Sp R ⟶ P.left), ε ≫ P.hom = 𝟙 _ → ∀ (f f' : P ⟶ X), k ≫ f.left = k ≫ f'.left → ε ≫ f.left = ε ≫ f'.left → f = f' := by
-  first | exact @GlobalTheory.ShearLift.eq_of_shear | exact GlobalTheory.ShearLift.eq_of_shear | (intros; apply GlobalTheory.ShearLift.eq_of_shear <;> assumption)
+  first | exact @GlobalTheory.ShearLift.eq_of_shear
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqOfShearAutomorphismLiftNilpotentStatement =====
@@ -225,7 +225,7 @@ theorem _root_.GlobalTheory.T.isIso_of_flat_pullback_reduction : ∀ (R R₀ : T
     ∀ (X Y : Over (Sp R)) (X₀ Y₀ : Over (Sp R₀)) (i : X₀.left ⟶ X.left) (j : Y₀.left ⟶ Y.left),
     IsPullback i X₀.hom X.hom (spMap π) → IsPullback j Y₀.hom Y.hom (spMap π) → Flat X.hom →
     ∀ (f : X ⟶ Y) (f₀ : X₀ ⟶ Y₀), i ≫ f.left = f₀.left ≫ j → IsIso f₀ → IsIso f := by
-  first | exact @GlobalTheory.NilThickIso.isIso_of_flat_of_isIso_reduction | exact GlobalTheory.NilThickIso.isIso_of_flat_of_isIso_reduction | (intros; apply GlobalTheory.NilThickIso.isIso_of_flat_of_isIso_reduction <;> assumption)
+  first | exact @GlobalTheory.NilThickIso.isIso_of_flat_of_isIso_reduction
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsIsoOfFlatPullbackReductionStatement =====
@@ -244,7 +244,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 theorem _root_.GlobalTheory.T.isProper_geometricallyConnected_smooth_nilpotent_lift : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (π : R →+* R₀), Function.Surjective π → IsNilpotent (RingHom.ker π) →
     ∀ (X : Over (Sp R)) (X₀ : Over (Sp R₀)) (i : X₀.left ⟶ X.left), IsPullback i X₀.hom X.hom (spMap π) → Smooth X.hom →
     IsProper X₀.hom → GeometricallyConnected X₀.hom → IsProper X.hom ∧ GeometricallyConnected X.hom := by
-  first | exact @GlobalTheory.NilLift.isProper_and_geometricallyConnected_of_smooth_lift | exact GlobalTheory.NilLift.isProper_and_geometricallyConnected_of_smooth_lift | (intros; apply GlobalTheory.NilLift.isProper_and_geometricallyConnected_of_smooth_lift <;> assumption)
+  first | exact @GlobalTheory.NilLift.isProper_and_geometricallyConnected_of_smooth_lift
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsProperGeometricallyConnectedSmoothNilpotentLifStatement =====

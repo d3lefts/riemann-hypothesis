@@ -453,8 +453,8 @@ theorem mul_det_evM_update {r : ℕ} (s : Fin r → SL(2, ℤ)) (w : Fin r → �
       (evM s w F τ).updateCol j₀ (fun i => (G ∣[w'] s i) τ) := by
     ext i j
     by_cases hj : j = j₀
-    · subst hj; simp [evM, Matrix.updateCol_apply]
-    · simp [evM, Matrix.updateCol_apply, hj, Function.update_of_ne hj]
+    · subst hj; simp [evM]
+    · simp [evM, hj]
   rw [hM, ← Matrix.det_updateCol_smul]
   have hc : (E τ • fun i => (G ∣[w'] s i) τ) =
       fun i => ∑ j, (fun j => e j τ) j • (evM s w F τ) i j := by
@@ -1498,12 +1498,10 @@ theorem sum_finrank_le_finrank_cuspForm (Γ : Subgroup SL(2, ℤ)) (r : ℕ) (s 
     { toFun := fun g => ∑ j, (hcf j (g j)).toCF
       map_add' := by
         intro a b; ext τ
-        simp only [CuspForm.add_apply, happ, IsCF.coe_toCF, Pi.mul_apply, Pi.add_apply, ModularForm.add_apply,
-          add_mul, Finset.sum_add_distrib]
+        simp only [CuspForm.add_apply, happ, IsCF.coe_toCF, Pi.mul_apply, Pi.add_apply, add_mul, Finset.sum_add_distrib]
       map_smul' := by
         intro c a; ext τ
-        simp only [CuspForm.smul_apply, happ, IsCF.coe_toCF, Pi.mul_apply, Pi.smul_apply, ModularForm.smul_apply,
-          RingHom.id_apply, smul_eq_mul, Finset.mul_sum, mul_assoc] }
+        simp only [CuspForm.smul_apply, happ, IsCF.coe_toCF, Pi.mul_apply, Pi.smul_apply, RingHom.id_apply, smul_eq_mul, Finset.mul_sum, mul_assoc] }
   have hinj : Function.Injective L := by
     rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
     intro g hg
@@ -1558,7 +1556,7 @@ def frameMap (Γ : Subgroup SL(2, ℤ)) [Γ.FiniteIndex] {r : ℕ} (w : Fin r �
     simp [add_mul, Finset.sum_add_distrib, Finset.sum_apply]
   map_smul' c g := by
     ext τ
-    simp [Finset.mul_sum, mul_assoc, Finset.sum_apply]
+    simp [Finset.mul_sum, Finset.sum_apply]
 
 theorem frameMap_apply (Γ : Subgroup SL(2, ℤ)) [Γ.FiniteIndex] {r : ℕ} (w : Fin r → ℤ) (F : Fin r → ℍ → ℂ)
     (k : ℤ) (hF : ∀ j, IsMF Γ (w j) (F j)) (g : Π j : Fin r, ModularForm 𝒮ℒ (k - w j)) :

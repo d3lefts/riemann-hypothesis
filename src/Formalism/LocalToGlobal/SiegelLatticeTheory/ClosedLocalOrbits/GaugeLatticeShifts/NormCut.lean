@@ -366,7 +366,7 @@ theorem normExp_abs {τ Rw H K Q1 Q2 R R' : Type} [NormedAddCommGroup H] [InnerP
     rw [hm, ← tsum_const_smul'']
     refine tsum_congr fun t => ?_
     by_cases h1 : t ∈ S <;> by_cases h2 : ιt t = i <;> by_cases h3 : intersection_update_fsHerm_neg_one t = q <;>
-      simp [Set.indicator_apply, hvec t, hio t, h1, h2, h3, @eq_comm _ q (intersection_update_fsHerm_neg_one t)]
+      simp [hvec t, hio t, h1, h2, h3, @eq_comm _ q (intersection_update_fsHerm_neg_one t)]
   have hinner : ∀ i j, inner ℂ (X.vecPart S i) (X.vecPart S j) = ∑ q, (((w q) ^ 2 : ℝ) : ℂ) * G q i j := by
     intro i j
     rw [PiLp.inner_apply]
@@ -431,7 +431,7 @@ def opOf (x : Formalism.L2.SG.PackageTie.HS Wq Wp) : Wq →L[ℂ] Wp :=
 
 theorem opOf_apply (x : Formalism.L2.SG.PackageTie.HS Wq Wp) (e : Wq) :
     opOf x e = ∑ i, inner ℂ (stdOrthonormalBasis ℂ Wq i) e • x i := by
-  simp [opOf, ContinuousLinearMap.sum_apply]
+  simp [opOf]
 
 theorem opOf_add (x y : Formalism.L2.SG.PackageTie.HS Wq Wp) : opOf (x + y) = opOf x + opOf y := by
   ext e
@@ -471,14 +471,12 @@ theorem blockOf_add (A B : PiLp 2 (fun _ : C' => V') →L[ℂ] PiLp 2 (fun _ : C
   ext v
   first
   | rfl
-  | simp [blockOf]
 
 theorem blockOf_smul (c : ℂ) (A : PiLp 2 (fun _ : C' => V') →L[ℂ] PiLp 2 (fun _ : C => V)) (ρ : C) (ρ' : C') :
     blockOf (c • A) ρ ρ' = c • blockOf A ρ ρ' := by
   ext v
   first
   | rfl
-  | simp [blockOf]
 
 def BlL (ρ : C) (ρ' : C') :
     Formalism.L2.SG.PackageTie.HS (PiLp 2 (fun _ : C' => V')) (PiLp 2 (fun _ : C => V)) →ₗ[ℂ]

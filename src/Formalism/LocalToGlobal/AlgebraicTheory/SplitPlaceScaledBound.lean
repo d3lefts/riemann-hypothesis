@@ -156,7 +156,7 @@ theorem CapelliMinorMembership.key_term {X : Fields} (A : Amb X) {a b : ℕ} {p 
 theorem CapelliMinorMembership.collapse {K κ B C : Type} [AddCommMonoid K] [Fintype κ] [Fintype B] [DecidableEq B]
     [Fintype C] [DecidableEq C] (g : κ → K) (β₁ : B) (α₁ : C) :
     ∑ i, ∑ β : B, ∑ α : C, (if α = α₁ then (if β = β₁ then g i else 0) else 0) = ∑ i, g i := by
-  simp [Finset.sum_ite_eq', Finset.sum_ite_eq]
+  simp [Finset.sum_ite_eq']
 
 theorem kerFrame_of (h : EigenFrameDual) : KerFrame := by
   intro X A a b N N' L p _ ι hd hinj hcD hn
@@ -177,7 +177,6 @@ theorem kerFrame_of (h : EigenFrameDual) : KerFrame := by
     · rw [norm_mul, norm_mul, norm_inv, CapelliMinorMembership.norm_natCast p hn₀, inv_one, mul_one]
       first
       | exact mul_le_one₀ (hcD _) (norm_nonneg _) (hr1 _ _)
-      | nlinarith [norm_nonneg (ι (A.cD k.1)), norm_nonneg (r k.1 j.1), hcD k.1, hr1 k.1 j.1]
     · simp
   · intro i k
     obtain ⟨τ₁, β₁, α₁⟩ := i
@@ -695,7 +694,7 @@ theorem transPow {K : Type} [NormedField K] [IsUltrametricDist K] [DecidableEq K
           simp only [map_mul, map_pow]; try ring
       _ = C (c ^ (k + 1) * (c ^ 2) ^ m * a)⁻¹ * (C (c ^ (k + 1) * (c ^ 2) ^ m * a) *
             (X ^ E * ((C c⁻¹ * G t) ^ (k + 1) * V))) := by
-          rw [hmain]; simp only [map_mul, map_pow]; try ring
+          rw [hmain]; simp only [map_mul, map_pow]
       _ = X ^ E * ((C c⁻¹ * G t) ^ (k + 1) * V) := by rw [← mul_assoc, hD1, one_mul]
   obtain ⟨hE, hb⟩ := eq_and_eq_one_of_C_mul_X_pow_eq hh key
   subst hE
@@ -972,7 +971,7 @@ theorem power_log_derivative_jets : PowLogDer := by
   | succ n =>
     have hd := congrArg (PowerSeries.derivative (R := K)) h
     rw [Derivation.leibniz_pow, Derivation.leibniz, PowerSeries.derivative_C] at hd
-    simp only [smul_eq_mul, nsmul_eq_mul, smul_zero, add_zero, add_tsub_cancel_right] at hd
+    simp only [smul_eq_mul, nsmul_eq_mul, add_tsub_cancel_right] at hd
     have hC : (PowerSeries.C (c ^ (n + 1)) : PowerSeries K) ≠ 0 := by
       intro h0
       apply pow_ne_zero (n + 1) hc

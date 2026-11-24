@@ -229,7 +229,7 @@ theorem fL_injective (hq : IsUnit (q : LaurentPolynomial K)) : Function.Injectiv
   obtain ⟨c, k, hck⟩ := units_eq K (Units.map (gEq K).toRingHom.toMonoidHom v)
   have hT : (T (z.val : ℤ) : LaurentPolynomial K) = LaurentPolynomial.C (c ^ q) * T ((q : ℤ) * k) := by
     have := congrArg (fun w : (LaurentPolynomial K)ˣ => (w : LaurentPolynomial K)) hv'
-    simp only [Units.val_pow_eq_pow_val, hck, IsUnit.unit_spec, T_pow, mul_one, mul_pow, map_pow] at this
+    simp only [Units.val_pow_eq_pow_val, hck, IsUnit.unit_spec, T_pow, mul_one, mul_pow] at this
     rw [map_pow]; exact this
   have he := laurent_monomial_exponent_eq K hT
   have hlt : ((z.val : ℕ) : ℤ) < q := by exact_mod_cast ZMod.val_lt z
@@ -273,7 +273,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.tateTwistCohomology_laurentPolynomial_of_isAlgClosed : ∀ (q : ℕ) [NeZero q] (K : Type) [Field K] [IsAlgClosed K], IsUnit (q : K) → ∀ n i : ℤ, (2 ≤ n → Subsingleton (Ht q (sp (LaurentPolynomial K)) n i)) ∧ Nonempty (Ht q (sp (LaurentPolynomial K)) 1 i ≃+ ZMod q) := by
-  first | (exact @GlobalTheory.EtC.gm_algClosed_cohomology) | (exact GlobalTheory.EtC.gm_algClosed_cohomology) | (intros; apply GlobalTheory.EtC.gm_algClosed_cohomology  <;> assumption)
+  first | (exact @GlobalTheory.EtC.gm_algClosed_cohomology)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateTwistCohomologyLaurentPolynomialOfIsAlgCloseStatement =====
@@ -349,7 +349,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.tateTwistCohomology_laurent_absIntClosedLocalDomain : ∀ (q : ℕ) [NeZero q] (T : Type) [CommRing T] [IsDomain T] [IsLocalRing T], AIC T → IsUnit (q : T) → ∀ n i : ℤ, (2 ≤ n → Subsingleton (Ht q (sp (LaurentPolynomial T)) n i)) ∧ Nonempty (Ht q (sp (LaurentPolynomial T)) 1 i ≃+ ZMod q) := by
-  first | (exact @GlobalTheory.EtC.GmAic.main) | (exact GlobalTheory.EtC.GmAic.main) | (intros; apply GlobalTheory.EtC.GmAic.main  <;> assumption)
+  first | (exact @GlobalTheory.EtC.GmAic.main)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateTwistCohomologyLaurentAbsIntClosedLocalDomaiStatement =====

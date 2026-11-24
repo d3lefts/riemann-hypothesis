@@ -125,12 +125,10 @@ theorem stepBruhat : StepBruhat := by
   have : LocallyCompactSpace H := hH.locallyCompactSpace
   have : SecondCountableTopology H := TopologicalSpace.Subtype.secondCountableTopology (H : Set G)
   obtain ⟨K0, hK0, h1⟩ := exists_compact_mem_nhds (1 : G)
-  obtain ⟨d, hd⟩ : ∃ d : ℕ → G, DenseRange d := TopologicalSpace.exists_dense_seq G
-  obtain ⟨U, hU⟩ : ∃ U : ℕ → Set G, U = fun n => (fun x => d n * x) '' interior K0 := ⟨_, rfl⟩
-  have hUo : ∀ n, IsOpen (U n) := fun n => by
-    rw [hU]; exact isOpenMap_mul_left (d n) _ isOpen_interior
-  have hUK : ∀ n, U n ⊆ (fun x => d n * x) '' K0 := fun n => by
-    rw [hU]; exact Set.image_mono interior_subset
+  obtain ⟨d, hd⟩ := TopologicalSpace.exists_dense_seq G
+  let U : ℕ → Set G := fun n => (fun x => d n * x) '' interior K0
+  have hUo : ∀ n, IsOpen (U n) := fun n => isOpenMap_mul_left (d n) _ isOpen_interior
+  have hUK : ∀ n, U n ⊆ (fun x => d n * x) '' K0 := fun n => Set.image_mono interior_subset
   have hcov : ∀ g : G, ∃ n, g ∈ U n := by
     intro g
     have ho : IsOpen ((fun x => g * x) '' (interior K0)⁻¹) :=
@@ -141,19 +139,17 @@ theorem stepBruhat : StepBruhat := by
     obtain ⟨z, hz, hzn⟩ := hn
     simp only at hzn
     refine ⟨n, ?_⟩
-    rw [hU]
     show g ∈ (fun x => d n * x) '' interior K0
     exact ⟨z⁻¹, Set.mem_inv.1 hz, by simp only; rw [← hzn, mul_inv_cancel_right]⟩
-  obtain ⟨A, hA⟩ : ∃ A : ℕ → G → ℝ≥0∞,
-      A = fun n g => ∫⁻ h, (U n).indicator 1 (g * (h : G)) ∂ν := ⟨_, rfl⟩
-  have hAm : ∀ n, Measurable (A n) := fun n => by
-    rw [hA]; exact measurable_avg ν (measurable_one.indicator (hUo n).measurableSet)
-  have hAinv : ∀ n g (k : H), A n (g * k) = A n g := fun n g k => by
-    rw [hA]; exact avg_mul_right ν _ g k
+  let A : ℕ → G → ℝ≥0∞ := fun n g => ∫⁻ h, (U n).indicator 1 (g * (h : G)) ∂ν
+  have hAm : ∀ n, Measurable (A n) :=
+    fun n => measurable_avg ν (measurable_one.indicator (hUo n).measurableSet)
+  have hAinv : ∀ n g (k : H), A n (g * k) = A n g :=
+    fun n g k => avg_mul_right ν _ g k
   have hAeq : ∀ n g, A n g = ν {h : H | g * (h : G) ∈ U n} := fun n g => by
     have hS : MeasurableSet {h : H | g * (h : G) ∈ U n} :=
       (continuous_const.mul continuous_subtype_val).measurable (hUo n).measurableSet
-    rw [← lintegral_indicator_one hS, hA]
+    rw [← lintegral_indicator_one hS]
     rfl
   have hApos : ∀ n g, g ∈ U n → 0 < A n g := fun n g hg => by
     rw [hAeq]
@@ -174,32 +170,31 @@ theorem stepBruhat : StepBruhat := by
     intro h hh
     exact hUK n hh
   have hex : ∀ g, ∃ n, 0 < A n g := fun g => (hcov g).imp fun n hn => hApos n g hn
-  obtain ⟨n₀, hn₀⟩ : ∃ n₀ : G → ℕ, n₀ = fun g => Nat.find (hex g) := ⟨_, rfl⟩
-  have hspec : ∀ g, 0 < A (n₀ g) g := fun g => by rw [hn₀]; exact Nat.find_spec (hex g)
-  have hmin : ∀ g m, 0 < A m g → n₀ g ≤ m := fun g m hm => by rw [hn₀]; exact Nat.find_min' _ hm
+  let n₀ : G → ℕ := fun g => Nat.find (hex g)
+  have hspec : ∀ g, 0 < A (n₀ g) g := fun g => Nat.find_spec (hex g)
+  have hmin : ∀ g m, 0 < A m g → n₀ g ≤ m := fun g m hm => Nat.find_min' _ hm
   have hn₀inv : ∀ g (k : H), n₀ (g * k) = n₀ g := fun g k =>
     le_antisymm (hmin _ _ (by rw [hAinv]; exact hspec g))
       (hmin _ _ (by rw [← hAinv _ g k]; exact hspec _))
-  have hn₀m : Measurable n₀ := by
-    rw [hn₀]
-    exact measurable_find hex fun k => measurableSet_lt measurable_const (hAm k)
-  obtain ⟨b, hb⟩ : ∃ b : G → ℝ≥0∞, b = fun g => (U (n₀ g)).indicator 1 g := ⟨_, rfl⟩
+  have hn₀m : Measurable n₀ :=
+    measurable_find hex fun k => measurableSet_lt measurable_const (hAm k)
+  let b : G → ℝ≥0∞ := fun g => (U (n₀ g)).indicator 1 g
   have hbm : Measurable b := by
     intro t ht
     have e : b ⁻¹' t = ⋃ n, (n₀ ⁻¹' {n}) ∩ ((U n).indicator (1 : G → ℝ≥0∞)) ⁻¹' t := by
       ext g
-      simp only [hb, Set.mem_preimage, Set.mem_iUnion, Set.mem_inter_iff, Set.mem_singleton_iff,
+      dsimp only [b]
+      simp only [Set.mem_preimage, Set.mem_iUnion, Set.mem_inter_iff, Set.mem_singleton_iff,
         exists_eq_left']
     rw [e]
     exact MeasurableSet.iUnion fun n => (hn₀m (measurableSet_singleton n)).inter
       ((measurable_one.indicator (hUo n).measurableSet) ht)
-  obtain ⟨a, ha⟩ : ∃ a : G → ℝ≥0∞, a = fun g => ∫⁻ h, b (g * (h : G)) ∂ν := ⟨_, rfl⟩
-  have ham : Measurable a := by rw [ha]; exact measurable_avg ν hbm
-  have hainv : ∀ g (k : H), a (g * k) = a g := fun g k => by rw [ha]; exact avg_mul_right ν b g k
+  let a : G → ℝ≥0∞ := fun g => ∫⁻ h, b (g * (h : G)) ∂ν
+  have ham : Measurable a := measurable_avg ν hbm
+  have hainv : ∀ g (k : H), a (g * k) = a g := fun g k => avg_mul_right ν b g k
   have haA : ∀ g, a g = A (n₀ g) g := fun g => by
-    rw [ha, hA]
     refine lintegral_congr fun h => ?_
-    rw [hb]
+    dsimp only [b]
     simp only [hn₀inv]
   have ha0 : ∀ g, a g ≠ 0 := fun g => by rw [haA]; exact (hspec g).ne'
   have hat : ∀ g, a g ≠ ⊤ := fun g => by rw [haA]; exact (hAfin _ g).ne
@@ -210,7 +205,7 @@ theorem stepBruhat : StepBruhat := by
       = ∫⁻ h, b (g * (h : G)) * (a g)⁻¹ ∂ν := by
         refine lintegral_congr fun h => ?_
         rw [hainv]
-    _ = a g * (a g)⁻¹ := by rw [lintegral_mul_const _ hbg, ha]
+    _ = a g * (a g)⁻¹ := lintegral_mul_const ((a g)⁻¹) hbg
     _ = 1 := ENNReal.mul_inv_cancel (ha0 g) (hat g)
 
 end PI.WeilQuotMeas.UnitaryGroupMassFormula

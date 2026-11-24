@@ -206,7 +206,7 @@ end ResidueCardinalityNilpotence
 section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 theorem _root_.GlobalTheory.Adopt.finCoefK_of_theta_inputs : _root_.GlobalTheory.FunPr.ThetaLocalInputs → FinCoefK := by
-  first | exact @_root_.ResidueCardinalityNilpotence.GlobalTheory.CompanionTheory.VolVal.finCoefK_alt | exact _root_.ResidueCardinalityNilpotence.GlobalTheory.CompanionTheory.VolVal.finCoefK_alt | (intros; apply _root_.ResidueCardinalityNilpotence.GlobalTheory.CompanionTheory.VolVal.finCoefK_alt <;> assumption)
+  first | exact @_root_.ResidueCardinalityNilpotence.GlobalTheory.CompanionTheory.VolVal.finCoefK_alt
 end
 end
 end -- clump:auto
@@ -278,7 +278,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 
 theorem _root_.GlobalTheory.T.finite_and_infinite_scalar_bounds : _root_.GlobalTheory.FunPr.ThetaLocalInputs → FinScalK ∧ InfScalK := by
-  first | exact @_root_.GlobalTheory.ScalAA.finScalK_and_infScalK_of_theta_inputs | exact _root_.GlobalTheory.ScalAA.finScalK_and_infScalK_of_theta_inputs | (intros; apply _root_.GlobalTheory.ScalAA.finScalK_and_infScalK_of_theta_inputs <;> assumption)
+  first | exact @_root_.GlobalTheory.ScalAA.finScalK_and_infScalK_of_theta_inputs
 end
 end -- clump:auto
 end -- clump:auto
@@ -629,7 +629,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 
 theorem _root_.GlobalTheory.T.sum_size_finite_top_term_integral : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → DictK → DepthK → FinTopK := by
-  first | exact @_root_.GlobalTheory.SumSize.TopInt.finite_top_term_integral_bound | exact _root_.GlobalTheory.SumSize.TopInt.finite_top_term_integral_bound | (intros; apply _root_.GlobalTheory.SumSize.TopInt.finite_top_term_integral_bound <;> assumption)
+  first | exact @_root_.GlobalTheory.SumSize.TopInt.finite_top_term_integral_bound
 end
 end -- clump:auto
 end -- clump:auto
@@ -1006,7 +1006,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 
 theorem _root_.GlobalTheory.T.gamma_factor_loss_at_finite_places : _root_.GlobalTheory.FunPr.ThetaLocalInputs → FinGamK := by
-  first | exact @_root_.GlobalTheory.GamLoss.finite_place_gamma_loss_bound | exact _root_.GlobalTheory.GamLoss.finite_place_gamma_loss_bound | (intros; apply _root_.GlobalTheory.GamLoss.finite_place_gamma_loss_bound <;> assumption)
+  first | exact @_root_.GlobalTheory.GamLoss.finite_place_gamma_loss_bound
 end
 end -- clump:auto
 end -- clump:auto
@@ -1066,7 +1066,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 
 theorem _root_.GlobalTheory.T.kernel_conjugation_mean_archimedean_top_term : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → DictK → DepthK → InfTopK := by
-  first | exact @_root_.GlobalTheory.KerConjMean.archimedean_top_term_kernel_conj_mean | exact _root_.GlobalTheory.KerConjMean.archimedean_top_term_kernel_conj_mean | (intros; apply _root_.GlobalTheory.KerConjMean.archimedean_top_term_kernel_conj_mean <;> assumption)
+  first | exact @_root_.GlobalTheory.KerConjMean.archimedean_top_term_kernel_conj_mean
 end
 end -- clump:auto
 end -- clump:auto
@@ -1475,7 +1475,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 
 theorem _root_.GlobalTheory.T.sum_size_bound_finite_places : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → DictK → DepthK → FinRowK := by
-  first | exact @_root_.GlobalTheory.SumSize.finite_place_sum_size_bound | exact _root_.GlobalTheory.SumSize.finite_place_sum_size_bound | (intros; apply _root_.GlobalTheory.SumSize.finite_place_sum_size_bound <;> assumption)
+  first | exact @_root_.GlobalTheory.SumSize.finite_place_sum_size_bound
 end
 end -- clump:auto
 end -- clump:auto
@@ -1502,7 +1502,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 
 theorem _root_.GlobalTheory.T.sum_size_dictionary : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → DictK := by
-  first | exact @_root_.GlobalTheory.SumSize.sum_size_dictionary_of_local_bounds | exact _root_.GlobalTheory.SumSize.sum_size_dictionary_of_local_bounds | (intros; apply _root_.GlobalTheory.SumSize.sum_size_dictionary_of_local_bounds <;> assumption)
+  first | exact @_root_.GlobalTheory.SumSize.sum_size_dictionary_of_local_bounds
 end
 end -- clump:auto
 end -- clump:auto
@@ -1546,7 +1546,7 @@ end TestFunctionNorms
 section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 theorem _root_.GlobalTheory.Adopt.test_vector_value_factorization : _root_.GlobalTheory.FunPr.ThetaLocalInputs → FinPsiK ∧ InfPsiK := by
-  first | exact @_root_.TestFunctionNorms.GlobalTheory.CompanionTheory.TestVal.test_value_psi_finite_infinite | exact _root_.TestFunctionNorms.GlobalTheory.CompanionTheory.TestVal.test_value_psi_finite_infinite | (intros; apply _root_.TestFunctionNorms.GlobalTheory.CompanionTheory.TestVal.test_value_psi_finite_infinite <;> assumption)
+  first | exact @_root_.TestFunctionNorms.GlobalTheory.CompanionTheory.TestVal.test_value_psi_finite_infinite
 end
 end
 end -- clump:auto
@@ -1605,7 +1605,7 @@ end TwistAwayFromPlace
 section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 theorem _root_.GlobalTheory.Adopt.twisted_local_factor_away_from_level : _root_.GlobalTheory.FunPr.ThetaLocalInputs → AwayK := by
-  first | exact @_root_.TwistAwayFromPlace.GlobalTheory.CompanionTheory.Twist.twist_trivial_away_from_level | exact _root_.TwistAwayFromPlace.GlobalTheory.CompanionTheory.Twist.twist_trivial_away_from_level | (intros; apply _root_.TwistAwayFromPlace.GlobalTheory.CompanionTheory.Twist.twist_trivial_away_from_level <;> assumption)
+  first | exact @_root_.TwistAwayFromPlace.GlobalTheory.CompanionTheory.Twist.twist_trivial_away_from_level
 end
 end
 end -- clump:auto
@@ -1644,7 +1644,7 @@ end
 section
 
 theorem _root_.GlobalTheory.T.sum_size_bound_all_places : _root_.GlobalTheory.FunPr.ThetaLocalInputs → GlobalTheory.SumSize.FinK ∧ GlobalTheory.SumSize.AwayK ∧ GlobalTheory.SumSize.InfK := by
-  first | exact @_root_.GlobalTheory.SumSize.Join.sum_size_finite_away_archimedean_combined | exact _root_.GlobalTheory.SumSize.Join.sum_size_finite_away_archimedean_combined | (intros; apply _root_.GlobalTheory.SumSize.Join.sum_size_finite_away_archimedean_combined <;> assumption)
+  first | exact @_root_.GlobalTheory.SumSize.Join.sum_size_finite_away_archimedean_combined
 end
 end -- clump:auto
 end -- clump:auto

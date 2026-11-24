@@ -103,18 +103,15 @@ theorem tate_weight_graded : ∀ {C σ Γ : Type} [Field C] [Group Γ] [MulSemir
   · subst h0; intro d; rw [Finsupp.filter_zero]; exact J.zero_mem
   obtain ⟨m0, hm0⟩ := Finsupp.support_nonempty_iff.mpr h0
   have hc : φ m0 ≠ 0 := Finsupp.mem_support_iff.mp hm0
-  set c := φ m0 with hcdef
-  set φ0 : σ →₀ C := c⁻¹ • φ with hφ0def
+  set φ0 : σ →₀ C := (φ m0)⁻¹ • φ with hφ0def
   have hφ0 : φ0 ∈ J := J.smul_mem _ hφ
   have hsupp0 : φ0.support = φ.support := Finsupp.support_smul_eq (inv_ne_zero hc)
-  have h1 : φ0 m0 = 1 := by
-    simp only [φ0, Finsupp.smul_apply, smul_eq_mul]; exact inv_mul_cancel₀ hc
-  have hφeq : φ = c • φ0 := by
-    simp only [φ0, smul_smul, mul_inv_cancel₀ hc, one_smul]
+  have h1 : φ0 m0 = 1 := by simp [φ0, hc]
+  have hφeq : φ = φ m0 • φ0 := by simp [φ0, hc]
   suffices H0 : ∀ d : ℤ, φ0.filter (fun m => w m = d) ∈ J by
     intro d; rw [hφeq, Finsupp.filter_smul]; exact J.smul_mem _ (H0 d)
   have hcard : φ0.support.card = n := by rw [hsupp0, hn]
-  have hm0' : m0 ∈ φ0.support := by rw [Finsupp.mem_support_iff, h1]; exact one_ne_zero
+  have hm0' : m0 ∈ φ0.support := by simp [Finsupp.mem_support_iff, h1]
   have hψ : ∀ g : Γ, ∃ ψ ∈ J, ∀ m, ψ m =
       ((χ g ^ (-w m0) : Cˣ) : C) * (((χ g ^ w m : Cˣ) : C) * (g • φ0 m)) - φ0 m := by
     intro g
@@ -127,7 +124,7 @@ theorem tate_weight_graded : ∀ {C σ Γ : Type} [Field C] [Group Γ] [MulSemir
     rw [hψm, h1, smul_one, mul_one, ← Units.val_mul, ← zpow_add, neg_add_cancel, zpow_zero,
       Units.val_one, sub_self]
   have hψ0 : ∀ g m, φ0 m = 0 → ψ g m = 0 := by
-    intro g m h; rw [hψm, h, smul_zero, mul_zero, mul_zero, sub_zero]
+    intro g m h; simp [hψm, h]
   have hψsupp : ∀ g, (ψ g).support ⊆ φ0.support.erase m0 := by
     intro g m hm
     rw [Finset.mem_erase, Finsupp.mem_support_iff]
@@ -140,8 +137,7 @@ theorem tate_weight_graded : ∀ {C σ Γ : Type} [Field C] [Group Γ] [MulSemir
   · have hw : ∀ m, φ0 m ≠ 0 → w m = w m0 := by
       intro m hm
       by_contra hne
-      apply hm
-      refine hT (w m0 - w m) (sub_ne_zero.mpr (Ne.symm hne)) (φ0 m) (fun g => ?_)
+      refine hm (hT (w m0 - w m) (sub_ne_zero.mpr (Ne.symm hne)) (φ0 m) (fun g => ?_))
       have e := hψm g m
       rw [hall g, Finsupp.zero_apply, eq_comm, sub_eq_zero] at e
       have hex : w m0 - w m + -w m0 + w m = 0 := by ring
@@ -154,7 +150,7 @@ theorem tate_weight_graded : ∀ {C σ Γ : Type} [Field C] [Group Γ] [MulSemir
     · rw [(Finsupp.filter_eq_zero_iff _ _).mpr (fun m hm => by
         by_contra h; exact hd ((hw m h).symm.trans hm))]
       exact J.zero_mem
-  · push_neg at hall
+  · push Not at hall
     obtain ⟨g, hg⟩ := hall
     obtain ⟨m1, hm1⟩ := Finsupp.support_nonempty_iff.mpr hg
     have hm1' := Finset.mem_of_mem_erase (hψsupp g hm1)
@@ -562,7 +558,7 @@ theorem eval₂_dual {R K σ : Type} [CommRing R] [Field K] [Fintype σ] (φ : R
   classical
   induction f using MvPolynomial.induction_on
   next a =>
-    simp [MvPolynomial.eval₂_C, MvPolynomial.pderiv_C]
+    simp [MvPolynomial.eval₂_C]
   next p q hp hq =>
     simp only [MvPolynomial.eval₂_add, hp, hq, map_add (f := _), add_mul, Finset.sum_add_distrib]
     ring
@@ -576,7 +572,7 @@ theorem eval₂_dual {R K σ : Type} [CommRing R] [Field K] [Fintype σ] (φ : R
       · subst h
         simp [MvPolynomial.eval₂_add, MvPolynomial.eval₂_mul, MvPolynomial.eval₂_X]
         try ring
-      · simp [MvPolynomial.eval₂_add, MvPolynomial.eval₂_mul, MvPolynomial.eval₂_X, Pi.single_apply, h, Ne.symm h]
+      · simp [MvPolynomial.eval₂_mul, MvPolynomial.eval₂_X, h, Ne.symm h]
         try ring
     rw [MvPolynomial.eval₂_mul, hp, Finset.sum_congr rfl fun i _ => hterm i, Finset.sum_add_distrib,
       ← Finset.mul_sum, Finset.sum_ite_eq']

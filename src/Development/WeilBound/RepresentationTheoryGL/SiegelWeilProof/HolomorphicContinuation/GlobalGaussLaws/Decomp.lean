@@ -68,8 +68,8 @@ variable {n : ℕ}
 theorem jj_mul_jj : JJ n * JJ n = -1 := by
   unfold JJ
   rw [fromBlocks_multiply]
-  simp only [Matrix.mul_zero, Matrix.zero_mul, Matrix.mul_one, Matrix.one_mul, Matrix.mul_neg,
-    Matrix.neg_mul, add_zero, zero_add, neg_zero]
+  simp only [Matrix.mul_zero, Matrix.mul_one, Matrix.mul_neg,
+    add_zero, zero_add, neg_zero]
   rw [← fromBlocks_one, fromBlocks_neg]
   simp
 
@@ -91,7 +91,7 @@ theorem inG_blocks {A B C D : Matrix (Fin n) (Fin n) ℂ} (h : InG (fromBlocks A
   unfold InG JJ at h
   rw [fromBlocks_conjTranspose, fromBlocks_multiply, fromBlocks_multiply, fromBlocks_inj] at h
   obtain ⟨h1, h2, -, h4⟩ := h
-  simp only [Matrix.mul_zero, Matrix.zero_mul, Matrix.mul_one, Matrix.one_mul, Matrix.mul_neg,
+  simp only [Matrix.mul_zero, Matrix.mul_one, Matrix.mul_neg,
     Matrix.neg_mul, add_zero, zero_add] at h1 h2 h4
   refine ⟨?_, ?_, ?_⟩
   · rw [← sub_eq_zero, ← h1]
@@ -148,7 +148,7 @@ theorem det_sub_I_smul_ne_zero {A B C D : Matrix (Fin n) (Fin n) ℂ} (h : InG (
     exact neg_add_eq_zero.1 h1
   have hM : (A - Complex.I • C)ᴴ * (A - Complex.I • C) = Aᴴ * A + Cᴴ * C := by
     simp only [conjTranspose_sub, conjTranspose_smul, Complex.star_def, Complex.conj_I,
-      sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm, smul_smul, hrel]
+      sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm, hrel]
     match_scalars <;> ring_nf <;> simp [Complex.I_sq]
   intro hdet
   obtain ⟨v, hv0, hv⟩ := exists_mulVec_eq_zero_iff.2 hdet
@@ -240,10 +240,10 @@ theorem inG_mM {a : Matrix (Fin n) (Fin n) ℂ} (ha : IsUnit a.det) : InG (mM a)
   simp [conjTranspose_nonsing_inv, mul_nonsing_inv _ hu, nonsing_inv_mul _ ha]
 
 theorem det_nU (b : Matrix (Fin n) (Fin n) ℂ) : (nU b).det = 1 := by
-  simp [nU, det_fromBlocks_zero₂₁]
+  simp [nU]
 
 theorem det_nbar (c : Matrix (Fin n) (Fin n) ℂ) : (nbar c).det = 1 := by
-  simp [nbar, det_fromBlocks_zero₁₂]
+  simp [nbar]
 
 theorem isUnit_det_mM {a : Matrix (Fin n) (Fin n) ℂ} (ha : IsUnit a.det) : IsUnit (mM a).det := by
   have hu : IsUnit aᴴ.det := by

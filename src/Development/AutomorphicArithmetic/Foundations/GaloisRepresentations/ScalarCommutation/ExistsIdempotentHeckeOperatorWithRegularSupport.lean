@@ -776,13 +776,13 @@ theorem UpperTheory.exists_levelSubgroup_central_scalar_of_pos :
   have hmat : (mat (rat y)).val = ((c : FiniteAdeleRing (𝓞 E) E)) • (1 : Matrix (Fin n) (Fin n) (FiniteAdeleRing (𝓞 E) E)) := by
     show ((c : E) • (1 : Matrix (Fin n) (Fin n) E)).map (algebraMap E (FiniteAdeleRing (𝓞 E) E)) = _
     ext i k
-    by_cases hik : i = k <;> simp [hik, Matrix.one_apply]
+    by_cases hik : i = k <;> simp [hik]
   have hcomp : ∀ w : Plc E, (comp w (rat y)).val = (c : w.adicCompletion E) • (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)) := by
     intro w
     show ((mat (rat y)).val).map (pLoc E w) = _
     rw [hmat]
     ext i k
-    by_cases hik : i = k <;> simp [hik, Matrix.one_apply]
+    by_cases hik : i = k <;> simp [hik]
   have hcen : ∀ g : GUf E n, rat y * g = g * rat y := by
     intro g
     refine Subtype.ext (Prod.ext (Units.ext ?_) (mul_comm _ _))
@@ -1201,7 +1201,6 @@ private theorem cen_ex {E : Type} [Field E] [NumberField E] [IsCMField E] {A : A
       (∀ w : Plc E, (comp w d).val = (c : w.adicCompletion E) • (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E))) ∧
       ∀ v, S.L.actG (F.j d) v = c • v := by
   first
-    | exact UpperTheory.exists_levelSubgroup_central_scalar_of_pos E A n p S F c hc
     | (obtain ⟨y, -, -, h1, -, h2, h3⟩ := UpperTheory.exists_levelSubgroup_central_scalar_of_pos E A n p S F c hc; exact ⟨_, h2, h1, h3⟩)
 
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField

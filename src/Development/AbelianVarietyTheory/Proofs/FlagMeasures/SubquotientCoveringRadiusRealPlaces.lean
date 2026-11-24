@@ -288,11 +288,7 @@ theorem exists_smul_mem {K : Type} [Field K] [NumberField K] {b : ℕ}
     (B : Submodule (𝓞 K) (Fin b → K)) (hBs : Submodule.span K (B : Set (Fin b → K)) = ⊤)
     (v : Fin b → K) : ∃ d : 𝓞 K, d ≠ 0 ∧ d • v ∈ B := by
   first
-  | exact @_root_.GlobalTheory.FiniteSumFlagMeasures.main
-  | exact _root_.GlobalTheory.FiniteSumFlagMeasures.main
   | (apply _root_.GlobalTheory.FiniteSumFlagMeasures.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.FiniteSumFlagMeasures.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.FiniteSumFlagMeasures.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.FiniteSumFlagMeasures.main ..)
 
 theorem homLat_span {K : Type} [Field K] [NumberField K] {a b : ℕ}
@@ -1293,7 +1289,6 @@ theorem subquot_frame : ∀ (I : AutInst) (x : I.GA) (A S R : Submodule (𝓞 I.
       intro v
       have hu : uMat (x.1 v)⁻¹ = (uMat (x.1 v))⁻¹ := by
         first
-          | rfl
           | simp only [Formalism.MainNotions.S.uMat, Subgroup.coe_inv, Matrix.coe_units_inv]
       rw [hu, inv_mul_inv_mul_conj_mul_mul_eq_self _ _ _ (hPu v) (hUu v), hs_map_of_norm_preserving _ (hσn _)]
     have hsum : ∑ v, Formalism.REAL.hs (D' (wv v)) = ∑ w, Formalism.REAL.hs (D' w) :=

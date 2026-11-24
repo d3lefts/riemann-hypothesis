@@ -577,7 +577,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim GlobalTheory.ArchTens
 
 theorem _root_.GlobalTheory.T.archimedean_tensor_factor_unfolding : _root_.GlobalTheory.FunPr.ThetaLocalInputs → BigC fun _ ch C _ => FlipAt ch (C / 2) → DatAt ch C := by
-  first | exact @_root_.GlobalTheory.ArchTens.Unfold.archimedean_tensor_unfold_datum | exact _root_.GlobalTheory.ArchTens.Unfold.archimedean_tensor_unfold_datum | (intros; apply _root_.GlobalTheory.ArchTens.Unfold.archimedean_tensor_unfold_datum <;> assumption)
+  first | exact @_root_.GlobalTheory.ArchTens.Unfold.archimedean_tensor_unfold_datum
 end
 end -- clump:auto
 end -- clump:auto
@@ -736,7 +736,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim GlobalTheory.ArchTens
 
 theorem _root_.GlobalTheory.T.archimedean_tensor_volume_bound : _root_.GlobalTheory.FunPr.ThetaLocalInputs → BigC fun _ ch C _ => CoefAt ch C := by
-  first | exact @_root_.GlobalTheory.ArchTens.VolSize.archimedean_tensor_volume_coefficient | exact _root_.GlobalTheory.ArchTens.VolSize.archimedean_tensor_volume_coefficient | (intros; apply _root_.GlobalTheory.ArchTens.VolSize.archimedean_tensor_volume_coefficient <;> assumption)
+  first | exact @_root_.GlobalTheory.ArchTens.VolSize.archimedean_tensor_volume_coefficient
 end
 end -- clump:auto
 end -- clump:auto
@@ -784,7 +784,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 
 theorem _root_.GlobalTheory.T.sum_size_archimedean_tensor_bound : _root_.GlobalTheory.FunPr.ThetaLocalInputs → InfTensK := by
-  first | exact @_root_.GlobalTheory.SumSize.archimedean_tensor_size_bound_of_local | exact _root_.GlobalTheory.SumSize.archimedean_tensor_size_bound_of_local | (intros; apply _root_.GlobalTheory.SumSize.archimedean_tensor_size_bound_of_local <;> assumption)
+  first | exact @_root_.GlobalTheory.SumSize.archimedean_tensor_size_bound_of_local
 end
 end -- clump:auto
 end -- clump:auto

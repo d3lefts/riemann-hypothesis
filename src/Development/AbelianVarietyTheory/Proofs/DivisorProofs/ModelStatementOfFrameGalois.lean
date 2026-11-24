@@ -548,7 +548,7 @@ theorem coeff_heckePolyOf {L : Type} [Field L] (n q : ℕ) (a : ℕ → L) (j : 
       if j ≤ n then (-1) ^ j * (q : L) ^ (j * (j - 1) / 2) * a j else 0 := by
   simp only [Formalism.L2.Col.heckePolyOf, finsetSum_coeff, coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq]
-  simp [Finset.mem_range, Nat.lt_succ_iff]
+  simp [Finset.mem_range]
 
 theorem coeff_sub_eq_reverse {K : Type} [Field K] {p q : K[X]} {n : ℕ} (hp : p.natDegree = n)
     (hq : q.natDegree = n) (k : ℕ) (hk : k ≤ n) :
@@ -1000,7 +1000,7 @@ theorem capDet_intertwine {R S M M' : Type*} [CommRing R] [CommRing S] [AddCommG
   refine ofFn_intertwine ψ _ _ (fun k y => ?_) x
   simp only [Formalism.BranchingDeterminantCap.bmF, LinearMap.sub_apply, map_sub, h]
   split_ifs
-  · simp [Module.End.intCast_apply, map_zsmul]
+  · simp [map_zsmul]
   · simp
 
 theorem capDet_dualWeyl_domain (O : Type) [CommRing O] [IsDomain O] [CharZero O] (N : ℕ) (ν : Fin N → ℕ)
@@ -1210,7 +1210,7 @@ theorem comp_of_rowZ {O : Type} [CommRing O] {N : ℕ} (H : Fin N → ℤ) (h : 
 theorem eq_zero_of_rowZ_neg {O : Type} [CommRing O] {N : ℕ} (H : Fin N → ℤ) (h : MvPolynomial (Fin N × Fin N) O)
     (hh : IsWeightedHomogeneous (GlobalTheory.LvT.KerLat.rowZ N N) h H) (c : Fin N) (hc : H c < 0) : h = 0 := by
   ext d
-  simp only [AddMonoidAlgebra.coeff_zero, Pi.zero_apply]
+  simp only [AddMonoidAlgebra.coeff_zero]
   by_contra hd
   have e := congrFun (hh hd) c
   rw [GlobalTheory.LvT.KerLat.weight_rowZ] at e
@@ -1274,7 +1274,7 @@ theorem comp_rowAct_transvection {O : Type} [CommRing O] {N : ℕ} (a b : Fin N)
     · rw [if_neg hk1, if_neg]
       intro he
       have := congrFun he a
-      simp [Pi.single_apply, hab] at this
+      simp [hab] at this
       omega
   rw [Finset.sum_congr rfl hk, Finset.sum_ite_eq', if_pos (by simp)]
 
@@ -1301,7 +1301,7 @@ theorem polar_formula : ∀ (O : Type) [CommRing O] (N : ℕ) (ι : Type) [Finty
       fun w => hP τ w x (cmp w) rfl
 
     simp only [evalE, map_sum, map_smul, FreeAlgebra.lift_ι_apply, Sum.elim_inr, LinearMap.sum_apply,
-    Finset.sum_apply, LinearMap.smul_apply, hPx]
+    LinearMap.smul_apply, hPx]
     have hsum : (∑ w ∈ Fintype.piFinset (fun _ : Fin N => Finset.range (M + 1)),
         (w a : O) • PiTensorProduct.tprod O (Function.update x τ (cmp w))) =
         ∑ w ∈ Fintype.piFinset (fun _ : Fin N => Finset.range (M + 1)),
@@ -1349,10 +1349,10 @@ theorem polar_formula : ∀ (O : Type) [CommRing O] (N : ℕ) (ι : Type) [Finty
       funext σ
       by_cases hσ : σ = τ
       · subst hσ; simp [g]
-      · simp [g, hσ, Pi.mulSingle_eq_of_ne hσ]
+      · simp [g, hσ]
 
     simp only [evalE, map_sum, map_mul, FreeAlgebra.lift_ι_apply, Sum.elim_inr, Sum.elim_inl, LinearMap.sum_apply,
-    Finset.sum_apply, Module.End.mul_apply, hPz, hg, Function.update_self, Function.update_idem]
+    Module.End.mul_apply, hPz, hg, Function.update_self, Function.update_idem]
     rw [← MultilinearMap.map_update_sum]
     congr 2
     apply Subtype.ext

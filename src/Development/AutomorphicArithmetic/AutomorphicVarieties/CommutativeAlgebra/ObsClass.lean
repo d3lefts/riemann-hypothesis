@@ -601,7 +601,7 @@ private theorem square_zero_extension_ring (O R S X : Type) [CommRing O] [IsLoca
     rw [Finset.sum_eq_single ⟨e, he⟩]
     · simp
     · intro b _ hb
-      simp [Pi.single_apply, hb]
+      simp [hb]
     · simp
 
 private theorem ker_span (O X R R' : Type) [CommRing O] [IsLocalRing O] [IsNoetherianRing O]
@@ -998,7 +998,7 @@ private theorem exists_grpTop (Γ : Type) [Group Γ] (T : TopologicalSpace Γ) :
     refine @lc_of_fib Γ _ _ T' _ _ (hρT' K') ?_
     intro x y hxy
     have := congrArg (fun e : Equiv.Perm (Γ ⧸ K) => e ((1 : Γ) : Γ ⧸ K)) hxy
-    simp only [ρ, K', MulAction.toPermHom_apply, MulAction.toPerm_apply, MulAction.Quotient.smul_coe, mul_one] at this
+    simp only [ρ, K', MulAction.toPermHom_apply, MulAction.toPerm_apply, MulAction.Quotient.smul_coe] at this
     rw [smul_eq_mul, smul_eq_mul, mul_one, mul_one] at this
     exact (hK x y).1 this
   · intro hφ

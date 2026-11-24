@@ -141,8 +141,6 @@ theorem mk_mem_connectedComponent_iff {art : Ideles K →* GlobalTheory.HeckeGal
         rw [map_inv, mul_inv_rev]
         first
           | exact (inv_mul_cancel_comm _ _).symm
-          | (rw [mul_comm, mul_inv_cancel_left])
-          | simp [mul_comm, mul_assoc]
       show _ ∈ connectedComponent 1
       rw [e]
       have hg : Continuous (fun c : (InfiniteAdeleRing K)ˣ =>
@@ -210,8 +208,6 @@ theorem restrict_eq_one : ∀ {K : Type} [Field K] [NumberField K] {Ω : Type} [
     have : ((algebraMap (𝓞 K) (𝓞 L) x : L) : AlgebraicClosure K) = algebraMap K (AlgebraicClosure K) (x : K) := by
       first
         | rfl
-        | (rw [RingOfIntegers.algebraMap_coe]; rfl)
-        | simp [IsScalarTower.algebraMap_apply K L (AlgebraicClosure K)]
     rw [this, AlgEquiv.commutes]
   have hram : Q.ramificationIdx (𝓞 K) = 1 := hv Q hQp hQo
   have hcard : Nat.card (Q.inertia (L ≃ₐ[K] L)) = 1 := by
@@ -228,7 +224,7 @@ theorem restrict_eq_one : ∀ {K : Type} [Field K] [NumberField K] {Ω : Type} [
         = e (σ (e.symm ((y : L) : AlgebraicClosure K))) - ((y : L) : AlgebraicClosure K) := by
       have h3 : ((AlgEquiv.restrictNormalHom L ((e.symm.trans σ).trans e) • y : 𝓞 L) : L) =
           AlgEquiv.restrictNormalHom L ((e.symm.trans σ).trans e) (y : L) := rfl
-      simp only [map_sub, h3, AlgEquiv.restrictNormalHom_apply]
+      simp only [map_sub, h3]
       have h4 := AlgEquiv.restrictNormalHom_apply L ((e.symm.trans σ).trans e) (y : L)
       rw [AddSubgroupClass.coe_sub, h4]
       rfl
@@ -469,7 +465,7 @@ open NumberField IsDedekindDomain GlobalTheory.CMVal GlobalTheory.LatVal Neutral
 open scoped nonZeroDivisors
 
 theorem _root_.GlobalTheory.T.isUniformiserAt_iff_adicCompletion_isUnifAt : ∀ {K : Type} [Field K] [NumberField K] (v : HeightOneSpectrum (𝓞 K)) (x : (v.adicCompletion K)ˣ), IsUniformiserAt K v (x : v.adicCompletion K) ↔ Formalism.L2.Host.IsUnifAt v x := by
-  first | exact @GlobalTheory.UnifVal.isUniformiserAt_iff_isUnifAt | exact GlobalTheory.UnifVal.isUniformiserAt_iff_isUnifAt | (intros; apply GlobalTheory.UnifVal.isUniformiserAt_iff_isUnifAt <;> assumption)
+  first | exact @GlobalTheory.UnifVal.isUniformiserAt_iff_isUnifAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsUniformiserAtIffAdicCompletionIsUnifAtStatement =====

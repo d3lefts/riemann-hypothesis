@@ -136,7 +136,7 @@ theorem eq_sum_gen {ε : Fin n → Bool} {Z : Matrix (Fin n) (Fin n) ℂ} (hZ : 
   rcases lt_trichotomy i j with h | rfl | h
   · rw [Fintype.sum_eq_add (i, j) (j, i) (by simp [h.ne])
       (fun q hq => by rw [gen_apply_zero ε q i j hq.1 hq.2, mul_zero])]
-    simp [coord, gen, h, h.ne, h.ne', not_lt.mpr h.le, Matrix.single_apply]
+    simp [coord, gen, h, h.ne, h.ne', not_lt.mpr h.le]
   · rw [Fintype.sum_eq_single (i, i) (fun q hq => by rw [gen_apply_zero ε q i i hq hq, mul_zero])]
     have he := entry_of_inG hZ i i
     simp only [sg, if_true] at he
@@ -144,12 +144,12 @@ theorem eq_sum_gen {ε : Fin n → Bool} {Z : Matrix (Fin n) (Fin n) ℂ} (hZ : 
       have h2 := congrArg Complex.re he
       simp at h2
       linarith
-    simp [coord, gen, Matrix.single_apply]
+    simp [coord, gen]
     try (apply Complex.ext <;> simp [hre])
   · rw [Fintype.sum_eq_add (i, j) (j, i) (by simp [h.ne'])
       (fun q hq => by rw [gen_apply_zero ε q i j hq.1 hq.2, mul_zero])]
     rw [entry_of_inG hZ i j]
-    simp [coord, gen, h, h.ne, h.ne', not_lt.mpr h.le, Matrix.single_apply, sg_swap]
+    simp [coord, gen, h, h.ne, h.ne', not_lt.mpr h.le, sg_swap]
     try (apply Complex.ext <;> simp <;> ring)
 
 theorem inG_of_log {ε : Fin n → Bool} (e : OpenPartialHomeomorph (Matrix (Fin n) (Fin n) ℂ) (Matrix (Fin n) (Fin n) ℂ))
@@ -485,7 +485,7 @@ theorem kavg_fix_isoK {σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} (hσ
     refine sSup_le ?_
     rintro T ⟨Θ, hΘ, rfl⟩
     rintro x ⟨s, rfl⟩
-    simp [LinearMap.mem_ker, sub_eq_zero, kavg_fix_range hσ hst he hfix Θ hΘ s]
+    simp [LinearMap.mem_ker, kavg_fix_range hσ hst he hfix Θ hΘ s]
   have h := hle hv
   simpa [LinearMap.mem_ker, sub_eq_zero] using h
 
@@ -602,10 +602,8 @@ theorem norm_sq_sum_orth {ι : Type*} [DecidableEq ι] (s : Finset ι) (x : ι �
     rw [inner_sum]
     exact Finset.sum_eq_zero fun i hi => h a (Finset.mem_insert_self _ _) i (Finset.mem_insert_of_mem hi)
       (fun e => ha (by rw [e]; exact hi))
-  have h2 := norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero _ _ h0
   rw [← ih (fun i hi j hj => h i (Finset.mem_insert_of_mem hi) j (Finset.mem_insert_of_mem hj))]
-  simp only [sq]
-  exact h2
+  simpa only [sq] using norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero _ _ h0
 
 end Orth
 
@@ -937,11 +935,11 @@ theorem sum_eq (hC : Calc ε σ D) {c : ℝ} (hc : ∀ v ∈ D, Cas ε σ v = (c
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [inner_smul_left, hC.skew _ (hgen p) _ (hC.mem _ (hgen p) v hv) v hv,
       inner_self_eq_norm_sq_to_K]
-    apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring
+    apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im]
   have h2 : ((c * ‖v‖ ^ 2 : ℝ) : ℂ) =
       ((∑ p, wt p * sg ε p * ‖dS σ (gen ε p) v‖ ^ 2 : ℝ) : ℂ) := by
     rw [Complex.ofReal_sum, ← key, hc v hv, inner_smul_left, inner_self_eq_norm_sq_to_K]
-    apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring
+    apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im]
   exact (Complex.ofReal_inj.1 h2).symm
 
 end GeneratorWeights

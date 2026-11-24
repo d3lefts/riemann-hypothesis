@@ -473,10 +473,6 @@ theorem lieEigen_rank_cover : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Ty
       u ∈ ⨆ i, eigSp (ρ.comp (algebraMap (𝓞 D.F) D.O)) (τ i) := by
   first
   | exact @_root_.GlobalTheory.LieEigenspaceFinrank.lie_type_of_unif
-  | exact _root_.GlobalTheory.LieEigenspaceFinrank.lie_type_of_unif
-  | (apply _root_.GlobalTheory.LieEigenspaceFinrank.lie_type_of_unif <;> assumption)
-  | (intros; apply _root_.GlobalTheory.LieEigenspaceFinrank.lie_type_of_unif <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.LieEigenspaceFinrank.lie_type_of_unif <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.LieEigenspaceFinrank.lie_type_of_unif ..)
 
 end GlobalTheory.UPel.HT.LieType
@@ -496,7 +492,7 @@ open scoped Matrix
 open GlobalTheory.UPel.HT GlobalTheory.UPel.HT.LieType
 
 theorem _root_.GlobalTheory.T.eigenspace_dimension_of_uniformization : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [CommRing R] (b : Base D R) (N : ℕ) (σ : R →+* ℂ) (ρ : D.O →+* Matrix (Fin D.g) (Fin D.g) ℂ) (o : Obj b N (spMap σ)) h hL (D' : PLat D.O D.inv) t Q e, UnifAt (o.fam h hL) σ ρ N D' t Q (𝟙 _) e → ∀ τ : Fin D.a → (D.F →+* ℂ), (∀ i (c : 𝓞 D.F), τ i (c : D.F) = σ (b.t i c)) → (∀ i, Module.finrank ℂ (eigSp (ρ.comp (algebraMap (𝓞 D.F) D.O)) (τ i)) = D.m) ∧ ∀ u : Fin D.g → ℂ, ρ (algebraMap (𝓞 D.F) D.O D.ω) *ᵥ u = σ b.ρ • u → u ∈ ⨆ i, eigSp (ρ.comp (algebraMap (𝓞 D.F) D.O)) (τ i) := by
-  first | exact @GlobalTheory.UPel.HT.LieType.lieEigen_rank_cover | exact GlobalTheory.UPel.HT.LieType.lieEigen_rank_cover | (intros; apply GlobalTheory.UPel.HT.LieType.lieEigen_rank_cover <;> assumption)
+  first | exact @GlobalTheory.UPel.HT.LieType.lieEigen_rank_cover
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenspaceDimensionOfUniformizationStatement =====
@@ -573,7 +569,7 @@ theorem exists_ext (F : Type) [Field F] [NumberField F] (τ : 𝓞 F →+* ℂ) 
     apply hI
     rw [eq_bot_iff]
     intro n hn
-    simp only [Ideal.mem_comap, RingHom.mem_ker, map_intCast] at hn
+    simp only [Ideal.mem_comap, RingHom.mem_ker] at hn
     simpa using hn
   refine ⟨IsFractionRing.lift hinj, fun c => ?_⟩
   exact IsFractionRing.lift_algebraMap hinj c
@@ -736,7 +732,7 @@ open scoped Matrix
 open GlobalTheory.UPel.HT
 
 theorem _root_.GlobalTheory.T.lieCondition_uniformisingSpace_isType : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [CommRing R] (b : Base D R) (N : ℕ) (σ : R →+* ℂ) (ρ : D.O →+* Matrix (Fin D.g) (Fin D.g) ℂ) (o : Obj b N (spMap σ)) h hL (D' : PLat D.O D.inv) t Q e, UnifAt (o.fam h hL) σ ρ N D' t Q (𝟙 _) e → b.IsType σ ρ := by
-  first | exact @GlobalTheory.UPel.HT.LieType.lie_isType | exact GlobalTheory.UPel.HT.LieType.lie_isType | (intros; apply GlobalTheory.UPel.HT.LieType.lie_isType <;> assumption)
+  first | exact @GlobalTheory.UPel.HT.LieType.lie_isType
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LieConditionUniformisingSpaceIsTypeStatement =====
@@ -805,7 +801,7 @@ theorem bigPhi_algebraMap (D : Datum p) (κ : ℤ_[p] →+* ℂ)
   show (evalTensor D.F κ τ).mapMatrix (e (algebraMap (𝓞 D.F) (D.O ⊗[ℤ] ℤ_[p]) c)) = _
   rw [e.commutes c, Matrix.algebraMap_eq_diagonal]
   ext i j
-  simp [Matrix.diagonal_apply, Matrix.scalar_apply, Algebra.TensorProduct.algebraMap_apply, evalTensor_tmul]
+  simp [Matrix.diagonal_apply, Matrix.scalar_apply, Algebra.TensorProduct.algebraMap_apply]
   split_ifs <;> simp [evalTensor_tmul]
 
 theorem tmul_one_comm {A : Type} [Ring A] (z : ℤ_[p]) (a : A ⊗[ℤ] ℤ_[p]) :
@@ -982,14 +978,14 @@ lemma piMatUnit_mul {I : Type} [DecidableEq I] (m : ℕ) (τ τ' : I) (i j k l :
     · subst h2
       by_cases h3 : ρ = τ
       · subst h3; simp [Matrix.single_mul_single_same]
-      · simp [Pi.single_apply, h3]
+      · simp [h3]
     · by_cases h3 : ρ = τ
       · subst h3; simp [Matrix.single_mul_single_of_ne, h2]
-      · simp [Pi.single_apply, h3, h2]
+      · simp [h3, h2]
   · by_cases h3 : ρ = τ
     · subst h3
       have : ρ ≠ τ' := h1
-      simp [Pi.single_apply, this, h1]
+      simp [this]
     · simp [Pi.single_apply, h3, h1]
 
 lemma piMatUnit_decomp {I : Type} [Fintype I] [DecidableEq I] (m : ℕ)
@@ -1001,7 +997,7 @@ lemma piMatUnit_decomp {I : Type} [Fintype I] [DecidableEq I] (m : ℕ)
     Pi.single_apply]
   simp only [show ∀ (c : Prop) [Decidable c] (M : Matrix (Fin m) (Fin m) ℂ),
       (if c then M else 0) a b = if c then M a b else 0 from fun c _ M => by split_ifs <;> rfl]
-  simp [Matrix.zero_apply, Matrix.single_apply, mul_ite, ite_and, Finset.sum_ite_eq,
+  simp [Matrix.single_apply, mul_ite, ite_and, Finset.sum_ite_eq,
     Finset.sum_ite_eq']
 
 lemma sum_piMatUnit_diag {I : Type} [Fintype I] [DecidableEq I] (m : ℕ) (τ : I) :
@@ -1015,17 +1011,13 @@ lemma sum_piMatUnit_diag {I : Type} [Fintype I] [DecidableEq I] (m : ℕ) (τ : 
     rcases eq_or_ne a b with rfl | hab
     · simp
     · simp [hab]
-  · simp [piMatUnit, Finset.sum_apply, Matrix.sum_apply, Pi.single_apply, h]
+  · simp [piMatUnit, Finset.sum_apply, Matrix.sum_apply, h]
 
 lemma exists_mul_idem_mul_eq_of_trace_eq {g : ℕ} (P P' : Matrix (Fin g) (Fin g) ℂ)
     (hP : IsIdempotentElem P) (hP' : IsIdempotentElem P') (ht : P.trace = P'.trace) :
     ∃ X Y : Matrix (Fin g) (Fin g) ℂ, Y * P' * X = P := by
   first
-  | exact @_root_.GlobalTheory.TraceEqualFinrank.exists_mul_mul_eq_of_trace_eq
-  | exact _root_.GlobalTheory.TraceEqualFinrank.exists_mul_mul_eq_of_trace_eq
   | (apply _root_.GlobalTheory.TraceEqualFinrank.exists_mul_mul_eq_of_trace_eq <;> assumption)
-  | (intros; apply _root_.GlobalTheory.TraceEqualFinrank.exists_mul_mul_eq_of_trace_eq <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.TraceEqualFinrank.exists_mul_mul_eq_of_trace_eq <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.TraceEqualFinrank.exists_mul_mul_eq_of_trace_eq ..)
 
 theorem conj_of_trace_central_idem_eq :
@@ -1114,7 +1106,7 @@ theorem conj_of_trace_central_idem_eq :
     intro τ i
     rw [hh]
     simp only [Finset.mul_sum, hprod]
-    simp [ite_and, Finset.sum_ite_eq, Finset.sum_ite_eq']
+    simp [ite_and, Finset.sum_ite_eq]
   have hinv : h' * h = 1 := by
     rw [hh', Finset.sum_mul]
     simp only [Finset.sum_mul, hrow]
@@ -1220,9 +1212,9 @@ theorem rep_conj_of_trace_eq : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (g : �
       ext τ i j
       simp only [Finset.sum_apply]
       rw [Finset.sum_eq_single τ]
-      · simp [Pi.single_apply, Matrix.scalar_apply, Matrix.diagonal_apply, Matrix.one_apply]
+      · simp [Matrix.scalar_apply, Matrix.diagonal_apply, Matrix.one_apply]
       · intro b _ hb
-        simp [Pi.single_apply, Ne.symm hb]
+        simp [Ne.symm hb]
       · simp
 
     rw [this, map_sum, Matrix.trace_sum]
@@ -1242,7 +1234,7 @@ theorem rep_conj_of_trace_eq : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (g : �
       have hφ' : φ (algebraMap (𝓞 D.F) D.O c) = fun τ => Matrix.scalar (Fin D.m) (τ (c : D.F)) := funext (hφ c)
       rw [← hσ, ← hσ', hφ', key, key] at h1
       simp only [Finset.sum_apply, Pi.smul_apply, Function.comp_apply, smul_eq_mul, Pi.zero_apply]
-      simp only [χ, MonoidHom.coe_coe, RingHom.coe_comp, Function.comp_apply, sub_mul, Finset.sum_sub_distrib]
+      simp only [χ, sub_mul, Finset.sum_sub_distrib]
       rw [sub_eq_zero]
       simpa [mul_comm] using h1)
     intro τ
@@ -1265,7 +1257,7 @@ open scoped Matrix
 open GlobalTheory.UPel.HT
 
 theorem _root_.GlobalTheory.T.uniformised_complex_fibre_marked_lattice_class : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [CommRing R] (b : Base D R) (N : ℕ) (σ : R →+* ℂ) (ρ : D.O →+* Matrix (Fin D.g) (Fin D.g) ℂ) (o : Obj b N (spMap σ)) h hL (D' : PLat D.O D.inv) t Q e, 0 < N → N.Coprime p → UnifAt (o.fam h hL) σ ρ N D' t Q (𝟙 _) e → ∃ t', D.Cls N D' t' ∧ ∀ a, ∃ x, t' a = t a + N • x := by
-  first | exact @GlobalTheory.UPel.HT.unifAt_cls | exact GlobalTheory.UPel.HT.unifAt_cls | (intros; apply GlobalTheory.UPel.HT.unifAt_cls <;> assumption)
+  first | exact @GlobalTheory.UPel.HT.unifAt_cls
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UniformisedComplexFibreMarkedLatticeClassStatement =====
@@ -1462,7 +1454,7 @@ open scoped Matrix
 open GlobalTheory.UPel.HT
 
 theorem _root_.GlobalTheory.T.exists_complexUniformisation_harrisTaylor : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [CommRing R] (b : Base D R) (N : ℕ) (σ : R →+* ℂ) (ρ : D.O →+* Matrix (Fin D.g) (Fin D.g) ℂ) (o : Obj b N (spMap σ)) h hL, 0 < N → N.Coprime p → b.IsType σ ρ → ∃ D' t Q e, D.Cls N D' t ∧ UnifAt (o.fam h hL) σ ρ N D' t Q (𝟙 _) e := by
-  first | (exact @GlobalTheory.UPel.HT.Unif.exists_unifAt) | (exact GlobalTheory.UPel.HT.Unif.exists_unifAt) | (intros; apply GlobalTheory.UPel.HT.Unif.exists_unifAt <;> assumption)
+  first | (exact @GlobalTheory.UPel.HT.Unif.exists_unifAt)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsComplexUniformisationHarrisTaylorStatement =====

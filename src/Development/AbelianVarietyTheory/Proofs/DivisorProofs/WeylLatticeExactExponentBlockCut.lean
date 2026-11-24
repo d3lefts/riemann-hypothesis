@@ -318,7 +318,7 @@ theorem hw_first (p q : ℕ) (ν : Fin (p + q) → ℕ) (hν : Antitone ν) :
       · rw [sum_sub_nuNext q (fun j => ν (Fin.natAdd (p + 1) j))
           (fun a b hab => hν (by rw [Fin.le_def] at hab ⊢; simp only [Fin.val_natAdd]; omega))]
         have h0 : nuNext ν (Fin.castAdd (q + 1) (Fin.last p)) = ν (Fin.natAdd (p + 1) 0) := by
-          unfold nuNext; rw [dite_eq_left (by simp <;> omega)]; congr 1
+          unfold nuNext; rw [dite_eq_left (by simp)]; congr 1
         have := hν (show Fin.castAdd (q + 1) (Fin.last p) ≤ Fin.natAdd (p + 1) 0 by
           simp [Fin.le_def])
         rw [h0]
@@ -332,7 +332,7 @@ theorem resHw_holds : ResHw := by
       (lpMinor ℚ ((i : ℕ) + 1) (by omega) (by omega) ^ (ν (Fin.castAdd q i) - nuNext ν (Fin.castAdd q i))) ⊗ₜ[ℚ]
         (1 : MvPolynomial (Fin q × Fin q) ℚ) := by
     intro i
-    rw [map_pow, resT_lpMinor_le p q _ _ _ (by simp <;> omega), Algebra.TensorProduct.tmul_pow, one_pow]
+    rw [map_pow, resT_lpMinor_le p q _ _ _ (by simp), Algebra.TensorProduct.tmul_pow, one_pow]
     rfl
   have e2 : ∀ j : Fin q, resT ℚ p q (lpMinor ℚ ((Fin.natAdd p j : ℕ) + 1) (by omega) (by omega) ^
       (ν (Fin.natAdd p j) - nuNext ν (Fin.natAdd p j))) =
@@ -523,7 +523,7 @@ theorem weight_rowW_eq {N : ℕ} (m : Fin N × Fin N →₀ ℕ) (a : Fin N) :
   rw [Finset.sum_eq_single a]
   · simp [rowW, rowDeg]
   · intro b _ hb
-    simp [rowW, Pi.single_apply, Ne.symm hb]
+    simp [rowW, Ne.symm hb]
   · simp
 
 theorem glRel_eV (N : ℕ) (ν : Fin N → ℕ) : GlRel N (eV N ν) := by
@@ -536,14 +536,14 @@ theorem glRel_eV (N : ℕ) (ν : Fin N → ℕ) : GlRel N (eV N ν) := by
   rw [eV_val ν a b ha hb, eV_val ν c d hc hd, eV_val ν c d hc hd, eV_val ν a b ha hb, h]
   by_cases hbc : b = c <;> by_cases hda : d = a
   · subst hbc hda
-    simp only [if_true, LinearMap.sub_apply, Submodule.coe_sub, eV_val ν d d ha hd, eV_val ν b b hc hb]
+    simp only [if_true, eV_val ν d d ha hd, eV_val ν b b hc hb]
   · subst hbc
     have : (⟨d, hd⟩ : Fin N) ≠ ⟨a, ha⟩ := fun h => hda (Fin.mk.inj h)
     simp only [if_true, this, if_false, hda, sub_zero, eV_val ν a d ha hd]
     simp
   · subst hda
     have : (⟨b, hb⟩ : Fin N) ≠ ⟨c, hc⟩ := fun h => hbc (Fin.mk.inj h)
-    simp only [if_true, this, if_false, hbc, zero_sub, LinearMap.neg_apply, Submodule.coe_neg, eV_val ν c b hc hb]
+    simp only [if_true, this, if_false, hbc, zero_sub, eV_val ν c b hc hb]
     simp
   · have h1 : (⟨b, hb⟩ : Fin N) ≠ ⟨c, hc⟩ := fun h => hbc (Fin.mk.inj h)
     have h2 : (⟨d, hd⟩ : Fin N) ≠ ⟨a, ha⟩ := fun h => hda (Fin.mk.inj h)
@@ -1057,8 +1057,7 @@ theorem intOn_divAdj (L M : Submodule ℤ V) (e : Module.End ℚ V)
     refine Finset.sum_congr rfl fun t ht => ?_
     have ht' : t ≤ k := Nat.lt_succ_iff.mp (Finset.mem_range.mp ht)
     have hch := Nat.choose_mul_factorial_mul_factorial ht'
-    simp only [LinearMap.smul_apply, Module.End.mul_apply, map_smul, ← Int.cast_smul_eq_zsmul ℚ, smul_smul,
-      LinearMap.sum_apply, Finset.smul_sum]
+    simp only [LinearMap.smul_apply, Module.End.mul_apply, map_smul, ← Int.cast_smul_eq_zsmul ℚ, smul_smul]
     congr 1
     have h1 : ((k.choose t : ℕ) : ℚ) * (t.factorial : ℚ) * ((k - t).factorial : ℚ) = (k.factorial : ℚ) := by
       exact_mod_cast hch
@@ -1224,7 +1223,7 @@ theorem adjE_pow (E F H T : Module.End ℚ V) (v : V) (n : ℕ)
     have hstep : ∀ y, (((adj E) ^ (k + 1)) T) y = E ((((adj E) ^ k) T) y) - (((adj E) ^ k) T) (E y) := by
       intro y
       rw [pow_succ', Module.End.mul_apply, adj_apply']
-      simp [Module.End.mul_apply]
+      simp
     refine ⟨fun i hi => ?_, ?_⟩
     · obtain ⟨i', rfl⟩ : ∃ i', i = i' + 1 := ⟨i - 1, by omega⟩
       rw [hstep, hEp, map_smul, ih1 i' (by omega), ih1 (i' + 1) (by omega)]
@@ -1387,20 +1386,20 @@ theorem rankOne : RankOne := by
     intro w
     have e1 := LinearMap.congr_fun (hG o o o q ho ho ho hq) w
     rw [if_pos (rfl : o = o), if_neg hqo] at e1
-    simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.zero_apply, sub_zero] at e1
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, sub_zero] at e1
     have e2 := LinearMap.congr_fun (hG q q o q hq hq ho hq) w
     rw [if_neg hqo, if_pos (rfl : q = q)] at e2
-    simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.zero_apply, zero_sub, LinearMap.neg_apply] at e2
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, zero_sub, LinearMap.neg_apply] at e2
     rw [hH, hH, map_sub, sub_eq_iff_eq_add'.mp e1, sub_eq_iff_eq_add'.mp e2]
     module
   have hHY : ∀ w, (D o o - D q q) (D q o w) = D q o ((D o o - D q q) w) - (2 : ℚ) • D q o w := by
     intro w
     have e1 := LinearMap.congr_fun (hG o o q o ho ho hq ho) w
     rw [if_neg hoq, if_pos (rfl : o = o)] at e1
-    simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.zero_apply, zero_sub, LinearMap.neg_apply] at e1
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, zero_sub, LinearMap.neg_apply] at e1
     have e2 := LinearMap.congr_fun (hG q q q o hq hq hq ho) w
     rw [if_pos (rfl : q = q), if_neg hoq] at e2
-    simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.zero_apply, sub_zero] at e2
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, sub_zero] at e2
     rw [hH, hH, map_sub, sub_eq_iff_eq_add'.mp e1, sub_eq_iff_eq_add'.mp e2]
     module
   constructor
@@ -1677,7 +1676,6 @@ theorem rankTwo : RankTwo := by
       sl2_Xpow_Y _ _ _ sXYp hHpXp U 1 hHpU l]
     simp only [map_add (f := _), map_smul]
     rw [← pow_succ_apply2 (D p o) (l + 1)]
-    push_cast
     module
   have hT5 : ∀ n : ℕ, D p q (∑ l ∈ Finset.range (n + 1), coef j l • (D p o ^ l) ((D o p ^ l) T')) =
       coef j n • (D p o ^ (n + 1)) ((D o p ^ n) U) := by

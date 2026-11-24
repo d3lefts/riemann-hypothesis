@@ -709,7 +709,6 @@ theorem integrable_cls {n : ℕ} (β : ℂ) (σ : Equiv.Perm (Fin n)) (d : Fin n
     (Ux13.continuous_psiH β σ).smul (hs.continuous.comp (Ux13.continuous_zjH σ d _))
   obtain ⟨C, hC⟩ := Formalism.FourierDecayAlt.P.aux_statement_17 n 0 σ d hd
   obtain ⟨R, hR⟩ := (show IsCompact (tsupport Ψ) from hc).isBounded.exists_norm_le
-  have hR0 : 0 ≤ max R 0 := le_max_right _ _
   refine hcont.integrable_of_hasCompactSupport ?_
   refine HasCompactSupport.intro (isCompact_closedBall (0 : U.XiH n 0 σ) (|C| * (max R 0) ^ n)) ?_
   intro η hη
@@ -747,9 +746,7 @@ theorem hMat_inj {m : ℕ} (σ σ' : Equiv.Perm (Fin m)) (d d' : Fin m → ℂ) 
     exact hd' _ this.symm
   subst hσ
   refine ⟨rfl, funext fun b => ?_⟩
-  have := congrFun (congrFun h (σ.symm b)) b
-  simp only [happ, Equiv.apply_symm_apply, if_true] at this
-  exact this
+  simpa only [happ, Equiv.apply_symm_apply, if_true] using congrFun (congrFun h (σ.symm b)) b
 
 end Formalism.FourierDecayAlt.P.PBJ.Fub
 

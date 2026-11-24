@@ -171,7 +171,6 @@ instance evalLeft_preservesMono (S : Type 1) [Ring S] (c : Scheme.{0}ᵒᵖ) :
       intro g
       simp only [evaluationLeftAdjoint_map_app]
       erw [colimit.ι_desc]
-      try rfl
     rw [h]
     have : HasExactColimitsOfShape (Discrete (c ⟶ t)) (ModuleCat.{1} S) := inferInstance
     have : PreservesFiniteLimits (colim : (Discrete (c ⟶ t) ⥤ ModuleCat.{1} S) ⥤ _) := inferInstance
@@ -280,7 +279,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.flat_sections_of_injective_zmodEtaleSheaf : ∀ (q : ℕ) [NeZero q] (M : Shv (ZMod q)) [Injective M], (∀ U : Scheme.{0}, Module.Flat (ULift.{1} (ZMod q)) (Sec M U)) ∧ FlatS M := by
-  first | (exact @GlobalTheory.EtC.InjFlat.flat_of_injective) | (exact GlobalTheory.EtC.InjFlat.flat_of_injective) | (intros; apply GlobalTheory.EtC.InjFlat.flat_of_injective  <;> assumption)
+  first | (exact @GlobalTheory.EtC.InjFlat.flat_of_injective)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatSectionsOfInjectiveZmodEtaleSheafStatement =====

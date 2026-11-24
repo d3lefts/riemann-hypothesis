@@ -99,7 +99,7 @@ open scoped TensorProduct Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.isHaarMeasure_map_emb0_of_rank_zero_decomposition : ∀ (D : D7) (S S₀ : HSp D) (d : HypDec S S₀ 0) (μ : Measure (GA D S₀)), μ.IsHaarMeasure → (Measure.map d.emb0 μ).IsHaarMeasure := by
-  first | exact @GlobalTheory.HaarEmb.map_wittEmbedding_zero_rank_isHaarMeasure | exact GlobalTheory.HaarEmb.map_wittEmbedding_zero_rank_isHaarMeasure | (intros; apply GlobalTheory.HaarEmb.map_wittEmbedding_zero_rank_isHaarMeasure <;> assumption)
+  first | exact @GlobalTheory.HaarEmb.map_wittEmbedding_zero_rank_isHaarMeasure
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MapWittEmbeddingZeroRankIsHaarMeasureStatement =====

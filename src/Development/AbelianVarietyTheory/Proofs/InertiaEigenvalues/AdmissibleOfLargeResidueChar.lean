@@ -702,7 +702,7 @@ theorem natDegree_blk {R : Type} [CommRing R] [Nontrivial R] {r : ℕ} (B : Matr
     (a : ℕ → R) (t : ℕ) : (B.charpoly * ∏ c ∈ Finset.Icc 1 t, (X - C (a c))).natDegree = r + t := by
   rw [(Matrix.charpoly_monic B).natDegree_mul (monic_prod_of_monic _ _ fun c _ => monic_X_sub_C (a c)),
     Matrix.charpoly_natDegree_eq_dim, natDegree_prod_of_monic _ _ fun c _ => monic_X_sub_C (a c)]
-  simp [natDegree_X_sub_C]
+  simp
 
 theorem scale_mem {R : Type} [CommRing R] (J : Ideal R) (p q : R[X]) (hdeg : p.natDegree = q.natDegree) (s : R)
     (h : ∀ k, (p - q).coeff k ∈ J) (k : ℕ) : (p.scaleRoots s - q.scaleRoots s).coeff k ∈ J := by
@@ -1155,8 +1155,7 @@ theorem ext_mul (h : LL.1 ≤ LL'.1) (r : ↥(OL LL') →+ ↥(OL LL))
   let y : ↥(OL LL') := ⟨d • x, hi⟩
   let a'' : ↥(OL LL) := ⟨e • a, hie⟩
   have hy : ((incO h a'' * y : ↥(OL LL')) : LL'.1) = (e * d) • (IntermediateField.inclusion h a * x) := by
-    simp only [incO, y, a'', RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, Subalgebra.coe_mul,
-      SetLike.val_smul, map_smul]
+    simp only [incO, y, a'', RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, Subalgebra.coe_mul]
     simp only [Algebra.smul_def, map_mul]
     have hc : IntermediateField.inclusion h (algebraMap ℤ_[l] LL.1 e) = algebraMap ℤ_[l] LL'.1 e := by simp
     rw [hc]
@@ -1386,7 +1385,7 @@ theorem descUr_entry (D : D7) (i : D.nd.Loc) (w : HeightOneSpectrum (𝓞 D.host
     (a b : Fin k) :
     (mapM (algebraMap ↥(OL C.LL) ↥C.LL.1) (locOC C M)) g a b =
       IntermediateField.inclusion C.le ((Br.loc D.nbr i w hw M) g a b) := by
-  simp only [mapM, locOC, Br.loc, Br.locM, MonoidHom.coe_comp, Function.comp_apply, RingHom.mapMatrix_apply, Matrix.map_apply]
+  simp only [mapM, locOC, Br.loc, Br.locM, MonoidHom.coe_comp, Function.comp_apply]
   rfl
 
 

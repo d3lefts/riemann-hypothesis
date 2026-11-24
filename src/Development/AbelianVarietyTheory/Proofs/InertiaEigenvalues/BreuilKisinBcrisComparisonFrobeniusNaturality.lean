@@ -106,7 +106,7 @@ theorem cmp_semilinear_pair : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a
     have hcB : (fun k => toB l O (c k)) = (Pi.single i 1 : ι → OB l O) := by
       funext k; by_cases hk : k = i
       · subst hk; simp [hc]
-      · simp [hc, Pi.single_apply, hk]
+      · simp [hc, hk]
     obtain ⟨z, hz⟩ := hL (inclL t ϖ P c) ⟨c, rfl⟩
     rw [hsmulL] at hz
     have hz1 : toB l O μ • jB (Pi.single i 1) = TWincl (toB l O) T z := by
@@ -114,7 +114,7 @@ theorem cmp_semilinear_pair : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a
     have hσc : (fun k => σA ((μ • c) k)) = σA μ • c := by
       funext k; by_cases hk : k = i
       · subst hk; simp [hc]
-      · simp [hc, Pi.single_apply, hk]
+      · simp [hc, hk]
     have hF : I.j (inclL t ϖ P (σA μ • (Γ *ᵥ c))) =
         TWincl (inclO l O) T (lam • TensorProduct.map σA.toLinearMap h z) := by
       rw [← Matrix.mulVec_smul, ← hσc, ← h5, map_smul, h3, hz, hmapW, GlobalTheory.Cyc.Decomp.TWincl_smul]
@@ -152,7 +152,7 @@ theorem cmp_semilinear_pair : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a
     have : (fun k => σB ((Pi.single i 1 : ι → OB l O) k)) = Pi.single i 1 := by
       funext k; by_cases hk : k = i
       · subst hk; simp
-      · simp [Pi.single_apply, hk]
+      · simp [hk]
     rw [this, Matrix.mulVec_single]
     convert key i using 2
     funext k; simp
@@ -300,7 +300,7 @@ theorem kisin_kB_comp_jB (hm : ∀ v ∈ LA t ϖ P, ∃ z : TW (OA l O) T, I.j (
     funext j
     by_cases hij : j = i
     · subst hij; simp
-    · simp [Pi.single_apply, hij]
+    · simp [hij]
   exact LinearMap.congr_fun h v
 
 theorem kisin_jB_comp_kB (hm : ∀ v ∈ LA t ϖ P, ∃ z : TW (OA l O) T, I.j (inclO l O m • v) = TWincl (inclO l O) T z)
@@ -380,7 +380,7 @@ open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.Weakl
 open scoped Formalism.Per
 
 theorem _root_.GlobalTheory.T.exists_bcris_comparison_kisinLattice : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O K : Type) [CommRing O] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [NormedField K] [IsUltrametricDist K] [Algebra O K] [IsUnitBall O K] [NormedAlgebra ℚ_[l] K] [TameDescentExponentData K l e a] (t : Wq l a →ₐ[ℤ_[l]] O) (ϖ : PiSys l e) (ι : Type) [Fintype ι] [DecidableEq ι] (P : PhiMod O K l e a ι) (T : LocLat (Gl l) ℚ_[l] K O) (I : Ident t ϖ P T), ∃ jB, IsCrisCmp I jB := by
-  first | exact @GlobalTheory.BKGal.exists_isCrisCmp | exact GlobalTheory.BKGal.exists_isCrisCmp | (intros; apply GlobalTheory.BKGal.exists_isCrisCmp <;> assumption)
+  first | exact @GlobalTheory.BKGal.exists_isCrisCmp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsBcrisComparisonKisinLatticeStatement =====

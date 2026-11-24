@@ -215,7 +215,6 @@ theorem Phi_injective (X : Submodule R U) (hX : X.FG) : Function.Injective (Phi 
     simp [b', v, Basis.baseChange_apply, Phi_tmul]
     first
       | exact (one_smul _ _).symm
-      | (rw [smulT_def]; simp)
   have key : ∀ z, Finsupp.linearCombination T v (b'.repr z) = Phi T hRT X z := by
     intro z
     rw [← hcomp]
@@ -393,7 +392,6 @@ theorem length_tensor_eq_top {R T : Type*} [CommRing R] [IsDomain R] [IsDiscrete
     have h0 : Module.length R (Fin 0 →₀ R) = 0 := by
       first
         | exact Module.length_eq_zero_iff.2 inferInstance
-        | exact Module.length_eq_zero
     rw [h0, zero_add] at h1
     have h2 : ∑ i, Module.length R (R ⧸ R ∙ p i ^ e i) = ((∑ i, e i : ℕ) : ℕ∞) := by
       rw [Nat.cast_sum]
@@ -458,8 +456,6 @@ attribute [local instance] locT
 
 theorem dvrT (w : HeightOneSpectrum (𝓞 K₁)) : IsDiscreteValuationRing (Tw w) := by
   first
-    | exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain (𝓞 K₁) (NumberField.RingOfIntegers.not_isField K₁) w.ne_bot (Tw w)
-    | exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain w.ne_bot (Tw w)
     | exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain (𝓞 K₁) w.ne_bot (Tw w)
 
 attribute [local instance] dvrT
@@ -467,8 +463,6 @@ attribute [local instance] dvrT
 theorem dvrLa (la : HeightOneSpectrum (𝓞 K)) :
     IsDiscreteValuationRing (Localization.AtPrime la.asIdeal) := by
   first
-    | exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain (𝓞 K) (NumberField.RingOfIntegers.not_isField K) la.ne_bot _
-    | exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain la.ne_bot _
     | exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain (𝓞 K) la.ne_bot _
 
 attribute [local instance] dvrLa

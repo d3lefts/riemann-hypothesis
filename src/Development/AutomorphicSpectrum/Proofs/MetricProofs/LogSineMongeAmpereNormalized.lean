@@ -133,7 +133,7 @@ theorem hessC_comp_tail (d : ℕ) (α : (Fin d → ℂ) → ℝ) (y : Fin d → 
   refine Fin.cases ?_ (fun i' => ?_) i <;> refine Fin.cases ?_ (fun j' => ?_) j
   all_goals
     simp [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, jacC_tailCL, blk,
-      Fin.succ_ne_zero, Finset.sum_ite_eq, Finset.sum_ite_eq']
+      Fin.succ_ne_zero, Finset.sum_ite_eq']
 
 end
 
@@ -530,7 +530,7 @@ theorem pderiv_fin_prod {σ : Type*} (k : σ) : ∀ (d : ℕ) (f : Fin (d + 1) �
       ring
 
 theorem pderiv_row_weight (c v : ℝ) : pderiv (some 0 : Option (Fin 2)) (rowW ![c, 0] v) = C c := by
-  simp [rowW, pderiv_X, Pi.single_apply]
+  simp [rowW, pderiv_X]
 
 theorem eval_row_weight (n : Fin 3 → ℝ) (c v : ℝ) :
     evalW n n (rowW ![c, 0] v) = lin4 (fun i => c * n i) + C v * X none := by
@@ -561,7 +561,7 @@ theorem extract_one : ∀ (d : ℕ) (T : Fin 3 → Matrix (Fin d) (Fin d) ℂ) (
   have h3 := hL (fun s i => c (r.succAbove s) * n i) (fun s => v (r.succAbove s))
   rw [h3, pderiv_row_weight, map_mul (evalW n n), map_prod (evalW n n)]
   simp only [eval_row_weight]
-  have h4 : evalW n n (C (c r)) = C (c r) := by simp [evalW, aeval_def, algebraMap_eq]
+  have h4 : evalW n n (C (c r)) = C (c r) := by simp [evalW, algebraMap_eq]
   rw [h4, C_mul', map_smul, Complex.real_smul]
   ring
 
@@ -606,14 +606,14 @@ theorem derivation_prod_succAbove_xt {σ : Type*} {n : ℕ}
   rfl
 
 theorem pderiv_rowW_zero_xt (u : Fin 2 → ℝ) (v : ℝ) : pderiv (some 0) (rowW u v) = C (u 0) := by
-  simp [rowW, pderiv_X, Pi.single_apply, pderiv_C, Derivation.leibniz]
+  simp [rowW, pderiv_X, Derivation.leibniz]
 
 theorem pderiv_rowW_one_xt (u : Fin 2 → ℝ) (v : ℝ) : pderiv (some 1) (rowW u v) = C (u 1) := by
-  simp [rowW, pderiv_X, Pi.single_apply, pderiv_C, Derivation.leibniz]
+  simp [rowW, pderiv_X, Derivation.leibniz]
 
 theorem pderiv_C_mul_xt {σ : Type*} [DecidableEq σ] (j : σ) (a : ℝ) (p : MvPolynomial σ ℝ) :
     pderiv j (C a * p) = C a * pderiv j p := by
-  simp [Derivation.leibniz, pderiv_C]
+  simp [Derivation.leibniz]
 
 theorem linear_form_linear_combination (a b : ℝ) (n m : Fin 3 → ℝ) :
     lin4 (fun i => a * n i + b * m i) = C a * lin4 n + C b * lin4 m := by
@@ -738,7 +738,7 @@ theorem evalW_pderiv_prod_rowW : ∀ (d k : ℕ), 1 ≤ k → 2 * k ≤ d + 2 �
   rw [hprod, hm2, hj, Derivation.leibniz, Derivation.leibniz_pow, Derivation.leibniz_pow]
   have hne : (none : Option (Fin 2)) ≠ some 0 := by simp
   simp only [pderiv_X_self, pderiv_X_of_ne hne, smul_eq_mul, smul_zero, zero_add, mul_zero,
-    add_zero, mul_one, Nat.add_sub_cancel, nsmul_eq_mul]
+    mul_one, Nat.add_sub_cancel, nsmul_eq_mul]
   simp only [map_mul, map_pow, map_natCast, evalW_X_some_zero, evalW_X_none]
   have hc : (C (2 * ((t + 1 : ℕ) : ℝ) - 1) : MvPolynomial (Option (Fin 3)) ℝ) =
       ((2 * t + 1 : ℕ) : MvPolynomial (Option (Fin 3)) ℝ) := by
@@ -1019,7 +1019,7 @@ theorem continuous_coeff_pp {Ω : Type*} [TopologicalSpace Ω] (u v : Ω → Fin
     funext r
 
     fin_cases r <;> simp [w, dp, mapAlgHom_apply] <;>
-      apply Finset.sum_congr rfl <;> intro i hi <;> congr 2 <;> funext q <;> rfl
+      apply Finset.sum_congr rfl <;> intro i hi <;> congr 2 <;> funext q
   rw [pp, hw, ← comp_aeval, AlgHom.comp_apply, mapAlgHom_apply, coeff_map]
   exact (AddMonoidAlgebra.coeff (aeval w Q) m).continuous
 
@@ -1122,7 +1122,7 @@ theorem pderiv_some_rename_mul (j : Fin 2) (P : MvPolynomial (Fin 2) ℝ) (m : �
     pderiv (some j) (rename some P * (X none : MvPolynomial (Option (Fin 2)) ℝ) ^ m) =
       rename some (pderiv j P) * X none ^ m := by
   have h0 : pderiv (some j) ((X none : MvPolynomial (Option (Fin 2)) ℝ) ^ m) = 0 := by
-    simp [Derivation.leibniz_pow, pderiv_X, Pi.single_apply]
+    simp [Derivation.leibniz_pow, pderiv_X]
   rw [Derivation.leibniz, h0, pderiv_rename (Option.some_injective _)]
   simp [mul_comm]
 
@@ -1487,7 +1487,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.xi_potential_hessian_decomposi
   ext p q
   refine Fin.cases ?_ (fun p' => ?_) p <;> refine Fin.cases ?_ (fun q' => ?_) q
   all_goals simp only [hessC, Matrix.of_apply, Fin.cases_zero, Fin.cases_succ, hH, PositivityTheory.Xgp.fib_hess.tl_zero, PositivityTheory.Xgp.fib_hess.tl_zero', PositivityTheory.Xgp.fib_hess.tl_succ, PositivityTheory.Xgp.fib_hess.tl_succ', map_zero, ContinuousLinearMap.zero_apply]
-  all_goals simp only [Pi.smul_apply, smul_eq_mul, Pi.single_eq_same, ne_eq, Fin.succ_ne_zero, not_false_eq_true, Pi.single_eq_of_ne, mul_zero, mul_one, Complex.zero_re, Complex.zero_im, Complex.one_re, Complex.one_im, Complex.I_re, Complex.I_im]
+  all_goals simp only [Pi.smul_apply, smul_eq_mul, Pi.single_eq_same, mul_zero, mul_one, Complex.one_re, Complex.one_im, Complex.I_re, Complex.I_im]
   all_goals clear hH hc h0 h1 hC
   all_goals have hr : ‖a‖ ^ 2 = a.re ^ 2 + a.im ^ 2 := by rw [Complex.sq_norm, Complex.normSq_apply]; ring
   all_goals have hpos : (0:ℝ) < 1 + (a.re ^ 2 + a.im ^ 2) := by positivity
@@ -1497,15 +1497,15 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.xi_potential_hessian_decomposi
     push_cast
     field_simp
     ring
-  all_goals have hz : ∀ j : Fin d, (Pi.single j.succ (1:ℂ) : Fin (d+1) → ℂ) 0 = 0 := fun j => by simp [Pi.single_apply, (Fin.succ_ne_zero j).symm]
-  all_goals simp only [hz, mul_zero, Complex.zero_re, Complex.zero_im, Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, PositivityTheory.Xgp.fib_hess.hm, ContinuousLinearMap.add_apply, ContinuousLinearMap.sub_apply, ContinuousLinearMap.smul_apply, ContinuousLinearMap.coe_smul', Pi.smul_apply, smul_eq_mul, ContinuousLinearMap.neg_apply]
+  all_goals have hz : ∀ j : Fin d, (Pi.single j.succ (1:ℂ) : Fin (d+1) → ℂ) 0 = 0 := fun j => by simp [(Fin.succ_ne_zero j).symm]
+  all_goals simp only [hz, mul_zero, Complex.zero_re, Complex.zero_im, Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, PositivityTheory.Xgp.fib_hess.hm, ContinuousLinearMap.add_apply, ContinuousLinearMap.sub_apply, ContinuousLinearMap.smul_apply, smul_eq_mul]
   all_goals try rw [hr]
   case refine_2.refine_2 =>
     apply Complex.ext
-    · simp only [Complex.add_re, Complex.div_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.sub_re, Complex.neg_re, Complex.re_ofNat, Complex.im_ofNat, Complex.add_im, Complex.div_im, Complex.mul_im, Complex.sub_im, Complex.neg_im, Complex.normSq_ofNat]
+    · simp only [Complex.add_re, Complex.div_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.re_ofNat, Complex.im_ofNat, Complex.add_im, Complex.div_im, Complex.mul_im, Complex.normSq_ofNat]
       field_simp
       ring
-    · simp only [Complex.add_re, Complex.div_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.sub_re, Complex.neg_re, Complex.re_ofNat, Complex.im_ofNat, Complex.add_im, Complex.div_im, Complex.mul_im, Complex.sub_im, Complex.neg_im, Complex.normSq_ofNat]
+    · simp only [Complex.add_re, Complex.div_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.re_ofNat, Complex.im_ofNat, Complex.add_im, Complex.div_im, Complex.mul_im, Complex.normSq_ofNat]
       field_simp
       ring
   all_goals push_cast
@@ -1650,7 +1650,7 @@ theorem fibre_integral_normal : GroundTheory.Heights₂.Heights.Inter.FibreLocal
           simp only [DiagonalFibreFubini.wordCoef]
           split_ifs <;> rfl
         by_cases hr : (r : ℕ) < 2 * k
-        · simp only [hr, if_true, hcoef, hf, Fin.tail, Fin.cons_zero, Fin.cons_succ]
+        · simp only [hr, if_true, hcoef, hf, Fin.cons_zero]
           simp
         · simp [hr]
     simp_rw [hpt]

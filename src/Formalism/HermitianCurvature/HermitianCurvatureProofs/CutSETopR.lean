@@ -857,10 +857,6 @@ theorem rdsp_opApply_vanishP (Θ : B.DiffOp k r Wp Wq) (F : B.Mat k r → (Wq �
        intro x hx
        obtain ⟨T, hT, rfl⟩ := List.mem_map.mp hx
        exact h0 T hT)
-    | (apply Multiset.sum_eq_zero
-       intro x hx
-       obtain ⟨T, hT, rfl⟩ := Multiset.mem_map.mp hx
-       exact h0 T hT)
 
 theorem rdsp_opAdj_vanishP (Θ : B.DiffOp k r Wp Wq) (F : B.Mat k r → (Wq →L[ℂ] Wp)) :
     ∀ g, g ∉ tsupport F → B.opAdj Θ F g = 0 := by
@@ -880,10 +876,6 @@ theorem rdsp_opAdj_vanishP (Θ : B.DiffOp k r Wp Wq) (F : B.Mat k r → (Wq →L
     | (apply List.sum_eq_zero
        intro x hx
        obtain ⟨T, hT, rfl⟩ := List.mem_map.mp hx
-       exact h0 T hT)
-    | (apply Multiset.sum_eq_zero
-       intro x hx
-       obtain ⟨T, hT, rfl⟩ := Multiset.mem_map.mp hx
        exact h0 T hT)
 
 end Help

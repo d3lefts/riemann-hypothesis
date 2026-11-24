@@ -223,7 +223,7 @@ theorem _root_.GlobalTheory.T.archimedeanHeisenbergLine_continuous_finite_zero :
     (∀ u, cS u = (HMul.hMul (uᵀ.submatrix e id) (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM g) : Matrix (Fin X.rank) (Fin S.rank) (AE D))) →
     ∀ u : Matrix (Fin S.rank) (Fin d) (AE D),
       Continuous (GlobalTheory.VacTransfer.archLine cS u) ∧ ∀ t, (GlobalTheory.VacTransfer.archLine cS u t).map (finPart D) = 0 := by
-  first | exact @GlobalTheory.ArchLineCont.archLine_continuous_finPart | exact GlobalTheory.ArchLineCont.archLine_continuous_finPart | (intros; apply GlobalTheory.ArchLineCont.archLine_continuous_finPart <;> assumption)
+  first | exact @GlobalTheory.ArchLineCont.archLine_continuous_finPart
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ArchimedeanHeisenbergLineContinuousFiniteZeroStatement =====
@@ -252,7 +252,7 @@ theorem hD_finset_sum {G R : Type} [AddCommGroup G] [NormedAddCommGroup R] [Norm
   funext w
   rw [Finset.sum_apply]
 
-  simp only [hD_eq_fderiv ι π om f hf, map_sum, ContinuousLinearMap.sum_apply]
+  simp only [hD_eq_fderiv ι π om f hf, map_sum]
   push_cast
   rw [Finset.mul_sum, Finset.sum_mul, ← Finset.sum_add_distrib]
 
@@ -314,7 +314,7 @@ theorem _root_.GlobalTheory.T.heisenbergDeriv_realLine_eq_sum_realPlaces : ∀ (
       (∀ t, (L t).map (finPart D) = 0) →
       (fun w => deriv (fun t : ℝ => heisO ψ S T (L t) f w) 0) =
         ∑ τ, dRho (heisO ψ S T) θ τ (compAt θ τ (L 1)) f := by
-  first | exact @GlobalTheory.PlaceSum.deriv_heisO_eq_sum_dRho | exact GlobalTheory.PlaceSum.deriv_heisO_eq_sum_dRho | (intros; apply GlobalTheory.PlaceSum.deriv_heisO_eq_sum_dRho <;> assumption)
+  first | exact @GlobalTheory.PlaceSum.deriv_heisO_eq_sum_dRho
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.HeisenbergDerivRealLineEqSumRealPlacesStatement =====
@@ -483,7 +483,7 @@ theorem _root_.GlobalTheory.T.schrodingerDeriv_relation_of_heisenbergDeriv : ∀
         c • (fun w => deriv (fun t : ℝ => heisO ψ S T (L t) (GlobalTheory.WeilSchrodinger.thetaTr D.host.F co ψ Φ) w) 0) →
       ∀ x, deriv (fun t : ℝ => GlobalTheory.WeilM.schr ψ (co.e (L' t)) Φ x) 0 =
         c * deriv (fun t : ℝ => GlobalTheory.WeilM.schr ψ (co.e (L t)) Φ x) 0 := by
-  first | exact @GlobalTheory.LineDerivTransfer.schr_deriv_of_heisO_deriv | exact GlobalTheory.LineDerivTransfer.schr_deriv_of_heisO_deriv | (intros; apply GlobalTheory.LineDerivTransfer.schr_deriv_of_heisO_deriv <;> assumption)
+  first | exact @GlobalTheory.LineDerivTransfer.schr_deriv_of_heisO_deriv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SchrodingerDerivRelationOfHeisenbergDerivStatement =====
@@ -646,7 +646,7 @@ theorem _root_.GlobalTheory.T.fockVacuumEquations_transfer_schroedingerDatum : �
       (∀ u, cS u = (HMul.hMul (uᵀ.submatrix e id) (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM ((if ε then -1 else 1 : D.host.E) • S.gram)) : Matrix (Fin X.rank) (Fin S.rank) (AE D))) →
       ∀ (f : WO S X → ℂ) (Φ : (Fin S.rank × Fin d → AF D.host.F) → ℂ), IsFinF ψ θ ε A B f → IsDatum M ψ cS Φ f →
         GlobalTheory.VacDatum.IsGaussEq M Bs.ψ Bs.emb Φ := by
-  first | exact @GlobalTheory.VacTransfer.vacDatum_transfer | exact GlobalTheory.VacTransfer.vacDatum_transfer | (intros; apply GlobalTheory.VacTransfer.vacDatum_transfer <;> assumption)
+  first | exact @GlobalTheory.VacTransfer.vacDatum_transfer
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FockVacuumEquationsTransferSchroedingerDatumStatement =====
@@ -953,7 +953,7 @@ theorem _root_.GlobalTheory.T.exists_algebraicDatum_thetaTransform_eq : ∀ (D :
     ∀ cS : Matrix (Fin S.rank) (Fin d) (AE D) ≃+ WO S X,
       (∀ u, cS u = (HMul.hMul (uᵀ.submatrix e id) (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM ((if ε then -1 else 1 : D.host.E) • S.gram)) : Matrix (Fin X.rank) (Fin S.rank) (AE D))) →
       ∀ f : WO S X → ℂ, IsFinF ψ θ ε A B f → ∃ ΦD ∈ algD M Bs.ψ Bs.emb, IsDatum M ψ cS ΦD f := by
-  first | exact @GlobalTheory.VacDatum.vacDatum_exists | exact GlobalTheory.VacDatum.vacDatum_exists | (intros; apply GlobalTheory.VacDatum.vacDatum_exists <;> assumption)
+  first | exact @GlobalTheory.VacDatum.vacDatum_exists
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsAlgebraicDatumThetaTransformEqStatement =====
@@ -975,7 +975,7 @@ open GlobalTheory.SquareComm GlobalTheory.SquareAgree
 theorem _root_.GlobalTheory.T.heisenberg_derivative_mem_fockAlgebraicThetaVectors : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D), IsStdChar D ψ (-1) → IsInfFam θ →
     ∀ (ε : Bool) (S X : HSp D) (A : Fr S) (B : Fr X), ∀ f ∈ algF ψ θ ε A B, ∀ (τ : D.what₂.Tau) (z : Matrix (Fin X.rank) (Fin S.rank) ℂ),
       dRho (heisO ψ (sgn ε S) X) θ τ z f ∈ algF ψ θ ε A B := by
-  first | exact @GlobalTheory.SquareComm.dRho_mem_algF | exact GlobalTheory.SquareComm.dRho_mem_algF | (intros; apply GlobalTheory.SquareComm.dRho_mem_algF <;> assumption)
+  first | exact @GlobalTheory.SquareComm.dRho_mem_algF
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.HeisenbergDerivativeMemFockAlgebraicThetaVectorsStatement =====
@@ -1092,7 +1092,7 @@ theorem _root_.GlobalTheory.T.exists_algebraicVector_thetaTransform_heisenbergDe
         ∀ g₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf D.host.F (Fin S.rank × Fin d),
           GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ActsD (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F) (M.heisLine Bs.ψ u) g g₁ →
         ∃ f₁ ∈ algF ψ θ ε A B, IsDatum M ψ cS (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure g₁ φ) f₁ := by
-  first | exact @GlobalTheory.SquareAgree.SchDeriv.exists_mem_algF_deriv | exact GlobalTheory.SquareAgree.SchDeriv.exists_mem_algF_deriv | (intros; apply GlobalTheory.SquareAgree.SchDeriv.exists_mem_algF_deriv <;> assumption)
+  first | exact @GlobalTheory.SquareAgree.SchDeriv.exists_mem_algF_deriv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsAlgebraicVectorThetaTransformHeisenbergDerStatement =====
@@ -1116,7 +1116,7 @@ theorem _root_.GlobalTheory.T.isSchrodingerThetaDatum_add_adelicSchwartz : ∀ {
     (ψ : AddChar (AF F) ℂ), GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsStd ψ → ∀ {Z : Type} [AddCommGroup Z]
     (crd : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := F) (E := E)) → Z) (Φ Φ' : (Fin n × Fin d → AF F) → ℂ) (f f' : Z → ℂ),
     IsDatum M ψ crd Φ f → IsDatum M ψ crd Φ' f' → IsDatum M ψ crd (Φ + Φ') (f + f') := by
-  first | exact @GlobalTheory.SquareAgree.isDatum_add | exact GlobalTheory.SquareAgree.isDatum_add | (intros; apply GlobalTheory.SquareAgree.isDatum_add <;> assumption)
+  first | exact @GlobalTheory.SquareAgree.isDatum_add
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IsSchrodingerThetaDatumAddAdelicSchwartzStatement =====
@@ -1148,7 +1148,7 @@ theorem _root_.GlobalTheory.T.realPlaceHeisenbergDeriv_thetaTransform_algebraicD
       (∀ u, cS u = (HMul.hMul (uᵀ.submatrix e id) (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.incM ((if ε then -1 else 1 : D.host.E) • S.gram)) : Matrix (Fin X.rank) (Fin S.rank) (AE D))) →
       ∀ ΦD ∈ algD M Bs.ψ Bs.emb, ∀ f : WO S X → ℂ, IsDatum M ψ cS ΦD f → ∀ (τ : D.what₂.Tau) (z : Matrix (Fin X.rank) (Fin S.rank) ℂ),
         ∃ ΦD' ∈ algD M Bs.ψ Bs.emb, IsDatum M ψ cS ΦD' (dRho (heisO ψ (sgn ε S) X) θ τ z f) := by
-  first | exact @GlobalTheory.SquareAgree.HeisDeriv.heisDeriv_algD | exact GlobalTheory.SquareAgree.HeisDeriv.heisDeriv_algD | (intros; apply GlobalTheory.SquareAgree.HeisDeriv.heisDeriv_algD <;> assumption)
+  first | exact @GlobalTheory.SquareAgree.HeisDeriv.heisDeriv_algD
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RealPlaceHeisenbergDerivThetaTransformAlgebraicDStatement =====

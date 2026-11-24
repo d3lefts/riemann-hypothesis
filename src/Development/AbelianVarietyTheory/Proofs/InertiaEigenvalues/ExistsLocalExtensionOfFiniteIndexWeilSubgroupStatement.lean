@@ -756,7 +756,7 @@ theorem exists_monic_base_root_near : ∀ (E Ω : Type) [Field E] [NumberField E
     rw [aeval_def, ← eval_map, ← hG]
     conv_lhs => rw [← hprod]
     rw [eval_multiset_prod, Multiset.map_map]
-    simp [Function.comp_def]
+    simp
   have hex : ∃ a ∈ G.roots, A.valuation (β - a) < A.valuation r := by
     by_contra hcon
     push_neg at hcon
@@ -1009,7 +1009,7 @@ open NumberField IsDedekindDomain ValuativeRel Matrix Polynomial Formalism.Conju
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.exists_localExtension_of_finiteIndex_weilSubgroup : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (H : Subgroup (Weil h)), H.FiniteIndex → IsOpen {σ : Ine (F := E) A | ineIncl h σ ∈ H} → ∃ (L : IntermediateField E Ω), FiniteDimensional E L ∧ IsLocalExt L h ∧ ∀ σ : Weil h, σ ∈ H ↔ ∀ x : L, (σ : G E Ω) (x : Ω) = x := by
-  first | exact @GlobalTheory.LocalExtField.exists_localExt_of_finiteIndex | exact GlobalTheory.LocalExtField.exists_localExt_of_finiteIndex | (intros; apply GlobalTheory.LocalExtField.exists_localExt_of_finiteIndex <;> assumption)
+  first | exact @GlobalTheory.LocalExtField.exists_localExt_of_finiteIndex
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLocalExtensionOfFiniteIndexWeilSubgroupStatement =====

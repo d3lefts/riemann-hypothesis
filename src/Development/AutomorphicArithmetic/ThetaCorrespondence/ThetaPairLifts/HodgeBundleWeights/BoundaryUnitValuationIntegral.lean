@@ -274,11 +274,7 @@ theorem nval_unit (T : CDVR) (u : T.V) (hu : IsUnit u) : nval T.V 1 (algebraMap 
 theorem exists_factor (T : CDVR) {F : Type} [Field F] (io : F →+* T.Fr) (hio : ∀ a, a ≠ 0 → vV T.V (io a) = 0) :
     ∃ φ : F →+* T.V, (algebraMap T.V T.Fr).comp φ = io := by
   first
-  | exact @_root_.GlobalTheory.LiftAndFactorization.exists_factor
-  | exact _root_.GlobalTheory.LiftAndFactorization.exists_factor
   | (apply _root_.GlobalTheory.LiftAndFactorization.exists_factor <;> assumption)
-  | (intros; apply _root_.GlobalTheory.LiftAndFactorization.exists_factor <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.LiftAndFactorization.exists_factor <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.LiftAndFactorization.exists_factor ..)
 
 end GlobalTheory.BdryUnitVal
@@ -368,7 +364,7 @@ section
 open NumberField IsDedekindDomain Module Formalism.BasicNotions Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.AllWt GlobalTheory.FlatLine GlobalTheory.CompHt GlobalTheory.FlatCore GlobalTheory.BdryUnit
 
 theorem _root_.GlobalTheory.T.boundary_unit_valuation_integral : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (Y : Model Xo c (RingHom.id c.F)) (Z : Comp Xo c) (V : (Xo.XF c).Opens) (τ : Psi H) (sig : GlobalTheory.IndefiniteRowSideFullHecke.FramedFlatCoordinates.Rule Y V τ.1) (f : Rul Xo c), (V : Set (Xo.XF c)) = Z → sig ∈ GlobalTheory.IndefiniteRowSideFullHecke.FramedFlatCoordinates.sections Y V τ.1 → GlobalTheory.IndefiniteRowSideFullHecke.FramedFlatCoordinates.VanishesNowhere sig → Reads Y V τ sig f → ∀ (T : CDVR) (io : c.F →+* T.Fr) (y₀ : IntFr Xo c T io), (∀ a, a ≠ 0 → vV T.V (io a) = 0) → (letI := io.toAlgebra; LiesOn Z y₀.1) → nval T.V 1 (evI y₀ f) = 0 := by
-  first | exact @_root_.GlobalTheory.BdryUnitVal.boundary_unit_at_integral_points | exact _root_.GlobalTheory.BdryUnitVal.boundary_unit_at_integral_points | (intros; apply _root_.GlobalTheory.BdryUnitVal.boundary_unit_at_integral_points <;> assumption)
+  first | exact @_root_.GlobalTheory.BdryUnitVal.boundary_unit_at_integral_points
 end
 end -- clump:auto
 end -- clump:auto

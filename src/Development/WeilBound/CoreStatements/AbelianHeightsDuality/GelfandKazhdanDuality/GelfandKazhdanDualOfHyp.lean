@@ -70,7 +70,7 @@ section -- clump:auto
 open NumberField IsDedekindDomain Matrix Formalism.L2.Host GlobalTheory.CuspRep GlobalTheory.ContraPair GlobalTheory.DiscSpec PositivityTheory.PRW.GKD
 
 theorem _root_.GlobalTheory.T.smooth_conjugate_inverse_mem : ∀ {E : Type} [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] {a : ℕ}, ∀ {φ : GA E a → ℂ}, φ ∈ Sm E a → (fun g => star (φ (invA E a g))) ∈ Sm E a := by
-  first | exact @GlobalTheory.CompanionTheory.DualSm.conj_invA_mem_Sm | exact GlobalTheory.CompanionTheory.DualSm.conj_invA_mem_Sm | (intros; apply GlobalTheory.CompanionTheory.DualSm.conj_invA_mem_Sm <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.DualSm.conj_invA_mem_Sm
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SmoothConjugateInverseMemStatement =====
@@ -187,7 +187,7 @@ theorem Eop_dual (τ : E →+* ℂ) (i j : Fin a) (φ : Sm E a) :
     rw [show (1 / 2 : ℂ) = ((1 / 2 : ℝ) : ℂ) by norm_num]
     exact Complex.conj_ofReal _
   simp only [Eop, e1, e2, map_neg, LinearMap.neg_apply, LinearMap.smul_apply, LinearMap.sub_apply, lieS_dual,
-    map_smulₛₗ, map_sub, c2, Complex.conj_I, neg_neg, smul_neg]
+    map_smulₛₗ, map_sub, c2, Complex.conj_I, smul_neg]
   module
 
 theorem cap_dual (τ : E →+* ℂ) (u : ℂ) (φ : Sm E a) :

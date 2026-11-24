@@ -425,7 +425,7 @@ theorem GlobalTheory.JR.WeilMix.negB_ptrB_wS_ptrB : ∀ (F E : Type) [Nontrivial
     simp [Function.uncurry, H, h0]
   have hint : Integrable (Function.uncurry H) (μ.prod μ) := hHc.integrable_of_hasCompactSupport hHs
   calc _ = ∫ x, G (-x) ∂μ := by
-        congr 1; funext x; simp only [G, neg_dotProduct, neg_neg]; rfl
+        congr 1; funext x; simp only [G, neg_dotProduct]; rfl
     _ = ∫ x, G x ∂μ := integral_neg_eq_self G μ
     _ = ∫ x, ∫ b', H x b' ∂μ ∂μ := by
         congr 1; funext x; simp only [G, H]; rw [integral_mul_const]
@@ -749,7 +749,7 @@ theorem dual_intLat (r : ℕ) (ψ : AddChar F ℂ) (hψ : IsStdChar ψ) :
       intro j
       by_cases hj : j = i
       · subst hj; simp [Unram.norm_star (F := F), he]
-      · simp [Pi.single_apply, hj]
+      · simp [hj]
     have := hy _ hx
     rwa [trForm_apply, Pi.star_single, star_star, single_dotProduct] at this
   · intro hy x hx
@@ -1153,7 +1153,7 @@ theorem diag_coe {ϖ : F} (hϖ : ϖ ≠ 0) :
       Matrix (Fin 2) (Fin 2) F) = !![ϖ, 0; 0, ϖ⁻¹] := by
   simp only [Matrix.SpecialLinearGroup.coe_mul, nS_coe, wS_coe, wS_inv_coe]
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two, hϖ] <;> field_simp <;> ring
+  fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two, hϖ] <;> field_simp
 
 theorem conj_step {ϖ : F} (hϖ : ϖ ≠ 0) (t : F) :
     (nS ϖ * ((wS F)⁻¹ * nS ϖ⁻¹ * wS F) * nS ϖ * (wS F)⁻¹)⁻¹ * nS t *
@@ -1161,7 +1161,7 @@ theorem conj_step {ϖ : F} (hϖ : ϖ ≠ 0) (t : F) :
   rw [mul_assoc, inv_mul_eq_iff_eq_mul]
   ext i j
   simp only [Matrix.SpecialLinearGroup.coe_mul, diag_coe hϖ, nS_coe]
-  fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two] <;> field_simp <;> ring
+  fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two] <;> field_simp
 
 theorem decomp (g : SpecialLinearGroup (Fin 2) F) (hc : (g : Matrix (Fin 2) (Fin 2) F) 1 0 ≠ 0) :
     g = nS (((g : Matrix (Fin 2) (Fin 2) F) 0 0 - 1) / (g : Matrix (Fin 2) (Fin 2) F) 1 0) *
@@ -1336,12 +1336,12 @@ theorem isTest_sub {X : Type} [TopologicalSpace X] {f g : X → ℂ} (hf : IsTes
 theorem wS_inv : (wS F)⁻¹ = wS F * wS F * wS F := by
   refine inv_eq_of_mul_eq_one_right (Subtype.ext ?_)
   simp only [Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_one]
-  simp [wS, Matrix.mul_fin_two, Matrix.one_fin_two]
+  simp [wS, Matrix.one_fin_two]
 
 theorem nS_inv (t : F) : (nS t)⁻¹ = nS (-t) := by
   refine inv_eq_of_mul_eq_one_right (Subtype.ext ?_)
   show (!![1, t; 0, 1] : Matrix (Fin 2) (Fin 2) F) * !![1, -t; 0, 1] = 1
-  simp [Matrix.mul_fin_two, Matrix.one_fin_two]
+  simp [Matrix.one_fin_two]
 
 
 variable (E) in

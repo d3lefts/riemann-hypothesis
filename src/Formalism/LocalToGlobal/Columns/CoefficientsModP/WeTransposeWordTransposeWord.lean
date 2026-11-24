@@ -89,8 +89,7 @@ theorem we_fock_smul_right {σ : Type} (c : ℚ) (f g : MvPolynomial σ ℚ) : f
   rw [we_fock_symm, we_fock_smul_left, we_fock_symm g]
 
 theorem we_fock_zero_right {σ : Type} (f : MvPolynomial σ ℚ) : fockQ f 0 = 0 := by
-  have := we_fock_smul_right 0 f 0
-  simpa using this
+  simpa using we_fock_smul_right (0 : ℚ) f 0
 
 theorem we_hw_norm_ne {r n : ℕ} (hn : n ≤ r) (ν : Fin n → ℕ) : fockQ (hw ℚ hn ν) (hw ℚ hn ν) ≠ 0 :=
   ne_of_gt ((fockQPos _ (hw ℚ hn ν) (hw ℚ hn ν)).2 (hwNe ℚ r n hn ν))
@@ -117,9 +116,7 @@ theorem we_fock_word {r n : ℕ} (hn : n ≤ r) (ν : Fin n → ℕ) (hν : Anti
 
 theorem we_transposeWord_transposeWord {r : ℕ} (w : List (Fin r × Fin r × ℕ)) :
     transposeWord (transposeWord w) = w := by
-  unfold transposeWord
-  rw [List.map_reverse, List.reverse_reverse, List.map_map]
-  simp [Function.comp_def]
+  simp [transposeWord, List.map_map, Function.comp_def]
 
 theorem nabla_eq_dual_weyl_holds : NablaEqDualWeyl := by
   intro r n hn ν hν
@@ -186,15 +183,13 @@ theorem weForm_apply (x y : dualWeyl ℚ r n ν) :
 
 theorem we_form_symm : (weForm hn ν).IsSymm := by
   rw [LinearMap.isSymm_def]
-  intro x y
-  rw [weForm_apply, weForm_apply, starRingEnd_apply, star_trivial, we_fock_symm]
+  simp [weForm_apply, we_fock_symm]
 
 theorem we_form_self_eq_zero (x : dualWeyl ℚ r n ν) (h : weForm hn ν x x = 0) : x = 0 := by
   rw [weForm_apply, div_eq_zero_iff] at h
   have h1 := h.resolve_right (we_hw_norm_ne hn ν)
   by_contra hx
-  have hx' : x.1 ≠ 0 := fun h0 => hx (Subtype.ext h0)
-  exact ne_of_gt ((fockQPos _ x.1 x.1).2 hx') h1
+  exact ne_of_gt ((fockQPos _ x.1 x.1).2 (fun h0 => hx (Subtype.ext h0))) h1
 
 theorem we_form_nondeg : (weForm hn ν).Nondegenerate :=
   ⟨fun x hx => we_form_self_eq_zero hn ν x (hx x), fun x hx => we_form_self_eq_zero hn ν x (hx x)⟩

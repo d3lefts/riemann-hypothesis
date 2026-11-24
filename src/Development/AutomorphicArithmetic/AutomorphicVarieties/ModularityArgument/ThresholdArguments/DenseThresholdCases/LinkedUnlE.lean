@@ -270,11 +270,11 @@ private theorem theta_tri {k : Type} [Field k] (b : GL (Fin 3) k) (hb : b.val.Bl
 
 private theorem gg_conj_pos {k : Type} [CommRing k] (x y : GG (m := 3) (R := k)) (h1 : x.right = 1) (h2 : y.right = 1) :
     (x * y * x⁻¹).left = x.left * y.left * x.left⁻¹ := by
-  simp [SemidirectProduct.mul_left, SemidirectProduct.inv_left, h1, h2, sgnAct_one]
+  simp [SemidirectProduct.mul_left, SemidirectProduct.inv_left, h1, h2]
 
 private theorem gg_conj_neg {k : Type} [CommRing k] (x y : GG (m := 3) (R := k)) (h1 : x.right = -1) (h2 : y.right = 1) :
     (x * y * x⁻¹).left = x.left * theta y.left * x.left⁻¹ := by
-  simp [SemidirectProduct.mul_left, SemidirectProduct.inv_left, h1, h2, sgnAct_neg_one, sgnAct_one, theta_theta]
+  simp [SemidirectProduct.mul_left, SemidirectProduct.inv_left, h1, h2, sgnAct_neg_one, theta_theta]
 
 section Mv
 
@@ -1377,6 +1377,7 @@ private theorem ker_eq_bot_of_orderOf {Q : Type} [CommGroup Q] [Finite Q] (χ : 
   have h4 := Subgroup.card_mul_index χ.ker
   rw [h3] at h4
   have h5 : Nat.card χ.ker = 1 := by
+    have : Nonempty Q := ⟨1⟩
     have hp : 0 < Nat.card Q := Nat.card_pos
     exact Nat.eq_of_mul_eq_mul_right hp (by rw [h4, one_mul])
   exact Subgroup.card_eq_one.1 h5
@@ -1497,13 +1498,12 @@ theorem UpperTheory.V.U3.countI :
     rw [hT, Finset.mem_biUnion]
     exact ⟨l, hl, Finset.mem_image_of_mem _ hψ⟩
   have hsumT : ∑ K' ∈ T, ((K'.index.totient : ℕ) : ℝ) ≤ (h.N : ℝ) := by
-    have hcyc : ∀ K' ∈ T, IsCyclic ((ZMod h.N)ˣ ⧸ K') := by
+    have h1 := orbSum (ZMod h.N)ˣ T (by
       intro K' hK'
       rw [hT, Finset.mem_biUnion] at hK'
       obtain ⟨l, -, hK'⟩ := hK'
       obtain ⟨ψ, -, rfl⟩ := Finset.mem_image.1 hK'
-      exact (orbFacts _ h.N ψ).2.1
-    have h1 := orbSum (ZMod h.N)ˣ T hcyc
+      exact (orbFacts _ h.N ψ).2.1)
     have h2 : Nat.card (ZMod h.N)ˣ ≤ h.N := by
       rw [Nat.card_eq_fintype_card, ZMod.card_units_eq_totient]
       exact Nat.totient_le _

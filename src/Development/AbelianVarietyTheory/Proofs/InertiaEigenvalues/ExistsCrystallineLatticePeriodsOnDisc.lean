@@ -197,7 +197,7 @@ theorem coord_mulLeft {d : ℕ} (e : Module.Basis (Fin d) ℚ_[l] V) (r : Fin d)
       (LinearMap.mulLeft ℚ_[l] c) x) = c * coord e r x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | tmul v y => simp [coord_tmul, mul_smul_comm]
+  | tmul v y => simp [coord_tmul]
   | add x y hx hy => simp only [map_add (f := _), hx, hy, mul_add]
 
 theorem coord_mem {d : ℕ} (e : Module.Basis (Fin d) ℚ_[l] V) (r : Fin d) (F : Submodule ℚ_[l] B)
@@ -294,7 +294,7 @@ theorem GlobalTheory.crysLattice_basis_mem_sum_fil_dR : ∀ (l : ℕ) [Fact l.Pr
     rw [← h2]
     by_cases hr : r = j
     · subst hr; simp
-    · simp [hr, Finsupp.single_apply, Pi.single_apply, Ne.symm hr]
+    · simp [hr]
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -395,7 +395,7 @@ theorem crd_mulLeft (bV : Module.Basis (Fin d) F V) (r : Fin d) (β : B) (z : V 
       β * crd bV r z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | tmul v x => simp [crd_tmul, mul_smul_comm]
+  | tmul v x => simp [crd_tmul]
   | add x y hx hy => simp only [map_add (f := _), hx, hy, mul_add]
 
 theorem crd_map (bV : Module.Basis (Fin d) F V) (r : Fin d) (f : V →ₗ[F] V) (σ : B →ₗ[F] B)
@@ -493,8 +493,7 @@ theorem lattice_basis_span_invariants : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [toMatrix_lat, Algebra.smul_def, map_mul, PadicInt.algebraMap_apply, T.zB]
     congr 1
-    simp only [LinearMap.restrictScalars_apply, AlgHom.toLinearMap_apply, AlgEquiv.coe_toAlgHom,
-      AlgHom.coe_coe]
+    simp only [LinearMap.restrictScalars_apply, AlgHom.toLinearMap_apply, AlgEquiv.coe_toAlgHom]
     rw [← T.actB]
     congr 1
     exact (P.PD_actB K g _).symm

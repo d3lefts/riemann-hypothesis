@@ -114,8 +114,8 @@ theorem branching_D1_le_weight_difference (n : ℕ) (lam : DomWeight (n + 1)) (s
   have h1 : Formalism.MainNotions.PrimeDegreeVariant.D1 rfl lam sg ≤ ∑ i : Fin n, (g i - g (i + 1)) := by
     unfold Formalism.MainNotions.PrimeDegreeVariant.D1
     refine Finset.sum_le_sum fun i _ => ?_
-    have a : g i = lam.w ⟨i.1, by omega⟩ := by simp [g, show i.1 < n + 1 by omega]
-    have b : g (i + 1) = lam.w ⟨i.1 + 1, by omega⟩ := by simp [g, show i.1 + 1 < n + 1 by omega]
+    have a : g i = lam.w ⟨i.1, by omega⟩ := by simp [g]
+    have b : g (i + 1) = lam.w ⟨i.1 + 1, by omega⟩ := by simp [g]
     rw [a, b]
     exact min_le_left _ _
   have h2 : ∑ i : Fin n, (g i - g (i + 1)) = g 0 - g n := by
@@ -403,7 +403,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.topNodeFormWeight_abs_le_linear : ∃ K1 : ℝ, ∀ (D : D7) (large₂ : SizeData₂ D), GlobalTheory.IndefiniteRowSideFullHecke.LevelPlusSubgroup.SizeRows large₂ → ∀ {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc), sc.cGap = 1 → ∀ τ i, |(((wt G (.top D.R.m) τ).w i : ℤ) : ℝ)| ≤ K1 * large₂.sc.b := by
-  first | exact @GlobalTheory.InfSize.WtSize.wt_top_abs_le | exact GlobalTheory.InfSize.WtSize.wt_top_abs_le | (intros; apply GlobalTheory.InfSize.WtSize.wt_top_abs_le <;> assumption)
+  first | exact @GlobalTheory.InfSize.WtSize.wt_top_abs_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TopNodeFormWeightAbsLeLinearStatement =====
@@ -539,7 +539,7 @@ theorem _root_.GlobalTheory.T.archimedean_branching_constant_bound : ∃ CF0 : �
       ∀ ch : Choice R, ch.Is → ch.AtScale CF large₂.sc.b →
         1 ≤ large₂.sc.b ∧ Real.log (∏ τ, Formalism.MainNotions.PrimeDegreeVariant.brBd ch.G.sp.topDec.rank (wt ch.G (.top D.R.m) τ)
           (listedWt ch.G (.grid D.R.m D.R.m) τ) ^ 2) ≤ K0 * D.R.f * (bigN D : ℝ) * large₂.sc.b * Real.log large₂.sc.b := by
-  first | exact @GlobalTheory.InfSize.main | exact GlobalTheory.InfSize.main | (intros; apply GlobalTheory.InfSize.main <;> assumption)
+  first | exact @GlobalTheory.InfSize.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ArchimedeanBranchingConstantBoundStatement =====
@@ -649,7 +649,7 @@ theorem _root_.GlobalTheory.T.adjugateSubstLinearEquiv_symm_mem_nabla : ∀ {E K
     (emb : ι → E →+* K) {n : ℕ} (σ : ι → DomWeight n) (M : Submodule (𝓞 E) (Fin n → E)),
     Submodule.IsLattice E M → ∀ (v : VV K fun τ => (σ τ).dual),
     v ∈ nabAtr emb (fun τ => (σ τ).dual) M → (GlobalTheory.FunObj.funEquiv σ).symm v ∈ nabAt emb σ M := by
-  first | exact @GlobalTheory.funEquiv_symm_mem_nabAt_of_nabAtr | exact GlobalTheory.funEquiv_symm_mem_nabAt_of_nabAtr | (intros; apply GlobalTheory.funEquiv_symm_mem_nabAt_of_nabAtr <;> assumption)
+  first | exact @GlobalTheory.funEquiv_symm_mem_nabAt_of_nabAtr
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjugateSubstLinearEquivSymmMemNablaStatement =====
@@ -768,7 +768,7 @@ theorem _root_.GlobalTheory.T.dualLattice_embedded_lastCoordinate_sum : ∀ {E K
     (L : Submodule (𝓞 E) (Fin N → E)),
     (∀ v, v ∈ L ↔ (fun k => v (Formalism.L2.Col.Br.iC hN k)) ∈ M ∧ ∃ c : 𝓞 E, (c : E) = v (Formalism.L2.Col.Br.iL hN)) →
     ∀ τ : ι, dualFr (tauLat emb τ L) = Formalism.L2.Col.Br.sumLat hN (dualFr (tauLat emb τ M)) 1 := by
-  first | exact @GlobalTheory.dualFr_tauLat_sumLat | exact GlobalTheory.dualFr_tauLat_sumLat | (intros; apply GlobalTheory.dualFr_tauLat_sumLat <;> assumption)
+  first | exact @GlobalTheory.dualFr_tauLat_sumLat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualLatticeEmbeddedLastCoordinateSumStatement =====
@@ -809,13 +809,13 @@ theorem latLast_isLattice : ∀ {E : Type} [Field E] [NumberField E] {n N : ℕ}
   have gm : ∀ m ∈ M, g m ∈ L := fun m hm => (hL _).2 ⟨by simpa [gC] using hm, 0, by simp [gL]⟩
   have he : e ∈ L := (hL _).2 ⟨by
       have : (fun k : Fin n => e (Fin.castSucc k)) = 0 := by
-        funext k; simp [e, Pi.single_apply, Fin.castSucc_ne_last]
+        funext k; simp [e, Fin.castSucc_ne_last]
       rw [this]; exact M.zero_mem, 1, by simp [e]⟩
   have dec : ∀ x : Fin (n + 1) → E, x = g (fun k => x (Fin.castSucc k)) + x (Fin.last n) • e := by
     intro x; ext j
     refine Fin.lastCases ?_ (fun i => ?_) j
     · simp [gL, e]
-    · simp [gC, e, Pi.single_apply, Fin.castSucc_ne_last]
+    · simp [gC, e, Fin.castSucc_ne_last]
   have hLeq : L = M.map (g.restrictScalars (𝓞 E)) ⊔ Submodule.span (𝓞 E) {e} := by
     apply le_antisymm
     · intro v hv
@@ -854,7 +854,7 @@ theorem _root_.GlobalTheory.T.isLattice_of_lastCoordinate_extension : ∀ {E : T
     (M : Submodule (𝓞 E) (Fin n → E)) (L : Submodule (𝓞 E) (Fin N → E)), Submodule.IsLattice E M →
     (∀ v, v ∈ L ↔ (fun k => v (Formalism.L2.Col.Br.iC hN k)) ∈ M ∧ ∃ c : 𝓞 E, (c : E) = v (Formalism.L2.Col.Br.iL hN)) →
     Submodule.IsLattice E L := by
-  first | exact @GlobalTheory.latLast_isLattice | exact GlobalTheory.latLast_isLattice | (intros; apply GlobalTheory.latLast_isLattice <;> assumption)
+  first | exact @GlobalTheory.latLast_isLattice
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsLatticeOfLastCoordinateExtensionStatement =====
@@ -900,7 +900,7 @@ theorem finLocal : ∀ {E K ι : Type} [Field E] [NumberField E] [Field K] [Numb
     have gm : ∀ m ∈ M, g m ∈ L := fun m hm => (hL _).2 ⟨by simpa [g] using hm, 0, by simp [g]⟩
     have he : e ∈ L := (hL _).2 ⟨by
       have : (fun k : Fin n => e (Fin.castSucc k)) = 0 := by
-        funext k; simp [e, Pi.single_apply, Fin.castSucc_ne_last]
+        funext k; simp [e, Fin.castSucc_ne_last]
       rw [this]; exact M.zero_mem, 1, by simp [e]⟩
     have hg : ∀ x : Fin n → E, g x ∈ Submodule.span E (L : Set (Fin (n + 1) → E)) := by
       intro x
@@ -913,7 +913,7 @@ theorem finLocal : ∀ {E K ι : Type} [Field E] [NumberField E] [Field K] [Numb
     apply top_unique
     intro x _
     have dec : x = g (fun k => x (Fin.castSucc k)) + x (Fin.last n) • e := by
-      ext j; refine Fin.lastCases ?_ (fun i => ?_) j <;> simp [g, e, Pi.single_apply, Fin.castSucc_ne_last]
+      ext j; refine Fin.lastCases ?_ (fun i => ?_) j <;> simp [g, e, Fin.castSucc_ne_last]
     rw [dec]
     exact Submodule.add_mem _ (hg _) (Submodule.smul_mem _ _ (Submodule.subset_span he))
   have h1 := GlobalTheory.OntoExponentsLat.exZ_sum_smul_mem_locP_delAtr E K ι N emb Λ L hLlat w u hu
@@ -985,7 +985,6 @@ theorem _root_.GlobalTheory.T.branchingPairing_integral_upToExponents : ∀ {E K
   intro E K ι _ _ _ _ _ _ emb n N hN Λ σ hI hS M L hM hL w u v hu hv
   first
   | exact GlobalTheory.BrPairLocal.finLocal emb hN Λ σ hI hS M L hM hL w u v hu hv
-  | exact GlobalTheory.BrPairLocal.finLocal emb hN Λ σ hI hS M L hM.toIsLattice hL w u v hu hv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BranchingPairingIntegralUpToExponentsStatement =====
@@ -1622,7 +1621,7 @@ theorem _root_.GlobalTheory.T.placeValuation_localDegree_arithmetic : ∀ {K : T
     (∀ d : ℕ, 0 < d → {w : HeightOneSpectrum (𝓞 K) | Formalism.DivisionValues.vw w (d : K) ≠ 0}.Finite) ∧
     (∀ d : ℕ, 0 < d → ∀ s : Finset (HeightOneSpectrum (𝓞 K)),
       ∑ w ∈ s, Formalism.DivisionValues.lw w * (Formalism.DivisionValues.vw w (d : K) : ℝ) ≤ Real.log d) := by
-  first | exact @GlobalTheory.vw_lw_arith | exact GlobalTheory.vw_lw_arith | (intros; apply GlobalTheory.vw_lw_arith <;> assumption)
+  first | exact @GlobalTheory.vw_lw_arith
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PlaceValuationLocalDegreeArithmeticStatement =====
@@ -1817,7 +1816,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 
 theorem _root_.GlobalTheory.T.field_pair_comparison : _root_.GlobalTheory.FunPr.ThetaLocalInputs → FinPairK ∧ InfPairK := by
-  first | exact @_root_.GlobalTheory.FPair.lift_splits_locally | exact _root_.GlobalTheory.FPair.lift_splits_locally | (intros; apply _root_.GlobalTheory.FPair.lift_splits_locally <;> assumption)
+  first | exact @_root_.GlobalTheory.FPair.lift_splits_locally
 end
 end -- clump:auto
 end -- clump:auto

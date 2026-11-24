@@ -262,7 +262,7 @@ open Formalism.IndefR.RecTie Formalism.IndefR.Lev Formalism.L2.Rows GlobalTheory
 
 theorem _root_.GlobalTheory.T.exists_algebraicRoots_coeffFieldContainsTwistValues : ∃ Sv : ∀ P : Pre, Set (Formalism.L2.Host.HChar P.host.E) → Finset ℂ, (∀ P Ξ, ∀ z ∈ Sv P Ξ, IsAlgebraic ℚ z) ∧
   ∀ (B : Base) (px : PreX B.toPre) (I : Col2.ColIn B px), I.Ok → (∀ z ∈ Sv B.toPre (Set.range I.xi), z ∈ B.LLC) → ValsIn I := by
-  first | exact @GlobalTheory.Mem.Col2.exists_roots_valsIn | exact GlobalTheory.Mem.Col2.exists_roots_valsIn | (intros; apply GlobalTheory.Mem.Col2.exists_roots_valsIn <;> assumption)
+  first | exact @GlobalTheory.Mem.Col2.exists_roots_valsIn
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsAlgebraicRootsCoeffFieldContainsTwistValueStatement =====
@@ -516,7 +516,7 @@ theorem _root_.GlobalTheory.T.exists_finite_algebraic_set_heckeFields_split : �
       (∀ z ∈ s, z ∈ B.LLC) → ∀ a : I.ι,
         Formalism.L2.Col.HeckeFieldsInAll (rowPts B.wts I.Ch I.sel (I.tup a)) ∅ ∧
           ∀ j : Fin B.R.m, Formalism.L2.Col.HeckeFieldsInAll (liftPts B.wts I.Ch I.sel (I.tup a) (j.1 + 1)) ∅ := by
-  first | exact @GlobalTheory.Mem.HFld.Transp.transp | exact GlobalTheory.Mem.HFld.Transp.transp | (intros; apply GlobalTheory.Mem.HFld.Transp.transp <;> assumption)
+  first | exact @GlobalTheory.Mem.HFld.Transp.transp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsFiniteAlgebraicSetHeckeFieldsSplitStatement =====
@@ -735,7 +735,7 @@ theorem _root_.GlobalTheory.T.exists_finite_columnConfigurations_witnesses : ∀
     (∀ i, (Wt i).1.fields.Ok ∧ (Wt i).2.2.Ok) ∧
     ∀ (B : Base) (px : PreX B.toPre) (I : Col2.ColIn B px), B.fields.Ok → I.Ok → B.toPre = P → HEq I.C f → B.KsC = F →
       B.fixedCoefficientFieldInComplex = F₀ → HEq (Set.range I.xi) Ξ → ∃ i, GlobalTheory.Mem.HFld.SameCfg B px I (Wt i).1 (Wt i).2.1 (Wt i).2.2 := by
-  first | exact @GlobalTheory.Mem.HFld.exists_finite_cfg | exact GlobalTheory.Mem.HFld.exists_finite_cfg | (intros; apply GlobalTheory.Mem.HFld.exists_finite_cfg <;> assumption)
+  first | exact @GlobalTheory.Mem.HFld.exists_finite_cfg
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsFiniteColumnConfigurationsWitnessesStatement =====
@@ -815,7 +815,7 @@ theorem _root_.GlobalTheory.T.exists_coefficientField_contains_heckeEigenvalues 
     (∀ z ∈ So B.toPre I.C B.KsC B.fixedCoefficientFieldInComplex (Set.range I.xi), z ∈ B.LLC) → ∀ a : I.ι,
       Formalism.L2.Col.HeckeFieldsInAll (rowPts B.wts I.Ch I.sel (I.tup a)) ∅ ∧
         ∀ j : Fin B.R.m, Formalism.L2.Col.HeckeFieldsInAll (liftPts B.wts I.Ch I.sel (I.tup a) (j.1 + 1)) ∅ := by
-  first | exact @GlobalTheory.Mem.HFld.heckeFields | exact GlobalTheory.Mem.HFld.heckeFields | (intros; apply GlobalTheory.Mem.HFld.heckeFields <;> assumption)
+  first | exact @GlobalTheory.Mem.HFld.heckeFields
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsCoefficientFieldContainsHeckeEigenvaluesStatement =====
@@ -834,7 +834,7 @@ open Formalism.IndefR.RecTie Formalism.IndefR.Lev Formalism.L2.Rows GlobalTheory
 theorem _root_.GlobalTheory.T.rowsLifts_heckeOperators_commute : ∀ (B : Base) (px : PreX B.toPre) (I : Col2.ColIn B px), B.fields.Ok → I.Ok → ∀ a : I.ι,
   Formalism.L2.Col.HeckeCommAll (rowPts B.wts I.Ch I.sel (I.tup a)) ∅ ∧
     ∀ j : Fin B.R.m, Formalism.L2.Col.HeckeCommAll (liftPts B.wts I.Ch I.sel (I.tup a) (j.1 + 1)) ∅ := by
-  first | exact @GlobalTheory.Mem.R3.Comm.rows_lifts_comm | exact GlobalTheory.Mem.R3.Comm.rows_lifts_comm | (intros; apply GlobalTheory.Mem.R3.Comm.rows_lifts_comm <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.Comm.rows_lifts_comm
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RowsLiftsHeckeOperatorsCommuteStatement =====

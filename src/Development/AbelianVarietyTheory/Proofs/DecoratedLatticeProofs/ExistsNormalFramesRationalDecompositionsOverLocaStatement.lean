@@ -151,7 +151,7 @@ theorem val_hz {a : XGeo D} (y : YRat a) (q : SplitPt D k) (hU : q.UnitAA) {PP :
     intro j h
     change valuation k (q.pr (incA D (star (y.bes j 0 h).ζ ⬝ᵥ (y.bes j 0 h).L.gram *ᵥ (y.bes j 0 h).ζ))) = 1
     have h3 := congrArg (fun x => valuation k (q.pr (incA D x))) (tau_norm y hT j h)
-    simp only [hn, map_mul, map_neg, map_pow, Valuation.map_neg, Valuation.map_pow, star_neg, star_pow, hx, hs, hN,
+    simp only [hn, map_mul, map_neg, map_pow, Valuation.map_neg, star_neg, star_pow, hx, hs, hN,
       one_pow, one_mul, mul_one] at h3
     exact h3
   | succ σ ih =>
@@ -237,7 +237,7 @@ open scoped TensorProduct Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_normalFrames_rationalDecompositions_over_local : ∀ {D : D7} (a : XGeo D) (y : YRat a) {βT : GL (Fin D.sp.X'.rank) (Lev.EAf D)} {PP : Pl D.host.E} (l : LocX a βT PP) (n : ℕ), y.Tau (-D.host.xi0 ^ (D.R.m / 2)) → star a.ζ₀ ⬝ᵥ a.Lz.gram *ᵥ a.ζ₀ = ((n : ℕ) : D.host.E) → ((n : ℕ) : 𝓞 D.host.E) ∉ PP.asIdeal → ∃ (FY : FYFam l) (sc : ℕ → l.k), IsNormalFr l y FY sc := by
-  first | exact @GlobalTheory.Fam.FramesY.normalFrames_exist | exact GlobalTheory.Fam.FramesY.normalFrames_exist | (intros; apply GlobalTheory.Fam.FramesY.normalFrames_exist <;> assumption)
+  first | exact @GlobalTheory.Fam.FramesY.normalFrames_exist
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsNormalFramesRationalDecompositionsOverLocaStatement =====

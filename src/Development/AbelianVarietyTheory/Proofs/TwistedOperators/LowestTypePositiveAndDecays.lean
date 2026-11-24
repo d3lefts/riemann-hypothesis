@@ -570,7 +570,7 @@ theorem inner_fderiv_ps : ∀ (n : ℕ) (ε : Fin n → Bool) (lam : Fin n → �
     have hl : HasDerivAt (fun s : ℂ => (toMK k)⁻¹ * (z + s • A) * toMK k) ((toMK k)⁻¹ * A * toMK k) t := by
       have e : (fun s : ℂ => (toMK k)⁻¹ * (z + s • A) * toMK k) =
           fun s => (toMK k)⁻¹ * z * toMK k + s • ((toMK k)⁻¹ * A * toMK k) := by
-        funext s; simp [mul_add, add_mul, Matrix.mul_smul, Matrix.smul_mul]
+        funext s; simp [mul_add, add_mul]
       rw [e]
       have h := ((hasDerivAt_id' t).smul_const ((toMK k)⁻¹ * A * toMK k)).const_add ((toMK k)⁻¹ * z * toMK k)
       rw [one_smul] at h
@@ -991,7 +991,6 @@ theorem ps_exp_pos_bound_analytic : ∀ (n : ℕ) (ε : Fin n → Bool) (lam : F
       rw [integral_congr_ae (Eventually.of_forall hre)]
       first
         | exact integral_complex_ofReal
-        | exact integral_ofReal
     rw [hI]
     refine mul_nonneg (Nat.cast_nonneg _) (Complex.zero_le_real.2 (integral_nonneg fun k => ?_))
     exact (Complex.le_def.1 (hF k)).1
@@ -1003,7 +1002,7 @@ theorem ps_exp_pos_bound_analytic : ∀ (n : ℕ) (ε : Fin n → Bool) (lam : F
     · rw [h0, norm_zero]; positivity
     have hb := norm_inner_ps_exp_le_decHS_mul hlam hτ hgap hX u (T u)
     rw [inner_self_eq_norm_sq_to_K] at hb
-    simp only [norm_pow, RCLike.norm_ofReal, Complex.norm_real, Real.norm_eq_abs, abs_norm] at hb
+    simp only [norm_pow, RCLike.norm_ofReal, abs_norm] at hb
     have hpos : 0 < ‖T u‖ := norm_pos_iff.2 h0
     nlinarith
   ·
@@ -1217,7 +1216,7 @@ theorem fderiv_tau_thE {abelian₂ Λ : Fin n → ℝ} {u : V} (hτ : IsTau ε a
     ext c d
     simp only [S, T, Matrix.map_apply, Matrix.sub_apply, Matrix.add_apply, Matrix.smul_apply,
       Matrix.single_apply]
-    split_ifs <;> simp <;> ring
+    split_ifs <;> simp
   have hBm : (Complex.I • (S + T)).map star = (-Complex.I) • S + (-Complex.I) • T := by
     ext c d
     simp only [S, T, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, Matrix.single_apply]
@@ -1709,7 +1708,7 @@ theorem of_trivial (R : DSRep T) (hker : ∀ x, T.cov x = 1 → R.U.π x = 1) {l
       by_cases hcd : b = c ∧ a = d
       · obtain ⟨rfl, rfl⟩ := hcd
         cases a <;> cases b <;> simp [Formalism.REAL.sgn, hb.1, hb.2.1, Eab]
-      · simp [Eab, Matrix.single_apply, hcd]
+      · simp [Eab, hcd]
     rw [h3, map_smul, LinearMap.smul_apply, map_smul, inner_smul_right] at h2
     simp only [hE, unitOp, Equiv.symm_apply_apply]
     exact h2

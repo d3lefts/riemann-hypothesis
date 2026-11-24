@@ -94,10 +94,10 @@ private theorem infGL_scalar {F : Type} [Field F] [NumberField F] [IsTotallyReal
   refine ga_ext ?_ ?_
   · rw [TR.pInf_infGL]
     ext i j
-    by_cases e : i = j <;> simp [Matrix.diagonal_apply, e, h1]
+    by_cases e : i = j <;> simp [e, h1]
   · rw [TR.pFin_infGL]
     ext i j
-    by_cases e : i = j <;> simp [Matrix.diagonal_apply, e, h2]
+    by_cases e : i = j <;> simp [e, h2]
 
 private theorem fin_expU {F : Type} [Field F] [NumberField F] [IsTotallyReal F] {ω : HChar F} (h : IsOfFinOrder ω)
     (z : Rinf F) : ω.1 (infId F (expU z)) = 1 := by
@@ -303,7 +303,7 @@ theorem rels (k : UpperTheory.V.TR.Kinf F 2) (w : InfinitePlace F) :
   have b1 := e _ _ hB 0 0
   have b2 := e _ _ hB 1 1
   have b3 := e _ _ hB 0 1
-  simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.one_apply] at a1 a2 a3 b1 b2 b3
+  simp [Matrix.mul_apply, Fin.sum_univ_two] at a1 a2 a3 b1 b2 b3
   exact ⟨a1, a2, a3, b1, b2, b3⟩
 
 theorem arch_rot (k : UpperTheory.V.TR.Kinf F 2) (X Y : UpperTheory.V.TR.Rinf F) :
@@ -1132,7 +1132,7 @@ theorem phi_eq {c : HeightOneSpectrum (𝓞 F) → ℕ} (hc : {w | c w ≠ 0}.Fi
   funext x
   rw [schwartzBruhatTensor2, hφ, gFin, finiteTensor2_apply, Phi]
   simp only [infPart, finPart, toR_homeomorphMixedSpace, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.head_cons, cosetIndicator_apply, sub_zero]
+    cosetIndicator_apply, sub_zero]
   congr 1
   have h0 := mem_nId_iff hc (pFin F (x 0))
   have h1 := mem_nId_iff hc (pFin F (x 1) - 1)
@@ -1161,8 +1161,7 @@ theorem fourier_phi {c : HeightOneSpectrum (𝓞 F) → ℕ} (hc : {w | c w ≠ 
   rw [phi_eq hc φ hφ, adelicFourier2_schwartzBruhatTensor2, schwartzBruhatTensor2,
     mixedFourier2Schwartz_apply, hφ', mixedFourier2_arch, gFin, finiteFourier2_finiteTensor2,
     finiteTensor2_apply]
-  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
-    finiteFourier_cosetIndicator, zero_mul, one_mul, AddChar.map_zero_eq_one, Circle.coe_one,
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, finiteFourier_cosetIndicator, zero_mul, one_mul, AddChar.map_zero_eq_one, Circle.coe_one,
     infPart, finPart, toR_homeomorphMixedSpace, PhiH, cst]
   have h0 := mem_dual_iff hc (pFin F (y 0))
   have h1 := mem_dual_iff hc (pFin F (y 1))
@@ -1179,7 +1178,7 @@ theorem fourier_phi {c : HeightOneSpectrum (𝓞 F) → ℕ} (hc : {w | c w ≠ 
     simp only [Set.indicator_apply, SetLike.mem_coe, a, b, if_true, if_false, Pi.one_apply]
     ring
   · rw [if_neg (fun h => a (h0.1 fun w => (h w).1))]
-    simp only [Set.indicator_apply, SetLike.mem_coe, a, b, if_true, if_false, Pi.one_apply]
+    simp only [Set.indicator_apply, SetLike.mem_coe, a, b, if_false, Pi.one_apply]
     ring
 
 theorem rowA_zero : rowA (0 : Fin 2 → F) = 0 := by
@@ -1361,7 +1360,7 @@ theorem pInf_vecMul (w : HeightOneSpectrum (𝓞 F)) (k : GL (Fin 2) (w.adicComp
     congrArg (fun M : GL (Fin 2) (UpperTheory.V.TR.Rinf F) => (M : Matrix (Fin 2) (Fin 2) (UpperTheory.V.TR.Rinf F)) a b) hK
 
   simp only [Matrix.vecMul, dotProduct, map_sum, map_mul, hKij]
-  fin_cases i <;> simp [Fin.sum_univ_two, Matrix.one_apply]
+  fin_cases i <;> simp [Matrix.one_apply]
 
 theorem pLoc_vecMul (w v : HeightOneSpectrum (𝓞 F)) (k : GL (Fin 2) (w.adicCompletion F)) (x : Fin 2 → Ad F)
     (i : Fin 2) :

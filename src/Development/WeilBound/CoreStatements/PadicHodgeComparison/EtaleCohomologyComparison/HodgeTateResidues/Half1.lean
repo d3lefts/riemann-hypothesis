@@ -1114,8 +1114,10 @@ theorem h1_lift_galois : ∀ {M : Model l K} {r j : ℕ} {v : M.T j} {x : Fam M 
     r n j (e M n j (v.lev n))
   change _ = (tMor ht ((B.schFn M.p).pt (okToOC l K)) r n).pull j
     (e M n j ((z • M.actT j σ v).lev n))
-  simpa only [galS, hx.2 n, hgal, e_smul e M j n z (M.actT j σ v), hz, hequi, LinearMap.map_smul] using
-    β_galF (B.schFn M.p) (okToOC l K) τ (galOC_okToOC τ) r n j (x n)
+  unfold galS
+  rw [β_galF (B.schFn M.p) (okToOC l K) τ (galOC_okToOC τ) r n j (x n),
+    hx.2 n, hgal, ← hz, ← hequi, ← LinearMap.map_smul,
+    ← e_smul e M j n z (M.actT j σ v)]
 
 theorem h1_lift_naturality : ∀ {M N : Model l K} (u : M.X ⟶ N.X) (hu : u ≫ N.p = M.p) {r j : ℕ} {v : N.T j} {x : Fam N r j},
     IsLift ht e r v x → IsLift ht e r (Model.pullT u hu j v) (pullS u hu x) := by
@@ -1125,8 +1127,8 @@ theorem h1_lift_naturality : ∀ {M N : Model l K} (u : M.X ⟶ N.X) (hu : u ≫
       (pullMor ((B.schMap u hu).pt (okToOC l K)) n).pull j (e N n j (v.lev n)) :=
     he.good.nat M N u hu n j (v.lev n)
   have hpull := pullT_tMor ht ((B.schMap u hu).pt (okToOC l K)) r n j (e N n j (v.lev n))
-  simpa only [pullS, hx.2 n, hpull, hnat] using
-    β_pullF (okToOC l K) (B.schMap u hu) r n j (x n)
+  unfold pullS
+  rw [β_pullF (okToOC l K) (B.schMap u hu) r n j (x n), hx.2 n, hpull, ← hnat]
 
 end CrystallineSemistableComparison.HT
 end -- clump:auto

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local dynamic-cache acceptance: actual stock fetch/restore, no external service."""
+"""Local dynamic-cache acceptance: actual stock registration/unpack, file:// downloads, no external service."""
 import copy
 import gzip
 import importlib.util
@@ -80,7 +80,7 @@ revisionEndpoint = "https://example.invalid/revisions"
         mapping = client.canonical("2026-03-17") + b"\n" + client.canonical([input_hash, artifact]) + b"\n"
         header = {"schema": 1, **identity, "input_fingerprint": client.fingerprint(identity),
                   "map_sha256": client.digest(mapping), "modules": 1}
-        row = ["Subject", input_hash, artifact, client.restore.sha256(archive)]
+        row = ["Subject", input_hash, artifact, client.digest(archive.read_bytes())]
         manifest = gzip.compress(client.canonical(header) + b"\n" + client.canonical(row) + b"\n", mtime=0)
         record = {"schema": 1, "repository": client.REPOSITORY, **identity,
                   "candidate_head": head, "candidate_tree": run(root, "git", "rev-parse", "HEAD^{tree}"),
@@ -102,11 +102,34 @@ revisionEndpoint = "https://example.invalid/revisions"
         selected = client.find_record(root, identity, fetcher=fetch)
         assert selected == record and requests == [index]
         shutil.rmtree(root / ".lake/build")
-        client.consume(root, cache, selected, identity, workers=2, fetcher=fetch)
+        # A checkout that was built before has X.hash beside X. Lake reads it instead of hashing X.
+        stale = [lib / "Subject.olean.hash", lib / "Subject.ilean.hash", ir / "Subject.c.hash"]
+        for path in stale:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("0" * 16)
+        # Downloads come from a file:// copy of the public layout; the local copy starts corrupt.
+        public = root / "public-fixture"
+        published = public / "artifacts" / client.REPOSITORY / (artifact[:-5] + ".art")
+        published.parent.mkdir(parents=True)
+        shutil.copy(archive, published)
+        archive.chmod(0o644)
+        archive.write_bytes(b"corrupt")
+        with patch.object(client, "PUBLIC_BASE", public.as_uri()):
+            client.consume(root, cache, selected, identity, fetcher=fetch)
+        assert client.digest(archive.read_bytes()) == row[3]
+        # Lake's unpack clears them; any it writes afterwards describe the restored files.
+        assert not any(path.exists() and path.read_text() == "0" * 16 for path in stale)
         for ext, data in originals.items():
             assert (ir if ext == "c" else lib).joinpath("Subject." + ext).read_bytes() == data
         assert "up-to-date" in run(root, "lake", "--no-build", "--rehash", "build", "Subject")
         assert requests == [index, record["map_key"], record["module_manifest_key"]]
+        # A published artifact whose bytes differ from the manifest's SHA-256 is never accepted.
+        shutil.rmtree(root / ".lake/build")
+        archive.unlink()
+        published.write_bytes(b"tampered")
+        with patch.object(client, "PUBLIC_BASE", public.as_uri()):
+            rejects(lambda: client.consume(root, cache, selected, identity, fetcher=fetch))
+        assert not archive.exists()
         # A newly seeded stock-release baseline works before any CI receipt exists.
         baseline_map = f"revisions/{client.REPOSITORY}/tc/{client.settings.TOOLCHAIN_DIR}/{head}.jsonl"
         baseline_manifest = f"bootstrap/{head}/modules.jsonl.gz"
@@ -153,7 +176,7 @@ revisionEndpoint = "https://example.invalid/revisions"
         source.write_bytes(original)
         (root / "src/Untracked.lean").write_text("--untracked\n")
         rejects(lambda: client.current_identity(root))
-    print("PASS dynamic CI client: actual stock get/restore, docs ancestors, exact metadata, corrupt blobs, traversal and dirty sources")
+    print("PASS dynamic CI client: actual stock registration/unpack, SHA-256 checked downloads, docs ancestors, exact metadata, corrupt blobs, traversal and dirty sources")
 
 
 if __name__ == "__main__":

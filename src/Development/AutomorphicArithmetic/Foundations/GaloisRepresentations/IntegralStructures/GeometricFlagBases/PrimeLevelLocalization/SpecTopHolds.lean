@@ -268,7 +268,7 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pCharConj_of :
         z ^ n * (-1) ^ n * (Matrix.scalar (Fin n) (((s : ℚ) : ℂ) / z) - A).det := by
       have e1 : (Matrix.scalar (Fin n) z - Bᵀ) * Q * A = Q * (z • A - ((s : ℚ) : ℂ) • 1) := by
         rw [Matrix.scalar_apply, ← Matrix.smul_one_eq_diagonal, sub_mul, sub_mul, hrel, mul_sub]
-        simp [smul_mul_assoc, mul_smul_comm]
+        simp
       have e2 : (Matrix.scalar (Fin n) z - B).det = (Matrix.scalar (Fin n) z - Bᵀ).det := by
         rw [← Matrix.eval_charpoly, ← Matrix.eval_charpoly, Matrix.charpoly_transpose]
       have e3 : z • A - ((s : ℚ) : ℂ) • (1 : Matrix (Fin n) (Fin n) ℂ) =
@@ -1403,7 +1403,7 @@ private theorem iw_of_cong {w : Plc E} (a g : GLw n w) (ha : a ∈ KGL w (n := n
   have c2 := sub_lt_of_conj a g⁻¹ ha h'
   refine ((GlobalTheory.CompanionTheory.IwEntries.iwGL_KGL_entries E w n g).1).2 ⟨le_one_of_sub_lt c1, le_one_of_sub_lt c2, fun i j hij => ?_⟩
   have e : g.val i j = (g.val - 1) i j := by
-    simp [Matrix.one_apply, (ne_of_lt hij).symm]
+    simp [(ne_of_lt hij).symm]
   rw [e]
   exact c1 i j
 

@@ -98,7 +98,6 @@ private theorem mem_weightSp_iff_forall_diag {n : ℕ} {K V : Type*} [Field K] [
     LinearMap.smul_apply, sub_eq_zero]
   first
   | simp only [Module.End.one_apply]
-  | simp only [LinearMap.one_apply]
 
 private theorem glRep_apply_mem_weightSp_shift {n : ℕ} {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
     (E : GLOps n K V) (hE : IsGLRep E) (a b : Fin n) (ν : Fin n → ℤ) (y : V)
@@ -114,30 +113,26 @@ private theorem glRep_apply_mem_weightSp_shift {n : ℕ} {K V : Type*} [Field K]
   · subst hca
     by_cases hcb : c = b
     · subst hcb
-      simp only [eq_self_iff_true, if_true]
+      simp only [if_true]
       push_cast
       first
       | module
-      | (simp [add_smul, sub_smul])
     · have hbc : ¬ b = c := fun h => hcb h.symm
-      simp only [eq_self_iff_true, if_true, if_neg hbc, if_neg hcb, LinearMap.zero_apply, sub_zero]
+      simp only [if_true, if_neg hbc, if_neg hcb, LinearMap.zero_apply, sub_zero]
       push_cast
       first
       | module
-      | (simp [add_smul, sub_smul]; abel)
   · by_cases hcb : c = b
     · subst hcb
-      simp only [eq_self_iff_true, if_true, if_neg hca, LinearMap.zero_apply, zero_sub]
+      simp only [if_true, if_neg hca, LinearMap.zero_apply, zero_sub]
       push_cast
       first
       | module
-      | (simp [add_smul, sub_smul]; abel)
     · have hbc : ¬ b = c := fun h => hcb h.symm
       simp only [if_neg hca, if_neg hbc, if_neg hcb, LinearMap.zero_apply, sub_zero, zero_add]
       push_cast
       first
       | module
-      | simp
 
 private theorem glRep_pow_apply_mem_weightSp_shift {n : ℕ} {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
     (E : GLOps n K V) (hE : IsGLRep E) (a b : Fin n) (k : ℕ) (ν : Fin n → ℤ) (y : V)
@@ -160,8 +155,6 @@ private theorem ppFac_apply_mem_weightSp_of_mem {n : ℕ} {K V : Type*} [Field K
   unfold ppFac
   first
   | rw [LinearMap.sum_apply]
-  | rw [LinearMap.coe_sum, Finset.sum_apply]
-  | rw [LinearMap.coe_fn_sum, Finset.sum_apply]
   refine Submodule.sum_mem _ fun k _ => ?_
   simp only [divPowE, LinearMap.smul_apply, Module.End.mul_apply, map_smul]
   refine Submodule.smul_mem _ _ (Submodule.smul_mem _ _ (Submodule.smul_mem _ _ ?_))
@@ -383,7 +376,6 @@ theorem comm_pow {R : Type*} [Ring R] {x y z : R} (h : x * y = y * x + z) (hz : 
             succ_nsmul (y ^ (k + 1) * z) (k + 1)]
           first
           | abel
-          | rw [add_assoc, add_comm (y ^ (k + 1) * z)]
 
 section
 
@@ -396,14 +388,10 @@ theorem pf_eq (E : GLOps n K V) (a b : Fin n) (s T : ℕ) :
     pf E a b s T = ∑ k ∈ Finset.range (T + 1), cA K s k • ((E b a) ^ k * (E a b) ^ k) := by
   first
   | simp only [pf, cA]
-  | unfold pf cA
   refine Finset.sum_congr rfl fun k _ => ?_
   unfold divPowE
   first
   | rw [smul_mul_smul_comm, smul_smul]
-  | simp only [smul_mul_smul_comm, smul_smul]
-  | simp only [smul_mul_assoc, mul_smul_comm, smul_smul, mul_assoc]
-  | simp [smul_smul, mul_assoc, mul_comm, mul_left_comm]
 
 theorem cA_succ [CharZero K] (s k : ℕ) :
     ((k + 1 : ℕ) : K) * cA K s (k + 1) = - ((s : K) + 1)⁻¹ * cA K (s + 1) k := by
@@ -841,7 +829,7 @@ theorem cartan_lowering_commute {E : GLOps n K V} (hE : IsGLRep E) {a b : Fin n}
     (E a a - E b b) * E b a = E b a * (E a a - E b b) - (2 : K) • E b a := by
   have h1 := hE.1 a a b a
   have h2 := hE.1 b b b a
-  simp only [if_true, if_neg hab, if_neg (Ne.symm hab), sub_zero, zero_sub] at h1 h2
+  simp only [if_true, if_neg hab, sub_zero, zero_sub] at h1 h2
   rw [sub_mul, mul_sub, two_smul, eq_add_of_sub_eq' h1, eq_add_of_sub_eq' h2]
   abel
 
@@ -889,7 +877,7 @@ theorem projector_factor_mem_weight_space {E : GLOps n K V} (hs : OperatorsShift
   have h1 := hpow b a k _ _ (hpow a b k ν x hx)
   have e : ν + k • rootW a b + k • rootW b a = ν := by
     ext i
-    simp only [Pi.add_apply, Pi.smul_apply, rootW, Pi.sub_apply, smul_eq_mul]
+    simp only [Pi.add_apply, Pi.smul_apply, rootW, Pi.sub_apply]
     ring
   rwa [e] at h1
 
@@ -1183,7 +1171,7 @@ private theorem idxOf_append_eq_length_add_of_not_mem (l1 l : List α) (x : α) 
       rintro rfl
       exact hx (by simp)
     have ht : x ∉ t := fun h => hx (by simp [h])
-    simp [List.idxOf_cons, hax, ih ht] <;> omega
+    simp [hax, ih ht] <;> omega
 
 theorem idxOf_append_first (l1 l2 : List α) (x : α) (hx : x ∉ l1) : (l1 ++ x :: l2).idxOf x = l1.length := by
   rw [idxOf_append_eq_length_add_of_not_mem l1 _ x hx]
@@ -1192,12 +1180,12 @@ theorem idxOf_append_first (l1 l2 : List α) (x : α) (hx : x ∉ l1) : (l1 ++ x
 theorem idxOf_append_second (l1 l2 : List α) (x y : α) (hxy : x ≠ y) (hy : y ∉ l1) :
     (l1 ++ x :: y :: l2).idxOf y = l1.length + 1 := by
   rw [idxOf_append_eq_length_add_of_not_mem l1 _ y hy]
-  simp [List.idxOf_cons, hxy]
+  simp [hxy]
 
 theorem idxOf_append_third (l1 l2 : List α) (x y z : α) (hxz : x ≠ z) (hyz : y ≠ z) (hz : z ∉ l1) :
     (l1 ++ x :: y :: z :: l2).idxOf z = l1.length + 2 := by
   rw [idxOf_append_eq_length_add_of_not_mem l1 _ z hz]
-  simp [List.idxOf_cons, hxz, hyz]
+  simp [hxz, hyz]
 
 theorem cn_idx_lt (l1 l2 : List α) (u : α) (hu : u ∈ l1) : (l1 ++ l2).idxOf u < l1.length := by
   induction l1 with
@@ -1211,7 +1199,7 @@ theorem cn_idx_lt (l1 l2 : List α) (u : α) (hu : u ∈ l1) : (l1 ++ l2).idxOf 
         · exact absurd h'.symm h
         · exact h'
       have := ih hu'
-      simp [List.idxOf_cons, h]
+      simp [h]
       omega
 
 end Pos
@@ -1227,11 +1215,11 @@ private theorem eq_of_idxOf_eq_of_mem {β : Type*} [BEq β] [LawfulBEq β] (l : 
     · by_cases hav : a = v
       · exact hau.symm.trans hav
       · subst hau
-        simp [List.idxOf_cons, hav] at h
+        simp [hav] at h
     · by_cases hav : a = v
       · subst hav
-        simp [List.idxOf_cons, hau] at h
-      · simp [List.idxOf_cons, hau, hav] at h
+        simp [hau] at h
+      · simp [hau, hav] at h
         have hu' : u ∈ t := (List.mem_cons.mp hu).resolve_left (fun h' => hau h'.symm)
         have hv' : v ∈ t := (List.mem_cons.mp hv).resolve_left (fun h' => hav h'.symm)
         exact ih hu' hv' h
@@ -1434,14 +1422,12 @@ theorem cn_front {j : ℕ} {l : List (Fin n × Fin n)} (h : NO n j l) (a b : Fin
   cases lF with
   | nil =>
     exfalso
-    have hA := hNO.2.2.1 a b (by omega) (by omega)
-    exact hG _ (by simpa using hA) ha
+    exact hG _ (by simpa using hNO.2.2.1 a b (by omega) (by omega)) ha
   | cons f lF' =>
     obtain ⟨a', d⟩ := f
     have ha' : a'.val = j := hF (a', d) List.mem_cons_self
     obtain rfl : a' = a := Fin.ext (by omega)
-    have hd := (hNO.2.1 (a', d) (by simp)).2
-    simp only at hd
+    have hd : a'.val < d.val := (hNO.2.1 (a', d) (by simp)).2
     have hdb : d = b := by
       by_contra hne
       have hne' : d.val ≠ b.val := fun h' => hne (Fin.ext h')
@@ -1458,7 +1444,7 @@ private lemma idxOf_append_of_not_mem_beq {α : Type} [BEq α] [LawfulBEq α] (l
   | cons y t ih =>
     have hxy : y ≠ x := fun h => hx (h ▸ List.mem_cons_self)
     have hxt : x ∉ t := fun h => hx (List.mem_cons_of_mem _ h)
-    simp [List.idxOf_cons, ih hxt, hxy] <;> omega
+    simp [ih hxt, hxy] <;> omega
 
 theorem cn_NO_drop {j : ℕ} {lF lG : List (Fin n × Fin n)} (h : NO n j (lF ++ lG)) (hF : ∀ r ∈ lF, r.1.val = j)
     (hG : ∀ r ∈ lG, r.1.val ≠ j) : NO n (j + 1) lG := by
@@ -1498,10 +1484,8 @@ theorem cn_iter {ord : List (Fin n × Fin n)} (h : NO n 0 ord) :
   | succ j ih =>
     obtain ⟨l', R, hs, hno⟩ := ih
     obtain ⟨l'', R', hs', hno'⟩ := cn_back hno
-    refine ⟨l'', R' ++ R, ?_, hno'⟩
-    have h2 := cn_steps_tail hs' R
-    rw [List.append_assoc] at h2
-    exact hs.trans h2
+    exact ⟨l'', R' ++ R,
+      hs.trans (by simpa [List.append_assoc] using cn_steps_tail hs' R), hno'⟩
 
 theorem restConn : RestConn := by
   intro n ord hord a b hab

@@ -1077,7 +1077,6 @@ theorem frechet (n : ℕ) (ε : Fin n → Bool) (X : GMod n) (c : X.V →ₗ[ℂ
     refine h1.congr_of_eventuallyEq (Eventually.of_forall fun t => ?_)
     show c u (g * NormedSpace.exp ((t : ℂ) • Y)) = c u (g * NormedSpace.exp ((s : ℂ) • Y) * NormedSpace.exp (((t - s : ℝ) : ℂ) • Y))
     rw [Matrix.mul_assoc, ← Matrix.exp_add_of_commute _ _ (((Commute.refl Y).smul_left _).smul_right _), ← add_smul]
-    congr 4
     push_cast
     ring_nf
   have hbd : ∀ s ∈ Icc (0:ℝ) 1, ‖c (∑ a, ∑ b, Y a b • X.E a b u) (g * NormedSpace.exp ((s : ℂ) • Y)) - T‖ ≤
@@ -1108,7 +1107,7 @@ theorem frechet (n : ℕ) (ε : Fin n → Bool) (X : GMod n) (c : X.V →ₗ[ℂ
   have hmv := Convex.norm_image_sub_le_of_norm_hasDerivWithin_le h1 hbd (convex_Icc 0 1)
     (⟨le_rfl, zero_le_one⟩ : (0:ℝ) ∈ Icc (0:ℝ) 1) (⟨zero_le_one, le_rfl⟩ : (1:ℝ) ∈ Icc (0:ℝ) 1)
   simp only [Complex.ofReal_one, Complex.ofReal_zero, one_smul, zero_smul, sub_zero, NormedSpace.exp_zero,
-    Matrix.mul_one, norm_one, mul_one] at hmv
+    norm_one, mul_one] at hmv
   rw [sub_right_comm] at hmv
   exact hmv
 
@@ -1455,8 +1454,8 @@ theorem sum_sq_translate {H : Type} [NormedAddCommGroup H] [InnerProductSpace �
   let Te : S ≃ₗᵢ[ℂ] S := T.toLinearIsometryEquiv rfl
   let l : S →ₗ[ℂ] ℂ :=
     { toFun := fun x => ⟪ξ, σ (Formalism.MainNotions.S.umat g) (x : H)⟫_ℂ
-      map_add' := fun x y => by simp [inner_add_right]
-      map_smul' := fun c x => by simp [inner_smul_right] }
+      map_add' := fun x y => by simp
+      map_smul' := fun c x => by simp }
   have hmul : ∀ x : H, σ (Formalism.MainNotions.S.umat (g * k)) x = σ (Formalism.MainNotions.S.umat g) (σ (Formalism.MainNotions.S.umat k) x) := by
     intro x
     have : Formalism.MainNotions.S.umat (g * k) = Formalism.MainNotions.S.umat g * Formalism.MainNotions.S.umat k := rfl
@@ -1488,8 +1487,8 @@ theorem kMaj : CompanionTheory.RgExh.Dec.N.S.KMaj := by
   · intro g
     let l : S →ₗ[ℂ] ℂ :=
       { toFun := fun x => ⟪ξ, σ (Formalism.MainNotions.S.umat g) (x : H)⟫_ℂ
-        map_add' := fun x y => by simp [inner_add_right]
-        map_smul' := fun c x => by simp [inner_smul_right] }
+        map_add' := fun x y => by simp
+        map_smul' := fun c x => by simp }
     have h := sq_le_of_basis l b ⟨(u : H), huS⟩
     show ‖l ⟨(u : H), huS⟩‖ₑ ^ 2 ≤ ENNReal.ofReal (‖(u : H)‖ ^ 2) * ∑ i, ‖l (b i)‖ₑ ^ 2
     rw [sum_enorm_sq, ← ENNReal.ofReal_mul (by positivity), ← ofReal_norm_eq_enorm, ← ENNReal.ofReal_pow (norm_nonneg _)]

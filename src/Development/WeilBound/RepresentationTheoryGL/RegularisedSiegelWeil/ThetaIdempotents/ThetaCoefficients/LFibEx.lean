@@ -593,7 +593,7 @@ theorem coefS_pure (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) {M : ℕ} (J : Ma
     rw [e1, hf, integral_congr_ae (Filter.Eventually.of_forall hpt), he, hprod, hc k]
     push_cast
     rw [Finset.prod_div_distrib]
-    simp only [NNReal.coe_one, Complex.ofReal_one, one_mul, mul_one]
+    simp only [one_mul, mul_one]
     rw [div_mul_div_comm]
   have lim1 : Filter.Tendsto (fun k => ∫ bb, (fouH σ ψ db (testH σ b (ρ k) S (U k)) bb /
         ∫ y, testH σ b (ρ k) S (U k) y ∂db) *
@@ -754,7 +754,7 @@ theorem _root_.GlobalTheory.T.siegel_weil_hermitian_formula : ∀ (F E : Type) [
   ∀ Φ : (Fin n → Fin M → AF F ⊗[F] E) → ℂ, GlobalTheory.Published.SiegelOneVector.IsSchwartzBruhat Φ →
   ∀ T : Matrix (Fin n) (Fin n) E, (∀ a b, σ (T b a) = T a b) → T.det ≠ 0 →
     coefN σ J ψ dx db Φ T = ∫ X, Φ X ∂(GlobalTheory.CompanionTheory.SW.thetaMeas σ J μ 𝓕 {X | HeckeCharacterZeroLocus.SiegelWeilU.gramE σ J X = T}) := by
-  first | exact @GlobalTheory.CompanionTheory.SiegelND.Coef.coefN_eq_theta | exact GlobalTheory.CompanionTheory.SiegelND.Coef.coefN_eq_theta | (intros; apply GlobalTheory.CompanionTheory.SiegelND.Coef.coefN_eq_theta <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SiegelND.Coef.coefN_eq_theta
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.ThetaIdempotents.ThetaCoefficients.SiegelWeilHermitianFormulaStatement =====

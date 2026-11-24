@@ -800,7 +800,7 @@ private lemma not_summable_two : ¬ Summable fun x : Fin 2 → ℤ => ‖x‖ ^ 
           fin_cases i
           · simp [g, Int.norm_eq_abs]
             rw [abs_of_nonneg (by positivity)]
-          · simp [g, Int.norm_eq_abs]
+          · simp [g]
             have : (b : ℝ) ≤ a := by exact_mod_cast hb'
             linarith
         · have h := norm_le_pi_norm (g (a, b)) 0
@@ -1360,7 +1360,6 @@ theorem UpperTheory.V.Af.Rs.unfM :
   first
     | rw [two_mul, two_nsmul]
     | rw [smul_eq_mul]
-    | simp [two_mul, two_smul]
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.AutomorphicRankinSelberg.UnfMMp =====
@@ -1601,14 +1600,14 @@ theorem UpperTheory.V.Af.Rn.lowTwo :
     ext v
     simp only [LinearMap.sub_apply, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.neg_apply,
       Module.End.mul_apply, map_add, map_sub, map_smul, map_neg, hAB, hAC, hBC]
-    match_scalars <;> ring_nf <;> simp [Complex.I_sq] <;> ring_nf
+    match_scalars <;> ring_nf <;> simp [Complex.I_sq]
   have h2 : (-(Complex.I • (B - C))) * (A - (Complex.I / 2) • (B + C))
       - (A - (Complex.I / 2) • (B + C)) * (-(Complex.I • (B - C)))
       = (-2 : ℂ) • (A - (Complex.I / 2) • (B + C)) := by
     ext v
     simp only [LinearMap.sub_apply, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.neg_apply,
       Module.End.mul_apply, map_add, map_sub, map_smul, map_neg, hAB, hAC, hBC]
-    match_scalars <;> ring_nf <;> simp [Complex.I_sq] <;> ring_nf
+    match_scalars <;> ring_nf <;> simp [Complex.I_sq]
   have h3 : (4 : ℂ) • ((A + (Complex.I / 2) • (B + C)) * (A - (Complex.I / 2) • (B + C)))
       = -((-(Complex.I • (B - C))) * (-(Complex.I • (B - C))) - (2 : ℂ) • (-(Complex.I • (B - C)))) := by
     ext v
@@ -1732,8 +1731,6 @@ theorem UpperTheory.V.Af.Rn.polyInj :
   have hq' : (0 : ℝ) < q := by exact_mod_cast hq
   first
     | exact Complex.ofReal_ne_zero.mpr (Real.rpow_pos_of_pos hq' _).ne'
-    | simp [hq.ne']
-    | exact_mod_cast (Real.rpow_pos_of_pos hq' _).ne'
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.HermitianTwists.PolyInj =====

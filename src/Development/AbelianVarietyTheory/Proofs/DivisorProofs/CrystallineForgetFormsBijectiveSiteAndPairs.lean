@@ -117,9 +117,6 @@ theorem coef_acyclic_of_two_sections (C : Type 1) [Category.{0} C] (M : Coef C) 
         simp only [A, map_sub]
         first
           | linear_combination (norm := abel1) h2 - h3 - h1
-          | linear_combination (norm := abel1) h2 - h3 + h1
-          | linear_combination (norm := abel1) h1 + h2 - h3
-          | linear_combination (norm := abel1) -h1 - h2 + h3
       rw [← hr, inner]
       simp only [map_sub, map_add (f := _)]
     have ku := key u
@@ -776,7 +773,7 @@ theorem fnMap_h2_bijective (C : Type 1) [Category.{0} C] (K : Cx C) (h11 : K.M1.
       rw [e2, map_add (f := _), K.diffTwo_comp_diffOne, add_zero, K.diffTwo_natural]
     let a : K.Z2 := ⟨(b.1.1, fun T T' φ => -f T T' φ, g), by
       refine ⟨hb1, fun T T' T'' φ ψ => ?_, fun T T' φ => ?_, fun T => ?_⟩
-      · rw [hf T T' T'' φ ψ]; simp only [map_neg, map_sub, map_add (f := _)]; abel
+      · rw [hf T T' T'' φ ψ]; simp only [map_neg]; abel
       · have e := hg T T' φ
         change g T' = K.M2.map φ (g T) + K.d1 T' (-f T T' φ)
         rw [e]; abel

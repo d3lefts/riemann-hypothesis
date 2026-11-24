@@ -148,11 +148,7 @@ omit [Valued L (WithZero (Multiplicative ℤ))] in
 theorem pow_apply_eq_zero {y : Matrix (Fin n) (Fin n) L} (hy : ∀ i j, j ≤ i → y i j = 0) (k : ℕ) :
     ∀ i j : Fin n, j.val < i.val + k → (y ^ k) i j = 0 := by
   first
-  | exact @_root_.GlobalTheory.StrictUpperNilpotent.pow_apply_eq_zero_of_strictUpper
-  | exact _root_.GlobalTheory.StrictUpperNilpotent.pow_apply_eq_zero_of_strictUpper
   | (apply _root_.GlobalTheory.StrictUpperNilpotent.pow_apply_eq_zero_of_strictUpper <;> assumption)
-  | (intros; apply _root_.GlobalTheory.StrictUpperNilpotent.pow_apply_eq_zero_of_strictUpper <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.StrictUpperNilpotent.pow_apply_eq_zero_of_strictUpper <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.StrictUpperNilpotent.pow_apply_eq_zero_of_strictUpper ..)
 
 theorem pow_succ_mem {c : Fin n → Fin n → ℤ} (hc : IsWeight c) {y : Matrix (Fin n) (Fin n) L}
@@ -408,11 +404,7 @@ theorem sum_half (a : Fin n → ℤ) (ha : ∀ i, a i.rev = -a i) :
 theorem zpow_finset_sum {ι : Type} {z : ℂ} (hz : z ≠ 0) (s : Finset ι) (a : ι → ℤ) :
     z ^ ∑ i ∈ s, a i = ∏ i ∈ s, z ^ a i := by
   first
-  | exact @_root_.GlobalTheory.AbelianSumIdentityFirst.main
-  | exact _root_.GlobalTheory.AbelianSumIdentityFirst.main
   | (apply _root_.GlobalTheory.AbelianSumIdentityFirst.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.AbelianSumIdentityFirst.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.AbelianSumIdentityFirst.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.AbelianSumIdentityFirst.main ..)
 
 end GlobalTheory.BorelUMod

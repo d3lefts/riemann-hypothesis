@@ -680,7 +680,7 @@ private theorem theta_triM {A : GL (Fin 3) B} {t : Fin 3 → Bˣ} {x y z : B}
     rw [theta_inv_val, h]
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [triM, Jmat, Matrix.mul_apply, Fin.sum_univ_three, Matrix.one_apply, Fin.rev] <;>
+      simp [triM, Jmat, Matrix.mul_apply, Fin.sum_univ_three, Fin.rev] <;>
       first
       | linear_combination y * h2
       | linear_combination z * h2 - x * y * h1
@@ -700,7 +700,7 @@ private theorem exists_triM (A : GL (Fin 3) B)
   have z21 := h 2 1 (by decide)
   have hd : IsUnit (A : Matrix (Fin 3) (Fin 3) B).det := Matrix.isUnits_det_units A
   rw [Matrix.det_fin_three, z10, z20, z21] at hd
-  simp only [mul_zero, zero_mul, sub_zero, add_zero, zero_sub, neg_zero, IsUnit.mul_iff] at hd
+  simp only [mul_zero, zero_mul, sub_zero, add_zero, IsUnit.mul_iff] at hd
   obtain ⟨⟨h0, h1⟩, h2⟩ := hd
   refine ⟨![h0.unit, h1.unit, h2.unit], (A : Matrix (Fin 3) (Fin 3) B) 0 1 * ↑h1.unit⁻¹,
     (A : Matrix (Fin 3) (Fin 3) B) 1 2 * ↑h2.unit⁻¹, (A : Matrix (Fin 3) (Fin 3) B) 0 2 * ↑h2.unit⁻¹, ?_⟩
@@ -1163,7 +1163,7 @@ private theorem theta_triGL {B : Type} [CommRing B] (t : Fin 3 → Bˣ) (x y z :
   rw [hinv]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [Jmat, triM, Matrix.mul_apply, Fin.sum_univ_three, Matrix.transpose_apply, Fin.rev] <;> ring
+    simp [Jmat, triM, Matrix.mul_apply, Fin.sum_univ_three, Fin.rev]
 
 private theorem triGL_mul {B : Type} [CommRing B] (t s : Fin 3 → Bˣ) (x y z x' y' z' : B) :
     triGL t x y z * triGL s x' y' z' = triGL (fun i => t i * s i)
@@ -1289,7 +1289,7 @@ theorem UpperTheory.isCrystalline_triangular_iff_of_charData :
   · refine ((isCrys_isDR_sub_quot φ hφ _ _ hc (contAction_charExtension_of_continuous_cocycle (hκ.cont 1) (hκ.cont 2) cy hy) f2 fun g v => ?_).2
       fun v => ⟨![0, v.1, v.2], rfl⟩).1 hcr
     rw [colRep_apply, hρ, characterExtensionRep_apply]
-    ext <;> simp [f2, triM, Matrix.mulVec, dotProduct, Fin.sum_univ_three]
+    ext <;> simp [f2, triM, dotProduct, Fin.sum_univ_three]
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.IsCrystallineTriangularIffOfCharData =====
@@ -1693,7 +1693,7 @@ private theorem gamCr : LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] 
     (fun g => cu'.mat g)).2.2 ?_
   convert hbN using 1
   ext g
-  simp only [Pi.sub_apply, Pi.add_apply, Pi.neg_apply, hz₀]
+  simp only [Pi.sub_apply, Pi.add_apply, hz₀]
   ring
 
 private theorem triM_map {B B' : Type} [CommRing B] [CommRing B'] (p : B →+* B') (t : Fin 3 → Bˣ) (t' : Fin 3 → B'ˣ)

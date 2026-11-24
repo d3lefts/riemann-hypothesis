@@ -97,7 +97,7 @@ theorem deriv_aeval {R S L : Type*} [CommRing R] [CommRing S] [Field L] [Algebra
     obtain ⟨s1, h1, e1⟩ := hp
     obtain ⟨s2, h2, e2⟩ := hq
     refine ⟨s1 + s2, I.add_mem h1 h2, ?_⟩
-    simp only [map_add (f := _), derivative_add, e1, e2]
+    simp only [map_add (f := _), e1, e2]
     ring
   | monomial n a =>
     obtain ⟨s, hs, es⟩ := hI a
@@ -521,7 +521,7 @@ private theorem det_rowop_lemma {n K : Type*} [Fintype n] [DecidableEq n] [CommR
         by_cases hk' : k' = k
         · subst hk'
           simp [hks, hjs, sub_eq_add_neg, mul_comm]
-        · simp [Matrix.updateRow_ne hk', hk']
+        · simp [hk']
       rw [heq, Matrix.det_updateRow_add_smul_self _ hjk, ih hjs]
   have h1 := key (Finset.univ.erase j) (Finset.notMem_erase j _)
   rw [← h1]
@@ -557,7 +557,7 @@ private theorem val_det_lt_lemma_3 {n K Γ : Type*} [Fintype n] [DecidableEq n] 
       by_cases hm : m = l
       · subst hm
         simp
-      · simp [Pi.single_apply, hm]
+      · simp [hm]
     · rw [Matrix.updateRow_ne hk]
       exact h k m
   exact lt_of_le_of_lt (mul_le_of_le_one_right' hadj) (hj l)
@@ -1031,7 +1031,7 @@ theorem deriv_aeval_mv {K L : Type*} [Field K] [Field L] [Algebra K L] {d : ℕ}
     D (MvPolynomial.aeval τ f) = MvPolynomial.aeval τ (MvPolynomial.pderiv k f) := by
   induction f using MvPolynomial.induction_on
   next a =>
-    simp [MvPolynomial.aeval_C, MvPolynomial.pderiv_C]
+    simp
   next p q hp hq =>
     simp only [map_add (f := _), hp, hq]
   next p i hp =>
@@ -1040,7 +1040,7 @@ theorem deriv_aeval_mv {K L : Type*} [Field K] [Field L] [Algebra K L] {d : ℕ}
     by_cases hki : k = i
     · subst hki
       simp
-    · simp [hki, Pi.single_apply, Ne.symm hki]
+    · simp [hki, Ne.symm hki]
 
 theorem trace_jacobian_mem : ∀ (K : Type) [Field K] [CharZero K] (d : ℕ) (A : Type) [CommRing A] [IsDomain A] [Algebra K A] (t : Fin d → A), Function.Injective (MvPolynomial.aeval t : MvPolynomial (Fin d) K →ₐ[K] A) → (∀ a : A, ∃ f g : MvPolynomial (Fin d) K, IsUnit (MvPolynomial.aeval t g) ∧ a * MvPolynomial.aeval t g = MvPolynomial.aeval t f) → ∀ (B : Type) [CommRing B] [IsDomain B] [Algebra A B] [Algebra K B] [IsScalarTower K A B] [Module.Finite A B], Function.Injective (algebraMap A B) → ∀ (F L : Type) [Field F] [Field L] [Algebra A F] [IsFractionRing A F] [Algebra B L] [IsFractionRing B L] [Algebra F L] [Algebra A L] [IsScalarTower A F L] [IsScalarTower A B L] [Algebra K L] [IsScalarTower K B L] (D : Fin d → Derivation K L L), (∀ k j, D k (algebraMap A L (t j)) = if k = j then 1 else 0) → ∀ (c : B) (b : Fin d → B), ∃ a : A, algebraMap A F a = Algebra.trace F L (algebraMap B L c * (Matrix.of fun k l => D k (algebraMap B L (b l))).det) := by
   intro K _ _ d A _ _ _ t ht hloc B _ _ _ _ _ _ hAB F L _ _ _ _ _ _ _ _ _ _ _ _ D hD c b

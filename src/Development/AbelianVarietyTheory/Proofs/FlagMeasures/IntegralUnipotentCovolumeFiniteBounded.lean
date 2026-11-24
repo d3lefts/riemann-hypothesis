@@ -158,7 +158,7 @@ theorem _root_.GlobalTheory.T.baseNormalForm_realFrames_at_realPlaces : ∀ (D :
     ∀ N : GlobalTheory.DegCnt.NF (HV D) D.R.rS, N.F = F0 X u → N.F' = F0 X u → N.j = 0 → N.T = Tu D u → N.ist = X.fY →
       ∀ τ : D.what₂.Tau, GlobalTheory.DegVol.IsFrameOf N D.R.k (embS D τ) (2 * Formalism.HermitianLatticesTheory.vInv D.host.E) (fun _ => 0)
         (phiV C τ) (zB X (C.Qi τ) u τ) (zB X (C.Qi τ) u τ) 1 := by
-  first | exact @GlobalTheory.TypeAsm.baseFrame_real | exact GlobalTheory.TypeAsm.baseFrame_real | (intros; apply GlobalTheory.TypeAsm.baseFrame_real <;> assumption)
+  first | exact @GlobalTheory.TypeAsm.baseFrame_real
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.BaseNormalFormRealFramesAtRealPlacesStatement =====
@@ -309,7 +309,7 @@ theorem _root_.GlobalTheory.T.measure_eq_of_strictFundamentalSetsPlacewise : ∀
     (∀ m ∈ Γ, ∀ v, Matrix.of (m v) ∈ Formalism.QuantumDeterminants.Nset k r) →
     GlobalTheory.DegVol.IsFund Γ (GlobalTheory.DegVol.RP k r (fun _ => 1)) Ω₁ → GlobalTheory.DegVol.IsFund Γ (GlobalTheory.DegVol.RP k r (fun _ => 1)) Ω₂ →
     Measure.pi (fun _ : ι => GlobalTheory.Amp.lebN k r) Ω₁ = Measure.pi (fun _ : ι => GlobalTheory.Amp.lebN k r) Ω₂ := by
-  first | exact @GlobalTheory.FundEq.measure_eq | exact GlobalTheory.FundEq.measure_eq | (intros; apply GlobalTheory.FundEq.measure_eq <;> assumption)
+  first | exact @GlobalTheory.FundEq.measure_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.MeasureEqOfStrictFundamentalSetsPlacewiseStatement =====
@@ -356,7 +356,7 @@ theorem coord_span_zero (Q : Matrix (Fin n) (Fin (2 * r + k + 1)) ℂ) (Qi : Mat
       Function.eval, h3, Pi.smul_apply, smul_eq_mul]
     have : i ≠ eI k r b := by
       intro h; rw [h] at hi; simp [eI] at hi; omega
-    simp [Pi.single_apply, this]
+    simp [this]
   exact hle hy
 
 theorem mem_nset (J : Matrix (Fin n) (Fin n) ℂ) (Q : Matrix (Fin n) (Fin (2 * r + k + 1)) ℂ)
@@ -519,7 +519,7 @@ theorem _root_.GlobalTheory.T.realIntegralUnipotent_besselModels_countable_subgr
     (∀ m ∈ trI C '' Formalism.L2.SG.PoincareInHH.PoincareSetting.NOinf X u,
       (fun τ => Matrix.of.symm (Matrix.of (m τ))⁻¹) ∈ trI C '' Formalism.L2.SG.PoincareInHH.PoincareSetting.NOinf X u) ∧
     ∀ m ∈ trI C '' Formalism.L2.SG.PoincareInHH.PoincareSetting.NOinf X u, ∀ τ, Matrix.of (m τ) ∈ Formalism.QuantumDeterminants.Nset D.R.k D.R.rS := by
-  first | exact @GlobalTheory.CovGrp.cov_grp | exact GlobalTheory.CovGrp.cov_grp | (intros; apply GlobalTheory.CovGrp.cov_grp <;> assumption)
+  first | exact @GlobalTheory.CovGrp.cov_grp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.RealIntegralUnipotentBesselModelsCountableSubgroStatement =====
@@ -538,7 +538,7 @@ theorem _root_.GlobalTheory.T.real_points_base_lattice_stabilizer_fixed_frame_un
     ∀ N : GlobalTheory.DegCnt.NF (HV D) D.R.rS, N.F = F0 X u → N.F' = F0 X u →
       GlobalTheory.DegVol.realPts (fun τ => phiV C τ) (N.Gam (VS D).L0 : Set ((VS D).V ≃ₗ[D.host.E] (VS D).V)) =
         trI C '' Formalism.L2.SG.PoincareInHH.PoincareSetting.NOinf X u := by
-  first | exact @GlobalTheory.TypeAsm.realPts_Gam_eq_trI_image_NOinf | exact GlobalTheory.TypeAsm.realPts_Gam_eq_trI_image_NOinf | (intros; apply GlobalTheory.TypeAsm.realPts_Gam_eq_trI_image_NOinf <;> assumption)
+  first | exact @GlobalTheory.TypeAsm.realPts_Gam_eq_trI_image_NOinf
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.RealPointsBaseLatticeStabilizerFixedFrameUnipoteStatement =====
@@ -771,7 +771,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem _root_.GlobalTheory.T.strictFundamentalSet_unipotent_on_besselModels : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u : D.what₂.Word) (C : Choice X 1),
     GlobalTheory.DegVol.IsFund (trI C '' Formalism.L2.SG.PoincareInHH.PoincareSetting.NOinf X u)
       (GlobalTheory.DegVol.RP D.R.k D.R.rS (fun _ => 1)) (trI C '' Y.FN u) := by
-  first | exact @GlobalTheory.TypeAsm.CovTrans.isFund_trI | exact GlobalTheory.TypeAsm.CovTrans.isFund_trI | (intros; apply GlobalTheory.TypeAsm.CovTrans.isFund_trI <;> assumption)
+  first | exact @GlobalTheory.TypeAsm.CovTrans.isFund_trI
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.StrictFundamentalSetUnipotentOnBesselModelsStatement =====
@@ -803,7 +803,6 @@ theorem covN_pi_smul {ι : Type} [Fintype ι] {α : Type} [MeasurableSpace α] (
     first
     | (have h : ((c : ℝ≥0∞) • μ) = c • μ := (ENNReal.smul_def c μ).symm
        rw [h]; infer_instance)
-    | (rw [← ENNReal.smul_def]; infer_instance)
   refine (Measure.pi_eq fun s hs => ?_)
   rw [Measure.smul_apply, Measure.pi_pi, smul_eq_mul]
   simp only [Measure.smul_apply, smul_eq_mul, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ]

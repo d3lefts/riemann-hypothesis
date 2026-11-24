@@ -353,7 +353,7 @@ theorem kills_insert_of_evalLaw : ∀ (k : Type) [Field k] [ValuativeRel k] [Top
     rw [← integral_const_mul]
     congr 1
     funext y
-    simp [P, p, fillAt_apply_of_notMem β hE hI, mul_assoc]
+    simp [P, p, fillAt_apply_of_notMem β hE hI]
   have hP : ∀ q, L (P q) = 0 := by
     intro q
     induction q using QuotientAddGroup.induction_on with | H a => ?_
@@ -746,7 +746,7 @@ theorem integrate_entry : ∀ (k : Type) [Field k] [ValuativeRel k] [Topological
     rw [hΦ'r a x]
     have h8 := red_indicator k ψ ν R Q w β E I e heE heI Φ.1 {s : k | s - a ∈ U} (x + Matrix.single e.1 e.2 a)
     have hxe : (x + Matrix.single e.1 e.2 a) e.1 e.2 - a = x e.1 e.2 := by
-      simp [Matrix.add_apply, Matrix.single_apply]
+      simp [Matrix.add_apply]
     change red ψ ν w β E I (Set.indicator {t : Matrix R Q k | t e.1 e.2 ∈ {s : k | s - a ∈ U}} Φ.1) _ = _
     rw [h8]
     by_cases hx : x e.1 e.2 ∈ U
@@ -896,8 +896,8 @@ theorem embA_elem_mem (r l : Fin c) (h : r ≠ l) (hrl : r.val < l.val) (a : k) 
   rw [embA_elem_val]
   rcases r' with r' | r' <;> rcases s with s | s
   · simp [Matrix.one_apply]
-  · simp [Matrix.one_apply]
-  · simp [Matrix.one_apply]
+  · simp
+  · simp
   · simp only [lev, Sum.elim_inr] at hrs
     simp only [fromBlocks_apply₂₂, transvection, Matrix.add_apply, single_apply, Matrix.one_apply, Sum.inr.injEq]
     have : ¬ (r = r' ∧ l = s) := by
@@ -1080,7 +1080,7 @@ theorem simpleSum_elem (l m : Fin c) (h : l ≠ m) (a : k) :
     rw [embA_elem_apply]
     by_cases h1 : j.val = i.val + 1
     · have : i ≠ j := by intro e; subst e; omega
-      by_cases h2 : i = l <;> by_cases h3 : j = m <;> simp_all [Matrix.one_apply]
+      by_cases h2 : i = l <;> by_cases h3 : j = m <;> simp_all
     · by_cases h2 : i = l <;> by_cases h3 : j = m <;> simp_all
   simp [this]
 

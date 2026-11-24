@@ -102,7 +102,7 @@ variable {n : ℕ}
 
 theorem rhoP_add {Kg : Type} (ι : Kg → M2 n) (m : ℕ) (e : ℤ) (X Y : Matrix (Fin n) (Fin n) ℂ) (k : Kg) :
     rhoP ι m e (X + Y) k = rhoP ι m e X k + rhoP ι m e Y k := by
-  simp only [rhoP, Matrix.mul_add, Matrix.add_mul, trace_add, mul_add, star_add]
+  simp only [rhoP, Matrix.add_mul, trace_add, mul_add, star_add]
 
 theorem rhoP_smul {Kg : Type} (ι : Kg → M2 n) (m : ℕ) (e : ℤ) (c : ℂ) (X : Matrix (Fin n) (Fin n) ℂ) (k : Kg) :
     rhoP ι m e (c • X) k = star c * rhoP ι m e X k := by
@@ -162,12 +162,12 @@ private theorem inK_fromBlocks_unitary_diag (U : Matrix (Fin n) (Fin n) ℂ) (hU
 private theorem u1_fromBlocks_diag_mul (U : Matrix (Fin n) (Fin n) ℂ) (y : M2 n) :
     u1 (Matrix.fromBlocks U 0 0 U * y) = U * u1 y := by
   conv_lhs => rw [← Matrix.fromBlocks_toBlocks y]
-  simp [u1, Matrix.fromBlocks_multiply, Matrix.mul_add, Matrix.mul_smul]
+  simp [u1, Matrix.fromBlocks_multiply, Matrix.mul_add]
 
 private theorem u2_fromBlocks_diag_mul (U : Matrix (Fin n) (Fin n) ℂ) (y : M2 n) :
     u2 (Matrix.fromBlocks U 0 0 U * y) = U * u2 y := by
   conv_lhs => rw [← Matrix.fromBlocks_toBlocks y]
-  simp [u2, Matrix.fromBlocks_multiply, Matrix.mul_add, Matrix.mul_smul, Matrix.mul_neg]
+  simp [u2, Matrix.fromBlocks_multiply, Matrix.mul_add]
 
 include hK ha hb in
 theorem Lam_inv (z : ℂ) {U X : Matrix (Fin n) (Fin n) ℂ} (hU : Uᴴ * U = 1) (hX : Xᴴ * X = 1) :
@@ -266,7 +266,7 @@ theorem pm_unit (σ : Equiv.Perm (Fin n)) : (pm σ)ᴴ * pm σ = 1 := by
   ext i j
   simp only [pm, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.of_apply, Matrix.one_apply]
   rw [Finset.sum_eq_single (σ.symm i)]
-  · by_cases h : i = j <;> simp [h, eq_comm, Equiv.apply_eq_iff_eq_symm_apply]
+  · by_cases h : i = j <;> simp [h]
   · intro k _ hk
     have : σ k ≠ i := fun e => hk (by rw [← e]; simp)
     simp [this]
@@ -705,8 +705,7 @@ private theorem exists_unitary_mul_blockTriangular_of_inFlagDomain (b : M2 n) (h
   intro h0
   obtain ⟨x, hx0, hx⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr h0
   have hr := congrArg (fun M => star x ⬝ᵥ (M *ᵥ x)) (v_rel b hb)
-  simp only [Matrix.sub_mulVec, ← Matrix.mulVec_mulVec, hx, Matrix.mulVec_zero, dotProduct_sub,
-    dotProduct_zero, Matrix.dotProduct_mulVec, ← Matrix.star_mulVec, star_zero, zero_dotProduct,
+  simp only [Matrix.sub_mulVec, ← Matrix.mulVec_mulVec, hx, Matrix.mulVec_zero, Matrix.dotProduct_mulVec, ← Matrix.star_mulVec, star_zero, zero_dotProduct,
     sub_zero, Matrix.zero_vecMul] at hr
   simp [Matrix.vecMul_smul] at hr
   have h2 : ∑ j, Complex.normSq (x j) = 0 := by

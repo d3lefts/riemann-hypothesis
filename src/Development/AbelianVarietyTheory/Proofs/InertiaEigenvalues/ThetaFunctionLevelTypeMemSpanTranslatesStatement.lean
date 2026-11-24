@@ -441,7 +441,7 @@ open GlobalTheory.DownLift
 open GlobalTheory.DownLift.GenFinite
 
 theorem _root_.GlobalTheory.T.exists_places_thetaFunction_fixedVectorShape : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.LiftRows.Given R F → R.FullP → ∀ (i : Fin D.R.m) (t : T) (f : WO (Vc D i) (Wc D i) → ℂ), IsThetaFunO R.ψ (Vc D i) (Wc D i) f → ∃ Sb : Finset (HeightOneSpectrum (𝓞 D.host.F)), GlobalTheory.DownLift.GenFinite.LikeOff R i t Sb f := by
-  first | exact @GlobalTheory.DownLift.ShapeOff.exists_likeOff | exact GlobalTheory.DownLift.ShapeOff.exists_likeOff | (intros; apply GlobalTheory.DownLift.ShapeOff.exists_likeOff <;> assumption)
+  first | exact @GlobalTheory.DownLift.ShapeOff.exists_likeOff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsPlacesThetaFunctionFixedVectorShapeStatement =====
@@ -640,7 +640,7 @@ open GlobalTheory.DownLift.GenFinite
 open GlobalTheory.DownLift.SplitCoef
 
 theorem _root_.GlobalTheory.T.exists_localTranslatesSpan_prescribedCoefficient : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D), IsStdChar D ψ (-1) → ∀ (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)), IsSelfDualC S ΛS → IsSelfDualC T ΛT → ∀ a : AE D, IsSplitIdem D a → ∀ f : WO S T → ℂ, IsThetaFunO ψ S T f → ∀ Φ : WO S T → ℂ, IsSBHalf a (latH S T ΛS ΛT) Φ → ∀ x₁, IsHalf a x₁ → ∃ f' ∈ locSpan ψ S T a f, ∀ ℓ, InvForm ψ S T a ℓ → ∀ x, IsHalf a x → ℓ (heisO ψ S T x f') = Φ x * ℓ (heisO ψ S T x₁ f) := by
-  first | exact @GlobalTheory.DownLift.SplitCoef.exists_locSpan_coef_eq | exact GlobalTheory.DownLift.SplitCoef.exists_locSpan_coef_eq | (intros; apply GlobalTheory.DownLift.SplitCoef.exists_locSpan_coef_eq <;> assumption)
+  first | exact @GlobalTheory.DownLift.SplitCoef.exists_locSpan_coef_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsLocalTranslatesSpanPrescribedCoefficientStatement =====
@@ -838,7 +838,7 @@ open GlobalTheory.DownLift.GenFinite
 open GlobalTheory.DownLift.SplitCoef
 
 theorem _root_.GlobalTheory.T.localHeisenbergSpan_preserves_type_relations : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks), R.thP_ωP → ∀ (i : Fin D.R.m) (t : T) (Sb : Finset (HeightOneSpectrum (𝓞 D.host.F))) (v : HeightOneSpectrum (𝓞 D.host.F)), v ∈ Sb → ∀ (ε : AF D.host.F) (a : AE D), IsPlaceIdem D v ε → a + cA D a = algebraMap (AF D.host.F) (AE D) ε → ∀ f : WO (Vc D i) (Wc D i) → ℂ, TypeIn R i t Sb f → CleanIn R i t Sb f → LikeOff R i t Sb f → ∀ f' ∈ locSpan R.ψ (Vc D i) (Wc D i) a f, TypeIn R i t (dropPl Sb v) f' ∧ CleanIn R i t (dropPl Sb v) f' ∧ LikeOff R i t Sb f' := by
-  first | exact @GlobalTheory.DownLift.PlaceTranslate.locSpan_pres | exact GlobalTheory.DownLift.PlaceTranslate.locSpan_pres | (intros; apply GlobalTheory.DownLift.PlaceTranslate.locSpan_pres <;> assumption)
+  first | exact @GlobalTheory.DownLift.PlaceTranslate.locSpan_pres
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalHeisenbergSpanPreservesTypeRelationsStatement =====
@@ -945,7 +945,7 @@ open GlobalTheory.DownLift.GenFinite
 open GlobalTheory.DownLift.SplitCoef
 
 theorem _root_.GlobalTheory.T.placeInvariantForm_kills_vanishing_schwartzBruhat : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D), IsStdChar D ψ (-1) → ∀ (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)), IsSelfDualC S ΛS → IsSelfDualC T ΛT → ∀ a b : AE D, IsSplitIdem D a → b * b = b → b * cA D b = 0 → infPart D b = 0 → b * a = a → ∀ (f₀ : WO S T → ℂ) (Tm : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ)), IsThetaFunO ψ S T f₀ → IsPlaceModel ψ (symplO S T) (heisO ψ S T) b (latH S T ΛS ΛT) 1 f₀ Tm → ∀ ℓ, InvForm ψ S T a ℓ → ∀ Ψ : WO S T → ℂ, IsSBHalf b (latH S T ΛS ΛT) Ψ → (∀ t : WO S T, a • t = 0 → Ψ t = 0) → ℓ (Tm Ψ) = 0 := by
-  first | exact @GlobalTheory.DownLift.SplitCoef.form_placeModel_eq_zero_of_vanish | exact GlobalTheory.DownLift.SplitCoef.form_placeModel_eq_zero_of_vanish | (intros; apply GlobalTheory.DownLift.SplitCoef.form_placeModel_eq_zero_of_vanish <;> assumption)
+  first | exact @GlobalTheory.DownLift.SplitCoef.form_placeModel_eq_zero_of_vanish
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.PlaceInvariantFormKillsVanishingSchwartzBruhatStatement =====
@@ -1143,7 +1143,7 @@ open GlobalTheory.DownLift.GenFinite
 open GlobalTheory.DownLift.SplitCoef
 
 theorem _root_.GlobalTheory.T.productDatumTheta_hasShape_adjoint_place : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D), IsStdChar D ψ (-1) → ∀ (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)), IsSelfDualC S ΛS → IsSelfDualC T ΛT → ∀ (βS : GL (Fin S.rank) (Formalism.IndefR.Lev.EAf D)) (βT : GL (Fin T.rank) (Formalism.IndefR.Lev.EAf D)) (P : Finset (Pl D.host.E)) (e e₀ : AE D) (PP : Pl D.host.E), IsIdemSum e P → PP ∈ P → Formalism.L2.NTheta.IsIdemAt e₀ PP → ∀ ω₁ ω₂ : (∀ PP : Pl D.host.E, Matrix (Fin S.rank) (Fin T.rank) (kP PP)) → ℂ, (∀ y y', y PP = y' PP → ω₁ y = ω₁ y') → (∀ y y', (∀ PP' ∈ P, PP' ≠ PP → y PP' = y' PP') → ω₂ y = ω₂ y') → ∀ f₀ f : WO S T → ℂ, IsThetaFunO ψ S T f₀ → IsThetaAt ψ (symplO S T) (heisO ψ S T) (cA D e) (latH S T ΛS ΛT) 1 f₀ (adjDat S T βS βT e fun y => ω₁ y * ω₂ y) f → HasShape ψ S T (cA D e₀) (adjDat S T βS βT e₀ ω₁) f := by
-  first | exact @GlobalTheory.DownLift.ProdShape.hasShape_adjDat | exact GlobalTheory.DownLift.ProdShape.hasShape_adjDat | (intros; apply GlobalTheory.DownLift.ProdShape.hasShape_adjDat <;> assumption)
+  first | exact @GlobalTheory.DownLift.ProdShape.hasShape_adjDat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ProductDatumThetaHasShapeAdjointPlaceStatement =====
@@ -1247,7 +1247,7 @@ theorem exists_decomp (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (a : AE D) 
       rw [hA, Finset.sum_eq_single x₁]
       · simp [Fq, he]
       · intro b _ hb
-        simp [Pi.single_apply, hb]
+        simp [hb]
       · intro h
         exact absurd hx₁ h
   have key := congrArg (K.liftQ ℓ hle) (hs _ hmem)
@@ -1316,7 +1316,7 @@ open GlobalTheory.DownLift.GenFinite
 open GlobalTheory.DownLift.SplitCoef
 
 theorem _root_.GlobalTheory.T.thetaFunction_mem_span_of_coefficientSpan : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D), IsStdChar D ψ (-1) → ∀ a : AE D, IsSplitIdem D a → ∀ f : WO S T → ℂ, IsThetaFunO ψ S T f → ∀ 𝒢 𝒯 : Set (WO S T → ℂ), (∀ φ ∈ 𝒯, IsThetaFunO ψ S T φ) → (∀ Ψ ∈ 𝒢, ∀ x₁, IsHalf a x₁ → ∃ φ ∈ Submodule.span ℂ 𝒯, ∀ ℓ, InvForm ψ S T a ℓ → ∀ x, IsHalf a x → ℓ (heisO ψ S T x φ) = Ψ x * ℓ (heisO ψ S T x₁ f)) → (∀ ℓ, InvForm ψ S T a ℓ → coef ψ S T a ℓ f ∈ Submodule.span ℂ 𝒢) → f ∈ Submodule.span ℂ 𝒯 := by
-  first | exact @GlobalTheory.DownLift.SplitCoef.Decomp.mem_span_of_coef_mem_span | exact GlobalTheory.DownLift.SplitCoef.Decomp.mem_span_of_coef_mem_span | (intros; apply GlobalTheory.DownLift.SplitCoef.Decomp.mem_span_of_coef_mem_span <;> assumption)
+  first | exact @GlobalTheory.DownLift.SplitCoef.Decomp.mem_span_of_coef_mem_span
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ThetaFunctionMemSpanOfCoefficientSpanStatement =====
@@ -1555,7 +1555,7 @@ open GlobalTheory.DownLift.GenFinite
 open GlobalTheory.DownLift.SplitCoef
 
 theorem _root_.GlobalTheory.T.thetaShapeRelation_drop_splitPlace : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks), IsStdChar D R.ψ (-1) → ∀ (i : Fin D.R.m) (t : T) (Sb : Finset (HeightOneSpectrum (𝓞 D.host.F))) (v : HeightOneSpectrum (𝓞 D.host.F)) (ε : AF D.host.F) (a : AE D), IsSplitIdem D a → IsPlaceIdem D v ε → a + cA D a = algebraMap (AF D.host.F) (AE D) ε → IsThetaFunO R.ψ (Vc D i) (Wc D i) (R.vP i t) → ∀ Φ f : WO (Vc D i) (Wc D i) → ℂ, HasShape R.ψ (Vc D i) (Wc D i) a Φ (R.vP i t) → HasShape R.ψ (Vc D i) (Wc D i) a Φ f → LikeOff R i t Sb f → LikeOff R i t (dropPl Sb v) f := by
-  first | exact @GlobalTheory.DownLift.SplitRel.likeOff_dropPl | exact GlobalTheory.DownLift.SplitRel.likeOff_dropPl | (intros; apply GlobalTheory.DownLift.SplitRel.likeOff_dropPl <;> assumption)
+  first | exact @GlobalTheory.DownLift.SplitRel.likeOff_dropPl
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ThetaShapeRelationDropSplitPlaceStatement =====
@@ -1788,8 +1788,8 @@ theorem step_twist : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type
   refine step_of_shape R hW i t hv ha hε hae' dS dT hth hΦ hs hT hC hL fun ℓ hℓ => ?_
   obtain ⟨c, hB⟩ := hc.lev.βV i
   refine GlobalTheory.T.mem_span_translates_conjugateHalf_twistPlace D _ _ (R.βV i) (R.βW i) hr _ _ _ hB
-    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ dS | exact dS.1)
-    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ dT | exact dT.1) (es PP) PP h0 (R.xiR t)
+    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ dS)
+    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ dT) (es PP) PP h0 (R.xiR t)
     (GlobalTheory.ChainTw.RModel.xiR_ne R hc.lev t PP hPP) _
     ((GlobalTheory.T.thetaCoefficient_isSchwartzBruhat_uniform_split D R.ψ _ _ hψ _ _ dS dT _ ha f hT.1).2.1 ℓ hℓ) fun κ k1 k2 k3 k4 _ x x' hx hx' => ?_
   have k5 : ∀ P' ∈ P, P' ≠ PP → redFn (R.βV i) P' (finE (Vc D i) κ) = 1 := fun P' h h' =>
@@ -1834,7 +1834,7 @@ open GlobalTheory.DownLift
 open GlobalTheory.DownLift.GenFinite
 
 theorem _root_.GlobalTheory.T.localGeneration_thetaFunctions_twistPlace : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.LiftRows.Given R F → R.FullP → ∀ (i : Fin D.R.m) (t : T) (Sb : Finset (HeightOneSpectrum (𝓞 D.host.F))) (v : HeightOneSpectrum (𝓞 D.host.F)), v ∈ Sb → (∀ PP ∈ R.Pg, ¬ GlobalTheory.DownLift.GenFinite.Over PP v) → (∃ PP ∈ R.Q t, GlobalTheory.DownLift.GenFinite.Over PP v) → ∀ (f : WO (Vc D i) (Wc D i) → ℂ), GlobalTheory.DownLift.GenFinite.TypeIn R i t Sb f → GlobalTheory.DownLift.GenFinite.CleanIn R i t Sb f → GlobalTheory.DownLift.GenFinite.LikeOff R i t Sb f → f ∈ Submodule.span ℂ (GlobalTheory.DownLift.GenFinite.StepGen R i t (GlobalTheory.DownLift.GenFinite.dropPl Sb v)) := by
-  first | exact @GlobalTheory.DownLift.GenTwist.step_twist | exact GlobalTheory.DownLift.GenTwist.step_twist | (intros; apply GlobalTheory.DownLift.GenTwist.step_twist <;> assumption)
+  first | exact @GlobalTheory.DownLift.GenTwist.step_twist
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalGenerationThetaFunctionsTwistPlaceStatement =====
@@ -1853,7 +1853,7 @@ open GlobalTheory.DownLift
 open GlobalTheory.DownLift.GenFinite
 
 theorem _root_.GlobalTheory.T.thetaFunction_local_generation_inertPlace_offLevel : GlobalTheory.Hk3.HoweUnram → ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.LiftRows.Given R F → R.FullP → ∀ (i : Fin D.R.m) (t : T) (Sb : Finset (HeightOneSpectrum (𝓞 D.host.F))) (v : HeightOneSpectrum (𝓞 D.host.F)), v ∈ Sb → (∀ ε, IsPlaceIdem D v ε → ∀ e, IsSplitIdem D e → e * algebraMap (AF D.host.F) (AE D) ε = 0) → (∀ PP, PP ∈ R.Pg ∨ PP ∈ R.Q t → ¬ GlobalTheory.DownLift.GenFinite.Over PP v) → ∀ (f : WO (Vc D i) (Wc D i) → ℂ), GlobalTheory.DownLift.GenFinite.TypeIn R i t Sb f → GlobalTheory.DownLift.GenFinite.CleanIn R i t Sb f → GlobalTheory.DownLift.GenFinite.LikeOff R i t Sb f → f ∈ Submodule.span ℂ (GlobalTheory.DownLift.GenFinite.StepGen R i t (GlobalTheory.DownLift.GenFinite.dropPl Sb v)) := by
-  first | exact @GlobalTheory.DownLift.GenFinite.Inert.step_inert | exact GlobalTheory.DownLift.GenFinite.Inert.step_inert | (intros; apply GlobalTheory.DownLift.GenFinite.Inert.step_inert <;> assumption)
+  first | exact @GlobalTheory.DownLift.GenFinite.Inert.step_inert
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ThetaFunctionLocalGenerationInertPlaceOffLevelStatement =====
@@ -1872,7 +1872,7 @@ open GlobalTheory.DownLift
 open GlobalTheory.DownLift.GenFinite
 
 theorem _root_.GlobalTheory.T.thetaFunction_localGeneration_splitPlaceOffLevels : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.LiftRows.Given R F → R.FullP → ∀ (i : Fin D.R.m) (t : T) (Sb : Finset (HeightOneSpectrum (𝓞 D.host.F))) (v : HeightOneSpectrum (𝓞 D.host.F)), v ∈ Sb → (∃ ε e, IsPlaceIdem D v ε ∧ IsSplitIdem D e ∧ e * algebraMap (AF D.host.F) (AE D) ε ≠ 0) → (∀ PP, PP ∈ R.Pg ∨ PP ∈ R.Q t → ¬ GlobalTheory.DownLift.GenFinite.Over PP v) → ∀ (f : WO (Vc D i) (Wc D i) → ℂ), GlobalTheory.DownLift.GenFinite.TypeIn R i t Sb f → GlobalTheory.DownLift.GenFinite.CleanIn R i t Sb f → GlobalTheory.DownLift.GenFinite.LikeOff R i t Sb f → f ∈ Submodule.span ℂ (GlobalTheory.DownLift.GenFinite.StepGen R i t (GlobalTheory.DownLift.GenFinite.dropPl Sb v)) := by
-  first | exact @GlobalTheory.DownLift.SplitGen.gen_split | exact GlobalTheory.DownLift.SplitGen.gen_split | (intros; apply GlobalTheory.DownLift.SplitGen.gen_split <;> assumption)
+  first | exact @GlobalTheory.DownLift.SplitGen.gen_split
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ThetaFunctionLocalGenerationSplitPlaceOffLevelsStatement =====
@@ -1979,7 +1979,7 @@ open GlobalTheory.DownLift
 open GlobalTheory.DownLift.GenFinite
 
 theorem _root_.GlobalTheory.T.thetaFunction_levelType_mem_span_translates : GlobalTheory.Hk3.HoweUnram → ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m) (Ks : Type) [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A), GlobalTheory.LiftRows.Given R F → R.FullP → ∀ (i : Fin D.R.m) (t : T) (f : WO (Vc D i) (Wc D i) → ℂ), GlobalTheory.DownLift.GenFinite.TypeVec R i t f → GlobalTheory.DownLift.GenFinite.Clean R i t f → f ∈ Submodule.span ℂ (GlobalTheory.DownLift.GenFinite.Gen R i t) := by
-  first | exact @GlobalTheory.DownLift.GenFinite.gen_of_type_clean | exact GlobalTheory.DownLift.GenFinite.gen_of_type_clean | (intros; apply GlobalTheory.DownLift.GenFinite.gen_of_type_clean <;> assumption)
+  first | exact @GlobalTheory.DownLift.GenFinite.gen_of_type_clean
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ThetaFunctionLevelTypeMemSpanTranslatesStatement =====

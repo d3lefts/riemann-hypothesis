@@ -1,6 +1,5 @@
 module
 
-public import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousAtPlace
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LatAtVAtStable
 public import Development.AbelianVarietyTheory.Definitions.Divisors.IsPairOfIsTriple
@@ -15,8 +14,6 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianSel
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianTensorSkewHermitianSplitSymplecticPairStatement
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchrodingerPreservesSchwartzBruhat
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardAdelicCharacterNontrivialAtPlaces
-public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaActionExists
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TraceSymplecticSelfZeroSplitSupported
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
@@ -83,60 +80,6 @@ theorem tens_add_smul {F : Type} [Field F] [NumberField F] {κ : Type} (v : Pl (
   funext z
   simp only [tens, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   ring
-
-theorem exists_localOp : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
-    (σ : E →ₐ[F] E) (B : Base F E) (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W)
-    (om' : Rep σ G.V' G.W), IsTriple B G X om om' → ∀ (v : Pl (F := F)), ∀ h ∈ UAt σ G.W (evFin F v),
-    ∃ S : ((Fin a × Fin (a + a') → Fv F v) → ℂ) → (Fin a × Fin (a + a') → Fv F v) → ℂ,
-      (∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v), S φ ∈ SB (Fin a × Fin (a + a') → Fv F v)) ∧
-      (∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v), ∀ φ₁, Acts (evFin F v) (om (1, h)) φ φ₁ → φ₁ = S φ) ∧
-      (∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v), ∀ φ' ∈ SB (Fin a × Fin (a + a') → Fv F v), ∀ c : ℂ,
-        S (c • φ + φ') = c • S φ + S φ') ∧
-      (∀ γ : Matrix (Fin a) (Fin (a + a')) (AE F E), At (evFin F v) γ →
-        ∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v),
-          S (schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo G.M.co v γ) φ) =
-            schr (GlobalTheory.LatVac.psiAt B.ψ v)
-              (GlobalTheory.LatVac.locCo G.M.co v (actAB (cA σ) ((1 : UA σ G.V.J), h) γ)) (S φ)) := by
-  intro hP F E _ _ _ _ _ σ B a a' G X om om' hTr v h hh
-  have hAE := _root_.GlobalTheory.ThK.LocalOps.actsEx hP
-  have hPair := (GlobalTheory.ThK.Check.isPair_of_isTriple hTr).1
-  have h1 : (1 : UA σ G.V.J) ∈ UAt σ G.V (evFin F v) := by
-    intro u _
-    simp [mat]
-  have hex := (hAE F E σ B a (a + a') G.V G.W G.M X.β (X.β / X.α) om _ _ _ _ hPair v).1 1 h1 h hh
-  have hex' : ∀ φ, ∃ φ₁, φ ∈ SB (Fin a × Fin (a + a') → Fv F v) →
-      φ₁ ∈ SB (Fin a × Fin (a + a') → Fv F v) ∧ Acts (evFin F v) (om (1, h)) φ φ₁ := by
-    intro φ
-    by_cases hφ : φ ∈ SB (Fin a × Fin (a + a') → Fv F v)
-    · obtain ⟨φ₁, hφ₁, -⟩ := hex φ hφ
-      exact ⟨φ₁, fun _ => hφ₁⟩
-    · exact ⟨0, fun h' => absurd h' hφ⟩
-  choose S hS using hex'
-  obtain ⟨R, hR0, hR⟩ := GlobalTheory.RestWitness.exists_rest (Fin a × Fin (a + a')) v
-  have hinv := (hR 0 (Submodule.zero_mem _)).1
-  have huniq : ∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v), ∀ φ₁, Acts (evFin F v) (om (1, h)) φ φ₁ → φ₁ = S φ :=
-    fun φ hφ φ₁ hA => eq_of_tens_eq v R hR0 hinv φ₁ (S φ)
-      ((hA R (hR φ hφ)).symm.trans ((hS φ hφ).2 R (hR φ hφ)))
-  have hW := GlobalTheory.WeilM.IsUWeilPair.isUSplitting hTr.weil
-  refine ⟨S, fun φ hφ => (hS φ hφ).1, huniq, ?_, ?_⟩
-  · intro x hx y hy c
-    have hz : c • x + y ∈ SB (Fin a × Fin (a + a') → Fv F v) := add_mem (Submodule.smul_mem _ c hx) hy
-    apply eq_of_tens_eq v R hR0 hinv
-    rw [← (hS _ hz).2 R (hR _ hz), tens_add_smul, map_add (f := _), map_smul, (hS x hx).2 R (hR x hx),
-      (hS y hy).2 R (hR y hy), ← tens_add_smul]
-  · intro γ hγ φ hφ
-    have hact : actAB (cA σ) ((1 : UA σ G.V.J), h) γ = γ * (mat h)ᵀ := by
-      simp [actAB, mat]
-    have hγ' : At (evFin F v) (actAB (cA σ) ((1 : UA σ G.V.J), h) γ) := by
-      rw [hact]
-      intro u hu
-      rw [← Matrix.smul_mul, hγ u hu, Matrix.zero_mul]
-    have hψ₁ := GlobalTheory.SchrSB.schr_mem_SB B.ψ hTr.base.std.1 v (GlobalTheory.LatVac.locCo G.M.co v γ) φ hφ
-    apply eq_of_tens_eq v R hR0 hinv
-    have e1 := GlobalTheory.T.adelicHeisenberg_acts_by_local_schrodinger G.M.co B.ψ v γ hγ φ R (hR φ hφ)
-    have e2 := hW.impl (1, h) γ _ (hR φ hφ).2
-    rw [← (hS _ hψ₁).2 R (hR _ hψ₁), ← e1, e2, (hS φ hφ).2 R (hR φ hφ)]
-    exact GlobalTheory.T.adelicHeisenberg_acts_by_local_schrodinger G.M.co B.ψ v _ hγ' (S φ) R (hR _ (hS φ hφ).1)
 
 theorem linForm_eq {K : Type} [Field K] {m n : Type} [Fintype m] [Fintype n] [DecidableEq m] [DecidableEq n]
     (l : Matrix m n K →ₗ[K] K) (Y : Matrix m n K) :
@@ -341,56 +284,5 @@ theorem heisW {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [
       rw [Matrix.mul_assoc (A * Y) Bm, hBh]
       simp only [Matrix.mul_assoc]
     rw [key]
-
-theorem shape : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)
-    (a a' : ℕ) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W), IsTriple B G X om om' →
-    ∀ v, X.Good v →
-    ∀ (t : E →ₐ[F] Fv F v) (ι : ((Fin a × Fin (a + a') → Fv F v) → ℂ) →ₗ[ℂ] (Matrix (Fin a) (Fin (a + a')) (Fv F v) → ℂ)), G.M.IsLinW B.ψ t 1 1 ι → (∀ h ∈ UAt σ G.W (evFin F v), ∃ c : ℂ, ∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v), ∀ φ₁ ∈ SB (Fin a × Fin (a + a') → Fv F v),
-      Acts (evFin F v) (om (1, h)) φ φ₁ → ∀ Y, ι φ₁ Y = c * ι φ (Y * (((mat h).map (piW t))⁻¹)ᵀ)) := by
-  intro hP F E _ _ _ _ _ σ B a a' G X om om' hTr v _ t ι hι h hh
-  obtain ⟨S, hSB, huniq, hlin, hcomm⟩ := exists_localOp hP F E σ B a a' G X om om' hTr v h hh
-  obtain ⟨hψc, hψ1, wT, wM, hA⟩ := heisW B G X om om' hTr v t h S hSB hcomm
-  obtain ⟨hT0, hM0, hST, hSM⟩ := hA ι hι
-  have hbij := GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Model.IsLin.bij hι
-  set ht := (mat h).map (piW t) with hht
-  have hdet : IsUnit ht.det := by
-    have h1 : IsUnit (mat h).det := (Units.isUnit h.1).map Matrix.detMonoidHom
-    have h2 := h1.map (piW t)
-    rw [RingHom.map_det] at h2
-    exact h2
-  have hsb := fun (w : (Fin a × Fin (a + a') → Fv F v) × (Fin a × Fin (a + a') → Fv F v))
-    (φ : (Fin a × Fin (a + a') → Fv F v) → ℂ) (hφ : φ ∈ SB _) => GlobalTheory.SchrSB.schr_mem_SB B.ψ hTr.base.std.1 v w φ hφ
-  have hL2 : ∀ x ∈ SB (Fin a × Fin (a + a') → Fv F v), ∀ y ∈ SB (Fin a × Fin (a + a') → Fv F v), ∀ c : ℂ,
-      (fun Y : Matrix (Fin a) (Fin (a + a')) (Fv F v) => ι (S (c • x + y)) (Y * htᵀ)) = c • (fun Y : Matrix (Fin a) (Fin (a + a')) (Fv F v) => ι (S x) (Y * htᵀ)) + fun Y : Matrix (Fin a) (Fin (a + a')) (Fv F v) => ι (S y) (Y * htᵀ) := by
-    intro x hx y hy c
-    funext Y
-    simp only [hlin x hx y hy c, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply]
-  have hT2 : ∀ C, ∀ x ∈ SB (Fin a × Fin (a + a') → Fv F v),
-      schr (GlobalTheory.LatVac.psiAt B.ψ v) (wT C) x ∈ SB (Fin a × Fin (a + a') → Fv F v) ∧
-      ι (schr (GlobalTheory.LatVac.psiAt B.ψ v) (wT C) x) = (fun Y => ι x (Y + C)) ∧
-      (fun Y : Matrix (Fin a) (Fin (a + a')) (Fv F v) => ι (S (schr (GlobalTheory.LatVac.psiAt B.ψ v) (wT C) x)) (Y * htᵀ)) = fun Y : Matrix (Fin a) (Fin (a + a')) (Fv F v) => ι (S x) ((Y + C) * htᵀ) := by
-    intro C x hx
-    refine ⟨hsb _ x hx, hT0 C x hx, ?_⟩
-    funext Y
-    simp only [hST C x hx, Matrix.add_mul]
-  have hM2 : ∀ l, ∀ x ∈ SB (Fin a × Fin (a + a') → Fv F v),
-      schr (GlobalTheory.LatVac.psiAt B.ψ v) (wM l) x ∈ SB (Fin a × Fin (a + a') → Fv F v) ∧
-      ι (schr (GlobalTheory.LatVac.psiAt B.ψ v) (wM l) x) = (fun Y => GlobalTheory.LatVac.psiAt B.ψ v (l Y) * ι x Y) ∧
-      (fun Y : Matrix (Fin a) (Fin (a + a')) (Fv F v) => ι (S (schr (GlobalTheory.LatVac.psiAt B.ψ v) (wM l) x)) (Y * htᵀ)) =
-        fun Y : Matrix (Fin a) (Fin (a + a')) (Fv F v) => GlobalTheory.LatVac.psiAt B.ψ v (l Y) * ι (S x) (Y * htᵀ) := by
-    intro l x hx
-    refine ⟨hsb _ x hx, hM0 l x hx, ?_⟩
-    funext Y
-    simp only [hSM l x hx, Matrix.mul_assoc, ← Matrix.transpose_mul, Matrix.nonsing_inv_mul _ hdet, Matrix.transpose_one,
-      Matrix.mul_one]
-  obtain ⟨c, hc⟩ := _root_.GlobalTheory.LinSchur.eq_smul_of_commute (SB (Fin a × Fin (a + a') → Fv F v)) (GlobalTheory.LatVac.psiAt B.ψ v) hψc hψ1 ι
-    (fun x Y => ι (S x) (Y * htᵀ)) hbij hL2
-    (fun C => schr (GlobalTheory.LatVac.psiAt B.ψ v) (wT C)) (fun l => schr (GlobalTheory.LatVac.psiAt B.ψ v) (wM l)) hT2 hM2
-  refine ⟨c, fun φ hφ φ₁ _ hAct Y => ?_⟩
-  rw [huniq φ hφ φ₁ hAct]
-  have e := congrFun (hc φ hφ) (Y * (ht⁻¹)ᵀ)
-  simp only [Pi.smul_apply, smul_eq_mul] at e
-  rwa [Matrix.mul_assoc, ← Matrix.transpose_mul, Matrix.mul_nonsing_inv _ hdet, Matrix.transpose_one,
-    Matrix.mul_one] at e
 
 end GlobalTheory.UnitWShape

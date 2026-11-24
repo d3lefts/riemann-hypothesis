@@ -62,32 +62,27 @@ theorem locBasic_le_locS (S : Submonoid R) (L : Submodule R W) : L ≤ locS S L 
 
 theorem locBasic_locS_mono (S : Submonoid R) {L M : Submodule R W} (h : L ≤ M) :
     locS S L ≤ locS S M := by
-  intro x hx
-  obtain ⟨s, hs, hsx⟩ := locBasic_mem_locS.mp hx
-  exact locBasic_mem_locS.mpr ⟨s, hs, h hsx⟩
+  rintro x ⟨s, hs, hsx⟩
+  exact ⟨s, hs, h hsx⟩
 
 theorem locBasic_locS_le_of_le {S T : Submonoid R} (hST : S ≤ T) (L : Submodule R W) :
     locS S L ≤ locS T L := by
-  intro x hx
-  obtain ⟨s, hs, hsx⟩ := locBasic_mem_locS.mp hx
-  exact locBasic_mem_locS.mpr ⟨s, hST hs, hsx⟩
+  rintro x ⟨s, hs, hsx⟩
+  exact ⟨s, hST hs, hsx⟩
 
 theorem locBasic_locS_idem (S : Submonoid R) (L : Submodule R W) :
     locS S (locS S L) = locS S L := by
   refine le_antisymm ?_ (locBasic_le_locS S _)
-  intro x hx
-  obtain ⟨s, hs, hsx⟩ := locBasic_mem_locS.mp hx
-  obtain ⟨t, ht, htx⟩ := locBasic_mem_locS.mp hsx
-  exact locBasic_mem_locS.mpr ⟨t * s, S.mul_mem ht hs, by rwa [mul_smul]⟩
+  rintro x ⟨s, hs, t, ht, htx⟩
+  exact ⟨t * s, S.mul_mem ht hs, by rwa [mul_smul]⟩
 
 theorem locBasic_locS_inf (S : Submonoid R) (L M : Submodule R W) :
     locS S (L ⊓ M) = locS S L ⊓ locS S M := by
   apply le_antisymm
   · exact le_inf (locBasic_locS_mono S inf_le_left) (locBasic_locS_mono S inf_le_right)
   · intro x hx
-    obtain ⟨s, hs, hsx⟩ := locBasic_mem_locS.mp (Submodule.mem_inf.mp hx).1
-    obtain ⟨t, ht, htx⟩ := locBasic_mem_locS.mp (Submodule.mem_inf.mp hx).2
-    refine locBasic_mem_locS.mpr ⟨s * t, S.mul_mem hs ht, Submodule.mem_inf.mpr ⟨?_, ?_⟩⟩
+    obtain ⟨⟨s, hs, hsx⟩, ⟨t, ht, htx⟩⟩ := Submodule.mem_inf.mp hx
+    refine ⟨s * t, S.mul_mem hs ht, Submodule.mem_inf.mpr ⟨?_, ?_⟩⟩
     · rw [mul_comm, mul_smul]
       exact L.smul_mem t hsx
     · rw [mul_smul]
@@ -145,8 +140,7 @@ theorem locBasic_hcompl_le (p : Ideal R) [p.IsPrime] :
     hcompl (K := K) p ≤ p.primeCompl := by
   unfold hcompl
   rw [Submonoid.closure_le]
-  intro s hs
-  exact hs.1
+  exact fun s hs => hs.1
 
 theorem locBasic_hcompl_not_mem (p : Ideal R) [p.IsPrime] (s : R) (hs : s ∈ hcompl (K := K) p) :
     s ∉ p := Ideal.mem_primeCompl_iff.mp (locBasic_hcompl_le (K := K) p hs)
@@ -157,8 +151,7 @@ theorem locBasic_mem_hcompl (p : Ideal R) (u : R) (hu : u ∉ p) (hu' : u ∉ co
   apply Submonoid.subset_closure
   refine ⟨hu, fun t ht htp => hu' ?_⟩
   unfold conjIdeal
-  apply Ideal.subset_span
-  exact ⟨t, htp, by rw [ht, star_star]⟩
+  exact Ideal.subset_span ⟨t, htp, by rw [ht, star_star]⟩
 
 def locBasic_sigma (hinj : Function.Injective (algebraMap R K))
     (hstar : ∀ r : R, star (algebraMap R K r) ∈ Set.range (algebraMap R K)) : R →+* R where

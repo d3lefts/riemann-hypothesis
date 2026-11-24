@@ -206,7 +206,7 @@ theorem rep_prim_pair (a : ℕ) (b c : ℤ) (d : ℕ) (ha : 0 < a) (hd : 0 < d) 
   have hxtT : ∀ j ∈ T, xt j = 0 := by
     intro j hj
     have hne : j ≠ i₀ := by rintro rfl; exact hi₀ hj
-    simp [hxt, hfdef, fvec, Pi.single_apply, hne]
+    simp [hxt, hfdef, fvec, hne]
   have hdiv : ((l : ℂ)⁻¹) • xt ∉ Λ := by
     rw [hxt, smul_smul, ← mul_inv, ← pow_succ', show j₁ - 1 + 1 = j₁ by omega]
     exact hPj
@@ -324,21 +324,16 @@ theorem rep_H_add_self (L : PeriodPair) (m : Type) [Fintype m] [DecidableEq m] (
     stdH L m (u + v) (u + v) = stdH L m u u + stdH L m u v + stdH L m v u + stdH L m v v := by
   first
   | (simp only [map_add (f := _), LinearMap.add_apply]; ring)
-  | (simp only [stdH, matH, LinearMap.mk₂'ₛₗ_apply, Pi.add_apply, map_add (f := _), add_mul, mul_add,
-      Finset.sum_add_distrib]; ring)
 
 theorem rep_H_smul_left (L : PeriodPair) (m : Type) [Fintype m] [DecidableEq m] (ξ : ℂ) (u v : m → ℂ) :
     stdH L m (ξ • u) v = ξ * stdH L m u v := by
   first
   | (simp only [map_smul, LinearMap.smul_apply, smul_eq_mul])
-  | (simp only [stdH, matH, LinearMap.mk₂'ₛₗ_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, mul_assoc])
 
 theorem rep_H_smul_right (L : PeriodPair) (m : Type) [Fintype m] [DecidableEq m] (ξ : ℂ) (u v : m → ℂ) :
     stdH L m v (ξ • u) = conj ξ * stdH L m v u := by
   first
   | (simp only [LinearMap.map_smulₛₗ, smul_eq_mul])
-  | (simp only [stdH, matH, LinearMap.mk₂'ₛₗ_apply, Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum];
-     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_; ring)
 
 theorem rep_unit_vec (a : ℕ) (b c : ℤ) (d : ℕ) (ha : 0 < a) (hd : 0 < d) (lam : ℂ) (hlam : lam ≠ 0) (m : Type) [Fintype m] [DecidableEq m] (Λ : AddSubgroup (m → ℂ)) (l : ℕ) (x y : ℤ) (T : Finset m) (i₀ : m) (h : KeyHyps a b c d ha hd lam hlam m Λ l x y T i₀) (hld : ¬ (l : ℤ) ∣ d) :
     ∃ w : m → ℂ, SatMem l Λ w ∧ (∀ j ∈ T, w j = 0) ∧ ∃ N S : ℤ, ¬ (l : ℤ) ∣ N ∧ ¬ (l : ℤ) ∣ S ∧
@@ -706,11 +701,9 @@ theorem keyExact : KeyExact := by
     have e1 : (N₁:ℂ) * (2 * (Q₀:ℂ) + Q₀ * ((l:ℂ) ^ k * p / q)) - γ' = (l:ℂ) ^ j * E₀ / q := by
       rw [← hEc, hEc2]
       field_simp
-      try ring
     rw [e1, hrcdef, hP, hpow]
     push_cast
     field_simp
-    try ring
   refine ⟨w' + rc • (Pi.single i₀ φ - w'), ?_, ?_, ?_⟩
   · have hmem : (E₀ * n₁ * M₃ : ℤ) • (w' + rc • (Pi.single i₀ φ - w')) ∈ Λ := by
       have key : (E₀ * n₁ * M₃ : ℤ) • (w' + rc • (Pi.single i₀ φ - w')) =

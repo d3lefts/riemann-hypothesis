@@ -233,7 +233,7 @@ theorem ge_of_mul_unit {δ : ℝ} {u y : C} (hu : V.v u = 0) (h : V.Ge δ (y * u
 theorem Cg.inv {δ : ℝ} {x x' : C} (hx : V.v x = 0) (hx' : V.v x' = 0) (h : Cg V δ x x') : Cg V δ x⁻¹ x'⁻¹ := by
   have hne := ne_zero_of_v hx
   have hne' := ne_zero_of_v hx'
-  have e : x⁻¹ - x'⁻¹ = (x' - x) * (x⁻¹ * x'⁻¹) := by field_simp <;> ring
+  have e : x⁻¹ - x'⁻¹ = (x' - x) * (x⁻¹ * x'⁻¹) := by field_simp
   unfold Cg
   rw [e]
   exact valuation_ge_mul_of_nonneg (Cg.symm h) (valuation_nonneg_of_zero (v_mul (v_inv hx) (v_inv hx')))
@@ -750,7 +750,6 @@ theorem ptSelf_of (hEx : PTExSelfSt) (hAvg : PTAvgSelfSt) (hStab : HStabSelfSt) 
     intro j
     first
     | simp [Finsupp.degree_single]
-    | (unfold Finsupp.degree; simp)
   have hγ1 : ∀ i, PowerSeries.coeff 1 (γ i) = ∑ c, (Y.rawSelf p).u g c i * w c := by
     intro i
     have h1 := congrArg (PowerSeries.coeff 1) (hlg i)

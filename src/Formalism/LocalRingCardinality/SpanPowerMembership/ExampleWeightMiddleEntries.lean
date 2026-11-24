@@ -339,8 +339,7 @@ instance : Subsingleton (zeroHLat K).V := inferInstanceAs (Subsingleton (Fin 0 �
 
 theorem zeroHLat_good : (zeroHLat K).Good := by
   refine ⟨fun _ => ?_, ?_, Subsingleton.elim _ _⟩
-  · rw [show (zeroHLat K).X _ = 1 from rfl, Matrix.det_one]
-    exact isUnit_one
+  · simp [zeroHLat]
   · rw [show (zeroHLat K).L = ⊤ from rfl, Subsingleton.elim (⊤ : Submodule (𝓞 K) (zeroHLat K).V) ⊥]
     exact Submodule.fg_bot
 

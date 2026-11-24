@@ -161,7 +161,7 @@ open Formalism.IndefR.RecTie Formalism.IndefR.Lev Formalism.L2.Rows GlobalTheory
 theorem _root_.GlobalTheory.T.liftLevelCharacter_typePrime_eq_columnCharacter : ∀ (X : Stages) (px : PreX X.B.toPre) (I : Col2.ColIn X.B px) (U : Set I.ι) (L : Formalism.IndefR.Links.LevCh X.toD7 (TupU I U)),
     I.Ok → LevOf X I U L → ∀ (i : Fin X.toD7.R.m) (w : {w // w ∈ (X.B.primes px).vGs}) (c : (𝓞 X.B.fields.E ⧸ w.1.asIdeal)ˣ),
       L.chi ((i : ℕ) + 1) w.1 c = Units.map X.toD7.what₂.embLL.toMonoidHom (Formalism.L2.Col.chiAt I.Ch w (i : ℕ) c) := by
-  first | exact @GlobalTheory.Mem.R3.LevChi.chi_succ_eq | exact GlobalTheory.Mem.R3.LevChi.chi_succ_eq | (intros; apply GlobalTheory.Mem.R3.LevChi.chi_succ_eq <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LevChi.chi_succ_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LiftLevelCharacterTypePrimeEqColumnCharacterStatement =====
@@ -182,7 +182,7 @@ theorem _root_.GlobalTheory.T.liftResidueTwistCharacter_eq_resChar : ∀ (X : St
     I.Ok → ValsIn I → LevOf X I U L → ∀ (t : TupU I U) (PP : HeightOneSpectrum (𝓞 X.B.fields.E)), PP ∈ Formalism.L2.Col.QE I.sel t.1 →
       ∀ c : (𝓞 X.B.fields.E ⧸ PP.asIdeal)ˣ, L.xiR t PP c = Units.map X.toD7.what₂.embLL.toMonoidHom
         (Formalism.L2.DIV.resChar (t.1 : Formalism.L2.DIV.Chr X.B.fields.F X.B.fields.E X.B.fields.K) PP c) := by
-  first | exact @GlobalTheory.Mem.LevResXi.xiR_eq_map_resChar | exact GlobalTheory.Mem.LevResXi.xiR_eq_map_resChar | (intros; apply GlobalTheory.Mem.LevResXi.xiR_eq_map_resChar <;> assumption)
+  first | exact @GlobalTheory.Mem.LevResXi.xiR_eq_map_resChar
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LiftResidueTwistCharacterEqResCharStatement =====
@@ -317,7 +317,7 @@ open Formalism.IndefR.RecTie Formalism.IndefR.Lev Formalism.L2.Rows GlobalTheory
 
 theorem _root_.GlobalTheory.T.typePrimes_disjoint_twistChosenPrimes : ∀ (X : Stages) (px : PreX X.B.toPre) (I : Col2.ColIn X.B px) (U : Set I.ι) (L : Formalism.IndefR.Links.LevCh X.toD7 (TupU I U)),
     I.Ok → ValsIn I → LevOf X I U L → ∀ t : TupU I U, Disjoint (X.B.primes px).vGs (Formalism.L2.Col.QE I.sel t.1) := by
-  first | exact @GlobalTheory.Mem.LevDisj.places_disjoint | exact GlobalTheory.Mem.LevDisj.places_disjoint | (intros; apply GlobalTheory.Mem.LevDisj.places_disjoint <;> assumption)
+  first | exact @GlobalTheory.Mem.LevDisj.places_disjoint
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TypePrimesDisjointTwistChosenPrimesStatement =====
@@ -764,7 +764,7 @@ theorem _root_.GlobalTheory.T.liftAdelicForm_level_type_eq_columnLevel : ∀ (X 
               ((Bridge.colJEquiv X.toD7.sp.cm X.B.R.nV ∅ (LiftBrg.sgL X I U t) _).symm k))) ∧
         ((k : Formalism.L2.Col.UAd X.toD7.sp.cm X.B.R.nV) ∈ Bridge.principalCongruenceSubgroup X.toD7.sp.cm X.B.R.nV ∅ (LiftBrg.sgL X I U t) →
           (levEnv (Vc X.toD7 i) (L.βV i) (L.datVt i t)).χ ⟨eG k, hk⟩ = 1) := by
-  first | exact @GlobalTheory.Mem.LevPres.lev_type_eq | exact GlobalTheory.Mem.LevPres.lev_type_eq | (intros; apply GlobalTheory.Mem.LevPres.lev_type_eq <;> assumption)
+  first | exact @GlobalTheory.Mem.LevPres.lev_type_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LiftAdelicFormLevelTypeEqColumnLevelStatement =====

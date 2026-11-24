@@ -113,7 +113,6 @@ theorem exists_algForm_ofType : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
         simp only [Set.mem_setOf_eq] at h ⊢
         rw [map_smul, h k hk] }
   have hFx : ∀ x : infU E n, ∀ u ∈ Fx, RU E n x.1 u ∈ Fx := fun x u hu k hk => by
-    change RU E n k (RU E n x.1 u) = RU E n x.1 u
     rw [RU_RU, fin_mul_inf (hK hk) x.2, ← RU_RU, hu k hk]
   have hcF : ∀ a v, Pairs.jOf W M (c a) v ∈ Fx := Pairs.coeff_mem (Pairs.span_rep W) (R := fun x => RU E n x.1)
     (Pairs.jOf_rep W M) hFx b (by rw [hc]; exact hφK)
@@ -160,7 +159,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 open GlobalTheory.GalCut GlobalTheory.UnitaryBC GlobalTheory.Cong GlobalTheory.DefU GlobalTheory.CuspRep GlobalTheory.PRep
 
 theorem _root_.GlobalTheory.T.exists_algebraicForm_weight_level_smooth_at_place : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (lam : (E →+* ℂ) → DomWeight n) (K : Subgroup (UA E n)) (U : Submodule ℂ (UA E n → ℂ)), K ≤ finU (E := E) (n := n) → OfType lam K U → ∀ w₀ : HeightOneSpectrum (𝓞 E), ∃ (W : Wt E n) (f : algForms W), (∀ τ, W.at τ = lam τ) ∧ f ≠ 0 ∧ (∀ v, f.1 v ∈ U) ∧ (∀ k ∈ K, ∀ v g, f.1 v (g * k) = f.1 v g) ∧ ∃ N ∈ nhds (1 : GL (Fin n) (w₀.adicCompletion E)), ∀ x ∈ locU n w₀, cLoc w₀ x ∈ N → ∀ v g, f.1 v (g * x) = f.1 v g := by
-  first | (exact @GlobalTheory.Cong.exists_algForm_ofType) | (exact GlobalTheory.Cong.exists_algForm_ofType) | (intros; apply GlobalTheory.Cong.exists_algForm_ofType  <;> assumption)
+  first | (exact @GlobalTheory.Cong.exists_algForm_ofType)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsAlgebraicFormWeightLevelSmoothAtPlaceStatement =====

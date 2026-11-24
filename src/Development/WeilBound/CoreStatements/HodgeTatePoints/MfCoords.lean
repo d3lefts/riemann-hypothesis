@@ -235,7 +235,7 @@ theorem coeff_spread {L : Type*} [CommRing L] (p : L[X]) (n : ℕ) :
       ← mul_assoc, ← C_mul, coeff_C_mul_X_pow, coeff_monomial]
     by_cases h : n = m
     · simp [h]
-    · simp [h, Ne.symm h]
+    · simp [h]
 
 theorem isIntegral_cone_iff {p : L[X]} :
     IsIntegral (cone o t) p ↔ ∀ n, p.coeff n ∈ piece o t n := by
@@ -1071,7 +1071,7 @@ private theorem exists_valR_eq_iff_forall_inChart_mem_regAt [IsClosedImmersion i
       have e : X.presheaf.stalkSpecializes (specializes_refl (GlobalTheory.CompanionTheory.Ar.genPt ξ)) = 𝟙 _ :=
         TopCat.Presheaf.stalkSpecializes_refl _ _
       have h3 := congrArg (fun φ => (φ ≫ Scheme.stalkClosedPointTo ξ).hom g) e
-      simp only [Category.id_comp] at h3
+      simp only at h3
       exact h3.trans hg
     exact (hinU ⟨_, specializes_refl _⟩).mp ⟨hc, fun j => h0 _⟩
   constructor
@@ -1098,9 +1098,9 @@ private theorem exists_valR_eq_iff_forall_inChart_mem_regAt [IsClosedImmersion i
           (X.presheaf.germ _ (genericPoint X) hgpU).hom f := rfl
       have h3 := congrArg (fun φ => (φ ≫ Scheme.stalkClosedPointTo ξ).hom f) e1
       have h4 := congrArg (fun φ => (φ ≫ Scheme.stalkClosedPointTo ξ).hom f) e2
-      simp only [CommRingCat.hom_comp, RingHom.comp_apply] at h3 h4
+      simp only at h3 h4
       rw [h1]
-      simp only [ψ, CommRingCat.hom_comp, RingHom.comp_apply]
+      simp only [ψ]
       exact h3.trans h4.symm
     have hsurj : Function.Surjective ψ := by
       intro a'
@@ -1110,8 +1110,8 @@ private theorem exists_valR_eq_iff_forall_inChart_mem_regAt [IsClosedImmersion i
           X.presheaf.stalkSpecializes (hall (genericPoint X)) = 𝟙 _ :=
         (TopCat.Presheaf.stalkSpecializes_comp _ _ _).trans (TopCat.Presheaf.stalkSpecializes_refl _ _)
       have h3 := congrArg (fun φ => (φ ≫ Scheme.stalkClosedPointTo ξ).hom g) hc2
-      simp only [Category.id_comp, CommRingCat.hom_comp, RingHom.comp_apply] at h3
-      simp only [ψ, CommRingCat.hom_comp, RingHom.comp_apply]
+      simp only at h3
+      simp only [ψ]
       exact h3
     obtain ⟨b, rfl⟩ := hsurj a
     have hb : b ∈ (⊥ : Subalgebra Γ(X, i ⁻¹ᵁ chart o n c) X.functionField) := by
@@ -1363,7 +1363,7 @@ theorem xr_norm : ∀ (X : Scheme.{0}) (s : X ⟶ Sp ℤ), IsProjOver s → ∀ 
         (Scheme.stalkClosedPointTo (point ℤ t ht)).hom b' := by
       have h4 := congrArg (fun φ => (φ ≫ Scheme.stalkClosedPointTo (point ℤ t ht)).hom b')
         (TopCat.Presheaf.stalkSpecializes_refl (PSpace ℤ N).presheaf (GlobalTheory.CompanionTheory.Ar.genPt (point ℤ t ht)))
-      simp only [Category.id_comp] at h4
+      simp only at h4
       exact h4
     rwa [e3] at hq
   haveI hFD : FiniteDimensional (GlobalTheory.TupleNorm.ratioField ℤ t) Ω := by

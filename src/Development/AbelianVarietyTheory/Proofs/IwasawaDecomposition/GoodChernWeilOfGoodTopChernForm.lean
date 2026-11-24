@@ -449,7 +449,6 @@ theorem goodBound_ev : ∀ (ι : Type) [Fintype ι] (m : ι → ℕ) (ρ : PolyR
     fun τ ξ => (hG τ).conn (hu τ) (by norm_num) ξ
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · intro i j
-    change ‖ρ.ev (G v) i j‖ ≤ _
     have := h1 B hB1 (fun w : EntIx m => G v w.1 w.2.1 w.2.2) hx (i, j)
     refine le_mul_pow_of_le (K := C1 * max c 1 ^ d1) (e := N * d1) ?_ (by linarith) hK1 hL (by omega)
     refine this.trans_eq ?_
@@ -488,7 +487,6 @@ theorem goodBound_ev : ∀ (ι : Type) [Fintype ι] (m : ι → ℕ) (ρ : PolyR
     refine hd2.trans_eq ?_
     rw [hBdef, mul_pow, mul_pow, mul_pow, ← pow_mul, ← pow_mul, ← pow_mul]; ring
   · intro a i j
-    change ‖conn (fun u => ρ.ev (G u)) v (coordVec a) i j‖ * poinWt S v a ≤ _
     have e := (hcvE (coordVec a)).self_of_nhds
     simp only at e
     rw [e]
@@ -812,14 +810,14 @@ theorem kron_left_pow (L : Matrix (Fin M) (Fin M) R) (m : ℕ) :
     (Matrix.kroneckerMap (· * ·) L (1 : Matrix (Fin M) (Fin M) R)) ^ m =
       Matrix.kroneckerMap (· * ·) (L ^ m) (1 : Matrix (Fin M) (Fin M) R) := by
   induction m with
-  | zero => simp [Matrix.one_kronecker_one]
+  | zero => simp
   | succ m ih => rw [pow_succ, ih, ← Matrix.mul_kronecker_mul, Matrix.mul_one, pow_succ]
 
 theorem kron_right_pow (L : Matrix (Fin M) (Fin M) R) (m : ℕ) :
     (Matrix.kroneckerMap (· * ·) (1 : Matrix (Fin M) (Fin M) R) L) ^ m =
       Matrix.kroneckerMap (· * ·) (1 : Matrix (Fin M) (Fin M) R) (L ^ m) := by
   induction m with
-  | zero => simp [Matrix.one_kronecker_one]
+  | zero => simp
   | succ m ih => rw [pow_succ, ih, ← Matrix.mul_kronecker_mul, Matrix.mul_one, pow_succ]
 
 theorem sum_tensorLie_pow_swap (L : Matrix (Fin M) (Fin M) R) (n : ℕ) :
@@ -1007,7 +1005,7 @@ theorem lie_sum {ι : Type} [Fintype ι] {m : ι → ℕ} (ρ σ : PolyRep m) {R
       (pderiv v (blockSum ρ.ent σ.ent i j)) * A v.1 v.2.1 v.2.2 = _
   obtain ⟨x, rfl⟩ := finSumFinEquiv.surjective i
   obtain ⟨y, rfl⟩ := finSumFinEquiv.surjective j
-  rcases x with x | x <;> rcases y with y | y <;> simp [lie, sum, blockSum]
+  rcases x with x | x <;> rcases y with y | y <;> simp [blockSum]
 
 end GlobalTheory.GoodMetric.PolyRep
 end -- clump:auto

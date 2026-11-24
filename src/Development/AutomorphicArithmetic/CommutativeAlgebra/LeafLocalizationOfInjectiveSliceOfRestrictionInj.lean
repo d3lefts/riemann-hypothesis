@@ -689,23 +689,23 @@ private def swapI {B Y W : Scheme.{0}} (p : Y ⟶ B) (ι : W ⟶ B) (U : B.Etale
   inv := swapB p ι U
   hom_inv_id := by
     apply pullback.hom_ext
-    · apply pullback.hom_ext <;> simp [swapF, swapB, pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc, pullback.lift_snd_assoc]
-    · simp [swapF, swapB, pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc, pullback.lift_snd_assoc]
+    · apply pullback.hom_ext <;> simp [swapF, swapB]
+    · simp [swapF, swapB]
   inv_hom_id := by
     apply pullback.hom_ext
-    · apply pullback.hom_ext <;> simp [swapF, swapB, pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc, pullback.lift_snd_assoc]
-    · simp [swapF, swapB, pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc, pullback.lift_snd_assoc]
+    · apply pullback.hom_ext <;> simp [swapF, swapB]
+    · simp [swapF, swapB]
 
 private def baseI {B : Scheme.{0}} (U : B.Etale) : U.left ≅ pullback (𝟙 B) U.hom where
   hom := pullback.lift U.hom (𝟙 _) (by simp)
   inv := pullback.snd _ _
-  hom_inv_id := by simp [pullback.lift_snd]
+  hom_inv_id := by simp
   inv_hom_id := by
     apply pullback.hom_ext
     · have h := pullback.condition (f := 𝟙 B) (g := U.hom)
       simp only [Category.comp_id] at h
       simpa using h.symm
-    · simp [pullback.lift_snd]
+    · simp
 
 theorem UpperTheory.nonempty_iso_relativeEtaleFamily_baseChange :
     ∀ {B Y W : Scheme.{0}} (p : Y ⟶ B) (ι : W ⟶ B), Nonempty (gYW p ι ≅ gY (pullback.fst p ι ≫ p)) ∧ Nonempty (gB B ≅ gY (𝟙 B)) ∧ Nonempty (gBW ι ≅ gY ι) := by
@@ -716,14 +716,14 @@ theorem UpperTheory.nonempty_iso_relativeEtaleFamily_baseChange :
   · intro U U' a
     apply pullback.hom_ext
     · apply pullback.hom_ext <;>
-        simp [swapI, swapF, gYW, gY, resY, resYW, pullback.map, pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc, pullback.lift_snd_assoc]
-    · simp [swapI, swapF, gYW, gY, resY, resYW, pullback.map, pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc, pullback.lift_snd_assoc]
+        simp [swapI, swapF, gYW, gY, resY, resYW, pullback.map]
+    · simp [swapI, swapF, gYW, gY, resY, resYW, pullback.map]
   · intro U U' a
     have hw : a.left ≫ U'.hom = U.hom := by simpa using a.w
-    apply pullback.hom_ext <;> simp [baseI, gB, gY, resY, pullback.map, hw, pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc, pullback.lift_snd_assoc]
+    apply pullback.hom_ext <;> simp [baseI, gB, gY, resY, pullback.map, hw]
   · intro U U' a
     apply pullback.hom_ext <;>
-      simp [gBW, gY, resY, resBW, pullback.map, pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc, pullback.lift_snd_assoc]
+      simp [gBW, gY, resY, resBW, pullback.map]
 
 end
 end -- clump:auto
@@ -899,15 +899,15 @@ private theorem pm_y {B Y Y' U V : Scheme.{0}} (p : Y ⟶ B) (g : Y' ⟶ Y) (x :
     (h : x = a ≫ y) (c₁ c₂ c₃ c₄ c₅ c₆ c₇ c₈) :
     pullback.map (g ≫ p) x (g ≫ p) y (𝟙 Y') a (𝟙 B) c₁ c₂ ≫ pullback.map (g ≫ p) y p y g (𝟙 V) (𝟙 B) c₃ c₄ =
       pullback.map (g ≫ p) x p x g (𝟙 U) (𝟙 B) c₅ c₆ ≫ pullback.map p x p y (𝟙 Y) a (𝟙 B) c₇ c₈ := by
-  apply pullback.hom_ext <;> simp [pullback.map, pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc, pullback.lift_snd_assoc, h]
+  apply pullback.hom_ext <;> simp [pullback.map]
 
 private theorem pm_w {A₁ A₂ A₃ A₄ W B : Scheme.{0}} (s₁ : A₁ ⟶ B) (s₂ : A₂ ⟶ B) (s₃ : A₃ ⟶ B) (s₄ : A₄ ⟶ B) (ι : W ⟶ B)
     (r : A₁ ⟶ A₂) (m₂ : A₂ ⟶ A₄) (m₁ : A₁ ⟶ A₃) (r' : A₃ ⟶ A₄) (h : r ≫ m₂ = m₁ ≫ r') (c₁ c₂ c₃ c₄ c₅ c₆ c₇ c₈) :
     pullback.map s₁ ι s₂ ι r (𝟙 W) (𝟙 B) c₁ c₂ ≫ pullback.map s₂ ι s₄ ι m₂ (𝟙 W) (𝟙 B) c₃ c₄ =
       pullback.map s₁ ι s₃ ι m₁ (𝟙 W) (𝟙 B) c₅ c₆ ≫ pullback.map s₃ ι s₄ ι r' (𝟙 W) (𝟙 B) c₇ c₈ := by
   apply pullback.hom_ext
-  · simp [pullback.map, pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc, pullback.lift_snd_assoc, h]
-  · simp [pullback.map, pullback.lift_fst, pullback.lift_snd, pullback.lift_fst_assoc, pullback.lift_snd_assoc]
+  · simp [pullback.map, h]
+  · simp [pullback.map]
 
 private theorem mY_nat {B Y Y' : Scheme.{0}} (p : Y ⟶ B) (g : Y' ⟶ Y) {U V : B.Etale} (a : U ⟶ V) :
     resY (g ≫ p) a ≫ mY p g V = mY p g U ≫ resY p a :=

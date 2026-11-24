@@ -152,11 +152,6 @@ theorem det_real_mul_mul (ι : Type) [Fintype ι] (j : ℕ) (A B : ι → Matrix
   first
   | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.DeterminantRealSandwich.det_real_family
   | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.DeterminantRealSandwich.det_real_family
-  | exact @_root_.GlobalTheory.DeterminantRealSandwich.det_real_family
-  | exact _root_.GlobalTheory.DeterminantRealSandwich.det_real_family
-  | (apply _root_.GlobalTheory.DeterminantRealSandwich.det_real_family <;> assumption)
-  | (intros; apply _root_.GlobalTheory.DeterminantRealSandwich.det_real_family <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.DeterminantRealSandwich.det_real_family <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.DeterminantRealSandwich.det_real_family ..)
 
 end GlobalTheory.MatMulDet
@@ -200,7 +195,6 @@ theorem main : ∀ {E : Type} [inst : Field E] [NumberField E] {j : ℕ}
         have h2 := coe_smul_mem Λ (n : 𝓞 E) hb
         convert Λ.add_mem h1 h2 using 1
         simp only [smul_add, smul_smul, map_intCast, Int.cast_mul]
-        push_cast
         rw [mul_comm (m : E) (n : E)]
       zero_mem' := ⟨1, one_ne_zero, by simp⟩
       smul_mem' := by

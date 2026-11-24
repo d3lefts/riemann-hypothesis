@@ -87,13 +87,9 @@ theorem coef_conv {G : Type} [Group G] [TopologicalSpace G]
     {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     {σ : G → (H →L[ℂ] H)} (hU : IsURep σ) (g x y : G) (w : H) :
     ⟪w, σ (x⁻¹ * g⁻¹ * y) w⟫_ℂ = ⟪σ g (σ x w), σ y w⟫_ℂ := by
-  have h1 : σ g (σ x w) = σ (g * x) w := (map_mul_apply hU g x w).symm
-  rw [h1]
-  symm
-  calc ⟪σ (g * x) w, σ y w⟫_ℂ = ⟪σ (g * x)⁻¹ (σ (g * x) w), σ (g * x)⁻¹ (σ y w)⟫_ℂ := (inner_map hU _ _ _).symm
-    _ = ⟪w, σ (x⁻¹ * g⁻¹ * y) w⟫_ℂ := by
-      rw [← map_mul_apply hU, ← map_mul_apply hU, inv_mul_cancel, hU.1, ContinuousLinearMap.one_apply,
-        mul_inv_rev]
+  rw [← inner_map hU (g * x) w (σ (x⁻¹ * g⁻¹ * y) w), map_mul_apply hU g x w,
+    ← map_mul_apply hU (g * x) (x⁻¹ * g⁻¹ * y) w,
+    show (g * x) * (x⁻¹ * g⁻¹ * y) = y by group]
 
 end PI.UnitaryGroupMassFormula.PhSchurConv.Main
 end -- clump:auto
@@ -124,7 +120,6 @@ theorem schur_orthogonality_idempotent : PI.PhSchurConv.SchurConv := by
       simp only [PI.PhSchurConv.phOf, PI.PhSchurConv.coefM]
       rw [(PI.UnitaryGroupMassFormula.PhSchurConv.Main.coef_inv hU)]
       simp only [star_mul', star_star, hstard]
-      try ring
     · intro x y
       have key : ∀ g, PI.PhSchurConv.phOf σ w d g * PI.PhSchurConv.phOf σ w d (x⁻¹ * g⁻¹ * y)
           = ((d : ℂ) * d) * (⟪σ y w, σ g (σ x w)⟫_ℂ * star ⟪w, σ g w⟫_ℂ) := by

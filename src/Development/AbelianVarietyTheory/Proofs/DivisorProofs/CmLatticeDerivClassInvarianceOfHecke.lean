@@ -100,8 +100,8 @@ theorem count_cons_eq {I : Type} [DecidableEq I] (i : I) (l : List I) :
     (fun j => (i :: l).count j) = (fun j => l.count j) + Pi.single i 1 := by
   funext j
   by_cases h : j = i
-  · subst h; simp [List.count_cons]
-  · simp [List.count_cons, Pi.single_apply, h, Ne.symm h]
+  · subst h; simp
+  · simp [h, Ne.symm h]
 
 theorem risingFactor_ne_zero {I : Type} [Fintype I] (k : ℕ) (hk : 1 ≤ k) (κ : I → ℕ) :
     risingFactor k κ ≠ 0 := by
@@ -597,7 +597,7 @@ theorem dualForm_existsUnique : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     apply LinearMap.ext_basis cb cb
     intro i j
     rw [Matrix.toLinearMap₂_apply_basis, clBasis_apply, clBasis_apply, hB']
-    simp [Gc, gram_apply, b]
+    simp [Gc, gram_apply]
 
 end GlobalTheory.DualFormExists
 end -- clump:auto
@@ -1052,7 +1052,7 @@ theorem clm_single_I {I : Type} (f : (I → ℂ) →L[ℂ] ℂ) (i : I) :
   ext j
   by_cases hj : j = i
   · subst hj; simp
-  · simp [Pi.single_apply, hj]
+  · simp [hj]
 
 theorem wirt_false_eq_lineDeriv {I : Type} [Fintype I] [DecidableEq I] (i : I) (h : (I → ℂ) → ℂ) (z : I → ℂ)
     (hd : DifferentiableAt ℂ h z) : wirt i false h z = lineDeriv ℂ h z (Pi.single i 1) := by
@@ -1228,7 +1228,7 @@ theorem isFractional_latB (c : Ideal (OF E)) (y : (Af E)ˣ) {θ : E} (hθ : θ �
       (algebraMap (𝓞 E) E β - cc (algebraMap (𝓞 E) E β)) * ((k : E) * (θ - cc θ)⁻¹) := by
     have hδ := sub_conj_ne hθ
     rw [hβ, Algebra.smul_def]
-    simp only [map_mul, map_natCast, map_intCast, map_sub]
+    simp only [map_mul, map_natCast, map_intCast]
     push_cast
     rw [← hbx]
     unfold lam
@@ -1401,8 +1401,7 @@ theorem dualForm_values (E : Type) [Field E] [NumberField E] [IsCMField E] (ξ :
       refine Finset.sum_congr rfl fun σ _ => ?_
       simp [IsCMField.complexEmbedding_complexConj, ComplexEmbedding.conjugate_coe_eq]
     rw [h2] at h1
-    simp only [c, sub_mul, Finset.sum_sub_distrib, ite_mul, zero_mul, Finset.sum_ite_eq', Finset.sum_ite_eq,
-      Finset.mem_univ, if_true]
+    simp only [c, sub_mul, Finset.sum_sub_distrib, ite_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     rw [sub_eq_zero]
     have h3 : ∑ τ₁, ∑ τ₂, τ₁ ξ * τ₂ ξ * b (ComplexEmbedding.conjugate τ₁) (ComplexEmbedding.conjugate τ₂) *
         (τ₁ x * τ₂ y) = ∑ σ : E →+* ℂ, σ ξ * σ x * ComplexEmbedding.conjugate σ y := by
@@ -1418,7 +1417,7 @@ theorem dualForm_values (E : Type) [Field E] [NumberField E] [IsCMField E] (ξ :
   have hcc : ∀ τ : E →+* ℂ, ComplexEmbedding.conjugate (ComplexEmbedding.conjugate τ) = τ := by
     intro τ
     ext x
-    simp [ComplexEmbedding.conjugate_coe_eq]
+    simp
   have hc := coeff_eq_zero c hsum (ComplexEmbedding.conjugate ρ) (ComplexEmbedding.conjugate ρ')
   simp only [c, b, hcc] at hc
   constructor
@@ -1497,7 +1496,7 @@ theorem series_differentiable : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     simp only [ContinuousLinearMap.apply_apply] at hm
     rw [hm]
     refine tsum_congr fun q => ?_
-    simp [hf', ContinuousLinearMap.sum_apply, Pi.single_apply]
+    simp [hf', Pi.single_apply]
   rwa [hev] at hL
 
 end GlobalTheory.DeformedSum.Series

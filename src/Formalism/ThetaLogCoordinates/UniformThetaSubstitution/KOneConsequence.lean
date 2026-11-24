@@ -145,8 +145,7 @@ theorem digits_sum_le_lgN (p m : ℕ) (hp : 1 < p) :
     · exact Nat.length_digits p m hp h
   have h := List.sum_le_card_nsmul (Nat.digits p m) (p - 1)
     (fun d hd => Nat.le_sub_one_of_lt (Nat.digits_lt_base hp hd))
-  rw [hlen, smul_eq_mul, mul_comm] at h
-  exact h
+  simpa [hlen, smul_eq_mul, mul_comm] using h
 
 theorem factorialValuationLowerBound : FactorialLg := by
   intro p m hp
@@ -212,9 +211,7 @@ theorem sum_factorial_ge {ι : Type} (p : ℕ) (hp : p.Prime) (T : Finset ι) (f
     have h := factorialValuationLowerBound p (f x) hp
     have h' : (lgN p (f x) : ℝ) ≤ lgN p B := by exact_mod_cast lgN_mono p (hB x hx)
     linarith
-  rw [Finset.sum_sub_distrib, ← Finset.sum_div, sum_const, nsmul_eq_mul] at h1
-  rw [Nat.cast_sum]
-  exact h1
+  simpa [Finset.sum_sub_distrib, ← Finset.sum_div, sum_const, nsmul_eq_mul, Nat.cast_sum] using h1
 
 theorem gainFactorialInequality : StarArith := by
   intro S _ p r0 r1 TT al ls e a i E i0 i2 hp halT he ha hiE hiT hpi htot hi2
@@ -315,13 +312,7 @@ theorem excessGainBound : ExcessGainBound := by
       gamP p * al s - ∑ e ∈ E, ch s e - ∑ e ∈ E, i s e := by
     intro s hs
     have hA : HasSum (fun e : ℕ => al s / p ^ (2 * e + 1)) (gamP p * al s) := by
-      have h := hgs.mul_right (al s)
-      have hf : (fun e : ℕ => al s / p ^ (2 * e + 1)) =
-          fun e : ℕ => (p ^ (2 * e + 1))⁻¹ * al s := by
-        funext e
-        rw [div_eq_mul_inv, mul_comm]
-      rw [hf]
-      exact h
+      simpa [div_eq_mul_inv, mul_comm] using hgs.mul_right (al s)
     have hC : HasSum (fun e : ℕ => ch s e) (∑ e ∈ E, ch s e) :=
       hasSum_sum_of_ne_finset_zero (fun e he => (hE s e he).2)
     have hI : HasSum (fun e : ℕ => i s e) (∑ e ∈ E, i s e) :=
@@ -798,8 +789,7 @@ lemma pay_le [NeZero ν] {p : ℕ} (hp : 0 < p) (α : PhiI ν r0 r1 E → ℕ) (
         rcases hP φ hα with h | h
         · exact le_trans (one_le_dAof_left hp φ) (Finset.single_le_sum (fun _ _ => Nat.zero_le _) h)
         · exact le_trans (one_le_dAof_right hp φ) (Finset.single_le_sum (fun _ _ => Nat.zero_le _) h)
-      calc α φ = α φ * 1 := (mul_one _).symm
-        _ ≤ α φ * ∑ τ ∈ P, dAof p φ τ := Nat.mul_le_mul_left _ h1
+      simpa using Nat.mul_le_mul_left (α φ) h1
   · rw [Finset.sum_filter]
     refine Finset.sum_le_sum (fun k _ => ?_)
     split_ifs with hk
@@ -808,8 +798,7 @@ lemma pay_le [NeZero ν] {p : ℕ} (hp : 0 < p) (α : PhiI ν r0 r1 E → ℕ) (
         refine le_trans ?_ (Finset.single_le_sum (fun _ _ => Nat.zero_le _) hk)
         simp only [dBof, Finsupp.single_eq_same]
         exact Nat.one_le_pow _ _ hp
-      calc β k = β k * 1 := (mul_one _).symm
-        _ ≤ β k * ∑ τ ∈ P, dBof p k τ := Nat.mul_le_mul_left _ h1
+      simpa using Nat.mul_le_mul_left (β k) h1
     · exact Nat.zero_le _
 
 lemma iN_mul_le [NeZero ν] {p : ℕ} (α : PhiI ν r0 r1 E → ℕ) (β : KapI ν r1 E →₀ ℕ)
@@ -872,8 +861,7 @@ lemma iN_le_min (hC : HitsCapPos) {K : Type} [Field K] [NeZero ν] {C : ℕ} {p 
 lemma sum_iN_tops [NeZero ν] (β : KapI ν r1 E →₀ ℕ) (TT : Finset (ZMod (2 * ν)))
     (h2 : ∀ k, β k ≠ 0 → k.1 ∈ TT) :
     ∑ s ∈ TT, ∑ e' ∈ range E, iN β s e' = ∑ k, β k := by
-  rw [sum_iN β TT]
-  exact Finset.sum_filter_of_ne (fun k _ hk => h2 k hk)
+  simpa [sum_iN β TT] using Finset.sum_filter_of_ne (fun k _ hk => h2 k hk)
 
 lemma low_pay (hJ : HitsColumnsPos) {K : Type} [Field K] [NeZero ν] {C : ℕ} (p : ℕ)
     (ξ : ZMod (2 * ν) → Fin r0 → K) (β : KapI ν r1 E →₀ ℕ) (l : Fin C → ℕ)
@@ -1288,9 +1276,7 @@ private theorem biLe_single_one_X (x : ι) (k : κ) :
     subst hβ
     refine ⟨?_, by simp [Finsupp.degree_single]⟩
     first
-      | exact zero_le _
       | exact fun i => Nat.zero_le _
-      | simp
   · rw [if_neg hβ] at hn
     simp at hn
 
@@ -1371,7 +1357,6 @@ lemma weight_posWt (s : σ) (n : σ × Fin r0 × Fin r1 →₀ ℕ) :
     intro i _
     first
       | exact zero_smul ℕ _
-      | simp
   case hs =>
     calc ∑ i ∈ n.support ∪ Finset.univ.image (fun x : Fin r0 × Fin r1 => ((s, x) : σ × Fin r0 × Fin r1)),
           n i • posWt r0 r1 s i
@@ -1392,7 +1377,7 @@ lemma minorAt_posWt {l : ℕ} (s s' : σ) (T : Fin l → Fin r0 → K) (I : Fin 
     MvPolynomial.IsWeightedHomogeneous (posWt r0 r1 s) (minorAt s' T I)
       (if s' = s then l else 0) := by
   have hdeg : (if s' = s then l else 0) = 0 + ∑ _i : Fin l, (if s' = s then 1 else 0) := by
-    split_ifs with h <;> simp [h]
+    split_ifs with h <;> simp
   rw [hdeg, minorAt, Matrix.det_apply']
   refine MvPolynomial.IsWeightedHomogeneous.sum _ _ _ (fun e _ => ?_)
   refine MvPolynomial.IsWeightedHomogeneous.mul ?hsign
@@ -1471,9 +1456,7 @@ theorem lowOp_deg {K : Type} [Field K] (hM : MinorProdDegree) {ν r0 r1 C : ℕ}
     (I : ∀ c, Fin (l c) → Fin r1) (n : ZV ν r0 r1 →₀ ℕ) (hn : n ∈ (lowOp l sf T I).support) :
     (∀ s, ∑ x : Fin r0 × Fin r1, n (s, x) = lsN l sf s) ∧ n.degree = ∑ s, lsN l sf s := by
   have hs := hM K (ZMod (2 * ν)) r0 r1 C l sf T I n hn
-  refine ⟨hs, ?_⟩
-  rw [deg_ZV]
-  exact Finset.sum_congr rfl fun s _ => hs s
+  exact ⟨hs, by rw [deg_ZV]; exact Finset.sum_congr rfl fun s _ => hs s⟩
 
 theorem lowOp_hom {K : Type} [Field K] (hM : MinorProdDegree) {ν r0 r1 C : ℕ} [NeZero ν]
     (l : Fin C → ℕ) (sf : Fin C → ZMod (2 * ν)) (T : ∀ c, Fin (l c) → Fin r0 → K)

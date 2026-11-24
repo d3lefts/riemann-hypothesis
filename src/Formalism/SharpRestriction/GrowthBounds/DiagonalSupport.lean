@@ -691,10 +691,7 @@ theorem num_size2 (C k r N Q cS c0 z Y a : ℝ) (hC : 2 ≤ C) (hk : 1 ≤ k) (h
     (hcS : 8 ≤ cS) (hc0 : 0 ≤ c0) (hz : 0 ≤ z) (hY : 2 ≤ Y)
     (hsz : C * k ^ 3 * r ^ 2 * N * Q ^ 5 * (cS + (r * N * c0 + z)) * Y ≤ a) : 8 * k ≤ a := by
   have hk3 : k ≤ k ^ 3 := le_self_pow₀ hk (by norm_num)
-  have hr2 : 4 ≤ r ^ 2 := by
-    have h := pow_le_pow_left₀ (by norm_num : (0 : ℝ) ≤ 2) hr 2
-    norm_num at h
-    linarith
+  have hr2 : 4 ≤ r ^ 2 := by nlinarith [sq_nonneg (r - 2)]
   have hQ5 : 1 ≤ Q ^ 5 := one_le_pow₀ hQ
   have hW : 8 ≤ cS + (r * N * c0 + z) := by
     have : 0 ≤ r * N * c0 := by positivity
@@ -766,11 +763,8 @@ theorem ellWt_flat {n' m : ℕ} (hm : 1 ≤ m) (d : Fin n' → ℕ) (s : Fin n')
     omega
   simp only [lamAt, flW, ellWt, lastIdx_eq]
   split_ifs
-  · rw [Pi.single_eq_same, Pi.single_eq_of_ne hne, sub_zero]
-    simp
-  · simp only [Fin.rev_zero, Fin.rev_last, Pi.single_eq_same, Pi.single_eq_of_ne hne, neg_zero,
-      zero_sub, neg_neg]
-    simp
+  · simp [Pi.single_eq_same, Pi.single_eq_of_ne hne]
+  · simp [Fin.rev_zero, Fin.rev_last, Pi.single_eq_same, Pi.single_eq_of_ne hne]
 
 theorem sizeStep (C : ℝ) (hC : 2 ≤ C) : SizeStep C 4 := by
   intro p n' m r TT L₁ L₂ de h x lam0 aT bT a Y cpp c0 Dp cStar H

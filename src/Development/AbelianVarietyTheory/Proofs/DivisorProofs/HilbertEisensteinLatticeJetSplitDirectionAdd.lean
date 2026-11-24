@@ -66,7 +66,6 @@ theorem rco_mul_rco : ∀ k n m j : ℕ, j ≤ m → m ≤ n →
   have h1 : n.choose m * m.choose j = n.choose j * (n - j).choose (m - j) := by
     first
       | exact Nat.choose_mul hjm
-      | exact Nat.choose_mul hmn hjm
   obtain ⟨p, rfl⟩ := Nat.exists_eq_add_of_le hjm
   obtain ⟨q, rfl⟩ := Nat.exists_eq_add_of_le hmn
   have e1 : j + p + q - (j + p) = q := by omega
@@ -155,7 +154,7 @@ open scoped Classical MatrixGroups nonZeroDivisors in
 private lemma piFinset_range_succ_eq_Iic {ι : Type} [Fintype ι] [DecidableEq ι] (κ : ι → ℕ) :
     Fintype.piFinset (fun i => Finset.range (κ i + 1)) = Finset.Iic κ := by
   ext μ
-  simp [Fintype.mem_piFinset, Finset.mem_range, Finset.mem_Iic, Pi.le_def, Nat.lt_succ_iff]
+  simp [Fintype.mem_piFinset, Finset.mem_range, Finset.mem_Iic, Pi.le_def]
 
 
 open NumberField UpperHalfPlane in

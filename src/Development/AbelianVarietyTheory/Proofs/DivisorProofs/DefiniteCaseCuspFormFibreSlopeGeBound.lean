@@ -197,7 +197,7 @@ theorem evalAt_intVec {n : ℕ} (la : Fin n → ℕ) (y : Matrix (Fin n) (Fin n)
     exact ((onBasis la).sum_repr _).symm
 
   rw [h, Submodule.coe_sum, map_sum]
-  simp [Submodule.coe_smul, map_smul]
+  simp [map_smul]
 
 variable {T : Type} [Fintype T] [DecidableEq T] {N : T → ℕ}
 
@@ -216,7 +216,7 @@ theorem norm_sum_mul_le {ι : Type} [Fintype ι] (a b : ι → ℂ) :
     ‖∑ i, a i * b i‖ ≤ Real.sqrt (∑ i, ‖a i‖ ^ 2) * Real.sqrt (∑ i, ‖b i‖ ^ 2) := by
   calc ‖∑ i, a i * b i‖ ≤ ∑ i, ‖a i‖ * ‖b i‖ := by
         refine (norm_sum_le _ _).trans (le_of_eq ?_)
-        simp [norm_mul]
+        simp
     _ ≤ _ := Real.sum_mul_le_sqrt_mul_sqrt _ _ _
 
 theorem mul_norm_tval_le_fibNorm : ∀ (T : Type) [Fintype T] [DecidableEq T] (N : T → ℕ) (la : ∀ t, Fin (N t) → ℕ), (∀ t, Antitone (la t)) → ∀ (x : TIdx la → ℂ) (X : ∀ t, Matrix (Fin (N t)) (Fin (N t)) ℂ) (u : ∀ t, UN (N t)) (s : ℝ), 0 ≤ s → s * ‖tval la x (fun t => X t * (u t).1)‖ ≤ Real.sqrt (∑ I, ‖(fibY la s X *ᵥ x) I‖ ^ 2) := by
@@ -482,7 +482,7 @@ theorem exists_ortho {σ : c.F →+* ℂ} {r : ℕ} {U : Unf Xo c σ r} {ξ : �
       fun _ => 1 := by
     funext b
     have h3 : (ρ : ℂ) * ((2 * Real.pi * ξ : ℝ) : ℂ) * ρ = 1 := by exact_mod_cast hρκ
-    simp only [Y, Matrix.conjTranspose_smul, Matrix.conjTranspose_one, Matrix.smul_mul, Matrix.mul_smul, Matrix.mul_one,
+    simp only [Y, Matrix.conjTranspose_smul, Matrix.conjTranspose_one, Matrix.mul_smul, Matrix.mul_one,
       smul_smul, Complex.star_def, Complex.conj_ofReal]
     rw [← mul_assoc, h3, one_smul]
   rw [hG, norm_one, one_pow, mul_one] at hm1
@@ -724,7 +724,7 @@ theorem exists_locBasis_inv : ∀ (K : Type) [Field K] [NumberField K] (n : ℕ)
   obtain ⟨hdet, hfin⟩ := hA
   have hu : IsUnit (A P).det := isUnit_iff_ne_zero.2 (hdet P)
   have hone : ∀ (w : HeightOneSpectrum (𝓞 K)) (j k : Fin n), w.valuation K ((Pi.single j 1 : Fin n → K) k) ≤ 1 :=
-    fun w j k => by by_cases hk : k = j <;> simp [Pi.single_apply, hk]
+    fun w j k => by by_cases hk : k = j <;> simp [hk]
   obtain ⟨s, hs, hint⟩ := exists_denom_notMem (fun w => A w * (A P)⁻¹)
     ((hfin.union (finite_not_intAt (A P)⁻¹)).subset fun w hw => by
       by_contra hn
@@ -803,8 +803,7 @@ theorem GlobalTheory.DefPt.det_gramPl_smul_single : ∀ (K : Type) [Field K] [Nu
       ((‖v.embedding t‖ ^ 2 : ℝ) : ℂ) • Matrix.reindex eqv eqv ((Y v.embedding)ᴴ * Y v.embedding) := by
     ext a b
     simp only [Formalism.HN.gramPl, Formalism.HermitianLatticesTheory.majAt, hf, Matrix.of_apply, Matrix.smul_apply, Matrix.reindex_apply,
-      Matrix.submatrix_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, dotProduct, Pi.star_apply,
-      smul_eq_mul, Finset.mul_sum, star_mul']
+      Matrix.submatrix_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, smul_eq_mul, Finset.mul_sum, star_mul']
     refine Finset.sum_congr rfl fun i _ => ?_
     have := Complex.conj_mul' (v.embedding t)
     push_cast
@@ -848,7 +847,7 @@ theorem smul_single_mem {ι : Type} [Fintype ι] [DecidableEq ι] (A : HeightOne
     (d : 𝓞 K) (hd : ∀ w, IntAt w ((d : K) • A w)) (i : ι) : (d : K) • (Pi.single i 1 : ι → K) ∈ locLat A := by
   intro w j
   have : (A w *ᵥ ((d : K) • (Pi.single i 1 : ι → K))) j = ((d : K) • A w) j i := by
-    simp [Matrix.mulVec_smul, Matrix.mulVec, dotProduct, Pi.single_apply, mul_comm]
+    simp [Matrix.mulVec, dotProduct, Pi.single_apply, mul_comm]
   rw [this]; exact hd w j i
 
 theorem isAdelic_reindex {ι : Type} [Fintype ι] [DecidableEq ι] {n : ℕ} (e : ι ≃ Fin n)
@@ -924,7 +923,7 @@ theorem log_relIndex {n : ℕ} (A : HeightOneSpectrum (𝓞 K) → Matrix (Fin n
         | (funext i; simp [Pi.basisFun_apply])
     · have hx : x = ∑ i, (x i / t) • ((t : K) • (Pi.single i 1 : Fin n → K)) := by
         funext j
-        simp [Finset.sum_apply, Pi.single_apply, smul_smul, div_mul_cancel₀ _ htK]
+        simp [Finset.sum_apply, Pi.single_apply]
         rw [Algebra.smul_def, show algebraMap (𝓞 K) K t = (t : K) from rfl, mul_div_cancel₀ _ htK]
       rw [SetLike.mem_coe, hx]
       exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -997,7 +996,7 @@ theorem GlobalTheory.LocMatSlope.slope_sq_locLat : ∀ (K : Type) [Field K] [Num
     intro x _
     have hx : x = ∑ i : ι, (x i / (d : K)) • ((d : K) • (Pi.single i 1 : ι → K)) := by
       funext j
-      simp [Finset.sum_apply, Pi.single_apply, smul_smul, div_mul_cancel₀ _ hdK]
+      simp [Finset.sum_apply, Pi.single_apply]
       rw [Algebra.smul_def, show algebraMap (𝓞 K) K d = (d : K) from rfl, mul_div_cancel₀ _ hdK]
     rw [hx]
     exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _

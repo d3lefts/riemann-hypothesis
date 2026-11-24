@@ -530,11 +530,11 @@ theorem UpperTheory.V.AlgebraTools.units_exist :
   have hb' : ∀ i, T.st (z i) * z i = b i • ep i := by
     intro i
     rw [hstz, hz, ← hb i]
-    simp only [mul_assoc, idem, idem']
+    simp only [mul_assoc, idem']
   have hzst : ∀ i, z i * T.st (z i) = b' i • ep (o i) := by
     intro i
     rw [hstz, hz, ← hb2 i]
-    simp only [mul_assoc, idem, idem']
+    simp only [mul_assoc, idem']
   have hbb : ∀ i, b' i = b i := by
     intro i
     have h := congrArg T.tr (hzst i)
@@ -600,7 +600,7 @@ open scoped TensorProduct
 private theorem charpoly_single {F : Type} [CommRing F] {m : ℕ} (i : Fin (m + 1)) :
     (single i i (1 : F)).charpoly = X ^ (m + 1) - X ^ m := by
   rw [← Matrix.diagonal_single, Matrix.charpoly_diagonal, Fin.prod_univ_succAbove _ i]
-  simp [Pi.single_apply, Fin.succAbove_ne]
+  simp [Fin.succAbove_ne]
   ring
 
 theorem UpperTheory.V.Pa.idem_nil :

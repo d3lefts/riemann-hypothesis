@@ -205,8 +205,7 @@ theorem tri_sgn (a b c : Fin n) : tri sgn0 a b c = triT a b c := by
     rcases lt_trichotomy a c with h3 | h3 | h3 <;>
     first
     | (exfalso; order)
-    | (subst_vars; simp [*, ne_of_lt, ne_of_gt, not_lt_of_gt, lt_asymm]; done)
-    | (subst_vars; simp [*, ne_of_lt, ne_of_gt, not_lt_of_gt, lt_asymm]; norm_num; done)
+    | (subst_vars; simp [*, ne_of_lt, ne_of_gt, lt_asymm]; done)
 
 theorem sum_sgn (a : Fin n) : ∑ b, sgn0 a b = 2 * rhoV n a := by
   have h : ∀ b, sgn0 a b = (if a < b then (1:ℝ) else 0) - (if b < a then (1:ℝ) else 0) := by
@@ -505,7 +504,7 @@ section -- clump:auto
 open PositivityTheory.RgBcC PositivityTheory.RgBcC.Real PositivityTheory.RgBcC.RealD
 
 theorem _root_.GlobalTheory.T.real_compression : PositivityTheory.RgBcC.RealD.Compress := by
-  first | exact @GlobalTheory.CompanionTheory.LevelCompress.exists_compress | exact GlobalTheory.CompanionTheory.LevelCompress.exists_compress | (intros; apply GlobalTheory.CompanionTheory.LevelCompress.exists_compress <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.LevelCompress.exists_compress
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RealCompressionStatement =====
@@ -991,7 +990,7 @@ theorem exists_adj (hp : IsPair E1 E2) {p : Module.End ℂ V × Module.End ℂ W
   | algebraMap r =>
     refine ⟨algebraMap ℂ _ (starRingEnd ℂ r), Subalgebra.algebraMap_mem _ _, fun x y => ?_⟩
     show ⟪algebraMap ℂ (Module.End ℂ V) r x, y⟫_ℂ = ⟪x, algebraMap ℂ (Module.End ℂ V) (starRingEnd ℂ r) y⟫_ℂ
-    simp [Module.algebraMap_end_apply, inner_smul_left, inner_smul_right, mul_comm]
+    simp [Module.algebraMap_end_apply, mul_comm]
   | add x y _ _ hx hy =>
     obtain ⟨q, hq, hq'⟩ := hx
     obtain ⟨q', hr, hr'⟩ := hy
@@ -1553,8 +1552,8 @@ theorem prod_filter {A : Type} [Monoid A] (g : ℕ → A) (p : ℕ → Prop) [De
   | nil => rfl
   | cons x l ih =>
     by_cases hx : p x
-    · simp [List.filter_cons, hx, ih]
-    · simp [List.filter_cons, hx, ih, hg x hx]
+    · simp [hx, ih]
+    · simp [hx, ih, hg x hx]
 
 theorem levs_eq (M : ℕ) (lev : Fin n → ℕ) (hM : ∀ a, lev a < M) :
     levs lev = (List.range M).filter fun j => decide (j ∈ univ.image lev) := by

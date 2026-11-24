@@ -753,35 +753,16 @@ theorem quot_pow_maximal_charP_local_card : ∀ (L : Type) [Field L] [NumberFiel
   have hla0 : la ≠ ⊥ := fun h => hl0 (by rw [h] at hlla; simpa using hlla)
   have hlatop : la ≠ ⊤ := hmax.ne_top
   have hpowle : ∀ i j : ℕ, la ^ i ≤ la ^ j ↔ j ≤ i := fun i j =>
-    ⟨fun h => by
-      by_contra hc
-      rw [not_le] at hc
-      exact absurd h (Ideal.pow_right_strictAnti la hla0 hlatop hc).not_ge,
-     fun h => Ideal.pow_le_pow_right h⟩
+    (Ideal.pow_right_strictAnti la hla0 hlatop).le_iff_ge
   have hle : la ^ n ≤ la := Ideal.pow_le_self hn0
   have hnil : ∀ c ∈ la, IsNilpotent (q c) := fun c hc =>
     ⟨n, by rw [← map_pow, Ideal.Quotient.eq_zero_iff_mem]; exact Ideal.pow_mem_pow hc n⟩
-  have hunit : ∀ a : 𝓞 L, IsUnit (q a) ↔ a ∉ la := by
-    intro a
-    constructor
-    · intro hu ha
-      obtain ⟨d, hd⟩ := hu.exists_right_inv
-      obtain ⟨c, rfl⟩ := Ideal.Quotient.mk_surjective d
-      have : a * c - 1 ∈ la ^ n := by
-        rw [← Ideal.Quotient.eq]; simpa [hq] using hd
-      have h1 : (1 : 𝓞 L) ∈ la := by
-        have := la.sub_mem (la.mul_mem_right c ha) (hle this)
-        simpa using this
-      exact hlatop ((Ideal.eq_top_iff_one _).mpr h1)
-    · intro ha
-      obtain ⟨c, y, hy, hcy⟩ := hmax.exists_inv ha
-      have h1 : q c * q a = 1 - q y := by
-        rw [← map_mul, ← map_one q, ← map_sub, ← hcy]; simp
-      have : IsUnit (q c * q a) := h1 ▸ (hnil y hy).isUnit_one_sub
-      exact isUnit_of_mul_isUnit_right this
+  have hunit : ∀ a : 𝓞 L, IsUnit (q a) ↔ a ∉ la := fun a =>
+    Ideal.Quotient.isUnit_mk_pow_iff_notMem (I := la) hn0
   have hmem : ∀ a : 𝓞 L, q a ∈ la.map q ↔ a ∈ la := fun a => Ideal.mem_quotient_iff_mem hle
 
-  obtain ⟨π₀, hπla, hπ2⟩ := SetLike.exists_of_lt ((Ideal.pow_right_strictAnti la hla0 hlatop) (by norm_num : 1 < 2))
+  obtain ⟨π₀, hπla, hπ2⟩ :=
+    IsConcreteLE.exists_of_lt ((Ideal.pow_right_strictAnti la hla0 hlatop) (by norm_num : 1 < 2))
   replace hπla : π₀ ∈ la := by simpa using hπla
   change π₀ ∉ la ^ 2 at hπ2
   have hQ : Ideal.span {π₀} ⊔ la ^ 2 = la := by
@@ -841,9 +822,8 @@ theorem quot_pow_maximal_charP_local_card : ∀ (L : Type) [Field L] [NumberFiel
   · rw [← Ideal.span_singleton_pow, hm, hlspan]
   · have hc1 : Nat.card ((𝓞 L ⧸ la ^ n) ⧸ la.map q) = Nat.card (𝓞 L ⧸ la) :=
       Nat.card_congr (DoubleQuot.quotQuotEquivQuotOfLE hle).toEquiv
-    have hc2 : ∀ I : Ideal (𝓞 L), Nat.card (𝓞 L ⧸ I) = Ideal.absNorm I := fun I => by
-      rw [Ideal.absNorm_apply, Submodule.cardQuot_apply]
-    rw [hm, hc1, hc2, hc2, map_pow, hn, mul_comm e b]
+    rw [hm, hc1, ← Submodule.cardQuot_apply, ← Submodule.cardQuot_apply,
+      cardQuot_pow_of_prime hla0, hn, mul_comm e b]
 
 end GlobalTheory
 end -- clump:auto
@@ -1336,7 +1316,7 @@ theorem exists_local_basis {F : Type} [Field F] [NumberField F] (p : HeightOneSp
     rw [← hB, ← he1 (B i)]
     congr 1
     funext k
-    simp [Module.Basis.equivFun_apply, Pi.single_apply, Finsupp.single_apply, eq_comm]
+    simp [Pi.single_apply, eq_comm]
   let S : Set (Fin (Module.finrank F C) → F) := {x | Int (e x)}
   obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples_of_finite (nonZeroDivisors (𝓞 F))
     (fun ki : Fin M × Fin (Module.finrank F C) => B.equivFun ⟨g ki.1, hg ki.1⟩ ki.2)
@@ -1445,7 +1425,7 @@ theorem intForm_descent_below (l e : ℕ) (hl : l.Prime) : ∃ c₀ : ℕ, ∀ (
     refine ⟨cc, ?_⟩
     rw [← hfe, hcc]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [CoreJ.phiJ, map_sum, map_smulₛₗ, map_smul, Finset.smul_sum]
+      simp only [CoreJ.phiJ, map_sum, map_smulₛₗ, Finset.smul_sum]
     exact Finset.sum_congr rfl fun k _ => smul_comm _ _ _
   choose cc hcc using hcc'
   have hσ₂ : ∀ z, C.σ₂ (C.inc z) = T.σ₀ z := fun z => congrArg (fun f => f z) hU.2.2.1

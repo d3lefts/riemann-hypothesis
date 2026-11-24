@@ -486,8 +486,7 @@ theorem inh_af : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed 
         Submodule.sub_mem _ (multOrder' v hv e).one_mem (hmem _), by simp [Finset.sum_apply], ?_⟩
       have e3 := geom_sum_mul (ψ 1) p
       rw [hpow, sub_self, mul_eq_zero] at e3
-      simp [Finset.sum_apply, Finset.sum_sub_distrib, AddChar.pow_apply,
-        e3.resolve_right (sub_ne_zero.2 h1)]
+      simp [Finset.sum_apply, Finset.sum_sub_distrib, e3.resolve_right (sub_ne_zero.2 h1)]
 
 end PositivityTheory.HtPt.Ri
 end -- clump:auto
@@ -504,7 +503,7 @@ open ReciprocityTheory.PGsh.L2 ReciprocityTheory.PGsh.Up GlobalTheory.CompanionT
 open scoped Matrix
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.hopf_orders_of_zmod_p_extremes : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (R : Type) [CommRing R] [Algebra R C], v.Integers R → v (p : C) < 1 → (∃ AA : HopfOrder (C := C) R (ZMod p), AA.carrier = intFun R (ZMod p) ∧ FStable (ZMod p) AA.carrier ∧ IsTight v p AA.carrier ∧ ∀ K, GenAF p AA.carrier K) ∧ (∃ AA : HopfOrder (C := C) R (ZMod p), AA.carrier = Submodule.span R (Set.range fun (ψ : AddChar (ZMod p) C) (x : ZMod p) => ψ x) ∧ AA.carrier ≠ intFun R (ZMod p) ∧ FStable (ZMod p) AA.carrier ∧ IsTight v p AA.carrier ∧ ∀ K, GenAF p AA.carrier K) := by
-  first | exact @PositivityTheory.HtPt.Ri.inh_af | exact PositivityTheory.HtPt.Ri.inh_af
+  first | exact @PositivityTheory.HtPt.Ri.inh_af
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.HopfOrdersOfZmodPExtremes =====
@@ -582,7 +581,7 @@ open scoped CategoryTheory.Obj CategoryTheory.MonObj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.tensor_product_tight_hopf_orders : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (R : Type) [CommRing R] [Algebra R C], v.Integers R → v (p : C) < 1 → ∀ (N₁ : Type) [AddCommGroup N₁] [Fintype N₁] [DecidableEq N₁], ∀ (N₂ : Type) [AddCommGroup N₂] [Fintype N₂] [DecidableEq N₂], ∀ (A₁ : HopfOrder (C := C) R N₁) (A₂ : HopfOrder (C := C) R N₂), (∀ x : N₁, p • x = 0) → (∀ x : N₂, p • x = 0) → IsTight v p A₁.carrier → IsTight v p A₂.carrier → IsTight v p (tens A₁.carrier A₂.carrier) := by
-  first | exact @GlobalTheory.CompanionTheory.Relay.tensor_product_tight_hopf_orders | exact GlobalTheory.CompanionTheory.Relay.tensor_product_tight_hopf_orders | (intros; apply GlobalTheory.CompanionTheory.Relay.tensor_product_tight_hopf_orders <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Relay.tensor_product_tight_hopf_orders
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.TensorProductTightHopfOrdersStatement =====

@@ -98,17 +98,17 @@ theorem q_snd (a : D2) : (q a).snd = (r1 a).snd + (r2 a).snd := by
   simp [q, r1, r2, dualMap]
 
 theorem quotient_inclusion_one : q.comp i1 = RingHom.id _ := by
-  ext a <;> simp [q, i1, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
+  ext a <;> simp [q, i1, TrivSqZeroExt.algebraMap_eq_inl]
 theorem quotient_inclusion_two : q.comp i2 = RingHom.id _ := by
-  ext a <;> simp [q, i2, dualMap, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
+  ext a <;> simp [q, i2, dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 theorem retraction_one_inclusion_one : r1.comp i1 = RingHom.id _ := by
-  ext a <;> simp [r1, i1, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
+  ext a <;> simp [r1, i1, TrivSqZeroExt.algebraMap_eq_inl]
 theorem retraction_one_inclusion_two : r1.comp i2 = GlobalTheory.CompanionTheory.Ar.epsMul 0 := by
-  ext a <;> simp [r1, i2, dualMap, GlobalTheory.CompanionTheory.Ar.epsMul, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
+  ext a <;> simp [r1, i2, dualMap, GlobalTheory.CompanionTheory.Ar.epsMul, TrivSqZeroExt.algebraMap_eq_inl]
 theorem retraction_two_inclusion_one : r2.comp i1 = GlobalTheory.CompanionTheory.Ar.epsMul 0 := by
-  ext a <;> simp [r2, i1, dualMap, GlobalTheory.CompanionTheory.Ar.epsMul, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
+  ext a <;> simp [r2, i1, dualMap, GlobalTheory.CompanionTheory.Ar.epsMul, TrivSqZeroExt.algebraMap_eq_inl]
 theorem retraction_two_inclusion_two : r2.comp i2 = RingHom.id _ := by
-  ext a <;> simp [r2, i2, dualMap, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
+  ext a <;> simp [r2, i2, dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 theorem inclusion_one_algebraMap : i1.comp (algebraMap ℂ (DualNumber ℂ)) = algebraMap ℂ D2 := by
   ext a <;> simp [i1, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 theorem inclusion_two_algebraMap : i2.comp (algebraMap ℂ (DualNumber ℂ)) = algebraMap ℂ D2 := by
@@ -116,7 +116,7 @@ theorem inclusion_two_algebraMap : i2.comp (algebraMap ℂ (DualNumber ℂ)) = a
 theorem q_alg : q.comp (algebraMap ℂ D2) = algebraMap ℂ (DualNumber ℂ) := by
   ext a <;> simp [q, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 theorem retraction_one_algebraMap : r1.comp (algebraMap ℂ D2) = algebraMap ℂ (DualNumber ℂ) := by
-  ext a <;> simp [r1, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
+  ext a <;> simp [r1, TrivSqZeroExt.algebraMap_eq_inl]
 theorem retraction_two_algebraMap : r2.comp (algebraMap ℂ D2) = algebraMap ℂ (DualNumber ℂ) := by
   ext a <;> simp [r2, dualMap, TrivSqZeroExt.algebraMap_eq_inl, algebraMap_doubleDual_apply]
 
@@ -355,7 +355,7 @@ theorem lie_model_with_cm_action : ∀ (E : Type) [Field E] [NumberField E] [IsC
       funext k
       by_cases hk : k = j
       · subst hk; simp [rhoTy]
-      · simp [rhoTy, Pi.single_apply, hk]
+      · simp [rhoTy, hk]
     have hproj : ∀ j, HT.eigProj (rhoTy ty) τ (Pi.single j 1) = if ty j = τ then Pi.single j 1 else 0 := by
       intro j
       split_ifs with hj
@@ -371,7 +371,7 @@ theorem lie_model_with_cm_action : ∀ (E : Type) [Field E] [NumberField E] [IsC
     · simp only [tyPart, Pi.smul_apply, smul_eq_mul]
       split_ifs <;> simp
     · intro b _ hb
-      split_ifs <;> simp [Pi.single_apply, Ne.symm hb]
+      split_ifs <;> simp [Ne.symm hb]
     · simp
 
 end PositivityTheory.Xgf
@@ -391,7 +391,7 @@ open Matrix GlobalTheory GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionT
 open scoped ComplexOrder
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.lie_model_with_cm_action : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (FU : FamilyUnif Xo (algebraMap (KA l) ℂ) ty) (i : Fin FU.n) (P : (FU.Di i).La →+ (Fin g → ℂ)), IsPeriod (FU.Di i) ty P → ∃ (M : LieModel Xo.univ.t.G (FU.u i P) (Fin g → ℂ)) (ρ : 𝓞 E →+* Module.End ℂ (Fin g → ℂ)), M.IsActOf Xo.univ.t.act.act ρ ∧ (∀ a w, ρ a w = fun k => ty k (a : E) * w k) ∧ (∀ w, IsDerivAt0 (fun z => (FU.ex i P z).left) w (M.pt w).left) ∧ ∀ τ w, HT.eigProj ρ τ w = tyPart ty τ w := by
-  first | exact @PositivityTheory.Xgf.lie_model_with_cm_action | exact PositivityTheory.Xgf.lie_model_with_cm_action
+  first | exact @PositivityTheory.Xgf.lie_model_with_cm_action
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.LieModelWithCmAction =====

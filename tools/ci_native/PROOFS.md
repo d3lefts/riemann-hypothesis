@@ -34,3 +34,10 @@ A cold expansion runs in its own network-free namespace and publishes its seal o
 on success. Later leases mount that tree read-only beneath a private build overlay;
 older Bubblewrap versions use private copy/reflink inodes. Failed partial expansions
 remain available for inspection and are never mistaken for a completed base.
+
+The current donor policy builds PR185 with stock Lean4.37.0-rc1 and no project baseline.
+A planner accepts only an exact source snapshot on the open PR’s ancestry, with policy-pinned raw configuration and a sealed full worklist.
+The worker checks that exact source again inside its network-free sandbox.
+The maximum lease is4096ready modules; the first operational lease uses1024Mathlib-only roots and64compiler jobs.
+Dependency preparation uses official4.37Mathlib caches;4.36project outputs are never restored.
+Main’s released toolchain/cache settings remain separate until the port is merged.

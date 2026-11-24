@@ -590,7 +590,7 @@ theorem _root_.GlobalTheory.T.exists_darboux_coordinates_triple : _root_.GlobalT
         (h : GlobalTheory.TripleRead.IsReading ψ A A₁ B α β e Bs Γ Xc), GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsTriple Bs Γ Xc om om' ∧
         GlobalTheory.TripleRead.IsTransp ψ true Γ.M om ωA e (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU W 1 h.JW) (GlobalTheory.TripleRead.toUX X e h.JX) ∧
         GlobalTheory.TripleRead.IsTransp ψ false Γ.M' om' ωB e (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU W₁ (-1) h.JW₁) (GlobalTheory.TripleRead.toUX X e h.JX) := by
-  first | exact @_root_.GlobalTheory.TripleDarboux.exists_darboux_basis_of_triple | exact _root_.GlobalTheory.TripleDarboux.exists_darboux_basis_of_triple | (intros; apply _root_.GlobalTheory.TripleDarboux.exists_darboux_basis_of_triple <;> assumption)
+  first | exact @_root_.GlobalTheory.TripleDarboux.exists_darboux_basis_of_triple
 end
 end -- clump:auto
 end -- clump:auto
@@ -661,7 +661,7 @@ theorem _root_.GlobalTheory.T.exists_matching_triple_for_theta_lift : GlobalTheo
       GlobalTheory.TripleRead.IsTransp ψ false Γ.M' om' ωB e (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU W₁ (-1) h.JW₁) (GlobalTheory.TripleRead.toUX X e h.JX) →
       ∀ R Rf, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsMatched Bs Γ Xc om om' R Rf →
         ∃ Pi rf rl p p', IsMatch ψ θ A A₁ B α β ωA ωB Pi rf rl p p' := by
-  first | exact @_root_.GlobalTheory.TripleAssembly.triple_exists_matching | exact _root_.GlobalTheory.TripleAssembly.triple_exists_matching | (intros; apply _root_.GlobalTheory.TripleAssembly.triple_exists_matching <;> assumption)
+  first | exact @_root_.GlobalTheory.TripleAssembly.triple_exists_matching
 end
 end -- clump:auto
 end -- clump:auto
@@ -710,7 +710,7 @@ theorem _root_.GlobalTheory.T.twist_triple_matches : GlobalTheory.Published.Howe
   ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D), IsStdChar D ψ (-1) → IsInfFam θ →
     ∀ (W W₁ X : HSp D) (A : Fr W) (A₁ : Fr W₁) (B : Fr X) (α β : (AE D)ˣ →* Circle), IsTriple W W₁ X α β →
       ∃ ωA ωB Pi rf rl p p', IsMatch ψ θ A A₁ B α β ωA ωB Pi rf rl p p' := by
-  first | exact @_root_.GlobalTheory.TripleRead.triple_exists_matching | exact _root_.GlobalTheory.TripleRead.triple_exists_matching | (intros; apply _root_.GlobalTheory.TripleRead.triple_exists_matching <;> assumption)
+  first | exact @_root_.GlobalTheory.TripleRead.triple_exists_matching
 end
 end -- clump:auto
 end -- clump:auto
@@ -932,7 +932,7 @@ theorem _root_.GlobalTheory.T.exists_stable_complement_of_irreducible_span_inter
   (∀ j f, ∃ f', τ j ∘ₗ β f = β f') → (⨆ f, LinearMap.range (β f)) = ⊤ →
   (∀ N : Submodule ℂ Pi, GlobalTheory.RealQuot.IsStab σ N → GlobalTheory.RealQuot.IsStab τ N → N = ⊥ ∨ N = ⊤) →
   ∀ N : Submodule ℂ Pi, GlobalTheory.RealQuot.IsStab σ N → ∃ N' : Submodule ℂ Pi, GlobalTheory.RealQuot.IsStab σ N' ∧ IsCompl N N' := by
-  first | exact @GlobalTheory.RealQuot.SemisimpleSpan.exists_stab_compl | exact GlobalTheory.RealQuot.SemisimpleSpan.exists_stab_compl | (intros; apply GlobalTheory.RealQuot.SemisimpleSpan.exists_stab_compl <;> assumption)
+  first | exact @GlobalTheory.RealQuot.SemisimpleSpan.exists_stab_compl
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsStableComplementOfIrreducibleSpanIntertwinStatement =====
@@ -961,7 +961,7 @@ theorem _root_.GlobalTheory.T.orientedPair_fockMaps_lie_equivariant : ∀ (D : D
   (∀ f, IsFinF ψ θ ε A B f → ∀ P ∈ GlobalTheory.RealQuot.coinv ε A B eT, p (fockF ψ θ ε A B f P) = 0) ∧
   ∀ h ∈ GfC X, ∀ f, IsFinF ψ θ ε A B f → ∃ f', IsFinF ψ θ ε A B f' ∧
     ∀ P, rf h (p (fockF ψ θ ε A B f P)) = p (fockF ψ θ ε A B f' P) := by
-  first | exact @GlobalTheory.RealQuot.oriented_maps | exact GlobalTheory.RealQuot.oriented_maps | (intros; apply GlobalTheory.RealQuot.oriented_maps <;> assumption)
+  first | exact @GlobalTheory.RealQuot.oriented_maps
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.OrientedPairFockMapsLieEquivariantStatement =====
@@ -1154,7 +1154,7 @@ theorem _root_.GlobalTheory.T.simple_quotients_iso_of_intertwined_semisimple : �
   (∀ N : Submodule ℂ Pi, GlobalTheory.RealQuot.IsStab σ N → ∃ N' : Submodule ℂ Pi, GlobalTheory.RealQuot.IsStab σ N' ∧ IsCompl N N') →
   ∃ e : (Q ⧸ GlobalTheory.RealQuot.rad ρ C) ≃ₗ[ℂ] (Q' ⧸ GlobalTheory.RealQuot.rad ρ' C'),
     ∀ i, e.toLinearMap ∘ₗ GlobalTheory.RealQuot.radAct ρ C i = GlobalTheory.RealQuot.radAct ρ' C' i ∘ₗ e.toLinearMap := by
-  first | exact @GlobalTheory.RealQuot.simpleQuot_iso_of_intertwined | exact GlobalTheory.RealQuot.simpleQuot_iso_of_intertwined | (intros; apply GlobalTheory.RealQuot.simpleQuot_iso_of_intertwined <;> assumption)
+  first | exact @GlobalTheory.RealQuot.simpleQuot_iso_of_intertwined
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SimpleQuotientsIsoOfIntertwinedSemisimpleStatement =====
@@ -1350,7 +1350,7 @@ theorem _root_.GlobalTheory.T.twisted_quotient_real : GlobalTheory.Published.How
             ∀ P, p (fockF ψ θ true A B f P) = φ (q P)) ∧
           ∀ f, IsFinF ψ θ false A₁ B f → ∃ φ : Pr →ₗ[ℂ] Pi, (∀ τ, ∀ Y ∈ lieAt X τ, φ ∘ₗ ρ τ Y = rl τ Y ∘ₗ φ) ∧
             ∀ P, p' (fockF ψ θ false A₁ B f P) = φ (q' P) := by
-  first | exact @_root_.GlobalTheory.RealQuot.twist_quotient_isReal | exact _root_.GlobalTheory.RealQuot.twist_quotient_isReal | (intros; apply _root_.GlobalTheory.RealQuot.twist_quotient_isReal <;> assumption)
+  first | exact @_root_.GlobalTheory.RealQuot.twist_quotient_isReal
 end
 end -- clump:auto
 end -- clump:auto
@@ -1442,7 +1442,7 @@ end
 section
 
 theorem _root_.GlobalTheory.T.twisted_local_factors_match : GlobalTheory.Published.HoweDualityReal → _root_.GlobalTheory.FunPr.ThetaLocalInputs → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ThetaIntegralsAgree → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.LocalMatching → GlobalTheory.SquareSt.LocalMatching := by
-  first | exact @_root_.GlobalTheory.SquareLM.twisted_square_local_matching | exact _root_.GlobalTheory.SquareLM.twisted_square_local_matching | (intros; apply _root_.GlobalTheory.SquareLM.twisted_square_local_matching <;> assumption)
+  first | exact @_root_.GlobalTheory.SquareLM.twisted_square_local_matching
 end
 end -- clump:auto
 end -- clump:auto

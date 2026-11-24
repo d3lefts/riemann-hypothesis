@@ -819,7 +819,7 @@ private theorem eta_eq_of_wild [Finite K] (h : IsPlaceOver A w) (n : ℕ) (f : R
     rw [hχa, hχa, div_pow, div_eq_div_iff_mul_eq_mul]
     have e2 := mul_inv_eq_iff_eq_mul.1 e'
     rw [e2]
-    simp [mul_comm, mul_left_comm, mul_assoc]
+    simp [mul_comm, mul_left_comm]
   have h2 : ∀ (k : ℕ) s, χ ((cj h)^[k] s) = χ s ^ normV w ^ k ∧
       π ((cj h)^[k] s) = ofAdd ((f ^ k) (toAdd (π s))) := fun k s => by
     induction k with
@@ -1230,7 +1230,7 @@ private theorem exists_dual_map {G K Γ V W : Type} [Group G] [TopologicalSpace 
       rw [hψ, map_sum] at e
       rw [← e]
 
-      simp only [T, LinearMap.sum_apply, map_sum, LinearMap.zero_apply]
+      simp only [T, LinearMap.sum_apply, map_sum]
       refine Finset.sum_congr rfl fun γ _ => ?_
       have e2 := hinv (s γ) (ρ γ⁻¹ w) v0
       rw [hs γ, ← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply] at e2

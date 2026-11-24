@@ -127,7 +127,7 @@ theorem coordForm_posDef (m : ℕ) : IsPosDef (coordForm (E := E) m) := by
     rw [Fintype.sum_sigma, Finset.sum_eq_single k]
     · exact Finset.sum_congr rfl fun j _ => by simp [Pi.basis_apply]
     · intro k' _ hk'
-      exact Finset.sum_eq_zero fun j _ => by simp [Pi.basis_apply, Pi.single_apply, Ne.symm hk']
+      exact Finset.sum_eq_zero fun j _ => by simp [Pi.basis_apply, Ne.symm hk']
     · simp
   have hsum : ∑ a, ∑ a', c a * c a' * coordForm m ((Pi.basis fun _ : Fin m => RingOfIntegers.basis E) a)
       ((Pi.basis fun _ : Fin m => RingOfIntegers.basis E) a') =
@@ -274,11 +274,7 @@ namespace GlobalTheory.SiegelGap
 theorem chain {n : ℕ} {d : Fin n → ℝ} {u : Matrix (Fin n) (Fin n) ℝ} (hS : GlobalTheory.RedTh.IsSiegel d u) :
     ∀ m : ℕ, ∀ i j : Fin n, (j : ℕ) = i + m → d i ≤ 4 ^ m * d j := by
   first
-  | exact @_root_.GlobalTheory.SiegelChain.siegel_chain
-  | exact _root_.GlobalTheory.SiegelChain.siegel_chain
   | (apply _root_.GlobalTheory.SiegelChain.siegel_chain <;> assumption)
-  | (intros; apply _root_.GlobalTheory.SiegelChain.siegel_chain <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.SiegelChain.siegel_chain <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.SiegelChain.siegel_chain ..)
 
 theorem chain_le {n : ℕ} {d : Fin n → ℝ} {u : Matrix (Fin n) (Fin n) ℝ} (hS : GlobalTheory.RedTh.IsSiegel d u)
@@ -437,7 +433,7 @@ theorem siegel_unipotent_inv_bounded : ∀ n : ℕ, ∃ c : ℝ, ∀ u : Matrix 
         rw [Matrix.updateRow_self]
         by_cases hb : b = i
         · subst hb; simp
-        · simp [Pi.single_apply, hb]
+        · simp [hb]
       · rw [Matrix.updateRow_ne ha]
         rcases lt_trichotomy a b with h | h | h
         · linarith [hup a b h]

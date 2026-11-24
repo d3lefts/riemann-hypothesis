@@ -255,7 +255,7 @@ theorem nonempty_piTensor_detRep_equiv (R β : Type) [CommRing R] [Fintype β] (
     ⟨(PiTensorProduct.constantBaseRingEquiv β ℂ).toLinearMap, fun g => ?_⟩
     (PiTensorProduct.constantBaseRingEquiv β ℂ).bijective⟩
   ext x
-  simp [leviChar_apply, detRep, Finset.prod_mul_distrib]
+  simp [leviChar_apply, detRep]
 
 end GlobalTheory.SmGL.Exponents
 end -- clump:auto
@@ -1256,7 +1256,6 @@ theorem exponentsSeparate (hG : Published.GeometricLemma) (hZ : Published.Zelevi
     obtain ⟨z, hz⟩ := exists_eq_torusChar hϖ (θ := χ * δ⁻¹) fun t ht => by
       simp [(hE i).unramified hm ht, hδ t ht]
     refine ⟨List.ofFn z, ?_⟩
-    beta_reduce
     rwa [hM, ← hz, inv_mul_cancel_right]
   · intro w
     by_cases hw : w.length = r

@@ -95,7 +95,7 @@ section -- clump:auto
 open GlobalTheory.PD GlobalTheory.CechDR KaehlerDifferential
 
 theorem _root_.GlobalTheory.T.mem_of_forall_heightOne_localization_integrallyClosed : ∀ (A K : Type) [CommRing A] [IsDomain A] [IsNoetherianRing A] [IsIntegrallyClosed A] [Field K] [Algebra A K] [IsFractionRing A K] (z : K), (∀ Q : Ideal A, Q.IsPrime → Q.height = 1 → ∃ r c : A, r ∉ Q ∧ algebraMap A K r * z = algebraMap A K c) → ∃ c : A, z = algebraMap A K c := by
-  first | (exact @GlobalTheory.NormalHeightOne.mem_of_forall_height_eq_one) | (exact GlobalTheory.NormalHeightOne.mem_of_forall_height_eq_one) | (intros; apply GlobalTheory.NormalHeightOne.mem_of_forall_height_eq_one <;> assumption)
+  first | (exact @GlobalTheory.NormalHeightOne.mem_of_forall_height_eq_one)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemOfForallHeightOneLocalizationIntegrallyClosedStatement =====
@@ -172,7 +172,7 @@ theorem exists_basis_D (k F K : Type) [Field k] [Field F] [Field K] [Algebra k F
   have h₂ : ∀ j, b₂ j = D k F (v j) := by
     intro j
     simp only [b₂, b₁, Module.Basis.map_apply, Module.Basis.baseChange_apply, tensorKaehlerEquivOfFormallyEtale_apply,
-      mapBaseChange_tmul, one_smul, mvPolynomialBasis_apply, map_D]
+      mapBaseChange_tmul, one_smul, mvPolynomialBasis_apply]
     have e : algebraMap A F (algebraMap P A (MvPolynomial.X j)) = v j := by
       change algebraMap A F (hv.aevalEquiv (MvPolynomial.X j)) = v j
       rw [hv.algebraMap_aevalEquiv, MvPolynomial.aeval_X]

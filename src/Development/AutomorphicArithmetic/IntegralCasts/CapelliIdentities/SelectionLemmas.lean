@@ -216,9 +216,7 @@ open NumberField IsDedekindDomain Matrix
 
 private theorem star_int {K : Type} [Field K] [StarRing K] (a : 𝓞 K) :
     ∃ b : 𝓞 K, algebraMap (𝓞 K) K b = star (algebraMap (𝓞 K) K a) := by
-  have h : IsIntegral ℤ ((starRingEnd K).toIntAlgHom (algebraMap (𝓞 K) K a)) :=
-    (RingOfIntegers.isIntegral_coe a).map _
-  exact ⟨⟨_, h⟩, rfl⟩
+  exact ⟨⟨_, (RingOfIntegers.isIntegral_coe a).map ((starRingEnd K).toIntAlgHom)⟩, rfl⟩
 
 private theorem hcompl_spec {K : Type} [Field K] [StarRing K] (p : Ideal (𝓞 K)) (hp : p.IsPrime)
     (s : 𝓞 K) (hs : s ∈ hcompl (K := K) p) :
@@ -243,8 +241,7 @@ private theorem exists_uniform {R W : Type} [CommRing R] [AddCommGroup W] [Modul
     obtain ⟨s, hs, hx⟩ := h (Submodule.mem_span_singleton_self x)
     refine ⟨s, hs, fun y hy => ?_⟩
     obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.1 hy
-    rw [smul_comm]
-    exact L.smul_mem _ hx
+    simpa [smul_smul, mul_comm] using L.smul_mem a hx
   | sup N₁ N₂ _ _ h₁ h₂ =>
     obtain ⟨s, hs, h₁⟩ := h₁ (le_sup_left.trans h)
     obtain ⟨t, ht, h₂⟩ := h₂ (le_sup_right.trans h)
@@ -269,9 +266,7 @@ private theorem vw_pow {K : Type} [Field K] [NumberField K] (w : HeightOneSpectr
 
 private theorem vw_nonneg {K : Type} [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K))
     (a : 𝓞 K) : 0 ≤ vw w (algebraMap (𝓞 K) K a) := by
-  unfold vw
-  rw [← FractionalIdeal.coeIdeal_span_singleton]
-  exact FractionalIdeal.count_coe_nonneg K w _
+  simpa only [vw, ← FractionalIdeal.coeIdeal_span_singleton] using FractionalIdeal.count_coe_nonneg K w (Ideal.span {a})
 
 private theorem vw_eq_zero {K : Type} [Field K] [NumberField K] (w : HeightOneSpectrum (𝓞 K))
     (a : 𝓞 K) (ha : a ∉ w.asIdeal) : vw w (algebraMap (𝓞 K) K a) = 0 := by
@@ -283,9 +278,7 @@ private theorem vw_eq_zero {K : Type} [Field K] [NumberField K] (w : HeightOneSp
   unfold vw
   rw [← FractionalIdeal.coeIdeal_span_singleton, FractionalIdeal.count_coe K w h0]
   by_contra hne
-  have hne' : (Associates.mk w.asIdeal).count (Associates.mk (Ideal.span {a})).factors ≠ 0 := by
-    exact_mod_cast hne
-  have := (Associates.count_ne_zero_iff_dvd h0 w.irreducible).1 hne'
+  have := (Associates.count_ne_zero_iff_dvd h0 w.irreducible).1 (by exact_mod_cast hne)
   exact ha (Ideal.dvd_span_singleton.1 this)
 
 private theorem det_int {K : Type} [Field K] {D : ℕ} (A : Matrix (Fin D) (Fin D) K)
@@ -294,9 +287,7 @@ private theorem det_int {K : Type} [Field K] {D : ℕ} (A : Matrix (Fin D) (Fin 
   choose B hB using h
   refine ⟨(Matrix.of B).det, ?_⟩
   rw [RingHom.map_det]
-  congr 1
-  ext i j
-  exact hB i j
+  exact congrArg Matrix.det (Matrix.ext fun i j => hB i j)
 
 private theorem core {K : Type} [Field K] [StarRing K] {n D : ℕ}
     (H : Matrix (Fin n) (Fin n) K) (hH : IsUnit H.det) (B : Matrix (Fin D) (Fin n) K)
@@ -317,15 +308,14 @@ private theorem core {K : Type} [Field K] [StarRing K] {n D : ℕ}
     rw [hb, ha, LinearMap.restrictScalars_apply, map_smul]
     unfold hform
     rw [Matrix.toLinearMapₛₗ₂'_apply]
-    have h1 : H *ᵥ (H⁻¹ *ᵥ star (B j)) = star (B j) := by
-      rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hH, Matrix.one_mulVec]
     have h2 : ∀ v : Fin n → K, ∑ a, ∑ b, (starRingEnd K) (y a) • (RingHom.id K) (v b) • H a b
         = star y ⬝ᵥ (H *ᵥ v) := by
       intro v
       simp only [dotProduct, Matrix.mulVec, Finset.mul_sum, smul_eq_mul, RingHom.id_apply,
         starRingEnd_apply, Pi.star_apply]
       refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
-    rw [h2, h1, star_mul', ← ht, smul_eq_mul]
+    rw [h2, Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hH, Matrix.one_mulVec,
+      star_mul', ← ht, smul_eq_mul]
     congr 1
     simp [dotProduct, Matrix.mulVec, star_sum, mul_comm]
   obtain ⟨a, ha⟩ := hs _ (hc _ hx) i

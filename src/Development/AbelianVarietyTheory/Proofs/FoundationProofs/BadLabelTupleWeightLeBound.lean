@@ -200,7 +200,7 @@ theorem lev_card : ∀ (g : ℕ) [Fact g.Prime] (N : ℕ), ∀ L : Lev g N,
       ((∀ a, u.val a a = 1) ∧ ∀ a b, a ≠ b → (a, b) ∉ U \ R → u.val a b = 0) := by
     intro u
     simp only [Lev.Mem, IsUp, hU, hR, Finset.mem_sdiff, Finset.mem_filter, Finset.mem_univ, true_and,
-      Finset.mem_product, not_and, not_not]
+      Finset.mem_product, not_and]
     constructor
     · rintro ⟨⟨h1, h2⟩, h3⟩
       refine ⟨h1, fun a b hab h => ?_⟩
@@ -571,7 +571,7 @@ def Corner (k : ℕ) (h : GG g N) : Prop :=
 lemma rowUp_one (k : ℕ) : RowUp k (1 : GG g N) := by
   intro a _
   refine ⟨by simp, fun b hb => ?_⟩
-  simp [Matrix.one_apply, hb.ne']
+  simp [hb.ne']
 
 lemma rowUp_mul (k : ℕ) (h h' : GG g N) (H : RowUp k h) (H' : RowUp k h') : RowUp k (h * h') := by
   have key : ∀ a b : Fin N, k ≤ (a : ℕ) → b ≤ a → (h * h').val a b = h'.val a b := by
@@ -1228,11 +1228,7 @@ theorem eq_zero_of_sum_joint_eigenvectors {ι κ M : Type} [AddCommGroup M] [Mod
     (s : Finset ι) : ∀ u : ι → M, (∀ i k, T k (u i) = l i k • u i) → ∑ i ∈ s, u i = 0 →
       ∀ i ∈ s, u i = 0 := by
   first
-  | exact @_root_.GlobalTheory.ComplexValueBound.main
-  | exact _root_.GlobalTheory.ComplexValueBound.main
   | (apply _root_.GlobalTheory.ComplexValueBound.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ComplexValueBound.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ComplexValueBound.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.ComplexValueBound.main ..)
 
 theorem root_exchange : ∀ (G : Type) [Group G] [Fintype G] (M : Type) [AddCommGroup M] [Module ℂ M] [FiniteDimensional ℂ M] (ρ : Representation ℂ G M), ∀ (B X Y : Subgroup G) (χ : G → ℂ), (∀ x ∈ X, x ∈ B → x = 1) → (∀ b ∈ B, ∀ x ∈ X, ∃ x' ∈ X, ∃ b' ∈ B, b * x = x' * b' ∧ χ b' = χ b) → (∀ x ∈ X, ∀ y ∈ Y, y⁻¹ * x⁻¹ * y * x ∈ B) → (∀ x ∈ X, ∀ x' ∈ X, x ≠ x' → ∃ y ∈ Y, χ (y⁻¹ * x⁻¹ * y * x) ≠ χ (y⁻¹ * x'⁻¹ * y * x')) → ∀ (n : ℕ) (v : Fin n → M), LinearIndependent ℂ v → (∀ i, (∀ b ∈ B, ρ b (v i) = χ b • v i) ∧ ∀ y ∈ Y, ρ y (v i) = v i) → ∃ w : Fin n → M, LinearIndependent ℂ w ∧ ∀ i, (∀ b ∈ B, ρ b (w i) = χ b • w i) ∧ ∀ x ∈ X, ρ x (w i) = w i := by

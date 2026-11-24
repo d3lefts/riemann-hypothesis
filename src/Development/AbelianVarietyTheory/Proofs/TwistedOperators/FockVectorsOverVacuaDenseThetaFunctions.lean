@@ -156,7 +156,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.Glob
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.fockCreation_preserves_fockVectors_two_frames : ∀ (D : D7) (V W : HSp D) (A : GlobalTheory.ChainFr.Fr V) (B : GlobalTheory.ChainFr.Fr W) (θ : InfFam D) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → IsInfFam θ → ∀ f, IsThetaFunO ψ V W f → ∀ (τ : D.what₂.Tau) (z : Matrix (Fin W.rank) (Fin V.rank) ℂ) (P : PolF D W.rank V.rank), ∃ Q : PolF D W.rank V.rank, crea (heisO ψ V W) θ τ (cplxO (A.cart τ) (B.cart τ)) z (GlobalTheory.ChainFr.ptF ψ θ A B f P) = GlobalTheory.ChainFr.ptF ψ θ A B f Q := by
-  first | exact @GlobalTheory.FockCreaDir.crea_ptF | exact GlobalTheory.FockCreaDir.crea_ptF | (intros; apply GlobalTheory.FockCreaDir.crea_ptF <;> assumption)
+  first | exact @GlobalTheory.FockCreaDir.crea_ptF
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FockCreationPreservesFockVectorsTwoFramesStatement =====
@@ -176,8 +176,7 @@ theorem norm_word_le_number_pow : ∀ (T H κ : Type) [AddCommGroup T] [Module �
   have hreal : ∀ (s : ℝ) (x : T), RCLike.re (inner ℂ (Φ x) (Φ ((s : ℂ) • x))) = s * ‖Φ x‖ ^ 2 := by
     intro s x
     rw [map_smul, inner_smul_right, inner_self_eq_norm_sq_to_K]
-    simp [Complex.mul_re]
-    left; rw [← Complex.ofReal_pow, Complex.ofReal_re]
+    simp [← Complex.ofReal_pow, Complex.ofReal_re]
   have hca : ∀ j x, RCLike.re (inner ℂ (Φ x) (Φ (c j (a j x)))) = ‖Φ (a j x)‖ ^ 2 := by
     intro j x
     rw [← inner_conj_symm, hadj, RCLike.conj_re, inner_self_eq_norm_sq]
@@ -209,8 +208,7 @@ theorem norm_word_le_number_pow : ∀ (T H κ : Type) [AddCommGroup T] [Module �
     intro j x
     refine hsq x _ (norm_nonneg _) ?_
     have := Finset.single_le_sum (f := fun i => ‖Φ (a i x)‖ ^ 2) (fun i _ => sq_nonneg _) (Finset.mem_univ j)
-    have : 0 ≤ r * ‖Φ x‖ ^ 2 := mul_nonneg (by linarith) (sq_nonneg _)
-    linarith
+    nlinarith
   have hac : ∀ j, a j * c j = c j * a j + (r' : ℂ) • 1 := fun j => sub_eq_iff_eq_add'.1 (hcomm j)
   have hc : ∀ j x, ‖Φ (c j x)‖ ≤ ‖Φ (M x)‖ := by
     intro j x
@@ -219,8 +217,7 @@ theorem norm_word_le_number_pow : ∀ (T H κ : Type) [AddCommGroup T] [Module �
       rw [← inner_self_eq_norm_sq (𝕜 := ℂ), hadj, ← Module.End.mul_apply, hac, LinearMap.add_apply,
         LinearMap.smul_apply, Module.End.one_apply, Module.End.mul_apply, map_add, inner_add_right, map_add, hca, hreal]
     have := Finset.single_le_sum (f := fun i => ‖Φ (a i x)‖ ^ 2) (fun i _ => sq_nonneg _) (Finset.mem_univ j)
-    have : r' * ‖Φ x‖ ^ 2 ≤ r * ‖Φ x‖ ^ 2 := mul_le_mul_of_nonneg_right hr' (sq_nonneg _)
-    linarith
+    nlinarith [mul_le_mul_of_nonneg_right hr' (sq_nonneg (‖Φ x‖ : ℝ))]
   have hC : ∀ s : ℝ, Commute M (M + (s : ℂ) • 1) := fun s =>
     (Commute.refl M).add_right ((Commute.one_right M).smul_right _)
   have hshift : ∀ (s : ℝ), |s| ≤ r → ∀ y, ‖Φ ((M + (s : ℂ) • 1) y)‖ ≤ 2 * ‖Φ (M y)‖ := by
@@ -244,25 +241,18 @@ theorem norm_word_le_number_pow : ∀ (T H κ : Type) [AddCommGroup T] [Module �
         _ = 2 ^ k * ‖Φ ((M + (s : ℂ) • 1) ((M ^ k) y))‖ := by rw [e]
         _ ≤ 2 ^ k * (2 * ‖Φ (M ((M ^ k) y))‖) := by gcongr; exact hshift s hs _
         _ = 2 ^ (k + 1) * ‖Φ (M ((M ^ k) y))‖ := by ring
-  have hcommx : ∀ (s : ℝ) (k : ℕ) x, M (((M + (s : ℂ) • 1) ^ k) x) = ((M + (s : ℂ) • 1) ^ k) (M x) := by
-    intro s k x
-    have e := LinearMap.congr_fun ((hC s).pow_right k).eq x
-    rw [Module.End.mul_apply, Module.End.mul_apply] at e
-    exact e
+  have hcommx : ∀ (s : ℝ) (k : ℕ) x, M (((M + (s : ℂ) • 1) ^ k) x) = ((M + (s : ℂ) • 1) ^ k) (M x) :=
+    fun s k x => LinearMap.congr_fun ((hC s).pow_right k).eq x
   have hMka : ∀ j (k : ℕ) x, (M ^ k) (a j x) = a j (((M + ((-r : ℝ) : ℂ) • 1) ^ k) x) := by
     intro j k x
     have hs : SemiconjBy (a j) (M + ((-r : ℝ) : ℂ) • 1) M := by
       unfold SemiconjBy; rw [hMa j]; push_cast; rw [neg_smul, ← sub_eq_add_neg]
-    have e := LinearMap.congr_fun (hs.pow_right k).eq x
-    rw [Module.End.mul_apply, Module.End.mul_apply] at e
-    exact e.symm
+    exact (LinearMap.congr_fun (hs.pow_right k).eq x).symm
   have hMkc : ∀ j (k : ℕ) x, (M ^ k) (c j x) = c j (((M + (r : ℂ) • 1) ^ k) x) := by
     intro j k x
     have hs : SemiconjBy (c j) (M + (r : ℂ) • 1) M := by
       unfold SemiconjBy; rw [hMc j]
-    have e := LinearMap.congr_fun (hs.pow_right k).eq x
-    rw [Module.End.mul_apply, Module.End.mul_apply] at e
-    exact e.symm
+    exact (LinearMap.congr_fun (hs.pow_right k).eq x).symm
   have hra : |(-r)| ≤ r := by rw [abs_neg, abs_of_nonneg (by linarith)]
   have hrc : |r| ≤ r := by rw [abs_of_nonneg (by linarith)]
   have hPa : ∀ j (k : ℕ), ∃ C : ℝ, ∀ x, ‖Φ ((M ^ k) (a j x))‖ ≤ C * ‖Φ ((M ^ (k + 1)) x)‖ := by
@@ -327,11 +317,9 @@ theorem norm_word_le_number_pow : ∀ (T H κ : Type) [AddCommGroup T] [Module �
     | zero => simp
     | succ i ih => rw [← add_assoc, pow_succ', Module.End.mul_apply]; exact ih.trans (hx _)
   obtain ⟨C, hC0, h⟩ := hlist l hl 0
-  refine ⟨C, fun x => ?_⟩
-  have h' := h x
-  rw [pow_zero, Module.End.one_apply, zero_add] at h'
   obtain ⟨i, rfl⟩ := Nat.exists_eq_add_of_le hld
-  exact h'.trans (mul_le_mul_of_nonneg_left (hmono x _ i) hC0)
+  refine ⟨C, fun x => (by simpa using h x : ‖Φ (l.prod x)‖ ≤ C * _).trans ?_⟩
+  exact mul_le_mul_of_nonneg_left (hmono x _ i) hC0
 
 end GlobalTheory
 end -- clump:auto
@@ -500,28 +488,20 @@ theorem weyl_number_operator_commutation
     (∀ z, N * a z = a z * (N - ((8 * Real.pi : ℝ) : ℂ) • 1)) ∧
     ∀ z, D z ∈ Submodule.span ℂ (Set.range (fun j => a (e j)) ∪ Set.range fun j => c (e j)) := by
   have I3 : Complex.I ^ 3 = -Complex.I := by rw [pow_succ, Complex.I_sq]; ring
-  have hJl : ∀ u v, inner ℝ (J u) v = -inner ℝ u (J v) := by
-    intro u v
+  have hJl : ∀ u v, inner ℝ (J u) v = -inner ℝ u (J v) := fun u v => by
     have h := J.inner_map_map (J u) v
     rw [hJJ, inner_neg_left] at h
     linarith
-  have hJself : ∀ z, inner ℝ z (J z) = 0 := by
-    intro z
-    have h := hJl z z
-    have h' := real_inner_comm z (J z)
-    linarith
-  have hDneg : ∀ w, D (-w) = -D w := by
-    intro w
-    have h := hsmul (-1) w
-    simpa using h
+  have hJself : ∀ z, inner ℝ z (J z) = 0 := fun z => by
+    linarith [hJl z z, real_inner_comm z (J z)]
+  have hDneg : ∀ w, D (-w) = -D w := fun w => by simpa using hsmul (-1) w
   have key : ∀ F : V → A, (∀ u v, F (u + v) = F u + F v) →
       (∀ (r : ℝ) v, F (r • v) = (r : ℂ) • F v) →
       ∀ w, F w = ∑ j, ((inner ℝ (e j) w : ℝ) : ℂ) • F (e j) := by
     intro F hFa hFs w
     have h := map_sum (AddMonoidHom.mk' F hFa) (fun j => inner ℝ (e j) w • e j) Finset.univ
     simp only [AddMonoidHom.mk'_apply, e.sum_repr'] at h
-    rw [h]
-    exact Finset.sum_congr rfl fun j _ => hFs _ _
+    simpa only [h] using Finset.sum_congr rfl fun j _ => hFs _ _
   have hca : ∀ u v, c (u + v) = c u + c v := by
     intro u v; rw [hc, hc, hc, map_add (f := _), hadd, hadd, smul_add]; abel
   have hcs : ∀ (r : ℝ) v, c (r • v) = (r : ℂ) • c v := by
@@ -544,29 +524,32 @@ theorem weyl_number_operator_commutation
   have hsw : ∀ u v, D u * D v = D v * D u +
       (2 * Real.pi * Complex.I * (inner ℝ u (J v) : ℝ) : ℂ) • 1 := by
     intro u v; rw [← hcomm u v]; abel
+  have hgen : ∀ (p q : ℂ) z w, (D z + p • D (J z)) * (D w + q • D (J w)) -
+      (D w + q • D (J w)) * (D z + p • D (J z)) = (2 * Real.pi * Complex.I *
+      ((1 + p * q) * ((inner ℝ z (J w) : ℝ) : ℂ) + (p - q) * ((inner ℝ z w : ℝ) : ℂ))) • 1 := by
+    intro p q z w
+    simp only [mul_add, add_mul, smul_mul_assoc, mul_smul_comm]
+    rw [hsw z w, hsw z (J w), hsw (J z) w, hsw (J z) (J w)]
+    simp only [hJJ, map_neg, inner_neg_right, hJl, neg_neg]
+    match_scalars <;> ring
+  have hc' : ∀ z, c z = D z + (-Complex.I) • D (J z) := fun z => by
+    rw [hc z, sub_eq_add_neg, neg_smul]
   have hac : ∀ z w, a z * c w - c w * a z =
       (4 * (Real.pi : ℂ) * ((inner ℝ z w : ℝ) : ℂ)
         - 4 * Real.pi * Complex.I * ((inner ℝ z (J w) : ℝ) : ℂ)) • (1 : A) := by
     intro z w
-    rw [ha, hc]
-    simp only [mul_sub, sub_mul, mul_add, add_mul, neg_mul, mul_neg, smul_mul_assoc, mul_smul_comm]
-    rw [hsw z w, hsw z (J w), hsw (J z) w, hsw (J z) (J w)]
-    simp only [hJJ, map_neg, inner_neg_right, inner_neg_left, hJl, neg_neg]
-    match_scalars <;> (ring_nf; try simp only [Complex.I_sq, I3]; try ring_nf)
-  have hcc : ∀ z w, c z * c w = c w * c z := by
-    intro z w
-    rw [← sub_eq_zero, hc, hc]
-    simp only [mul_sub, sub_mul, mul_add, add_mul, neg_mul, mul_neg, smul_mul_assoc, mul_smul_comm]
-    rw [hsw z w, hsw z (J w), hsw (J z) w, hsw (J z) (J w)]
-    simp only [hJJ, map_neg, inner_neg_right, inner_neg_left, hJl, neg_neg]
-    match_scalars <;> (ring_nf; try simp only [Complex.I_sq, I3]; try ring_nf)
-  have haa : ∀ z w, a z * a w = a w * a z := by
-    intro z w
-    rw [← sub_eq_zero, ha, ha]
-    simp only [mul_sub, sub_mul, mul_add, add_mul, neg_mul, mul_neg, smul_mul_assoc, mul_smul_comm]
-    rw [hsw z w, hsw z (J w), hsw (J z) w, hsw (J z) (J w)]
-    simp only [hJJ, map_neg, inner_neg_right, inner_neg_left, hJl, neg_neg]
-    match_scalars <;> (ring_nf; try simp only [Complex.I_sq, I3]; try ring_nf)
+    rw [ha, hc', neg_mul, mul_neg, sub_neg_eq_add, neg_add_eq_sub, ← neg_sub,
+      hgen Complex.I (-Complex.I), ← neg_smul]
+    congr 1
+    ring_nf
+    simp only [Complex.I_sq, I3]
+    ring
+  have hcc : ∀ z w, c z * c w = c w * c z := fun z w => by
+    rw [← sub_eq_zero, hc', hc', hgen (-Complex.I) (-Complex.I)]
+    simp [Complex.I_mul_I]
+  have haa : ∀ z w, a z * a w = a w * a z := fun z w => by
+    rw [← sub_eq_zero, ha, ha, neg_mul_neg, neg_mul_neg, hgen Complex.I Complex.I]
+    simp [Complex.I_mul_I]
   have hcsum := key c hca hcs
   have hasum := key a haa' has
   refine ⟨?_, ?_, ?_, ?_⟩

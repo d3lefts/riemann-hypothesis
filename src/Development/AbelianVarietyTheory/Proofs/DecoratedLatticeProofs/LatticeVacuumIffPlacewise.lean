@@ -62,7 +62,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.carriesLatticeCompletion_of_trivialAtPlaces : ∀ (D : D7) (S : HSp D) (L : Lat S) (P : Pl D → Prop), ∀ g ∈ grpOff S P, Moves S g L L P := by
-  first | exact @GlobalTheory.fixes_latV_of_mem_grpOff | exact GlobalTheory.fixes_latV_of_mem_grpOff | (intros; apply GlobalTheory.fixes_latV_of_mem_grpOff <;> assumption)
+  first | exact @GlobalTheory.fixes_latV_of_mem_grpOff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.CarriesLatticeCompletionOfTrivialAtPlacesStatement =====
@@ -128,7 +128,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.heisenbergOperator_disjointSupport_smul_add : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (c c' : AF D.host.F) (x y : WO S T) (f : WO S T → ℂ), c * c' = 0 → heisO ψ S T (c • x + c' • y) f = heisO ψ S T (c • x) (heisO ψ S T (c' • y) f) := by
-  first | exact @GlobalTheory.HeisDisj.heisO_smul_add_smul | exact GlobalTheory.HeisDisj.heisO_smul_add_smul | (intros; apply GlobalTheory.HeisDisj.heisO_smul_add_smul <;> assumption)
+  first | exact @GlobalTheory.HeisDisj.heisO_smul_add_smul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HeisenbergOperatorDisjointSupportSmulAddStatement =====
@@ -240,7 +240,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.homLatticeCompletion_cut_integral_properties : ∀ (D : D7) (S T : HSp D) (LS : Set (Fin S.rank → D.host.E)) (LT : Set (Fin T.rank → D.host.E)) (P : Pl D → Prop) (u : WO S T), u ∈ latO S T LS LT P → (∀ γ ∈ intAf D.host.F, pairA D.host.F 0 γ • u ∈ latO S T LS LT (fun v => P v ∧ evalV D.host.F v γ ≠ 0)) ∧ pairA D.host.F 0 1 • u = u ∧ u.map (infPart D) = 0 ∧ ((∀ v, ¬ P v) → u = 0) := by
-  first | exact @GlobalTheory.FinPl.latO_algebra | exact GlobalTheory.FinPl.latO_algebra | (intros; apply GlobalTheory.FinPl.latO_algebra <;> assumption)
+  first | exact @GlobalTheory.FinPl.latO_algebra
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HomLatticeCompletionCutIntegralPropertiesStatement =====
@@ -317,7 +317,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.homLattice_placeCut_smul_mem_openSubgroup : ∀ (D : D7) (S T : HSp D) (LS : Set (Fin S.rank → D.host.E)) (LT : Set (Fin T.rank → D.host.E)) (P : Pl D → Prop) (U : AddSubgroup (WO S T)), IsOpen (U : Set (WO S T)) → ∀ u ∈ latO S T LS LT P, ∃ s : Finset (Pl D), ∀ γ ∈ intAf D.host.F, (∀ v ∈ s, evalV D.host.F v γ = 0) → pairA D.host.F 0 γ • u ∈ U := by
-  first | exact @GlobalTheory.LatLevel.smul_mem_open_of_vanish | exact GlobalTheory.LatLevel.smul_mem_open_of_vanish | (intros; apply GlobalTheory.LatLevel.smul_mem_open_of_vanish <;> assumption)
+  first | exact @GlobalTheory.LatLevel.smul_mem_open_of_vanish
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.HomLatticePlaceCutSmulMemOpenSubgroupStatement =====
@@ -333,7 +333,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.thetaLatticeVacuum_of_carriesLatticeCompletions : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (χS χT : (AE D)ˣ →* Circle) (om : Om S T), IsWeilDatumO ψ S T χS χT om → ∀ (LS : Lat S) (LT : Lat T), IsSelfDualC S LS → IsSelfDualC T LT → ∀ (P : Pl D → Prop) (f : WO S T → ℂ), Vac ψ S T LS LT P f → ∀ (g : GA D S) (h : GA D T) (MS : Lat S) (MT : Lat T), IsSelfDualC S MS → IsSelfDualC T MT → Moves S g LS MS P → Moves T h LT MT P → Vac ψ S T MS MT P (om (g, h) f) := by
-  first | exact @GlobalTheory.VacMove.vac_of_moves | exact GlobalTheory.VacMove.vac_of_moves | (intros; apply GlobalTheory.VacMove.vac_of_moves <;> assumption)
+  first | exact @GlobalTheory.VacMove.vac_of_moves
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ThetaLatticeVacuumOfCarriesLatticeCompletionsStatement =====

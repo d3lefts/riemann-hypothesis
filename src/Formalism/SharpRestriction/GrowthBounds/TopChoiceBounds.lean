@@ -274,7 +274,8 @@ theorem bc_size_real (G N1 u M P de h lx R B : ℝ)
   have hM5 : M + 5 ≤ ((h + 3) / P + 6) * lx := by
     have e : (h + 3) * lx / P = (h + 3) / P * lx := by ring
     rw [e] at hM2
-    nlinarith
+    have he : ((h + 3) / P + 6) * lx = (h + 3) / P * lx + 6 * lx := by ring
+    linarith
   have hR0 : 0 ≤ R := by linarith
   have hCe : G * de ≤ (((h + 3) / P + 6) * R * 2) * lx := by
     calc G * de ≤ (M + 5) * R * 2 := hup
@@ -290,10 +291,14 @@ theorem bc_size_real (G N1 u M P de h lx R B : ℝ)
   have he1 : 1 ≤ Real.exp 1 := by have := Real.add_one_le_exp (1 : ℝ); linarith
   have he2 := Real.exp_one_lt_d9
   have hA : B ≤ 6 * Real.exp 1 * G * de := by
-    have : 6 * (G * de) ≤ 6 * Real.exp 1 * G * de := by nlinarith
+    have : 6 * (G * de) ≤ 6 * Real.exp 1 * G * de := by
+      have := le_mul_of_one_le_right (by linarith : 0 ≤ 6 * (G * de)) he1
+      linarith [show 6 * (G * de) * Real.exp 1 = 6 * Real.exp 1 * G * de by ring]
     linarith
   rw [max_eq_left hA] at hN1
-  nlinarith
+  have hmul := mul_le_mul_of_nonneg_right he2.le (by linarith : 0 ≤ 6 * (G * de))
+  have he : 6 * Real.exp 1 * G * de = Real.exp 1 * (6 * (G * de)) := by ring
+  linarith
 
 def logBoundConstant (r : ℕ) (h : ℝ) : ℝ := ((h + 3) / (10 : ℝ) ^ (-((6 * r + 1 : ℕ) : ℤ)) + 6) * (6 * (r : ℝ) + 1) * 2
 
@@ -337,8 +342,10 @@ theorem bc_size (r : ℕ) (de h x : ℝ) (hh : 0 ≤ h) (hde : 0 < de) (hde1 : d
     have : Real.logb 2 x ≤ 2 * Real.log x := by
       unfold Real.logb
       rw [div_le_iff₀ (by linarith)]
-      nlinarith
-    nlinarith
+      have := mul_le_mul_of_nonneg_left (by linarith : (1 / 2 : ℝ) ≤ Real.log 2) (by linarith : 0 ≤ Real.log x)
+      linarith
+    have := mul_le_mul_of_nonneg_left this (by linarith : 0 ≤ h + 3)
+    linarith
   have hN1 : (orbitWindowCount r de h x : ℝ) ≤
       max (6 * Real.exp 1 * (goodG' r de h x : ℝ) * de) ((h + 3) * Real.logb 2 x) + 2 := by
     unfold orbitWindowCount
@@ -365,8 +372,8 @@ theorem segment_count_log_bounds (r : ℕ) (h : ℝ) (hr : 1 ≤ r) (hh : 0 ≤ 
   have hlx := one_le_log_of_three_le_bis hx
   have hCl : 0 < logBoundConstant r h * Real.log x := by positivity
   have hGd : 0 < (goodG' r de h x : ℝ) * de := by positivity
-  refine ⟨?_, by nlinarith, by nlinarith, ?_⟩
-  · rw [le_div_iff₀ hde]; nlinarith
+  refine ⟨?_, by linarith, by linarith, ?_⟩
+  · rw [le_div_iff₀ hde]; linarith
   intro n' TT L₂ K h3 hg
   have c1 : (orbitSmallMultiplicity r h x + 1) * ((6 * r + 1) * goodU de) ≤ n' := by
     have : (orbitSmallMultiplicity r h x + 1) * ((6 * r + 1) * goodU de) ≤ goodG' r de h x := by
@@ -388,7 +395,7 @@ theorem segment_count_log_bounds (r : ℕ) (h : ℝ) (hr : 1 ≤ r) (hh : 0 ≤ 
       _ = (TT.card : ℝ) * ((goodG' r de h x : ℝ) * de) := by ring
       _ ≤ (TT.card : ℝ) * (20 * logBoundConstant r h * Real.log x) := by
         apply mul_le_mul_of_nonneg_left _ hN0
-        nlinarith
+        linarith
   · have hnG : (n' : ℝ) + (goodG' r de h x : ℝ) ≤ 4 / 3 * n' := by linarith
     have hfin : (TT.card : ℝ) * (goodG' r de h x : ℝ) ≤ (22.4 * de * n') * (goodG' r de h x : ℝ) := by
       calc (TT.card : ℝ) * (goodG' r de h x : ℝ) ≤ (orbitWindowCount r de h x : ℝ) * ((n' : ℝ) + (goodG' r de h x : ℝ)) := t2'
@@ -1725,7 +1732,9 @@ theorem prime_power_band_log_sum_le (X ρ P₀ : ℝ) (d : ℕ) (hd : 1 ≤ d) (
       _ = (1 + ρ) / (1 - ρ) := mul_div_mul_left _ _ hX0.ne'
       _ ≤ 1 + 3 * ρ := by
           rw [div_le_iff₀ h1ρ]
-          nlinarith
+          have := mul_le_mul_of_nonneg_left (by linarith : 3 * ρ ≤ 1) (by linarith : 0 ≤ ρ)
+          linarith [show (1 + 3 * ρ) * (1 - ρ) = 1 + 2 * ρ - 3 * ρ ^ 2 by ring,
+            show ρ * (3 * ρ) = 3 * ρ ^ 2 by ring]
   have hba : (b : ℝ) ≤ (1 + 3 * ρ) * a := (div_le_iff₀ ha0).1 ht
   have hcard : (S.card : ℝ) ≤ 3 * ρ * a + 1 := by
     have hsub : S ⊆ Finset.Icc a b := fun p hp => Finset.mem_Icc.2 ⟨S.min'_le p hp, S.le_max' p hp⟩
@@ -1777,16 +1786,17 @@ theorem prime_power_band_log_sum_le_log_sq (X ρ P₀ : ℝ) (hX : 1 ≤ X) (hρ
         _ = Real.log ((p : ℝ) ^ dOf p) := (Real.log_pow _ _).symm
         _ ≤ Real.log (2 * X) := by
             apply Real.log_le_log (by positivity)
-            nlinarith
+            have := mul_le_mul_of_nonneg_left (by linarith : 1 + ρ ≤ 2) hX0.le
+            linarith
         _ = Real.log 2 + Real.log X := Real.log_mul (by norm_num) hX0.ne'
     have hl20 : 0 < Real.log 2 := by linarith
     have e2 : ((dOf p : ℝ) - 1) * Real.log 2 ≤ Real.log X := by linarith
     by_contra hcon
     rw [not_le] at hcon
-    have : 2 * Real.log X * (1 / 2) ≤ ((dOf p : ℝ) - 1) * Real.log 2 := by
-      apply mul_le_mul (by linarith) hl2 (by norm_num) (by linarith)
     have h4 : 2 * Real.log X < (dOf p : ℝ) - 1 := by linarith
-    nlinarith
+    have hlt : 2 * Real.log X * (1 / 2) < ((dOf p : ℝ) - 1) * Real.log 2 :=
+      lt_of_lt_of_le (mul_lt_mul_of_pos_right h4 (by norm_num)) (mul_le_mul_of_nonneg_left hl2 (by linarith))
+    linarith
   rw [← Finset.sum_fiberwise_of_maps_to hmaps]
   have hB0 : 0 ≤ Real.log X * (3 * ρ + 1 / P₀) := by positivity
   calc ∑ d ∈ Finset.Icc 1 ⌊1 + 2 * Real.log X⌋₊, ∑ p ∈ S with dOf p = d, Real.log p / p
@@ -1825,7 +1835,8 @@ theorem prime_power_band_sum_at_scale {D : D7} (L : SizeData₂ D) (r : ℝ) (h�
     · intro p hp
       exfalso
       obtain ⟨_, _, _, d, _, e1, e2⟩ := hP p (Finset.mem_filter.1 hp).2
-      nlinarith
+      have := mul_lt_mul_of_pos_left (by linarith : 1 + r < 1 - r) hX0
+      linarith
   · have hlX : Real.log L.sc.X' = x ^ (ε / 3) := by unfold Scale.X'; exact Real.log_exp _
     have hB1 : 1 ≤ x ^ (ε / 3) := Real.one_le_rpow hx1 (by positivity)
     have hX1 : 1 ≤ L.sc.X' := by
@@ -1836,7 +1847,9 @@ theorem prime_power_band_sum_at_scale {D : D7} (L : SizeData₂ D) (r : ℝ) (h�
       apply one_div_le_one_div_of_le (by norm_num)
       have : x ^ (2 : ℝ) = x ^ 2 := by exact_mod_cast Real.rpow_natCast x 2
       rw [this]
-      nlinarith
+      have hsq := pow_le_pow_left₀ (by norm_num) h2 2
+      norm_num at hsq
+      exact hsq
     have hk1 : (1 : ℝ) ≤ D.R.k := by
       have h0 : (0 : ℝ) < D.R.k := lt_of_lt_of_le (Real.rpow_pos_of_pos hx0 _) hK.1
       have : 0 < D.R.k := by exact_mod_cast h0
@@ -1886,7 +1899,7 @@ theorem lambda_nonneg (K : Consts) (hK : K.Nonneg) (s : Scale) : 0 ≤ La K s :=
     have hx1 := s.one_lt_alt
     have hb1 : 1 ≤ s.b := by unfold Scale.b; exact Real.one_le_exp (by unfold Scale.L; positivity)
     unfold Scale.a
-    nlinarith
+    exact one_le_mul_of_one_le_of_one_le hx1.le hb1
   have h1 : 0 ≤ Real.log s.a := Real.log_nonneg ha
   have h2 := hK.1
   positivity
@@ -1966,7 +1979,8 @@ open Formalism.BasicNotions Formalism.MainNotions.G Formalism.MainNotions
 theorem bt_chain {S : ℝ} (h : 40 ≤ S) (i : ℕ) : 40 * S ^ i ≤ S ^ (i + 1) := by
   have : 0 < S ^ i := pow_pos (by linarith) i
   rw [pow_succ]
-  nlinarith
+  have := mul_le_mul_of_nonneg_left h this.le
+  linarith [mul_comm (S ^ i) 40]
 
 theorem bt_real_tII {tII r N u1 u2 u3 u4 n' c B : ℝ} (h0 : 0 ≤ tII) (hr : 0 ≤ r) (hN : 0 ≤ N)
     (h1 : u1 ≤ B) (h2 : u2 ≤ B) (h3 : u3 ≤ 3 * B) (h4 : u4 ≤ B) (h5 : n' * c ≤ N * B) :
@@ -1975,7 +1989,9 @@ theorem bt_real_tII {tII r N u1 u2 u3 u4 n' c B : ℝ} (h0 : 0 ≤ tII) (hr : 0 
   have hc : tII * r * N * (u1 + u2 + u3 + u4) ≤ tII * r * N * (6 * B) :=
     mul_le_mul_of_nonneg_left hb (mul_nonneg (mul_nonneg h0 hr) hN)
   have hd : 2 * r * (n' * c) ≤ 2 * r * (N * B) := mul_le_mul_of_nonneg_left h5 (by linarith)
-  nlinarith
+  linarith [show tII * r * N * (6 * B) = 6 * tII * r * (N * B) by ring,
+    show (6 * tII * r + 2 * r) * (N * B) = 6 * tII * r * (N * B) + 2 * r * (N * B) by ring,
+    show 2 * r * n' * c = 2 * r * (n' * c) by ring]
 
 theorem bt_real_DII {DII r Np E lb n' c c0 N B : ℝ} (h0 : 0 ≤ DII) (hr : 0 ≤ r)
     (h1 : Np * E * lb ≤ N * B) (h5 : n' * c ≤ N * B) (h7 : Np * c0 ≤ N * B) :
@@ -1983,14 +1999,21 @@ theorem bt_real_DII {DII r Np E lb n' c c0 N B : ℝ} (h0 : 0 ≤ DII) (hr : 0 �
   have a1 : DII * (Np * E * lb) ≤ DII * (N * B) := mul_le_mul_of_nonneg_left h1 h0
   have a2 : 2 * r * (n' * c) ≤ 2 * r * (N * B) := mul_le_mul_of_nonneg_left h5 (by linarith)
   have a3 : r * (Np * c0) ≤ r * (N * B) := mul_le_mul_of_nonneg_left h7 hr
-  nlinarith
+  linarith [show DII * Np * E * lb = DII * (Np * E * lb) by ring,
+    show 2 * r * n' * c = 2 * r * (n' * c) by ring,
+    show r * Np * c0 = r * (Np * c0) by ring,
+    show (DII + 3 * r) * (N * B) = DII * (N * B) + 2 * r * (N * B) + r * (N * B) by ring]
 
 theorem bt_real_tI {sm kappaThresholdOne kappaThresholdTwo N N1 v br n' c B : ℝ} (h1 : 0 ≤ kappaThresholdOne) (h2 : 0 ≤ kappaThresholdTwo) (hN : 0 ≤ N)
     (hs : sm ≤ 2 * (N * B)) (hv : N1 * v ≤ 2 * B) (hb : br ≤ B) (h5 : n' * c ≤ N * B) :
     sm + kappaThresholdOne * N * N1 * v + kappaThresholdTwo * N * br + 2 * n' * c ≤ (4 + 2 * kappaThresholdOne + kappaThresholdTwo) * (N * B) := by
   have a1 : kappaThresholdOne * N * (N1 * v) ≤ kappaThresholdOne * N * (2 * B) := mul_le_mul_of_nonneg_left hv (mul_nonneg h1 hN)
   have a2 : kappaThresholdTwo * N * br ≤ kappaThresholdTwo * N * B := mul_le_mul_of_nonneg_left hb (mul_nonneg h2 hN)
-  nlinarith
+  linarith [show kappaThresholdOne * N * N1 * v = kappaThresholdOne * N * (N1 * v) by ring,
+    show kappaThresholdOne * N * (2 * B) = 2 * kappaThresholdOne * (N * B) by ring,
+    show kappaThresholdTwo * N * B = kappaThresholdTwo * (N * B) by ring,
+    show (4 + 2 * kappaThresholdOne + kappaThresholdTwo) * (N * B) =
+      4 * (N * B) + 2 * kappaThresholdOne * (N * B) + kappaThresholdTwo * (N * B) by ring]
 
 theorem bt_real_NE {S Np N E lb B : ℝ} (hS : 40 ≤ S) (hN : 0 ≤ N) (hNp : Np ≤ 40 * S * N) (hNp0 : 0 ≤ Np)
     (hE0 : 0 ≤ E) (hE : E ≤ S ^ 8) (hl0 : 0 ≤ lb) (hl : lb ≤ S) (hB : S ^ 20 ≤ B) : Np * E * lb ≤ N * B := by
@@ -2016,7 +2039,7 @@ theorem bt_real_br {S Q DI kappaThresholdTwo N k lb c n' B : ℝ} (hS : 40 ≤ S
   have b4 : k * Q ≤ S * S := mul_le_mul hk hQ hQ0 hS0
   have b5 : k * lb ≤ S * S := mul_le_mul hk hl hl0 hS0
   have b6 : 8 * (DI + 1) + kappaThresholdTwo * N * k * lb + 4 * N * c + 2 * n' * c ≤
-      8 * (S ^ 13 + 1) + S * S ^ 2 * S * S + 4 * (S ^ 2 * S) + 2 * (S * S) := by nlinarith
+      8 * (S ^ 13 + 1) + S * S ^ 2 * S * S + 4 * (S ^ 2 * S) + 2 * (S * S) := by linarith
   have b60 : 0 ≤ 8 * (DI + 1) + kappaThresholdTwo * N * k * lb + 4 * N * c + 2 * n' * c := by positivity
   have b7 : Q * (8 * (DI + 1) + kappaThresholdTwo * N * k * lb + 4 * N * c + 2 * n' * c) ≤
       S * (8 * (S ^ 13 + 1) + S * S ^ 2 * S * S + 4 * (S ^ 2 * S) + 2 * (S * S)) :=
@@ -2047,7 +2070,8 @@ theorem bt_fin {t c1 C Z : ℝ} (hc : 0 ≤ c1) (h : c1 + 1 ≤ C) (hZ : 1 ≤ Z
   have h0 : 0 ≤ c1 * Z := mul_nonneg hc (by linarith)
   have h1 : ((⌈t⌉₊ : ℕ) : ℝ) ≤ ((⌈c1 * Z⌉₊ : ℕ) : ℝ) := by exact_mod_cast Nat.ceil_mono ht
   have h2 := Nat.ceil_lt_add_one h0
-  nlinarith
+  have := mul_le_mul_of_nonneg_right h (by linarith : 0 ≤ Z)
+  linarith [show (c1 + 1) * Z = c1 * Z + Z by ring]
 
 theorem bt_logb_le {p a : ℝ} (hp : 2 ≤ p) (ha : 1 ≤ a) : Real.logb p a ≤ 2 * Real.log a := by
   unfold Real.logb
@@ -2057,12 +2081,14 @@ theorem bt_logb_le {p a : ℝ} (hp : 2 ≤ p) (ha : 1 ≤ a) : Real.logb p a ≤
     linarith
   have hla : 0 ≤ Real.log a := Real.log_nonneg ha
   rw [div_le_iff₀ (by linarith)]
-  nlinarith
+  have := mul_le_mul_of_nonneg_left hl2 hla
+  linarith [show Real.log a * (1 / 2) = 1 / 2 * Real.log a by ring,
+    show 2 * Real.log a * Real.log p = 2 * (Real.log a * Real.log p) by ring]
 
 theorem mul_div_le_div_of_le {La a p k : ℝ} (ha : 0 < a) (hp : 0 < p) (hk : 0 < k) (h : La ≤ k) : La * a / (p * k) ≤ a / p := by
   rw [div_le_div_iff₀ (by positivity) hp]
   have := mul_le_mul_of_nonneg_right h (mul_pos ha hp).le
-  nlinarith
+  linarith [show La * (a * p) = La * a * p by ring, show k * (a * p) = a * (p * k) by ring]
 
 theorem mul_rpow_neg_le_div {a p : ℝ} {l : ℕ} (ha : 0 < a) (hp : 1 ≤ p) (hl : 1 ≤ l) : a * p ^ (-(l : ℝ)) ≤ a / p := by
   have h1 : p ^ (-(l : ℝ)) ≤ p ^ (-1 : ℝ) := by
@@ -2080,7 +2106,7 @@ theorem density_sum_le_two_div {N1 a p La k : ℝ} (ha : 0 < a) (hp : 0 < p) (hk
     rw [this]
     have h3 : N1 / p ≤ 1 := (div_le_one hp).2 h1
     have h4 : 0 ≤ a / p := by positivity
-    nlinarith
+    exact mul_le_of_le_one_left h4 h3
   have e2 : N1 * (La * a / (p * k)) ≤ a / p := by
     have : N1 * (La * a / (p * k)) = (N1 * La) * a / (p * k) := by ring
     rw [this]
@@ -2098,7 +2124,8 @@ theorem bt_a (s : Scale) : 1 < s.a := by
   have hx1 := s.one_lt_alt
   have hb1 : 1 ≤ s.b := by unfold Scale.b; exact Real.one_le_exp (by unfold Scale.L; positivity)
   unfold Scale.a
-  nlinarith
+  calc (1 : ℝ) < s.x := hx1
+    _ ≤ s.x * s.b := le_mul_of_one_le_right (by linarith) hb1
 
 theorem pow_sum_le_pow_eight {S u v w : ℝ} (hS : 40 ≤ S) (hu0 : 0 ≤ u) (hu : u ≤ S) (hv0 : 0 ≤ v) (hv : v ≤ S) (hw0 : 0 ≤ w)
     (hw : w ≤ S) : u ^ 3 + v ^ 5 + w ^ 2 ≤ S ^ 8 := by
@@ -2268,7 +2295,9 @@ theorem one_le_first_length_at_scale (D : D7) (s : Scale) {p : ℕ} (hp : (1 : �
   rw [Nat.one_le_ceil_iff]
   apply Real.logb_pos hp
   have h1 : 1 < s.x ^ Scale.A := Real.one_lt_rpow s.one_lt_alt (by unfold Scale.A; norm_num)
-  have h2 : 1 < (D.R.k : ℝ) * s.x ^ Scale.A := by nlinarith
+  have h2 : 1 < (D.R.k : ℝ) * s.x ^ Scale.A :=
+    calc (1 : ℝ) < s.x ^ Scale.A := h1
+      _ ≤ (D.R.k : ℝ) * s.x ^ Scale.A := le_mul_of_one_le_left (by linarith) hk
   exact one_lt_pow₀ h2 (by norm_num)
 
 theorem bt_k (D : D7) : (5 : ℝ) ≤ (D.R.k : ℝ) := by
@@ -2434,7 +2463,9 @@ theorem bt_I (X : Inst D L) (K : Consts) (hK : K.Nonneg) (Ce S Ce9 : ℝ) (H : b
         have := mul_le_mul_of_nonneg_right hc (by linarith only [hB0] : 0 ≤ 2 * (L.sc.a / p))
         linarith only [this]
     · exact bt_real_br hS hQ0 O.Q (by positivity) hDS htI2 H.integral_constant_le_bound hNp0
-        (le_trans O.NpS (by nlinarith only [hS])) hk0.le H.k O.lb0 O.lb hcG0 H.c
+        (le_trans O.NpS (by
+          have := mul_le_mul_of_nonneg_right hS (by linarith : 0 ≤ S)
+          linarith [show S * S = S ^ 2 by ring])) hk0.le H.k O.lb0 O.lb hcG0 H.c
         (by positivity) O.nS O.SB
   · rw [hDeq]
     refine bt_fin (c1 := K.DI) hDI (by unfold bt_C; linarith only [hr0, hrC, hDII, htI1, htI2, h90]) hNB ?_
@@ -2499,9 +2530,13 @@ theorem bt_loga (s : Scale) : Real.log s.a = Real.log s.x + s.x ^ s.eps := by
   unfold Scale.a Scale.b Scale.L
   rw [Real.log_mul hx0.ne' (Real.exp_pos _).ne', Real.log_exp]
 
-theorem bt_q {q y : ℝ} (hq : q ^ 2 = y) (h : 3 / 2 ≤ q) : q / 2 ≤ y / 3 := by nlinarith
+theorem bt_q {q y : ℝ} (hq : q ^ 2 = y) (h : 3 / 2 ≤ q) : q / 2 ≤ y / 3 := by
+  have := mul_le_mul_of_nonneg_right h (by linarith : 0 ≤ q)
+  linarith [show q * q = q ^ 2 by ring]
 
-theorem bt_48 {y : ℝ} (h : 48 ≤ y) : 48 * y ≤ y ^ 2 := by nlinarith
+theorem bt_48 {y : ℝ} (h : 48 ≤ y) : 48 * y ≤ y ^ 2 := by
+  have := mul_le_mul_of_nonneg_right h (by linarith : 0 ≤ y)
+  linarith [show y * y = y ^ 2 by ring]
 
 theorem bt_48' {y : ℝ} (h : 48 ≤ y) : 48 * y ^ 2 ≤ y ^ 3 := by
   have : y ^ 3 = y * y ^ 2 := by ring
@@ -3057,7 +3092,8 @@ theorem one_le_b₂ (s : Scale) : 1 ≤ s.b := by
 
 theorem one_lt_a (s : Scale) : 1 < s.a := by
   unfold Scale.a
-  nlinarith [s.one_lt_alt, one_le_b₂ s]
+  calc (1 : ℝ) < s.x := s.one_lt_alt
+    _ ≤ s.x * s.b := le_mul_of_one_le_right (by linarith [s.one_lt_alt]) (one_le_b₂ s)
 
 theorem scale_b'_nonneg₂ (s : Scale) : 0 ≤ s.b' := by
   unfold Scale.b' Scale.X'
@@ -3084,7 +3120,7 @@ theorem bl_Nm_le_Sc (P : ParameterChoice' D L) : (5 : ℝ) ≤ (D.R.k : ℝ) ∧
     linarith
   have hD : (5 : ℝ) ≤ (D.s.Del : ℝ) := by linarith
   have hkD : 5 * (D.s.Del : ℝ) ≤ (D.R.k : ℝ) * (D.s.Del : ℝ) := mul_le_mul_of_nonneg_right hk (by linarith)
-  refine ⟨hk, ?_, ?_⟩ <;> rw [L.Sc_eq] <;> nlinarith
+  refine ⟨hk, ?_, ?_⟩ <;> rw [L.Sc_eq] <;> linarith
 
 theorem kappa_le_Sc (P : ParameterChoice' D L) (j : ℕ) (hj : j ∈ SizeData₂.lifts D) : kaJ D j ≤ L.Sc := by
   obtain ⟨hk, hN, _⟩ := bl_Nm_le_Sc P
@@ -3094,7 +3130,7 @@ theorem kappa_le_Sc (P : ParameterChoice' D L) (j : ℕ) (hj : j ∈ SizeData₂
   have ht : (0 : ℝ) ≤ (D.R.t : ℝ) + 1 := by positivity
   have h1 := mul_le_mul_of_nonneg_right hj2 ht
   unfold kaJ
-  nlinarith
+  linarith
 
 theorem w''_le₂ (s : Scale) (n : ℕ) (hn : 1 ≤ n) : s.w'' n ≤ s.b' / s.x ∧ s.b' / s.x ≤ s.b' := by
   have hx := x_pos₂ s
@@ -3103,7 +3139,8 @@ theorem w''_le₂ (s : Scale) (n : ℕ) (hn : 1 ≤ n) : s.w'' n ≤ s.b' / s.x 
   constructor
   · unfold Scale.w''
     apply div_le_div_of_nonneg_left hb hx
-    nlinarith
+    have := le_mul_of_one_le_left hx.le hn'
+    linarith [mul_comm (n : ℝ) s.x]
   · exact div_le_self hb s.one_lt_alt.le
 
 theorem two_b'_le_a₂ (s : Scale) : 2 * s.b' ≤ s.a := by
@@ -3116,7 +3153,8 @@ theorem two_b'_le_a₂ (s : Scale) : 2 * s.b' ≤ s.a := by
   have h : s.b' * s.X' = s.a := by
     unfold Scale.b'
     exact div_mul_cancel₀ _ (by linarith)
-  nlinarith
+  have := mul_le_mul_of_nonneg_left hX hb
+  linarith
 
 theorem fill_nonneg₂ (X : Inst D L) (j : ℕ) (z : Bool × HH D) : 0 ≤ fill X (bL L) j z := by
   have hb := scale_b'_nonneg₂ L.sc
@@ -3142,7 +3180,10 @@ theorem fill_nonneg₂ (X : Inst D L) (j : ℕ) (z : Bool × HH D) : 0 ≤ fill 
 
 theorem sq_sub_one_pos_and_mul_le {p a : ℝ} (hp2 : 2 ≤ p) (hpa : 2 * a < p) : 0 < p ^ 2 - 1 ∧ p * (6 / 5 * a) ≤ p ^ 2 - 1 := by
   have h1 : p * (6 / 5 * a) ≤ p * (3 / 5 * p) := mul_le_mul_of_nonneg_left (by linarith) (by linarith)
-  have h2 : 4 ≤ p ^ 2 := by nlinarith
+  have h2 : 4 ≤ p ^ 2 := by
+    have := pow_le_pow_left₀ (by norm_num) hp2 2
+    norm_num at this
+    exact this
   have h3 : p * (3 / 5 * p) = 3 / 5 * p ^ 2 := by ring
   constructor <;> linarith
 
@@ -3208,7 +3249,7 @@ theorem hLarge_proved (X : Inst D L) (K : Consts) (hK : K.Nonneg) (h1 : 1 ≤ K.
     have h4 : L.sc.a / ((D.R.k : ℝ) * L.sc.x ^ (Scale.A / 2)) ≤ L.sc.a / 5 := by
       apply div_le_div_of_nonneg_left (by linarith) (by norm_num)
       have : 1 ≤ L.sc.x ^ (Scale.A / 2) := Real.one_le_rpow L.sc.one_lt_alt.le (by unfold Scale.A; norm_num)
-      nlinarith
+      exact le_trans (bt_k D) (le_mul_of_one_le_right (by linarith [bt_k D]) this)
     unfold al cG
     rw [h1]
     constructor <;> linarith

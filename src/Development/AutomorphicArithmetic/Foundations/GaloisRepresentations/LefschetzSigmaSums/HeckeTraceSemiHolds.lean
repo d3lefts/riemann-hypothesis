@@ -133,7 +133,7 @@ theorem conjRep_of : ConjRep := by
         simp [twMap]
       map_mul' := fun g h => by
         ext x
-        simp [twMap, Module.End.mul_apply] }
+        simp [twMap] }
   exact ⟨Tw σ V, twAdd σ V, twMod σ V, tw_finite σ V, ξ', toTw σ V, tw_smul σ V, fun g x => rfl⟩
 
 end UpperTheory.Gal.LocalSmoothExtension
@@ -213,7 +213,6 @@ theorem cxFlat_of : CxFlat := by
       else 0) S ?_
   intro z hz
   refine hS z ?_
-  beta_reduce at hz
   split_ifs at hz with hfix
   · have h12 := left_ne_zero_of_mul hz
     exact ⟨hfix, left_ne_zero_of_mul h12, right_ne_zero_of_mul h12⟩
@@ -854,7 +853,7 @@ private theorem rev_lin (r : ℂ) (hr : r ≠ 0) :
   · rw [revAt_le (by norm_num)]
     simp [coeff_X, coeff_C, coeff_one]
   · rw [revAt_eq_self_of_lt (by omega)]
-    simp [coeff_X, coeff_one, coeff_C]
+    simp [coeff_X, coeff_one]
 
 open Polynomial in
 private theorem rev_prod (s : Multiset ℂ) (hs : ∀ z ∈ s, z ≠ 0) :
@@ -1244,7 +1243,7 @@ theorem UpperTheory.Gal.LocalSmoothExtension.traceSemi_of :
       by_cases hjk : j = k
       · subst hjk
         simp
-      · simp [Finsupp.single_apply, hjk]
+      · simp [hjk]
 
     rw [LinearMap.trace_eq_matrix_trace ℂ b, LinearMap.trace_eq_matrix_trace ℂ b', Matrix.trace,
     Matrix.trace, map_sum]

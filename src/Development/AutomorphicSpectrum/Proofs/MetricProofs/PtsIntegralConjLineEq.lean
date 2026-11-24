@@ -140,7 +140,7 @@ theorem conjLine_tensor (A B : HermLine ι) :
 theorem conjLine_conjLine (A : HermLine ι) : conjLine (conjLine A) = A := by
   cases A with
   | mk a h pos smul =>
-    simp only [conjLine, HermLine.mk.injEq, heq_eq_eq, true_and]
+    simp only [conjLine, HermLine.mk.injEq, true_and]
     funext z
     rw [conjPt_conjPt]
 
@@ -186,11 +186,11 @@ theorem madens_cx (D : ℕ) (φ : (Fin D → ℂ) → ℝ) (y : Fin D → ℂ) :
   have h1 : ∀ i : Fin D, c (Pi.single i 1) = Pi.single i 1 := by
     intro i; funext k; rw [hc]; by_cases h : k = i
     · subst h; simp
-    · simp [Pi.single_apply, h]
+    · simp [h]
   have h2 : ∀ i : Fin D, c (Complex.I • Pi.single i 1) = -(Complex.I • Pi.single i 1) := by
     intro i; funext k; rw [hc]; by_cases h : k = i
     · subst h; simp
-    · simp [Pi.single_apply, h]
+    · simp [h]
   ext i j
   simp only [cxHessian, Matrix.map_apply, hf, madens_hess, h1, h2, map_neg, ContinuousLinearMap.neg_apply, neg_neg]
   rw [hc y]

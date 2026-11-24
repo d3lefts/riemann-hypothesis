@@ -264,7 +264,7 @@ theorem _root_.GlobalTheory.T.valuation_proportionalityRatio_le_bottomPairs : �
     b₂ ≠ 0 → v ∈ Qbar → (∀ lam : Qbar →+* ℂ_[p], ‖lamC lam v‖ = 1) →
     ∀ (γ z z' : K), b₁ = σ γ * b₂ * v → σ z = (P₁.norm : ℂ) → σ z' = (P₂'.norm : ℂ) → z ≠ 0 → z' ≠ 0 →
     (vw w γ : ℝ) ≤ vw w z + vw w z' + 6 * Formalism.PairingDivisionLocalBalance.wt S del_vp w := by
-  first | exact @GlobalTheory.NormSum.LemmaC.vw_le_of_bottom_pairs | exact GlobalTheory.NormSum.LemmaC.vw_le_of_bottom_pairs | (intros; apply GlobalTheory.NormSum.LemmaC.vw_le_of_bottom_pairs <;> assumption)
+  first | exact @GlobalTheory.NormSum.LemmaC.vw_le_of_bottom_pairs
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ValuationProportionalityRatioLeBottomPairsStatement =====
@@ -403,7 +403,7 @@ theorem _root_.GlobalTheory.T.rallis_inner_product_formula_first_occurrence : _r
           ∀ (hd : P'.d = P.d) (h : GA D P.d),
             (∀ T, starRingEnd ℂ (P.coord h T) = κ * u * c0 s * ∑ T', (M T T' : ℂ) * P'.coord (hd ▸ h) T') ∧
             ∀ T', P'.coord (hd ▸ h) T' * (κ * u * c0 s) = ∑ T, (M' T' T : ℂ) * starRingEnd ℂ (P.coord h T) := by
-  first | exact @_root_.GlobalTheory.BotFormula.bottom_theta_petersson_norm_formula | exact _root_.GlobalTheory.BotFormula.bottom_theta_petersson_norm_formula | (intros; apply _root_.GlobalTheory.BotFormula.bottom_theta_petersson_norm_formula <;> assumption)
+  first | exact @_root_.GlobalTheory.BotFormula.bottom_theta_petersson_norm_formula
 end
 end -- clump:auto
 end -- clump:auto
@@ -478,7 +478,7 @@ section
 open GlobalTheory.SqTop
 
 theorem _root_.GlobalTheory.T.botConst_of_theta_matching : _root_.GlobalTheory.FunPr.ThetaLocalInputs → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ThetaIntegralsAgree → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.LocalMatching → (∀ D, GlobalTheory.NormSum.Inp D) → BotSmall → LNe → BotConst := by
-  first | exact @_root_.GlobalTheory.SqTop.botConst_of_inputs_alt | exact _root_.GlobalTheory.SqTop.botConst_of_inputs_alt | (intros; apply _root_.GlobalTheory.SqTop.botConst_of_inputs_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.SqTop.botConst_of_inputs_alt
 end
 end -- clump:auto
 end -- clump:auto

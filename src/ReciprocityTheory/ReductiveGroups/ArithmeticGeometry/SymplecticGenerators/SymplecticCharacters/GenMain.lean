@@ -71,7 +71,7 @@ private theorem symplectic_sum_pair_eq_J {A : Matrix (Fin g ⊕ Fin g) (Fin g �
   rw [SymplecticGroup.mem_iff, Matrix.transpose_transpose] at h
   rw [← h]
   simp only [Matrix.mul_apply, Fintype.sum_sum_type, Matrix.transpose_apply]
-  simp [Matrix.J, Matrix.fromBlocks, Matrix.one_apply, Finset.sum_sub_distrib, sub_eq_add_neg]
+  simp [Matrix.J, Matrix.fromBlocks, Matrix.one_apply, sub_eq_add_neg]
   rw [Finset.sum_add_distrib, Finset.sum_neg_distrib]
 
 private theorem symplectic_inl_inl_eq_zero_of_colsFixed {k : ℕ} {A : Matrix (Fin g ⊕ Fin g) (Fin g ⊕ Fin g) ℤ}
@@ -111,12 +111,11 @@ theorem phase2 (k : Fin g) (n : ℕ) : ∀ M ∈ symplecticGroup (Fin g) ℤ, Co
   have hEE' : E * E' = 1 := by
     ext c d
     simp [E, E', Matrix.mul_apply, Matrix.one_apply, sub_mul, mul_add, Finset.sum_add_distrib,
-      Finset.sum_sub_distrib, ite_and]
+      ite_and]
     split_ifs <;> simp_all
   have hE'E : E' * E = 1 := by
     ext c d
-    simp [E, E', Matrix.mul_apply, Matrix.one_apply, add_mul, mul_sub, Finset.sum_add_distrib,
-      Finset.sum_sub_distrib, ite_and]
+    simp [E, E', Matrix.mul_apply, Matrix.one_apply, add_mul, mul_sub, Finset.sum_sub_distrib, ite_and]
     split_ifs <;> simp_all
   let U : (Matrix (Fin g) (Fin g) ℤ)ˣ := ⟨E, E', hEE', hE'E⟩
   have hO1 : spDiag U ∈ spH g := spDiag_mem U
@@ -178,7 +177,7 @@ theorem move_col (k j : Fin g) (hjk : (k : ℕ) ≤ j) (hne : j ≠ k) (s : ℤ)
     ext a b
     simp only [P, Matrix.mul_apply, Matrix.of_apply, Matrix.one_apply]
     rw [Finset.sum_eq_single (Equiv.swap j k a)]
-    · simp [Equiv.swap_apply_self, eq_comm]
+    · simp [Equiv.swap_apply_self]
     · intro c _ hc
       simp [Ne.symm hc]
     · simp
@@ -190,13 +189,13 @@ theorem move_col (k j : Fin g) (hjk : (k : ℕ) ≤ j) (hne : j ≠ k) (s : ℤ)
     constructor <;> intro r <;> rcases r with a | a
     · have h1 : (Equiv.swap j k a = i) ↔ (a = i) := by rw [Equiv.swap_apply_eq_iff, hsw]
       simp [spDiag, U, P, Matrix.one_apply, Matrix.fromBlocks, h1]
-    · simp [spDiag, U, P, Matrix.one_apply, Matrix.fromBlocks]
-    · simp [spDiag, U, P, Matrix.one_apply, Matrix.fromBlocks]
+    · simp [spDiag, U, P, Matrix.fromBlocks]
+    · simp [spDiag, U, P, Matrix.fromBlocks]
     · have h1 : (i = a) ↔ (a = i) := eq_comm
       simp [spDiag, U, P, Matrix.one_apply, Matrix.fromBlocks, Function.swap, hsw, h1]
   · rw [Matrix.mul_apply, Fintype.sum_sum_type]
     rcases r with a | a <;>
-      simp [spDiag, U, P, hsupp, Matrix.one_apply, Matrix.fromBlocks, Equiv.swap_apply_eq_iff] <;>
+      simp [spDiag, U, P, hsupp, Matrix.fromBlocks, Equiv.swap_apply_eq_iff] <;>
       try (split_ifs <;> simp_all)
 
 theorem sign_col (k : Fin g) (s : ℤ) (hs : s = 1 ∨ s = -1)
@@ -303,14 +302,14 @@ theorem col_inr_step (k : Fin g) (M : Matrix (Fin g ⊕ Fin g) (Fin g ⊕ Fin g)
   have hlow : ∀ i : Fin g, (i : ℕ) < k → M (Sum.inr i) (Sum.inr k) = 0 := by
     intro i hi
     have hik : i ≠ k := by intro h; subst h; omega
-    rw [row_inr_of_col_inl hM (hF i hi).1]; simp [Matrix.one_apply, hik]
+    rw [row_inr_of_col_inl hM (hF i hi).1]; simp [hik]
   set c' : Fin g → ℤ := fun l => if (k : ℕ) < l then M (Sum.inr l) (Sum.inr k) else 0 with hc'
   have hdot : c' ⬝ᵥ Pi.single k 1 = 0 := by rw [dotProduct_single]; simp [hc']
   have hDmem : spDiag (rkU _ _ hdot) ∈ spH g := spDiag_mem _
   have hDF : ColsFixed k (spDiag (rkU _ _ hdot)) := by
     refine colsFixed_spDiag_rk hdot (fun i hi => ?_) (fun i hi => ?_)
     · have hik : i ≠ k := by intro h; subst h; omega
-      simp [Pi.single_apply, hik]
+      simp [hik]
     · simp only [hc']
       rw [if_neg (by omega)]
   have hDk : ∀ r, spDiag (rkU _ _ hdot) r (Sum.inl k) =
@@ -332,14 +331,14 @@ theorem col_inr_step (k : Fin g) (M : Matrix (Fin g ⊕ Fin g) (Fin g ⊕ Fin g)
       if_true, hck, mul_one, hc']
     rcases lt_trichotomy (l : ℕ) k with h | h | h
     · have hlk : l ≠ k := by intro e; subst e; omega
-      rw [if_neg (by omega), hlow l h]; simp [Matrix.one_apply, hlk]
+      rw [if_neg (by omega), hlow l h]; simp [hlk]
     · have e : l = k := Fin.ext h
       subst e; rw [if_neg (lt_irrefl _), hck]; simp
     · have hlk : l ≠ k := by intro e; subst e; omega
-      rw [if_pos h]; simp [Matrix.one_apply, hlk]
+      rw [if_pos h]; simp [hlk]
   have ha1 : ∀ i : Fin g, (i : ℕ) < k → M1 (Sum.inl i) (Sum.inr k) = 0 := by
     intro i hi
-    rw [row_inl_of_col_inr hM1sp (hM1F i hi).2]; simp [Matrix.one_apply]
+    rw [row_inl_of_col_inr hM1sp (hM1F i hi).2]; simp
   set S : Matrix (Fin g) (Fin g) ℤ := Matrix.of fun l m =>
     if m = k then (if l = k then -M1 (Sum.inl k) (Sum.inr k) else -M1 (Sum.inl l) (Sum.inr k))
     else (if l = k then -M1 (Sum.inl m) (Sum.inr k) else 0) with hS
@@ -380,30 +379,26 @@ private theorem mem_symplecticGroup_of_mem_spH (g : ℕ) :
     intro M hM'
     rw [SetLike.mem_coe]
     rcases hM' with ((⟨S, hS, rfl⟩ | ⟨U, rfl⟩) | hJ)
-    · (first | rw [SymplecticGroup.mem_iff] | rw [Matrix.mem_symplecticGroup_iff])
+    · (first | rw [SymplecticGroup.mem_iff])
       rw [spTransl, Matrix.J, Matrix.fromBlocks_transpose,
         Matrix.fromBlocks_multiply, Matrix.fromBlocks_multiply]
       simp [hS.eq]
     · have hU2 : (U : Matrix (Fin g) (Fin g) ℤ) * (↑U⁻¹ : Matrix (Fin g) (Fin g) ℤ) = 1 := by
         first
         | exact Units.mul_inv U
-        | exact Matrix.mul_nonsing_inv _ (Matrix.isUnits_det_units U)
       have hU : ((↑U⁻¹ : Matrix (Fin g) (Fin g) ℤ)ᵀ) * (U : Matrix (Fin g) (Fin g) ℤ)ᵀ = 1 := by
         rw [← Matrix.transpose_mul, hU2, Matrix.transpose_one]
-      (first | rw [SymplecticGroup.mem_iff] | rw [Matrix.mem_symplecticGroup_iff])
+      (first | rw [SymplecticGroup.mem_iff])
       rw [spDiag, Matrix.J, Matrix.fromBlocks_transpose,
         Matrix.fromBlocks_multiply, Matrix.fromBlocks_multiply]
-      simp [hU, hU2]
+      simp
       rw [← Matrix.transpose_mul]
       first
       | rw [Matrix.mul_nonsing_inv _ (Matrix.isUnits_det_units U), Matrix.transpose_one]
-      | rw [← Matrix.coe_units_inv, Units.mul_inv, Matrix.transpose_one]
     · rw [Set.mem_singleton_iff] at hJ
       rw [hJ]
       first
-      | exact SymplecticGroup.J_mem
-      | exact Matrix.J_mem
-      | ((first | rw [SymplecticGroup.mem_iff] | rw [Matrix.mem_symplecticGroup_iff])
+      | ((first | rw [SymplecticGroup.mem_iff])
          rw [Matrix.J, Matrix.fromBlocks_transpose, Matrix.fromBlocks_multiply,
            Matrix.fromBlocks_multiply]
          simp)

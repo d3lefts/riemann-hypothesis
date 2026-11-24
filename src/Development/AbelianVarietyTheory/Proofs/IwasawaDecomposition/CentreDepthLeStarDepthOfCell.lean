@@ -248,7 +248,7 @@ theorem mem_depthSet_of_quot {X X₁ : Type} [AddCommGroup X] [Module O X] [Modu
         have hcS : ∀ i, c i ≠ 0 → ∃ j, s j = i := fun i hi => hS i (Finset.mem_filter.2 ⟨Finset.mem_univ _,
           fun x hx y => by
             have h0 := LinearMap.congr_fun₂ hc x x
-            simp only [LinearMap.smul_apply, pull_apply, hx, map_zero, LinearMap.zero_apply, smul_zero,
+            simp only [LinearMap.smul_apply, pull_apply, hx, map_zero, smul_zero,
               LinearMap.sum_apply] at h0
             have h4 := (Finset.sum_eq_zero_iff_of_nonneg fun j _ => nsmul_nonneg (hn j x) _).1 h0.symm i
               (Finset.mem_univ _)
@@ -286,7 +286,7 @@ theorem mem_depthSet_of_rcone : ∀ (O : Type) [CommRing O] (bar : O → O) (ψ 
   let R : Submodule O X :=
     { carrier := {x | ∀ y, B x y = 0}
       add_mem' := fun {x x'} hx hx' y => by
-        simp only [Set.mem_setOf_eq, map_add (f := _), LinearMap.add_apply, hx y, hx' y, add_zero]
+        simp only [map_add (f := _), LinearMap.add_apply, hx y, hx' y, add_zero]
       zero_mem' := fun y => by simp
       smul_mem' := fun c x hx y => by
         show B (c • x) y = 0
@@ -332,7 +332,7 @@ theorem inCone_of_strict {n : ℕ} {γ' : Fin m' → LinearMap.BilinForm ℤ X} 
         simp only [Sum.elim_inl, Sum.elim_inr, LinearMap.id_apply, Pi.neg_apply, neg_smul, Finset.sum_neg_distrib, hrel,
           add_neg_cancel])
     rw [Fintype.sum_sum_type] at this
-    simp only [Sum.elim_inl, Sum.elim_inr, LinearMap.id_apply, Pi.neg_apply, neg_mul, Finset.sum_neg_distrib] at this
+    simp only [Sum.elim_inl, Sum.elim_inr, Pi.neg_apply, neg_mul, Finset.sum_neg_distrib] at this
     linarith
   have hφ : ∑ i, a i * φ.evalZ (β i) = ∑ j, b j * φ.evalZ (γ' j) := by
     rw [← hlin, hrel]; exact (linearOn_iff φ γ').1 hlin' b hb

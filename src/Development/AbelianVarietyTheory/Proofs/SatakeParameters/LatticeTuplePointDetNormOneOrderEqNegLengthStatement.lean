@@ -89,7 +89,7 @@ theorem adic_ringEquiv_eq_self {F : Type} [Field F] [NumberField F] (w : HeightO
   have hval : ∀ b : F, Valued.v (algebraMap F (w.adicCompletion F) b) = w.valuation F b := by
     intro b
     rw [HeightOneSpectrum.algebraMap_adicCompletion]
-    simp [HeightOneSpectrum.valuedAdicCompletion_eq_valuation']
+    simp
 
   have hcmp : ∀ (b : F) (u : w.adicCompletion F), b ≠ 0 →
       (Valued.v u ≤ Valued.v (algebraMap F (w.adicCompletion F) b) ↔
@@ -161,7 +161,7 @@ theorem firstFactor_agree : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
       Valued.v (algebraMap F (v.adicCompletion F) b) = v.valuation F b := by
     intro v b
     rw [HeightOneSpectrum.algebraMap_adicCompletion]
-    simp [HeightOneSpectrum.valuedAdicCompletion_eq_valuation']
+    simp
   have hww : w = w' := by
     by_contra hne
     have hle : ¬ w.asIdeal ≤ w'.asIdeal := fun h =>
@@ -396,7 +396,7 @@ open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.MainNotions F
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.lattice_det_mem_U1_and_ordA_eq_neg_len : Sites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S => ∀ j (hj : j ≤ D.R.m) (La : (sysS H X std).Lt j), ((sysS H X std).Pj j).IsLatTup La.2 → (J.fd std).dt j La ∈ U1 (sigD D) ∧ ∀ v : (sysS H X std).Pl, ordA (A0 J) v ((J.fd std).dt j La) = -len (sysS H X std) v j La.2) := by
-  first | exact @GlobalTheory.TwV.Xc.latticeTuplePoint_det_normOne_order_eq_neg_length | exact GlobalTheory.TwV.Xc.latticeTuplePoint_det_normOne_order_eq_neg_length | (intros; apply GlobalTheory.TwV.Xc.latticeTuplePoint_det_normOne_order_eq_neg_length <;> assumption)
+  first | exact @GlobalTheory.TwV.Xc.latticeTuplePoint_det_normOne_order_eq_neg_length
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.LatticeTuplePointDetNormOneOrderEqNegLengthStatement =====

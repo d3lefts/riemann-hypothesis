@@ -307,11 +307,11 @@ theorem cmp_split [IsDomain R] {ι κ : Type*} [Fintype ι] [DecidableEq ι] [Fi
     · rw [hM1 (.inl a) b]
       by_cases hab : a = b
       · subst hab
-        simp [Matrix.one_apply, Matrix.diagonal_apply]
-      · simp [Matrix.one_apply, Matrix.diagonal_apply, hab]
+        simp
+      · simp [hab]
     · simp [Matrix.toBlocks₁₂]
     · rw [hM1 (.inr a) b]
-      simp [Matrix.one_apply]
+      simp
     · simp [Matrix.toBlocks₂₂]
   rw [hMb] at hGram
   simp only [Matrix.fromBlocks_map, Matrix.fromBlocks_transpose, Matrix.fromBlocks_multiply,
@@ -651,7 +651,7 @@ theorem finiteAdeleIdempotentOfF_mul_self : (e0 : Matrix (Fin 2) (Fin 2) R) * e0
 
 theorem elementary_hyperbolic : (e0 : Matrix (Fin 2) (Fin 2) R)ᴴ * hyp = hyp - hyp * e0 := by
   ext i j; fin_cases i <;> fin_cases j <;>
-    simp [e0, hyp, Matrix.mul_apply, Fin.sum_univ_two, vecMul, dotProduct, diagonal_apply]
+    simp [e0, hyp, Matrix.mul_apply, vecMul, dotProduct, diagonal_apply]
 
 theorem elementary_commutes_diagonal (d : Fin 2 → R) :
     (e0 : Matrix (Fin 2) (Fin 2) R) * diagonal d = diagonal d * e0 := by
@@ -1495,7 +1495,7 @@ theorem sel_main (σ : R ≃+* R) (ϖ : R) (hϖ0 : ϖ ≠ 0) (hϖ : ¬ IsUnit ϖ
         by_cases hl : l = j
         · subst hl
           simp
-        · simp [Pi.single_apply, hl]
+        · simp [hl]
       rw [hs]
       simp [Matrix.mulVec_single, dotProduct, Pi.single_apply]
     · rw [Matrix.mulVec_mulVec, hg2, Matrix.smul_mulVec, Matrix.one_mulVec]

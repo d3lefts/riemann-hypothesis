@@ -273,7 +273,7 @@ theorem _root_.GlobalTheory.T.centralizer_torusEllipticElement_realPlace : ∀ {
       (centMeas h dt).real univ = dt.real univ ∧
       (IsCompact (cent (gam h) : Set (GArch D.sp.cm.sig V.gram (placeOf D ρ))) ↔
         CompactSpace (Tor P (placeOf D ρ).Completion)) := by
-  first | exact @GlobalTheory.RealPlaceCentraliser.centMeas_real_place | exact GlobalTheory.RealPlaceCentraliser.centMeas_real_place | (intros; apply GlobalTheory.RealPlaceCentraliser.centMeas_real_place <;> assumption)
+  first | exact @GlobalTheory.RealPlaceCentraliser.centMeas_real_place
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentralizerTorusEllipticElementRealPlaceStatement =====

@@ -163,7 +163,7 @@ open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.E
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.familyMidVolume_at_linked : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (p : _root_.GlobalTheory.Mem.Top.Bl.Parameters hL), GlobalTheory.Fc.RowE (Bl.IsGoodE p.s) (_root_.GlobalTheory.Mem.Top.Bl.BundleLinkage p) (fun _ D _ _ _ => Formalism.MainNotions.LocalBesselAndTopKernel.FamilyMidVolume D) := by
-  first | exact @_root_.GlobalTheory.MemberRanks.admissible_ranks_at_member_alt | exact _root_.GlobalTheory.MemberRanks.admissible_ranks_at_member_alt | (intros; apply _root_.GlobalTheory.MemberRanks.admissible_ranks_at_member_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.MemberRanks.admissible_ranks_at_member_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -341,7 +341,7 @@ open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.E
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.type_frame_all_members' : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (p : _root_.GlobalTheory.Mem.Top.Bl.Parameters hL), GlobalTheory.Fc.RowE (Bl.IsGoodE p.s) (_root_.GlobalTheory.Mem.Top.Bl.BundleLinkage p) (fun _ D _ _ _ => Formalism.L2.SG.RowsConc.TFrameAt D) := by
-  first | exact @_root_.GlobalTheory.Fam.MemberFrame.tFrameAt_at_linked_of_recT | exact _root_.GlobalTheory.Fam.MemberFrame.tFrameAt_at_linked_of_recT | (intros; apply _root_.GlobalTheory.Fam.MemberFrame.tFrameAt_at_linked_of_recT <;> assumption)
+  first | exact @_root_.GlobalTheory.Fam.MemberFrame.tFrameAt_at_linked_of_recT
 end
 end -- clump:auto
 end -- clump:auto
@@ -525,7 +525,7 @@ open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.E
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.bigGap_of_isGoodE_isLinked : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (p : _root_.GlobalTheory.Mem.Top.Bl.Parameters hL), GlobalTheory.Fc.RowE (Bl.IsGoodE p.s) (_root_.GlobalTheory.Mem.Top.Bl.BundleLinkage p) (fun _ D _ _ _ => GlobalTheory.Core.Rk.BigGap D) := by
-  first | exact @_root_.GlobalTheory.Core.Rk.GapAt.rowE_bigGap_alt | exact _root_.GlobalTheory.Core.Rk.GapAt.rowE_bigGap_alt | (intros; apply _root_.GlobalTheory.Core.Rk.GapAt.rowE_bigGap_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.Core.Rk.GapAt.rowE_bigGap_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -600,7 +600,7 @@ open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.E
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_constants_for_parameters_scale_bundle : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (p : _root_.GlobalTheory.Mem.Top.Bl.Parameters hL) (F G H : ℝ → ℝ → ℝ), GlobalTheory.Fc.RowE (Bl.IsGoodE p.s) (_root_.GlobalTheory.Mem.Top.Bl.BundleLinkage p) (fun _ D O _ _ => ∃ C' Cl Cg CT : ℝ, F Cg CT ≤ C' ∧ G Cg CT ≤ Cl ∧ H Cg CT ≤ O.L.sc.L ∧ GlobalTheory.Core.Rk.HD D O.L.sc.L C' Cl Cg (1 / 4) 3 (1 / 2) CT ∧ GlobalTheory.Core.Rk.IsScaleWithBoundedGamma D O.L.sc.L C' ∧ (∀ u, GlobalTheory.Core.Rk.RankMu D u) ∧ GlobalTheory.Core.Rk.BigGap D ∧ 1 ≤ D.R.rS) := by
-  first | exact @_root_.GlobalTheory.Fam.MemberSizes.parameters_scale_size_bounds_of_member | exact _root_.GlobalTheory.Fam.MemberSizes.parameters_scale_size_bounds_of_member | (intros; apply _root_.GlobalTheory.Fam.MemberSizes.parameters_scale_size_bounds_of_member <;> assumption)
+  first | exact @_root_.GlobalTheory.Fam.MemberSizes.parameters_scale_size_bounds_of_member
 end
 end -- clump:auto
 end -- clump:auto

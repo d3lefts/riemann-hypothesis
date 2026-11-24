@@ -284,7 +284,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp GlobalTheory.BigOn.Exp.SerBase
 
 theorem _root_.GlobalTheory.T.latIoAt' : _root_.GlobalTheory.BigOn.Exp.SerBase.LatticeInclusionAt := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.SerBase.latIoAt_alt | exact _root_.GlobalTheory.BigOn.Exp.SerBase.latIoAt_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.SerBase.latIoAt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.SerBase.latIoAt_alt
 end
 end -- clump:auto
 end -- clump:auto

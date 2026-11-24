@@ -668,7 +668,7 @@ theorem _root_.GlobalTheory.T.cocycle_defines_descended_line_bundle : H90 → �
       ∀ (W : Scheme.{0}) (a b : W ⟶ Z) (hab : a ≫ h = b ≫ h) (w : W) (i : N.ι), h (a w) ∈ N.U i →
         gm a w ((N.pull h).U fun _ => i) (T.s fun _ => i) =
           gm (pullback.lift a b hab) w ⊤ hu.unit * gm b w ((N.pull h).U fun _ => i) (T.s fun _ => i) := by
-  first | exact @GlobalTheory.CompanionTheory.LbCocycle.exists_lb | exact GlobalTheory.CompanionTheory.LbCocycle.exists_lb | (intros; apply GlobalTheory.CompanionTheory.LbCocycle.exists_lb <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.LbCocycle.exists_lb
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.CocycleDefinesDescendedLineBundleStatement =====
@@ -792,7 +792,7 @@ theorem _root_.GlobalTheory.T.lbIso_pull_of_generator_ratio_eq : ∀ {Z P Q : Sc
         gm a w ((N.pull (g ≫ f)).U fun _ => i) (T.s fun _ => i) * (gm a w ((M.pull g).U fun _ => k) (τ.s fun _ => k))⁻¹ =
           gm b w ((N.pull (g ≫ f)).U fun _ => i) (T.s fun _ => i) * (gm b w ((M.pull g).U fun _ => k) (τ.s fun _ => k))⁻¹) →
       LBIso M (N.pull f) := by
-  first | exact @GlobalTheory.CompanionTheory.RigGlue.lbIso_of_same_descent | exact GlobalTheory.CompanionTheory.RigGlue.lbIso_of_same_descent | (intros; apply GlobalTheory.CompanionTheory.RigGlue.lbIso_of_same_descent <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.RigGlue.lbIso_of_same_descent
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.GeneratorCompatibilityCompositePullbackStatement =====
@@ -868,7 +868,7 @@ theorem _root_.GlobalTheory.T.generator_descent_unit_exists : ∀ {Z P Q : Schem
       ∀ (W : Scheme.{0}) (a b : W ⟶ Z) (hab : a ≫ g ≫ f = b ≫ g ≫ f) (w : W) (J : (W ⟶ P) → M.ι), Good M w J →
         gm (pullback.lift a b hab) w ⊤ hu.unit =
           val τ a w J * val c (pullback.lift (a ≫ g) (b ≫ g) (by simpa using hab)) w J * (val τ b w J)⁻¹ := by
-  first | exact @GlobalTheory.CompanionTheory.RigDesc.exists_unit_of_gen | exact GlobalTheory.CompanionTheory.RigDesc.exists_unit_of_gen | (intros; apply GlobalTheory.CompanionTheory.RigDesc.exists_unit_of_gen <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.RigDesc.exists_unit_of_gen
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.GeneratorDescentUnitExistsStatement =====
@@ -1074,7 +1074,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.line_bundle_trivial_after_flat_cover : ∀ {P : Scheme.{0}} (M : LB P), M.IsLB → ∃ (Z : Scheme.{0}) (g : Z ⟶ P),
     Flat g ∧ LocallyOfFinitePresentation g ∧ Surjective g ∧ Triv (M.pull g) := by
-  first | exact @GlobalTheory.CompanionTheory.RigCover.exists_flat_cover_triv | exact GlobalTheory.CompanionTheory.RigCover.exists_flat_cover_triv | (intros; apply GlobalTheory.CompanionTheory.RigCover.exists_flat_cover_triv <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.RigCover.exists_flat_cover_triv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.LineBundleTrivialAfterFlatCoverStatement =====
@@ -1198,7 +1198,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 theorem _root_.GlobalTheory.T.seesaw_triviality_abelian_scheme : ∀ (S : Scheme.{0}) (A X Y : Over S) [GrpObj A], IsAbelianScheme A → ∀ q : X ⟶ Y, Flat q.left →
     LocallyOfFinitePresentation q.left → Surjective q.left →
     ∀ N : LB (A ⊗ Y).left, N.IsLB → Triv (ev N (1 : Y ⟶ A) (𝟙 Y)) → Triv (ev N (fst A X) (snd A X ≫ q)) → Triv N := by
-  first | exact @GlobalTheory.CompanionTheory.RigDesc.triv_of_triv_of_flat_cover | exact GlobalTheory.CompanionTheory.RigDesc.triv_of_triv_of_flat_cover | (intros; apply GlobalTheory.CompanionTheory.RigDesc.triv_of_triv_of_flat_cover <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.RigDesc.triv_of_triv_of_flat_cover
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.SeesawTrivialityAbelianSchemeStatement =====
@@ -1356,7 +1356,7 @@ theorem pr_sg {W : Over S} (a b : W ⟶ A ⊗ X) (h) :
     lift (a ≫ fst A X) (𝟙 W) ≫ aH A (pr q a b h) = pr q a b h ≫ sg A q := by
   apply CartesianMonoidalCategory.hom_ext
   · have := pr_one q a b h
-    simp only [aH, sg, comp_lift, lift_fst, Category.assoc, lift_snd_assoc, Category.id_comp, Category.comp_id]
+    simp only [aH, sg, comp_lift, lift_fst, lift_snd_assoc, Category.id_comp, Category.comp_id]
     rw [← Category.assoc, this]
   · simp [aH, sg]
 
@@ -1441,7 +1441,7 @@ theorem _root_.GlobalTheory.T.theorem_of_cube_generator_exists : ∀ (S : Scheme
       ∀ (W : Scheme.{0}) (a b d : W ⟶ (A ⊗ X).left) (hab : a ≫ (lift (fst A X) (snd A X ≫ q)).left = b ≫ (lift (fst A X) (snd A X ≫ q)).left)
         (hbd : b ≫ (lift (fst A X) (snd A X ≫ q)).left = d ≫ (lift (fst A X) (snd A X ≫ q)).left) (w : W) (J : (W ⟶ (A ⊗ X).left) → M.ι), Good M w J →
         val c (pullback.lift a b hab) w J * val c (pullback.lift b d hbd) w J = val c (pullback.lift a d (hab.trans hbd)) w J := by
-  first | exact @GlobalTheory.CompanionTheory.RigDescLink.descent_datum | exact GlobalTheory.CompanionTheory.RigDescLink.descent_datum | (intros; apply GlobalTheory.CompanionTheory.RigDescLink.descent_datum <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.RigDescLink.descent_datum
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.TheoremOfCubeGeneratorExistsStatement =====

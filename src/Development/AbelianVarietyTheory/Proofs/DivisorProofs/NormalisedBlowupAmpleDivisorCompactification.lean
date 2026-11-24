@@ -299,7 +299,7 @@ theorem exists_not_dvd_le {X : Type} [AddCommGroup X] (β : LinearMap.BilinForm 
       have hv : v ≠ 0 := by rintro rfl; simp at hx
       have hvv := hβ v hv
       have e : β (m • v) (m • v) = (m : ℤ) * ((m : ℤ) * β v v) := by
-        simp [map_nsmul, LinearMap.smul_apply, nsmul_eq_mul]
+        simp [map_nsmul, LinearMap.smul_apply]
       have hm' : (2 : ℤ) ≤ m := by exact_mod_cast hm
       have h2 : 2 * β v v ≤ (m : ℤ) * β v v := mul_le_mul_of_nonneg_right hm' hvv.le
       have h3 : 2 * ((m : ℤ) * β v v) ≤ (m : ℤ) * ((m : ℤ) * β v v) :=
@@ -849,7 +849,7 @@ theorem exists_idealSheaf_comap_orders : ∀ (g n : ℕ), 1 ≤ g → 3 ≤ n �
     have e : Y.pt ≫ πY ≫ X₁.π = spMap (AlgHom.id X₁.o₁ X₁.Ω₁).toRingHom ≫ spMap X₁.S.R.val.toRingHom ≫ X₁.u ≫ i := by
       rw [← Category.assoc, hHom, Category.assoc, X₁.comp]
     have e' := congrArg (fun h : Sp X₁.Ω₁ ⟶ Z => h (closedPoint X₁.Ω₁)) e
-    simp only [Scheme.Hom.comp_apply] at e'
+    simp only at e'
     exact ⟨_, e'.symm⟩
   have hDU : ∀ x ∈ (D.nsmul k).idealSheaf.support, x ∉ U := fun x hx hxU => hsupp x (hsub x hx) ((hmemU x).1 hxU)
   have hrange : ∀ {q : ℕ} [Fact q.Prime] (y : Sp (OO q) ⟶ Y.Z), Set.range (gPt q ≫ y) ⊆ U →

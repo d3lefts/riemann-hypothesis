@@ -95,11 +95,11 @@ theorem dM_inl (ε : Fin n → Bool) (x : Mode ε) (i j : Fin n) :
   · by_cases h : j = x.1.1
     · subst h
       simp [Matrix.single_apply, apply_ite]
-    · simp [Matrix.single_apply, h, Ne.symm h]
+    · simp [h, Ne.symm h]
   · by_cases h : i = x.1.2
     · subst h
       simp [Matrix.single_apply, apply_ite]
-    · simp [Matrix.single_apply, h, Ne.symm h]
+    · simp [h, Ne.symm h]
 
 theorem dM_inr (ε : Fin n → Bool) (x : Mode ε) (i j : Fin n) :
     dM ε x (X (Sum.inr (i, j))) = (if j = x.1.2 then X (Sum.inr (i, x.1.1)) else 0)
@@ -109,11 +109,11 @@ theorem dM_inr (ε : Fin n → Bool) (x : Mode ε) (i j : Fin n) :
   · by_cases h : j = x.1.2
     · subst h
       simp [Matrix.single_apply, apply_ite]
-    · simp [Matrix.single_apply, h, Ne.symm h]
+    · simp [h, Ne.symm h]
   · by_cases h : i = x.1.1
     · subst h
       simp [Matrix.single_apply, apply_ite]
-    · simp [Matrix.single_apply, h, Ne.symm h]
+    · simp [h, Ne.symm h]
 
 theorem mode_ne (ε : Fin n → Bool) (w x : Mode ε) : x.1.2 ≠ w.1.1 := by
   intro h
@@ -198,7 +198,7 @@ theorem pencil_det_adjugate_coeff :
   have hZ : e.mapMatrix Z = (Polynomial.X : Polynomial (MvPolynomial τ ℂ)) • A.map Polynomial.C +
       B.map Polynomial.C := by
     refine Matrix.ext fun i j => ?_
-    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply,
+    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply,
       smul_eq_mul, Z, he]
     exact pencil_map_entry (A i j) (B i j)
   have hdet : MvPolynomial.optionEquivLeft ℂ τ Z.det =
@@ -228,7 +228,7 @@ theorem pencil_det_adjugate_coeff :
         simp only [Matrix.updateRow_self, if_true]
         by_cases hc : c = j
         · subst hc; simp
-        · simp [Pi.single_apply, hc]
+        · simp [hc]
       · simp only [Matrix.updateRow_ne hr, if_neg hr, Matrix.add_apply, Matrix.smul_apply,
           Matrix.map_apply, smul_eq_mul]
         compute_degree
@@ -279,16 +279,16 @@ theorem dM_X_inl_entry {n : ℕ} (ε : Fin n → Bool) (x : Mode ε) (a b : Fin 
   rw [Finset.sum_sub_distrib]
   congr 1
   · rw [Finset.sum_eq_single x.1.2]
-    · by_cases h : x.1.1 = b <;> simp [Matrix.single_apply, h]
+    · by_cases h : x.1.1 = b <;> simp [h]
     · intro c _ hc
-      simp [Matrix.single_apply, Ne.symm hc]
+      simp [Ne.symm hc]
     · simp
   · rw [Finset.sum_eq_single x.1.1]
     · by_cases h : a = x.1.2
-      · simp [Matrix.single_apply, h]
-      · simp [Matrix.single_apply, h, Ne.symm h]
+      · simp [h]
+      · simp [h, Ne.symm h]
     · intro c _ hc
-      simp [Matrix.single_apply, Ne.symm hc]
+      simp [Ne.symm hc]
     · simp
 
 theorem dM_block_entries : BlockDeterminantCondition := by
@@ -392,9 +392,9 @@ theorem coeff_optionEquivLeft_extDerivation {τ : Type}
   | mul_X p n hp =>
     rw [Derivation.leibniz, MvPolynomial.mkDerivation_X]
     rcases n with _ | v
-    · simp only [smul_zero, zero_add, smul_eq_mul, mul_zero, map_mul, MvPolynomial.optionEquivLeft_X_none]
+    · simp only [zero_add, smul_eq_mul, mul_zero, map_mul, MvPolynomial.optionEquivLeft_X_none]
       rcases k with _ | k
-      · simp [Polynomial.coeff_mul_X_zero, mul_comm (Polynomial.X) _]
+      · simp [mul_comm (Polynomial.X) _]
       · rw [mul_comm Polynomial.X, Polynomial.coeff_mul_X, Polynomial.coeff_mul_X, hp]
     · simp only [smul_eq_mul, map_add (f := _), map_mul, MvPolynomial.optionEquivLeft_X_some, optionEquivLeft_rename_some_complex_eq_C,
         Polynomial.coeff_add, Polynomial.coeff_mul_C, Polynomial.coeff_C_mul, hp, Derivation.leibniz]
@@ -758,7 +758,7 @@ theorem piola {ι : Type} [Fintype ι] [DecidableEq ι] (δ : ι → Derivation 
     simp only [updateRow_self]
     by_cases hl : l = j
     · subst hl; simp
-    · simp [Pi.single_apply, hl]
+    · simp [hl]
   have hpair : ∀ i k, i ≠ k → f (i, k) + f (k, i) = 0 := by
     intro i k hik
     set D : ι → R := fun l => δ i (M k l) with hD
@@ -772,9 +772,9 @@ theorem piola {ι : Type} [Fintype ι] [DecidableEq ι] (δ : ι → Derivation 
       simp only [hf]
       congr 1
       ext a b
-      simp only [submatrix_apply, id, updateRow_apply, updateRow_ne hik, hD]
+      simp only [submatrix_apply, id, updateRow_apply, hD]
       by_cases hai : a = i
-      · subst hai; simp [Equiv.swap_apply_left, hik, Ne.symm hik, hM]
+      · subst hai; simp [Equiv.swap_apply_left, hik, hM]
       · by_cases hak : a = k
         · subst hak; simp [Equiv.swap_apply_right, hik, Ne.symm hik]
         · rw [Equiv.swap_apply_of_ne_of_ne hai hak]; simp [hai, hak]
@@ -946,7 +946,7 @@ private lemma pderiv_mu_lambdaPoly_lemma_5 (f : _root_.GlobalTheory.PsCo.Pc1.A.P
   | C a => simp [_root_.GlobalTheory.PsCo.Pc1.A.inM]
   | add p q hp hq => simp [map_add (f := _), hp, hq]
   | mul_X p v hp =>
-    simp only [map_mul, Derivation.leibniz, hp, smul_eq_mul, map_add (f := _)]
+    simp only [map_mul, Derivation.leibniz, hp, smul_eq_mul]
     simp [_root_.GlobalTheory.PsCo.Pc1.A.inM, pderiv_X]
 
 open MvPolynomial in
@@ -1180,7 +1180,7 @@ private lemma coeff_pderiv_mu_lemma_13 (F : _root_.GlobalTheory.PsCo.Pc1.A.PolyM
       (k + 1 : _root_.GlobalTheory.PsCo.Pc1.Poly n) *
         _root_.GlobalTheory.PsCo.Pc1.A.exL n L (_root_.GlobalTheory.PsCo.Pc1.A.coefM n L (k + 1) F) := by
   rw [_root_.GlobalTheory.PsCo.Cw2a.t_coefM_pderiv]
-  simp only [Algebra.smul_def, map_add (f := _), map_natCast, map_one, nsmul_eq_mul, Nat.cast_add, Nat.cast_one]
+  simp only [Algebra.smul_def, map_add (f := _), map_natCast, map_one]
   rw [show ((k : _root_.GlobalTheory.PsCo.Pc1.A.PolyL n L) + 1) =
       _root_.GlobalTheory.PsCo.Pc1.A.inL n L ((k : _root_.GlobalTheory.PsCo.Pc1.Poly n) + 1) by simp, extractCoeff_inl_mul]
 
@@ -1259,10 +1259,10 @@ private lemma koszulRecursion_solvable_of_product_lemma (M : ℕ) (m : Fin L →
 
     simp only [hZ, _root_.GlobalTheory.PsCo.Pc1.A.Zm, Derivation.leibniz, pencilModeDerivation_muVariable_lemma_9,
     pencilModeDerivation_lambdaPoly_lemma_7, _root_.GlobalTheory.PsCo.Pc1.A.pencilDerivativePartMatrix, lambdaModeDerivation_entryPoly_lemma_8,
-    _root_.GlobalTheory.PsCo.Pc1.A.pencilConstantPartMatrix, map_add, map_sum, lambdaModeDerivation_variable_lemma_10, smul_zero, add_zero, smul_eq_mul,
+    _root_.GlobalTheory.PsCo.Pc1.A.pencilConstantPartMatrix, map_add, map_sum, lambdaModeDerivation_variable_lemma_10, add_zero, smul_eq_mul,
     mul_zero]
-    simp only [MvPolynomial.derivation_C, mul_zero, smul_zero, zero_add, add_zero, Finset.sum_const_zero, map_zero,
-      smul_eq_mul, _root_.GlobalTheory.PsCo.Pc1.OmP]
+    simp only [MvPolynomial.derivation_C, mul_zero, add_zero, Finset.sum_const_zero, map_zero,
+      _root_.GlobalTheory.PsCo.Pc1.OmP]
     rw [_root_.GlobalTheory.PsCo.DMComm.dM_comm ε h i]
   have h3 : pderiv none w = 0 := pderiv_mu_lambdaPoly_lemma_5 _
   have h5 : _root_.GlobalTheory.PsCo.Pc1.A.i2 L (_root_.GlobalTheory.PsCo.Pc1.rP ε) = ∑ j, b j * a j := by
@@ -1373,8 +1373,8 @@ theorem _root_.GlobalTheory.PsCo.Pc1.A.stAlg : _root_.GlobalTheory.PsCo.Pc1.StAl
     refine ⟨fun k => C r * p₁ k, fun x k => C r * q₁ x k,
       ⟨fun k => ?_, fun k hk => ?_, fun x k hk => ?_⟩, ?_⟩
     · have h₁ := r₁ k
-      simp only [Derivation.leibniz, MvPolynomial.derivation_C, smul_zero, add_zero, smul_eq_mul, shift_const_mul_lemma_4]
-      simp only [mul_add, Finset.sum_add_distrib] at h₁ ⊢
+      simp only [Derivation.leibniz, MvPolynomial.derivation_C, smul_eq_mul, shift_const_mul_lemma_4]
+      simp only [Finset.sum_add_distrib] at h₁ ⊢
       have hc : ∀ x : _root_.GlobalTheory.PsCo.Pc1.Mode ε,
           _root_.GlobalTheory.PsCo.Pc1.dM ε x (_root_.GlobalTheory.PsCo.Pc1.rP ε) *
               (C r * _root_.GlobalTheory.PsCo.Pc1.prev (q₁ x) k) =

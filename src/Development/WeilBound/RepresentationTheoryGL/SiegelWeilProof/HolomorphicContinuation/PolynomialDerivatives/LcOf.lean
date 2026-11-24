@@ -300,8 +300,8 @@ theorem pderiv_cr (c : ℝ) (k j : Fin m × Fin n × Bool) (Q : PX m n) :
   classical
   rw [cr_apply, cr_apply, map_add (f := _), map_neg, Derivation.map_smul, pderiv_mul, pderiv_X, pderiv_comm k j]
   by_cases h : k = flip j
-  · subst h; simp [Pi.single_apply]; ring
-  · simp [Pi.single_apply, h, Ne.symm h]
+  · subst h; simp; ring
+  · simp [h, Ne.symm h]
 
 end PositivityTheory.Rg.Sw.LC
 end -- clump:auto
@@ -576,7 +576,7 @@ theorem hop_pderiv_comm' (i j : Fin m × Fin n × Bool) (p : PX m n) :
     apply MvPolynomial.derivation_ext
     intro k
     rw [Derivation.commutator_apply, pderiv_X, pderiv_X]
-    by_cases h1 : j = k <;> by_cases h2 : i = k <;> simp [Pi.single_apply, h1, h2]
+    by_cases h1 : j = k <;> by_cases h2 : i = k <;> simp [h1, h2]
   have := congrArg (fun D : Derivation ℂ (PX m n) (PX m n) => D p) h
   simpa [Derivation.commutator_apply, sub_eq_zero] using this
 
@@ -600,17 +600,17 @@ theorem hop_pderiv_cr (c : ℝ) (j k : Fin m × Fin n × Bool) (Q : PX m n) :
   obtain ⟨a, i, e⟩ := j
   cases e
   · rw [cr_false, cr_false]
-    simp only [map_add (f := _), map_neg, map_smul, Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_C_mul,
+    simp only [map_add (f := _), map_neg, Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_C_mul,
       hop_pderiv_comm' k (a, i, false)]
     by_cases h : k = (a, i, true)
-    · subst h; simp [Pi.single_apply]; ring
-    · simp [Pi.single_apply, h, Ne.symm h]
+    · subst h; simp; ring
+    · simp [h, Ne.symm h]
   · rw [cr_true, cr_true]
-    simp only [map_add (f := _), map_neg, map_smul, Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_C_mul,
+    simp only [map_add (f := _), map_neg, Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_C_mul,
       hop_pderiv_comm' k (a, i, true)]
     by_cases h : k = (a, i, false)
-    · subst h; simp [Pi.single_apply]; ring
-    · simp [Pi.single_apply, h, Ne.symm h]
+    · subst h; simp; ring
+    · simp [h, Ne.symm h]
 
 theorem sgn_mul_same (ε : Fin m → Bool) {a b : Fin m} (h : ε a = ε b) : sgn ε a * sgn ε b = 1 := by
   unfold sgn; rw [h]; split_ifs <;> norm_num
@@ -654,7 +654,7 @@ theorem hop_deriv_fock {c : ℝ} (hc : 0 < c) (k : Fin m × Fin n × Bool) (p : 
       rw [Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_mul]
       by_cases h : k = j
       · subst h; simp
-      · simp [Pi.single_apply, h, Ne.symm h]
+      · simp [h, Ne.symm h]
     have hcond : ((k.1, k.2.1, !k.2.2) = (j.1, j.2.1, !j.2.2)) ↔ k = j := by
       obtain ⟨a, i, e⟩ := j
       obtain ⟨b, l, e'⟩ := k
@@ -709,7 +709,7 @@ theorem fockHOp_of : FockHOp := by
     have e5 : pderiv (b, i, false) (X (a, i, false) * p) = X (a, i, false) * pderiv (b, i, false) p := by
       rw [Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_mul]
       have : ((b, i, false) : Fin m × Fin n × Bool) ≠ (a, i, false) := by simp [Ne.symm hab]
-      simp [Pi.single_apply, this]
+      simp [this]
     rw [e5] at t4
     rw [hop_pderiv_comm' (a, i, true) (b, i, false)] at t2
     have e6 : fock c (X (b, i, true) * (X (a, i, false) * p)) = fock c (X (a, i, false) * X (b, i, true) * p) := by
@@ -717,7 +717,7 @@ theorem fockHOp_of : FockHOp := by
     have hK : (C (1 / (2 * c) : ℂ) : PX m n) * C (2 * c : ℂ) = 1 := by
       rw [← map_mul, show (1 / (2 * c) : ℂ) * (2 * c) = 1 by field_simp, map_one]
     have e7 : (c : ℂ) * (1 - -1) = 2 * c := by ring
-    simp only [e7, map_neg, map_one, neg_one_mul, neg_neg]
+    simp only [e7, map_neg, map_one, neg_one_mul]
     linear_combination t2 - X (b, i, false) * t3 - C (1 / (2 * c) : ℂ) * t4 - C (1 / (2 * c) : ℂ) * e6 +
       (X (b, i, false) * fock c (X (a, i, false) * p) - fock c (X (a, i, false) * pderiv (b, i, false) p)) * hK
 
@@ -777,7 +777,7 @@ theorem cr_comm (c : ℝ) (k l : Ix m n) (P : PX m n) :
     cr c k (cr c l P) = cr c l (cr c k P) := by
   classical
   simp only [cr_apply, map_sub, Derivation.map_smul, Derivation.leibniz, pderiv_X, Pi.single_apply, smul_eq_mul]
-  simp only [MvPolynomial.smul_eq_C_mul, pderiv_C, mul_zero, zero_mul, add_zero, zero_add]
+  simp only [MvPolynomial.smul_eq_C_mul]
   rw [pderiv_comm' k l P]
   have e : (flp l = k) ↔ (flp k = l) :=
     ⟨fun h => by rw [← h, flp_flp], fun h => by rw [← h, flp_flp]⟩
@@ -960,7 +960,7 @@ theorem err_deg (c : ℝ) : ∀ d : ℕ, ∀ s : Ix m n →₀ ℕ, s.degree = d
       intro i
       by_cases hi : i = k
       · subst hi; simp; omega
-      · simp [Finsupp.single_apply, Ne.symm hi]
+      · simp [Ne.symm hi]
     set s' := s - Finsupp.single k 1 with hs'
     have hsplit : s = s' + Finsupp.single k 1 := (tsub_add_cancel_of_le hle).symm
     have hd' : s'.degree = d := by
@@ -971,7 +971,7 @@ theorem err_deg (c : ℝ) : ∀ d : ℕ, ∀ s : Ix m n →₀ ℕ, s.degree = d
       rw [← fock_monomial, ← fock_monomial, hsplit, add_comm, monomial_single_add, pow_one, fock_X_mul]
     have e : err c s = (2 * c : ℂ) • (X (flp k) * err c s') - pderiv k (Sm c s' + err c s') := by
       rw [err, hrec, cr_apply, hsplit, Sm_succ, err]
-      simp only [sub_add_cancel, mul_sub, smul_sub]
+      simp only [mul_sub, smul_sub]
       abel
     rw [e]
     refine DegLT.sub (DegLT.smul _ (DegLT.X_mul _ (ih s' hd'))) (DegLT.pderiv _ (DegLT.add ?_ ((ih s' hd').mono (by omega))))
@@ -1231,7 +1231,7 @@ theorem pderiv_Sg (c : ℝ) (k : Fin m × Fin n × Bool) :
     pderiv k (Sg c : PX m n) = C (-(c : ℂ)) * X (k.1, k.2.1, !k.2.2) := by
   obtain ⟨a, i, b⟩ := k
   cases b <;> simp [Sg, pderiv_X, Pi.single_apply, Finset.mul_sum, mul_comm, ite_and,
-    Finset.sum_ite_eq', Finset.sum_ite_eq]
+    Finset.sum_ite_eq']
 
 def Qv (c : ℝ) (P : PX m n) (v : Fin m → Fin n → ℂ) : PX m n :=
   ∑ k, C (crd k v) * (pderiv k P + P * pderiv k (Sg c))
@@ -1374,7 +1374,7 @@ private theorem sum_X_mul_pderiv_mem_QA_of_generators (ε : Fin m → Bool) (g h
     simp only [Derivation.leibniz, smul_eq_mul, mul_add, Finset.sum_add_distrib, Finset.mul_sum]
     congr 1 <;> refine Finset.sum_congr rfl (fun a _ => by ring)
   · intro r
-    simp [Derivation.map_algebraMap]
+    simp
   · exact hgen
 
 theorem fE_mem (ε : Fin m → Bool) (i j : Fin n) : ∀ R ∈ QA ε, fE i j R ∈ QA ε := by
@@ -1431,7 +1431,7 @@ theorem sumT (ε : Fin m → Bool) (p q : Prop) [Decidable p] [Decidable q] (k l
     (∑ a, C (sgn ε a) * ((if p then C (sgn ε a) * X (a, l, false) else 0) *
       (if q then C (sgn ε a) * X (a, k, true) else 0)) : PX m n) = if p ∧ q then Qp ε k l else 0 := by
   by_cases hp : p <;> by_cases hq : q <;> simp only [hp, hq, if_true, if_false, and_self, and_true, and_false,
-    true_and, false_and, mul_zero, zero_mul, Finset.sum_const_zero]
+    mul_zero, zero_mul, Finset.sum_const_zero]
   rw [Qp_eq]
   refine Finset.sum_congr rfl fun a _ => ?_
   linear_combination (X (a, k, true) * X (a, l, false) : PX m n) * sgn3 ε a
@@ -1440,7 +1440,7 @@ theorem sumT' (ε : Fin m → Bool) (p q : Prop) [Decidable p] [Decidable q] (k 
     (∑ a, C (sgn ε a) * ((if p then C (sgn ε a) * X (a, k, true) else 0) *
       (if q then C (sgn ε a) * X (a, l, false) else 0)) : PX m n) = if p ∧ q then Qp ε k l else 0 := by
   by_cases hp : p <;> by_cases hq : q <;> simp only [hp, hq, if_true, if_false, and_self, and_true, and_false,
-    true_and, false_and, mul_zero, zero_mul, Finset.sum_const_zero]
+    mul_zero, zero_mul, Finset.sum_const_zero]
   rw [Qp_eq]
   refine Finset.sum_congr rfl fun a _ => ?_
   linear_combination (X (a, k, true) * X (a, l, false) : PX m n) * sgn3 ε a
@@ -1593,7 +1593,7 @@ theorem pderiv_comm (i j : Fin m × Fin n × Bool) (P : PX m n) :
     apply MvPolynomial.derivation_ext
     intro k
     rw [Derivation.commutator_apply, pderiv_X, pderiv_X]
-    by_cases hi : i = k <;> by_cases hj : j = k <;> simp [Pi.single_apply, hi, hj]
+    by_cases hi : i = k <;> by_cases hj : j = k <;> simp [hi, hj]
   have := congrArg (fun D : Derivation ℂ (PX m n) (PX m n) => D P) h
   simpa [Derivation.commutator_apply, sub_eq_zero] using this
 
@@ -1661,22 +1661,22 @@ theorem op_id (c : ℝ) (ε : Fin m → Bool) (i j : Fin n) (P : PX m n) :
     ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun a _ => ?_
   cases hε : ε a
-  · simp only [hε, Bool.false_eq_true, if_false, if_true, zero_sub, cr_apply, sw, Bool.not_true]
+  · simp only [Bool.false_eq_true, if_false, if_true, zero_sub, cr_apply, sw, Bool.not_true]
     rw [pderiv_comm (a, j, true) (a, i, false)]
     by_cases hij : i = j
     · subst hij
-      simp [sgn, hε, pderiv_mul, pderiv_X, Pi.single_apply, smul_eq_C_mul, pderiv_C_mul, map_ofNat]
+      simp [sgn, hε, pderiv_X, smul_eq_C_mul, map_ofNat]
       ring
     · have hne : (a, j, false) ≠ (a, i, false) := by simp [Ne.symm hij]
-      simp [sgn, hε, pderiv_mul, pderiv_X, Pi.single_apply, smul_eq_C_mul, pderiv_C_mul, hij, hne, map_ofNat]
+      simp [sgn, hε, pderiv_X, smul_eq_C_mul, hij, hne, map_ofNat]
       ring
-  · simp only [hε, if_true, Bool.true_eq_false, if_false, sub_zero, cr_apply, sw, Bool.not_false]
+  · simp only [if_true, Bool.true_eq_false, if_false, sub_zero, cr_apply, sw, Bool.not_false]
     by_cases hij : i = j
     · subst hij
-      simp [sgn, hε, pderiv_mul, pderiv_X, Pi.single_apply, smul_eq_C_mul, pderiv_C_mul, map_ofNat]
+      simp [sgn, hε, pderiv_X, smul_eq_C_mul, map_ofNat]
       ring
     · have hne : (a, j, false) ≠ (a, i, false) := by simp [Ne.symm hij]
-      simp [sgn, hε, pderiv_mul, pderiv_X, Pi.single_apply, smul_eq_C_mul, pderiv_C_mul, hij, hne, map_ofNat]
+      simp [sgn, hε, pderiv_X, smul_eq_C_mul, hij, hne, map_ofNat]
       ring
 
 theorem kopL_apply (ε : Fin m → Bool) (i j : Fin n) (p : PX m n) :

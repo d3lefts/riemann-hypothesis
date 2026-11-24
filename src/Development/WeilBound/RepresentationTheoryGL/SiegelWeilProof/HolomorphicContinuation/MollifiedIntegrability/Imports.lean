@@ -1063,7 +1063,7 @@ theorem FP_sum (hI : IntG) (hA : AlgA) (hc : 0 < c) {ι : Type*} (s : Finset ι)
   induction s using Finset.induction_on with
   | empty =>
     funext y
-    simp only [Finset.sum_empty, Finset.sum_apply, Pi.zero_apply]
+    simp only [Finset.sum_empty, Finset.sum_apply]
     rw [FP_eq_integral_Fi]
     simp [Fi, evX]
   | insert i s hi ih =>
@@ -1250,7 +1250,7 @@ theorem ent_apply (a : Fin m) (i : Fin n) (v : Fin m → Fin n → ℂ) : ent a 
 
 theorem crd_apply (k : Fin m × Fin n × Bool) (v : Fin m → Fin n → ℂ) :
     crd k v = if k.2.2 then star (v k.1 k.2.1) else v k.1 k.2.1 := by
-  unfold crd; split_ifs <;> simp [ent_apply, Complex.conjCLE_apply]
+  unfold crd; split_ifs <;> simp [ent_apply]
 
 theorem evX_eq (P : PX m n) (x : Fin m → Fin n → ℂ) : evX P x = MvPolynomial.eval (fun k => crd k x) P := by
   simp only [evX, crd_apply]
@@ -1260,7 +1260,7 @@ theorem evX_pderiv_mul_X (p : PX m n) (k b : Fin m × Fin n × Bool) (x : Fin m 
   rw [pderiv_mul, pderiv_X]
   by_cases h : k = b
   · subst h; simp [evX_eq]
-  · simp [evX_eq, Pi.single_apply, h]
+  · simp [evX_eq, h]
 
 def dEv (P : PX m n) (x : Fin m → Fin n → ℂ) : (Fin m → Fin n → ℂ) →L[ℝ] ℂ :=
   ∑ k, evX (pderiv k P) x • crd k
@@ -1356,7 +1356,7 @@ theorem crd_wirt (a : Fin m) (j : Fin n) (k : Fin m × Fin n × Bool) :
   rw [crd_apply, crd_apply]
   by_cases h : a' = a ∧ i' = j
   · obtain ⟨rfl, rfl⟩ := h
-    cases bb <;> simp <;> ring_nf <;> simp [Complex.I_sq] <;> ring
+    cases bb <;> simp <;> ring_nf <;> simp [Complex.I_sq]
   · have h' : ¬ ((a', i', bb) = (a, j, false)) := by intro e; simp at e; exact h ⟨e.1, e.2.1⟩
     simp [h, h']
 
@@ -1382,9 +1382,8 @@ theorem evX_pderiv_phiP (ε : Fin m → Bool) (c t : ℝ) (b : Matrix (Fin n) (F
 
   simp only [phiP, map_neg, map_sum, pderiv_mul, pderiv_C, pderiv_X, Pi.single_apply]
 
-  simp only [evX, map_neg, map_sum, map_mul, Prod.ext_iff]
-  simp only [mul_zero, mul_one, zero_mul, Pi.single_apply, Prod.mk.injEq, and_true, Bool.false_eq_true, and_false,
-    if_false, map_zero, add_zero, zero_add]
+  simp only [evX, map_neg, map_sum, Prod.ext_iff]
+  simp only [zero_mul, and_true, zero_add]
   rw [neg_inj, Finset.sum_eq_single a]
   · refine Finset.sum_congr rfl fun k _ => ?_
     rw [Finset.sum_eq_single j]

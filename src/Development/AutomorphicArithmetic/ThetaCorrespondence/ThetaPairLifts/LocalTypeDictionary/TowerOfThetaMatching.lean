@@ -291,7 +291,7 @@ theorem _root_.GlobalTheory.T.definiteBottom_framesChange_stageZero : ∀ {D : D
   ∃ (Z : Tri T A A' WW) (v : T → ℂ), GlobalTheory.SqTower.IsStageC W i j 0 0 Z ∧
     Z.rA.Λ = X.rA.Λ ∧ Z.rA'.Λ = X.rA'.Λ ∧ Z.rW.Λ = X.rW.Λ ∧ Z.rA.β = X.rA.β ∧ Z.rA'.β = X.rA'.β ∧ Z.rW.β = X.rW.β ∧
     (∀ t, v t ≠ 0 ∧ ∃ ζ : D.what₂.LL, GlobalTheory.Square.IsAwayUnit (Qn G t) ζ ∧ v t = D.what₂.embLL ζ * v μ₀) ∧ ∀ c : T → ℂ, Y.IsConst W.ψ W.θ c → Z.IsConst W.ψ W.θ (fun t => v t * c t) := by
-  first | exact @GlobalTheory.BottomFrames.frames_change | exact GlobalTheory.BottomFrames.frames_change | (intros; apply GlobalTheory.BottomFrames.frames_change <;> assumption)
+  first | exact @GlobalTheory.BottomFrames.frames_change
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DefiniteBottomFramesChangeStageZeroStatement =====
@@ -400,7 +400,7 @@ theorem _root_.GlobalTheory.T.movedSeesawTriple_primeThetaIntegral_eq_scaled : �
       (MeasureTheory.IntegrableOn ((moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').ker' ψ θ t P y) (moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').fd'
           (moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').m' ↔ MeasureTheory.IntegrableOn (Y.ker' ψ θ t P (y * h)) Y.fd' Y.m') ∧
       (moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').I' ψ θ t P y = (r' t)⁻¹ * Y.I' ψ θ t P (y * h) := by
-  first | exact @GlobalTheory.BotMove.int_prime_moveTri | exact GlobalTheory.BotMove.int_prime_moveTri | (intros; apply GlobalTheory.BotMove.int_prime_moveTri <;> assumption)
+  first | exact @GlobalTheory.BotMove.int_prime_moveTri
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MovedSeesawTriplePrimeThetaIntegralEqScaledStatement =====
@@ -517,7 +517,7 @@ theorem _root_.GlobalTheory.T.movedSeesawTriple_thetaIntegral_eq_scaled : ∀ {D
       (MeasureTheory.IntegrableOn ((moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').ker ψ θ t P y) (moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').fd
           (moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').m ↔ MeasureTheory.IntegrableOn (Y.ker ψ θ t P (y * h)) Y.fd Y.m) ∧
       (moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').I ψ θ t P y = (r t)⁻¹ * Y.I ψ θ t P (y * h) := by
-  first | exact @GlobalTheory.BotMove.moveTri_I | exact GlobalTheory.BotMove.moveTri_I | (intros; apply GlobalTheory.BotMove.moveTri_I <;> assumption)
+  first | exact @GlobalTheory.BotMove.moveTri_I
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MovedSeesawTripleThetaIntegralEqScaledStatement =====
@@ -595,7 +595,7 @@ theorem moved_vacua_scal : ∀ {D : D7} {T : Type} {Lc : LevCh D T} {sc : Global
     fun t => ⟨?_, ?_⟩, fun t => ?_, fun t => ?_, ?_⟩
   rotate_left 2
   · have := e t
-    simp only [GlobalTheory.Grid.WRep.toSgn, MonoidHom.coe_comp, Function.comp_apply, MonoidHom.prodMap, MonoidHom.prod_apply, MulEquiv.coe_toMonoidHom, MulEquiv.apply_symm_apply, MonoidHom.id_apply] at this
+    simp only [GlobalTheory.Grid.WRep.toSgn, MonoidHom.coe_comp, Function.comp_apply, MonoidHom.prodMap, MonoidHom.prod_apply, MulEquiv.coe_toMonoidHom, MonoidHom.id_apply] at this
     exact this
   · exact e' t
   · intro t
@@ -604,7 +604,7 @@ theorem moved_vacua_scal : ∀ {D : D7} {T : Type} {Lc : LevCh D T} {sc : Global
     refine ⟨ζ, hζ, ?_⟩
     rw [hζe]
     simp only [splitFacO, a, b, LevCh.mu, Formalism.IndefR.Lift.tup, hb, Circle.coe_mul, Circle.coe_inv, MonoidHom.div_apply,
-      MonoidHom.mul_apply, MonoidHom.one_apply, map_mul, map_inv, Circle.coe_div, mul_one]
+      MonoidHom.mul_apply, map_mul, map_inv, Circle.coe_div, mul_one]
     field_simp [Circle.coe_ne_zero]
   · exact mul_ne_zero (Circle.coe_ne_zero _) (inv_ne_zero (Circle.coe_ne_zero _))
   · exact mul_ne_zero (Circle.coe_ne_zero _) (inv_ne_zero (Circle.coe_ne_zero _))
@@ -639,7 +639,7 @@ theorem _root_.GlobalTheory.T.moved_vacua_scalar_multiples_reference_tuple : ∀
     ∃ r r' : T → ℂ, (∀ t, r t ≠ 0 ∧ r' t ≠ 0) ∧ (∀ t, Y.ω t (g, h) Y.vac = r t • Y.ω μ₀ (g, h) Y.vac) ∧
       (∀ t, Y.ω' t (g', h) Y.vac' = r' t • Y.ω' μ₀ (g', h) Y.vac') ∧
       ∀ t, ∃ ζ : D.what₂.LL, GlobalTheory.Square.IsAwayUnit (Qn G t) ζ ∧ r' t / r t = D.what₂.embLL ζ * (r' μ₀ / r μ₀) := by
-  first | exact @GlobalTheory.BotScal.moved_vacua_scal | exact GlobalTheory.BotScal.moved_vacua_scal | (intros; apply GlobalTheory.BotScal.moved_vacua_scal <;> assumption)
+  first | exact @GlobalTheory.BotScal.moved_vacua_scal
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MovedVacuaScalarMultiplesReferenceTupleStatement =====
@@ -676,7 +676,7 @@ theorem GlobalTheory.RightTranslateFundDomain.haar_and_fundDomain : ∀ {D : D7}
       rw [this, Measure.map_id]
     · intro h x
       show (h • x) * g = h • (x * g)
-      simp [Submonoid.smul_def, Subgroup.smul_def, mul_assoc]
+      simp [Subgroup.smul_def, mul_assoc]
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HaarFundamentalDomainRightTranslateUnitary =====
@@ -701,7 +701,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle GlobalTheory.Grid 
 
 
 theorem _root_.GlobalTheory.T.haar_fundamentalDomain_rightTranslate_unitary : ∀ {D : D7} {V : HSp D} (m : MeasureTheory.Measure (GA D V)) (fd : Set (GA D V)) (g : GA D V), m.IsHaarMeasure → MeasureTheory.IsFundamentalDomain (GQ V) fd m → (m.map (fun x => x * g⁻¹)).IsHaarMeasure ∧ MeasureTheory.IsFundamentalDomain (GQ V) ((fun x => x * g) ⁻¹' fd) (m.map (fun x => x * g⁻¹)) := by
-  first | exact @GlobalTheory.RightTranslateFundDomain.haar_and_fundDomain | exact GlobalTheory.RightTranslateFundDomain.haar_and_fundDomain | (intros; apply GlobalTheory.RightTranslateFundDomain.haar_and_fundDomain <;> assumption)
+  first | exact @GlobalTheory.RightTranslateFundDomain.haar_and_fundDomain
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HaarFundamentalDomainRightTranslateUnitaryStatement =====
@@ -1117,7 +1117,7 @@ theorem _root_.GlobalTheory.T.translated_finite_datum_eq_standardPairSecondMembe
     (∀ t, Y.ω t (g, h) Y.vac = r t • Y.ω t₀ (g, h) Y.vac) → (∀ t, Y.ω' t (g', h) Y.vac' = r' t • Y.ω' t₀ (g', h) Y.vac') →
     ∀ t, IsThetaAt ψ (symplO A' WW) (heisO ψ A' WW) (cA D ((moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').e t)) (latO A' WW (moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').rA'.Λ (moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').rW.Λ fun _ => True) 1 (moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').vac'
     (stdSnd (α t / β t) ((moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').e t) ((moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').ideal S t) A.rank A' WW (moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').rA'.β (moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').rW.β) ((moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').f' t) := by
-  first | exact @GlobalTheory.BotMoveSnd.snd_moved | exact GlobalTheory.BotMoveSnd.snd_moved | (intros; apply GlobalTheory.BotMoveSnd.snd_moved <;> assumption)
+  first | exact @GlobalTheory.BotMoveSnd.snd_moved
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TranslatedFiniteDatumEqStandardPairSecondMemberStatement =====
@@ -1203,7 +1203,7 @@ theorem _root_.GlobalTheory.T.thetaSeesawTriple_moved_to_selfDual_isValid : ∀ 
     ∀ (t₀ : T) (r r' : T → ℂ), (∀ t, r t ≠ 0 ∧ r' t ≠ 0) →
     (∀ t, Y.ω t (g, h) Y.vac = r t • Y.ω t₀ (g, h) Y.vac) → (∀ t, Y.ω' t (g', h) Y.vac' = r' t • Y.ω' t₀ (g', h) Y.vac') →
     (moveTri Y ΛA ΛA' ΛW g g' h t₀ r r').Is ψ θ α β νH S := by
-  first | exact @GlobalTheory.BotMove.moveTri_is | exact GlobalTheory.BotMove.moveTri_is | (intros; apply GlobalTheory.BotMove.moveTri_is <;> assumption)
+  first | exact @GlobalTheory.BotMove.moveTri_is
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaSeesawTripleMovedToSelfDualIsValidStatement =====
@@ -1282,7 +1282,7 @@ theorem _root_.GlobalTheory.T.definiteBottom_lattice_change_constants_awayUnit :
   ∃ (Z : Tri T A A' WW) (v : T → ℂ), GlobalTheory.SqTower.IsStageC W i j 0 0 Z ∧
     Z.rA.Λ = X.rA.Λ ∧ Z.rA'.Λ = X.rA'.Λ ∧ Z.rW.Λ = X.rW.Λ ∧ (∀ t, v t ≠ 0 ∧ ∃ ζ : D.what₂.LL, GlobalTheory.Square.IsAwayUnit (Qn G t) ζ ∧ v t = D.what₂.embLL ζ * v μ₀) ∧
     ∀ c : T → ℂ, Y.IsConst W.ψ W.θ c → Z.IsConst W.ψ W.θ (fun t => v t * c t) := by
-  first | exact @GlobalTheory.SqTower.bottom_lattices | exact GlobalTheory.SqTower.bottom_lattices | (intros; apply GlobalTheory.SqTower.bottom_lattices <;> assumption)
+  first | exact @GlobalTheory.SqTower.bottom_lattices
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DefiniteBottomLatticeChangeConstantsAwayUnitStatement =====
@@ -1308,7 +1308,7 @@ theorem _root_.GlobalTheory.T.definiteBottom_tower_constants_differ_by_factor : 
   IsBottomTri W i j X → GlobalTheory.SqTower.IsStageC W i j 0 0 Y →
   Y.rA.Λ = X.rA.Λ → Y.rA'.Λ = X.rA'.Λ → Y.rW.Λ = X.rW.Λ → Y.rA.β = X.rA.β → Y.rA'.β = X.rA'.β → Y.rW.β = X.rW.β →
   ∀ c : T → ℂ, Y.IsConst W.ψ W.θ c → ∃ κ : ℂ, κ ≠ 0 ∧ X.IsConst W.ψ W.θ (fun t => κ * c t) := by
-  first | exact @GlobalTheory.SqTower.bottom_const_normal | exact GlobalTheory.SqTower.bottom_const_normal | (intros; apply GlobalTheory.SqTower.bottom_const_normal <;> assumption)
+  first | exact @GlobalTheory.SqTower.bottom_const_normal
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DefiniteBottomTowerConstantsDifferByFactorStatement =====
@@ -1373,7 +1373,7 @@ theorem _root_.GlobalTheory.T.witt_tower_constant_ratio_eq_bottom : _root_.Globa
       IsBottomTri W i j X → GlobalTheory.SqTower.IsStageC W i j 0 0 Y → Y.IsConst W.ψ W.θ c → ∃ v : T → ℂ,
         X.IsConst W.ψ W.θ (fun t => v t * c t) ∧
         ∀ t, v t ≠ 0 ∧ ∃ ζ : D.what₂.LL, GlobalTheory.Square.IsAwayUnit (Qn G t) ζ ∧ v t = D.what₂.embLL ζ * v μ₀ := by
-  first | exact @_root_.GlobalTheory.SqTower.theta_tower_bottom_constant_ratio | exact _root_.GlobalTheory.SqTower.theta_tower_bottom_constant_ratio | (intros; apply _root_.GlobalTheory.SqTower.theta_tower_bottom_constant_ratio <;> assumption)
+  first | exact @_root_.GlobalTheory.SqTower.theta_tower_bottom_constant_ratio
 end
 end -- clump:auto
 end -- clump:auto
@@ -1498,7 +1498,7 @@ theorem _root_.GlobalTheory.T.witt_tower_norm_step_of_small_rank : _root_.Global
       (∀ t, IsHeckeL (nuH G t i j) (Lf t)) → ∃ (B B' WW₁ : HSp D) (Y : Tri T B B' WW₁) (c y : T → ℂ),
         GlobalTheory.SqTower.IsStageC W i j p q Y ∧ Y.IsConst W.ψ W.θ c ∧
         (∀ t, y t ≠ 0 ∧ lam t * Lf t ((e + 1 : ℕ) : ℂ) = y t * c t) ∧ ∀ t, GlobalTheory.Square.StepRatio D.what₂.embLL (Qn G t) G.pl.S0 (condExp G.pl) (fun v => Ideal.absNorm v.asIdeal) (y t) (y μ₀) := by
-  first | exact @_root_.GlobalTheory.SqStep.theta_tower_norm_step_small_rank | exact _root_.GlobalTheory.SqStep.theta_tower_norm_step_small_rank | (intros; apply _root_.GlobalTheory.SqStep.theta_tower_norm_step_small_rank <;> assumption)
+  first | exact @_root_.GlobalTheory.SqStep.theta_tower_norm_step_small_rank
 end
 end -- clump:auto
 end -- clump:auto
@@ -1610,7 +1610,7 @@ end
 section
 open GlobalTheory.SqTop
 theorem _root_.GlobalTheory.T.tower_of_theta_matching_lNe : _root_.GlobalTheory.FunPr.ThetaLocalInputs → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ThetaIntegralsAgree → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.LocalMatching → LNe → Tower := by
-  first | exact @_root_.GlobalTheory.SqTower.tower_alt_bis | exact _root_.GlobalTheory.SqTower.tower_alt_bis | (intros; apply _root_.GlobalTheory.SqTower.tower_alt_bis <;> assumption)
+  first | exact @_root_.GlobalTheory.SqTower.tower_alt_bis
 end
 end -- clump:auto
 end -- clump:auto

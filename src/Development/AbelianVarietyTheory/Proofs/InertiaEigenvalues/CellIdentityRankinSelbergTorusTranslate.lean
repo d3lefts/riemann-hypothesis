@@ -390,7 +390,6 @@ theorem GlobalTheory.CellDec.lastRow_tl_mul_mem_latt_iff : ∀ (E : Type) [Field
   rw [GroundTheory.Global.mem_idealFiniteAdeles, GroundTheory.Global.mem_idealFiniteAdeles]
   refine forall_congr' fun v => ?_
   rw [sub_single_apply, sub_single_apply]
-  beta_reduce
   rw [htv]
   by_cases hv : v ∈ T
   · rw [l.2 v hv]
@@ -509,11 +508,7 @@ namespace GlobalTheory.RSCell
 theorem wtS_eq_sum (N : ℕ) (a : Fin N → ℤ) :
     GlobalTheory.CellDec.wtS N a = ∑ i : Fin N, ((N : ℤ) - 1 - 2 * ((i : ℕ) : ℤ)) * a i := by
   first
-  | exact @_root_.GlobalTheory.WeightSumSplit.wtS_eq
-  | exact _root_.GlobalTheory.WeightSumSplit.wtS_eq
   | (apply _root_.GlobalTheory.WeightSumSplit.wtS_eq <;> assumption)
-  | (intros; apply _root_.GlobalTheory.WeightSumSplit.wtS_eq <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.WeightSumSplit.wtS_eq <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.WeightSumSplit.wtS_eq ..)
 
 theorem locFac_eq_wtS_sphZ : ∀ (q : ℕ), 0 < q → ∀ (n : ℕ) (α : Fin (n + 1) → ℂ) (x : ℝ) (ν : Fin (n + 1) → ℤ), 0 ≤ ν (Fin.last n) →

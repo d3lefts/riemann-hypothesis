@@ -178,11 +178,11 @@ private theorem bd_rho_mem {l : ℕ} [Fact l.Prime] {F : GFrame l} {n : ℕ} {x 
         simp [DD.epM, DD.add_ep, DD.one_ep, hK m i i Iff.rfl]
     · refine ⟨?_, ?_, fun hd => ?_, fun hd => ?_⟩
       · funext m
-        simp [DD.epM, DD.add_ep', Matrix.one_apply_ne hij, DD.zero_ep']
-      · simp [DD.epM, DD.add_eta, Matrix.one_apply_ne hij, DD.zero_eta]
+        simp [DD.epM, Matrix.one_apply_ne hij]
+      · simp [DD.epM, Matrix.one_apply_ne hij]
       · funext m
-        simp [DD.epM, DD.add_ep, Matrix.one_apply_ne hij, DD.zero_ep, hK m i j hd]
-      · simp [DD.epM, DD.add_a, Matrix.one_apply_ne hij, DD.zero_a]
+        simp [DD.epM, Matrix.one_apply_ne hij, hK m i j hd]
+      · simp [DD.epM, Matrix.one_apply_ne hij]
   · rw [bd_mem_iff]
     intro i j
     simp only [NP.ρX, Matrix.map_apply, hC]
@@ -872,9 +872,9 @@ theorem UpperTheory.V.Pa.od_comm :
   rw [Matrix.zero_apply]
   by_cases hi : (i : ℕ) < a <;> by_cases hj : (j : ℕ) < a
   · exact hZ' i j (by simp [hi, hj])
-  · simp only [e, hi, hj, ↓reduceIte, mul_one, mul_zero, one_mul, zero_mul] at h5
+  · simp only [e, hi, hj, ↓reduceIte, mul_zero, one_mul] at h5
     exact h5.symm
-  · simp only [e, hi, hj, ↓reduceIte, mul_one, mul_zero, one_mul, zero_mul] at h5
+  · simp only [e, hi, hj, ↓reduceIte, mul_one, zero_mul] at h5
     exact h5
   · exact hZ' i j (by simp [hi, hj])
 end -- clump:auto
@@ -1454,7 +1454,7 @@ theorem UpperTheory.V.Pa.secondCohomologyBound_of_boundaryBound :
   have hsurj : ∀ m, Function.Surjective (q m) := fun m => Ideal.Quotient.mkₐ_surjective _ _
   have hqeq : ∀ m (u v : x.A), q m u = q m v ↔ (PowerSeries.X : PowerSeries x.K) ^ m ∣ u - v := by
     intro m u v
-    simp only [hqdef, Ideal.Quotient.mkₐ_eq_mk, Ideal.Quotient.eq, Ideal.mem_span_singleton] <;> rfl
+    simp only [hqdef, Ideal.Quotient.mkₐ_eq_mk, Ideal.Quotient.eq, Ideal.mem_span_singleton]
   have hzm : ∀ m i j, (fun g => (z i j g).map (q m)) ∈ SelP h x (x.Am m) :=
     fun m i j => (sel_red l L G G0 h n x k x.A (x.Am m) (q m)).1 _ (hz i j)
   choose cm hcu Ψm hΨm hΨe using fun m => hC m (fun i j g => (z i j g).map (q m)) (hzm m)

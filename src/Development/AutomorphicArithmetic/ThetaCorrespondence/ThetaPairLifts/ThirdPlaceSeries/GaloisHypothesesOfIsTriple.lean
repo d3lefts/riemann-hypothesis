@@ -652,7 +652,7 @@ section -- clump:auto
 open GlobalTheory.TripleGal Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.MainNotions.BlochKatoReduction Formalism.MainNotions.BlochKatoReduction.Gen Formalism.ConjugateSelfDual ReciprocityTheory.Gal NumberField IsDedekindDomain Polynomial
 
 theorem _root_.GlobalTheory.T.noDecompositionInvariants_aboveL_of_noHodgeJump : ∀ (D : D7) (bkP : BlochKatoReduction.BK D) (i : D.ntw.Tw) (s : D.ntw.Sig i), NoJump bkP i s → ∀ v ∈ placesOver D.host.E (D.ntw.l i), NoInv i (Tmat i s) v := by
-  first | exact @GlobalTheory.InvJump.noInv_of_noJump | exact GlobalTheory.InvJump.noInv_of_noJump | (intros; apply GlobalTheory.InvJump.noInv_of_noJump <;> assumption)
+  first | exact @GlobalTheory.InvJump.noInv_of_noJump
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NoDecompositionInvariantsAboveLOfNoHodgeJumpStatement =====
@@ -672,7 +672,7 @@ theorem eq_zero_of_scalar {O : Type} [CommRing O] [IsDomain O] {n : ℕ} (d : O)
   have e : (d • (1 : Matrix (Fin n) (Fin n) O)).map (algebraMap O (FractionRing O)) =
       algebraMap O (FractionRing O) d • (1 : Matrix (Fin n) (Fin n) (FractionRing O)) := by
     ext a b
-    by_cases hab : a = b <;> simp [Matrix.one_apply, hab]
+    by_cases hab : a = b <;> simp [hab]
   rw [e, Matrix.smul_mulVec, Matrix.one_mulVec] at h
   have h1 : algebraMap O (FractionRing O) d - 1 ≠ 0 := fun h0 =>
     hd (IsFractionRing.injective O (FractionRing O) (by rw [map_one]; exact sub_eq_zero.1 h0))

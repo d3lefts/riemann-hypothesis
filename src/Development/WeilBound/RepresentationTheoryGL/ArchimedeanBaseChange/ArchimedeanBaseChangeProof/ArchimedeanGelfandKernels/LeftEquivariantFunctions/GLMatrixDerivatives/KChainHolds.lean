@@ -204,7 +204,7 @@ theorem hOf_single (i : Fin n × Fin n) : hOf (Pi.single i (1 : ℝ)) = (hb i : 
   rw [Finset.sum_eq_single i]
   · simp
   · intro p _ hp
-    simp [Pi.single_apply, hp]
+    simp [hp]
   · simp
 
 theorem unit_of {y : Mat n} (hy : y ∈ GLs n) : IsUnit y.det := isUnit_iff_ne_zero.mpr hy
@@ -302,7 +302,7 @@ def psiL {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] (K0 : V →
     (w0 : Mat n) (Γ T : V →L[ℂ] V) : Mat n →ₗ[ℝ] (V →L[ℂ] V) where
   toFun X := ((-(2 * n : ℂ)) * X.trace) • K0 * Γ * T - Dk (w0 * X) * Γ * T - K0 * Γ * T * DF X
   map_add' X Y := by
-    simp only [Matrix.trace_add, mul_add, add_smul, add_mul, Matrix.mul_add, map_add (f := _)]
+    simp only [Matrix.trace_add, mul_add, add_smul, add_mul, map_add (f := _)]
     abel
   map_smul' r X := by
     simp only [Matrix.trace_smul, Matrix.mul_smul, map_smul, RingHom.id_apply]
@@ -487,15 +487,14 @@ theorem derTwo_at (h : CxData lam E Fr ε ι S Γ T) {k : Mat n → (E.V →L[�
     unfold Kf
     rw [Matrix.conjTranspose_mul, conjT_line hX, Matrix.mul_inv_rev, Matrix.mul_inv_rev,
       h.mul _ (inv_mem ht) _ (inv_mem hy)]
-    simp only [hwdef, Matrix.mul_assoc, _root_.mul_assoc]
+    simp only [hwdef, _root_.mul_assoc]
   have h2' := h2.congr_of_eventuallyEq e
   rw [h1.unique h2']
-  simp only [zero_smul, add_zero, inv_one, Matrix.mul_one, Matrix.one_mul, h.one, _root_.one_mul, Matrix.det_one,
+  simp only [zero_smul, add_zero, inv_one, h.one, _root_.one_mul, Matrix.det_one,
     one_pow, inv_one, _root_.mul_one, map_neg, Matrix.mul_neg, Rd]
   have ew : (c : ℂ) * ((y * yᴴ).det ^ n)⁻¹ = wt c y := rfl
   rw [ew]
-  simp only [smul_sub, mul_sub, sub_mul, smul_mul_assoc, mul_smul_comm, smul_neg, mul_neg, neg_mul, smul_add, mul_add,
-    add_mul, _root_.mul_assoc, smul_smul]
+  simp only [smul_sub, mul_sub, sub_mul, smul_mul_assoc, mul_smul_comm, smul_neg, mul_neg, neg_mul, smul_add, _root_.mul_assoc, smul_smul]
   push_cast
   ring_nf
   abel_nf
@@ -534,7 +533,7 @@ theorem hOf_single (i : Fin n × Fin n) : hOf (Pi.single i (1 : ℝ)) = hb i := 
   rw [Finset.sum_eq_single i]
   · simp
   · intro p _ hp
-    simp [Pi.single_apply, hp]
+    simp [hp]
   · simp
 
 theorem herm_inv_conj {x H : Mat n} (hH : H.IsHermitian) : (x⁻¹ * H * xᴴ⁻¹).IsHermitian := by
@@ -545,10 +544,10 @@ def phiL {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] (Fr k : Mat n →
     Mat n →ₗ[ℝ] (V →L[ℂ] V) where
   toFun X := fderiv ℝ Fr 1 X * k w + Ld X k w
   map_add' X Y := by
-    simp only [Ld, map_add (f := _), add_mul, Matrix.add_mul, neg_add]
+    simp only [Ld, map_add (f := _), add_mul, neg_add]
     abel
   map_smul' r X := by
-    simp only [Ld, map_smul, smul_mul_assoc, Matrix.smul_mul, RingHom.id_apply, smul_add, smul_neg]
+    simp only [Ld, map_smul, smul_mul_assoc, RingHom.id_apply, smul_add, smul_neg]
 
 private theorem smul_add_smul_mul_mul_smul_add_smul_of_mul_eq_zero (hH : HbFacts) {H : Mat n} (h : H.IsHermitian) :
     ∑ p, coords H p • hb p = H := by
@@ -699,7 +698,6 @@ theorem halfOne_of (hH : HbFacts) (hF : FrameDer) (hO : ∀ n, IsOpen (cone n)) 
     rw [hxX] at h5
     first
       | rw [two_smul] at h5
-      | rw [two_nsmul] at h5
     rw [hc2, map_add (f := _)] at h5
     have hder : (fderiv ℝ F x) (x * (x⁻¹ * hb i * xᴴ⁻¹))
         = Fr x * φ (x⁻¹ * hb i * xᴴ⁻¹) * Γ * T * Fr y⁻¹ :=
@@ -757,7 +755,7 @@ theorem trace_hOf_mul (hH : HbFacts) (u u' : Fin n × Fin n → ℝ) :
     (hOf u * hOf u').trace = ∑ p, ((u p * u' p : ℝ) : ℂ) := by
   obtain ⟨-, horth, -⟩ := hH n
   simp only [hOf, Finset.sum_mul, Finset.mul_sum, Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_sum,
-    Matrix.trace_smul, horth, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    Matrix.trace_smul, horth, smul_eq_mul, mul_ite, mul_one, mul_zero]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [Finset.sum_ite_eq']
   simp only [Finset.mem_univ, if_true]

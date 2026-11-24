@@ -74,20 +74,6 @@ open scoped MatrixGroups Real ComplexConjugate Manifold ModularForm
 
 namespace GlobalTheory
 
-theorem periodic_comp_ofComplex_of_vadd' {f : ℍ → ℂ} {M : ℝ} (hper : ∀ τ : ℍ, f (M +ᵥ τ) = f τ) :
-    Function.Periodic (f ∘ ofComplex) M := by
-  intro w
-  by_cases hw : 0 < w.im
-  · have hw' : 0 < (w + M).im := by simpa using hw
-    simp only [Function.comp_apply, ofComplex_apply_of_im_pos hw', ofComplex_apply_of_im_pos hw]
-    rw [← hper ⟨w, hw⟩]
-    congr 1
-    ext
-    simp [coe_vadd, add_comm]
-  · push_neg at hw
-    have hw' : (w + M).im ≤ 0 := by simpa using hw
-    simp [ofComplex_apply_of_im_nonpos hw', ofComplex_apply_of_im_nonpos hw]
-
 theorem qParam_add_period {M : ℝ} (hM : M ≠ 0) (z : ℂ) :
     Function.Periodic.qParam M (z + M) = Function.Periodic.qParam M z := by
   unfold Function.Periodic.qParam
@@ -102,7 +88,7 @@ theorem isBoundedAtImInfty_of_periodic_of_polyBound :
   intro f h C A hh hf hper hbd
   set M : ℝ := (h : ℝ) with hMdef
   have hM : 0 < M := by simp [hMdef, hh]
-  have hperF : Function.Periodic (f ∘ ofComplex) M := periodic_comp_ofComplex_of_vadd' hper
+  have hperF : Function.Periodic (f ∘ ofComplex) M := UpperHalfPlane.periodic_comp_ofComplex hper
 
   have hbd' : ∀ τ : ℍ, 1 ≤ τ.im → ‖f τ‖ ≤ C * τ.im ^ A := by
     intro τ hτ
@@ -132,7 +118,7 @@ theorem isBoundedAtImInfty_of_periodic_of_polyBound :
   set g : ℍ → ℂ := fun τ ↦ f τ * Function.Periodic.qParam M τ with hg
   have hnormg : ∀ τ : ℍ, ‖g τ‖ = ‖f τ‖ * Real.exp (-2 * π * τ.im / M) := by
     intro τ
-    simp [hg, norm_mul, Function.Periodic.norm_qParam]
+    simp [hg, Function.Periodic.norm_qParam]
   have hgdiff : MDifferentiable 𝓘(ℂ) 𝓘(ℂ) g :=
     hf.mul ((Function.Periodic.differentiable_qParam (h := M)).comp_mdifferentiable
       UpperHalfPlane.mdifferentiable_coe)
@@ -160,7 +146,8 @@ theorem isBoundedAtImInfty_of_periodic_of_polyBound :
     rw [Set.mem_setOf_eq, hnormg]
     exact mul_le_mul_of_nonneg_right (hbd' τ hτ) (Real.exp_pos _).le
   have hgbdd : IsBoundedAtImInfty g := hgzero.boundedAtFilter
-  have hdecay := hgzero.exp_decay_atImInfty hM (periodic_comp_ofComplex_of_vadd' hgper) hgdiff hgbdd
+  have hdecay := hgzero.exp_decay_atImInfty hM
+      (UpperHalfPlane.periodic_comp_ofComplex hgper) hgdiff hgbdd
   obtain ⟨K, hK⟩ := hdecay.bound
   obtain ⟨B, hB⟩ := (atImInfty_mem _).1 hK
   refine isBoundedAtImInfty_iff.2 ⟨K, B, fun τ hτ ↦ ?_⟩

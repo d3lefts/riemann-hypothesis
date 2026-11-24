@@ -270,7 +270,7 @@ theorem _root_.GlobalTheory.T.diagonalSiegel_heisenbergInvariant_form_unique : �
                   (GlobalTheory.DiagSiegel.diagMat z) Φ) = l Φ) →
             ∃ c : ℂ, ∀ Φ ∈ GlobalTheory.WeilM.schA D.host.F κ, l Φ = c * GlobalTheory.DiagSiegel.thetaDiagInt ν 𝓕
               (GlobalTheory.WeilSchrodinger.thetaTr D.host.F (GlobalTheory.WeilSchrodinger.transD (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) co) ψ Φ) := by
-  first | exact @GlobalTheory.DiagSiegelUniq.uniq | exact GlobalTheory.DiagSiegelUniq.uniq | (intros; apply GlobalTheory.DiagSiegelUniq.uniq <;> assumption)
+  first | exact @GlobalTheory.DiagSiegelUniq.uniq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiagonalSiegelHeisenbergInvariantFormUniqueStatement =====
@@ -580,7 +580,7 @@ theorem _root_.GlobalTheory.T.thetaDiagonal_siegelParabolic_rule : ∀ (D : D7) 
                 (Fintype.card (Fin S.rank)) t *
               GlobalTheory.DiagSiegel.thetaDiagInt ν 𝓕 (GlobalTheory.WeilSchrodinger.thetaTr D.host.F
                 (GlobalTheory.WeilSchrodinger.transD (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) co) ψ Φ) := by
-  first | exact @GlobalTheory.DblTargetTheta.thetaDiag_rule | exact GlobalTheory.DblTargetTheta.thetaDiag_rule | (intros; apply GlobalTheory.DblTargetTheta.thetaDiag_rule <;> assumption)
+  first | exact @GlobalTheory.DblTargetTheta.thetaDiag_rule
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaDiagonalSiegelParabolicRuleStatement =====
@@ -789,7 +789,7 @@ theorem _root_.GlobalTheory.T.doubledWeilDatum_diag_acts_on_externalProduct : �
           ∀ f₁ f₂ : Formalism.IndefR.Datum.WO S T → ℂ,
             Formalism.IndefR.Datum.IsThetaFunO ψ S T f₁ → Formalism.IndefR.Datum.IsThetaFunO ψ S T f₂ →
               ωd (1, hd) (fun w : Formalism.IndefR.Datum.WO S (GlobalTheory.Doubling.dblSp T) => f₁ (w.submatrix (finSumFinEquiv ∘ Sum.inl) id) * star (f₂ (w.submatrix (finSumFinEquiv ∘ Sum.inr) id))) = (fun w : Formalism.IndefR.Datum.WO S (GlobalTheory.Doubling.dblSp T) => ω (1, h) f₁ (w.submatrix (finSumFinEquiv ∘ Sum.inl) id) * star (f₂ (w.submatrix (finSumFinEquiv ∘ Sum.inr) id))) := by
-  first | exact @GlobalTheory.DblRestrictChar.dbl_diag_box | exact GlobalTheory.DblRestrictChar.dbl_diag_box | (intros; apply GlobalTheory.DblRestrictChar.dbl_diag_box <;> assumption)
+  first | exact @GlobalTheory.DblRestrictChar.dbl_diag_box
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DoubledWeilDatumDiagActsOnExternalProductStatement =====
@@ -969,7 +969,7 @@ theorem _root_.GlobalTheory.T.doubledSpace_boxProduct_inner_factorizes : ∀ (D 
         Formalism.IndefR.Datum.IsThetaFunO ψ S T b → Formalism.IndefR.Datum.IsThetaFunO ψ S T b' →
         ∫ w in 𝓕, GlobalTheory.DblBox.box a b w * star (GlobalTheory.DblBox.box a' b' w) ∂μ =
           (∫ u in 𝓕₁, a u * star (a' u) ∂μ₁) * star (∫ u in 𝓕₁, b u * star (b' u) ∂μ₁) := by
-  first | exact @GlobalTheory.DblBoxHaar.box_integral | exact GlobalTheory.DblBoxHaar.box_integral | (intros; apply GlobalTheory.DblBoxHaar.box_integral <;> assumption)
+  first | exact @GlobalTheory.DblBoxHaar.box_integral
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DoubledSpaceBoxProductInnerFactorizesStatement =====
@@ -1060,7 +1060,7 @@ attribute [-instance] Formalism.DoubleCosetMeasures.instMeasMat GlobalTheory.Spl
 theorem _root_.GlobalTheory.T.isThetaFun_doubledSpaceBoxProduct : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S T : HSp D) (f₁ f₂ : Formalism.IndefR.Datum.WO S T → ℂ),
     Formalism.IndefR.Datum.IsThetaFunO ψ S T f₁ → Formalism.IndefR.Datum.IsThetaFunO ψ S T f₂ →
       Formalism.IndefR.Datum.IsThetaFunO ψ S (GlobalTheory.Doubling.dblSp T) (GlobalTheory.DblBox.box f₁ f₂) := by
-  first | exact @GlobalTheory.DblBoxTheta.isThetaFunO_box | exact GlobalTheory.DblBoxTheta.isThetaFunO_box | (intros; apply GlobalTheory.DblBoxTheta.isThetaFunO_box <;> assumption)
+  first | exact @GlobalTheory.DblBoxTheta.isThetaFunO_box
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsThetaFunDoubledSpaceBoxProductStatement =====
@@ -1204,7 +1204,7 @@ theorem _root_.GlobalTheory.T.thetaFun_families_same_heisenberg_inner_eq_smul : 
       MeasureTheory.IsAddFundamentalDomain (Formalism.L2.Theta.ratL T S) 𝓕 μ →
       (∀ i j, ∫ x in 𝓕, X i x * star (X j x) ∂μ = ∫ x in 𝓕, Y i x * star (Y j x) ∂μ) →
       ∃ c : ℂ, ∀ i, X i = c • Y i := by
-  first | exact @GlobalTheory.ThetaSchurFam.two_families_scalar | exact GlobalTheory.ThetaSchurFam.two_families_scalar | (intros; apply GlobalTheory.ThetaSchurFam.two_families_scalar <;> assumption)
+  first | exact @GlobalTheory.ThetaSchurFam.two_families_scalar
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaFunFamiliesSameHeisenbergInnerEqSmulStatement =====
@@ -1306,7 +1306,7 @@ theorem _root_.GlobalTheory.T.doubledWeilDatum_diag_thetaProduct_eq_scalar_smul 
           ∃ c : ℂ, ∀ f₁ f₂ : Formalism.IndefR.Datum.WO S T → ℂ,
             Formalism.IndefR.Datum.IsThetaFunO ψ S T f₁ → Formalism.IndefR.Datum.IsThetaFunO ψ S T f₂ →
               ωd (1, hd) (fun w : Formalism.IndefR.Datum.WO S (GlobalTheory.Doubling.dblSp T) => f₁ (w.submatrix (finSumFinEquiv ∘ Sum.inl) id) * star (f₂ (w.submatrix (finSumFinEquiv ∘ Sum.inr) id))) = c • (fun w : Formalism.IndefR.Datum.WO S (GlobalTheory.Doubling.dblSp T) => ω (1, h) f₁ (w.submatrix (finSumFinEquiv ∘ Sum.inl) id) * star (f₂ (w.submatrix (finSumFinEquiv ∘ Sum.inr) id))) := by
-  first | exact @GlobalTheory.DblThetaRestrict.scalar | exact GlobalTheory.DblThetaRestrict.scalar | (intros; apply GlobalTheory.DblThetaRestrict.scalar <;> assumption)
+  first | exact @GlobalTheory.DblThetaRestrict.scalar
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DoubledWeilDatumDiagThetaProductEqScalarSmulStatement =====
@@ -1339,7 +1339,7 @@ theorem thetaSum_schr_negY (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (hu : ∀ a
   rw [Complex.star_def, Complex.conj_tsum]
   refine tsum_congr fun ξ => ?_
   generalize (fun i => algebraMap F (AdeleRing (𝓞 F) F) (ξ i)) = a
-  simp only [GlobalTheory.WeilM.schr, map_mul, Complex.star_def, Complex.conj_conj, hc, dotProduct_neg, neg_add, mul_neg]
+  simp only [GlobalTheory.WeilM.schr, map_mul, Complex.conj_conj, hc, dotProduct_neg, neg_add, mul_neg]
 
 end GlobalTheory.WeilSchrodinger.DblTarget.ThetaBox
 
@@ -1394,7 +1394,7 @@ theorem _root_.GlobalTheory.T.thetaTransform_doubledCoords_boxProduct : ∀ (D :
           fun w : Formalism.IndefR.Datum.WO S (GlobalTheory.Doubling.dblSp T) =>
             GlobalTheory.WeilSchrodinger.thetaTr D.host.F co ψ φ₁ (w.submatrix (finSumFinEquiv ∘ Sum.inl) id) *
               star (GlobalTheory.WeilSchrodinger.thetaTr D.host.F co ψ (fun x => star (φ₂ x)) (w.submatrix (finSumFinEquiv ∘ Sum.inr) id)) := by
-  first | exact @GlobalTheory.WeilSchrodinger.DblTarget.thetaTr_coDbl_boxFun | exact GlobalTheory.WeilSchrodinger.DblTarget.thetaTr_coDbl_boxFun | (intros; apply GlobalTheory.WeilSchrodinger.DblTarget.thetaTr_coDbl_boxFun <;> assumption)
+  first | exact @GlobalTheory.WeilSchrodinger.DblTarget.thetaTr_coDbl_boxFun
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaTransformDoubledCoordsBoxProductStatement =====
@@ -1515,7 +1515,7 @@ theorem _root_.GlobalTheory.T.transportedWeilDatum_doubledTarget_restrict_boxTen
             gd.1.1 = Matrix.reindex finSumFinEquiv finSumFinEquiv (Matrix.fromBlocks g.1.1 0 0 1) →
             ∀ φ₁ ∈ GlobalTheory.WeilM.schA D.host.F κ, ∀ φ₂ ∈ GlobalTheory.WeilM.schA D.host.F κ,
               omp (gd, 1) (GlobalTheory.WeilM.boxFun φ₁ φ₂) = GlobalTheory.WeilM.boxFun (om (g, 1) φ₁) φ₂ := by
-  first | exact @GlobalTheory.WeilSchrodinger.DblRestrict.omp_diag_boxFun | exact GlobalTheory.WeilSchrodinger.DblRestrict.omp_diag_boxFun | (intros; apply GlobalTheory.WeilSchrodinger.DblRestrict.omp_diag_boxFun <;> assumption)
+  first | exact @GlobalTheory.WeilSchrodinger.DblRestrict.omp_diag_boxFun
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TransportedWeilDatumDoubledTargetRestrictBoxTensStatement =====
@@ -1648,7 +1648,7 @@ theorem _root_.GlobalTheory.T.exists_doubled_schrodingerModel_transposed_siegelR
                            gd.1.1 = Matrix.fromBlocks g.1.1 0 0 1 →
                            ∀ φ₁ ∈ GlobalTheory.WeilM.schA D.host.F κ, ∀ φ₂ ∈ GlobalTheory.WeilM.schA D.host.F κ,
                              omd gd (GlobalTheory.WeilM.boxFun φ₁ φ₂) = GlobalTheory.WeilM.boxFun (om (g, 1) φ₁) φ₂ := by
-  first | exact @GlobalTheory.WeilSchrodinger.DblTarget.exists_dbl_target | exact GlobalTheory.WeilSchrodinger.DblTarget.exists_dbl_target | (intros; apply GlobalTheory.WeilSchrodinger.DblTarget.exists_dbl_target <;> assumption)
+  first | exact @GlobalTheory.WeilSchrodinger.DblTarget.exists_dbl_target
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDoubledSchrodingerModelTransposedSiegelRulStatement =====

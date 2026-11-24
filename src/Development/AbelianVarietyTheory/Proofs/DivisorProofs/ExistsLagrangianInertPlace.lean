@@ -129,8 +129,8 @@ theorem exists_isLagr_of_local (F : Type) [Field F] [NumberField F] (v : HeightO
     intro a b
     simp only [Hyp, submatrix_apply]
     rcases e.symm a with i | i <;> rcases e.symm b with j | j <;>
-      by_cases hij : i = j <;> simp [fromBlocks, one_apply, hij, eq_comm]
-  have hdH : H.det = δ ^ (m + m) * J.det := by simp [H, det_smul]
+      by_cases hij : i = j <;> simp [fromBlocks, hij, eq_comm]
+  have hdH : H.det = δ ^ (m + m) * J.det := by simp [H]
   have hdHyp : Hyp.det = (-1) ^ m := by simp [Hyp, det_submatrix_equiv_self, det_hyp]
   have hs : ((-1 : L) ^ m) ^ 2 = 1 := by rw [← pow_mul, mul_comm, pow_mul]; simp
   obtain ⟨P, hP, hPeq⟩ := (GlobalTheory.HermLocal.congr_iff_adicCompletion F v L σ hσ hH hHyp
@@ -768,7 +768,6 @@ theorem parity_at (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) (w : Hei
   have hvG0 : w.valuation E (Xᵀ * J * X.map σ).det ≠ 0 := (Valuation.ne_zero_iff _).2 hG0
   have hlow' : w.valuation E e ^ n ≤ w.valuation E (Xᵀ * J * X.map σ).det := by
     first
-      | rwa [mul_inv_le_iff₀ hvG0, one_mul] at hlow
       | rwa [mul_inv_le_iff₀ (zero_lt_iff.2 hvG0), one_mul] at hlow
   have hEq : w.valuation E (Xᵀ * J * X.map σ).det = w.valuation E e ^ n := le_antisymm hup hlow'
   rw [hdetG, map_mul, map_mul, val_sigma σ v w hin] at hEq

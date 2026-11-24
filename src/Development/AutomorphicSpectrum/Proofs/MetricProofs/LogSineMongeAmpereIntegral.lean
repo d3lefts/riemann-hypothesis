@@ -597,7 +597,7 @@ theorem integral_mob_sq (hg : IsUnit g.det) (f : ℂ × ℂ → ℝ) :
     setIntegral_univ, setIntegral_univ] at hcv
   rw [hcv]
   refine integral_congr_ae (Eventually.of_forall fun p => ?_)
-  simp only [GlobalTheory.CompanionTheory.Ar.PB.FibPt.CovSq.det_prodMap, Prod.map_apply, smul_eq_mul]
+  simp only [GlobalTheory.CompanionTheory.Ar.PB.FibPt.CovSq.det_prodMap, smul_eq_mul]
   rw [abs_of_nonneg (mul_nonneg (Complex.normSq_nonneg _) (Complex.normSq_nonneg _))]
   rfl
 
@@ -649,21 +649,21 @@ theorem mobius_pair_line_first_axis {d : ℕ} (y : Fin d → ℂ) (a₀ a₁ t :
   funext i
   refine Fin.cases ?_ (fun j => ?_) i
   · simp
-  · simp [Pi.single_apply, Fin.succ_ne_zero]
+  · simp [Fin.succ_ne_zero]
 
 theorem mobius_pair_line_second_axis {d : ℕ} (y : Fin d → ℂ) (a₀ a₁ t : ℂ) :
     (Fin.cons a₀ (Fin.cons a₁ y) : Fin (d + 2) → ℂ) + t • (Pi.single 1 1 : Fin (d + 2) → ℂ) =
       Fin.cons a₀ (Fin.cons (a₁ + t) y) := by
   funext i
   refine Fin.cases ?_ (fun j => ?_) i
-  · simp [Pi.single_apply]
+  · simp
   · refine Fin.cases ?_ (fun l => ?_) j
-    · simp [Pi.single_apply]
+    · simp
     · have : (l.succ.succ : Fin (d + 2)) ≠ 1 := by
         intro h
         have := congrArg Fin.val h
         simp at this
-      simp [Pi.single_apply, this]
+      simp [this]
 
 theorem mobius_pair_cons {d : ℕ} (g : (Fin d → ℂ) → Matrix (Fin 2) (Fin 2) ℂ) (y : Fin d → ℂ) (b₀ b₁ : ℂ) :
     mob2 g (Fin.cons b₀ (Fin.cons b₁ y)) = Fin.cons (mob (g y) b₀) (Fin.cons (mob (g y) b₁) y) := rfl
@@ -738,7 +738,7 @@ theorem det_jacobian_mobius_pair {d : ℕ} (g : (Fin d → ℂ) → Matrix (Fin 
     refine Fin.cases ?_ (fun l => ?_) i
     · exact hJ10
     · rw [hJss]
-      simp [Pi.single_apply, Fin.succ_ne_zero]
+      simp [Fin.succ_ne_zero]
   have hc1 : ∀ i : Fin d, (J.submatrix Fin.succ Fin.succ) i.succ 0 = 0 := by
     intro i
     simp only [Matrix.submatrix_apply]
@@ -747,7 +747,7 @@ theorem det_jacobian_mobius_pair {d : ℕ} (g : (Fin d → ℂ) → Matrix (Fin 
       intro h
       have := congrArg Fin.val h
       simp at this
-    simp [Pi.single_apply, this]
+    simp [this]
   have hlast : ((J.submatrix Fin.succ Fin.succ).submatrix Fin.succ Fin.succ) = 1 := by
     ext i j
     simp only [Matrix.submatrix_apply]

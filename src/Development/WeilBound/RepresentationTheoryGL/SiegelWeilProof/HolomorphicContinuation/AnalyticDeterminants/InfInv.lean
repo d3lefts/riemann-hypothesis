@@ -141,10 +141,10 @@ theorem det_one_add_smul_single_same (i : Fin n) (s : ℂ) :
     · subst hab
       by_cases hai : a = i
       · subst hai
-        simp [Matrix.single_apply]
-      · simp [Matrix.single_apply, hai, Ne.symm hai]
+        simp
+      · simp [hai, Ne.symm hai]
     · have hn : ¬ (i = a ∧ i = b) := fun h => hab (h.1.symm.trans h.2)
-      simp [Matrix.single_apply, hn, hab, Matrix.one_apply_ne hab]
+      simp [hn, hab, Matrix.one_apply_ne hab]
   rw [h, Matrix.det_diagonal]
   simp
 
@@ -181,11 +181,10 @@ theorem pieceOff (Θ : M2 n → ℂ) (hl : LawH Θ) (x : M2 n) (hx : InG x) (hd 
     fderiv ℂ Θ x (Pij c i j * x) = lam (Pij c i j) * Θ x := by
   have hc1 : (Pij c i j)ᴴ * JJ n + JJ n * Pij c i j = 0 := by
     simp [Pij, JJ, Matrix.fromBlocks_conjTranspose, Matrix.fromBlocks_multiply, Matrix.fromBlocks_add,
-      Matrix.conjTranspose_smul, Matrix.conjTranspose_single, Complex.star_def]
+      Matrix.conjTranspose_single]
   have hc2 : (Pij c i j)ᴴ * JJ n * Pij c i j = 0 := by
     simp [Pij, JJ, Matrix.fromBlocks_conjTranspose, Matrix.fromBlocks_multiply,
-      Matrix.conjTranspose_smul, Matrix.conjTranspose_single, Complex.star_def,
-      Matrix.single_mul_single_of_ne, hij, Ne.symm hij]
+      Matrix.conjTranspose_single, Matrix.single_mul_single_of_ne, hij, Ne.symm hij]
   have hdet : ∀ t : ℝ, ((1 : Matrix (Fin n) (Fin n) ℂ) + t • (-(conj c) • Matrix.single j i 1)).det = 1 := by
     intro t
     rw [← smul_assoc, Matrix.smul_single, smul_eq_mul, mul_one]
@@ -200,7 +199,7 @@ theorem pieceOff (Θ : M2 n → ℂ) (hl : LawH Θ) (x : M2 n) (hx : InG x) (hd 
         Matrix.toBlocks_fromBlocks₂₂, hdet]
       simp)
   rw [key]
-  simp [lam, Pij, Matrix.trace_smul, Matrix.trace_single_eq_of_ne _ _ _ hij,
+  simp [lam, Pij, Matrix.trace_single_eq_of_ne _ _ _ hij,
     Matrix.trace_single_eq_of_ne _ _ _ (Ne.symm hij)]
 
 theorem one_add_smul_single_mul (i : Fin n) (u v : ℂ) :
@@ -278,7 +277,7 @@ theorem pieceDiag (Θ : M2 n → ℂ) (hl : LawH Θ) (x : M2 n) (hx : InG x) (hd
       ring)
   rw [key]
   congr 1
-  simp [lam, Pij, Matrix.trace_smul]
+  simp [lam, Pij]
   apply Complex.ext <;> simp <;> ring
 
 theorem lam_add (Y Y' : M2 n) : lam (Y + Y') = lam Y + lam Y' := by
@@ -321,7 +320,7 @@ theorem mem_span_gen (Y : M2 n) (hY : Y.toBlocks₂₁ = 0) : Y ∈ Submodule.sp
       all_goals simp [Pij, Matrix.single_apply]
       all_goals split_ifs
       all_goals ring_nf
-      all_goals simp [Complex.I_sq]
+      all_goals simp
     rw [h]
     exact Submodule.smul_mem _ _ (Submodule.sub_mem _
       (Submodule.subset_span (Or.inr ⟨1, i, j, rfl⟩))
@@ -334,7 +333,7 @@ theorem mem_span_gen (Y : M2 n) (hY : Y.toBlocks₂₁ = 0) : Y ∈ Submodule.sp
       all_goals simp [Pij, Matrix.single_apply]
       all_goals split_ifs
       all_goals ring_nf
-      all_goals simp [Complex.I_sq]
+      all_goals simp
     rw [h]
     exact Submodule.smul_mem _ _ (Submodule.add_mem _
       (Submodule.subset_span (Or.inr ⟨1, j, i, rfl⟩))
@@ -438,7 +437,7 @@ theorem fderiv_xZx (Z x v : M2 n) (i j : Fin n ⊕ Fin n) :
       (x * Z * xᴴ) i j + (t : ℂ) * (v * Z * xᴴ + x * Z * vᴴ) i j + (t : ℂ) ^ 2 * (v * Z * vᴴ) i j := by
     funext t
     simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_smul, star_trivial, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, Matrix.add_apply, Matrix.smul_apply, Complex.real_smul, smul_smul]
+      Matrix.smul_mul, Matrix.mul_smul, Matrix.add_apply, Matrix.smul_apply, Complex.real_smul]
     ring
   have hr : HasDerivAt (fun t : ℝ => (t : ℂ)) 1 0 := Complex.ofRealCLM.hasDerivAt
   have h : HasDerivAt (fun t : ℝ => ((x + t • v) * Z * (x + t • v)ᴴ) i j) ((v * Z * xᴴ + x * Z * vᴴ) i j) 0 := by
@@ -472,7 +471,6 @@ theorem imK_conj (e : M2 n) : (imK e)ᴴ = -imK e := by
 theorem fderiv_xZx_skew (Z x E : M2 n) (hE : Eᴴ = -E) (i j : Fin n ⊕ Fin n) :
     fderiv ℝ (fun y : M2 n => (y * Z * yᴴ) i j) x (E * x) = (E * (x * Z * xᴴ) - (x * Z * xᴴ) * E) i j := by
   rw [fderiv_xZx, Matrix.conjTranspose_mul, hE]
-  congr 1
   simp only [Matrix.mul_assoc, Matrix.mul_neg, sub_eq_add_neg]
 
 theorem dK_xZx (Z x e : M2 n) (i j : Fin n ⊕ Fin n) :
@@ -490,7 +488,7 @@ theorem decomp (M : M2 n) : M = fromBlocks (M.toBlocks₁₁ - M.toBlocks₂₂)
     ∑ a, ∑ b, (M.toBlocks₂₂ a b • eA a b + (-M.toBlocks₂₁ a b) • eB a b) := by
   ext i j
   rcases i with a' | a' <;> rcases j with b' | b' <;>
-    simp [eA, eB, Matrix.sum_apply, Matrix.single_apply, ite_and, Finset.sum_ite_eq, Finset.sum_ite_eq',
+    simp [eA, eB, Matrix.sum_apply, Matrix.single_apply, ite_and, Finset.sum_ite_eq',
       Matrix.toBlocks₁₁, Matrix.toBlocks₁₂, Matrix.toBlocks₂₁, Matrix.toBlocks₂₂]
 
 theorem eA_mul_apply (M : M2 n) (a b : Fin n) : (eA a b * M) (Sum.inr a) (Sum.inr b) = M (Sum.inr b) (Sum.inr b) := by
@@ -512,9 +510,8 @@ theorem sumA (M : M2 n) : ∑ a, ∑ b, ((eA a b * M - M * eA a b : M2 n) (Sum.i
 
 theorem sumB (M : M2 n) : ∑ a, ∑ b, -((eB a b * M - M * eB a b : M2 n) (Sum.inr a) (Sum.inl b)) =
     (n : ℂ) * (M.toBlocks₁₁.trace - M.toBlocks₂₂.trace) := by
-  simp only [Matrix.sub_apply, eB_mul_apply, mul_eB_apply, neg_sub, neg_neg, sub_neg_eq_add, Finset.sum_sub_distrib]
-  simp only [Matrix.trace, Matrix.diag, toBlocks₁₁_apply', toBlocks₂₂_apply', Finset.sum_const, Finset.card_univ,
-    Fintype.card_fin, nsmul_eq_mul, mul_sub]
+  simp only [Matrix.sub_apply, eB_mul_apply, mul_eB_apply, sub_neg_eq_add]
+  simp only [Matrix.trace, Matrix.diag, toBlocks₁₁_apply', toBlocks₂₂_apply', mul_sub]
   have h : ∀ a b : Fin n, -(-M (Sum.inl b) (Sum.inl b) + M (Sum.inr a) (Sum.inr a)) =
       M (Sum.inl b) (Sum.inl b) - M (Sum.inr a) (Sum.inr a) := fun _ _ => by ring
   simp only [h, Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,

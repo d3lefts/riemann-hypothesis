@@ -194,7 +194,7 @@ theorem divided_power_padic_valuation_bound {ι : Type} [Fintype ι] {n : ℕ} (
     have hma : m' (l, a) = m (l, a) - f l := by
       rw [hm']; simp [ha, hb, hab]
     have hmb : m' (l, b) = m (l, b) + f l := by
-      rw [hm']; simp [ha, hb, hab, Ne.symm hab]
+      rw [hm']; simp [ha, hb, Ne.symm hab]
     have hmc : ∀ c, c ≠ a → c ≠ b → m' (l, c) = m (l, c) := by
       intro c hca hcb
       rw [hm']; simp [ha, hb, hca, hcb]
@@ -227,7 +227,6 @@ theorem divided_power_padic_valuation_bound {ι : Type} [Fintype ι] {n : ℕ} (
     have hnat : (∏ l ∈ f.support, zf l).natAbs = ∏ l ∈ f.support, (zf l).natAbs := by
       first
         | exact map_prod Int.natAbsHom zf f.support
-        | simpa using map_prod Int.natAbsHom zf f.support
     rw [hnat, Finset.prod_congr rfl (fun l _ => hz l)]
     refine Finset.prod_subset (Finset.subset_univ _) fun l _ hl => ?_
     simp only [Finsupp.mem_support_iff, not_not] at hl
@@ -465,11 +464,11 @@ theorem divided_powers_preserve_polarization (p : ℕ) [Fact p.Prime] (Q : MvPol
           ext i
           by_cases hiv : i = v
           · rw [hiv]
-            simp [hmjv, Finsupp.single_apply, hvw, Ne.symm hvw] <;> omega
+            simp [hmjv, hvw] <;> omega
           · by_cases hiw : i = w
             · rw [hiw]
-              simp [hmjw, Finsupp.single_apply, hvw, Ne.symm hvw] <;> omega
-            · simp [hmjo j i hiv hiw, hmjo (j + 1) i hiv hiw, Finsupp.single_apply, Ne.symm hiv,
+              simp [hmjw, Ne.symm hvw] <;> omega
+            · simp [hmjo j i hiv hiw, hmjo (j + 1) i hiv hiw, Ne.symm hiv,
                 Ne.symm hiw]
         rw [hexp, Nat.descFactorial_succ, Nat.cast_mul]
         congr 1
@@ -558,7 +557,6 @@ theorem list_prod_eigen_shift {V : Type*} [AddCommGroup V] [Module K V] (E : Mod
     first
       | done
       | module
-      | (rw [mul_comm, mul_smul]; module)
 
 theorem prod_range_sub_eq_factorial_choose (w : ℤ) (k : ℕ) :
     (∏ j ∈ Finset.range k, ((w : K) - (j : K))) = (k.factorial : K) * ((Ring.choose w k : ℤ) : K) := by
@@ -567,8 +565,6 @@ theorem prod_range_sub_eq_factorial_choose (w : ℤ) (k : ℕ) :
       Ring.descPochhammer_eq_factorial_smul_choose]
     first
       | rw [nsmul_eq_mul]
-      | rw [smul_eq_mul]
-      | simp
   have h2 := congrArg (Int.cast (R := K)) h1
   push_cast at h2
   exact h2
@@ -661,8 +657,7 @@ theorem integral_generators_preserve_lattice (p : ℕ) [Fact p.Prime] (Q : MvPol
       refine Finset.sum_congr rfl fun l _ => ?_
       unfold letterPolarization polarizationOperator
       split_ifs
-      · simp only [LinearMap.comp_apply, LinearMap.mulLeft_apply, AlgHom.toLinearMap_apply,
-          LinearMap.coe_toAddHom]
+      · simp only [LinearMap.comp_apply, LinearMap.mulLeft_apply]
         change X (l, a) * (pderiv (l, a)) ((monomial m) c) = _
         rw [MvPolynomial.X_mul_pderiv_monomial, Nat.cast_smul_eq_nsmul]
       · simp only [LinearMap.neg_apply, LinearMap.comp_apply, LinearMap.mulLeft_apply]
@@ -773,7 +768,7 @@ theorem multidegree_part_finitely_generated {p : ℕ} (hp0 : (p : KK O) ≠ 0) {
         simp [mul_add]
       map_smul' := fun o F => by
         funext s
-        simp [MvPolynomial.coeff_smul, mul_smul_comm] }
+        simp }
   let g : (S → O) →ₗ[O] (S → KK O) :=
     LinearMap.pi (fun s => (Algebra.linearMap O (KK O)).comp (LinearMap.proj s))
   have hinj : Function.Injective f := by

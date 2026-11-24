@@ -72,12 +72,12 @@ open Formalism.QuantumDeterminants
 theorem hpk_col_f {k r : ℕ} (l j : Fin (2 * r + k + 1)) (hj : r + k < j.val) :
     Hpk k r l j = if l.val + j.val = 2 * r + k then 1 else 0 := by
   unfold Hpk
-  split_ifs <;> first | rfl | (exfalso; omega) | (simp_all; omega) | simp_all | omega
+  split_ifs <;> first | rfl | (exfalso; omega)
 
 theorem hpk_row_e {k r : ℕ} (p l : Fin (2 * r + k + 1)) (hp : p.val < r) :
     Hpk k r p l = if p.val + l.val = 2 * r + k then 1 else 0 := by
   unfold Hpk
-  split_ifs <;> first | rfl | (exfalso; omega) | (simp_all; omega) | simp_all | omega
+  split_ifs <;> first | rfl | (exfalso; omega)
 
 theorem lieNUpper : LieNUpper := by
   intro k r X hX i j hji
@@ -110,8 +110,7 @@ theorem lieNUpper : LieNUpper := by
       intro h; apply hl; ext; omega
     · simp
   have hz : X b p = 0 := hA1 ⟨p.val, by omega⟩ b (by simp only; omega)
-  rw [s1, s2, hz, star_zero, zero_add] at e
-  exact e
+  rwa [s1, s2, hz, star_zero, zero_add] at e
 
 end Formalism.MainNotions.GrowthW
 end -- clump:auto

@@ -305,7 +305,7 @@ theorem exists_basis {A B M N : Type} [CommRing A] [CommRing B] [AddCommGroup M]
     change f (e.repr (e i) j) = _
     by_cases hij : j = i
     · subst hij; simp
-    · simp [hij, Ne.symm hij]
+    · simp [hij]
   have hQ1 : ∀ i, Q (Pi.single i 1) = u (e i) := fun i => by
     simp [Q, Fintype.linearCombination_apply_single]
   have hS' : S.comp Q = LinearMap.id := by
@@ -592,7 +592,7 @@ theorem exists_mReal_of_realises : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (
         funext fun j' => by
           by_cases h : j' = k
           · subst h; simp
-          · simp [Pi.single_apply, h]
+          · simp [h]
       rw [hφ1] at hr
       have hr3 := (j.map_smulₛₗ ((t : (ainfObj K).A) ^ r) _).symm.trans ((congrArg j hr).trans j.map_zero)
       have hur : IsUnit (((inclW l).comp (ainfId K).toRingHom) ((t : (ainfObj K).A) ^ r)) := by
@@ -692,7 +692,7 @@ theorem isFrac_add {A M : Type} [CommRing A] [AddCommGroup M] [Module A M] {d : 
   unfold IsFrac at *
   rw [h, LocalizedModule.mk_eq]
   refine ⟨1, ?_⟩
-  simp only [Submonoid.smul_def, one_smul, smul_smul, pow_add, mul_comm]
+  simp only [Submonoid.smul_def, one_smul, smul_smul, pow_add]
 
 theorem isFrac_le {A M : Type} [CommRing A] [AddCommGroup M] [Module A M] {d : A}
     {y : LocalizedModule (Submonoid.powers d) M} {m : M} {k a : ℕ} (h : IsFrac d y m k) (hka : k ≤ a) :
@@ -706,7 +706,7 @@ theorem isFrac_smul {A M : Type} [CommRing A] [AddCommGroup M] [Module A M] {d :
   unfold IsFrac at h
   rw [h, LocalizedModule.smul'_mk, LocalizedModule.mk_eq]
   refine ⟨1, ?_⟩
-  simp only [Submonoid.smul_def, one_smul, OneMemClass.coe_one]
+  simp only [Submonoid.smul_def, one_smul]
 
 theorem exists_common_den {R : Type} [CommRing R] (x : R) {ι : Type} [Finite ι]
     (f : ι → Localization.Away x) : ∃ (n : ℕ) (g : ι → R), ∀ i, algebraMap R _ (g i) = x ^ n • f i := by
@@ -936,7 +936,7 @@ theorem mreal_hom_frob : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K)
   set Φ : WCb l →+* WCb l := (frobW l).toRingHom with hΦ
   have hc : ∀ x, L (frobS l bk.a x) = Φ (L x) := by
     intro x
-    simp only [hL, hΦ, BK.evW, RingHom.comp_apply, bk.ev_frob, AlgHom.coe_toRingHom]
+    simp only [hL, hΦ, BK.evW, RingHom.comp_apply, bk.ev_frob]
     exact (frobW_inclW _).symm
   have hsm : ∀ {m n : Type} (c : bk.S) (M : Matrix m n bk.S), (c • M).map L = L c • M.map L := by
     intro m n c M; ext i j; simp [Matrix.map_apply, Matrix.smul_apply]
@@ -1014,25 +1014,25 @@ theorem GlobalTheory.BSP.strat_homDefect_φ : ∀ (l : ℕ) [Fact l.Prime] (K : 
     apply smul_cancel (pow_mem hgE S'.a)
     calc BK.hf g bk.E ^ S'.a • BK.hf g bk.E ^ S.a • (S'.A.map (BK.hf f) * ((S'.ε f g).map B.D.φ * (Y.map (BK.hf g)).map B.D.φ))
         = BK.hf g bk.E ^ S.a • ((BK.hf g bk.E ^ S'.a • (S'.A.map (BK.hf f) * (S'.ε f g).map B.D.φ)) * (Y.map (BK.hf g)).map B.D.φ) := by
-          simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Matrix.mul_assoc, mul_comm]
+          simp only [Matrix.smul_mul, smul_smul, Matrix.mul_assoc, mul_comm]
       _ = BK.hf g bk.E ^ S.a • ((BK.hf f bk.E ^ S'.a • (S'.ε f g * S'.A.map (BK.hf g))) * (Y.map (BK.hf g)).map B.D.φ) := congrArg (fun M => BK.hf g bk.E ^ S.a • (M * (Y.map (BK.hf g)).map B.D.φ)) e2
       _ = BK.hf f bk.E ^ S'.a • (S'.ε f g * (BK.hf g bk.E ^ S.a • (S'.A.map (BK.hf g) * (Y.map (BK.hf g)).map B.D.φ))) := by
           simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Matrix.mul_assoc, mul_comm]
       _ = BK.hf f bk.E ^ S'.a • (S'.ε f g * (BK.hf g bk.E ^ S'.a • (Y.map (BK.hf g) * S.A.map (BK.hf g)))) := congrArg (fun M => BK.hf f bk.E ^ S'.a • (S'.ε f g * M)) hYg
       _ = BK.hf g bk.E ^ S'.a • BK.hf f bk.E ^ S'.a • (S'.ε f g * Y.map (BK.hf g) * S.A.map (BK.hf g)) := by
-          simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Matrix.mul_assoc, mul_comm]
+          simp only [Matrix.mul_smul, smul_smul, Matrix.mul_assoc, mul_comm]
   have T2 : BK.hf g bk.E ^ S.a • (S'.A.map (BK.hf f) * ((Y.map (BK.hf f)).map B.D.φ * (S.ε f g).map B.D.φ)) =
       BK.hf f bk.E ^ S'.a • (Y.map (BK.hf f) * S.ε f g * S.A.map (BK.hf g)) := by
     apply smul_cancel (pow_mem hfE S.a)
     calc BK.hf f bk.E ^ S.a • BK.hf g bk.E ^ S.a • (S'.A.map (BK.hf f) * ((Y.map (BK.hf f)).map B.D.φ * (S.ε f g).map B.D.φ))
         = BK.hf g bk.E ^ S.a • ((BK.hf f bk.E ^ S.a • (S'.A.map (BK.hf f) * (Y.map (BK.hf f)).map B.D.φ)) * (S.ε f g).map B.D.φ) := by
-          simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Matrix.mul_assoc, mul_comm]
+          simp only [Matrix.smul_mul, smul_smul, Matrix.mul_assoc, mul_comm]
       _ = BK.hf g bk.E ^ S.a • ((BK.hf f bk.E ^ S'.a • (Y.map (BK.hf f) * S.A.map (BK.hf f))) * (S.ε f g).map B.D.φ) := congrArg (fun M => BK.hf g bk.E ^ S.a • (M * (S.ε f g).map B.D.φ)) hYf
       _ = BK.hf f bk.E ^ S'.a • (Y.map (BK.hf f) * (BK.hf g bk.E ^ S.a • (S.A.map (BK.hf f) * (S.ε f g).map B.D.φ))) := by
           simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Matrix.mul_assoc, mul_comm]
       _ = BK.hf f bk.E ^ S'.a • (Y.map (BK.hf f) * (BK.hf f bk.E ^ S.a • (S.ε f g * S.A.map (BK.hf g)))) := congrArg (fun M => BK.hf f bk.E ^ S'.a • (Y.map (BK.hf f) * M)) e1
       _ = BK.hf f bk.E ^ S.a • BK.hf f bk.E ^ S'.a • (Y.map (BK.hf f) * S.ε f g * S.A.map (BK.hf g)) := by
-          simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Matrix.mul_assoc, mul_comm]
+          simp only [Matrix.mul_smul, smul_smul, Matrix.mul_assoc, mul_comm]
   rw [Matrix.map_sub, Matrix.map_mul, Matrix.map_mul, Matrix.mul_sub, Matrix.sub_mul, smul_sub, smul_sub]
   · exact congrArg₂ (· - ·) T1 T2
   · exact fun a b => map_sub _ a b
@@ -1083,7 +1083,7 @@ theorem strat_map_A_mul {l : ℕ} [Fact l.Prime] {K : FinExt l} {bk : BK K} {d :
     S.A.map (BK.hf g) * S.A'.map (BK.hf g) = BK.hf g bk.E ^ S.b • (1 : Matrix (Fin d) (Fin d) B.A) := by
   rw [← Matrix.map_mul, S.A_mul]
   ext i j
-  by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+  by_cases hij : i = j <;> simp [hij]
 
 theorem env_matrix_eq_zero {l : ℕ} [Fact l.Prime] {K : FinExt l} {bk : BK K}
     (En : Env bk bk.prism (bk.toP bk.E) (bk.toP X)) {d d' : ℕ} (S : Strat bk d) (S' : Strat bk d')

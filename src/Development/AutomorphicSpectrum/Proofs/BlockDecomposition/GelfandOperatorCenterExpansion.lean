@@ -64,7 +64,7 @@ open GlobalTheory.CompanionTheory.WaveMult
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 theorem _root_.GlobalTheory.T.gelfand_value_negation : ∀ (n : ℕ) (cc : Fin n → ℂ) (m : ℕ), (-1 : ℂ) ^ m * GlobalTheory.Dec.gelfVal (fun a => - cc a) m = phiSeq (n : ℂ) (GlobalTheory.Dec.gelfVal cc) m := by
-  first | exact @GlobalTheory.CompanionTheory.WaveMult.ValPhi.gelfVal_neg_eq_phiSeq | exact GlobalTheory.CompanionTheory.WaveMult.ValPhi.gelfVal_neg_eq_phiSeq | (intros; apply GlobalTheory.CompanionTheory.WaveMult.ValPhi.gelfVal_neg_eq_phiSeq <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.WaveMult.ValPhi.gelfVal_neg_eq_phiSeq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GelfandValueNegationStatement =====
@@ -220,7 +220,7 @@ theorem Du_bracket (hR : RCalc) {u : ℂ} (hu : u * u = -1) (X Y : Mat n) {f : M
   have e3 : (Complex.I • X) * Y - Y * (Complex.I • X) = Complex.I • (X * Y - Y * X) := by
     simp [smul_sub]
   have e4 : (Complex.I • X) * (Complex.I • Y) - (Complex.I • Y) * (Complex.I • X) = -(X * Y - Y * X) := by
-    simp [smul_smul, smul_sub]
+    simp [smul_smul]
     abel
   rw [e2] at a2
   rw [e3] at a3
@@ -232,7 +232,7 @@ theorem Du_bracket (hR : RCalc) {u : ℂ} (hu : u * u = -1) (X Y : Mat n) {f : M
   generalize Rd (Complex.I • (X * Y - Y * X)) f g = L at *
   rw [sub_eq_iff_eq_add] at a1 a2 a3 a4
   rw [a1, a2, a3, a4]
-  match_scalars <;> first | ring1 | linear_combination (-1 / 4 : ℂ) * hu | linear_combination (1 / 4 : ℂ) * hu
+  match_scalars <;> first | ring1 | linear_combination (-1 / 4 : ℂ) * hu
 
 end Ops
 

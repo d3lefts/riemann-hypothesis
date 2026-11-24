@@ -164,8 +164,7 @@ lemma free_io (a : S) (x : A) : FreeOf a (io x : SlopeTestRemainingChoices S A) 
   intro i j
   exact mul_scalar_comm_of_entries_zero_or_one (eU a i j) x (fun k l => by
     first
-    | (simp only [eU, Matrix.of_apply]; split_ifs <;> simp)
-    | (rw [eU]; simp only [Matrix.of_apply]; split_ifs <;> simp))
+    | (simp only [eU, Matrix.of_apply]; split_ifs <;> simp))
 
 lemma free_mul {a : S} {x y : SlopeTestRemainingChoices S A} (hx : FreeOf a x) (hy : FreeOf a y) : FreeOf a (x * y) := fun i j => (hx i j).mul_right (hy i j)
 
@@ -203,7 +202,7 @@ lemma free_star {a : S} {x : SlopeTestRemainingChoices S A} (hx : FreeOf a x) : 
 lemma freeOf2_of_four_entries {a : S} {x y z w : SlopeTestRemainingChoices S A} (hx : FreeOf a x) (hy : FreeOf a y) (hz : FreeOf a z)
     (hw : FreeOf a w) : FreeOf2 a !![x, y; z, w] := by
   intro i j
-  fin_cases i <;> fin_cases j <;> first | exact hx | exact hy | exact hz | exact hw | simp [hx, hy, hz, hw]
+  fin_cases i <;> fin_cases j <;> first | exact hx | exact hy | exact hz | exact hw
 
 private lemma d0_eq_diagonal (b : SlopeTestRemainingChoices S A) : d0 b = !![b, 0; 0, b] := by
   first
@@ -514,7 +513,7 @@ theorem plusForm (L : LevelData A r) (f : FrameData S A) (a : S) (Ya : ℂ) (H :
   have hZ : (!![io L.ζi, 0; 0, io L.ζbi] * !![1, 0; io L.GG * f.l L Ya, io L.GG] : M2 (SlopeTestRemainingChoices S A)) =
       !![io L.ζi, 0; 0, io L.ζbi * io L.GG] * !![1, 0; f.l L Ya, 1] := by
     rw [Matrix.mul_fin_two, Matrix.mul_fin_two]
-    simp only [mul_one, mul_zero, zero_mul, add_zero, zero_add, one_mul, mul_assoc]
+    simp only [mul_one, mul_zero, zero_mul, add_zero, zero_add, mul_assoc]
   show f.RR * ins a (f.TT Ya) =
     star (ins a (!![io L.ζi, 0; 0, io L.ζbi] * !![1, 0; io L.GG * f.l L Ya, io L.GG]) * f.F) *
       ((wt L : SlopeTestRemainingChoices S A) ^ (f.N + 1) * (f.c * ins a !![f.q Ya • f.xi (Ya + 1), 0; 0, f.x Ya])) *
@@ -580,9 +579,8 @@ end Mon
 
 theorem star_inv {R : Type} [Ring R] [StarRing R] {a b a' b' : R} (h1 : a * b = 1) (h : star a = a')
     (h2 : a' * b' = 1) : star b = b' := by
-  have e : star b * a' = 1 := by rw [← h, ← star_mul, h1, star_one]
   calc star b = star b * (a' * b') := by rw [h2, mul_one]
-    _ = b' := by rw [← mul_assoc, e, one_mul]
+    _ = b' := by rw [← mul_assoc, ← h, ← star_mul, h1, star_one, one_mul]
 
 section Slots
 
@@ -612,34 +610,28 @@ theorem free_io (c : S) (x : A) : FreeOf c (io x : SlopeTestRemainingChoices S A
   split_ifs <;> simp
 
 theorem free_one (c : S) : FreeOf c (1 : SlopeTestRemainingChoices S A) := by
-  unfold Formalism.FourierDecayAlt.Wd.FreeOf
-  intro i j
-  exact Commute.one_right _
+  unfold FreeOf
+  exact fun i j => Commute.one_right _
 
 theorem free_zero (c : S) : FreeOf c (0 : SlopeTestRemainingChoices S A) := by
-  unfold Formalism.FourierDecayAlt.Wd.FreeOf
-  intro i j
-  exact Commute.zero_right _
+  unfold FreeOf
+  exact fun i j => Commute.zero_right _
 
 theorem free_mul {c : S} {b b' : SlopeTestRemainingChoices S A} (h : FreeOf c b) (h' : FreeOf c b') : FreeOf c (b * b') := by
-  unfold Formalism.FourierDecayAlt.Wd.FreeOf at h h' ⊢
-  intro i j
-  exact (h i j).mul_right (h' i j)
+  unfold FreeOf at h h' ⊢
+  exact fun i j => (h i j).mul_right (h' i j)
 
 theorem free_add {c : S} {b b' : SlopeTestRemainingChoices S A} (h : FreeOf c b) (h' : FreeOf c b') : FreeOf c (b + b') := by
-  unfold Formalism.FourierDecayAlt.Wd.FreeOf at h h' ⊢
-  intro i j
-  exact (h i j).add_right (h' i j)
+  unfold FreeOf at h h' ⊢
+  exact fun i j => (h i j).add_right (h' i j)
 
 theorem free_pow {c : S} {b : SlopeTestRemainingChoices S A} (h : FreeOf c b) (n : ℕ) : FreeOf c (b ^ n) := by
-  unfold Formalism.FourierDecayAlt.Wd.FreeOf at h ⊢
-  intro i j
-  exact (h i j).pow_right n
+  unfold FreeOf at h ⊢
+  exact fun i j => (h i j).pow_right n
 
 theorem free_smul [Algebra ℂ A] {c : S} {b : SlopeTestRemainingChoices S A} (k : ℂ) (h : FreeOf c b) : FreeOf c (k • b) := by
-  unfold Formalism.FourierDecayAlt.Wd.FreeOf at h ⊢
-  intro i j
-  exact (h i j).smul_right k
+  unfold FreeOf at h ⊢
+  exact fun i j => (h i j).smul_right k
 
 theorem free_star [StarRing A] {c : S} {b : SlopeTestRemainingChoices S A} (h : FreeOf c b) : FreeOf c (star b) := by
   unfold Formalism.FourierDecayAlt.Wd.FreeOf at h ⊢
@@ -705,8 +697,7 @@ theorem mGGi (L : LevelData A r) : L.GGi ∈ zfns L := by
   simp [Formalism.FourierDecayAlt.Fr.zfns]
 
 theorem star_ζb {L : LevelData A r} (h : IsStarLevel L) : star L.ζb = L.ζ := by
-  obtain ⟨h1, -, -⟩ := h
-  rw [← h1, star_star]
+  rw [← h.1, star_star]
 
 theorem star_GG {L : LevelData A r} (h : IsStarLevel L) : star L.GG = L.GG := by
   obtain ⟨h1, -, h3⟩ := id h
@@ -715,8 +706,7 @@ theorem star_GG {L : LevelData A r} (h : IsStarLevel L) : star L.GG = L.GG := by
 theorem star_GGi {L : LevelData A r} (h : IsStarLevel L) : star L.GGi = L.GGi := star_inv L.GG_GGi (star_GG h) L.GG_GGi
 
 theorem star_ζi {L : LevelData A r} (h : IsStarLevel L) : star L.ζi = L.ζbi := by
-  obtain ⟨h1, -, -⟩ := h
-  exact star_inv L.ζ_ζi h1 L.ζb_ζbi
+  exact star_inv L.ζ_ζi h.1 L.ζb_ζbi
 
 theorem star_ζbi {L : LevelData A r} (h : IsStarLevel L) : star L.ζbi = L.ζi := star_inv L.ζb_ζbi (star_ζb h) L.ζ_ζi
 
@@ -724,26 +714,22 @@ theorem wt_eq (L : LevelData A r) : (wt L : SlopeTestRemainingChoices S A) = io 
   simp only [Formalism.FourierDecayAlt.Fr.wt, io_mul]
 
 theorem star_wt {L : LevelData A r} (h : IsStarLevel L) : star (wt L : SlopeTestRemainingChoices S A) = wt L := by
-  obtain ⟨h1, -, -⟩ := id h
   rw [Formalism.FourierDecayAlt.Fr.wt, io_star]
   congr 1
-  rw [star_mul, star_mul, star_GGi h, star_ζb h, h1]
+  rw [star_mul, star_mul, star_GGi h, star_ζb h, h.1]
   exact ((fcomm L (mGGi L) (mζ L)).mul_right (fcomm L (mGGi L) (mζb L))).eq
 
 theorem wt_fn (L : LevelData A r) {g : A} (hg : g ∈ zfns L) : Commute (wt L : SlopeTestRemainingChoices S A) (io g) := by
-  unfold Formalism.FourierDecayAlt.Fr.wt
-  exact io_comm (((fcomm L (mζ L) hg).mul_left (fcomm L (mζb L) hg)).mul_left (fcomm L (mGGi L) hg))
+  simpa only [Formalism.FourierDecayAlt.Fr.wt] using io_comm (((fcomm L (mζ L) hg).mul_left (fcomm L (mζb L) hg)).mul_left (fcomm L (mGGi L) hg))
 
 theorem wti_wt (L : LevelData A r) : (wti L : SlopeTestRemainingChoices S A) * wt L = 1 := by
   rw [Formalism.FourierDecayAlt.Fr.wti, Formalism.FourierDecayAlt.Fr.wt, ← io_mul, ← io_one]
-  congr 1
-  exact mon3 L.ζi_ζ L.ζbi_ζb L.GG_GGi (fcomm L (mζbi L) (mζ L))
+  rw [mon3 L.ζi_ζ L.ζbi_ζb L.GG_GGi (fcomm L (mζbi L) (mζ L))]
 
 variable {L : LevelData A r} {f : FrameData S A}
 
 theorem c_wt (h : IsFrame L f) : Commute f.c (wt L) := by
-  rw [wt_eq]
-  exact ((h.c_fn _ (mζ L)).mul_right (h.c_fn _ (mζb L))).mul_right (h.c_fn _ (mGGi L))
+  simpa only [wt_eq] using ((h.c_fn _ (mζ L)).mul_right (h.c_fn _ (mζb L))).mul_right (h.c_fn _ (mGGi L))
 
 theorem star_d (hS : IsStarLevel L) (h : IsFrame L f) : star (f.d L) = f.d L := by
   rw [Formalism.FourierDecayAlt.Fr.FrameData.d, star_mul, star_pow, star_wt hS, h.c_star]
@@ -1122,15 +1108,12 @@ section Gen
 variable {B : Type} [Ring B]
 
 lemma comm_inv {x xi y : B} (h1 : x * xi = 1) (h2 : xi * x = 1) (h : Commute x y) : Commute xi y := by
-  first | exact GlobalTheory.CommuteInvLeft.commute_inv_left .. | (apply GlobalTheory.CommuteInvLeft.commute_inv_left <;> assumption) | (intros; apply GlobalTheory.CommuteInvLeft.commute_inv_left <;> assumption) | (apply @GlobalTheory.CommuteInvLeft.commute_inv_left <;> assumption) | (intros; apply @GlobalTheory.CommuteInvLeft.commute_inv_left <;> assumption) | (apply @GlobalTheory.CommuteInvLeft.commute_inv_left <;> first | assumption | infer_instance) | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› x xi y h1 h2 h | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› x xi y h1 h2 | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› x xi y h1 | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› x xi y | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› x xi | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› x | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B
+  first | (apply GlobalTheory.CommuteInvLeft.commute_inv_left <;> assumption) | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› x xi y h1 h2 h | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› x xi y h1 h2 | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› x xi y h1 | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› x xi y | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› x xi | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› x | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B ‹_› | exact @GlobalTheory.CommuteInvLeft.commute_inv_left B
 
 lemma star_inv [StarRing B] {x xi : B} (h1 : x * xi = 1) (h : star x = x) : star xi = xi := by
   have h3 : star xi * x = 1 := by
-    have := congrArg star h1
-    rwa [star_mul, star_one, h] at this
-  calc star xi = star xi * (x * xi) := by rw [h1, mul_one]
-    _ = (star xi * x) * xi := by rw [mul_assoc]
-    _ = xi := by rw [h3, one_mul]
+    simpa only [star_mul, star_one, h] using congrArg star h1
+  exact left_inv_eq_right_inv h3 h1
 
 lemma t21_commutator_identity [Algebra ℂ B] (a c a' c' : B) (Y Y' Yb : ℂ) (hne : Y ≠ Y')
     (h1 : (Y - Y') • (a * c' - c' * a) = c * a' - c' * a)
@@ -1183,8 +1166,7 @@ lemma free_pow {c : S} {b : SlopeTestRemainingChoices S A} (h : FreeOf c b) (n :
 
 lemma free_star {c : S} {b : SlopeTestRemainingChoices S A} (h : FreeOf c b) : FreeOf c (star b) := by
   intro i j
-  have := (h j i).star_star
-  rwa [star_eU] at this
+  simpa only [star_eU] using (h j i).star_star
 
 lemma freeOf2_of_entries {c : S} {p q r s : SlopeTestRemainingChoices S A} (hp : FreeOf c p) (hq : FreeOf c q) (hr : FreeOf c r)
     (hs : FreeOf c s) : FreeOf2 c !![p, q; r, s] := by
@@ -1201,8 +1183,7 @@ lemma comm_lit {w p q r s : SlopeTestRemainingChoices S A} (hp : Commute w p) (h
 lemma freeOf2_mul {c : S} {M N : M2 (SlopeTestRemainingChoices S A)} (hM : FreeOf2 c M) (hN : FreeOf2 c N) :
     FreeOf2 c (M * N) := by
   intro i j k l
-  rw [Matrix.mul_apply]
-  exact Commute.sum_right _ _ _ fun m _ => (hM i m k l).mul_right (hN m j k l)
+  simpa only [Matrix.mul_apply] using Commute.sum_right _ _ _ fun m _ => (hM i m k l).mul_right (hN m j k l)
 
 lemma ins_comm_ins {a : S} {M N : M2 (SlopeTestRemainingChoices S A)} (fM : FreeOf2 a M) (fN : FreeOf2 a N) (h : M * N = N * M) :
     Commute (ins a M) (ins a N) := by
@@ -1458,18 +1439,13 @@ theorem comm_inv {B : Type} [Monoid B] {x xi b : B} (h1 : x * xi = 1) (h2 : xi *
 theorem star_inv {B : Type} [Monoid B] [StarMul B] {x xi : B} (h1 : x * xi = 1)
     (h : star x = x) : star xi = xi := by
   have h2 : star xi * x = 1 := by
-    have := congrArg star h1
-    rwa [star_mul, h, star_one] at this
-  calc star xi = star xi * (x * xi) := by rw [h1, mul_one]
-    _ = (star xi * x) * xi := (mul_assoc _ _ _).symm
-    _ = xi := by rw [h2, one_mul]
+    simpa only [star_mul, h, star_one] using congrArg star h1
+  rw [← mul_one (star xi), ← h1, ← mul_assoc, h2, one_mul]
 
 theorem mul_mul_one {B : Type} [Monoid B] {c ci d di : B} (h1 : c * ci = 1) (h2 : d * di = 1)
     (h : Commute d ci) : c * d * (ci * di) = 1 := by
   calc c * d * (ci * di) = c * (d * ci) * di := by simp only [mul_assoc]
-    _ = c * (ci * d) * di := by rw [h.eq]
-    _ = (c * ci) * (d * di) := by simp only [mul_assoc]
-    _ = 1 := by rw [h1, h2, one_mul]
+    _ = 1 := by rw [h.eq, ← mul_assoc, mul_assoc, h1, h2, one_mul]
 
 theorem mat1 {B : Type} [Ring B] (z zi w wi G Gi l : B) (hz : zi * z = 1) (hw : wi * w = 1)
     (hG : G * Gi = 1) :
@@ -1477,8 +1453,7 @@ theorem mat1 {B : Type} [Ring B] (z zi w wi G Gi l : B) (hz : zi * z = 1) (hw : 
   rw [Matrix.mul_fin_two, Matrix.mul_fin_two, Matrix.mul_fin_two, Matrix.one_fin_two]
   simp only [mul_one, mul_zero, zero_mul, add_zero, zero_add, one_mul]
   ext i j
-  fin_cases i <;> fin_cases j
-  all_goals simp
+  fin_cases i <;> fin_cases j <;> simp
   · exact hz
   · noncomm_ring
   · rw [← mul_assoc, mul_assoc wi G Gi, hG, mul_one, hw]
@@ -1489,8 +1464,7 @@ theorem mat2 {B : Type} [Ring B] (z zi w wi G Gi l : B) (hz : z * zi = 1) (hw : 
   rw [Matrix.mul_fin_two, Matrix.mul_fin_two, Matrix.mul_fin_two, Matrix.one_fin_two]
   simp only [mul_one, mul_zero, zero_mul, add_zero, zero_add, one_mul]
   ext i j
-  fin_cases i <;> fin_cases j
-  all_goals simp
+  fin_cases i <;> fin_cases j <;> simp
   · exact hz
   · rw [mul_assoc l, hz, mul_one, mul_assoc Gi, ← mul_assoc w, hw, one_mul, ← mul_assoc, hG,
       one_mul, neg_add_cancel]
@@ -1595,8 +1569,7 @@ theorem dg_mul {p q p' q' : SlopeTestRemainingChoices S A} (hp : FreeOf a p) (hq
   simp
 
 theorem dg_one : ins a !![(1 : SlopeTestRemainingChoices S A), 0; 0, 1] = 1 := by
-  rw [← Matrix.one_fin_two]
-  exact ins_one a
+  simpa only [← Matrix.one_fin_two] using ins_one a
 
 theorem dg_comm {p q p' q' : SlopeTestRemainingChoices S A} (hp : FreeOf a p) (hq : FreeOf a q) (hp' : FreeOf a p')
     (hq' : FreeOf a q') (h1 : Commute p p') (h2 : Commute q q') :
@@ -1625,8 +1598,7 @@ theorem freeOf_smul_one (φ : ℂ) : FreeOf a (φ • (1 : SlopeTestRemainingCho
 theorem mul_rh0_apply_one_zero (M : M2 (SlopeTestRemainingChoices S A)) (D : ℂ) :
     (M * Rh0 a D : M2 (SlopeTestRemainingChoices S A)) 1 0 = (D - 1)⁻¹ • (D • M 1 0 - M 1 0 * eU a 0 0 - M 1 1 * eU a 0 1) := by
   simp only [Rh0, P0, Matrix.mul_apply, Fin.sum_univ_two, Matrix.smul_apply, Matrix.sub_apply,
-    Matrix.one_apply, Matrix.of_apply]
-  simp only [mul_smul_comm, mul_sub, smul_sub]
+    Matrix.one_apply, Matrix.of_apply, mul_smul_comm, mul_sub, smul_sub]
   simp
   module
 
@@ -1799,7 +1771,6 @@ end Formalism.FourierDecayAlt.P.Fr7
 namespace Formalism.FourierDecayAlt.P
 
 theorem plus_letter_frame_of_data : Formalism.FourierDecayAlt.Fr.PlusAssemble := by
-  unfold Formalism.FourierDecayAlt.Fr.PlusAssemble Formalism.FourierDecayAlt.Fr.PlusStep
   intro _ _ _ _ hLP hRTT hForm hTau hPL A S _ _ _ _ _ _ r L f a Ya h
   exact Formalism.FourierDecayAlt.P.Fr7.plusStep_of hLP hRTT hForm hTau hPL L f a Ya h
 

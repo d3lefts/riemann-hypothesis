@@ -130,7 +130,6 @@ private theorem step {A : Type} [CommRing A] (I : Ideal A) (τ : A ≃+* A) (d :
     rw [← neg_sub]
     exact neg_mem h
   obtain ⟨c, hc⟩ := prod_one_add (fun i => (⇑τ)^[i] a) ((x - N) * v) d
-  beta_reduce at hc
   refine ⟨y * (1 + a * ((x - N) * v)), ?_, ?_⟩
   · have e : y * (1 + a * ((x - N) * v)) - y = (y * a) * ((x - N) * v) := by ring
     rw [e]
@@ -997,7 +996,7 @@ private theorem map_aeval_matrix {R S : Type} [CommRing R] [CommRing S] (f : R �
   have hc : (f.mapMatrix (m := Fin n)).comp (algebraMap R (Matrix (Fin n) (Fin n) R)) =
       (algebraMap S (Matrix (Fin n) (Fin n) S)).comp f := by
     ext x i j
-    simp [Matrix.algebraMap_matrix_apply, Matrix.one_apply, apply_ite f]
+    simp [Matrix.algebraMap_matrix_apply, apply_ite f]
   rw [hc] at h
   rw [aeval_def, aeval_def, eval₂_map]
   exact h

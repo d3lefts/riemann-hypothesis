@@ -331,7 +331,7 @@ theorem good_baseChange : ∀ (p : ℕ) [Fact p.Prime] (A : Type) [CommRing A](B
     | zero => simp
     | tmul c x =>
       have hx : (1 : B) ⊗ₜ[A] (x : K₁) ∈ LinearMap.ker (d.baseChange B) := by
-        simp [LinearMap.baseChange_tmul, x.2]
+        simp [LinearMap.baseChange_tmul]
       refine ⟨c ⊗ₜ ⟨_, hx⟩, ?_⟩
       simp [e₁, AlgebraTensorModule.cancelBaseChange_symm_tmul]
     | add u u' h h' => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ h h'
@@ -366,7 +366,7 @@ theorem cancel_lTensor (A : Type) [CommRing A] (B : Type) [CommRing B] [Algebra 
   | tmul b t =>
     induction t with
     | add x y hx hy => simp only [map_add (f := _), TensorProduct.tmul_add, hx, hy]
-    | tmul c k => simp [TensorProduct.AlgebraTensorModule.cancelBaseChange_tmul, TensorProduct.smul_tmul']
+    | tmul c k => simp [TensorProduct.AlgebraTensorModule.cancelBaseChange_tmul]
 
 theorem cov_comp : ∀ (p : ℕ) [Fact p.Prime] (A : Type) [CommRing A](B : Type) [CommRing B] [Algebra A B](B₁ : Type) [CommRing B₁] [Algebra A B₁] [Algebra B B₁] [IsScalarTower A B B₁] (r : ℕ → A), Pf p A → Pf p B → IsRt p r → Cov p r B → Cov p (fun k => algebraMap A B (r k)) B₁ → Cov p r B₁ := by
   intro p _ A _ B _ _ B₁ _ _ _ _ r hA hB hr h1 h2
@@ -939,8 +939,6 @@ theorem existsUnique_comp_eq (π : B) (g : B →+* T)
     rw [RingHom.comp_apply, hf n y b hb, hf m y b (hle h _ hb)]
     first
       | rfl
-      | exact Ideal.Quotient.factor_mk _ _
-      | simp [Ideal.Quotient.factorPow]
   refine ⟨IsAdicComplete.liftRingHom _ f hcompat, ?_, ?_⟩
   · ext b
     apply key
@@ -1149,7 +1147,7 @@ theorem pq_baseChange_polynomial : ∀ (p : ℕ) [Fact p.Prime] (A : Type) [Comm
   have hcomp : (Polynomial.C : K →+* Polynomial K).comp (algebraMap A K)
       = (Polynomial.mapRingHom (algebraMap A K)).comp (algebraMap A (Polynomial A)) := by
     ext a
-    simp [Polynomial.algebraMap_apply]
+    simp
   have key := _root_.GlobalTheory.CompanionTheory.PerfectRing.pq_baseChange p A (Polynomial A) B K (Polynomial K) i (Ideal.span {h})
     Polynomial.C (Polynomial.mapRingHom (algebraMap A K)) i₁ hA hK hPQ hcomp hcl hC hj
   refine ⟨i₁, ?_, hC, hX⟩

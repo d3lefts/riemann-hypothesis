@@ -256,7 +256,6 @@ theorem unwBack_smooth_exp {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M →
   intro e he
   have hg : ContDiff ℝ ∞ (fun w : ℂ => ((Real.exp w.re : ℝ) : ℂ)) := by
     first
-    | fun_prop
     | exact Complex.ofRealCLM.contDiff.comp (Real.contDiff_exp.comp Complex.reCLM.contDiff)
   refine (hg.comp_contDiffOn (hu e he)).congr fun p _ => ?_
   simp [Function.comp]
@@ -315,7 +314,6 @@ theorem unweightBack (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
     | exact ((Real.continuous_exp.comp hw2c).add (Real.continuous_exp.comp hw1c)).add
         ((Real.continuous_exp.comp hw1c).mul (continuous_const.add (continuous_const.mul
           (continuous_finsetSum _ (fun j _ => ((hdbc j).norm.pow 2))))))
-    | fun_prop
   obtain ⟨C, hC, hCK⟩ := unwBack_bound K hK _ hFc
   have hbd : ∀ x ∈ K, Real.exp (w2 ph ψ x) ≤ C ∧ Real.exp (w1 ph ψ x) ≤ C ∧
       Real.exp (w1 ph ψ x) * (2 + 4 * ∑ j, ‖db n z j (fun y => ((w2 ph ψ y : ℝ) : ℂ)) x‖ ^ 2) ≤ C := by
@@ -349,10 +347,6 @@ theorem unweightBack (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
   have hgc : Continuous g := by
     first
     | exact continuous_induced_rng.2 (continuous_pi hgcj)
-    | exact (PiLp.continuous_toLp 2 _).comp (continuous_pi hgcj)
-    | exact (PiLp.continuous_equiv_symm 2 _).comp (continuous_pi hgcj)
-    | exact continuous_pi hgcj
-    | exact (EuclideanSpace.equiv (Fin n) ℂ).symm.continuous.comp (continuous_pi hgcj)
   have hBs : AEStronglyMeasurable (fun x => g x - unwG ph ψ f x) (vol n z) :=
     hgc.aestronglyMeasurable.sub (hEm.aestronglyMeasurable.smul hf.1)
   have hBm : AEMeasurable (fun x => ENNReal.ofReal (‖g x - unwG ph ψ f x‖ ^ 2)) (vol n z) :=
@@ -362,7 +356,7 @@ theorem unweightBack (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
     ⟨fun y => (Real.exp (w2 ph ψ y) : ℂ) • g y, fun y => rfl⟩
   have hg'c : ∀ y j, g' y j = (Real.exp (w2 ph ψ y) : ℂ) * g y j := by
     intro y j; rw [hg'v y]
-    first | rfl | simp [PiLp.smul_apply] | simp
+    first | rfl
   have hg'f : ∀ l, (fun y => g' y l) = fun y => (Real.exp (w2 ph ψ y) : ℂ) * g y l :=
     fun l => funext fun y => hg'c y l
   have hdiv0 : ∀ x, x ∉ K₀ → divF n z g x = 0 := by
@@ -426,7 +420,6 @@ theorem unweightBack (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
     · rw [hg'f j]
       first
       | exact (hg j).2.mul_left
-      | exact HasCompactSupport.mul_left (hg j).2
   · have hle : nV n z (fun x => g' x - f x) (w2 ph ψ) ≤
         ENNReal.ofReal C * nV n z (fun x => g x - unwG ph ψ f x) (fun _ => 0) := by
       unfold nV

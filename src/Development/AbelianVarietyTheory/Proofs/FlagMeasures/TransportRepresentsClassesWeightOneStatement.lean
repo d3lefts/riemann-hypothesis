@@ -221,7 +221,7 @@ theorem classes_and_weight : ∀ (D : D7) (X : HidaSetting D) (u : D.what₂.Wor
     have : Nat.card ((D.mem u).C.stab 0 c) = 1 := by
       haveI : Unique ((D.mem u).C.stab 0 c) := uniqueOfSubsingleton 1
       exact Nat.card_unique
-    simp [Formalism.BasicNotions.ColumnChain.wt, this]
+    simp [Formalism.BasicNotions.ColumnChain.wt]
 
 end GlobalTheory.ColClass
 end -- clump:auto
@@ -238,7 +238,7 @@ open scoped TensorProduct InnerProductSpace
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.transport_represents_classes_weight_one : ∀ (D : D7) (X : HidaSetting D) (u : D.what₂.Word) (F : Formalism.L2.Forms.Forms0 D u) (Tr : Transport X u F) (hK : X.LevelSubgroupCharacter), (∀ a, Tr.ιA (sigA X.B.I a) = Formalism.UG.sigR (Formalism.L2.Forms.sigD D) (FiniteAdeleRing (𝓞 D.host.F) D.host.F) (Tr.ιA a)) → LevelMatch X Tr hK → ClsMatch X Tr hK ∧ (Formalism.L2.SG.ColsDim.StabTriv (iotaF X u) (Ku X u hK) → ∀ c, (D.mem u).C.wt 0 c = 1) := by
-  first | exact @GlobalTheory.ColClass.classes_and_weight | exact GlobalTheory.ColClass.classes_and_weight | (intros; apply GlobalTheory.ColClass.classes_and_weight <;> assumption)
+  first | exact @GlobalTheory.ColClass.classes_and_weight
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.TransportRepresentsClassesWeightOneStatement =====

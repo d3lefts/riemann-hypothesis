@@ -107,7 +107,7 @@ theorem _root_.GlobalTheory.T.exists_satake_sphericalVector_definiteUnitary : �
       ∀ k ≤ n, GlobalTheory.LFun.heckeVec ((RU E n).comp (locU n w).subtype) ((GlobalTheory.LFun.KGL w (n := n)).comap ((cLoc w).comp (locU n w).subtype))
         (fun x => GlobalTheory.SphPar.divInd (Formalism.UG.Ov E w) (Formalism.IndefR.Mult.dualLab (Formalism.IndefR.Mult.splitLab n k)) ((cLoc w).comp (locU n w).subtype x)) φ =
         GlobalTheory.LFun.satEig (Formalism.UG.qV E w) n S k • φ := by
-  first | exact @GlobalTheory.FrameAut.exists_locComp_hasSatGL_heckeVec | exact GlobalTheory.FrameAut.exists_locComp_hasSatGL_heckeVec | (intros; apply GlobalTheory.FrameAut.exists_locComp_hasSatGL_heckeVec <;> assumption)
+  first | exact @GlobalTheory.FrameAut.exists_locComp_hasSatGL_heckeVec
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSatakeSphericalVectorDefiniteUnitaryStatement =====
@@ -259,7 +259,7 @@ theorem _root_.GlobalTheory.T.small_place_finite_set_alt : ∀ {D : D7} {L : Siz
     ∀ w ∈ p.R.twPl, W.WRange P (Formalism.EigenvalueLevelCeiling.plc w) → SmallAt p j P w →
     {v : HeightOneSpectrum (𝓞 D.host.E) | (Ideal.absNorm v.asIdeal).Prime ∧
       ¬ ∃ Q : (blk p j (p.R.mu w)).Pl, ((Formalism.EigenvalueLevelCeiling.plc w : ℕ) : 𝓞 D.host.E) ∉ (plOf p j (p.R.mu w) Q).asIdeal ∧ labOf p j (p.R.mu w) Q = v}.Finite := by
-  first | exact @_root_.GlobalTheory.FrameAutCof.cofinite_labels_at_alt | exact _root_.GlobalTheory.FrameAutCof.cofinite_labels_at_alt | (intros; apply _root_.GlobalTheory.FrameAutCof.cofinite_labels_at_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.FrameAutCof.cofinite_labels_at_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -368,7 +368,7 @@ theorem _root_.GlobalTheory.T.small_place_block_decomposition_alt : ∀ {D : D7}
       (labOf p j (p.R.mu w) Q).under (𝓞 (maximalRealSubfield D.host.E)) = (plOf p j (p.R.mu w) Q).under (𝓞 (maximalRealSubfield D.host.E)) ∧
       Ideal.absNorm (labOf p j (p.R.mu w) Q).asIdeal = (blk p j (p.R.mu w)).q Q ∧
       (((Formalism.EigenvalueLevelCeiling.plc w : ℕ) : 𝓞 D.host.E) ∈ (labOf p j (p.R.mu w) Q).asIdeal ↔ ((Formalism.EigenvalueLevelCeiling.plc w : ℕ) : 𝓞 D.host.E) ∈ (plOf p j (p.R.mu w) Q).asIdeal) := by
-  first | exact @_root_.GlobalTheory.FrameLab.labels_ok_alt | exact _root_.GlobalTheory.FrameLab.labels_ok_alt | (intros; apply _root_.GlobalTheory.FrameLab.labels_ok_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.FrameLab.labels_ok_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -494,7 +494,7 @@ theorem _root_.GlobalTheory.T.norm_sq_emb_block_eq_q_pow_of_small_at : ∀ {D : 
     ∀ (j : Fin D.R.m) (P : Par) (W : Wts D.what₂.Tau), Dict L j P W → NumOk P W →
     ∀ w ∈ p.R.twPl, W.WRange P (Formalism.EigenvalueLevelCeiling.plc w) → SmallAt p j P w →
     ∀ ν ∈ (blk p j (p.R.mu w)).bl, ∀ Q, ‖D.what₂.embLL (ν Q)‖ ^ 2 = ((blk p j (p.R.mu w)).q Q : ℝ) ^ ((blk p j (p.R.mu w)).n - (blk p j (p.R.mu w)).t) := by
-  first | exact @_root_.GlobalTheory.FrameAut.norm_sq_blockValue_alt | exact _root_.GlobalTheory.FrameAut.norm_sq_blockValue_alt | (intros; apply _root_.GlobalTheory.FrameAut.norm_sq_blockValue_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.FrameAut.norm_sq_blockValue_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -865,7 +865,7 @@ section -- clump:auto
 section
 
 theorem _root_.GlobalTheory.T.aut_statement_of_small_exponent_statement : _root_.GlobalTheory.ExpTie.SmallnessCondition → _root_.GlobalTheory.FrameAut.AutStAlt := by
-  first | exact @_root_.GlobalTheory.FrameAut.autSt_of_smallSt' | exact _root_.GlobalTheory.FrameAut.autSt_of_smallSt' | (intros; apply _root_.GlobalTheory.FrameAut.autSt_of_smallSt' <;> assumption)
+  first | exact @_root_.GlobalTheory.FrameAut.autSt_of_smallSt'
 end
 end -- clump:auto
 end -- clump:auto
@@ -896,7 +896,7 @@ section -- clump:auto
 section
 
 theorem _root_.GlobalTheory.T.frame_aut_of_small_estimate : _root_.GlobalTheory.ExpTie.SmallnessCondition → _root_.GlobalTheory.FrameAut.AutStAlt := by
-  first | exact @_root_.GlobalTheory.FrameAut.frame_autSt_of_smallSt | exact _root_.GlobalTheory.FrameAut.frame_autSt_of_smallSt | (intros; apply _root_.GlobalTheory.FrameAut.frame_autSt_of_smallSt <;> assumption)
+  first | exact @_root_.GlobalTheory.FrameAut.frame_autSt_of_smallSt
 end
 end -- clump:auto
 end -- clump:auto

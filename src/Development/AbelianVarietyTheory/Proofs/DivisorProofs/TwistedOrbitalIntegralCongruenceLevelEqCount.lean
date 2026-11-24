@@ -195,7 +195,7 @@ theorem exists_unitary_of_torus : ∀ (E : Type) [Field E] [NumberField E] [IsCM
       have hp := hpres (Pi.single j 1) (Pi.single i 1)
       rw [Matrix.mulVec_single_one, Matrix.mulVec_single_one] at hp
       rw [Matrix.mul_one, Matrix.mul_apply, Matrix.one_apply]
-      simp only [stdH, Matrix.transpose_apply, Matrix.col_apply] at hp
+      simp only [stdH, Matrix.col_apply] at hp
       simp only [cT, Matrix.transpose_apply, Matrix.map_apply]
       rw [Finset.sum_congr rfl (fun k _ => mul_comm (cj w (h.val k i)) (h.val k j)), hp]
       by_cases hij : i = j
@@ -203,7 +203,7 @@ theorem exists_unitary_of_torus : ∀ (E : Type) [Field E] [NumberField E] [IsCM
       · rw [if_neg hij, Finset.sum_eq_zero]
         intro k _
         by_cases hk : k = j
-        · subst hk; simp [Pi.single_apply, Ne.symm hij, hij]
+        · subst hk; simp [Ne.symm hij]
         · simp [Pi.single_apply, hk]
   · apply Units.ext
     apply Matrix.toLin'.injective
@@ -326,10 +326,6 @@ namespace GlobalTheory.KapOrb.SelfDualPull
 theorem exists_basis_of_lattice : ∀ (K : GlobalTheory.UnitLemma.UQ) (V : Type) [AddCommGroup V] [Module K.E V] [Module K.O V] [IsScalarTower K.O K.E V] [FiniteDimensional K.E V] (L : Submodule K.O V), L.FG → Submodule.span K.E (L : Set V) = ⊤ → ∃ b : Module.Basis (Fin (Module.finrank K.E V)) K.E V, ∀ y, y ∈ L ↔ ∀ i, b.repr y i ∈ (algebraMap K.O K.E).range := by
   first
   | exact @_root_.GlobalTheory.LatticeIntegralCoordinates.lattice_eq_integral_coords
-  | exact _root_.GlobalTheory.LatticeIntegralCoordinates.lattice_eq_integral_coords
-  | (apply _root_.GlobalTheory.LatticeIntegralCoordinates.lattice_eq_integral_coords <;> assumption)
-  | (intros; apply _root_.GlobalTheory.LatticeIntegralCoordinates.lattice_eq_integral_coords <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.LatticeIntegralCoordinates.lattice_eq_integral_coords <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.LatticeIntegralCoordinates.lattice_eq_integral_coords ..)
 
 theorem exists_orthonormal_of_selfDual : ∀ (K : GlobalTheory.UnitLemma.UQ) (V : Type) [AddCommGroup V] [Module K.E V] [Module K.O V] [IsScalarTower K.O K.E V] [FiniteDimensional K.E V] (h : V → V → K.E), (∀ y y' z, h (y + y') z = h y z + h y' z) → (∀ (a : K.E) y z, h (a • y) z = a * h y z) → (∀ y z, h z y = K.c (h y z)) → (∀ y, (∀ z, h y z = 0) → y = 0) → ∀ L : Submodule K.O V, L.FG → Submodule.span K.E (L : Set V) = ⊤ → (∀ y, y ∈ L ↔ ∀ z ∈ L, h y z ∈ (algebraMap K.O K.E).range) → ∃ f : Fin (Module.finrank K.E V) → V, (∀ i j, h (f i) (f j) = if i = j then 1 else 0) ∧ ∀ y, y ∈ L ↔ ∀ i, h y (f i) ∈ (algebraMap K.O K.E).range := by
@@ -945,7 +941,7 @@ theorem entries_int_of_le (w : Pl E) {K : GlobalTheory.UnitLemma.UQ} {e : K.E �
     rw [Matrix.mulVec_mulVec, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.one_mulVec]
     by_cases hk : k = j
     · subst hk; simp
-    · simp [Pi.single_apply, hk]
+    · simp [hk]
   have := (mem_pullLat_iff w hB B ψ hψ g y).1 (h hy') i
   rw [hψy, Matrix.mulVec_mulVec, ← Units.val_mul, Matrix.mulVec_single_one] at this
   simpa using this
@@ -1118,7 +1114,7 @@ theorem pullLat_selfDual : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     funext j
     rw [Finset.sum_apply]
     simp only [hφs, z, hpre, Pi.smul_apply, Pi.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero,
-      Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+      Finset.sum_ite_eq, Finset.mem_univ, if_true]
     exact (ha j).symm
   have hsd : ∀ y, (∀ i, φ y i ∈ w.adicCompletionIntegers E) ↔
       ∀ z' ∈ pullLat w B ψ g, B.herm x y z' ∈ (algebraMap K.O K.E).range := by
@@ -1139,7 +1135,7 @@ theorem pullLat_selfDual : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
         unfold stdH
         rw [Finset.sum_eq_single i]
         · simp
-        · intro k _ hk; simp [Pi.single_apply, hk]
+        · intro k _ hk; simp [hk]
         · simp
       rwa [hcalc] at this
   refine ⟨⟨?_, ?_⟩, ?_⟩

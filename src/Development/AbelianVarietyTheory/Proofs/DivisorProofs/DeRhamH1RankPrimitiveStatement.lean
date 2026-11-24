@@ -130,7 +130,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.de_rham_h1_rank_primitive : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (g : ℕ), IsAbelianScheme A → SmoothOfRelativeDimension g A.hom → FP R (HH1 A.hom) (2 * g) ∧ DeRhamH1Primitive A := by
-  first | exact @GlobalTheory.AbCoh.rank_prim_HH1 | exact GlobalTheory.AbCoh.rank_prim_HH1 | (intros; apply GlobalTheory.AbCoh.rank_prim_HH1 <;> assumption)
+  first | exact @GlobalTheory.AbCoh.rank_prim_HH1
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DeRhamH1RankPrimitiveStatement =====

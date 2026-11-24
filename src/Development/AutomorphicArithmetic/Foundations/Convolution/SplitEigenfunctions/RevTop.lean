@@ -130,7 +130,7 @@ private theorem fourier (S T : Set (Fin 4 → ℚ)) (q : (Fin 4 → ℚ) → ℚ
   set G : S → A ℚ → ℂ := fun ξ b => ψ (b * rt (q ξ - t)) * c ξ with hG
   have hGc : ∀ ξ, Continuous (G ξ) := fun ξ =>
     (Pp.cont_ψ.comp (continuous_id.mul continuous_const)).mul continuous_const
-  have hGn : ∀ ξ b, ‖G ξ b‖ = ‖c ξ‖ := fun ξ b => by simp [hG, Pp.norm_ψ]
+  have hGn : ∀ ξ b, ‖G ξ b‖ = ‖c ξ‖ := fun ξ b => by simp [hG]
   have e : ∀ b : A ℚ, (∑' ξ : S, ψ (b * rt (q ξ)) * c ξ) * ψ (-(b * rt t)) = ∑' ξ, G ξ b := by
     intro b
     rw [← tsum_mul_right]
@@ -241,7 +241,7 @@ private theorem coefOf (hV : VolE) :
       _ ≤ B := h3
   have hNc : Continuous fun b : A ℚ => nU b := by
     refine Continuous.subtype_mk (continuous_matrix fun i j => ?_) _
-    fin_cases i <;> fin_cases j <;> simp [nU] <;> fun_prop
+    fin_cases i <;> fin_cases j <;> simp <;> fun_prop
   have hcont : Continuous fun p : A ℚ × IdeleGroup.normOneSubgroup E × G1 E => f p.1 p.2.1 p.2.2 := by
     have hp : Continuous fun p : A ℚ × IdeleGroup.normOneSubgroup E × G1 E => (nU p.1 * g₀, x p.2.1 p.2.2) :=
       ((hNc.comp continuous_fst).mul continuous_const).prodMk (hxc.comp continuous_snd)
@@ -707,7 +707,7 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.momKill :
           rw [le_mul_inv_iff₀ hpos]
           exact h1
         simp only [norm_mul, Complex.norm_real, wt, hy, if_true, Set.indicator_of_mem, Pi.one_apply,
-          norm_one, one_mul, Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)]
+          one_mul, Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)]
         rw [abs_of_pos (inv_pos.2 hpos), ← mul_assoc, ← mul_assoc]
         exact mul_le_mul_of_nonneg_right h2 (norm_nonneg _)
       · simp only [Set.indicator_of_notMem hy]

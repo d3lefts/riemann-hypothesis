@@ -117,7 +117,7 @@ theorem stdBlock_iff (a : ℕ) (y : Gn p (a + 1)) :
     · ext i j
       have hi : (i : ℕ) < a + 1 := by omega
       have hj : (j : ℕ) < a + 1 := by omega
-      have := h ⟨i, hi⟩ ⟨j, hj⟩ (by first | omega | simp | (simp; omega))
+      have := h ⟨i, hi⟩ ⟨j, hj⟩ (by first | omega | simp)
       simp only [tl, entN, hi, hj, and_self, dif_pos, Matrix.one_apply, Fin.ext_iff] at this ⊢
       exact this
   · rintro ⟨h1, h2⟩ i j hij
@@ -206,7 +206,7 @@ open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.Spl
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.exists_irreducible_detTwist_of_stdTrace_twoBlock : ∀ (p : ℕ) [Fact p.Prime] (a : ℕ) (θ : (ZMod p)ˣ →* ℂˣ) (α : GlobalTheory.GLq.Gn p (a + 1) → ℂ), GlobalTheory.GLq.IsIrr α → stdTrace a θ α ≠ 0 → ∃ σ : GlobalTheory.GLq.Gn p a → ℂ, GlobalTheory.GLq.IsIrr σ ∧ GlobalTheory.GLq.ip α (GlobalTheory.GLq.hc a 1 σ (fun y : GlobalTheory.GLq.Gn p 1 => ((θ (Matrix.GeneralLinearGroup.det y) : ℂˣ) : ℂ)) (a + 1)) ≠ 0 := by
-  first | exact @GlobalTheory.LevelType.RestrictionTwo.exists_irr_hc_of_stdTrace_ne_zero | exact GlobalTheory.LevelType.RestrictionTwo.exists_irr_hc_of_stdTrace_ne_zero | (intros; apply GlobalTheory.LevelType.RestrictionTwo.exists_irr_hc_of_stdTrace_ne_zero <;> assumption)
+  first | exact @GlobalTheory.LevelType.RestrictionTwo.exists_irr_hc_of_stdTrace_ne_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsIrreducibleDetTwistOfStdTraceTwoBlockStatement =====
@@ -482,7 +482,7 @@ open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.Spl
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.exists_irreducible_harishChandra_of_stdTrace_ne_zero : ∀ (p : ℕ) [Fact p.Prime] (r a c : ℕ) (θ : (ZMod p)ˣ →* ℂˣ) (ψ : GlobalTheory.GLq.Gn p r → ℂ), r = a + 1 + c → GlobalTheory.GLq.IsChar ψ → stdTrace a θ ψ ≠ 0 → ∃ (α : GlobalTheory.GLq.Gn p (a + 1) → ℂ) (β : GlobalTheory.GLq.Gn p c → ℂ), GlobalTheory.GLq.IsIrr α ∧ GlobalTheory.GLq.IsIrr β ∧ GlobalTheory.GLq.ip ψ (GlobalTheory.GLq.hc (a + 1) c α β r) ≠ 0 ∧ stdTrace a θ α ≠ 0 := by
-  first | exact @GlobalTheory.LevelType.exists_irr_hc_of_stdTrace_ne_zero | exact GlobalTheory.LevelType.exists_irr_hc_of_stdTrace_ne_zero | (intros; apply GlobalTheory.LevelType.exists_irr_hc_of_stdTrace_ne_zero <;> assumption)
+  first | exact @GlobalTheory.LevelType.exists_irr_hc_of_stdTrace_ne_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsIrreducibleHarishChandraOfStdTraceNeZeroStatement =====
@@ -529,7 +529,6 @@ theorem exists_stdVec_of_parVec : ∀ (p : ℕ) [Fact p.Prime] (r : ℕ) (α : T
       intro i j hij
       have hyv : y.val i j = x.val (σ.symm i) (σ.symm j) := by
         rw [← GlobalTheory.Parabolic.conj_permGL_apply σ.symm y i j, hy]
-        congr 2
         group
       rw [hyv, hx _ _ (fun h => hij ⟨hlo i h.1, hhi j h.2⟩)]
       simp
@@ -565,7 +564,7 @@ open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.Spl
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.exists_standardTypeVector_of_parabolicTypeVector : ∀ (p : ℕ) [Fact p.Prime] (r : ℕ) (α : Type) [Fintype α] [LinearOrder α] (m : α → Type) [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] (e : (Σ a, m a) ≃ Fin r) (a : α) (θ : (ZMod p)ˣ →* ℂˣ) (U : Type) [AddCommGroup U] [Module ℂ U] (ρ : Representation ℂ (GL (Fin r) (ZMod p)) U) (v : U), Fintype.card (m a) = 1 → v ≠ 0 → ParVec ρ e a θ v → ∃ (c : ℕ) (v' : U), c < r ∧ v' ≠ 0 ∧ StdVec ρ c θ v' := by
-  first | exact @GlobalTheory.LevelType.exists_stdVec_of_parVec | exact GlobalTheory.LevelType.exists_stdVec_of_parVec | (intros; apply GlobalTheory.LevelType.exists_stdVec_of_parVec <;> assumption)
+  first | exact @GlobalTheory.LevelType.exists_stdVec_of_parVec
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsStandardTypeVectorOfParabolicTypeVectorStatement =====
@@ -605,7 +604,7 @@ theorem stdTrace_ne_zero : ∀ (p : ℕ) [Fact p.Prime] (r a : ℕ) (θ : (ZMod 
   set S : Finset (GL (Fin r) (ZMod p)) := Finset.univ.filter (StdBlock a) with hS
   set c : GL (Fin r) (ZMod p) → ℂ := fun x => (((θ (Matrix.GeneralLinearGroup.det x))⁻¹ : ℂˣ) : ℂ) with hc
   have hcm : ∀ x y, c (x * y) = c x * c y := fun x y => by
-    simp [hc, map_mul, mul_inv, Units.val_mul, mul_comm]
+    simp [hc, map_mul, Units.val_mul, mul_comm]
   set E : Module.End ℂ ρ := ∑ x ∈ S, c x • ρ.ρ x with hE
   have htr : stdTrace a θ ρ.character = LinearMap.trace ℂ ρ E := by
 
@@ -667,7 +666,7 @@ open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.Spl
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.stdParabolicTwistedTraceSum_ne_zero_of_vector : ∀ (p : ℕ) [Fact p.Prime] (r a : ℕ) (θ : (ZMod p)ˣ →* ℂˣ) (ρ : FDRep ℂ (GL (Fin r) (ZMod p))) (v : ρ), v ≠ 0 → StdVec ρ.ρ a θ v → stdTrace a θ ρ.character ≠ 0 := by
-  first | exact @GlobalTheory.LevelType.stdTrace_ne_zero | exact GlobalTheory.LevelType.stdTrace_ne_zero | (intros; apply GlobalTheory.LevelType.stdTrace_ne_zero <;> assumption)
+  first | exact @GlobalTheory.LevelType.stdTrace_ne_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.StdParabolicTwistedTraceSumNeZeroOfVectorStatement =====
@@ -789,7 +788,7 @@ open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil GlobalTheory.Spl
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.thetaLabel_root_of_harishChandraConstituent : ∀ (p : ℕ) [Fact p.Prime] (L : GlobalTheory.GLq.LabelDatum p) (r a c : ℕ) (θ : (ZMod p)ˣ →* ℂˣ) (u : ZMod p) (f : Polynomial (ZMod p)) (ψ : GlobalTheory.GLq.Gn p r → ℂ) (α : GlobalTheory.GLq.Gn p (a + 1) → ℂ) (β : GlobalTheory.GLq.Gn p c → ℂ) (σ : GlobalTheory.GLq.Gn p a → ℂ), r = a + 1 + c → GlobalTheory.GLq.IsIrr ψ → GlobalTheory.GLq.IsIrr α → GlobalTheory.GLq.IsIrr β → GlobalTheory.GLq.IsIrr σ → GlobalTheory.GLq.HasLabel L ψ f → GlobalTheory.GLp.IsCharLab L θ u → GlobalTheory.GLq.ip ψ (GlobalTheory.GLq.hc (a + 1) c α β r) ≠ 0 → GlobalTheory.GLq.ip α (GlobalTheory.GLq.hc a 1 σ (fun y : GlobalTheory.GLq.Gn p 1 => ((θ (Matrix.GeneralLinearGroup.det y) : ℂˣ) : ℂ)) (a + 1)) ≠ 0 → f.IsRoot u := by
-  first | exact @GlobalTheory.GLq.DetSplit.root_of_constituent | exact GlobalTheory.GLq.DetSplit.root_of_constituent | (intros; apply GlobalTheory.GLq.DetSplit.root_of_constituent <;> assumption)
+  first | exact @GlobalTheory.GLq.DetSplit.root_of_constituent
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ThetaLabelRootOfHarishChandraConstituentStatement =====

@@ -426,7 +426,6 @@ theorem HeckeWC.eigW (hk : X.KForm b) (he : X.EWnorm b) (hn : 0 < X.nP b) (H : X
   have hinj : Function.Injective (X.w0C b j) := by
     first
     | exact hinjE.comp hinjW
-    | (simp only [w0C, LinearMap.coe_comp]; exact hinjE.comp hinjW)
   exact eig_transport Bs.v0.embedding (X.w0C b j) hinj (H.hC j) (H.maps j) (H.rat j) (X.Wp j c) (cf.ev c)
     (H.eig j c)
 
@@ -658,7 +657,6 @@ theorem vw_eq_zero_of_pow {k : K} {n : ℕ} (hn : 0 < n) (hk : k ^ n = 1) (w : H
     rw [← FractionalIdeal.count_pow]
     first
     | rw [FractionalIdeal.spanSingleton_pow]
-    | rw [← FractionalIdeal.spanSingleton_pow]
     rw [hk, FractionalIdeal.spanSingleton_one, FractionalIdeal.count_one]
   rcases mul_eq_zero.mp h1 with h | h
   · exact absurd h (by exact_mod_cast hn.ne')

@@ -100,7 +100,7 @@ theorem _root_.GlobalTheory.T.definiteFamilyCoefficientMaps_mul_rootOfUnity : �
     (c0L : ∀ i : Fin D.R.m, Formalism.IndefR.FWT.VsV D i D.what₂.LL →ₛₗ[D.what₂.embLL] (R.cV i).W),
     GlobalTheory.Mem.R3.Rw.OmExt.CoefFam R c0L → ∀ (i : Fin D.R.m) (a : D.what₂.LL) (n : ℕ), n ≠ 0 → a ^ n = 1 →
     GlobalTheory.Mem.R3.Rw.OmExt.CoefFam R (Function.update c0L i (D.what₂.embLL a • c0L i)) := by
-  first | exact @GlobalTheory.Mem.R3.Rw.OmExt.coefFam_update_root | exact GlobalTheory.Mem.R3.Rw.OmExt.coefFam_update_root | (intros; apply GlobalTheory.Mem.R3.Rw.OmExt.coefFam_update_root <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.Rw.OmExt.coefFam_update_root
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DefiniteFamilyCoefficientMapsMulRootOfUnityStatement =====
@@ -132,7 +132,7 @@ theorem _root_.GlobalTheory.T.exists_coefficientMaps_agree_rootOfUnity_enlarged 
       (u : (w.st Z).toD7.what₂.LL) (u' : (w'.st Z').toD7.what₂.LL) (n n' : ℕ), n ≠ 0 ∧ u ^ n = 1 ∧ n' ≠ 0 ∧ u' ^ n' = 1 ∧
       HEq (MvPolynomial.map (w'.st Z').toD7.what₂.embLL v'.1) (MvPolynomial.map (w.st Z).toD7.what₂.embLL v.1) ∧ c0L i v ≠ 0 ∧
       HEq ((w'.st Z').toD7.what₂.embLL u' • c0L'' i' v') ((w.st Z).toD7.what₂.embLL u • c0L i v) := by
-  first | exact @GlobalTheory.Mem.R3.Rw.LiftUnit.exists_agree_root | exact GlobalTheory.Mem.R3.Rw.LiftUnit.exists_agree_root | (intros; apply GlobalTheory.Mem.R3.Rw.LiftUnit.exists_agree_root <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.Rw.LiftUnit.exists_agree_root
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsCoefficientMapsAgreeRootOfUnityEnlargedStatement =====

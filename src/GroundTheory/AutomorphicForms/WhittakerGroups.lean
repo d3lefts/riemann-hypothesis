@@ -71,52 +71,31 @@ namespace GroundTheory.Variant₂.N1
 theorem eq_one_of_forall_norm_zpow_sub_one_lt {z : ℂ} (h : ∀ m : ℤ, ‖z ^ m - 1‖ < 1) :
     z = 1 := by
   have hpow : ∀ n : ℕ, ‖z ^ n - 1‖ < 1 := fun n => by simpa using h n
-  have hle : ‖z‖ ≤ 1 := by
+  have hbound : ∀ w : ℂ, (∀ n : ℕ, ‖w ^ n - 1‖ < 1) → ‖w‖ ≤ 1 := by
+    intro w hw
     by_contra hlt
     rw [not_le] at hlt
     obtain ⟨n, hn⟩ := pow_unbounded_of_one_lt (2 : ℝ) hlt
-    have h1 := hpow n
-    have h2 : ‖z ^ n‖ - ‖(1 : ℂ)‖ ≤ ‖z ^ n - 1‖ := norm_sub_norm_le _ _
-    rw [norm_pow, norm_one] at h2
-    linarith
+    have h2 : ‖w ^ n‖ - 1 ≤ ‖w ^ n - 1‖ := by
+      simpa using norm_sub_norm_le (w ^ n) 1
+    rw [norm_pow] at h2
+    linarith [hw n]
   have hz0 : z ≠ 0 := by
     rintro rfl
-    have := hpow 1
-    simp at this
+    simpa using hpow 1
   have hge : 1 ≤ ‖z‖ := by
-    by_contra hlt
-    rw [not_le] at hlt
-    have hpos : 0 < ‖z‖ := norm_pos_iff.mpr hz0
-    have h1 : 1 < ‖z⁻¹‖ := by
-      rw [norm_inv]
-      exact (one_lt_inv₀ hpos).mpr hlt
-    obtain ⟨n, hn⟩ := pow_unbounded_of_one_lt (2 : ℝ) h1
-    have h3 := h (-(n : ℤ))
-    rw [zpow_neg, zpow_natCast, ← inv_pow] at h3
-    have h2 : ‖z⁻¹ ^ n‖ - ‖(1 : ℂ)‖ ≤ ‖z⁻¹ ^ n - 1‖ := norm_sub_norm_le _ _
-    rw [norm_pow, norm_one] at h2
-    linarith
-  have hn1 : ‖z‖ = 1 := le_antisymm hle hge
+    have h1 : ‖z⁻¹‖ ≤ 1 := by
+      refine hbound _ fun n => ?_
+      simpa [zpow_neg, ← inv_pow] using h (-(n : ℤ))
+    simpa [norm_inv, inv_le_one₀ (norm_pos_iff.mpr hz0)] using h1
+  have hn1 : ‖z‖ = 1 := le_antisymm (hbound z hpow) hge
   have key : ∀ w : ℂ, ‖w‖ = 1 → ‖w - 1‖ < 1 → 3 * ‖w - 1‖ ^ 2 ≤ ‖w ^ 2 - 1‖ ^ 2 := by
     intro w hw hw1
-    have e : w ^ 2 - 1 = (w - 1) * (w + 1) := by ring
-    rw [e, norm_mul, mul_pow]
-    have hw' : w.re ^ 2 + w.im ^ 2 = 1 := by
-      have := Complex.sq_norm w
-      rw [hw, Complex.normSq_apply] at this
-      nlinarith
-    have a1 : ‖w - 1‖ ^ 2 = (w.re - 1) ^ 2 + w.im ^ 2 := by
-      rw [Complex.sq_norm, Complex.normSq_apply]
-      simp
-      ring
-    have a2 : ‖w + 1‖ ^ 2 = (w.re + 1) ^ 2 + w.im ^ 2 := by
-      rw [Complex.sq_norm, Complex.normSq_apply]
-      simp
-      ring
-    have a3 : 3 ≤ ‖w + 1‖ ^ 2 := by
-      have : ‖w - 1‖ ^ 2 < 1 := by nlinarith [norm_nonneg (w - 1)]
-      nlinarith
-    nlinarith [sq_nonneg ‖w - 1‖]
+    have hpar := parallelogram_law_with_norm (𝕜 := ℂ) w 1
+    rw [hw, norm_one] at hpar
+    have hlt : ‖w - 1‖ ^ 2 < 1 := by nlinarith [norm_nonneg (w - 1)]
+    rw [show w ^ 2 - 1 = (w - 1) * (w + 1) by ring, norm_mul, mul_pow]
+    nlinarith
   have hk : ∀ k : ℕ, 3 ^ k * ‖z - 1‖ ^ 2 ≤ ‖z ^ (2 ^ k) - 1‖ ^ 2 := by
     intro k
     induction k with

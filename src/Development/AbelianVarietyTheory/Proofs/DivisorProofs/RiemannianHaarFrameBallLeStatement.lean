@@ -194,7 +194,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.frameBall_subset_expChart_image_frameBox : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (Ψ : Finset (E →+* ℂ)) (G : Matrix (Fin r) (Fin r) E) (x : Frame Ψ r) (hG : G.det ≠ 0), (∀ τ, (mat x τ).det ≠ 0) → ∀ δ : ℝ, 0 < δ → ∃ ε₀ : ℝ, 0 < ε₀ ∧ ∀ ε : ℝ, 0 < ε → ε < ε₀ → frBall Ψ G x ε ⊆ GlobalTheory.SUVol.DensOne.chartExp Ψ G hG '' {X : realLie Ψ G | ‖X‖ < δ ∧ ∀ τ a b, ‖((mat x τ)⁻¹ * Matrix.of (X.1 τ) * mat x τ) a b‖ < 2 * ε} := by
-  first | exact @GlobalTheory.CovTop.VolUp.BallCover.frBall_subset_chartExp_image | exact GlobalTheory.CovTop.VolUp.BallCover.frBall_subset_chartExp_image | (intros; apply GlobalTheory.CovTop.VolUp.BallCover.frBall_subset_chartExp_image <;> assumption)
+  first | exact @GlobalTheory.CovTop.VolUp.BallCover.frBall_subset_chartExp_image
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrameBallSubsetExpChartImageFrameBoxStatement =====
@@ -336,7 +336,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.riemannianHaar_le_one_of_dim_zero : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (Ψ : Finset (E →+* ℂ)) (G : Matrix (Fin r) (Fin r) E) (x : Frame Ψ r), 1 ≤ r → (∀ τ, (mat x τ).det ≠ 0) → Ψ.card * (r ^ 2 - 1) = 0 → ∀ S : Set (realSU Ψ G), riemHaar Ψ G x S ≤ 1 := by
-  first | exact @GlobalTheory.SUVol.Degenerate.riemHaar_le_one | exact GlobalTheory.SUVol.Degenerate.riemHaar_le_one | (intros; apply GlobalTheory.SUVol.Degenerate.riemHaar_le_one <;> assumption)
+  first | exact @GlobalTheory.SUVol.Degenerate.riemHaar_le_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RiemannianHaarLeOneOfDimZeroStatement =====
@@ -372,7 +372,7 @@ private theorem permJ' {r : ℕ} (p q : ℕ) (e : Fin p ⊕ Fin q ≃ Fin r) :
     revert h
     generalize e.symm a = i
     generalize e.symm b = j
-    rcases i with i | i <;> rcases j with j | j <;> intro h <;> simp_all [one_apply]
+    rcases i with i | i <;> rcases j with j | j <;> intro h <;> simp_all
 
 namespace GlobalTheory.CovTop.VolUp.FrameBox
 
@@ -458,7 +458,7 @@ theorem boxEnt_norm_sq_eq {r : ℕ} (d : Fin r → ℝ) (hd : ∀ a, d a = 1 ∨
     · intro e; simp only [Prod.mk.injEq] at e; exact h.ne e.1
     · rintro ⟨a', b'⟩
       simp only [boxEnt, if_pos h, Prod.mk.injEq]
-      split_ifs <;> (try simp only [norm_neg, norm_mul, hdd, Complex.norm_I, norm_one, norm_zero]) <;> first | (norm_num; done) | (rename_i h1 h2; exact absurd (h1.1.symm.trans h2.1) h.ne)
+      split_ifs <;> (try simp only [norm_neg, hdd, norm_one, norm_zero]) <;> first | (norm_num; done) | (rename_i h1 h2; exact absurd (h1.1.symm.trans h2.1) h.ne)
   · subst h
     have haz : a ≠ z := fun e => hab (by rw [e])
     refine ⟨(a, a), (z, z), ?_, ?_⟩
@@ -470,7 +470,7 @@ theorem boxEnt_norm_sq_eq {r : ℕ} (d : Fin r → ℝ) (hd : ∀ a, d a = 1 ∨
     · intro e; simp only [Prod.mk.injEq] at e; exact h.ne e.1
     · rintro ⟨a', b'⟩
       simp only [boxEnt, if_neg (not_lt.2 h.le), if_pos h, Prod.mk.injEq]
-      split_ifs <;> (try simp only [norm_neg, norm_mul, hdd, Complex.norm_I, norm_one, norm_zero]) <;> first | (norm_num; done) | (rename_i h1 h2; exact absurd (h1.1.symm.trans h2.1) h.ne)
+      split_ifs <;> (try simp only [norm_mul, hdd, Complex.norm_I, norm_zero]) <;> first | (norm_num; done) | (rename_i h1 h2; exact absurd (h1.1.symm.trans h2.1) h.ne)
 
 theorem norm_boxVec : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (Ψ : Finset (E →+* ℂ)) (d : Ψ → Fin r → ℝ) (z : Fin r), (∀ τ a, d τ a = 1 ∨ d τ a = -1) → ∀ k, ‖boxVec d z k‖ = √2 := by
   intro E _ _ _ r Ψ d z hd k
@@ -613,22 +613,22 @@ theorem boxCoord_boxVec (E : Type) [Field E] [NumberField E] [IsCMField E] (r : 
       exact ⟨h.1, h.2.1, h.2.2⟩
     · rintro ⟨rfl, rfl, rfl⟩; rfl
   simp only [hjk]
-  simp only [boxCoord, boxVec, LinearMap.coe_comp, Function.comp_apply, Complex.reLm_coe, Complex.imLm_coe]
-  simp only [entryL, LinearMap.restrictScalars_apply, ContinuousLinearMap.coe_coe, EuclideanSpace.proj, PiLp.toLp_apply]
+  simp only [boxCoord, boxVec]
+  simp only [entryL, EuclideanSpace.proj]
   by_cases hτ : τ' = τ
   swap
   · split_ifs <;> simp_all
   subst hτ
-  simp only [true_and, if_true]
+  simp only [true_and]
   clear hjk
   split_ifs with h1 h1' h3 h3 h3 h3 h3 h3
-  all_goals simp only [LinearMap.coe_comp, Function.comp_apply, Complex.reLm_coe, Complex.imLm_coe, entryL, LinearMap.restrictScalars_apply, ContinuousLinearMap.coe_coe, EuclideanSpace.proj, PiLp.toLp_apply, PiLp.proj_apply, boxEnt, if_true]
+  all_goals simp only [LinearMap.coe_comp, Function.comp_apply, Complex.reLm_coe, Complex.imLm_coe, LinearMap.restrictScalars_apply, ContinuousLinearMap.coe_coe, PiLp.proj_apply, boxEnt, if_true]
   all_goals rcases lt_trichotomy a b with h2 | rfl | h2
   all_goals (try simp only [lt_irrefl, if_false])
   all_goals (try simp only [h2, not_lt_of_gt h2, if_true, if_false])
   all_goals clear _hd
   all_goals (split_ifs with e1 e2 <;> (try obtain ⟨rfl, rfl⟩ := h1') <;> (try obtain ⟨rfl, rfl⟩ := e1) <;> (try obtain ⟨rfl, rfl⟩ := e2) <;> (try simp))
-  all_goals (try (simp only [Fin.lt_iff_val_lt_val, Fin.ext_iff, Prod.ext_iff, ne_eq, Prod.mk.injEq] at *; omega))
+  all_goals (try (simp only [Fin.lt_iff_val_lt_val, Fin.ext_iff, Prod.ext_iff, ne_eq] at *; omega))
   all_goals exact absurd ⟨rfl, rfl⟩ h3
 
 end GlobalTheory.CovTop.VolUp.FrameBox
@@ -829,7 +829,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.riemannianLieMeasure_frameBox_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (κ : Type) (p q : κ → ℕ) (Ψ : Finset (E →+* ℂ)) (G : Matrix (Fin r) (Fin r) E) (x : Frame Ψ r) (σ : κ ≃ Ψ) (A : ∀ ρ, Matrix (Fin (p ρ) ⊕ Fin (q ρ)) (Fin r) ℂ) (e : ∀ ρ, Fin (p ρ) ⊕ Fin (q ρ) ≃ Fin r), 1 ≤ r → IsIdent p q Ψ G x σ A e → ∀ t : ℝ, 0 < t → riemLie Ψ G x {X | ∀ τ a b, ‖((mat x τ)⁻¹ * Matrix.of (X τ) * mat x τ) a b‖ < t} ≤ ENNReal.ofReal ((3 * t) ^ (Ψ.card * (r ^ 2 - 1))) := by
-  first | exact @GlobalTheory.CovTop.VolUp.FrameBox.riemLie_frameBox_le | exact GlobalTheory.CovTop.VolUp.FrameBox.riemLie_frameBox_le | (intros; apply GlobalTheory.CovTop.VolUp.FrameBox.riemLie_frameBox_le <;> assumption)
+  first | exact @GlobalTheory.CovTop.VolUp.FrameBox.riemLie_frameBox_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RiemannianLieMeasureFrameBoxLeStatement =====
@@ -1047,7 +1047,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.tangentNormalizedHaar_le_two_mul_lieHaar : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (Ψ : Finset (E →+* ℂ)) (G : Matrix (Fin r) (Fin r) E) (hG : G.det ≠ 0) (lam : Measure (realLie Ψ G)) [lam.IsAddHaarMeasure], ∃ δ : ℝ, 0 < δ ∧ ∀ s : Set (realLie Ψ G), MeasurableSet s → s ⊆ Metric.ball 0 δ → tangentHaar (realSU Ψ G) (lam.map Subtype.val) (GlobalTheory.SUVol.DensOne.chartExp Ψ G hG '' s) ≤ 2 * lam s := by
-  first | exact @GlobalTheory.CovTop.VolUp.UpDens.tangentHaar_le_two_mul_lam | exact GlobalTheory.CovTop.VolUp.UpDens.tangentHaar_le_two_mul_lam | (intros; apply GlobalTheory.CovTop.VolUp.UpDens.tangentHaar_le_two_mul_lam <;> assumption)
+  first | exact @GlobalTheory.CovTop.VolUp.UpDens.tangentHaar_le_two_mul_lam
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentNormalizedHaarLeTwoMulLieHaarStatement =====
@@ -1179,7 +1179,7 @@ theorem riemHaar_frBall_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
   set s : Set (realLie Ψ G) := {X : realLie Ψ G | ‖X‖ < δ ∧ ∀ τ a b,
     ‖((mat x τ)⁻¹ * Matrix.of (X.1 τ) * mat x τ) a b‖ < 2 * ε} with hs
   have hs' : s = Metric.ball 0 δ ∩ Subtype.val ⁻¹' S := by
-    ext X; simp [hs, hS, mem_ball_zero_iff]
+    ext X; simp [hs, hS]
   have hsm : MeasurableSet s := by
     rw [hs']; exact measurableSet_ball.inter (measurable_subtype_coe hSm)
   have hsb : s ⊆ Metric.ball 0 δ := by rw [hs']; exact Set.inter_subset_left
@@ -1223,7 +1223,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.riemannianHaar_frameBall_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (κ : Type) (p q : κ → ℕ) (Ψ : Finset (E →+* ℂ)) (G : Matrix (Fin r) (Fin r) E) (x : Frame Ψ r) (σ : κ ≃ Ψ) (A : ∀ ρ, Matrix (Fin (p ρ) ⊕ Fin (q ρ)) (Fin r) ℂ) (e : ∀ ρ, Fin (p ρ) ⊕ Fin (q ρ) ≃ Fin r), 1 ≤ r → IsIdent p q Ψ G x σ A e → ∃ ε₀ : ℝ, 0 < ε₀ ∧ ∀ ε : ℝ, 0 < ε → ε < ε₀ → riemHaar Ψ G x (frBall Ψ G x ε) ≤ ENNReal.ofReal ((8 * ε) ^ (Ψ.card * (r ^ 2 - 1))) := by
-  first | exact @GlobalTheory.CovTop.VolUp.UpBall.riemHaar_frBall_le | exact GlobalTheory.CovTop.VolUp.UpBall.riemHaar_frBall_le | (intros; apply GlobalTheory.CovTop.VolUp.UpBall.riemHaar_frBall_le <;> assumption)
+  first | exact @GlobalTheory.CovTop.VolUp.UpBall.riemHaar_frBall_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RiemannianHaarFrameBallLeStatement =====

@@ -368,7 +368,7 @@ theorem _root_.GlobalTheory.T.autRep_isotypic_splitPlace_localComponent : ∀ (L
     Function.Injective T → (∀ a, T a ∈ π.S) → GlobalTheory.HeckeFrob.IsLocMap s σ i T →
     ∀ g ∈ π.S, g ∈ ⨆ (T' : {T' : σ.V →ₗ[ℂ] (GAf L n → π.W) // (∀ a, T' a ∈ π.S) ∧ GlobalTheory.HeckeFrob.IsLocMap s σ i T'}),
       LinearMap.range T'.1 := by
-  first | exact @GlobalTheory.HeckeFrob.mem_iSup_range_locMap | exact GlobalTheory.HeckeFrob.mem_iSup_range_locMap | (intros; apply GlobalTheory.HeckeFrob.mem_iSup_range_locMap <;> assumption)
+  first | exact @GlobalTheory.HeckeFrob.mem_iSup_range_locMap
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AutRepIsotypicSplitPlaceLocalComponentStatement =====
@@ -457,7 +457,7 @@ theorem _root_.GlobalTheory.T.finite_heckeDoubleCoset_cosets_at_splitPlace : ∀
     (ϖ : s.v.adicCompletion (maximalRealSubfield L)), IsUnif L s.v ϖ → ∀ J : Subgroup (GAf L n),
     (∀ κ, TrivOutside {s.v} κ → (κ ∈ J ↔ κ ∈ Umax L n)) → ∀ k : ℕ,
     ((fun x : GAf L n => (x : GAf L n ⧸ J)) '' tSet L n s ϖ k).Finite := by
-  first | exact @GlobalTheory.TSetFinLoc.finite_image_tSet_loc | exact GlobalTheory.TSetFinLoc.finite_image_tSet_loc | (intros; apply GlobalTheory.TSetFinLoc.finite_image_tSet_loc <;> assumption)
+  first | exact @GlobalTheory.TSetFinLoc.finite_image_tSet_loc
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteHeckeDoubleCosetCosetsAtSplitPlaceStatement =====
@@ -755,7 +755,7 @@ theorem _root_.GlobalTheory.T.splitPlace_fixed_vector_sum_spherical_images : ∀
     ∃ (m : ℕ) (T : Fin m → σ.V →ₗ[ℂ] (GAf L n → π.W)) (e : Fin m → σ.V),
       (∀ j, GlobalTheory.HeckeFrob.IsLocMap s σ i (T j)) ∧
       (∀ j, e j ∈ GlobalTheory.PRep.fixed σ.ρ (GlobalTheory.SplitWeil.KO (s.w.adicCompletion L) (Fin n))) ∧ f = ∑ j, T j (e j) := by
-  first | exact @GlobalTheory.SphAvg.exists_sum_fixed | exact GlobalTheory.SphAvg.exists_sum_fixed | (intros; apply GlobalTheory.SphAvg.exists_sum_fixed <;> assumption)
+  first | exact @GlobalTheory.SphAvg.exists_sum_fixed
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceFixedVectorSumSphericalImagesStatement =====
@@ -832,7 +832,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 theorem _root_.GlobalTheory.T.continuous_adicCompletion_equiv_uniformiser : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] (v : HeightOneSpectrum (𝓞 F))
     (w : HeightOneSpectrum (𝓞 E)) (i : v.adicCompletion F ≃+* w.adicCompletion E), Continuous i →
     ∀ ϖ : v.adicCompletion F, Valued.v ϖ = WithZero.exp (-1 : ℤ) → Valued.v (i ϖ) = WithZero.exp (-1 : ℤ) := by
-  first | exact @GlobalTheory.UnifMap.unif_to_unif | exact GlobalTheory.UnifMap.unif_to_unif | (intros; apply GlobalTheory.UnifMap.unif_to_unif <;> assumption)
+  first | exact @GlobalTheory.UnifMap.unif_to_unif
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ContinuousAdicCompletionEquivUniformiserStatement =====
@@ -885,7 +885,7 @@ theorem satEig_inv_normalised : ∀ (q n k : ℕ), 0 < q → k ≤ n → ∀ (α
   intro q n k hq hk α
   rw [esymm_map_mul_const', GlobalTheory.LFun.satEig, ← mul_assoc, ← mul_assoc, exponent_eq q n k hq hk]
   congr 2
-  simp [Multiset.map_map, Function.comp_def, Units.val_inv_eq_inv_val]
+  simp [Function.comp_def, Units.val_inv_eq_inv_val]
 
 end GlobalTheory.SatEigArith
 end -- clump:auto
@@ -904,7 +904,7 @@ theorem _root_.GlobalTheory.T.satakeEigenvalue_inv_normalised_eq_esymm : ∀ (q 
     (q : ℂ) ^ (k * (k - 1) / 2) * (((q : ℂ) ^ (k * (n - 1)))⁻¹ *
         GlobalTheory.LFun.satEig q n ((Finset.univ.val.map α).map (·⁻¹)) k) =
       ((Finset.univ.val.map fun i => ((α i : ℂ))⁻¹).map (· * (q : ℂ) ^ (((1 - (n : ℝ)) / 2 : ℝ) : ℂ))).esymm k := by
-  first | exact @GlobalTheory.SatEigArith.satEig_inv_normalised | exact GlobalTheory.SatEigArith.satEig_inv_normalised | (intros; apply GlobalTheory.SatEigArith.satEig_inv_normalised <;> assumption)
+  first | exact @GlobalTheory.SatEigArith.satEig_inv_normalised
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SatakeEigenvalueInvNormalisedEqEsymmStatement =====
@@ -1040,7 +1040,7 @@ theorem _root_.GlobalTheory.T.splitHeckeOperator_inverse_conjugatePlace_cosetSum
       GlobalTheory.LFun.heckeVec ρ (GlobalTheory.LFun.KGL (GlobalTheory.HeckeFrob.conjSplit s).w n)
                    (fun g => Formalism.UG.Tj ℂ n (Formalism.UG.Ov L (GlobalTheory.HeckeFrob.conjSplit s).w) (i ϖ) k g⁻¹) e =
         ∑ γ ∈ R, ρ (Matrix.GeneralLinearGroup.map i.toRingHom ((GlobalTheory.HeckeFrob.conjSplit s).loc n γ)) e := by
-  first | exact @GlobalTheory.HeckeEigCoset.heckeVec_Tj_inv_conj_eq_sum | exact GlobalTheory.HeckeEigCoset.heckeVec_Tj_inv_conj_eq_sum | (intros; apply GlobalTheory.HeckeEigCoset.heckeVec_Tj_inv_conj_eq_sum <;> assumption)
+  first | exact @GlobalTheory.HeckeEigCoset.heckeVec_Tj_inv_conj_eq_sum
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitHeckeOperatorInverseConjugatePlaceCosetSumStatement =====
@@ -1145,7 +1145,7 @@ theorem _root_.GlobalTheory.T.split_place_hecke_operator_eigenvalue_conj_spheric
     ∀ k, 1 ≤ k → k ≤ n →
       ((normV (GlobalTheory.HeckeFrob.conjSplit s).w : ℕ) : ℂ) ^ (k * (k - 1) / 2) • NG.tN J s ϖ k (T e) =
         (GlobalTheory.HeckeFrob.twEig (GlobalTheory.HeckeFrob.conjSplit s).w α).esymm k • T e := by
-  first | exact @GlobalTheory.HeckeEigConj.tN_eig | exact GlobalTheory.HeckeEigConj.tN_eig | (intros; apply GlobalTheory.HeckeEigConj.tN_eig <;> assumption)
+  first | exact @GlobalTheory.HeckeEigConj.tN_eig
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceHeckeOperatorEigenvalueConjSphericalStatement =====
@@ -1264,7 +1264,7 @@ theorem _root_.GlobalTheory.T.spherical_vector_fixed_local_alt : ∀ (hL : _root
         Polynomial.C ((-1 : ℂ) ^ k * ((normV w : ℕ) : ℂ) ^ (k * (k - 1) / 2) * c k) * X ^ (D.R.nV - k) =
       (Multiset.map (fun α => X - Polynomial.C α)
         ((_root_.GlobalTheory.CuspRep.ParLawsT.locRecT hL (D.nd.plOm.2 w) x).lpTw ((1 - (D.R.nV : ℝ)) / 2)).frobEig).prod := by
-  first | exact @_root_.GlobalTheory.HeckeFrob.locPol_eq_alt | exact _root_.GlobalTheory.HeckeFrob.locPol_eq_alt | (intros; apply _root_.GlobalTheory.HeckeFrob.locPol_eq_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeckeFrob.locPol_eq_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1330,7 +1330,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 
 theorem _root_.GlobalTheory.T.locRecT_unr_of_sphAt : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (D : D7) (π : NG.AutRep D.host.E D.R.nV) (s : SplitPlace D.host.E) x,
     GlobalTheory.AutQuot.LocAt π s.w x → π.SphericalAtPlace s.v → (_root_.GlobalTheory.CuspRep.ParLawsT.locRecT hL (D.nd.plOm.2 s.w) x).unr := by
-  first | exact @_root_.GlobalTheory.SphLoc.main_alt_alt | exact _root_.GlobalTheory.SphLoc.main_alt_alt | (intros; apply _root_.GlobalTheory.SphLoc.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.SphLoc.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1450,7 +1450,7 @@ section
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting NumberField IsDedekindDomain Polynomial
 
 theorem _root_.GlobalTheory.T.exists_nbc_auSide_true_of_isEmpty_loc : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (D : D7), IsEmpty D.nd.Loc → ∀ T : GlobalTheory.RowTie.WDTie D.nd D.naut, ∃ (C : NBC D.naut) (A : _root_.GlobalTheory.HeightCounting.AUSideAlt (setBC D C)), _root_.GlobalTheory.HeightCounting.AutomorphicSideRealised hL (setBC D C) T A := by
-  first | exact @_root_.GlobalTheory.AutQuot.exists_nbc_auSide_auTrue_of_isEmpty | exact _root_.GlobalTheory.AutQuot.exists_nbc_auSide_auTrue_of_isEmpty | (intros; apply _root_.GlobalTheory.AutQuot.exists_nbc_auSide_auTrue_of_isEmpty <;> assumption)
+  first | exact @_root_.GlobalTheory.AutQuot.exists_nbc_auSide_auTrue_of_isEmpty
 end
 end -- clump:auto
 end -- clump:auto

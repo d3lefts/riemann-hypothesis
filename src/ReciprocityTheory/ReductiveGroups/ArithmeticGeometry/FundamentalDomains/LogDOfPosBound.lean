@@ -123,7 +123,7 @@ lemma Lv_n (Z : X.Coord) (τ : X.Ψ) (v : Fin r → ℂ) (m : Fin (r - X.p0)) :
   rw [sum_eq_sum_castLE_p0_of_vanish_above X]
   · refine Finset.sum_congr rfl fun c _ => ?_
     rw [dif_pos (by simp)]
-    first | rfl | (congr 2) | simp
+    first | rfl
   · intro j hj
     rw [dif_neg (not_lt.mpr hj), zero_mul]
 
@@ -393,8 +393,8 @@ lemma pivot_neg {x : Frame X.Ψ r} (hx : x ∈ X.dom) (ho : X.IsOrtho x) {Z : X.
   have hre := Bf_self_re X Z τ (v - t)
   have hP0 : Pv X (v - t) = 0 := by
     funext a
-    have ha : ((Fin.castLE X.p0_le a : Fin r) : ℕ) < X.p0 := by simp [Fin.coe_castLE]
-    simp [Pv, ht, ha]
+    have ha : ((Fin.castLE X.p0_le a : Fin r) : ℕ) < X.p0 := by simp
+    simp [Pv, ht]
   have hNm : Nv X Z τ (v - t) m0 = 1 := by
     have h1 : ∀ c : Fin X.p0, (v - t) (Fin.castLE X.p0_le c) = 0 := fun c => congrFun hP0 c
     simp only [Nv, h1, mul_zero, Finset.sum_const_zero, add_zero]
@@ -531,7 +531,7 @@ lemma log_dOf_neg {x : Frame X.Ψ r} (hx : x ∈ X.dom) (ho : X.IsOrtho x) {Z : 
 lemma spread_nonneg (la : Wt X.Ψ r) (τ : X.Ψ) : 0 ≤ X.spread la τ := by
   unfold Data.spread
   rcases isEmpty_or_nonempty (Fin r) with h | h
-  · simp [Real.iSup_of_isEmpty, Real.iInf_of_isEmpty]
+  · simp
   · exact sub_nonneg.mpr (ciInf_le_ciSup (Set.finite_range _).bddBelow (Set.finite_range _).bddAbove)
 
 theorem nfac_xZ {x : Frame X.Ψ r} (hx : x ∈ X.dom) (ho : X.IsOrtho x) {ρ : ℝ} (hρ0 : 0 < ρ) (hρ : ρ ≤ 1 / 10)

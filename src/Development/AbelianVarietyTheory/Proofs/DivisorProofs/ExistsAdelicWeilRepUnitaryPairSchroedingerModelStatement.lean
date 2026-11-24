@@ -130,7 +130,7 @@ theorem _root_.GlobalTheory.T.exists_weilRep_hermitianPair_rationalSchrodinger :
             co.e (incM D.host.F x) = (fun i => algebraMap D.host.F (AF D.host.F) (y i), fun i => algebraMap D.host.F (AF D.host.F) (z i))) →
           ∃ om, GlobalTheory.WeilM.IsUWeilPair (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (GlobalTheory.WeilM.adeleClass D.host.F) ψ ξ
             (incM D.host.F JA) (incM D.host.F JB) co χT χS om := by
-  first | exact @GlobalTheory.WeilSchrodinger.exists_isUWeilPair_hsp | exact GlobalTheory.WeilSchrodinger.exists_isUWeilPair_hsp | (intros; apply GlobalTheory.WeilSchrodinger.exists_isUWeilPair_hsp <;> assumption)
+  first | exact @GlobalTheory.WeilSchrodinger.exists_isUWeilPair_hsp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsWeilRepHermitianPairRationalSchrodingerStatement =====
@@ -208,7 +208,7 @@ theorem _root_.GlobalTheory.T.exists_adelicWeilRep_unitaryPair_schroedingerModel
         GlobalTheory.WeilM.ResEtaPow (Units.map (algebraMap D.host.F (AF D.host.F)).toMonoidHom).range χX n →
         GlobalTheory.WeilM.ResEtaPow (Units.map (algebraMap D.host.F (AF D.host.F)).toMonoidHom).range χW d →
         ∃ om, Mo.IsWeil B.ψ χX χW om := by
-  first | exact @GlobalTheory.WeilSchrodinger.exists_isWeil | exact GlobalTheory.WeilSchrodinger.exists_isWeil | (intros; apply GlobalTheory.WeilSchrodinger.exists_isWeil <;> assumption)
+  first | exact @GlobalTheory.WeilSchrodinger.exists_isWeil
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAdelicWeilRepUnitaryPairSchroedingerModelStatement =====

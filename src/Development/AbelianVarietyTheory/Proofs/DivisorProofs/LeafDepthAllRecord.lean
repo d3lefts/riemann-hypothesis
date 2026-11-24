@@ -229,7 +229,7 @@ open Classical NumberField IsDedekindDomain Formalism.L2.FormalSeriesBounds Form
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ
 
 theorem _root_.GlobalTheory.T.inertPrimeDepthDataExistsAtPoints_proof : (∀ (p : ℕ) [Fact p.Prime], ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF.UpFSt p) → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (lv : Level H) (Xo : Moduli Dw lv) (c : Coeff lv) [StarRing (𝓞 E)], PkgInertSt Xo c := by
-  first | exact @GlobalTheory.InertPackage.pkgInert | exact GlobalTheory.InertPackage.pkgInert | (intros; apply GlobalTheory.InertPackage.pkgInert <;> assumption)
+  first | exact @GlobalTheory.InertPackage.pkgInert
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.JetHarmonics.InertPrimeDepthDataExistsAtPointsProofStatement =====
@@ -520,7 +520,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ (PS Pt ev pt comp1 FGLaw)
 open MvPolynomial (X)
 
 theorem _root_.GlobalTheory.T.exists_integral_chart_integral_framed_point : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) [StarRing (𝓞 E)], IntegralChartExists Xo c ∧ ((∀ a : 𝓞 E, star a = H.bar a) → IntChartEx Xo c) ∧ ((∀ a : 𝓞 E, star a = H.bar a) → ∀ (T : CDVR) (io : c.F →+* T.Fr) (y : IntFr Xo c T io), ∃ C : IntegralChartA3 Xo c T io y, FrTrunc C.I.G (𝟙 (Sp T.V)) (chD C.ch) C.xT C.eT) := by
-  first | exact @GlobalTheory.IntChartExists.intChart_exists | exact GlobalTheory.IntChartExists.intChart_exists | (intros; apply GlobalTheory.IntChartExists.intChart_exists <;> assumption)
+  first | exact @GlobalTheory.IntChartExists.intChart_exists
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.ExistsIntegralChartIntegralFramedPointStatement =====
@@ -683,7 +683,7 @@ theorem gap_bounds : ∀ (D : D7) (L : SizeData₂ D) (Pm : ParameterChoice' D L
     congr 1
     split_ifs with h
     · rfl
-    · exact absurd (by first | exact hjm | exact ⟨hj1, hj2⟩) h
+    · exact absurd (by first | exact ⟨hj1, hj2⟩) h
   have c1 := L.cloud_v (plOf D z) ⟨D.R.k - 2, hv⟩
   have c2 := abs_le.1 (L.be_close (plOf D z) ⟨0, hm⟩ ⟨j - 1, hjm⟩)
   rw [Rat.cast_sub] at c2

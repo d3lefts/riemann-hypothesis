@@ -324,7 +324,7 @@ section
 open GlobalTheory.RefSum GlobalTheory.CovTop GlobalTheory.BigTop
 
 theorem _root_.GlobalTheory.T.numerical_point_statement_of_size : _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.RefSum.NumPtAlt := by
-  first | exact @_root_.GlobalTheory.RefSum.NumSizes.numPt_of_size' | exact _root_.GlobalTheory.RefSum.NumSizes.numPt_of_size' | (intros; apply _root_.GlobalTheory.RefSum.NumSizes.numPt_of_size' <;> assumption)
+  first | exact @_root_.GlobalTheory.RefSum.NumSizes.numPt_of_size'
 end
 end -- clump:auto
 end -- clump:auto
@@ -366,7 +366,7 @@ theorem thA_small (u : Weight Dw) (n : ℕ) (τ : Psi H) (i : ℕ) (hi : i < Dw.
 theorem thA_out (u : Weight Dw) (n : ℕ) (τ : E →+* ℂ) (i : ℕ) (h : Dw.mult τ ≤ i) : thA Dw u n (τ, i) = 0 := by
   unfold Datum.mult at h
   simp only [thA, wtOf]
-  split_ifs at h ⊢ <;> first | omega | simp
+  split_ifs at h ⊢ <;> first | omega
 
 theorem psi_or_conj (τ : E →+* ℂ) : (∃ τ' : Psi H, τ = τ'.1) ∨ ∃ τ' : Psi H, τ = conjEmb τ'.1 := by
   by_cases h : τ (H.rt : E) = H.rt0
@@ -1197,7 +1197,7 @@ section
 open GlobalTheory.RefSum GlobalTheory.CovTop GlobalTheory.BigTop
 
 theorem _root_.GlobalTheory.T.sum_pt_of_wt_pt_num_pt : _root_.GlobalTheory.RefSum.WtPtAlt → _root_.GlobalTheory.RefSum.NumPtAlt → _root_.GlobalTheory.RefSum.SumPtAlt := by
-  first | exact @_root_.GlobalTheory.RefSum.sumPt_of_sizes_alt | exact _root_.GlobalTheory.RefSum.sumPt_of_sizes_alt | (intros; apply _root_.GlobalTheory.RefSum.sumPt_of_sizes_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.RefSum.sumPt_of_sizes_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1424,7 +1424,7 @@ section
 open GlobalTheory.RefSum GlobalTheory.CovTop GlobalTheory.BigTop
 
 theorem _root_.GlobalTheory.T.weight_pt_of_size : _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.RefSum.WtPtAlt := by
-  first | exact @_root_.GlobalTheory.RefSum.DivWt.wt_pt_of_cov_size | exact _root_.GlobalTheory.RefSum.DivWt.wt_pt_of_cov_size | (intros; apply _root_.GlobalTheory.RefSum.DivWt.wt_pt_of_cov_size <;> assumption)
+  first | exact @_root_.GlobalTheory.RefSum.DivWt.wt_pt_of_cov_size
 end
 end -- clump:auto
 end -- clump:auto
@@ -1458,7 +1458,7 @@ section
 open GlobalTheory.RefSum GlobalTheory.CovTop GlobalTheory.BigTop
 
 theorem _root_.GlobalTheory.T.sum_pt_of_size : _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.RefSum.SumPtAlt := by
-  first | exact @_root_.GlobalTheory.RefSum.sumPt_of_size_alt | exact _root_.GlobalTheory.RefSum.sumPt_of_size_alt | (intros; apply _root_.GlobalTheory.RefSum.sumPt_of_size_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.RefSum.sumPt_of_size_alt
 end
 end -- clump:auto
 end -- clump:auto

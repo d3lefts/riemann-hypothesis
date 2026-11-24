@@ -581,7 +581,7 @@ theorem muMax_le_mon {V κ : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K
     intro m _
     by_cases hm : m = s
     · subst hm
-      simp [Pi.single_apply, hst]
+      simp [hst]
     · simp [Pi.single_apply, hm]
   have hline : ∀ m, muMaxDef (Pi.basisFun K (MonI lam)) (fun _ : InfinitePlace K => (monD lam)⁻¹)
       (𝓞 K ∙ (Pi.single m (1 : K) : MonI lam → K)) ≤ -Real.log c0 := by
@@ -1064,7 +1064,7 @@ theorem brp_lcvInf_std (n : ℕ) :
     rw [Finset.sum_eq_single a]
     · by_cases h : a = c
       · subst h; simp
-      · simp [Pi.single_apply, Matrix.one_apply, h, Ne.symm h]
+      · simp [h]
     · intro b _ hb
       simp [Pi.single_apply, hb]
     · intro h; exact absurd (Finset.mem_univ _) h
@@ -1142,7 +1142,6 @@ theorem det_bound_common_denominator (w : HeightOneSpectrum (𝓞 K)) {M : Submo
   have h4 := key _ (fun a b => hE2 a b)
   first
     | rwa [Matrix.coe_units_inv, Matrix.det_nonsing_inv, Ring.inverse_eq_inv'] at h4
-    | simpa [Matrix.coe_units_inv, Matrix.det_nonsing_inv] using h4
 
 variable {ι : Type} [Fintype ι]
 

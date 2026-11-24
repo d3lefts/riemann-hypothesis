@@ -456,11 +456,10 @@ theorem genFun_gen (Λ : Submodule (𝓞 E) S.V) (F : LFlag S r T) (Pc : LFlag S
     (hPc : ∀ x, Pc x → IsLift Λ x ∧ IsAdmissible Λ g F x ∧ IsFixedConv Λ g x) :
     GenFun Λ F Pc g := by
   intro x y hxy
-  have hxy' : DCRel Λ F x.1 y.1 := hxy
   obtain ⟨hxl, hxa, hxc⟩ := hPc x.1 x.2
   obtain ⟨hyl, hya, hyc⟩ := hPc y.1 y.2
-  have hyx : DCRel Λ F y.1 x.1 := (dCRelEquivAll_holds E S r T T' Λ F).symm hxy'
-  exact ⟨gen_fwd hFl hFc hxl hxc hyc hya hxy', gen_fwd hFl hFc hyl hyc hxc hxa hyx⟩
+  have hyx : DCRel Λ F y.1 x.1 := (dCRelEquivAll_holds E S r T T' Λ F).symm hxy
+  exact ⟨gen_fwd hFl hFc hxl hxc hyc hya hxy, gen_fwd hFl hFc hyl hyc hxc hxa hyx⟩
 
 end GenAll
 

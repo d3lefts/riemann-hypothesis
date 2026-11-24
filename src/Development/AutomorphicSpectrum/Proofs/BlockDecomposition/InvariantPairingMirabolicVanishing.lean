@@ -160,14 +160,9 @@ theorem twKer_le_comap_levi (ψ : AddChar k Circle) {n : ℕ} {V : Type} [AddCom
   first
     | (obtain ⟨u, w, rfl⟩ := hx
        obtain ⟨hm, hc⟩ := GlobalTheory.CompanionTheory.BZMirabolic.thetaConj k ψ n a m u
-       simp only [SetLike.mem_coe, Submodule.mem_comap, map_sub, Units.smul_def, map_smul]
+       simp only [SetLike.mem_coe, Submodule.mem_comap, map_sub, map_smul]
        rw [key, hc]
        exact Submodule.subset_span ⟨⟨_, hm⟩, _, rfl⟩)
-    | (obtain ⟨⟨u, w⟩, rfl⟩ := hx
-       obtain ⟨hm, hc⟩ := GlobalTheory.CompanionTheory.BZMirabolic.thetaConj k ψ n a m u
-       simp only [SetLike.mem_coe, Submodule.mem_comap, map_sub, Units.smul_def, map_smul]
-       rw [key, hc]
-       exact Submodule.subset_span ⟨(⟨_, hm⟩, _), rfl⟩)
 
 theorem twKerConj (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] : TwKerConj k := by
@@ -223,7 +218,7 @@ theorem det_unip (n : ℕ) (v : Multiplicative (Fin n → k)) :
     have hj : j ≠ Fin.last n := fun h => by
       subst h
       exact absurd hij' (not_lt.2 (Fin.le_last i))
-    simp [unip, colMat, hj, one_apply, hij'.ne']
+    simp [unip, colMat, hj, hij'.ne']
   rw [Matrix.det_of_upperTriangular htri]
   refine Finset.prod_eq_one fun i _ => ?_
   induction i using Fin.lastCases with

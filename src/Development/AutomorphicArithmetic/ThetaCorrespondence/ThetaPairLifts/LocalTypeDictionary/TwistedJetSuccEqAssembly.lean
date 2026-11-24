@@ -579,7 +579,7 @@ theorem exists_poly_blockAct_coef {k : ℕ} (f : MvPolynomial (ι × Fin k × Fi
       Formalism.GradedWeylDivisibility.blockAct ℂ g p = map (eval fun x => g x.1 x.2.1 x.2.2) (T p) := by
     intro g p
     induction p using MvPolynomial.induction_on with
-    | C a => simp [T, aeval_C, MvPolynomial.algebraMap_eq, map_C, eval_C]
+    | C a => simp [T, MvPolynomial.algebraMap_eq, map_C, eval_C]
     | add p q hp hq => simp only [map_add (f := _), hp, hq, T]
     | mul_X p v hp =>
       simp only [T] at hp ⊢
@@ -760,7 +760,7 @@ section -- clump:auto
 open Formalism.BasicNotions Formalism.L2.DIV
 
 theorem _root_.GlobalTheory.T.equivariant_GL_of_equivariant_unitary_coefficientSpace : ∀ {ι : Type} [Fintype ι] {N n : ℕ} (hN : N = n + 1) (Λ : ι → DomWeight N) (σ : ι → DomWeight n) (φ : VV ℂ Λ →ₗ[ℂ] VV ℂ σ), (∀ (u : ι → Matrix.unitaryGroup (Fin n) ℂ) (v : VV ℂ Λ), φ (rhoK Λ (fun τ => Formalism.MainNotions.PrimeDegreeVariant.embGL ℂ n N hN.symm (GlobalTheory.Branching.unitaryIncl n (u τ))) v) = rhoK σ (fun τ => GlobalTheory.Branching.unitaryIncl n (u τ)) (φ v)) → ∀ (g : ι → GL (Fin n) ℂ) (v : VV ℂ Λ), φ (rhoK Λ (fun τ => Formalism.MainNotions.PrimeDegreeVariant.embGL ℂ n N hN.symm (g τ)) v) = rhoK σ g (φ v) := by
-  first | exact @GlobalTheory.Branching.Family.equivariant_gl_of_unitary | exact GlobalTheory.Branching.Family.equivariant_gl_of_unitary | (intros; apply GlobalTheory.Branching.Family.equivariant_gl_of_unitary <;> assumption)
+  first | exact @GlobalTheory.Branching.Family.equivariant_gl_of_unitary
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.EquivariantGLOfEquivariantUnitaryCoefficientSpacStatement =====
@@ -1106,7 +1106,7 @@ theorem colFn_eq (ch : Choice R) (a : Fin ch.n) (g : GA D (ch.G.V (.top 0))) :
     congr_fun (pairVec_colOf ch.W.θ ch.ξ (ch.Psi a)) g
   rw [h1]
   unfold scal colFun
-  simp only [LinearMap.comp_apply, LinearEquiv.coe_coe]
+  simp only [LinearMap.comp_apply]
   rw [arg_eq]
   rfl
 
@@ -1504,13 +1504,11 @@ theorem _root_.GlobalTheory.T.twisted_pairing_identity : _root_.GlobalTheory.Fun
     (fun X Y j hj k hk => by
       rcases j with _ | j
       · have := i2 (GlobalTheory.JetsOne.psiC_right ch a) X Y k hk
-        beta_reduce
         rw [Function.update_self, this]
       · exact congrArg _ (i1 X Y _ j.succ_pos hj k hk))
     (fun X Y j hj k hk => by
       rcases j with _ | j
       · have := h0 t a β hβ τ hτ y (psiC (ch.Psi a) (X 0)) X Y k hk
-        beta_reduce
         rw [Function.update_self, this]
       · exact congrArg _ (i3 X Y _ j.succ_pos hj k hk))
     (fun X Y k h1 hk => congrArg _ (i4 X Y k h1 hk))
@@ -1554,7 +1552,7 @@ section
 open GlobalTheory.RowClaim
 
 theorem _root_.GlobalTheory.T.twisted_jets_assemble : _root_.GlobalTheory.FunPr.ThetaLocalInputs → SumOKK → StepJets := by
-  first | exact @_root_.GlobalTheory.RowClaim.JetsAssembly.twistedJet_succ_eq_assembly | exact _root_.GlobalTheory.RowClaim.JetsAssembly.twistedJet_succ_eq_assembly | (intros; apply _root_.GlobalTheory.RowClaim.JetsAssembly.twistedJet_succ_eq_assembly <;> assumption)
+  first | exact @_root_.GlobalTheory.RowClaim.JetsAssembly.twistedJet_succ_eq_assembly
 end
 end -- clump:auto
 end -- clump:auto

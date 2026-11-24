@@ -185,12 +185,13 @@ theorem mass_pow_le_exp_rpow (f m : ℕ) (rd L B₁ C κ : ℝ) (hf : 1 ≤ f) (
   have hrdpos : (0 : ℝ) < rd := by linarith
   have hfe : (f : ℝ) ≤ Real.exp m := (Real.log_le_iff_le_exp hfpos).1 hlf
   have hre : rd ≤ Real.exp (κ * L) := (Real.log_le_iff_le_exp hrdpos).1 hlrd
-  have hfr : (1 : ℝ) ≤ f * rd := by nlinarith
-  have hfr2 : (1 : ℝ) ≤ f * rd ^ 2 := by nlinarith
+  have hfr : (1 : ℝ) ≤ f * rd := one_le_mul_of_one_le_of_one_le hf1 (by linarith)
+  have hfr2 : (1 : ℝ) ≤ f * rd ^ 2 :=
+    one_le_mul_of_one_le_of_one_le hf1 (one_le_pow₀ (by linarith))
   have hBr0 : 0 ≤ B₁ * rd := mul_nonneg hB0 hrdpos.le
   have hBr : B₁ * rd ≤ 4 * f * rd * rd := mul_le_mul_of_nonneg_right hB hrdpos.le
-  have ha : 1 + 2 * B₁ ≤ 9 * f * rd := by nlinarith
-  have hb : 1 + 2 * (B₁ * rd) ≤ 9 * f * rd ^ 2 := by nlinarith
+  have ha : 1 + 2 * B₁ ≤ 9 * f * rd := by linarith
+  have hb : 1 + 2 * (B₁ * rd) ≤ 9 * f * rd ^ 2 := by linarith
   have hc : B₁ * (B₁ * rd) ≤ 16 * (f : ℝ) ^ 2 * rd ^ 3 := by
     have h := mul_le_mul hB hBr hBr0 (by linarith)
     calc B₁ * (B₁ * rd) ≤ 4 * f * rd * (4 * f * rd * rd) := h
@@ -222,13 +223,17 @@ theorem mass_pow_le_exp_rpow (f m : ℕ) (rd L B₁ C κ : ℝ) (hf : 1 ≤ f) (
       _ = _ := h2
       _ ≤ _ := h3
   have key : 60 + 24 * (m : ℝ) + 36 * (κ * L) ≤ C ^ 2 * ((m : ℝ) ^ 2 * L) := by
-    have y1 : 1 ≤ κ * L := by nlinarith
-    have hmm : 2 * (m : ℝ) ≤ (m : ℝ) ^ 2 := by nlinarith
-    have hyl : (m : ℝ) ^ 2 ≤ κ * L * (m : ℝ) ^ 2 := by nlinarith
-    have hy4 : 4 * (κ * L) ≤ κ * L * (m : ℝ) ^ 2 := by nlinarith
+    have y1 : 1 ≤ κ * L := one_le_mul_of_one_le_of_one_le hκ hL
+    have hmm : 2 * (m : ℝ) ≤ (m : ℝ) ^ 2 := by
+      have := mul_le_mul_of_nonneg_right hm2 (by linarith : (0 : ℝ) ≤ m)
+      linarith
+    have hyl : (m : ℝ) ^ 2 ≤ κ * L * (m : ℝ) ^ 2 := le_mul_of_one_le_left (sq_nonneg _) y1
+    have hy4 : 4 * (κ * L) ≤ κ * L * (m : ℝ) ^ 2 := by
+      have := mul_le_mul_of_nonneg_left (by linarith : (4 : ℝ) ≤ (m : ℝ) ^ 2) (by linarith : 0 ≤ κ * L)
+      linarith
     have hCk : 55 * κ * ((m : ℝ) ^ 2 * L) ≤ C ^ 2 * ((m : ℝ) ^ 2 * L) :=
       mul_le_mul_of_nonneg_right hC (mul_nonneg (sq_nonneg _) (by linarith))
-    nlinarith
+    linarith
   have hexp : ((2 * (2 * f) : ℕ) : ℝ) * (15 + 6 * (m : ℝ) + 9 * (κ * L)) ≤
       L * (C * (m : ℝ) ^ 2 * f) * C := by
     have e1 : ((2 * (2 * f) : ℕ) : ℝ) * (15 + 6 * (m : ℝ) + 9 * (κ * L)) =
@@ -389,7 +394,7 @@ theorem exists_small_mem_fractional_ideal (K : Type) [Field K] [NumberField K] [
   have hS : (∏ w, f w ^ w.mult) = NNReal.sqrt ‖discr K‖₊ := by
     apply NNReal.eq
     rw [NNReal.coe_prod, Real.coe_sqrt, coe_nnnorm, Int.norm_eq_abs, ← rootDiscr_pow_eq_sqrt_discr K]
-    simp only [hmult, f, NNReal.coe_pow, NNReal.sq_sqrt, Real.coe_toNNReal _ hr0, Finset.prod_const,
+    simp only [hmult, f, NNReal.sq_sqrt, Real.coe_toNNReal _ hr0, Finset.prod_const,
       Finset.card_univ, hcard]
   have hbound : minkowskiBound K I < MeasureTheory.volume (convexBodyLT K f) := by
     rw [convexBodyLT_volume, hS]
@@ -491,7 +496,7 @@ theorem lagrange_identity_orthCompanion (hspan : Submodule.span K (Set.range e) 
     h (orthCompanion h e x) v * star (h (orthCompanion h e x) v') = h x x * h v' v - h x v * h v' x := by
   rw [orthCompanion_inner_apply, orthCompanion_inner_apply, inner_eq_coords_orthonormal_pair h e hspan ho x x, inner_eq_coords_orthonormal_pair h e hspan ho v' v,
     inner_eq_coords_orthonormal_pair h e hspan ho x v, inner_eq_coords_orthonormal_pair h e hspan ho v' x]
-  simp only [star_add, star_mul', star_neg, star_star]
+  simp only [star_add, star_mul', star_neg]
   ring
 
 theorem inner_self_ne_zero_of_orthonormal (hcm : ∀ (φ : K →+* ℂ) (a : K), φ (star a) = starRingEnd ℂ (φ a))
@@ -1219,9 +1224,9 @@ theorem covolume_trace_lattice (hK : IsCMUnram K) (h : V →ₗ⋆[K] V →ₗ[K
     simp only [v, A, hι, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul, starRingEnd_apply,
       he, Matrix.of_apply]
     split_ifs with hii
-    · simp [hii]
+    · simp
       exact congrArg _ (mul_comm _ _)
-    · simp [hii]
+    · simp
   have hdetG : (Matrix.gram ℝ v).det = A.det * A.det := by
     rw [hG, Matrix.det_blockDiagonal, Fin.prod_univ_two]
   have hA0 : A.det ≠ 0 := by

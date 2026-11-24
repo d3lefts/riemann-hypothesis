@@ -490,7 +490,7 @@ theorem _root_.GlobalTheory.T.rowFormsFiniteGroupAction_eq_flagLevelRightTransla
       ∃ a : Bridge.ActTie (Bridge.ratF X.toD7.sp.X') P (levEnv X.toD7.sp.X' L.βX (L.datXt t)).Q (levEnv X.toD7.sp.X' L.βX (L.datXt t)).ch ((famR X I hX U Xg tr).A.leftGroupActionRight t),
         ∀ q : (levEnv X.toD7.sp.X' L.βX (L.datXt t)).Q,
           eG (a.red q) = rTup L.βX (L.datXt t) (Formalism.UG.bc (swapAE X.toD7) ((q : Bridge.Gf X.toD7.sp.X') : GL _ _)) := by
-  first | exact @GlobalTheory.Mem.R3.RowAct.act_tie | exact GlobalTheory.Mem.R3.RowAct.act_tie | (intros; apply GlobalTheory.Mem.R3.RowAct.act_tie <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.RowAct.act_tie
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RowFormsFiniteGroupActionEqFlagLevelRightTranslaStatement =====
@@ -987,7 +987,7 @@ theorem _root_.GlobalTheory.T.splitHecke_rows_eq_doubleCoset_operators : ∀ (X 
       Nonempty (Bridge.HeckeTie (Bridge.ratF X.toD7.sp.X') P ((famR X I hX U Xg tr).A.heckeR t) (fun i => 1 ≤ i.2 ∧ i.2 ≤ X.toD7.sp.X'.rank)
         (isTEnv X.toD7.sp.X' (fun P : PlS X.B px => (P.1 : Pl X.toD7.host.E)) ((famR X I hX U Xg tr).A.ok t))
         (isLocEnv X.toD7.sp.X' (fun P : PlS X.B px => (P.1 : Pl X.toD7.host.E)) ((famR X I hX U Xg tr).A.ok t))) := by
-  first | exact @GlobalTheory.Mem.R3.RowHk.hecke_tie | exact GlobalTheory.Mem.R3.RowHk.hecke_tie | (intros; apply GlobalTheory.Mem.R3.RowHk.hecke_tie <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.RowHk.hecke_tie
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitHeckeRowsEqDoubleCosetOperatorsStatement =====
@@ -1084,7 +1084,7 @@ theorem _root_.GlobalTheory.T.exists_rowForms_adelic_decoratedLattices : ∀ (X 
         (fun i => Formalism.L2.Col.InertTypeOk X.toD7.sp.X'.rank i.2)
         (fun i => IsLabElt X.toD7.sp.X' (i.1.1 : PlI X.B px).1 (labIn X.toD7.sp.X'.rank i.2))
         fun i => IsLocElt X.toD7.sp.X' (i.1.1 : PlI X.B px).1)) ∧ BrgStdR X I hX U Xg tr L cX (fun t φ => (s t).pres.extL φ)  := by
-  first | exact @GlobalTheory.Mem.R3.RowsRead.exists_rowSide | exact GlobalTheory.Mem.R3.RowsRead.exists_rowSide | (intros; apply GlobalTheory.Mem.R3.RowsRead.exists_rowSide <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.RowsRead.exists_rowSide
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsRowFormsAdelicDecoratedLatticesStatement =====

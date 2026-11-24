@@ -323,7 +323,7 @@ theorem in_map {f : MvPowerSeries σ Q} (hf : In (⊤ : Ideal B) f) :
 
 theorem map_smul_series (c : Q) (f : MvPowerSeries σ Q) : map Θ (c • f) = Θ c • map Θ f := by
   ext α
-  simp [coeff_map, coeff_smul]
+  simp [coeff_map]
 
 include hΘ in
 theorem map_comb {ι : Type} [Fintype ι] (b : ι → B) (e : ι → MvPowerSeries σ Q) :
@@ -1219,7 +1219,7 @@ theorem defect_frob_pow : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsA
     have e' : b - a ^ p - T = -(a ^ p - expand p hp (map F.σ a)) - kB - (p : F.B) • h₀ := by
       rw [hbeq]; abel
     rw [e']
-    simp only [map_sub, map_neg, coeff_smul, smul_eq_mul]
+    simp only [map_sub, map_neg, coeff_smul]
     refine sub_mem (sub_mem (neg_mem (pow_sub_expand_mem p F.σ F.σ_pow huB a α)) (hkJ α)) ?_
     exact Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _)
   obtain ⟨w', hw'⟩ := exists_eq_p_mul p _ hW

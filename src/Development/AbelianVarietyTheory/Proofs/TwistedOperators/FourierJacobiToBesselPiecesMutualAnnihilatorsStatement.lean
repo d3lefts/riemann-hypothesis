@@ -289,7 +289,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.depthLatticeGridRow_zero_le_selfDualHomLattice : All fun {D} _ _ _ {G} _ _ => 0 < D.R.m → latRow G 0 ≤ latBig G 0 := by
-  first | exact @GlobalTheory.RowBig.latRow_zero_le_latBig | exact GlobalTheory.RowBig.latRow_zero_le_latBig | (intros; apply GlobalTheory.RowBig.latRow_zero_le_latBig <;> assumption)
+  first | exact @GlobalTheory.RowBig.latRow_zero_le_latBig
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DepthLatticeGridRowZeroLeSelfDualHomLatticeStatement =====
@@ -308,7 +308,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.idempotent_smul_mem_hat_lattice : All fun {D} _ _ _ {G} _ _ => ∀ i, i < D.R.m → ∀ v : WO (G.V (.grid (i + 1) 0)) (G.V (.grid i 0)), v ∈ latO (G.V (.grid (i + 1) 0)) (G.V (.grid i 0)) (G.Λ (.grid (i + 1) 0) : Set _) (G.Λ (.grid i 0) : Set _) (fun _ => True) → v ∈ latBig G i → ∀ e : AE D, IsIdemSum e G.pl.W0 → e • v ∈ hatMx (G.modul • homLat (G.Λ (.grid (i + 1) 0)) (G.Λ (.grid i 0))) := by
-  first | exact @GlobalTheory.DepthBig.smul_mem_hatMx_of_mem_latBig | exact GlobalTheory.DepthBig.smul_mem_hatMx_of_mem_latBig | (intros; apply GlobalTheory.DepthBig.smul_mem_hatMx_of_mem_latBig <;> assumption)
+  first | exact @GlobalTheory.DepthBig.smul_mem_hatMx_of_mem_latBig
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IdempotentSmulMemHatLatticeStatement =====
@@ -354,13 +354,13 @@ theorem latRow_bidual : All fun {D} _ _ {sc} {G} W _ => ∀ i, i < D.R.m → ∀
   have finO := (GlobalTheory.AscFinWit.finLat_latO
     (S := G.V (.grid (i + 1) 0)) (T := G.V (.grid i 0))
     (LS := G.Λ (.grid (i + 1) 0)) (LT := G.Λ (.grid i 0))
-    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdS | exact (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdS).toIsLattice)
-    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdT | exact (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdT).toIsLattice)).fin
+    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdS)
+    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdT)).fin
   have finB := (GlobalTheory.AscFinWit.finLat_latO
     (S := G.V (.grid (i + 1) 0)) (T := G.V (.grid i 0))
     (LS := G.Λ (.grid (i + 1) 0)) (LT := idLat (shiftId G) (G.Λ (.grid i 0)))
-    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdS | exact (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdS).toIsLattice)
-    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdB | exact (GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdB).toIsLattice)).fin
+    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdS)
+    (by first | exact GlobalTheory.ProjXCols.selfDual_isFullLattice _ _ sdB)).fin
   have uO : u ∈ latO (G.V (.grid (i + 1) 0)) (G.V (.grid i 0)) (G.Λ (.grid (i + 1) 0) : Set _)
       (G.Λ (.grid i 0) : Set _) (fun _ => True) := by
     refine (GlobalTheory.SelfDualAt.latO_ann_at D W.ψ W.ψ_std _ _ _ _ sdS sdT (fun _ => True) u hu).2 fun u' hu' => ?_
@@ -392,7 +392,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.depthLatticeFirstRow_eq_doubleAnnihilator : All fun {D} _ _ {sc} {G} W _ => ∀ i, i < D.R.m → ∀ u : WO (G.V (.grid (i + 1) 0)) (G.V (.grid i 0)), MxAt (fun _ => True) u → (∀ u' : WO (G.V (.grid (i + 1) 0)) (G.V (.grid i 0)), MxAt (fun _ => True) u' → (∀ v ∈ latRow G i, W.ψ (symplO _ _ v u') = 1) → W.ψ (symplO _ _ u u') = 1) → u ∈ latRow G i := by
-  first | exact @GlobalTheory.AscFin.LatticeBidual.latRow_bidual | exact GlobalTheory.AscFin.LatticeBidual.latRow_bidual | (intros; apply GlobalTheory.AscFin.LatticeBidual.latRow_bidual <;> assumption)
+  first | exact @GlobalTheory.AscFin.LatticeBidual.latRow_bidual
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DepthLatticeFirstRowEqDoubleAnnihilatorStatement =====
@@ -437,7 +437,7 @@ private theorem selfDual_isFullLattice {D : D7} : ∀ (V : HSp D) (Λ : Submodul
       refine ⟨b + c, ?_⟩
       change (b : D.host.E) + c = _
       rw [hb, hc]
-      simp [f, map_add, add_mul, Finset.sum_add_distrib, mul_add]
+      simp [f, add_mul, Finset.sum_add_distrib, mul_add]
     smul_mem' := by
       rintro c x ⟨b, hb⟩
       refine ⟨RingOfIntegers.mapRingHom (starRingEnd D.host.E) c * b, ?_⟩
@@ -587,7 +587,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.jacobi_depth_lattice_keeps_isotropic_hom_part : OnStd fun {D} _ _ {sc} {G} _ F => ∀ σ (h : 2 * (σ + 1) + 2 ≤ D.R.m), ∀ u ∈ latRow G (2 * σ + 2), (F.dJ (σ + 1) h).extX _ (u ⬝ (F.dJ (σ + 1) h).jX) ∈ latRow G (2 * σ + 2) := by
-  first | exact @GlobalTheory.AscFin.SplitX.latRow_extX | exact GlobalTheory.AscFin.SplitX.latRow_extX | (intros; apply GlobalTheory.AscFin.SplitX.latRow_extX <;> assumption)
+  first | exact @GlobalTheory.AscFin.SplitX.latRow_extX
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.JacobiDepthLatticeKeepsIsotropicHomPartStatement =====
@@ -717,8 +717,8 @@ theorem hO_extY_right (u : WO V W) (a' : Mx D W.rank ρ) : hO V W u (d.extY W a'
 theorem hO_extX_left (a : Mx D W.rank ρ) (u' : WO V W) : hO V W (d.extX W a) u' = hO V W (d.extX W a) (d.extY W (u' ⬝ d.jY)) := by
   rw [d.hO_coordS, d.hO_coordS]
   simp only [HypDec.extY_apply, HypDec.extX_apply, Matrix.mul_assoc, HypDec.pY_jX, HypDec.pY_j0, HypDec.pY_jY,
-    HypDec.pX_jX, HypDec.pX_j0, HypDec.pX_jY, Matrix.mul_zero, Matrix.mul_one, pairS, Matrix.zero_mul, Matrix.mul_zero,
-    Matrix.trace_zero, add_zero, zero_add, hO_zero_left, hO_zero_right]
+    HypDec.pX_jX, HypDec.pX_j0, HypDec.pX_jY, Matrix.mul_zero, Matrix.mul_one, pairS, Matrix.mul_zero,
+    Matrix.trace_zero, add_zero, hO_zero_left, hO_zero_right]
 
 end GlobalTheory.AscFin.AnnPieces
 
@@ -854,7 +854,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.fourierJacobiToBessel_pieces_mutual_annihilators : OnStd fun {D} _ _ {sc} {G} W F => ∀ σ (h : 2 * (σ + 1) + 2 ≤ D.R.m) (h' : 2 * σ + 2 ≤ D.R.m), FinLat (pcFB W F σ h h').A₂ ∧ (∀ a, MxAt (fun _ => True) a → (a ∈ (pcFB W F σ h h').A₁ ↔ ∀ a' ∈ (pcFB W F σ h h').A₂, W.ψ (symplO _ _ ((F.dJ (σ + 1) h).extX _ a) ((F.dJ (σ + 1) h).extY _ a')) = 1)) ∧ (∀ a', MxAt (fun _ => True) a' → (a' ∈ (pcFB W F σ h h').A₂ ↔ ∀ a ∈ (pcFB W F σ h h').A₁, W.ψ (symplO _ _ ((F.dJ (σ + 1) h).extX _ a) ((F.dJ (σ + 1) h).extY _ a')) = 1)) := by
-  first | exact @GlobalTheory.AscFin.AnnPieces.pcFB_dualA | exact GlobalTheory.AscFin.AnnPieces.pcFB_dualA | (intros; apply GlobalTheory.AscFin.AnnPieces.pcFB_dualA <;> assumption)
+  first | exact @GlobalTheory.AscFin.AnnPieces.pcFB_dualA
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FourierJacobiToBesselPiecesMutualAnnihilatorsStatement =====

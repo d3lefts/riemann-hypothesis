@@ -201,7 +201,7 @@ theorem isRayL_mul_prime_wideInd {F : Type} [Field F] [NumberField F] (𝔪 𝔭
       have : (cls 𝔭 * cls J = C) ↔ (cls J = C * (cls 𝔭)⁻¹) := by
         rw [eq_mul_inv_iff_mul_eq, mul_comm]
       by_cases hc : cls J = C * (cls 𝔭)⁻¹
-      · simp [hc, this.mpr hc]
+      · simp [hc]
       · simp [hc, mt this.mp hc]
     · rw [Set.indicator_of_notMem (hnot J hJ), Set.indicator_of_notMem (show J ∉ S from hJ), mul_zero]
   have h3 : HasSum (B.indicator (g C)) (((Ideal.absNorm 𝔭 : ℕ) : ℂ) ^ (-s) * Z' s) := by
@@ -710,8 +710,6 @@ theorem cmValues_minPadicVal_bound : MinVal := by
     · simp only [hd, if_true]
       refine ⟨l + 1, by have := hl.two_le; omega, ?_, ?_⟩
       · first
-          | exact (Nat.coprime_succ_self l)
-          | exact (Nat.coprime_self_succ l)
           | simp
       · have h := padicValNat.pow_sub_pow (p := l) (x := l + 1) (y := 1) hodd (by have := hl.one_lt; omega)
           (by simp) (by

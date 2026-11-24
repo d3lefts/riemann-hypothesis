@@ -110,13 +110,6 @@ lemma wt_countable : Countable SL(2, ℤ) := by
 lemma wt_cont (g : SL(2, ℤ)) : Continuous (fun τ : ℍ => g • τ) :=
   continuous_const_smul (g : GL (Fin 2) ℝ)
 
-lemma wt_fd_closed : IsClosed ModularGroup.fd := by
-  have h1 : IsClosed {z : ℍ | 1 ≤ normSq (z : ℂ)} :=
-    isClosed_le continuous_const (Complex.continuous_normSq.comp UpperHalfPlane.continuous_coe)
-  have h2 : IsClosed {z : ℍ | |z.re| ≤ 1 / 2} :=
-    isClosed_le (continuous_abs.comp (Complex.continuous_re.comp UpperHalfPlane.continuous_coe)) continuous_const
-  exact h1.inter h2
-
 theorem wt_exists : ∀ L : ℕ, 0 < L → ∃ ρ, Wt L ρ := by
   intro L hL
   haveI : NeZero L := ⟨hL.ne'⟩
@@ -133,7 +126,7 @@ theorem wt_exists : ∀ L : ℕ, 0 < L → ∃ ρ, Wt L ρ := by
     have : K = ⋃ s ∈ S, (fun τ : ℍ => s • τ) ⁻¹' ModularGroup.fd := by
       ext τ; simp [hK]
     rw [this]
-    exact Finset.measurableSet_biUnion _ fun s _ => (wt_fd_closed.preimage (wt_cont s)).measurableSet
+    exact Finset.measurableSet_biUnion _ fun s _ => (ModularGroup.isClosed_fd.preimage (wt_cont s)).measurableSet
   have hKfin : ∀ τ : ℍ, {γ : Gamma0 L | (γ : SL(2, ℤ)) • τ ∈ K}.Finite := by
     intro τ
     have h1 : {g : SL(2, ℤ) | g • τ ∈ K}.Finite := by

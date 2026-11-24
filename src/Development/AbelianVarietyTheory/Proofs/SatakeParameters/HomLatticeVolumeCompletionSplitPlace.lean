@@ -462,7 +462,7 @@ theorem homLat_le_span (P : HeightOneSpectrum O) {p : ℕ} (ρ : E →+* Qq) (hp
         simp only [A, Matrix.smul_mulVec, Matrix.vecMulVec_mulVec, Pi.smul_apply, smul_eq_mul,
           Algebra.smul_def]
         rw [← hr']
-        simp [Matrix.mulVec, mul_comm, mul_assoc, mul_left_comm]
+        simp [Matrix.mulVec, mul_comm, mul_assoc]
       rw [e]
       exact N'.smul_mem r hn'
     obtain ⟨t, ht, htY⟩ := hY A hA
@@ -1009,8 +1009,8 @@ theorem completion_ringEquiv_of_dense : ∀ {E : Type} [Field E] [NumberField E]
     rw [e]
     exact GlobalTheory.Idele.isOpen_valued_le P (-(n : ℤ))
   · obtain ⟨γ, hγ⟩ := Valued.mem_nhds_zero.1 hU
-    obtain ⟨n, hn⟩ := GlobalTheory.Idele.exists_exp_neg_lt
-      (γ := MonoidWithZeroHom.ValueGroup₀.embedding γ.1) (by simp)
+    obtain ⟨n, hn⟩ := WithZero.exists_exp_neg_natCast_lt
+      (x := MonoidWithZeroHom.ValueGroup₀.embedding γ.1) (by simp)
     refine ⟨n, fun z hz => hγ ?_⟩
     have hz' := (hS n z).1 hz
     simp only [Set.mem_setOf_eq, Valuation.restrict_lt_iff_lt_embedding]

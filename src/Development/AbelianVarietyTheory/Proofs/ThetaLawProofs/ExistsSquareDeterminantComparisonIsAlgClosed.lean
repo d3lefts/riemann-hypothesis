@@ -212,7 +212,7 @@ open GlobalTheory.KeyKa
 
 
 theorem _root_.GlobalTheory.T.boxProducts_basis_span_powObj_sections : ∀ (K : Type) [Field K] (x : KeyIn K) (m N : ℕ) (b : Fin N → RR x m), IsBasis x b → ∀ (n : ℕ) (s : LB.Sec (LB.LinComb x.P.L (K := Fin n) (fun c => (Out.powPr x.P.A c).left) (fun _ => (m : ℤ)))), ∃ q : (Fin n → Fin N) → K, ∀ (Z : Scheme.{0}) (r : Z ⟶ (Out.powObj x.P.A n).left) (z : Z) J, Good x.P.L z J → sval s r z J = ∑ I, gs r z ⊤ (cst (Out.powObj x.P.A n).hom ⊤ (q I)) * ∏ c, gs (r ≫ (Out.powPr x.P.A c).left) z (x.P.L.U (J (r ≫ (Out.powPr x.P.A c).left))) ((b (I c)).f (J (r ≫ (Out.powPr x.P.A c).left))) := by
-  first | exact @GlobalTheory.BoxSpan.boxProducts_span | exact GlobalTheory.BoxSpan.boxProducts_span | (intros; apply GlobalTheory.BoxSpan.boxProducts_span <;> assumption)
+  first | exact @GlobalTheory.BoxSpan.boxProducts_span
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.BoxProductsBasisSpanPowObjSectionsStatement =====
@@ -282,7 +282,7 @@ open GlobalTheory.AbLaw
 open GlobalTheory.KeyKa
 
 theorem _root_.GlobalTheory.T.exists_enum_ker_transpose_similitude_points : Out.Laws → ∀ (K : Type) [Field K] [IsAlgClosed K] (x : KeyIn K) (m : ℕ) (al : Matrix (Fin 4) (Fin 4) ℤ), (m : K) ≠ 0 → al.transpose * al = (m : ℤ) • (1 : Matrix (Fin 4) (Fin 4) ℤ) → ∃ ξ : (Fin 4 → Fin (m ^ x.P.g)) → Fin 4 → Pt x, (∀ I I', I ≠ I' → ∀ p : Sp K, ∃ r, (ξ I r).left p ≠ (ξ I' r).left p) ∧ (∀ I c, (List.ofFn fun r : Fin 4 => ξ I r ^ al r c).prod = 1) := by
-  first | exact @GlobalTheory.KeyKa.exists_enum_ker_transpose | exact GlobalTheory.KeyKa.exists_enum_ker_transpose | (intros; apply GlobalTheory.KeyKa.exists_enum_ker_transpose <;> assumption)
+  first | exact @GlobalTheory.KeyKa.exists_enum_ker_transpose
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsEnumKerTransposeSimilitudePointsStatement =====
@@ -299,7 +299,7 @@ open GlobalTheory.AbLaw
 open GlobalTheory.KeyKa
 
 theorem _root_.GlobalTheory.T.exists_normalised_iso_pullback_mul_by_m : Out.Laws → ∀ (R : Type) [CommRing R] [IsNoetherianRing R] (x : KeyIn R) (m : ℕ), ∃ mu : LB.Gen (LB.LinComb x.P.L (K := Fin 2) ![((𝟙 x.P.A) ^ m).left, 𝟙 x.P.A.left] ![1, -(m : ℤ) ^ 2]), mu.IsGen ∧ ∀ (p : (𝟙_ (Over (Sp R))).left) J, Good x.P.L p J → val mu (eSec x.P.A) p J = val x.rig (𝟙 _) p J ^ (1 - (m : ℤ) ^ 2) := by
-  first | exact @GlobalTheory.KeyKa.exists_normalised_mulPull | exact GlobalTheory.KeyKa.exists_normalised_mulPull | (intros; apply GlobalTheory.KeyKa.exists_normalised_mulPull <;> assumption)
+  first | exact @GlobalTheory.KeyKa.exists_normalised_mulPull
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsNormalisedIsoPullbackMulByMStatement =====
@@ -316,7 +316,7 @@ open GlobalTheory.AbLaw
 open GlobalTheory.KeyKa
 
 theorem _root_.GlobalTheory.T.exists_normalising_unit_similitude_origin : ∀ (R : Type) [CommRing R] (x : KeyIn R) (m : ℕ) (al : Matrix (Fin 4) (Fin 4) ℤ) (ξ : Fin 4 → Pt x) (mu : LB.Gen (LB.LinComb x.P.L (K := Fin 2) ![((𝟙 x.P.A) ^ m).left, 𝟙 x.P.A.left] ![1, -(m : ℤ) ^ 2])) (w : LB.Gen (LB.LinComb x.P.L (K := Fin 4 ⊕ Fin 4) (Sum.elim (fun r => (alMap x al r (ξ r)).left) (fun c => (Out.powPr x.P.A c).left)) (Sum.elim (fun _ => 1) (fun _ => -(m : ℤ))))), m ≠ 0 → al.transpose * al = (m : ℤ) • (1 : Matrix (Fin 4) (Fin 4) ℤ) → (∀ c, (List.ofFn fun r : Fin 4 => ξ r ^ al r c).prod = 1) → mu.IsGen → w.IsGen → ∃ rho : Rˣ, ∀ (p : (𝟙_ (Over (Sp R))).left) J, Good x.P.L p J → (val w (eSec (Out.powObj x.P.A 4)) p J ^ (m ^ 2) * ∏ r, val mu (ξ r).left p J).val = gs (𝟙_ (Over (Sp R))).hom p ⊤ (cst (𝟙 (Sp R)) ⊤ rho) * (val x.rig (𝟙 _) p J ^ (4 - 4 * (m : ℤ) ^ 3)).val := by
-  first | exact @GlobalTheory.SimilUnit.exists_normalising_unit | exact GlobalTheory.SimilUnit.exists_normalising_unit | (intros; apply GlobalTheory.SimilUnit.exists_normalising_unit <;> assumption)
+  first | exact @GlobalTheory.SimilUnit.exists_normalising_unit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsNormalisingUnitSimilitudeOriginStatement =====
@@ -333,7 +333,7 @@ open GlobalTheory.AbLaw
 open GlobalTheory.KeyKa
 
 theorem _root_.GlobalTheory.T.exists_point_thetaPullbacks_isUnit : Out.Laws → ∀ (K : Type) [Field K] [IsAlgClosed K] (x : KeyIn K) (m : ℕ) (al : Matrix (Fin 4) (Fin 4) ℤ) (ξ : Fin 4 → Pt x), (m : K) ≠ 0 → al.transpose * al = (m : ℤ) • (1 : Matrix (Fin 4) (Fin 4) ℤ) → ∃ y : 𝟙_ (Over (Sp K)) ⟶ Out.powObj x.P.A 4, ∀ (p : (𝟙_ (Over (Sp K))).left) J, Good x.P.L p J → ∀ r, IsUnit (gs (y.left ≫ (alMap x al r (ξ r)).left) p (x.P.L.U (J (y.left ≫ (alMap x al r (ξ r)).left))) (x.th.f (J (y.left ≫ (alMap x al r (ξ r)).left)))) := by
-  first | exact @GlobalTheory.SimilNonvan.exists_pt_isUnit | exact GlobalTheory.SimilNonvan.exists_pt_isUnit | (intros; apply GlobalTheory.SimilNonvan.exists_pt_isUnit <;> assumption)
+  first | exact @GlobalTheory.SimilNonvan.exists_pt_isUnit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsPointThetaPullbacksIsUnitStatement =====
@@ -350,7 +350,7 @@ open GlobalTheory.AbLaw
 open GlobalTheory.KeyKa
 
 theorem _root_.GlobalTheory.T.exists_section_boxProduct_div_generator : ∀ (X Y : Scheme.{0}) (L : LB X), L.IsLB → ∀ (K₁ K₂ : Type) [Fintype K₁] [Fintype K₂] (φ : K₁ → (Y ⟶ X)) (ψ : K₂ → (Y ⟶ X)) (e : ℤ) (th : L.Sec) (w : LB.Gen (LB.LinComb L (K := K₁ ⊕ K₂) (Sum.elim φ ψ) (Sum.elim (fun _ => 1) (fun _ => -e)))), w.IsGen → ∃ s : LB.Sec (LB.LinComb L ψ (fun _ => e)), ∀ (Z : Scheme.{0}) (r : Z ⟶ Y) (z : Z) J, Good L z J → ∏ k, gs (r ≫ φ k) z (L.U (J (r ≫ φ k))) (th.f (J (r ≫ φ k))) = (val w r z J).val * sval s r z J := by
-  first | exact @GlobalTheory.KeyQuot.exists_sec_quot | exact GlobalTheory.KeyQuot.exists_sec_quot | (intros; apply GlobalTheory.KeyQuot.exists_sec_quot <;> assumption)
+  first | exact @GlobalTheory.KeyQuot.exists_sec_quot
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsSectionBoxProductDivGeneratorStatement =====
@@ -449,7 +449,7 @@ theorem exists_transl_ratio (laws : Out.Laws) {R : Type} [CommRing R] (x : KeyIn
   have hu := DVR.mulGen_isGen _ _ _ _ _ _ _ hw (DVR.invGen_isGen _ _ _ _ hw')
   obtain ⟨a, ha⟩ := exists_ratio x.P.isLB (fun U _ h => by
       simp only [Fintype.prod_sum_type, Sum.elim_inl, Sum.elim_inr, ← Over.comp_left, tr_alMap, zpow_neg,
-        Finset.prod_inv_distrib, zpow_one, inv_inv]
+        Finset.prod_inv_distrib, zpow_one]
       simp only [mul_inv, inv_inv, mul_mul_mul_comm _ _⁻¹, inv_mul_cancel])
     (Out.powObj x.P.A 4).hom (laws.globalFns _ _ (AbelianSchemeGerms.isAbelianScheme_powObj _ x.P.isAb 3)).2
     (DVR.pullGen_isGen _ _ _ _ hu (tr x v.1).left) hu

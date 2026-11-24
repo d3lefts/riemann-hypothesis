@@ -142,7 +142,7 @@ theorem hform_eq_herm (σ : E →+* E) (hst : ∀ a : E, star a = σ a)
 theorem hform_isSymm (J : Matrix (Fin n) (Fin n) E) (hJ : ∀ i j, star (J i j) = J j i) :
     (hform J).IsSymm := by
   refine LinearMap.IsSymm.mk fun x y => ?_
-  simp only [hform_apply, starRingEnd_apply, star_sum, star_mul', star_star, hJ, RingHom.id_apply]
+  simp only [hform_apply, starRingEnd_apply, star_sum, star_mul', star_star, hJ]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 
@@ -196,7 +196,7 @@ theorem isUJ_of_isom (σ : E →+* E) (hst : ∀ a : E, star a = σ a)
     simp [Pi.single_apply, apply_ite σ]
   rw [hr] at h
   rw [← h]
-  simp only [IsUJ, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Finset.sum_mul]
+  simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Finset.sum_mul]
   rw [Finset.sum_comm]
 
 end Pos
@@ -340,14 +340,10 @@ theorem mat_den {M : ℕ} (A : Matrix (Fin M) (Fin M) E) : ∃ d : ℕ, 0 < d �
     intro a
     have halg : IsAlgebraic ℤ a := by
       first
-      | exact (IsFractionRing.isAlgebraic_iff ℤ ℚ).mpr (Algebra.IsAlgebraic.isAlgebraic a)
       | exact (IsFractionRing.isAlgebraic_iff ℤ ℚ E).mpr (Algebra.IsAlgebraic.isAlgebraic a)
-      | exact (IsFractionRing.isAlgebraic_iff (R := ℤ) (K := ℚ)).mpr (Algebra.IsAlgebraic.isAlgebraic a)
-      | exact Algebra.IsAlgebraic.isAlgebraic a
     obtain ⟨y, hy0, hy⟩ : ∃ y ≠ (0 : ℤ), IsIntegral ℤ (y • a) := by
       first
       | exact halg.exists_integral_multiple
-      | exact exists_integral_multiple halg
     refine ⟨y.natAbs, Int.natAbs_pos.mpr hy0, ?_⟩
     have hcast : ((y.natAbs : ℕ) : E) = (((y.natAbs : ℕ) : ℤ) : E) := (Int.cast_natCast _).symm
     rcases (show ((y.natAbs : ℕ) : ℤ) = y ∨ ((y.natAbs : ℕ) : ℤ) = -y by omega) with h | h

@@ -438,7 +438,7 @@ theorem _root_.GlobalTheory.T.lastTwoSteps_localModel_extendByZero_topStep : ∀
           (.theta D.R.m (j + 1)) (z.submatrix (Fin.cast h₃) (Fin.cast h₄))ᵀ) ∧
         T₂ Φ = fun x => castSch ch.G (show j + 1 + 1 = D.R.m by omega) (f ⟨j + 1, by omega⟩)
           ((rowJac ch.G (j + 1) (by omega) 0 (by omega)).ext0 _ x) := by
-  first | exact @GlobalTheory.LastStepExt0.model_last | exact GlobalTheory.LastStepExt0.model_last | (intros; apply GlobalTheory.LastStepExt0.model_last <;> assumption)
+  first | exact @GlobalTheory.LastStepExt0.model_last
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.LastTwoStepsLocalModelExtendByZeroTopStepStatement =====
@@ -638,7 +638,7 @@ theorem topVertexFrame_renumbered_cast (ch : Choice R) (t : T) (w : Pl D.host.E)
     · have := congrFun (congrFun hL r) (Sum.inr 0)
       refine Eq.trans ?_ (this.trans ?_)
       · rfl
-      · simp only [fromCols_apply_inr, of_apply, Matrix.mul_diagonal, Matrix.map_apply, mul_one]
+      · simp only [fromCols_apply_inr, of_apply, Matrix.mul_diagonal, Matrix.map_apply]
         rw [Pi.one_apply, mul_one]
         symm
         show ∑ k : Fin 1, (_ : Kw w) = _
@@ -681,7 +681,7 @@ theorem _root_.GlobalTheory.T.lastTwoSteps_topVertex_frame_at_place : ∀ {D : D
         FX.β = fromCols ((topOrthAt ch.G (show D.R.m = j + 1 + 1 by omega)).iA.map p.pr * (frRow ch.S.B t w D.R.m le_rfl).β)
           (Matrix.of fun r _ => ((topOrthAt ch.G (show D.R.m = j + 1 + 1 by omega)).iB.map p.pr *ᵥ fun _ => (1 : Kw w)) r) ∧
         ∀ r z, FX.β r z = (frTop ch.S.toGridChoice t w (j + 1 + 1) (by omega)).β r (e z) := by
-  first | exact @GlobalTheory.FlatPlace.frame_top_last | exact GlobalTheory.FlatPlace.frame_top_last | (intros; apply GlobalTheory.FlatPlace.frame_top_last <;> assumption)
+  first | exact @GlobalTheory.FlatPlace.frame_top_last
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.LastTwoStepsTopVertexFrameAtPlaceStatement =====
@@ -835,7 +835,7 @@ theorem GlobalTheory.FlatPlace.lastStep_eventually : Big fun ch => ChrP ch → A
         (Fin.castLE (show (locGrid ch.G t w).rank ((locGrid ch.G t w).m, j + 1 + 1) ≤ _ by simp only [hm]; omega))
         (Fin.cast (show (locGrid ch.G t w).rank ((locGrid ch.G t w).m, j + 1) = _ by simp only [hm]; omega)) := by
       funext a b
-      simp only [Matrix.submatrix_apply, Matrix.toRows₁_apply, id]
+      simp only [Matrix.submatrix_apply, Matrix.toRows₁_apply]
       exact congrArg (fun z => y' z (Fin.cast h₄ b)) (hsymm a).symm
     have hy' : (y'.submatrix e.symm id) (topLast (locGrid ch.G t w) (j + 1 + 1)) = y' (Sum.inr ()) := by
       funext b
@@ -864,7 +864,7 @@ open GlobalTheory.FlatPlace GlobalTheory.LocMod GlobalTheory.SplitWeil
 
 
 theorem _root_.GlobalTheory.T.flatDictionary_lastTwoSteps_at_place : Big fun ch => ChrP ch → ArrP ch → LocP ch → BesP ch → JacP ch → LastP ch := by
-  first | exact @GlobalTheory.FlatPlace.lastStep_eventually | exact GlobalTheory.FlatPlace.lastStep_eventually | (intros; apply GlobalTheory.FlatPlace.lastStep_eventually <;> assumption)
+  first | exact @GlobalTheory.FlatPlace.lastStep_eventually
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FlatDictionaryLastTwoStepsAtPlaceStatement =====

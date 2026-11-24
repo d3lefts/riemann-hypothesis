@@ -140,7 +140,7 @@ private theorem tc_mul (x y : GG (m := m) (R := DualNumber κ)) : tc (x * y) = t
       sn_mul, Matrix.map_mul, Matrix.add_mul, Matrix.mul_assoc, h1]
   · simp only [tc, GG.mat, SemidirectProduct.mul_left, sgnAct_neg_one, h, if_false, _root_.mul_inv_rev,
       Units.val_mul, theta_val, theta_inv_val, thetaLie, sn_mul, sn_J, Matrix.map_mul, Jmat_map,
-      Matrix.transpose_map, sn_inv, Matrix.add_mul, Matrix.mul_add, Matrix.mul_assoc, Matrix.zero_mul,
+      Matrix.transpose_map, sn_inv, Matrix.add_mul, Matrix.mul_assoc, Matrix.zero_mul,
       Matrix.mul_zero, zero_add, add_zero, Matrix.transpose_neg, Matrix.transpose_mul, Matrix.neg_mul,
       Matrix.mul_neg, hJ, h2]
 
@@ -328,12 +328,12 @@ private def fstM (F : R →ₐ[O] DualNumber κ) : Matrix (Fin 3) (Fin 3) R →+
 private theorem sndM_mul (F : R →ₐ[O] DualNumber κ) (X Y : Matrix (Fin 3) (Fin 3) R) :
     sndM F (X * Y) = fstM F X * sndM F Y + sndM F X * fstM F Y := by
   ext a b
-  simp [sndM, fstM, dualFst, Matrix.mul_apply, Fin.sum_univ_three, DualNumber.snd_mul]
+  simp [sndM, fstM, dualFst, Matrix.mul_apply, Fin.sum_univ_three]
   ring
 
 private theorem sndM_one (F : R →ₐ[O] DualNumber κ) : sndM F 1 = 0 := by
   ext a b
-  by_cases h : a = b <;> simp [sndM, Matrix.one_apply, h]
+  by_cases h : a = b <;> simp [sndM, h]
 
 private theorem sndM_J (F : R →ₐ[O] DualNumber κ) : sndM F (Jmat R 3) = 0 := by
   ext a b

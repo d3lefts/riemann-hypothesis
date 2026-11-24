@@ -198,7 +198,7 @@ theorem nd_smul (a : K → ℕ) (c : K → ℂ) (z : (Σ k, J k) → ℂ) :
   rw [← Finset.prod_mul_distrib]
   refine Finset.prod_congr rfl fun k _ => ?_
   have : ∑ i, ‖c k * z ⟨k, i⟩‖ ^ 2 = ‖c k‖ ^ 2 * ∑ i, ‖z ⟨k, i⟩‖ ^ 2 := by
-    simp [norm_mul, mul_pow, Finset.mul_sum]
+    simp [mul_pow, Finset.mul_sum]
   rw [this, mul_pow, ← pow_mul]
 
 theorem nd_conj (a : K → ℕ) (z : (Σ k, J k) → ℂ) : nd a (fun p => starRingEnd ℂ (z p)) = nd a z := by
@@ -1238,7 +1238,7 @@ theorem cond_of_bd {Ω : Type} [Field Ω] [CharZero Ω] {x : (Σ k, J k) → Ω}
       MvPolynomial.aeval (fun p : Σ k, J k => x p / x ⟨p.1, c p.1⟩) f := fun f => by
     show S.val.toRingHom (MvPolynomial.aeval ρS f) = _
     rw [MvPolynomial.aeval_def, MvPolynomial.aeval_def, MvPolynomial.eval₂_comp_left]
-    congr 1 <;> first | rfl | exact RingHom.ext_int _ _
+    congr 1
   have hwP : w ∈ mcPts (mCoordIdeal x) := by
     refine ⟨fun k => ⟨c k, ?_⟩, fun f hf => ?_⟩
     · have h1 : ρS ⟨k, c k⟩ = 1 := Subtype.ext (div_self (hc k))

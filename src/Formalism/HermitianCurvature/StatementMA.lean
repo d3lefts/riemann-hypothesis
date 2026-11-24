@@ -295,22 +295,17 @@ theorem coordE_smooth (v : M.Var r) : ContDiff ℝ sm (coordE v) := by
 
 theorem ext_smooth_diff {f : Qp r TT → ℂ} (hf : f ∈ smSub r TT) (x : E r) (hx : x ∈ Qset r TT) :
     DifferentiableAt ℝ (ext f) x := by
-  have h1 : ContDiffOn ℝ sm (ext f) (Qset r TT) := hf
-  have hn : sm ≠ 0 := by
-    unfold sm
-    simp
-  exact (h1.contDiffAt ((Qset_open r TT).mem_nhds hx)).differentiableAt hn
+  exact ((hf : ContDiffOn ℝ sm (ext f) (Qset r TT)).contDiffAt
+    ((Qset_open r TT).mem_nhds hx)).differentiableAt (by simp [sm])
 
 theorem wirt_smooth {f : Qp r TT → ℂ} (hf : f ∈ smSub r TT) (v : M.Var r) :
     ContDiffOn ℝ sm (wirt v (ext f)) (Qset r TT) := by
-  have hf' : ContDiffOn ℝ sm (ext f) (Qset r TT) := hf
   have hd : ContDiffOn ℝ sm (fun y => fderiv ℝ (ext f) y) (Qset r TT) :=
-    ((contDiffOn_infty_iff_fderiv_of_isOpen (Qset_open r TT)).mp hf').2
-  have h1 : ContDiffOn ℝ sm (fun y => fderiv ℝ (ext f) y (dirE v)) (Qset r TT) :=
-    hd.clm_apply contDiffOn_const
-  have h2 : ContDiffOn ℝ sm (fun y => fderiv ℝ (ext f) y (Complex.I • dirE v)) (Qset r TT) :=
-    hd.clm_apply contDiffOn_const
-  exact contDiffOn_const.mul (h1.add (contDiffOn_const.mul h2))
+    ((contDiffOn_infty_iff_fderiv_of_isOpen (Qset_open r TT)).mp
+      (hf : ContDiffOn ℝ sm (ext f) (Qset r TT))).2
+  exact contDiffOn_const.mul
+    ((hd.clm_apply (contDiffOn_const (c := dirE v))).add
+      (contDiffOn_const.mul (hd.clm_apply (contDiffOn_const (c := Complex.I • dirE v)))))
 
 def coordQ (v : M.Var r) : SmQ r TT :=
   ⟨fun q => coordE v q.1, ((coordE_smooth v).contDiffOn).congr fun x hx => by simp [ext, hx]⟩
@@ -378,8 +373,7 @@ def Gq (q : Qp P.r P.TT) : ℝ := (∏ l, Complex.normSq (q.1.1 l)) * (Complex.n
 def Wq (q : Qp P.r P.TT) : ℝ := Complex.normSq q.1.2 / (Complex.normSq q.1.2 - P.TT)
 
 theorem Gq_pos (q : Qp P.r P.TT) : 0 < Gq P q := by
-  have hq : (∀ l, q.1.1 l ≠ 0) ∧ P.TT < Complex.normSq q.1.2 := q.2
-  exact mul_pos (Finset.prod_pos fun l _ => Complex.normSq_pos.mpr (hq.1 l)) (sub_pos.mpr hq.2)
+  exact mul_pos (Finset.prod_pos fun l _ => Complex.normSq_pos.mpr (q.2.1 l)) (sub_pos.mpr q.2.2)
 
 theorem Gq_meas : Measurable (Gq P) := by
   apply Continuous.measurable

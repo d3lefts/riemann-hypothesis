@@ -302,7 +302,7 @@ theorem exists_sq_eq_inv_near_one : ∀ (F E : Type) [NontriviallyNormedField F]
     (((2 : F) • ContinuousLinearMap.fst F V V).prod (ContinuousLinearMap.fst F V V + ContinuousLinearMap.snd F V V))
     (((2 : F)⁻¹ • ContinuousLinearMap.fst F V V).prod (ContinuousLinearMap.snd F V V - (2 : F)⁻¹ • ContinuousLinearMap.fst F V V))
     (by intro p; ext1 <;> simp [smul_smul, h2])
-    (by intro p; ext1 <;> simp [smul_smul, h2] <;> abel)
+    (by intro p; ext1 <;> simp [smul_smul, h2])
   have hd1 : HasStrictFDerivAt (fun p : V × V => B p.1 p.1)
       ((B p0.1).comp (ContinuousLinearMap.fst F V V) + ((B.comp (ContinuousLinearMap.fst F V V))).flip p0.1) p0 := by
     have := ((B.comp (ContinuousLinearMap.fst F V V))).hasStrictFDerivAt (x := p0)
@@ -343,7 +343,7 @@ section -- clump:auto
 open GlobalTheory.JR Matrix MeasureTheory Filter Topology
 
 theorem _root_.GlobalTheory.T.finiteEtale_exists_sq_root_near_one : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E), ∀ U ∈ 𝓝 (1 : A.K), ∀ᶠ v in 𝓝 (1 : A.K), ∃ s ∈ U, ∃ s' ∈ U, s * s' = 1 ∧ s ^ 2 = v := by
-  first | exact @GlobalTheory.JR.SqrtNearOne.exists_sq_eq_inv_near_one | exact GlobalTheory.JR.SqrtNearOne.exists_sq_eq_inv_near_one | (intros; apply GlobalTheory.JR.SqrtNearOne.exists_sq_eq_inv_near_one <;> assumption)
+  first | exact @GlobalTheory.JR.SqrtNearOne.exists_sq_eq_inv_near_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FiniteEtaleExistsSqRootNearOneStatement =====
@@ -471,7 +471,7 @@ section -- clump:auto
 open GlobalTheory.JR Matrix MeasureTheory Filter Topology
 
 theorem _root_.GlobalTheory.T.scaledIntegersK_annihilator_small_near_zero : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E) (ψ : AddChar F ℂ), IsStdChar ψ → ∀ U ∈ 𝓝 (0 : A.K), ∀ᶠ c in 𝓝[≠] (0 : F), ∀ b : A.K, (∀ z : A.K, c • z ∈ A.OK → A.psiK ψ (z * b) = 1) → b ∈ U := by
-  first | exact @GlobalTheory.JR.annihilator_small | exact GlobalTheory.JR.annihilator_small | (intros; apply GlobalTheory.JR.annihilator_small <;> assumption)
+  first | exact @GlobalTheory.JR.annihilator_small
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ScaledIntegersKAnnihilatorSmallNearZeroStatement =====
@@ -928,7 +928,7 @@ section -- clump:auto
 open GlobalTheory.JR Matrix MeasureTheory Filter Topology
 
 theorem _root_.GlobalTheory.T.truncatedWhittaker_weilRep_eventually : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E) (ψ : AddChar F ℂ), IsStdChar ψ → ∀ (m : A.Meas ψ) (x : A.Kˣ) (γ : ℂ) W, A.IsWeil ψ x A.etaK (m.μL x) γ W → ∀ φ, IsTest φ → ∀ a : A.K, IsUnit a → (∀ y : A.L, IsUnit y → a = x * A.NL y → ∀ᶠ c in 𝓝[≠] (0 : F), A.abelian₂ m.μK ψ a (fun g => W g φ 0) c = γ * A.orbL m.ν φ y) ∧ ((¬ ∃ y : A.L, IsUnit y ∧ a = x * A.NL y) → ∀ᶠ c in 𝓝[≠] (0 : F), A.abelian₂ m.μK ψ a (fun g => W g φ 0) c = 0) := by
-  first | exact @GlobalTheory.JR.WhitX.lam_weil_eventually | exact GlobalTheory.JR.WhitX.lam_weil_eventually | (intros; apply GlobalTheory.JR.WhitX.lam_weil_eventually <;> assumption)
+  first | exact @GlobalTheory.JR.WhitX.lam_weil_eventually
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TruncatedWhittakerWeilRepEventuallyStatement =====

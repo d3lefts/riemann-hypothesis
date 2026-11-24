@@ -132,7 +132,7 @@ open GlobalTheory.Core.Rk.IP
 
 
 theorem _root_.GlobalTheory.T.sphericalParameterBound_nonsplit_places : GlobalTheory.IndefiniteRowSideFullHecke.SphericalSectionVariables.UnramDoublingInert → ∀ D : D7, ParamBoundOn D fun v => ¬ Formalism.MainNotions.SchurIrreducible.IsSplit (E := D.host.E) v := by
-  first | exact @GlobalTheory.Core.Rk.ParamInert.paramBoundOn_nonsplit | exact GlobalTheory.Core.Rk.ParamInert.paramBoundOn_nonsplit | (intros; apply GlobalTheory.Core.Rk.ParamInert.paramBoundOn_nonsplit <;> assumption)
+  first | exact @GlobalTheory.Core.Rk.ParamInert.paramBoundOn_nonsplit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SphericalParameterBoundNonsplitPlacesStatement =====

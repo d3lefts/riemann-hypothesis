@@ -145,7 +145,7 @@ private theorem exists_gl_vecMul_single_eq_and_fixes_single_of_le {R : Type} [Co
       rw [h] at hk
       simp [L] at hk
       omega
-    simp [Pi.single_apply, hne]
+    simp [hne]
   have hr : Unimodular R (fun i : Fin (m - 1 + 1) => v ⟨i, by have := i.isLt; omega⟩) := by
     show Ideal.span _ = ⊤
     rw [Ideal.eq_top_iff_one, ← hwv]
@@ -199,7 +199,7 @@ private theorem exists_gl_vecMul_single_eq_and_fixes_single_of_le {R : Type} [Co
         ring
       · simp
     rw [e1, Fin.sum_univ_eq_sum_range F n, ← Finset.sum_subset (s₁ := Finset.range (m - 1)) (s₂ := Finset.range n)
-      (by intro k hk; rw [Finset.mem_range] at hk ⊢; exact lt_of_lt_of_le hk (by first | omega | exact L.isLt.le))
+      (by intro k hk; rw [Finset.mem_range] at hk ⊢; exact lt_of_lt_of_le hk (by first | omega))
       (fun k _ hk => dif_neg (by simp only [Finset.mem_range] at hk; omega)),
       ← Fin.sum_univ_eq_sum_range F (m - 1)]
     apply Finset.sum_congr rfl
@@ -228,7 +228,7 @@ private theorem exists_gl_vecMul_single_eq_and_fixes_single_of_le {R : Type} [Co
         intro h
         rw [h] at hk
         simp [L] at hk
-      simp [Pi.single_apply, hne]
+      simp [hne]
     · rw [if_neg hk, add_zero]
       by_cases hk2 : k = L
       · rw [hk2, v2L]
@@ -237,7 +237,7 @@ private theorem exists_gl_vecMul_single_eq_and_fixes_single_of_le {R : Type} [Co
           have : (k : ℕ) ≠ m - 1 := fun h => hk2 (Fin.ext (by simpa [L] using h))
           omega
         simp only [v2, v1, z2, Pi.add_apply, Pi.smul_apply, smul_eq_mul, hv k hkm, z1m k hkm, hsL k hkm]
-        simp [Pi.single_apply, hk2]
+        simp
   have hg0v : Matrix.mulVec ((T3 * T2 * T1 : GL (Fin n) R) : Matrix (Fin n) (Fin n) R) v = Pi.single L 1 := by
     rw [Units.val_mul, Units.val_mul, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, s1, s2, s3]
   have gg0 := splitSet_transitive_lemma_3 (T3 * T2) T1 (splitSet_transitive_lemma_3 T3 T2 gT3 gT2) gT1
@@ -340,8 +340,6 @@ theorem splitSet_transitive : ∀ (R : Type) [CommRing R] (s : ℕ), StableRange
         split_ifs with hc
         · first
             | exact absurd (congrArg Fin.val hc) (by simp)
-            | exact absurd hc (by simp [Fin.ext_iff])
-            | simp [Fin.ext_iff] at hc
         · rfl
       have hw : ∀ k : Fin n, n - p ≤ (k : ℕ) → (pairAct R n g0⁻¹ a).2 k = 0 := by
         intro k hk
@@ -354,8 +352,6 @@ theorem splitSet_transitive : ∀ (R : Type) [CommRing R] (s : ℕ), StableRange
         split_ifs with hc
         · first
             | exact absurd (congrArg Fin.val hc) (by simp)
-            | exact absurd hc (by simp [Fin.ext_iff])
-            | simp [Fin.ext_iff] at hc
         · rfl
       obtain ⟨g1, hg1v, hg1w, hg1good⟩ := exists_gl_vecMul_single_eq_and_fixes_single_of_le s hs (m := n - p) (by omega) (by omega)
         _ _ hv hw hwv
@@ -594,7 +590,7 @@ def permFreeIso (k G : Type) [CommRing k] [Group G] (X ι : Type) [MulAction G X
       simp only [LinearMap.coe_comp, Function.comp_apply, Finsupp.lsingle_apply, MonoidAlgebra.lsingle_apply]
       rw [permRep_single]
       erw [Representation.free_single_single]
-      simp [freeLEquiv_single, Representation.free_single_single, mul_smul] }
+      simp [freeLEquiv_single, mul_smul] }
 
 theorem main : ∀ (k G : Type) [CommRing k] [Group G] (X ι : Type) [MulAction G X],
     Projective (permT X (Rep.free k G ι)) := by
@@ -610,7 +606,6 @@ open CategoryTheory CategoryTheory.Limits GlobalTheory.HomStab
 theorem _root_.GlobalTheory.T.projective_perm_tensor_free : ∀ (k G : Type) [CommRing k] [Group G] (X ι : Type) [MulAction G X], Projective (permT X (Rep.free k G ι)) := by
   first
   | exact @GlobalTheory.HomStab.main
-  | exact @GlobalTheory.HomStab.freeLEquiv_single
 end
 end -- clump:auto
 end -- clump:auto
@@ -660,8 +655,6 @@ open CategoryTheory CategoryTheory.Limits GlobalTheory.HomStab
 theorem _root_.GlobalTheory.T.projective_res_free_rep_of_injective : ∀ (k G H : Type) [CommRing k] [Group G] [Group H] (φ : H →* G), Function.Injective φ → ∀ ι : Type, Projective (Rep.res φ (Rep.free k G ι)) := by
   first
   | exact @GlobalTheory.HomStab.projective_res_free_of_injective
-  | exact @GlobalTheory.HomStab.projective_res_of_injective
-  | exact @GlobalTheory.HomStab.resFunctor_isEquivalence_of_bijective
 end
 end -- clump:auto
 end -- clump:auto
@@ -778,8 +771,6 @@ open CategoryTheory CategoryTheory.Limits GlobalTheory.HomStab
 theorem _root_.GlobalTheory.T.shapiro_isIso_groupHomology_zero : ∀ (k G H X : Type) [CommRing k] [Group G] [Group H] [MulAction G X] (φ : H →* G) (x : X) (hx : ∀ h, φ h • x = x), φ.range = MulAction.stabilizer G x → (∀ y : X, ∃ g : G, g • x = y) → ∀ A : Rep k G, IsIso (groupHomology.map φ (ptMap φ x hx A) 0) := by
   first
   | exact @GlobalTheory.HomStab.isIso_map_ptMap_zero
-  | exact @GlobalTheory.HomStab.ShapiroZero.linkExactnessStability_hom_fact
-  | exact @GlobalTheory.HomStab.ShapiroZero.H0π_smul
 end
 end -- clump:auto
 end -- clump:auto
@@ -841,7 +832,7 @@ variable (R : Type) [CommRing R]
 
 theorem padMat_castLE {m n : ℕ} (h : m ≤ n) (A : Matrix (Fin m) (Fin m) R) (i j : Fin m) :
     (padMat R A : Matrix (Fin n) (Fin n) R) (Fin.castLE h i) (Fin.castLE h j) = A i j := by
-  simp [padMat, Fin.coe_castLE, i.2, j.2]
+  simp [padMat, i.2, j.2]
 
 theorem stab_injective {m n : ℕ} (h : m ≤ n) : Function.Injective (stab R m n h) := by
   intro g g' e
@@ -994,7 +985,7 @@ theorem pm_id : pm R (id : Fin n → Fin n) = 1 := by
   by_cases h : a = b
   · subst h
     simp [pm]
-  · simp [pm, Matrix.one_apply, h, Ne.symm h]
+  · simp [pm, h, Ne.symm h]
 
 def pmU (f g : Fin n → Fin n) (h1 : ∀ k, f (g k) = k) (h2 : ∀ k, g (f k) = k) : GL (Fin n) R :=
   ⟨pm R f, pm R g, by rw [pm_mul, show f ∘ g = id from funext h1, pm_id],
@@ -1090,7 +1081,7 @@ theorem GlobalTheory.HomStab.exists_perm_face_stdSeq : ∀ (R : Type) [CommRing 
       split_ifs <;> omega
     · intro j h1 h2
       have hjp : j < p := by simpa [stdList] using h2
-      simp only [List.getElem_map, List.getElem_eraseIdx, stdList, List.getElem_ofFn, Fin.val_mk]
+      simp only [List.getElem_map, List.getElem_eraseIdx, stdList, List.getElem_ofFn]
       split_ifs with hj
       · exact pairAct_pmU R _ _ _ _ _ (by omega) _ (by simp only [cyc_val, Fin.val_mk]; split_ifs <;> omega)
       · exact pairAct_pmU R _ _ _ _ _ (by omega) _ (by simp only [cyc_val, Fin.val_mk]; split_ifs <;> omega)
@@ -1168,8 +1159,8 @@ theorem chainsMap_id_add {k G : Type} [CommRing k] [Group G] {A B : Rep k G} (f 
   apply groupHomology.inhomogeneousChains.ext
   intro x
   ext a : 2
-  simp only [groupHomology.chainsMap_f_single, HomologicalComplex.add_f_apply]
-  simp [groupHomology.chainsMap_f_single]
+  simp only [HomologicalComplex.add_f_apply]
+  simp
   rw [← Finsupp.single_add]
   rfl
 
@@ -1198,8 +1189,6 @@ open CategoryTheory CategoryTheory.Limits GlobalTheory.HomStab
 theorem _root_.GlobalTheory.T.hMap_sum_zsmul_add : ∀ (k G : Type) [CommRing k] [Group G] (A B : Rep k G) (n : ℕ), (∀ f g : A ⟶ B, hMap (f + g) n = hMap f n + hMap g n) ∧ hMap (0 : A ⟶ B) n = 0 ∧ (∀ (m : ℤ) (f : A ⟶ B), hMap (m • f) n = m • hMap f n) ∧ ∀ (ι : Type) (T : Finset ι) (f : ι → (A ⟶ B)), hMap (∑ i ∈ T, f i) n = ∑ i ∈ T, hMap (f i) n := by
   first
   | exact @GlobalTheory.HomStab.hMap_additive
-  | exact @GlobalTheory.HomStab.hMap_add
-  | exact @GlobalTheory.HomStab.chainsMap_id_add
 end
 end -- clump:auto
 end -- clump:auto
@@ -1309,8 +1298,6 @@ open CategoryTheory CategoryTheory.Limits GlobalTheory.HomStab GlobalTheory.SeqC
 theorem _root_.GlobalTheory.T.standardSeqPoint_comp_splitSeqDifferential : ∀ (R : Type) [CommRing R] (n p q : ℕ) (h : p + 1 ≤ n) (h₁ : ∀ x, stab R (n - (p + 1)) n (Nat.sub_le _ _) x • stdSeq R n (p + 1) h = stdSeq R n (p + 1) h) (h₀ : ∀ x, stab R (n - p) n (Nat.sub_le _ _) x • stdSeq R n p (by omega) = stdSeq R n p (by omega)), ptH (k := ℤ) (stab R (n - (p + 1)) n (Nat.sub_le _ _)) (stdSeq R n (p + 1) h) h₁ q ≫ hMap (splitD R n p) q = if Even p then grpHMap (stab R (n - (p + 1)) (n - p) (by omega)) q ≫ ptH (k := ℤ) (stab R (n - p) n (Nat.sub_le _ _)) (stdSeq R n p (by omega)) h₀ q else 0 := by
   first
   | exact @GlobalTheory.HomStab.ptH_comp_hMap_splitD
-  | exact @GlobalTheory.HomStab.stab_comp_stab
-  | exact @GlobalTheory.HomStab.altSum_neg_one
 end
 end -- clump:auto
 end -- clump:auto

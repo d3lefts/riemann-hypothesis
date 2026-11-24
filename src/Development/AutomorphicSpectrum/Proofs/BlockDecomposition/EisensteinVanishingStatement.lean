@@ -121,7 +121,7 @@ theorem char_integral {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F 
     have h0 : (0 : Matrix (Fin V.rank) (Fin n) D.host.E).map (incA D) = 0 := by
       ext i j
       simp
-    simp only [h0, pairing_zero_left, setIntegral_const, smul_eq_mul, mul_one]
+    simp only [h0, pairing_zero_left, setIntegral_const]
     simp [Measure.real, hμ.2.2]
   · set ξ' : Mx D V.rank n := ξ.map (incA D) with hξ'
     have hrat : ξ' ∈ ratMx D V.rank n := ⟨ξ, rfl⟩
@@ -202,7 +202,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.ModerateGrowthSchwartz (schwartzA)
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.eisenstein_vanishing : PositivityTheory.GramSchwartzFunctions.EC.Zero := by
-  first | exact @GlobalTheory.CompanionTheory.EisZero.zero | exact GlobalTheory.CompanionTheory.EisZero.zero | (intros; apply GlobalTheory.CompanionTheory.EisZero.zero <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.EisZero.zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EisensteinVanishingStatement =====

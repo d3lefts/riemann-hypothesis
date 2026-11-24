@@ -194,7 +194,6 @@ theorem kf_iff (hF : PI.AdBridgeSteps.FinK) (I : AutInst) (e : I.GA ≃ₜ* HAd 
 
 theorem mem_KGA_iff (hR : PI.AdBridgeSteps.RealK) (hF : PI.AdBridgeSteps.FinK) (I : AutInst)
     (e : I.GA ≃ₜ* HAd I) (hb : IsBridge I e) (x : I.GA) : x ∈ KGA I ↔ e x ∈ KHA I := by
-  show ((∀ v, x.1 v ∈ KinfV I v) ∧ x.2 ∈ I.Kset) ↔ (e x ∈ KinfHA I ∧ e x ∈ KfHA I)
   exact and_congr (kinf_iff hR I e hb x) (kf_iff hF I e hb x)
 
 theorem bridgeMaxCpt_of (hR : PI.AdBridgeSteps.RealK) (hF : PI.AdBridgeSteps.FinK) :
@@ -262,7 +261,6 @@ theorem bridge_apply_eq_of_comp (I : AutInst) (e : I.GA ≃ₜ* HAd I) (he : IsB
   have hs : e (e.symm h) = h := by
     first
     | exact e.apply_symm_apply h
-    | simp
   have hB := he (e.symm h)
   rw [hs] at hB
   obtain ⟨h1', h2'⟩ := hB
@@ -278,7 +276,6 @@ theorem sigR_inclR_star (I : AutInst) (y : I.E) :
       Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF I.F) (starRingEnd I.E y) := by
   first
   | (simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR, Formalism.BasicNotions.CMData.sig]; done)
-  | rfl
 
 theorem bc_inclR_mem_HR (I : AutInst) (γ : GL (Fin I.n) I.E)
     (hγ : γ ∈ Formalism.UG.UJ (starRingEnd I.E) I.J) :
@@ -331,7 +328,6 @@ theorem adBridgeGF_main (I : AutInst) : AdBridgeGF I := by
     have hs : e (e.symm h) = h := by
       first
       | exact e.apply_symm_apply h
-      | simp
     refine ⟨e.symm h, ?_, hs⟩
     simp only [Formalism.MainNotions.S.AutInst.GFset, Set.mem_setOf_eq]
     refine ⟨γ, hγ, fun v => ?_, ?_⟩

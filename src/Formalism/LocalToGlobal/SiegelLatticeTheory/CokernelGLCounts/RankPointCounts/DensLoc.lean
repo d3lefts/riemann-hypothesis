@@ -149,10 +149,10 @@ theorem h_ed_e (hP : (Pm F F').det ≠ 0) (a b : Fin r) :
   · simp [hab, Ne.symm hab]
 
 theorem h_ed_ed (a b : Fin r) : S.hT (ed F F' a) (ed F F' b) = 0 := by
-  simp [ed, hl_sum, hr_sum, hl_smul, hr_smul, F'.e_iso]
+  simp [ed, F'.e_iso]
 
 theorem h_ed_zp (a : Fin r) : S.hT (ed F F' a) F'.z = 0 := by
-  simp [ed, hl_sum, hl_smul, F'.z_orth]
+  simp [ed, F'.z_orth]
 
 theorem h_zp_ed (a : Fin r) : S.hT F'.z (ed F F' a) = 0 := by
   exact h_zero_swap _ (h_ed_zp F F' a)
@@ -173,13 +173,13 @@ theorem h_ed_zt (hP : (Pm F F').det ≠ 0) (b : Fin r) : S.hT (ed F F' b) (zt F 
   simp [cz]
 
 theorem h_e_zt (b : Fin r) : S.hT (F.e b) (zt F F') = 0 := by
-  simp [zt, hr_sub, hr_sum, hr_smul, F.z_orth, F.e_iso]
+  simp [zt, hr_sub, F.z_orth, F.e_iso]
 
 theorem h_zt_zt : S.hT (zt F F') (zt F F') = -(T : E) := by
   have h1 : S.hT (∑ a, cz F F' a • F.e a) (zt F F') = 0 := by
-    simp [hl_sum, hl_smul, h_e_zt]
+    simp [h_e_zt]
   have h2 : S.hT F.z (zt F F') = -(T : E) := by
-    simp [zt, hr_sub, hr_sum, hr_smul, h_z_e, F.z_norm]
+    simp [zt, hr_sub, h_z_e, F.z_norm]
   calc S.hT (zt F F') (zt F F')
       = S.hT F.z (zt F F') - S.hT (∑ a, cz F F' a • F.e a) (zt F F') := hl_sub S _ _ _
     _ = -(T : E) := by rw [h1, h2, sub_zero]
@@ -191,22 +191,22 @@ theorem h_e_zt' (hP : (Pm F F').det ≠ 0) (b : Fin r) : S.hT (F.e b) (zt' F F')
   simp [cz']
 
 theorem h_ed_zt' (b : Fin r) : S.hT (ed F F' b) (zt' F F') = 0 := by
-  simp [zt', hr_sub, hr_sum, hr_smul, h_ed_zp, h_ed_ed]
+  simp [zt', hr_sub, h_ed_zp, h_ed_ed]
 
 theorem h_zt'_zt' : S.hT (zt' F F') (zt' F F') = -(T' : E) := by
   have h1 : S.hT (∑ a, cz' F F' a • ed F F' a) (zt' F F') = 0 := by
-    simp [hl_sum, hl_smul, h_ed_zt']
+    simp [h_ed_zt']
   have h2 : S.hT F'.z (zt' F F') = -(T' : E) := by
-    simp [zt', hr_sub, hr_sum, hr_smul, h_zp_ed, F'.z_norm]
+    simp [zt', hr_sub, h_zp_ed, F'.z_norm]
   calc S.hT (zt' F F') (zt' F F')
       = S.hT F'.z (zt' F F') - S.hT (∑ a, cz' F F' a • ed F F' a) (zt' F F') := hl_sub S _ _ _
     _ = -(T' : E) := by rw [h1, h2, sub_zero]
 
 theorem h_v_zt (hP : (Pm F F').det ≠ 0) (a : Fin r) : S.hT (vv F F' a) (zt F F') = 0 := by
-  simp [vv, hl_sub, h_e_zt, h_ed_zt F F' hP]
+  simp [vv, h_e_zt, h_ed_zt F F' hP]
 
 theorem h_v_zt' (hP : (Pm F F').det ≠ 0) (a : Fin r) : S.hT (vv F F' a) (zt' F F') = 0 := by
-  simp [vv, hl_sub, h_e_zt' F F' hP, h_ed_zt']
+  simp [vv, h_e_zt' F F' hP, h_ed_zt']
 
 theorem hermForm_anisotropic_orth_second (hT : (T : E) ≠ 0) : S.hT (zt F F') (zt2 F F') = 0 := by
   unfold zt2
@@ -217,7 +217,7 @@ theorem hermForm_anisotropic_orth_second (hT : (T : E) ≠ 0) : S.hT (zt F F') (
   simp [beta]
 
 theorem hermForm_vector_orth_second (hP : (Pm F F').det ≠ 0) (a : Fin r) : S.hT (vv F F' a) (zt2 F F') = 0 := by
-  simp [zt2, hr_add, hr_smul, h_v_zt F F' hP, h_v_zt' F F' hP]
+  simp [zt2, hr_add, h_v_zt F F' hP, h_v_zt' F F' hP]
 
 theorem hermForm_second_anisotropic (hT : (T : E) ≠ 0) :
     S.hT (zt2 F F') (zt2 F F') = -(T' : E) + beta F F' * star (beta F F') / (T : E) := by
@@ -292,8 +292,7 @@ theorem fvec_eq (F : FlagG S r (T : E)) (F' : FlagG S r (T' : E)) (b : Fin (r + 
   induction b using Fin.lastCases with
   | last =>
     rw [Fin.sum_univ_castSucc]
-    simp only [Um, Matrix.of_apply, if_pos rfl, Fin.snoc_castSucc, Fin.snoc_last, gv, FlagG.fvec,
-      one_smul]
+    simp only [Um, Matrix.of_apply, Fin.snoc_castSucc, Fin.snoc_last, gv, FlagG.fvec]
     rw [zp_eq F F', add_comm]
     simp [kk]
   | cast b =>

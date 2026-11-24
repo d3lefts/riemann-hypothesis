@@ -123,7 +123,7 @@ section -- clump:auto
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.exists_action_factor_through_tensor_character : ∀ (k : Type) [Field k] (C O B : Type) [CommRing C] [Ring O] [Algebra C O] [Algebra C k] [Ring B] [Algebra k B] (e : (k ⊗[C] O) ≃ₐ[k] B) (X : Type) [AddCommGroup X] [Module k X] (σX : O →+* Module.End k X), (∀ c, σX (algebraMap C O c) = algebraMap C k c • 1) → ∃ ρX : B →ₐ[k] Module.End k X, ∀ o, ρX (e (1 ⊗ₜ[C] o)) = σX o := by
-  first | (exact @GlobalTheory.tensor_action_factors) | (exact GlobalTheory.tensor_action_factors) | (intros; apply GlobalTheory.tensor_action_factors  <;> assumption)
+  first | (exact @GlobalTheory.tensor_action_factors)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsActionFactorThroughTensorCharacterStatement =====
@@ -227,7 +227,7 @@ open GlobalTheory.UPel.Sm GlobalTheory.Cris GlobalTheory.DeRham
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.harrisTaylor_tensor_order_algEquiv_matrix_charP : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.Datum p) (k : Type) [Field k] [CharP k p] [Algebra (𝓞 D.F) k], Nonempty ((k ⊗[𝓞 D.F] D.O) ≃ₐ[k] Matrix (Fin D.m) (Fin D.m) k) := by
-  first | (exact @GlobalTheory.UPel.HT.Datum.charP_tensor_matrix) | (exact GlobalTheory.UPel.HT.Datum.charP_tensor_matrix) | (intros; apply GlobalTheory.UPel.HT.Datum.charP_tensor_matrix  <;> assumption)
+  first | (exact @GlobalTheory.UPel.HT.Datum.charP_tensor_matrix)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HarrisTaylorTensorOrderAlgEquivMatrixCharPStatement =====
@@ -503,17 +503,17 @@ theorem isSimpleRing_of_isSemisimpleRing {R : Type} [Ring R] [Nontrivial R] [IsS
       funext i
       by_cases hi : i = i0
       · subst hi; simp [e]
-      · simp [e, Pi.single_apply, hi]
+      · simp [e, hi]
     have hid : φ.symm e * φ.symm e = φ.symm e := by
       rw [← map_mul]; congr 1; funext i
       by_cases hi : i = i0
       · subst hi; simp [e]
-      · simp [e, Pi.single_apply, hi]
+      · simp [e, hi]
     rcases h _ hcen hid with h0 | h1
     · have := congrFun (congrArg φ h0) i0
       simp [e] at this
     · have := congrFun (congrArg φ h1) i1
-      simp [e, Pi.single_apply, h01.symm] at this
+      simp [e, h01.symm] at this
 
 theorem Datum.actF_injective (D : Datum p) : Function.Injective D.actF := by
   haveI : Nontrivial D.endO := by
@@ -705,7 +705,7 @@ open GlobalTheory.UPel.Sm GlobalTheory.Cris GlobalTheory.DeRham
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.harrisTaylor_tensor_order_algEquiv_matrix_charZero : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.Datum p) (k : Type) [Field k] [IsAlgClosed k] [CharZero k] [Algebra (𝓞 D.F) k], Nonempty ((k ⊗[𝓞 D.F] D.O) ≃ₐ[k] Matrix (Fin D.m) (Fin D.m) k) := by
-  first | (exact @GlobalTheory.UPel.HT.MoritaChar0.tensor_order_algEquiv_matrix) | (exact GlobalTheory.UPel.HT.MoritaChar0.tensor_order_algEquiv_matrix) | (intros; apply GlobalTheory.UPel.HT.MoritaChar0.tensor_order_algEquiv_matrix <;> assumption)
+  first | (exact @GlobalTheory.UPel.HT.MoritaChar0.tensor_order_algEquiv_matrix)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HarrisTaylorTensorOrderAlgEquivMatrixCharZeroStatement =====
@@ -931,7 +931,7 @@ section -- clump:auto
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.sq_mul_finrank_matrixAlgebra_hom_eq_finrank_mul : ∀ (k : Type) [Field k] (m : ℕ) (X Y : Type) [AddCommGroup X] [Module k X] [FiniteDimensional k X] [AddCommGroup Y] [Module k Y] [FiniteDimensional k Y] (ρX : Matrix (Fin m) (Fin m) k →ₐ[k] Module.End k X) (ρY : Matrix (Fin m) (Fin m) k →ₐ[k] Module.End k Y), m ^ 2 * Module.finrank k (GlobalTheory.HTRho.homO ρX.toRingHom ρY.toRingHom) = Module.finrank k X * Module.finrank k Y := by
-  first | (exact @GlobalTheory.MatCount.count) | (exact GlobalTheory.MatCount.count) | (intros; apply GlobalTheory.MatCount.count <;> assumption)
+  first | (exact @GlobalTheory.MatCount.count)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SqMulFinrankMatrixAlgebraHomEqFinrankMulStatement =====
@@ -951,11 +951,7 @@ namespace GlobalTheory.HTRho
 theorem span_one_tmul (k : Type) [Field k] (C O : Type) [CommRing C] [Ring O] [Algebra C O] [Algebra C k] :
     Submodule.span k (Set.range fun o : O => (1 : k) ⊗ₜ[C] o) = ⊤ := by
   first
-  | exact @_root_.GlobalTheory.OneTensorSpanTop.span_one_tmul_eq_top
-  | exact _root_.GlobalTheory.OneTensorSpanTop.span_one_tmul_eq_top
   | (apply _root_.GlobalTheory.OneTensorSpanTop.span_one_tmul_eq_top <;> assumption)
-  | (intros; apply _root_.GlobalTheory.OneTensorSpanTop.span_one_tmul_eq_top <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.OneTensorSpanTop.span_one_tmul_eq_top <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.OneTensorSpanTop.span_one_tmul_eq_top ..)
 
 theorem finrank_homO_morita : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.Datum p) (k : Type) [Field k] [IsAlgClosed k], (∀ n : ℕ, n.Coprime p → (n : k) ≠ 0) → ∀ (χ : 𝓞 D.F →+* k) (X Y : Type) [AddCommGroup X] [Module k X] [FiniteDimensional k X] [AddCommGroup Y] [Module k Y] [FiniteDimensional k Y] (σX : D.O →+* Module.End k X) (σY : D.O →+* Module.End k Y), (∀ c, σX (algebraMap (𝓞 D.F) D.O c) = χ c • 1) → (∀ c, σY (algebraMap (𝓞 D.F) D.O c) = χ c • 1) → D.m ^ 2 * Module.finrank k (GlobalTheory.HTRho.homO σX σY) = Module.finrank k X * Module.finrank k Y := by
@@ -1022,7 +1018,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 open GlobalTheory.UPel.Sm GlobalTheory.Cris GlobalTheory.DeRham
 
 theorem _root_.GlobalTheory.T.finrank_hom_harrisTaylorOrder_morita : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.Datum p) (k : Type) [Field k] [IsAlgClosed k], (∀ n : ℕ, n.Coprime p → (n : k) ≠ 0) → ∀ (χ : 𝓞 D.F →+* k) (X Y : Type) [AddCommGroup X] [Module k X] [FiniteDimensional k X] [AddCommGroup Y] [Module k Y] [FiniteDimensional k Y] (σX : D.O →+* Module.End k X) (σY : D.O →+* Module.End k Y), (∀ c, σX (algebraMap (𝓞 D.F) D.O c) = χ c • 1) → (∀ c, σY (algebraMap (𝓞 D.F) D.O c) = χ c • 1) → D.m ^ 2 * Module.finrank k (GlobalTheory.HTRho.homO σX σY) = Module.finrank k X * Module.finrank k Y := by
-  first | (exact @GlobalTheory.HTRho.finrank_homO_morita) | (exact GlobalTheory.HTRho.finrank_homO_morita) | (intros; apply GlobalTheory.HTRho.finrank_homO_morita <;> assumption)
+  first | (exact @GlobalTheory.HTRho.finrank_homO_morita)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankHomHarrisTaylorOrderMoritaStatement =====

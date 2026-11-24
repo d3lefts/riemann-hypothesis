@@ -266,7 +266,7 @@ theorem _root_.GlobalTheory.T.exists_numberField_involution_similitudeCentralize
     ∃ (L : Type) (_ : Field L) (_ : NumberField L) (ι : L →ₐ[ℚ] G.C) (c : L →ₐ[ℚ] L),
       Function.Injective ι ∧ (∀ z : G.C, z * γ = γ * z ↔ ∃ w, ι w = z) ∧
       (∀ x, ι (c x) = β * sh G (ι x) * ((β⁻¹ : G.Cˣ) : G.C)) ∧ ∀ x, c (c x) = x := by
-  first | (exact @GlobalTheory.CentSim.centraliser_field_involution) | (exact GlobalTheory.CentSim.centraliser_field_involution) | (intros; apply GlobalTheory.CentSim.centraliser_field_involution  <;> assumption)
+  first | (exact @GlobalTheory.CentSim.centraliser_field_involution)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNumberFieldInvolutionSimilitudeCentralizerStatement =====
@@ -759,7 +759,7 @@ theorem exists_finset_classes (L : Type) [Field L] [NumberField L] (c : L →ₐ
     by_cases hS : w.under ℤ ∈ S
     · have hWS : w ∈ WS := (finite_under L S).mem_toFinset.2 hS
       rw [if_neg (fun h => h.2 hS)]
-      simp only [n, hu, if_pos hS, hσa, Δ, Finset.mem_filter, hWS, true_and, not_true, and_false, if_false]
+      simp only [n, hu, if_pos hS, hσa, Δ, Finset.mem_filter, hWS, true_and]
       split_ifs with h2 <;> omega
     · have hnWS : w ∉ Δ := fun h => hS ((finite_under L S).mem_toFinset.1 (Finset.mem_filter.1 h).1)
       by_cases hT' : w.under ℤ ∈ T
@@ -776,7 +776,7 @@ theorem exists_finset_classes (L : Type) [Field L] [NumberField L] (c : L →ₐ
             WithZero.log_mul ((Valuation.ne_zero_iff _).2 hz0) ((Valuation.ne_zero_iff _).2 hcz0)]
           ring
         rw [e, ord_conj L c hc, if_pos ⟨hT', hS⟩]
-        simp only [n, hu, if_neg hS, if_pos hT', hnWS, if_false, hT', not_false_eq_true, and_self, if_true]
+        simp only [n, hu, if_neg hS, hnWS, if_false, hT', if_true]
         ring
       · have h1 := hT w hT'
         have e : ord w a = 0 := (ord_eq_zero_iff w ha0).2 h1
@@ -1286,7 +1286,7 @@ theorem _root_.GlobalTheory.T.finite_definitePair_classes_fixed_minpoly_degree_o
       (∀ k ∈ K', ∀ k' ∈ K', ∀ g, f' (k * g * k') = f' g) →
       ∀ P0 : Polynomial G.F, {q : GlobalTheory.LKDef.DCls G | (Quot.out q).pol = P0 ∧ Irreducible (Quot.out q).pol ∧
         (Quot.out q).term L.K.toSubgroup f 1 K' f' ≠ 0}.Finite := by
-  first | (exact @GlobalTheory.LKDefFin.finite_classes_of_pol) | (exact GlobalTheory.LKDefFin.finite_classes_of_pol) | (intros; apply GlobalTheory.LKDefFin.finite_classes_of_pol <;> assumption)
+  first | (exact @GlobalTheory.LKDefFin.finite_classes_of_pol)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteDefinitePairClassesFixedMinpolyDegreeOneStatement =====

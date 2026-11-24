@@ -78,7 +78,7 @@ theorem cobOne_baseChange :
     intro c
     induction c with
     | add x y hx hy => simp only [tmul_add, map_add (f := _), hx, hy]
-    | tmul x y => simp [Bialgebra.comul_one, Algebra.TensorProduct.one_def]
+    | tmul x y => simp
   simp only [cobOne_apply, LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply,
     LinearMap.baseChange_tmul, tmul_sub, map_sub, TensorProduct.comul_tmul, h,
     AlgebraTensorModule.distribBaseChange_tmul, Algebra.TensorProduct.one_def]
@@ -475,7 +475,7 @@ section -- clump:auto
 open TensorProduct Coalgebra Bialgebra CategoryTheory WithConv GlobalTheory GlobalTheory.PDiv GlobalTheory.PDivGroup
 
 theorem _root_.GlobalTheory.T.mem_symmetricCocycles_of_pullback_mulP : ∀ {p : ℕ} {R : Type} [CommRing R] (G : PDivGroup p R) (n : ℕ) (c : G.A n ⊗[R] G.A n), pullbackTwo (G.mulP n) c ∈ symCocycles R (G.A (n + 1)) → c ∈ symCocycles R (G.A n) := by
-  first | exact @GlobalTheory.PDivGroup.mem_symCocycles_of_pullTwo_mulP | exact GlobalTheory.PDivGroup.mem_symCocycles_of_pullTwo_mulP | (intros; apply GlobalTheory.PDivGroup.mem_symCocycles_of_pullTwo_mulP <;> assumption)
+  first | exact @GlobalTheory.PDivGroup.mem_symCocycles_of_pullTwo_mulP
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemSymmetricCocyclesOfPullbackMulPStatement =====
@@ -508,7 +508,7 @@ theorem counit_comp_cartierBaseChange :
   induction x with
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul r φ =>
-    simp [Algebra.TensorProduct.one_def, Algebra.smul_def, mul_comm]
+    simp [Algebra.smul_def, mul_comm]
 
 def cotBaseChange :
     Cot R' (CartierDual R' (R' ⊗[R] A)) ≃ₗ[R'] R' ⊗[R] Cot R (CartierDual R A) :=

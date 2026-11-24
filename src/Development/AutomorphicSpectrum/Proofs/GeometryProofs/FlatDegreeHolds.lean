@@ -547,7 +547,7 @@ open Matrix GlobalTheory GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionT
 open scoped ComplexOrder
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.padic_norm_transition_det_one : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (I : Type) [Fintype I] [DecidableEq I] (x e : I → D.La) (T : Matrix I I E) (ℓ : Nat.Primes), IsLocBasis (𝓞 E) ℓ x → IsLocBasis (𝓞 E) ℓ e → IsTransition D x e T → ∀ j : E →+* ℂ_[ℓ], ‖j T.det‖ = 1 := by
-  first | exact @PositivityTheory.Xgf.padic_norm_transition_det_one | exact PositivityTheory.Xgf.padic_norm_transition_det_one
+  first | exact @PositivityTheory.Xgf.padic_norm_transition_det_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.PadicNormTransitionDetOne =====
@@ -606,7 +606,7 @@ theorem flatGen_finNorm : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     have hfin := hN V X.K j' X.β X.y v' w' Tm X.t X.m m'' hval hβ hF' hiv hiw
     have hchg := hline.chg X.K X.β X.y v w v' w' (δ • (1 : Matrix (Fin D.p) (Fin D.p) X.K))
       (δ' • (1 : Matrix (Fin D.q) (Fin D.q) X.K)) hF hF' hA hB
-    simp only [Matrix.det_smul, Matrix.det_one, mul_one, Fintype.card_fin] at hchg
+    simp only [Matrix.det_smul, Matrix.det_one, Fintype.card_fin] at hchg
     have hφ0 := hline.ne X.K X.β X.y v w hF
     have hφ'0 := hline.ne X.K X.β X.y v' w' hF'
     have horth : ∀ a b, sesq (FU.Di i) (x (.inl a)) (x (.inr b)) = 0 := fun a b =>
@@ -906,7 +906,7 @@ open Matrix GlobalTheory GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionT
 open scoped ComplexOrder
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.hodge_gram_invariant_pullback : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (S S' : Scheme.{0}) (t : SAB H S) (t' : SAB H S') (f : S' ⟶ S) (m : SABMap t' t f) (x' : Sp ℂ ⟶ S') (x : Sp ℂ ⟶ S) (n : ℕ) (v' : Fin n → (epsAt x' ⟶ t'.G)) (v : Fin n → (epsAt x ⟶ t.G)) (Γ : Matrix (Fin n) (Fin n) ℂ), x = x' ≫ f → (∀ k, (v k).left = (v' k).left ≫ m.φ) → (IsHodgeGram t'.G t'.PP.L x' v' Γ ↔ IsHodgeGram t.G t.PP.L x v Γ) := by
-  first | exact @PositivityTheory.Xgf.hodge_gram_invariant_pullback | exact PositivityTheory.Xgf.hodge_gram_invariant_pullback
+  first | exact @PositivityTheory.Xgf.hodge_gram_invariant_pullback
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.HodgeGramInvariantPullback =====
@@ -1057,7 +1057,7 @@ theorem tan_iff {S S' : Scheme.{0}} {t : SAB H S} {t' : SAB H S'} {f : S' ⟶ S}
       erw [← Category.assoc, spMap_comp_spMap]
       have : ((TrivSqZeroExt.fstHom R R R).toRingHom).comp (algebraMap R (DualNumber R)) = RingHom.id R := by
         refine RingHom.ext fun a => ?_
-        simp [TrivSqZeroExt.algebraMap_eq_inl]
+        simp
       rw [this]
       show Spec.map (𝟙 _) ≫ x' = x'
       rw [Spec.map_id, Category.id_comp]

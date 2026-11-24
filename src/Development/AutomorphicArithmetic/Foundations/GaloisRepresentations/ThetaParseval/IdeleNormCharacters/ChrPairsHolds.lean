@@ -288,7 +288,6 @@ theorem UpperTheory.Gal.TP.Chr.chrEx :
     refine Finset.prod_congr rfl fun w _ => ?_
     obtain ⟨a, b, ha, hb, h1, h2⟩ := exps hev (hm w)
     have hz : (emb w).1 (x : E) ≠ 0 := (map_ne_zero (emb w).1).2 x.ne_zero
-    beta_reduce
     rw [ha, hb, ← typ_term _ hz a b, h1, h2]
   · have h1 := hEI E emb (fun w => k * m w) (fun w => k' * m w) s s' fun x => by
       rw [← inf_psi hAb emb μ m hμi k s x, ← inf_psi hAb emb μ m hμi k' s' x, h]
@@ -413,7 +412,7 @@ theorem _root_.GlobalTheory.T.heckeCharCM_eta_local_eq_neg_one_pow_val_inert : �
     (∀ (w : HeightOneSpectrum (𝓞 E)) (u : (w.adicCompletion E)ˣ), ¬ IsSplitAt w → Valued.v (u : w.adicCompletion E) = 1 →
       μ.1 (Neutral.B1.localIdele E w u) = 1) →
     ∀ w : Pl E, ¬ IsSplitAt w → μ.loc w = GlobalTheory.SmGL.unrChar (w.adicCompletion E) (-1) := by
-  first | exact @GlobalTheory.MuInert.loc_eq_unrChar_neg_one | exact GlobalTheory.MuInert.loc_eq_unrChar_neg_one | (intros; apply GlobalTheory.MuInert.loc_eq_unrChar_neg_one <;> assumption)
+  first | exact @GlobalTheory.MuInert.loc_eq_unrChar_neg_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeckeCharCMEtaLocalEqNegOnePowValInertStatement =====

@@ -132,7 +132,7 @@ theorem _root_.GlobalTheory.T.diagonalHeisenbergInvariant_form_eq_smul_diagonalI
       ∀ μ : @MeasureTheory.Measure (κ → AF D.host.F) (borel _),
         @MeasureTheory.Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
         ∃ c : ℂ, ∀ Φ ∈ GlobalTheory.WeilM.schA D.host.F (κ ⊕ κ), l Φ = c * GlobalTheory.DiagSiegel.diagInt μ Φ := by
-  first | exact @GlobalTheory.HostDiagUniq.eq_smul_diagInt | exact GlobalTheory.HostDiagUniq.eq_smul_diagInt | (intros; apply GlobalTheory.HostDiagUniq.eq_smul_diagInt <;> assumption)
+  first | exact @GlobalTheory.HostDiagUniq.eq_smul_diagInt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiagonalHeisenbergInvariantFormEqSmulDiagonalIntStatement =====
@@ -228,7 +228,7 @@ theorem _root_.GlobalTheory.T.darbouxCoords_transport_covolumeOne_haar : ∀ (D 
       lam.IsAddHaarMeasure ∧ MeasureTheory.IsAddFundamentalDomain (GlobalTheory.WeilUnitaryTransport.ratPair D.host.F κ) 𝓖 lam ∧
       lam 𝓖 = 1 ∧ ∀ g : (κ → AF D.host.F) × (κ → AF D.host.F) → ℂ,
         ∫ w in 𝓕, g (e w) ∂ν = ∫ p in 𝓖, g p ∂lam := by
-  first | exact @GlobalTheory.DarbouxMeasure.transport_covol_one | exact GlobalTheory.DarbouxMeasure.transport_covol_one | (intros; apply GlobalTheory.DarbouxMeasure.transport_covol_one <;> assumption)
+  first | exact @GlobalTheory.DarbouxMeasure.transport_covol_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DarbouxCoordsTransportCovolumeOneHaarStatement =====
@@ -251,8 +251,7 @@ namespace GlobalTheory.DiagThetaRatInv
 
 theorem dot_elim {R : Type} [CommRing R] {κ : Type} [Fintype κ] (x : κ ⊕ κ → R) (v : κ → R) :
     x ⬝ᵥ Sum.elim v (-v) = ∑ i, (x (Sum.inl i) - x (Sum.inr i)) * v i := by
-  simp only [dotProduct, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, Pi.neg_apply, mul_neg, sub_mul,
-    Finset.sum_sub_distrib, Finset.sum_neg_distrib, sub_eq_add_neg]
+  simp only [dotProduct, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, Pi.neg_apply, mul_neg, Finset.sum_neg_distrib, sub_eq_add_neg]
   simp only [add_mul, neg_mul, Finset.sum_add_distrib, Finset.sum_neg_distrib]
 
 theorem schr_diag {R : Type} [CommRing R] [Invertible (2 : R)] (ψ : AddChar R ℂ) {κ : Type} [Fintype κ]
@@ -315,7 +314,7 @@ theorem _root_.GlobalTheory.T.diagonalThetaSum_rationalPair_invariant : ∀ (F :
     (Φ : (κ ⊕ κ → AF F) → ℂ), ∀ γ ∈ GlobalTheory.WeilUnitaryTransport.ratPair F κ, ∀ w : (κ → AF F) × (κ → AF F),
       GlobalTheory.WeilM.thetaSum F (GlobalTheory.WeilM.schr ψ (Sum.elim (γ + w).1 (γ + w).1, Sum.elim (γ + w).2 (-(γ + w).2)) Φ) =
         GlobalTheory.WeilM.thetaSum F (GlobalTheory.WeilM.schr ψ (Sum.elim w.1 w.1, Sum.elim w.2 (-w.2)) Φ) := by
-  first | exact @GlobalTheory.DiagThetaRatInv.diag_theta_rat_inv | exact GlobalTheory.DiagThetaRatInv.diag_theta_rat_inv | (intros; apply GlobalTheory.DiagThetaRatInv.diag_theta_rat_inv <;> assumption)
+  first | exact @GlobalTheory.DiagThetaRatInv.diag_theta_rat_inv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiagonalThetaSumRationalPairInvariantStatement =====
@@ -484,7 +483,7 @@ theorem _root_.GlobalTheory.T.integral_diagonalTheta_secondVariable_diagonal : �
       ∫ y in 𝓕₁, GlobalTheory.WeilM.thetaSum F (GlobalTheory.WeilM.schr ψ (Sum.elim x x, Sum.elim y (-y)) Φ) ∂μ =
         (μ.real 𝓕₁ : ℂ) * ∑' η : κ → F, Φ (Sum.elim ((fun i => algebraMap F (AF F) (η i)) + x)
           ((fun i => algebraMap F (AF F) (η i)) + x)) := by
-  first | exact @GlobalTheory.ThetaDiagUnfold.integral_thetaSum_schr_diag | exact GlobalTheory.ThetaDiagUnfold.integral_thetaSum_schr_diag | (intros; apply GlobalTheory.ThetaDiagUnfold.integral_thetaSum_schr_diag <;> assumption)
+  first | exact @GlobalTheory.ThetaDiagUnfold.integral_thetaSum_schr_diag
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralDiagonalThetaSecondVariableDiagonalStatement =====
@@ -585,7 +584,7 @@ theorem _root_.GlobalTheory.T.integral_fundamentalDomain_tsum_rationalTranslates
       (∃ B : ℝ, ∀ x : κ → AF F, Summable (fun η : κ → F => ‖h ((fun i => algebraMap F (AF F) (η i)) + x)‖) ∧
         ∑' η : κ → F, ‖h ((fun i => algebraMap F (AF F) (η i)) + x)‖ ≤ B) →
       ∫ x in 𝓕₁, ∑' η : κ → F, h ((fun i => algebraMap F (AF F) (η i)) + x) ∂μ = ∫ u, h u ∂μ := by
-  first | exact @GlobalTheory.ThetaUnfoldInt.integral_fundamentalDomain_tsum | exact GlobalTheory.ThetaUnfoldInt.integral_fundamentalDomain_tsum | (intros; apply GlobalTheory.ThetaUnfoldInt.integral_fundamentalDomain_tsum <;> assumption)
+  first | exact @GlobalTheory.ThetaUnfoldInt.integral_fundamentalDomain_tsum
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralFundamentalDomainTsumRationalTranslatesStatement =====
@@ -655,7 +654,7 @@ theorem integral_fundamentalDomain_eq_iterated (Γ₁ : AddSubgroup V) [Countabl
         intro k
         ext ⟨x, y⟩
         simp only [Set.mem_vadd_set_iff_neg_vadd_mem, Set.mem_prod, AddSubgroup.vadd_def,
-          AddSubgroup.coe_neg, vadd_eq_add, Prod.fst_add, Prod.snd_add, Prod.fst_neg, Prod.snd_neg]
+          vadd_eq_add, Prod.fst_add, Prod.snd_add, Prod.fst_neg, Prod.snd_neg]
       show μ.prod μ ((g +ᵥ (𝓕₁ ×ˢ 𝓕₁)) ∩ (g' +ᵥ (𝓕₁ ×ˢ 𝓕₁))) = 0
       rw [hset g, hset g', Set.prod_inter_prod, Measure.prod_prod]
       by_cases h1 : (g : V × V).1 = (g' : V × V).1
@@ -739,7 +738,7 @@ theorem _root_.GlobalTheory.T.integral_ratPairFundamentalDomain_adelic_iterated 
     ∃ c₁ : ℝ, 0 < c₁ ∧ ∀ G : (κ → AF F) × (κ → AF F) → ℂ, Measurable G →
       (∀ γ ∈ GlobalTheory.WeilUnitaryTransport.ratPair F κ, ∀ w, G (γ + w) = G w) → (∃ B : ℝ, ∀ w, ‖G w‖ ≤ B) →
       ∫ w in 𝓖, G w ∂lam = c₁ * ∫ x in 𝓕₁, ∫ y in 𝓕₁, G (x, y) ∂μ ∂μ := by
-  first | exact @GlobalTheory.PeriodicIteratedIntegral.integral_ratPair_fundamentalDomain_eq_iterated | exact GlobalTheory.PeriodicIteratedIntegral.integral_ratPair_fundamentalDomain_eq_iterated | (intros; apply GlobalTheory.PeriodicIteratedIntegral.integral_ratPair_fundamentalDomain_eq_iterated <;> assumption)
+  first | exact @GlobalTheory.PeriodicIteratedIntegral.integral_ratPair_fundamentalDomain_eq_iterated
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralRatPairFundamentalDomainAdelicIteratedStatement =====
@@ -870,7 +869,7 @@ theorem _root_.GlobalTheory.T.ratDarbouxCoords_rationalMatrix_iff_ratPair : ∀ 
       e (incM D.host.F x) = (fun i => algebraMap D.host.F (AF D.host.F) (y i), fun i => algebraMap D.host.F (AF D.host.F) (z i))) →
     ∀ w : Matrix (Fin T.rank) (Fin S.rank) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE (F := D.host.F) (E := D.host.E)),
       w ∈ ratL T S ↔ e w ∈ GlobalTheory.WeilUnitaryTransport.ratPair D.host.F κ := by
-  first | exact @GlobalTheory.RatDarbouxPointsD.ratL_iff_ratPair | exact GlobalTheory.RatDarbouxPointsD.ratL_iff_ratPair | (intros; apply GlobalTheory.RatDarbouxPointsD.ratL_iff_ratPair <;> assumption)
+  first | exact @GlobalTheory.RatDarbouxPointsD.ratL_iff_ratPair
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RatDarbouxCoordsRationalMatrixIffRatPairStatement =====
@@ -1063,7 +1062,7 @@ open MeasureTheory
 
 theorem _root_.GlobalTheory.T.tsum_norm_adelicSchwartz_rationalTranslates_le : ∀ (F : Type) [Field F] [NumberField F] (ι : Type) [Fintype ι], ∀ Φ ∈ GlobalTheory.WeilM.schA F ι,
     ∃ B : ℝ, ∀ z : ι → AF F, ∑' ξ : ι → F, ‖Φ ((fun i => algebraMap F (AF F) (ξ i)) + z)‖ ≤ B := by
-  first | exact @GlobalTheory.UniformTranslateBound.tsum_norm_translate_le | exact GlobalTheory.UniformTranslateBound.tsum_norm_translate_le | (intros; apply GlobalTheory.UniformTranslateBound.tsum_norm_translate_le <;> assumption)
+  first | exact @GlobalTheory.UniformTranslateBound.tsum_norm_translate_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TsumNormAdelicSchwartzRationalTranslatesLeStatement =====
@@ -1242,7 +1241,7 @@ theorem _root_.GlobalTheory.T.diagonalThetaIntegral_eq_nonzero_mul_diagonal : �
             ∃ c : ℂ, c ≠ 0 ∧ ∀ Φ ∈ GlobalTheory.WeilM.schA D.host.F (κ ⊕ κ),
               GlobalTheory.DiagSiegel.thetaDiagInt ν 𝓕 (GlobalTheory.WeilSchrodinger.thetaTr D.host.F (GlobalTheory.DblSchr.ddr co) ψ Φ) =
                 c * GlobalTheory.DiagSiegel.diagInt μ Φ := by
-  first | exact @GlobalTheory.DiagSiegelUnfold.diag_theta_integral | exact GlobalTheory.DiagSiegelUnfold.diag_theta_integral | (intros; apply GlobalTheory.DiagSiegelUnfold.diag_theta_integral <;> assumption)
+  first | exact @GlobalTheory.DiagSiegelUnfold.diag_theta_integral
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiagonalThetaIntegralEqNonzeroMulDiagonalStatement =====
@@ -1287,7 +1286,7 @@ theorem _root_.GlobalTheory.T.diagonalThetaIntegral_siegelRule_doubledWeil : ∀
                          (GlobalTheory.DblSchr.omdOf omd₀ p Φ)) =
               GlobalTheory.DiagSiegel.ruleFac (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (GlobalTheory.WeilM.adeleClass D.host.F) χT (Fintype.card (Fin T.rank)) t *
                 GlobalTheory.DiagSiegel.thetaDiagInt ν 𝓕 (GlobalTheory.WeilSchrodinger.thetaTr D.host.F (GlobalTheory.DblSchr.ddr co) ψ Φ) := by
-  first | exact @GlobalTheory.DiagThetaRule.thetaDiagInt_omdOf | exact GlobalTheory.DiagThetaRule.thetaDiagInt_omdOf | (intros; apply GlobalTheory.DiagThetaRule.thetaDiagInt_omdOf <;> assumption)
+  first | exact @GlobalTheory.DiagThetaRule.thetaDiagInt_omdOf
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiagonalThetaIntegralSiegelRuleDoubledWeilStatement =====
@@ -1405,7 +1404,7 @@ theorem _root_.GlobalTheory.T.siegelRule_diagonal_doubledSchroedingerModel : ∀
           GlobalTheory.WeilM.SiegelRule (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (GlobalTheory.WeilM.adeleClass D.host.F) ψ ξ (incM D.host.F JA)
             (GlobalTheory.WeilM.dbl (incM D.host.F JB)) (GlobalTheory.DblSchr.dblD (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) co) χT
             (GlobalTheory.WeilM.diagCols (Fin S.rank)) (GlobalTheory.DblSchr.omdOf omd₀) := by
-  first | exact @GlobalTheory.DiagSiegel.siegelRule_ddr | exact GlobalTheory.DiagSiegel.siegelRule_ddr | (intros; apply GlobalTheory.DiagSiegel.siegelRule_ddr <;> assumption)
+  first | exact @GlobalTheory.DiagSiegel.siegelRule_ddr
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SiegelRuleDiagonalDoubledSchroedingerModelStatement =====

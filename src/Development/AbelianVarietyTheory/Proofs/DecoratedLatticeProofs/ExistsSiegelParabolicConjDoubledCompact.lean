@@ -105,7 +105,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.mem_latticeStabilizer_iff_scaledFrameConj : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (N : ℕ) (Λ : Submodule (𝓞 E) (Fin N → E)) (b M M' : GL (Fin N) (AF F ⊗[F] E)) (u : (AF F ⊗[F] E)ˣ), IsLatticeFrame Λ b → (∀ v i j, compFin F E v (M'.1 i j) ∈ intLoc F E v ∧ compFin F E v ((M'⁻¹).1 i j) ∈ intLoc F E v) → M.1 = (u : AF F ⊗[F] E) • M'.1 → ∀ (v : HeightOneSpectrum (𝓞 F)) (x : GL (Fin N) (Fv F v ⊗[F] E)), x ∈ Formalism.UG.stabGL (latLoc F Λ v) ↔ (Formalism.UG.bc (compFin F E v) (b * M))⁻¹ * x * Formalism.UG.bc (compFin F E v) (b * M) ∈ Formalism.UG.stabGL (latLoc F (stdLattice E N) v) := by
-  first | exact @GlobalTheory.StdUnn.StabFin.mem_stab_iff | exact GlobalTheory.StdUnn.StabFin.mem_stab_iff | (intros; apply GlobalTheory.StdUnn.StabFin.mem_stab_iff <;> assumption)
+  first | exact @GlobalTheory.StdUnn.StabFin.mem_stab_iff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MemLatticeStabilizerIffScaledFrameConjStatement =====
@@ -177,7 +177,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.mem_unitaryStandard_iff_conj_similitude : ∀ (R : Type) [CommRing R] (σ : R →+* R), (∀ x, σ (σ x) = x) → ∀ (N : ℕ) (M y : GL (Fin N) R) (r : Rˣ), Formalism.UG.cT σ M.1 * M.1 = (r : R) • 1 → (y ∈ Formalism.UG.UJ σ (1 : Matrix (Fin N) (Fin N) R) ↔ M⁻¹ * y * M ∈ Formalism.UG.UJ σ (1 : Matrix (Fin N) (Fin N) R)) := by
-  first | exact @GlobalTheory.StdUnn.mem_UJ_one_iff_conj_similitude | exact GlobalTheory.StdUnn.mem_UJ_one_iff_conj_similitude | (intros; apply GlobalTheory.StdUnn.mem_UJ_one_iff_conj_similitude <;> assumption)
+  first | exact @GlobalTheory.StdUnn.mem_UJ_one_iff_conj_similitude
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MemUnitaryStandardIffConjSimilitudeStatement =====
@@ -386,7 +386,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.exists_realPlacesIdempotent_extensionAdeles : ∀ D : D7, ∃ e : AE D, e * e = e ∧ cA D e = e ∧ (∀ v, compFin D.host.F D.host.E v e = 0) ∧ (∀ w, compInf D.host.F D.host.E w e = 1) ∧ finPart D e = 0 ∧ infPart D e = 1 := by
-  first | exact @GlobalTheory.StdUnn.realIdem_exists | exact GlobalTheory.StdUnn.realIdem_exists | (intros; apply GlobalTheory.StdUnn.realIdem_exists <;> assumption)
+  first | exact @GlobalTheory.StdUnn.realIdem_exists
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsRealPlacesIdempotentExtensionAdelesStatement =====
@@ -476,7 +476,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.exists_idele_traceZero_norm_adjust_realComponents : ∀ (D : D7) (μ : D.host.E), IsSkew μ → ∀ u₀ : (AE D)ˣ, ∃ u ε : (AE D)ˣ, (ε : AE D) * u * cA D u = incA D μ ∧ (∀ v, compFin D.host.F D.host.E v u = compFin D.host.F D.host.E v u₀) ∧ ∀ w, compInf D.host.F D.host.E w (ε * cA D ε) = 4 := by
-  first | exact @GlobalTheory.StdUnn.exists_scal_real | exact GlobalTheory.StdUnn.exists_scal_real | (intros; apply GlobalTheory.StdUnn.exists_scal_real <;> assumption)
+  first | exact @GlobalTheory.StdUnn.exists_scal_real
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsIdeleTraceZeroNormAdjustRealComponentsStatement =====
@@ -720,7 +720,7 @@ theorem exists_skew_norm_mul_unit : ∀ D : D7, ∃ μ : D.host.E, IsSkew μ ∧
   · rw [h] at hsq
     exact_mod_cast (by simpa using hsq : (D.host.q : D.host.E) = 0)
   · have := congrArg (fun z : 𝓞 D.host.E => (z : D.host.E)) e
-    simp only [RingOfIntegers.coe_eq_algebraMap, map_mul] at this
+    simp only [map_mul] at this
     exact (congrArg _ (hcv α).symm).trans this
 
 end GlobalTheory.StdUnn.SkewNorm
@@ -743,7 +743,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.exists_traceZero_localNorm_mul_integralUnit : ∀ D : D7, ∃ μ : D.host.E, IsSkew μ ∧ ∃ u ε : (AE D)ˣ, (ε : AE D) * u * cA D u = incA D μ ∧ IntA (ε : AE D) ∧ IntA ((ε⁻¹ : (AE D)ˣ) : AE D) := by
-  first | exact @GlobalTheory.StdUnn.SkewNorm.exists_skew_norm_mul_unit | exact GlobalTheory.StdUnn.SkewNorm.exists_skew_norm_mul_unit | (intros; apply GlobalTheory.StdUnn.SkewNorm.exists_skew_norm_mul_unit <;> assumption)
+  first | exact @GlobalTheory.StdUnn.SkewNorm.exists_skew_norm_mul_unit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsTraceZeroLocalNormMulIntegralUnitStatement =====

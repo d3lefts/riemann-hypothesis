@@ -104,7 +104,7 @@ theorem repr_eq_trace (a : 𝓞 E) (k) :
   classical
   conv_rhs => rw [← (RingOfIntegers.basis E).sum_repr a]
 
-  simp only [map_sum, RingOfIntegers.coe_eq_algebraMap, Finset.mul_sum, map_zsmul, mul_smul_comm,
+  simp only [map_sum, Finset.mul_sum, map_zsmul, mul_smul_comm,
   ← integralBasis_apply, trace_dualInt]
   simp
 
@@ -300,7 +300,7 @@ theorem hermForm_smul_eq_sum {g : ℕ} (ty : Fin g → (E →+* ℂ)) (Hm : Matr
     · simp [tyPart, h]
       ring
     · intro σ _ hσ
-      simp [tyPart, Ne.symm hσ, hσ]
+      simp [tyPart, Ne.symm hσ]
     · simp
   · rw [hb j k h]
     simp only [mul_zero, zero_mul]

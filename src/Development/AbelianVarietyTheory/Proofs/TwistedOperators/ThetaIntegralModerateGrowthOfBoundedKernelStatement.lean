@@ -236,7 +236,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.SquareComm GlobalTheory.SquareAgree
 
 theorem _root_.GlobalTheory.T.finprod_finiteHeight_transposeGramUnitary_le : ∀ (D : D7) (X : HSp D) {d : ℕ} (e : Fin X.rank ≃ Fin d) {J : Matrix (Fin d) (Fin d) D.host.E} (hJ : J = D.host.xi0 • reindex e e X.gramᵀ), ∃ C : NNReal, ∀ h : GA D X, ∏ᶠ v, GlobalTheory.AdelicU.htFin D.host.F v (Formalism.UG.bc (GlobalTheory.AdelicU.compFin D.host.F D.host.E v) (kapX X e hJ h).1) ≤ C * ∏ᶠ v, GlobalTheory.IndefiniteRowSideFullHecke.LieAlgebraExponentialFamilies.finHt X v h := by
-  first | exact @GlobalTheory.SquareAgree.finprod_htFin_kapX_le | exact GlobalTheory.SquareAgree.finprod_htFin_kapX_le | (intros; apply GlobalTheory.SquareAgree.finprod_htFin_kapX_le <;> assumption)
+  first | exact @GlobalTheory.SquareAgree.finprod_htFin_kapX_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FinprodFiniteHeightTransposeGramUnitaryLeStatement =====
@@ -355,7 +355,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.SquareComm GlobalTheory.SquareAgree
 
 theorem _root_.GlobalTheory.T.infiniteHeight_transposeGramUnitary_le : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (X : HSp D) {d : ℕ} (e : Fin X.rank ≃ Fin d) {J : Matrix (Fin d) (Fin d) D.host.E} (hJ : J = D.host.xi0 • reindex e e X.gramᵀ), ∃ C : NNReal, ∀ h : GA D X, ∏ w, GlobalTheory.AdelicU.htInf D.host.F w (Formalism.UG.bc (GlobalTheory.AdelicU.compInf D.host.F D.host.E w) (kapX X e hJ h).1) ≤ C * ∏ τ, GlobalTheory.IndefiniteRowSideFullHecke.LieAlgebraExponentialFamilies.infHt θ X τ h := by
-  first | exact @GlobalTheory.HtInfKapX.htInf_kapX_le | exact GlobalTheory.HtInfKapX.htInf_kapX_le | (intros; apply GlobalTheory.HtInfKapX.htInf_kapX_le <;> assumption)
+  first | exact @GlobalTheory.HtInfKapX.htInf_kapX_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.InfiniteHeightTransposeGramUnitaryLeStatement =====
@@ -523,7 +523,7 @@ theorem _root_.GlobalTheory.T.theta_integral_moderate_growth_of_bounded_kernel :
     ∀ Φ₀ Φ₀D, IsDatum Γ.M' ψ cB Φ₀D Φ₀ → Γ.M'.Conv om' Φ₀D →
     (∃ (C : ℝ) (k : ℕ), ∀ g h, ‖GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.theta om' Φ₀D g h‖ ≤ C * (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ht h : ℝ) ^ k) →
     ModInt θ ωB ν₁ 𝓕₁ Φ₀ := by
-  first | exact @GlobalTheory.ModGrowth.modInt_of_bound | exact GlobalTheory.ModGrowth.modInt_of_bound | (intros; apply GlobalTheory.ModGrowth.modInt_of_bound <;> assumption)
+  first | exact @GlobalTheory.ModGrowth.modInt_of_bound
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ThetaIntegralModerateGrowthOfBoundedKernelStatement =====

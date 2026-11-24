@@ -464,7 +464,7 @@ theorem frame_conj_fix {z : Fin (2 * r + k + 1) → ℂ} {g : Mx k r} (hg : IsFr
   have hU' : gᴴ * Hpk k r * g = Hpk k r := hU
   have hb1 : ∀ e : Fin (2 * r + k + 1), bvec e e = 1 := fun e => by simp [bvec]
   have hb0 : ∀ e p : Fin (2 * r + k + 1), p ≠ e → bvec e p = 0 := fun e p hp => by
-    simp [bvec, Pi.single_apply, hp]
+    simp [bvec, hp]
   have hfixv : ∀ e : Fin (2 * r + k + 1), (e.val < r ∨ r + k < e.val) → g *ᵥ bvec e = bvec e := by
     intro e he
     have heL := e.isLt
@@ -648,13 +648,11 @@ theorem besselIntg_turn (L : LocBessel k r) (ka : ℝ) (hc : L.c = ((2 * ka : �
 
 theorem J_turn (L : LocBessel k r) (ka : ℝ) (hc : L.c = ((2 * ka : ℝ) : ℂ)) (f : Mx k r → (L.Wq →L[ℂ] L.Wp))
     (g : Mx k r) : (turnL L ka).J (turnF L ka f) g = L.J f (tT k r * g * tTi k r) := by
-  rw [J_eq_integral, J_eq_integral]
-  have hP : pairMeas (turnL L ka) = pairMeas L := rfl
-  rw [hP]
+  rw [J_eq_integral, J_eq_integral, show pairMeas (turnL L ka) = pairMeas L from rfl]
   conv_lhs => rw [← map_thP_pairMeas L, ← thE_coe, integral_map_equiv]
-  refine integral_congr_ae (Filter.Eventually.of_forall fun p => ?_)
-  rw [thE_coe]
-  exact besselIntg_turn L ka hc f g p
+  exact integral_congr_ae (Filter.Eventually.of_forall fun p => by
+    rw [thE_coe]
+    exact besselIntg_turn L ka hc f g p)
 
 theorem jNorm2_turn (L : LocBessel k r) (ka : ℝ) (hc : L.c = ((2 * ka : ℝ) : ℂ)) (f : Mx k r → (L.Wq →L[ℂ] L.Wp))
     (μsec : ℂ → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) : jNorm2 (turnL L ka) (turnF L ka f) μsec = jNorm2 L f μsec := by
@@ -699,9 +697,8 @@ theorem thP_stabAct (g a : Mx k r) (x : PairSp k r) :
 theorem isOrbQuot_turn (L : LocBessel k r) (ka : ℝ) {g : Mx k r} {μR : Measure (Mt k r)} {ν : Measure (PairSp k r)}
     (h : IsOrbQuot L g μR ν) : IsOrbQuot (turnL L ka) (tTi k r * g * tT k r) (μR.map (cA k r)) (ν.map (thP k r)) := by
   intro F hF
-  have hP : pairMeas (turnL L ka) = pairMeas L := rfl
   calc ∫⁻ x, F x ∂pairMeas (turnL L ka) = ∫⁻ x, F x ∂((pairMeas L).map (thE k r)) := by
-        rw [hP, thE_coe, map_thP_pairMeas]
+        rw [show pairMeas (turnL L ka) = pairMeas L from rfl, thE_coe, map_thP_pairMeas]
     _ = ∫⁻ x, F (thE k r x) ∂pairMeas L := lintegral_map_equiv _ _
     _ = ∫⁻ x, (∫⁻ a, F (thE k r (stabAct g (Matrix.of a) x)) ∂μR) ∂ν :=
         h (fun x => F (thE k r x)) (hF.comp (thE k r).measurable)
@@ -726,7 +723,7 @@ theorem isRelStab_turn (L : LocBessel k r) (ka : ℝ) (hc : L.c = ((2 * ka : ℝ
   have e2 : (tTi k r * g * tT k r)⁻¹ * a' * (tTi k r * g * tT k r) =
       tTi k r * (g⁻¹ * (tT k r * a' * tTi k r) * g) * tT k r := by
     rw [← conjI_inv]
-    simp only [Matrix.mul_assoc, tTi_mul_tT_assoc, tT_mul_tTi_assoc, tT_mul_tTi, tTi_mul_tT, Matrix.mul_one]
+    simp only [Matrix.mul_assoc]
   show psi k r L.z (cOfDpsi (ka : ℂ)) a' = psi k r L.z' (cOfDpsi (ka : ℂ)) ((tTi k r * g * tT k r)⁻¹ * a' * (tTi k r * g * tT k r))
   rw [e2]
   conv_lhs => rw [e1]
@@ -762,11 +759,11 @@ theorem flagMat_conjI {z : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (x : M
         simp only [tT, Matrix.mulVec_diagonal, Pi.smul_apply, smul_eq_mul]
         by_cases hp : p = eI k r ⟨j.val, hj⟩
         · rw [hp, dT_eI]
-        · have hb : bvec (eI k r ⟨j.val, hj⟩) p = 0 := by simp [bvec, Pi.single_apply, hp]
+        · have hb : bvec (eI k r ⟨j.val, hj⟩) p = 0 := by simp [bvec, hp]
           rw [hb, mul_zero, mul_zero]
       · rw [dite_eq_right hj, tT_mulVec_Wb hz, show j.val = r by have := j.isLt; omega]
     rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, hv, Matrix.mulVec_smul]
-    simp only [tTi, Matrix.mulVec_diagonal, dT_eI, Fin.val_mk, Pi.smul_apply, smul_eq_mul]
+    simp only [tTi, Matrix.mulVec_diagonal, dT_eI, Pi.smul_apply, smul_eq_mul]
     ring
   · rw [dite_eq_right hi, dite_eq_right hi, if_neg hi, one_mul]
 
@@ -775,9 +772,7 @@ theorem continuous_rootCoordsS {z : Fin (2 * r + k + 1) → ℂ} (S : Finset (Fi
   refine continuous_pi fun q => ?_
   unfold flagMat
   split_ifs with hi h2
-  · have hc : Continuous fun a : Mt k r => Matrix.of a *ᵥ fvec k r z q.1.2 :=
-      Continuous.matrix_mulVec continuous_id continuous_const
-    exact (continuous_apply (eI k r ⟨q.1.1.val, hi⟩)).comp hc
+  · exact (continuous_apply (eI k r ⟨q.1.1.val, hi⟩)).comp (Continuous.matrix_mulVec continuous_id continuous_const)
   · exact continuous_const
   · exact continuous_const
 

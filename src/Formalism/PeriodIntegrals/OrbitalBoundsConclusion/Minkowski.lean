@@ -356,8 +356,7 @@ theorem schurPoly_eval_zero (N ℓ m y : ℕ) (h1 : y ≠ 0) (h2 : y ≤ m) :
   unfold schurPoly
   rw [eval_prod]
   apply Finset.prod_eq_zero (i := y - 1) (Finset.mem_range.2 (by omega))
-  have : y - 1 + 1 = y := by omega
-  simp [this]
+  simp [show y - 1 + 1 = y by omega]
 
 theorem dvd_sum_eval (hb : PowerSumStep) (N : ℕ)
     (P : Subgroup (Matrix.GeneralLinearGroup (Fin N) ℤ)) [Fintype P] (f : ℤ[X]) :
@@ -385,9 +384,8 @@ theorem pGroupStep_of (ha : TraceStep) (hb : PowerSumStep) : PGroupStep := by
     obtain ⟨a, hga⟩ := hP g
     have hmat : ((g : Matrix.GeneralLinearGroup (Fin N) ℤ) : Matrix (Fin N) (Fin N) ℤ) ^ (ℓ ^ a)
         = 1 := by
-      have := congrArg (fun x : P => ((x : Matrix.GeneralLinearGroup (Fin N) ℤ) :
+      simpa using congrArg (fun x : P => ((x : Matrix.GeneralLinearGroup (Fin N) ℤ) :
         Matrix (Fin N) (Fin N) ℤ)) hga
-      simpa using this
     obtain ⟨y, hy, htr, hy0⟩ := ha N ℓ a hℓ _ hmat
     rw [htr]
     apply schurPoly_eval_zero _ _ _ _ _ hy

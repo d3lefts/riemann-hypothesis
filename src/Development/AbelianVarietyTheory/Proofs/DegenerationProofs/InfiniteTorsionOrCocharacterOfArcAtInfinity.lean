@@ -132,7 +132,7 @@ private lemma leading_polynomial_eq_zero_iff_lt_weightedOrder {k : Type} [Field 
         MvPowerSeries.coeff e f := by
     intro e he
     rw [Polynomial.finsetSum_coeff, Finset.sum_eq_single e]
-    · simp [Polynomial.coeff_C_mul_X_pow]
+    · simp
     · intro e' he' hne
       rw [Polynomial.coeff_C_mul_X_pow, if_neg]
       intro h1
@@ -709,7 +709,7 @@ abbrev toK (k : Type) [Field k] : PowerSeries k →ₐ[k] FractionRing (PowerSer
 theorem toK_injective : Function.Injective (toK k) := IsFractionRing.injective (PowerSeries k) _
 
 def ev0 (k : Type) [Field k] : PowerSeries k →ₐ[k] k :=
-  { PowerSeries.constantCoeff (R := k) with commutes' := fun c => by simp [PowerSeries.algebraMap_apply] }
+  { PowerSeries.constantCoeff (R := k) with commutes' := fun c => by simp }
 
 theorem laurentCoeffEvalLinear_apply (x : PowerSeries k) : ev0 k x = PowerSeries.constantCoeff x := rfl
 

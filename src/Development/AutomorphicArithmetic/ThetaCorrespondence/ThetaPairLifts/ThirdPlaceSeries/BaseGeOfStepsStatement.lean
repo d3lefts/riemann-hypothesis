@@ -333,7 +333,7 @@ theorem inCoefLat_pow' (R : RealDat D A Ks) (i : Fin D.R.m) {β : GL (Fin (Vc D 
   have e2 := smul_mem_hLat hβ (k := k⁻¹) (by rw [inv_inv]; exact h₁ (m₁ + m₂) (Nat.le_add_right _ _)) (h * k)
   rw [mul_inv_cancel_right] at e2
   have e3 := Submodule.smul_mem _ ((p ^ d : ℕ) : 𝓞 D.what₂.LL)
-    (nabAtr_scale (labLL D) (Formalism.IndefR.FWT.lamV D i) _ (by first | exact GlobalTheory.RepsCompare.isLattice_hLat _ _ | exact hLat_full _ _) e1 e2 P hP)
+    (nabAtr_scale (labLL D) (Formalism.IndefR.FWT.lamV D i) _ (by first | exact hLat_full _ _) e1 e2 P hP)
   refine ⟨_, e3, ?_⟩
   rw [Nat.cast_smul_eq_nsmul, map_nsmul, map_smulₛₗ, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul]
   congr 1
@@ -771,7 +771,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp GlobalTheory.BigOn.Exp.SerBase
 
 theorem _root_.GlobalTheory.T.kerOfAt' : _root_.GlobalTheory.BigOn.Exp.SerBase.KerOfAtAlt := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.SerBase.kerOfAt_alt | exact _root_.GlobalTheory.BigOn.Exp.SerBase.kerOfAt_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.SerBase.kerOfAt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.SerBase.kerOfAt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1013,7 +1013,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp GlobalTheory.BigOn.Exp.SerBase
 
 theorem _root_.GlobalTheory.T.readCmpAt_of_serBase : _root_.GlobalTheory.BigOn.Exp.SerBase.ReadComparisonAt := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.SerBase.readCmpAt_alt | exact _root_.GlobalTheory.BigOn.Exp.SerBase.readCmpAt_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.SerBase.readCmpAt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.SerBase.readCmpAt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1030,7 +1030,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.read_injective : _root_.GlobalTheory.BigOn.Exp.ReadInjAlt := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.readInj_alt | exact _root_.GlobalTheory.BigOn.Exp.readInj_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.readInj_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.readInj_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1096,7 +1096,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp GlobalTheory.BigOn.Exp.SerBase
 
 theorem _root_.GlobalTheory.T.trace_rationality_at_place' : _root_.GlobalTheory.BigOn.Exp.SerBase.TraceAt' := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.SerBase.traceOfAt_alt | exact _root_.GlobalTheory.BigOn.Exp.SerBase.traceOfAt_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.SerBase.traceOfAt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.SerBase.traceOfAt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1160,7 +1160,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.baseGe_of_cuspRapidDecay_artin_rayClassField_seriesRat : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.SerStd.SeriesRatS → _root_.GlobalTheory.BigOn.Exp.BaseLowerBound₂ := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.baseGe_of_alt | exact _root_.GlobalTheory.BigOn.Exp.baseGe_of_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.baseGe_of_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.baseGe_of_alt
 end
 end -- clump:auto
 end -- clump:auto

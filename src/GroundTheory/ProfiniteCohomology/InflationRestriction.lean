@@ -161,7 +161,6 @@ theorem IsTgLift.tgDiff_out (hx : IsCocycleOne A N x) (hy : IsTgLift A N x y) (g
     tgDiff A y (Quotient.out (g : G ⧸ N)) (Quotient.out (h : G ⧸ N)) = tgDiff A y g h := by
   obtain ⟨m, hm⟩ := QuotientGroup.mk_out_eq_mul N g
   obtain ⟨n, hn⟩ := QuotientGroup.mk_out_eq_mul N h
-  change tgDiff A y (g : G ⧸ N).out (h : G ⧸ N).out = _
   rw [hm, hn, hy.tgDiff_mul_mul hx]
 
 
@@ -559,7 +558,6 @@ theorem exists_isTgLift (hN : IsClosed (N : Set G)) (z : cocycles (Rep.res N.sub
   refine ⟨fun g => b g + A.ρ (s g) (X (sectionRetraction N hsec g)), ⟨?_, ?_, ?_⟩, ?_⟩
   · simp [b, hs1, hr1, hX1]
   · intro g n
-    beta_reduce
     rw [mk_mul_mem N g n, sectionRetraction_mul N hsec, hXc, map_add (f := _), ← Module.End.mul_apply,
       ← map_mul, section_mul_sectionRetraction N hsec]
     abel

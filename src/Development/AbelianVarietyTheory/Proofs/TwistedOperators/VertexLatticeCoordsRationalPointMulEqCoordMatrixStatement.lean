@@ -98,8 +98,7 @@ theorem finG_rat {D : D7} (V : HSp D) (fr : GL (Fin V.rank) D.host.E) (g : GfC V
   have hm : ((Formalism.L2.Theta.matHom V γ : GL (Fin V.rank) _) : Matrix (Fin V.rank) (Fin V.rank) _) =
       (fr.1 * U.1 * (fr⁻¹ : GL (Fin V.rank) D.host.E).1).map (incA D) := hmt
   unfold Formalism.L2.Theta.finHom
-  simp only [Formalism.UG.bc, MonoidHom.comp_apply, Units.coe_map, MonoidHom.coe_coe, RingHom.mapMatrix_apply, hm,
-    Matrix.map_map]
+  simp only [Formalism.UG.bc, MonoidHom.comp_apply, Units.coe_map, hm]
   ext i j
   exact key _
 
@@ -162,7 +161,7 @@ theorem _root_.GlobalTheory.T.vertexLatticeCoords_rationalPoint_mul_eq_coordMatr
     (S : GridChoice W Set.univ) (X : Node) (r : FinPt G X) (U : Matrix.unitaryGroup (Fin (G.V X).rank) D.host.E),
     GlobalTheory.RatMoveJets.RatCoord (G.V X) (S.N.fr X) r U → ∀ x : FinPt G X,
       GlobalTheory.SumSize.latAt S X (r * x) = SDLat.smulLat U.1 (GlobalTheory.SumSize.latAt S X x) := by
-  first | exact @GlobalTheory.RatMoveLat.latAt_rat | exact GlobalTheory.RatMoveLat.latAt_rat | (intros; apply GlobalTheory.RatMoveLat.latAt_rat <;> assumption)
+  first | exact @GlobalTheory.RatMoveLat.latAt_rat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.VertexLatticeCoordsRationalPointMulEqCoordMatrixStatement =====

@@ -206,7 +206,7 @@ private theorem bsp_one (n : ℕ) (z : O) (A : Matrix (Fin n) (Fin n) O) :
       simp
     · have hne : S.f (e i).1 ≠ S.f (e i').1 := fun h =>
         hii (e.injective (Subtype.ext (S.f.injective h)))
-      simp [Finsupp.single_apply, hne, hii]
+      simp [hne, hii]
 
 theorem blockSplit {J : Type} [Fintype J] (n : ℕ) (z : O) (hz : z ≠ 0)
     (A : J → Matrix (Fin n) (Fin n) O) (h : ∑ j, A j = z • (1 : Matrix (Fin n) (Fin n) O)) :
@@ -351,7 +351,7 @@ theorem latRetract : LatRetract := by
       have hj : (b'.restrictScalars O) j = ⟨b' j, Submodule.subset_span ⟨j, rfl⟩⟩ :=
         Subtype.ext (Module.Basis.restrictScalars_apply _ _ _)
       rw [hj]
-      simp [ret, Module.Basis.constr_basis]
+      simp [ret]
     intro y
     exact LinearMap.congr_fun h3 y
   refine ⟨ret, ?_, ?_⟩

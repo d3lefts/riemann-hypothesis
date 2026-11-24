@@ -181,7 +181,7 @@ open scoped TensorProduct InnerProductSpace ComplexConjugate
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.maximal_compact_sorted_frame_acts_through_model_compact : ∀ (D : D7) (θ : InfFam D) (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (hV : V.SigOK) (k : GA D V), IsInfFam θ → k ∈ GlobalTheory.Cusp.Kinf θ V (GlobalTheory.ChainOnto.RealData.sortedFrame M hV) → ∀ τ, M.fr τ * infMat D.sp.cm.sig V.gram (θ τ) k * (M.fr τ)⁻¹ ∈ Formalism.REAL.Kset (M.ε τ) := by
-  first | exact @GlobalTheory.ChainOnto.RealData.conj_mem_Kset_of_mem_Kinf | exact GlobalTheory.ChainOnto.RealData.conj_mem_Kset_of_mem_Kinf | (intros; apply GlobalTheory.ChainOnto.RealData.conj_mem_Kset_of_mem_Kinf <;> assumption)
+  first | exact @GlobalTheory.ChainOnto.RealData.conj_mem_Kset_of_mem_Kinf
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MaximalCompactSortedFrameActsThroughModelCompactStatement =====
@@ -197,7 +197,7 @@ open scoped TensorProduct InnerProductSpace ComplexConjugate
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.multiplicity_map_right_translate_real_point : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (J : Set (GA D V)) (χ : GA D V → ℂ) (T : MMap M), IsMultMap θ M J χ T → ∀ k ∈ GinfC V, ∀ v : M.Vec, ∃ v' : M.Vec, (∀ τ, (v' τ : M.H τ) = M.rep τ (infMat D.sp.cm.sig V.gram (θ τ) k) (v τ)) ∧ ∀ x, T v (x * k) = T v' x := by
-  first | exact @GlobalTheory.RealPointMove.translate_eq_move | exact GlobalTheory.RealPointMove.translate_eq_move | (intros; apply GlobalTheory.RealPointMove.translate_eq_move <;> assumption)
+  first | exact @GlobalTheory.RealPointMove.translate_eq_move
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MultiplicityMapRightTranslateRealPointStatement =====
@@ -259,12 +259,12 @@ theorem isCartanInv_cart (M : DSModel V S) (τ : D.what₂.Tau) : IsCartanInv (g
   have h1 : ((M.fr τ)⁻¹)ᴴ * (M.fr τ)ᴴ = 1 := by
     rw [← conjTranspose_mul, Matrix.mul_nonsing_inv _ hd, conjTranspose_one]
   have hJ : (Formalism.REAL.Jm (M.ε τ)) * Formalism.REAL.Jm (M.ε τ) = 1 := by
-    ext i j; by_cases h : i = j <;> simp [Formalism.REAL.Jm, diagonal_apply, h, Matrix.one_apply] <;> split_ifs <;> simp
+    ext i j; by_cases h : i = j <;> simp [Formalism.REAL.Jm, h, Matrix.one_apply] <;> split_ifs <;> simp
   have hJh : (Formalism.REAL.Jm (M.ε τ))ᴴ = Formalism.REAL.Jm (M.ε τ) := by
     ext i j
     by_cases h : i = j
-    · subst h; simp [Formalism.REAL.Jm, diagonal_apply]; split_ifs <;> simp
-    · simp [Formalism.REAL.Jm, diagonal_apply, h, Ne.symm h]
+    · subst h; simp [Formalism.REAL.Jm]; split_ifs <;> simp
+    · simp [Formalism.REAL.Jm, h, Ne.symm h]
   have hg : ((M.fr τ)⁻¹)ᴴ * gramAt D V τ * (M.fr τ)⁻¹ = Formalism.REAL.Jm (M.ε τ) := by
     rw [← M.fr_gram τ, ← Matrix.mul_assoc, ← Matrix.mul_assoc, h1, Matrix.one_mul, Matrix.mul_assoc,
       Matrix.mul_nonsing_inv _ hd, Matrix.mul_one]
@@ -287,7 +287,7 @@ theorem exists_maj_cart (θ : InfFam D) (hθ : IsInfFam θ) (M : DSModel V S) :
     simp only [Matrix.mul_assoc]
   rw [this, hε, diagonal_mul_diagonal]
   ext i j
-  by_cases h : i = j <;> simp [diagonal_apply, h, Matrix.one_apply] <;> split_ifs <;> simp
+  by_cases h : i = j <;> simp [h, Matrix.one_apply] <;> split_ifs <;> simp
 
 theorem exists_kStable (M : DSModel V S) (τ : D.what₂.Tau) {w : M.H τ} (hw : w ∈ GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.kfin M τ) :
     ∃ W : Submodule ℂ (M.H τ), FiniteDimensional ℂ W ∧ w ∈ W ∧ Formalism.MainNotions.S.IsKStableOn (M.ε τ) (M.σ τ) W := by

@@ -134,7 +134,7 @@ section -- clump:auto
 open GlobalTheory.CompanionTheory.ThTot
 
 theorem _root_.GlobalTheory.T.weil_representation_continuity : WeilCont := by
-  first | exact @GlobalTheory.CompanionTheory.ThTot.weilCont | exact GlobalTheory.CompanionTheory.ThTot.weilCont | (intros; apply GlobalTheory.CompanionTheory.ThTot.weilCont <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ThTot.weilCont
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WeilRepresentationContinuityStatement =====

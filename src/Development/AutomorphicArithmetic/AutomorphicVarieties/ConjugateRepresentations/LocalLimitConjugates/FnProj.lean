@@ -134,7 +134,7 @@ theorem UpperTheory.V.Cj.H.absDense :
         rw [inner_add_left, ha v, hb v, add_zero]
       zero_mem' := by
         intro v
-        simp only [Set.mem_setOf_eq, inner_zero_left]
+        simp only [inner_zero_left]
       smul_mem' := by
         intro c a ha v
         simp only [Set.mem_setOf_eq] at ha ⊢
@@ -197,7 +197,7 @@ private theorem UpperTheory.V.Cj.H.absInv_low {H : Type} [NormedAddCommGroup H] 
     have hn : ‖Complex.I * (s : ℂ)‖ = |s| := by
       rw [norm_mul, Complex.norm_I, one_mul, Complex.norm_real, Real.norm_eq_abs]
     rw [hn]
-    simp [Complex.mul_re, hre]
+    simp [hre]
   have h0 : 0 ≤ |s| * ‖v‖ := mul_nonneg (abs_nonneg s) (norm_nonneg v)
   nlinarith [norm_nonneg (x + (Complex.I * s) • v), sq_nonneg ‖x‖]
 
@@ -464,7 +464,7 @@ theorem UpperTheory.V.Cj.H.absProj :
       simp [Function.comp_apply, map_smul, hTR k g w]
     exact tendsto_nhds_unique (hlim (R g w)) h2
   · intro k g w
-    simp [ContinuousLinearMap.smul_apply, map_smul, hTR k g w]
+    simp [map_smul, hTR k g w]
   · intro k g w
     exact hTR k g w
   · intro k v

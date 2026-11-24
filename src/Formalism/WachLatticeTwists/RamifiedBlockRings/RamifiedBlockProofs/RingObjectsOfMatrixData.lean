@@ -138,8 +138,8 @@ private theorem matrix_charpolyRev_map {R S : Type*} [CommRing R] [CommRing S] (
   ext i j
   by_cases h : i = j
   · subst h
-    simp [Matrix.one_apply]
-  · simp [Matrix.one_apply, h]
+    simp
+  · simp [h]
 
 theorem detT (hG1 : ∀ (g : G) (k : ℕ), (fun x => (Matrix.charpolyRev (r g x)).coeff k) ∈ T)
     (M : Xs → Matrix d d O[X]) (hM : M ∈ tSpan (polyT T) (rPoly r)) (k : ℕ) :
@@ -181,8 +181,8 @@ theorem blockPolyT : StatBlockPolyT := by
       ext i j
       by_cases h : i = j
       · subst h
-        simp [Algebra.algebraMap_eq_smul_one, smul_mul_assoc, Matrix.one_apply]
-      · simp [Algebra.algebraMap_eq_smul_one, smul_mul_assoc, Matrix.one_apply, h]
+        simp [Algebra.algebraMap_eq_smul_one]
+      · simp [Algebra.algebraMap_eq_smul_one, h]
     rw [hq]
     exact Subalgebra.add_mem _ (Subalgebra.sub_mem _
       (Subalgebra.mul_mem _ (Subalgebra.algebraMap_mem _ _) hE) hA)
@@ -214,7 +214,7 @@ theorem rank_block {K : Type*} [Field K] {d : Type} [Fintype d] [DecidableEq d] 
   let P : Matrix {a // bl a = k} d K := Matrix.of fun i a => if (i : d) = a then (1 : K) else 0
   have h1 : M.toSquareBlock bl k = P * M * P.transpose := by
     ext i j
-    simp [P, Matrix.mul_apply, Matrix.toSquareBlock_def, Matrix.transpose_apply]
+    simp [P, Matrix.mul_apply, Matrix.toSquareBlock_def]
   have h2 : M = P.transpose * M.toSquareBlock bl k * P := by
     ext a b
     simp only [P, Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, Matrix.toSquareBlock_def]
@@ -268,7 +268,7 @@ theorem eDiag' (A : Type) [CommRing A] (d : Type) [Fintype d] [DecidableEq d] (S
     by_cases hab : a = b
     · subst hab
       by_cases hs : S a <;> simp [hs]
-    · simp [Matrix.diagonal_apply, hab]
+    · simp [hab]
   have hp : ∀ l : List ℕ, (Matrix.diagonal fun a => if S a then (1 : A) else 0) *
       (l.map fun i => Matrix.diagonal fun a => if S a then β a - α i else 0).prod =
       Matrix.diagonal fun a => if S a then (l.map fun i => β a - α i).prod else 0 := by

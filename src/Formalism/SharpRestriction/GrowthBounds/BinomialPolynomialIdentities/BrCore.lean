@@ -178,7 +178,7 @@ lemma qh_count_all [NeZero n] {mu : Fin n → ℤ} (hmu : Dominant mu) (k : ℕ)
         exact ⟨⟨κ, by omega⟩, by simpa using hκ, rfl⟩
     have h2 := hshape ⟨t, htn⟩
     unfold Formalism.GradedWeylDivisibility.shapeDeg at h2
-    simp only [Fin.val_mk] at h2
+    simp only at h2
     have hle : mu ⟨t, htn⟩ ≤ mu 0 := hmu (by rw [Fin.le_def]; simp)
     have hlast : mu (lastIdx n) ≤ mu ⟨t, htn⟩ := hmu (by rw [Fin.le_def]; simp [lastIdx]; omega)
     have key : (univ.filter fun c : ↥(TCols mu) => t < colH mu c.1).card =
@@ -493,7 +493,7 @@ lemma qh_le_last [NeZero n] (a : Fin n) : a ≤ lastIdx n := by
 
 lemma qh_count [NeZero n] {mu : Fin n → ℤ} (hmu : Dominant mu) (t : Fin n) :
     ((TCols mu).filter (fun c => t.val < colH mu c)).card = (mu t - mu (lastIdx n)).toNat := by
-  have h0 : mu t ≤ mu 0 := hmu (by first | exact Fin.zero_le _ | (rw [Fin.le_iff_val_le_val]; simp))
+  have h0 : mu t ≤ mu 0 := hmu (by first | exact Fin.zero_le _)
   have hset : (TCols mu).filter (fun c => t.val < colH mu c) =
       Finset.Ioc (mu (lastIdx n)) (mu t) := by
     ext c
@@ -516,8 +516,6 @@ lemma qh_mapCoord_alg (P : MvPolynomial (Fin n × Fin n) ℤ) :
   first
     | (rw [mapCoord, IsLocalization.Away.AwayMap.lift_eq]; try rfl; done)
     | (rw [mapCoord, IsLocalization.Away.lift_eq]; try rfl; done)
-    | (simp [mapCoord]; done)
-    | (unfold mapCoord; exact IsLocalization.lift_eq _ _)
 
 lemma qh_mapCoord_detU (z : ℤ) :
     mapCoord R ((detU n ^ z : (GLCoord ℤ n)ˣ) : GLCoord ℤ n) = ((qhDet R n ^ z : (GLCoord R n)ˣ) : GLCoord R n) := by
@@ -536,7 +534,6 @@ lemma qh_can_emb [NeZero n] (mu : Fin n → ℤ) (c : ↥(TCols mu)) (a : Fin (c
     intro x
     first
       | (simp only [canT, Finset.mem_map, Finset.mem_univ, true_and]; exact ⟨x, rfl⟩)
-      | simp [canT]
   have hmono : StrictMono (Fin.castLE (colH_le mu c)) := by
     intro x y hxy
     rw [Fin.lt_iff_val_lt_val] at hxy ⊢
@@ -554,7 +551,6 @@ lemma qh_mapCoord_minor [NeZero n] (mu : Fin n → ℤ) (c : ↥(TCols mu)) (S :
   first
     | (simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, genMat, MvPolynomial.map_X,
         qh_can_emb]; done)
-    | simp [genMat, qh_can_emb]
 
 lemma qh_mapCoord_brk [NeZero n] (mu : Fin n → ℤ) (I : TIdx mu) :
     mapCoord R (brk mu I) = ((qhDet R n ^ mu (lastIdx n) : (GLCoord R n)ˣ) : GLCoord R n) *
@@ -565,8 +561,6 @@ lemma qh_mapCoord_brk [NeZero n] (mu : Fin n → ℤ) (I : TIdx mu) :
        congr 1
        refine Finset.prod_congr rfl (fun c _ => ?_)
        exact qh_mapCoord_minor mu c _ _)
-    | (simp only [brk, TMat, map_mul, map_prod, qh_mapCoord_detU,
-        qh_mapCoord_minor])
 
 lemma qh_brk_mem [NeZero n] {mu : Fin n → ℤ} (hmu : Dominant mu) (I : TIdx mu) :
     mapCoord R (brk mu I) ∈ inducedSections R mu := by
@@ -578,7 +572,6 @@ lemma qh_brk_mem [NeZero n] {mu : Fin n → ℤ} (hmu : Dominant mu) (I : TIdx m
       (fun c _ => qh_N_mem (R := R) (colH mu c) (colH_le mu c) _))
   first
     | (rw [qh_weight_sum hmu] at h; exact h)
-    | (convert h using 2; exact (qh_weight_sum hmu).symm)
 
 end Formalism.InvariantFactorPaths.ColumnFamilies
 end -- clump:auto
@@ -1549,7 +1542,7 @@ theorem qn_pt_step (n : ℕ) (D : Finset (Fin n × Fin n)) (a s : Fin n) (hw : (
           simp [qn_pt, hw, hs]
         · have h1 : (b, c) ≠ (b, s) := by simp [hc]
           have h2 : s ≠ c := fun h => hc h.symm
-          simp [qn_pt, hs, h1, h2, hc]
+          simp [qn_pt, hs, h1, h2]
       · have h1 : (b, c) ≠ (a, s) := by simp [hb]
         simp [qn_pt, h1, hb]
   exact congrArg (fun φ => φ F) h
@@ -1608,11 +1601,11 @@ theorem qn_prod_pt (n : ℕ) (m : Fin n × Fin n →₀ ℕ) :
     rcases lt_trichotomy a c with hac | hac | hac
     · have h0 : m (a, c) = 0 := h a c hac
       have h1 : ¬ c < a := not_lt.mpr hac.le
-      simp [h0, qn_off, Finsupp.filter_apply, h1]
+      simp [h0, qn_off, h1]
     · subst hac
-      simp [qn_pt, qn_low, qn_off, Finsupp.filter_apply]
+      simp [qn_pt, qn_low, qn_off]
     · have h1 : a ≠ c := ne_of_gt hac
-      simp [qn_pt, qn_low, qn_off, Finsupp.filter_apply, hac, h1]
+      simp [qn_pt, qn_low, qn_off, hac, h1]
   · unfold LowerTri at h
     push Not at h
     obtain ⟨a, c, hac, hne⟩ := h
@@ -1848,10 +1841,9 @@ namespace Formalism.InvariantFactorPaths.ColumnFamilies
 
 theorem highest_weight_corollary_two : RationalBitableauLatticeStatement := by
   intro n _ mu hmu
-  have h := qn_main n (qn_nu mu) (qn_nu_anti hmu) (fun I : TIdx mu => brkPol mu I) (canT mu)
-    (fun I => bracket_mem_dualWeyl hmu I) (dualWeyl_le_span_bracket hmu) (eval_id_bracket_canonical mu)
-  rw [qn_nu_cast hmu] at h
-  exact h
+  simpa only [qn_nu_cast hmu] using
+    qn_main n (qn_nu mu) (qn_nu_anti hmu) (fun I : TIdx mu => brkPol mu I) (canT mu)
+      (fun I => bracket_mem_dualWeyl hmu I) (dualWeyl_le_span_bracket hmu) (eval_id_bracket_canonical mu)
 
 end Formalism.InvariantFactorPaths.ColumnFamilies
 end -- clump:auto

@@ -1,51 +1,8 @@
 module
 
 public import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrDefs
-public import Lemmata.FirstBlockLemmaC.Imports
-public import Lemmata.FirstBlockLemmaD.Imports
-public import Lemmata.PadicNatCastNorm.NormNatCastOfNotDvd
-import Mathlib.Algebra.Order.Floor.Extended
-import Mathlib.Algebra.Order.Floor.Semifield
-import Mathlib.Algebra.Order.Interval.Basic
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.Combinatorics.Enumerative.DyckWord
-import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
-import Mathlib.Data.NNRat.Floor
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.Geometry.Euclidean.Volume.Basic
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.NumberTheory.Height.NumberField
-import Mathlib.NumberTheory.Height.Projectivization
-import Mathlib.NumberTheory.LucasLehmer
+import Mathlib.Analysis.Normed.Ring.Finite
 import Mathlib.NumberTheory.Padics.LocalField
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.RingTheory.Radical.NatInt
-import Mathlib.RingTheory.WittVector.IsPoly
-import Mathlib.Tactic.Echelon.Zsqrtd
-import Mathlib.Tactic.Inclusion.Extension.Core.Core
-import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp
-import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic
-import Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses
-import Mathlib.Tactic.NormNum.Irrational
-import Mathlib.Tactic.NormNum.IsCoprime
-import Mathlib.Tactic.NormNum.IsSquare
-import Mathlib.Tactic.NormNum.LegendreSymbol
-import Mathlib.Tactic.NormNum.ModEq
-import Mathlib.Tactic.NormNum.NatFib
-import Mathlib.Tactic.NormNum.NatLog
-import Mathlib.Tactic.NormNum.NatSqrt
-import Mathlib.Tactic.NormNum.Ordinal
-import Mathlib.Tactic.NormNum.Parity
-import Mathlib.Tactic.NormNum.Prime
-import Mathlib.Tactic.NormNum.RealSqrt
-import Mathlib.Topology.Sheaves.Init
 
 @[expose] public section
 
@@ -60,7 +17,7 @@ noncomputable abbrev res : Obar p →+* kbar p := IsLocalRing.residue (Obar p)
 theorem norm_le_one (x : Obar p) : ‖(x : PadicAlgCl p)‖ ≤ 1 := mem_Obar_iff.1 x.2
 
 theorem norm_sub_le_max' (x y : PadicAlgCl p) : ‖x - y‖ ≤ max ‖x‖ ‖y‖ := by
-  first | exact Bl.FirstBlockLemmaD.goal1 .. | (apply Bl.FirstBlockLemmaD.goal1 <;> assumption) | (intros; apply Bl.FirstBlockLemmaD.goal1 <;> assumption)
+  simpa only [sub_eq_add_neg, norm_neg] using IsUltrametricDist.norm_add_le_max x (-y)
 
 theorem isUnit_iff (x : Obar p) : IsUnit x ↔ ‖(x : PadicAlgCl p)‖ = 1 := by
   constructor
@@ -179,11 +136,38 @@ theorem not_dvd_qK_pow_sub_one (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (h
   exact (Fact.out : p.Prime).one_lt.ne' (Nat.dvd_one.1 h3)
 
 theorem norm_eq_one_of_pow {m : ℕ} (hm : m ≠ 0) {ζ : PadicAlgCl p} (hζ : ζ ^ m = 1) : ‖ζ‖ = 1 := by
-  first | exact Bl.FirstBlockLemmaC.goal1 .. | (apply Bl.FirstBlockLemmaC.goal1 <;> assumption) | (intros; apply Bl.FirstBlockLemmaC.goal1 <;> assumption)
+  exact (isOfFinOrder_iff_pow_eq_one.mpr ⟨m, Nat.pos_of_ne_zero hm, hζ⟩).norm_eq_one
 
 theorem norm_sub_one_of_pow {m : ℕ} (hm : ¬ p ∣ m) {η : PadicAlgCl p} (hη : η ^ m = 1) (h : η ≠ 1) :
     ‖η - 1‖ = 1 := by
-  first | exact Bl.PadicNatCastNorm.goal1 .. | (apply Bl.PadicNatCastNorm.goal1 <;> assumption) | (intros; apply Bl.PadicNatCastNorm.goal1 <;> assumption)
+  have hm0 : m ≠ 0 := by
+    rintro rfl
+    exact hm (dvd_zero p)
+  have hn : ‖η‖ = 1 := norm_eq_one_of_pow hm0 hη
+  have hup : ‖η - 1‖ ≤ 1 := by
+    simpa only [hn, norm_one, max_self] using norm_sub_le_max' η 1
+  have hgeom : ∀ n : ℕ, ‖∑ j ∈ Finset.range n, η ^ j‖ ≤ 1 := fun n =>
+    IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one
+      (fun j _ => by rw [norm_pow, hn, one_pow])
+  have hpow : ∀ i : ℕ, ‖η ^ i - 1‖ ≤ ‖η - 1‖ := fun i => by
+    rw [← geom_sum_mul, norm_mul]
+    simpa only [one_mul] using
+      mul_le_mul_of_nonneg_right (hgeom i) (norm_nonneg (η - 1))
+  have hsum0 : ∑ i ∈ Finset.range m, η ^ i = 0 := by
+    have hgeom := geom_sum_mul η m
+    rw [hη, sub_self] at hgeom
+    exact (mul_eq_zero.mp hgeom).resolve_right (sub_ne_zero.mpr h)
+  have hmeq : (m : PadicAlgCl p) = -∑ i ∈ Finset.range m, (η ^ i - 1) := by
+    rw [Finset.sum_sub_distrib, hsum0, Finset.sum_const, Finset.card_range, nsmul_eq_mul,
+      mul_one, zero_sub, neg_neg]
+  have hmnorm : ‖(m : PadicAlgCl p)‖ = 1 := by
+    have hcast : ((m : ℚ_[p]) : PadicAlgCl p) = (m : PadicAlgCl p) := map_natCast _ m
+    rw [← hcast, PadicAlgCl.norm_extends, Padic.norm_natCast_eq_one_iff]
+    exact (Nat.Prime.coprime_iff_not_dvd Fact.out).mpr hm
+  refine le_antisymm hup ?_
+  rw [← hmnorm, hmeq, norm_neg]
+  exact IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _)
+    (fun i _ => hpow i)
 
 theorem norm_sub_eq_one_of_pow_eq_one {m : ℕ} (hm : ¬ p ∣ m) {ζ ξ : PadicAlgCl p} (hζ : ζ ^ m = 1)
     (hξ : ξ ^ m = 1) (h : ζ ≠ ξ) : ‖ζ - ξ‖ = 1 := by

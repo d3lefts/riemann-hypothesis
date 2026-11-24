@@ -390,7 +390,7 @@ open scoped TensorProduct InnerProductSpace
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.discrete_series_model_of_dual_parameter : ∀ {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S), ∃ (M' : DSModel V (fun τ => dualPar (S τ))) (c : ∀ τ, M'.H τ ≃ₗᵢ⋆[ℂ] M.H τ), ∀ τ, ∀ g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ), ∀ w, c τ (M'.rep τ g w) = M.rep τ g (c τ w) := by
-  first | exact @GlobalTheory.ConjDS.exists_conjModel | exact GlobalTheory.ConjDS.exists_conjModel | (intros; apply GlobalTheory.ConjDS.exists_conjModel <;> assumption)
+  first | exact @GlobalTheory.ConjDS.exists_conjModel
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DiscreteSeriesModelOfDualParameterStatement =====
@@ -510,11 +510,6 @@ theorem isOpen_stab (hs : L.s = 0) (hQ : L.Q = ∅) {x : X} (hx : x ∈ killed �
     IsOpen {g : GfC V | ρ g x = x} := by
   first
   | (rename_i h_5 h_6 h_16 h_17; revert D V β L G h_5 h_6 eG c P Pl0 ok pl q Sg X h_16 h_17 ρ hs hQ x hx; exact @_root_.GlobalTheory.FiniteRingMultiplication.isOpen_stabiliser)
-  | exact @_root_.GlobalTheory.FiniteRingMultiplication.isOpen_stabiliser
-  | exact _root_.GlobalTheory.FiniteRingMultiplication.isOpen_stabiliser
-  | (apply _root_.GlobalTheory.FiniteRingMultiplication.isOpen_stabiliser <;> assumption)
-  | (intros; apply _root_.GlobalTheory.FiniteRingMultiplication.isOpen_stabiliser <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.FiniteRingMultiplication.isOpen_stabiliser <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.FiniteRingMultiplication.isOpen_stabiliser ..)
 
 theorem isGoodRep_of_killed (hs : L.s = 0) (hQ : L.Q = ∅) (hl : LiftsExist V β L)

@@ -2,6 +2,7 @@ module
 
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.LinearAlgebra.Trace
+public import Development.AutomorphicArithmetic.TwistedTraces.LinearFormEqMulTraceOfTwistedInvariant
 public import Development.AutomorphicArithmetic.TwistedTraces.ListOfFnProdEqMulUpdateOneOfPairwiseCommute
 public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.CuspidalMultiplicityOneTotallyComplex
 public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.SfDefs
@@ -63,9 +64,9 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-import Mathlib.Tactic.Polynomial.Basic
 import Development.AutomorphicArithmetic.IntegralCasts.IsOpenStabOfMemNhds
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
 import Mathlib.Tactic.Linter.Style
@@ -80,97 +81,7 @@ import Development.AbelianVarietyTheory.Definitions.Divisors.T2SpaceGeneralLinea
 import GroundTheory.GlobalFields.LocalAtPlace
 
 -- This file was produced by scripts/clump.py from the modules listed below.
--- Members: Development.AutomorphicArithmetic.TwistedTraces.LinearFormEqMulTraceOfTwistedInvariant, Development.AutomorphicArithmetic.TwistedTraces.ExistsScalarOfTwistedIntertwinerCommutingAlgebra, Development.AutomorphicArithmetic.TwistedTraces.IsotypicProjectionProductCommute, Development.AutomorphicArithmetic.TwistedTraces.IsotypicSubmoduleProductDecomposition, Development.AutomorphicArithmetic.TwistedTraces.IsotypicSubspaceProductClosed, Development.AutomorphicArithmetic.TwistedTraces.TraceRestrictEqOfHasFinTrace, Development.AutomorphicArithmetic.TwistedTraces.IsotypicIntersectionProductEq, Development.AutomorphicArithmetic.TwistedTraces.FiniteDimensionalFixedVectorsIsotypicOfIrreducib, Development.AutomorphicArithmetic.TwistedTraces.TwistedIntertwinerFixedVectorsOfIrreducible, Development.AutomorphicArithmetic.TwistedTraces.IsotypicMultiplicityTensorProduct, Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.TwistFactorAlt
-
--- ===== clump member: Development.AutomorphicArithmetic.TwistedTraces.LinearFormEqMulTraceOfTwistedInvariant =====
--- clump-header: {"m": "Development.AutomorphicArithmetic.TwistedTraces.LinearFormEqMulTraceOfTwistedInvariant", "h": "module\n\npublic import Mathlib.Basic.Complex.Basic\npublic import Mathlib.LinearAlgebra.Trace\nimport Mathlib.Algebra.Module.StablyFree.Basic\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Bernstein\nimport Mathlib.Analysis.SpecialFunctions.Gamma.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.SimpleRing.Principal\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\n\n"}
-section -- clump:auto
-@[expose] public section
-
-open scoped BigOperators
-
-theorem UpperTheory.linearForm_eq_mul_trace_of_twisted_invariant :
-    ∀ (P : Type) [AddCommGroup P] [Module ℂ P] [FiniteDimensional ℂ P] (J E : Module.End ℂ P) (l : Module.End ℂ P →ₗ[ℂ] ℂ), LinearMap.trace ℂ P (E * J) = 1 → (∀ a a' b : Module.End ℂ P, a' * J = J * a → l (b * a') = l (a * b)) → ∀ b, l b = l E * LinearMap.trace ℂ P (b * J) := by
-  intro P _ _ _ J E l hE h
-  have tr : ∀ (η : P →ₗ[ℂ] ℂ) (u : P), LinearMap.trace ℂ P (η.smulRight u) = η u := by
-    intro η u
-    have h0 := LinearMap.trace_eq_contract_apply ℂ P
-      (TensorProduct.tmul ℂ (show Module.Dual ℂ P from η) u)
-    have h1 : dualTensorHom ℂ P P (TensorProduct.tmul ℂ (show Module.Dual ℂ P from η) u)
-        = η.smulRight u := by
-      apply LinearMap.ext
-      intro y
-      simp [dualTensorHom_apply]
-    rw [h1] at h0
-    rw [h0]
-    simp [contractLeft_apply]
-  have key : ∀ (u x : P) (η ξ : P →ₗ[ℂ] ℂ),
-      ξ (J x) * l (η.smulRight u) = η (J u) * l (ξ.smulRight x) := by
-    intro u x η ξ
-    have hc : (η.smulRight (J x)) * J = J * ((η ∘ₗ J).smulRight x) := by
-      apply LinearMap.ext
-      intro y
-      simp [Module.End.mul_apply]
-    have h1 := h ((η ∘ₗ J).smulRight x) (η.smulRight (J x)) (ξ.smulRight u) hc
-    have e1 : ξ.smulRight u * η.smulRight (J x) = ξ (J x) • η.smulRight u := by
-      apply LinearMap.ext
-      intro y
-      simp [Module.End.mul_apply, smul_smul, mul_comm]
-    have e2 : (η ∘ₗ J).smulRight x * ξ.smulRight u = η (J u) • ξ.smulRight x := by
-      apply LinearMap.ext
-      intro y
-      simp [Module.End.mul_apply, smul_smul, mul_comm]
-    rw [e1, e2, map_smul, map_smul] at h1
-    simpa [smul_eq_mul] using h1
-  have hJ : ∃ x, J x ≠ 0 := by
-    by_contra hne
-    push_neg at hne
-    have hJ0 : J = 0 := LinearMap.ext hne
-    rw [hJ0] at hE
-    simp at hE
-  obtain ⟨x₀, hx₀⟩ := hJ
-  have hφ : ∃ φ : Module.Dual ℂ P, φ (J x₀) ≠ 0 := by
-    by_contra hne
-    push_neg at hne
-    exact hx₀ ((Module.forall_dual_apply_eq_zero_iff ℂ (J x₀)).1 hne)
-  obtain ⟨φ, hφ⟩ := hφ
-  obtain ⟨ξ₀, hξ₀⟩ : ∃ ξ₀ : P →ₗ[ℂ] ℂ, ξ₀ (J x₀) = 1 :=
-    ⟨(φ (J x₀))⁻¹ • φ, by simp [hφ]⟩
-  have rank1 : ∀ (η : P →ₗ[ℂ] ℂ) (u : P),
-      l (η.smulRight u) = l (ξ₀.smulRight x₀) * LinearMap.trace ℂ P (η.smulRight u * J) := by
-    intro η u
-    have e : η.smulRight u * J = (η ∘ₗ J).smulRight u := by
-      apply LinearMap.ext
-      intro y
-      simp [Module.End.mul_apply]
-    have hk := key u x₀ η ξ₀
-    rw [hξ₀, one_mul] at hk
-    rw [e, tr, hk]
-    simp [mul_comm]
-  have all : ∀ b : Module.End ℂ P,
-      l b = l (ξ₀.smulRight x₀) * LinearMap.trace ℂ P (b * J) := by
-    intro b
-    obtain ⟨t, rfl⟩ := (dualTensorHomEquiv ℂ P P).surjective b
-    induction t using TensorProduct.induction_on with
-    | zero => simp
-    | tmul η u =>
-      have h1 : dualTensorHomEquiv ℂ P P (TensorProduct.tmul ℂ η u)
-          = LinearMap.smulRight (show P →ₗ[ℂ] ℂ from η) u := by
-        apply LinearMap.ext
-        intro y
-        simp [dualTensorHomEquiv, dualTensorHom_apply]
-      rw [h1]
-      exact rank1 η u
-    | add s t hs ht =>
-      rw [map_add (f := _), map_add (f := _), add_mul, map_add (f := _), mul_add, hs, ht]
-  intro b
-  have hκ := all E
-  rw [hE, mul_one] at hκ
-  rw [hκ]
-  exact all b
-end -- clump:auto
-end -- clump:auto
--- ===== end clump member: Development.AutomorphicArithmetic.TwistedTraces.LinearFormEqMulTraceOfTwistedInvariant =====
+-- Members: Development.AutomorphicArithmetic.TwistedTraces.ExistsScalarOfTwistedIntertwinerCommutingAlgebra, Development.AutomorphicArithmetic.TwistedTraces.IsotypicProjectionProductCommute, Development.AutomorphicArithmetic.TwistedTraces.IsotypicSubmoduleProductDecomposition, Development.AutomorphicArithmetic.TwistedTraces.IsotypicSubspaceProductClosed, Development.AutomorphicArithmetic.TwistedTraces.TraceRestrictEqOfHasFinTrace, Development.AutomorphicArithmetic.TwistedTraces.IsotypicIntersectionProductEq, Development.AutomorphicArithmetic.TwistedTraces.FiniteDimensionalFixedVectorsIsotypicOfIrreducib, Development.AutomorphicArithmetic.TwistedTraces.TwistedIntertwinerFixedVectorsOfIrreducible, Development.AutomorphicArithmetic.TwistedTraces.IsotypicMultiplicityTensorProduct, Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.TwistFactorAlt
 
 -- ===== clump member: Development.AutomorphicArithmetic.TwistedTraces.ExistsScalarOfTwistedIntertwinerCommutingAlgebra =====
 -- clump-header: {"m": "Development.AutomorphicArithmetic.TwistedTraces.ExistsScalarOfTwistedIntertwinerCommutingAlgebra", "h": "module\n\npublic import Mathlib.Basic.Complex.Basic\npublic import Mathlib.LinearAlgebra.Trace\npublic import Development.AutomorphicArithmetic.TwistedTraces.LinearFormEqMulTraceOfTwistedInvariant\npublic import Development.AutomorphicArithmetic.TwistedTraces.ListOfFnProdEqMulUpdateOneOfPairwiseCommute\nimport Mathlib.Algebra.Module.StablyFree.Basic\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Bernstein\nimport Mathlib.Analysis.SpecialFunctions.Gamma.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.SimpleRing.Principal\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\n\n"}

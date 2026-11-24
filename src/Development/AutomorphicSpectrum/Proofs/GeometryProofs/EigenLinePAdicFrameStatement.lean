@@ -168,7 +168,7 @@ theorem _root_.GlobalTheory.T.adapted_basis_spans_eigenspace : ∀ (E : Type) [F
     IsAdapted ρH σ v w u → LinearIndependent K v → Module.finrank K (HT.eigSp ρH σ) = p + q →
     FiniteDimensional K (HT.eigSp ρH σ) →
     LinearIndependent K u ∧ Submodule.span K (Set.range u) = HT.eigSp ρH σ := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.adaptedFamily_isBasis | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.adaptedFamily_isBasis | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.adaptedFamily_isBasis <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.adaptedFamily_isBasis
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.AdaptedBasisSpansEigenspaceStatement =====
@@ -231,7 +231,7 @@ open GlobalTheory.CompanionTheory.Ar.Flat.CPoint
 theorem _root_.GlobalTheory.T.basis_of_submodule_iff_unique_coords : ∀ (K W : Type) [Field K] [AddCommGroup W] [Module K W] (S : Submodule K W) (n : ℕ) (b : Fin n → W),
     (LinearIndependent K b ∧ Submodule.span K (Set.range b) = S) ↔
       (∀ i, b i ∈ S) ∧ ∀ e ∈ S, ∃! x : Fin n → K, e = ∑ i, x i • b i := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.basis_iff_unique_combinations | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.basis_iff_unique_combinations | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.basis_iff_unique_combinations <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.basis_iff_unique_combinations
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.BasisOfSubmoduleIffUniqueCoordsStatement =====
@@ -275,7 +275,7 @@ open GlobalTheory.CompanionTheory.Ar.Flat.CPoint
 
 theorem _root_.GlobalTheory.T.cm_conjugation_compat_complex_conj : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (τ : E →+* ℂ) (a : 𝓞 E),
     ComplexEmbedding.conjugate τ (a : E) = τ (H.bar a : 𝓞 E) ∧ H.bar (H.bar a) = a := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.conjugate_coe_eq_bar | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.conjugate_coe_eq_bar | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.conjugate_coe_eq_bar <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.conjugate_coe_eq_bar
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.CmConjugationCompatComplexConjStatement =====
@@ -317,7 +317,7 @@ open GlobalTheory.CompanionTheory.Ar.Flat.CPoint
 
 theorem _root_.GlobalTheory.T.cm_integers_regular_at_component : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (β : O →+* c.F) (Y : Model Xo c β) (U : Set (Xo.XF c)) (Z : CptOver Y U) (τ : E →+* ℂ) (σ : E →+* Z.Ω), (∀ b : 𝓞 E, σ (b : E) = Z.inc (tauIn c τ b)) →
     ∀ (q : Cpt (Z.ξ₀ ≫ Y.j)) (a : 𝓞 E), σ (a : E) ∈ regAt (Z.ξ₀ ≫ Y.j) q := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.integers_mem_regAt | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.integers_mem_regAt | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.integers_mem_regAt <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.integers_mem_regAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.CmIntegersRegularAtComponentStatement =====
@@ -340,7 +340,7 @@ theorem _root_.GlobalTheory.T.component_specialization_lattice_basis : ∀ (E : 
       (∀ e, SameVec Y y (MU.pt e) (MY.pt e)) ∧
       (∀ x : Fin g → regAt (Z.ξ₀ ≫ Y.j) ⟨_, h₁⟩, Z.M.ValAt (y ≫ Y.j) (comb ℓ x) (MY.pt (fun i => ψ (x i)))) ∧
       MU.IsActOf Xo.univ.t.act.act ρK ∧ MY.IsActOf Y.t.act.act ρK := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.tangent_coords | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.tangent_coords | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.tangent_coords <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.tangent_coords
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ComponentSpecializationLatticeBasisStatement =====
@@ -395,7 +395,7 @@ open GlobalTheory.CompanionTheory.Ar.Flat.CPoint
 
 theorem _root_.GlobalTheory.T.cp_embedding_factors_through_complex : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (l : Level H) (c : Coeff l) (p : Nat.Primes)
     (κ : c.F →+* ℂ_[p]) (s : E →+* ℂ_[p]), ∃ τ : E →+* ℂ, s = κ.comp (inE c τ) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.exists_emb_through_coeff | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.exists_emb_through_coeff | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.exists_emb_through_coeff <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.exists_emb_through_coeff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.CpEmbeddingFactorsThroughComplexStatement =====
@@ -454,7 +454,7 @@ open GlobalTheory.CompanionTheory.Ar.Flat.CPoint
 theorem _root_.GlobalTheory.T.cp_integers_valuation_ring : ∀ p : Nat.Primes, (NormedField.valuation (K := ℂ_[p])).Integers (OCp p) ∧
     (∃ x : ℂ_[p], 0 < NormedField.valuation (K := ℂ_[p]) x ∧ NormedField.valuation (K := ℂ_[p]) x < 1) ∧
     ∀ x : ℂ_[p], x ∈ (algebraMap (OCp p) ℂ_[p]).range ↔ ‖x‖ ≤ 1 := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.ocp_integers | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.ocp_integers | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.ocp_integers <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.ocp_integers
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.CpIntegersValuationRingStatement =====
@@ -488,7 +488,7 @@ theorem baseFn_value {O R : Type} [CommRing O] [CommRing R] [IsLocalRing R] (s :
       f.appTop ≫ (Scheme.ΓSpecIso (CommRingCat.of R)).hom := by
     set_option backward.isDefEq.respectTransparency.types false in
       rw [Scheme.germ_stalkClosedPointTo]
-      simp [Iso.trans_hom, Scheme.Hom.appTop]
+      simp [Scheme.Hom.appTop]
   have e2 : (Scheme.ΓSpecIso (CommRingCat.of O)).inv ≫ s.appTop ≫ f.appTop ≫
       (Scheme.ΓSpecIso (CommRingCat.of R)).hom = CommRingCat.ofHom φ := by
     rw [← Category.assoc s.appTop, ← Scheme.Hom.comp_appTop, hf, Scheme.ΓSpecIso_naturality,
@@ -666,7 +666,7 @@ theorem _root_.GlobalTheory.T.dvr_point_component_eigen_reduction : ∀ (E : Typ
       (∀ (a : Z.Ω) (h : a ∈ regAt (Z.ξ₀ ≫ Y.j) ⟨_, h₁⟩), a ∈ regAt (Z.ξ₀ ≫ Y.j) ⟨_, h₂⟩ →
         ψ ⟨a, h⟩ ∈ (algebraMap V K).range) ∧
       ∀ x : c.F, ∃ h : Z.inc x ∈ regAt (Z.ξ₀ ≫ Y.j) ⟨_, h₁⟩, ψ ⟨_, h⟩ = βK x := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.point_val | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.point_val | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.point_val <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.point_val
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.DvrPointComponentEigenReductionStatement =====
@@ -734,7 +734,7 @@ open GlobalTheory.CompanionTheory.Ar.Flat.CPoint
 theorem _root_.GlobalTheory.T.dvr_point_eigen_frame_reduction : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (β : O →+* c.F) (Y : Model Xo c β) (p : Nat.Primes) (κ : c.F →+* ℂ_[p]) (V K : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Field K] [Algebra V K] [IsFractionRing V K] (j : K →+* ℂ_[p]) (βK : c.F →+* K) (y : Sp K ⟶ Xo.XF c),
     (∀ x : c.F, ‖κ x‖ ≤ 1 ↔ x ∈ β.range) → (∀ a : K, ‖j a‖ ≤ 1 ↔ a ∈ (algebraMap V K).range) → j.comp βK = κ →
     y ≫ pullback.snd _ _ = spMap βK → ∃ z : Sp V ⟶ Y.X, spMap (algebraMap V K) ≫ z = y ≫ Y.j := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.exists_modelPoint_extension | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.exists_modelPoint_extension | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.exists_modelPoint_extension <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.exists_modelPoint_extension
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.DvrPointEigenFrameReductionStatement =====
@@ -751,7 +751,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CompanionTheory.Ar.Flat.CPoint
 
 theorem _root_.GlobalTheory.T.generic_point_component_local_ring : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X), IsCptGen ξ → ∀ q : Cpt ξ, IsLocalRing (regAt ξ q) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.isLocalRing_regAt | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.isLocalRing_regAt | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.isLocalRing_regAt <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.isLocalRing_regAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenericPointComponentLocalRingStatement =====
@@ -833,7 +833,7 @@ theorem _root_.GlobalTheory.T.hodge_lattice_stable_under_action : ∀ (E : Type)
     (HL : Submodule R (Vs × Module.Dual Ω Vs)),
     (∀ a y, (ρH a y).1 = ρ a y.1) → HodgeAt ρH HL ℓ t →
     (∀ i, t i ∈ HL) ∧ (∀ a, ∀ h ∈ HL, ρH a h ∈ HL) ∧ ∀ a i, ρ a (ℓ i) ∈ Submodule.span R (Set.range ℓ) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.hodgeAt_stable | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.hodgeAt_stable | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.hodgeAt_stable <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.hodgeAt_stable
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.HodgeLatticeStableUnderActionStatement =====
@@ -873,7 +873,7 @@ open GlobalTheory.CompanionTheory.Ar.Flat.CPoint
 
 theorem _root_.GlobalTheory.T.iota_multi_linear_combination_det : ∀ (Ω Vs : Type) [Field Ω] [AddCommGroup Vs] [Module Ω Vs] (p : ℕ) (P : Matrix (Fin p) (Fin p) Ω) (v : Fin p → Vs),
     exteriorPower.ιMulti Ω p (fun i => ∑ k, P i k • v k) = P.det • exteriorPower.ιMulti Ω p v := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.ιMulti_matrix_transform | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.ιMulti_matrix_transform | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.ιMulti_matrix_transform <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.ιMulti_matrix_transform
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.IotaMultiLinearCombinationDetStatement =====
@@ -924,7 +924,7 @@ open GlobalTheory.CompanionTheory.Ar.Flat.CPoint
 theorem _root_.GlobalTheory.T.number_field_embeddings_into_cp_integral : ∀ (E : Type) [Field E] [NumberField E] (p : Nat.Primes),
     (∀ (s : E →+* ℂ_[p]) (a : 𝓞 E), s (a : E) ∈ (algebraMap (OCp p) ℂ_[p]).range) ∧
       Nat.card (E →+* ℂ_[p]) = Module.finrank ℚ E := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.embeddings_padicComplex | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.embeddings_padicComplex | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.embeddings_padicComplex <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.embeddings_padicComplex
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.NumberFieldEmbeddingsIntoCpIntegralStatement =====
@@ -1143,7 +1143,7 @@ theorem finrank_eigSp_eval : ∀ (E : Type) [Field E] [NumberField E] (Ω Vs C :
     ext i
     by_cases h : i = j
     · subst h; simp
-    · simp [Pi.single_apply, h]
+    · simp [h]
   have tΩ : ∀ a, LinearMap.trace Ω Vs (ρ a) = ((∑ j, M a j j : R') : Ω) :=
     fun a => trace_of_comb hl hs (ρ a) (M a) (hM a)
   have tC : ∀ a, LinearMap.trace C (Fin g → C) (ρC a) = ψ (∑ j, M a j j) := by
@@ -1196,7 +1196,7 @@ theorem _root_.GlobalTheory.T.finrank_eigSp_eq_of_lattice_specialization : ∀ (
     (∀ a i, ρ a (ℓ i) ∈ Submodule.span R' (Set.range ℓ)) → Tied ℓ ψ ρ ρC →
     (∀ e : E, ∃ h : σ e ∈ R', ψ ⟨σ e, h⟩ = σC e) →
     Module.finrank C (HT.eigSp ρC σC) = Module.finrank Ω (HT.eigSp ρ σ) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.finrank_eigSp_eval | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.finrank_eigSp_eval | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.finrank_eigSp_eval <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.finrank_eigSp_eval
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ReduceLatticeActionToResidueStatement =====
@@ -1340,7 +1340,7 @@ theorem _root_.GlobalTheory.T.residue_hodge_lattice_adapted_basis : ∀ (E : Typ
     LinearIndependent C w → Submodule.span C (Set.range w) = HT.eigSp ρC σ' →
     Submodule.span A (Set.range w) = HT.eigSub ρC σ' (stdLat A C g) →
     ∃ ε : Aˣ, Ap.det * Q.det = algebraMap A C ε * gm * P.det := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.det_evaluated_frame | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.det_evaluated_frame | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.det_evaluated_frame <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.det_evaluated_frame
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ResidueHodgeLatticeAdaptedBasisStatement =====
@@ -1406,7 +1406,7 @@ theorem _root_.GlobalTheory.T.hodge_lattice_eval_eigProj_comm : ∀ (E : Type) [
     (σ : E →+* Ω) (σC : E →+* C) (h : HL) (hp : HT.eigProj ρH σ (h : Vs × Module.Dual Ω Vs) ∈ HL),
     IsEval ℓ ψ ρH ρHC HL ev → (∀ e : E, ∃ h : σ e ∈ R', ψ ⟨σ e, h⟩ = σC e) → (∀ a, ∀ h ∈ HL, ρH a h ∈ HL) →
     ev ⟨_, hp⟩ = HT.eigProj ρHC σC (ev h) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.EvalProj.ev_eigProj | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.EvalProj.ev_eigProj | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.EvalProj.ev_eigProj <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.EvalProj.ev_eigProj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.SpecializeHodgeLatticeEigenFrameStatement =====
@@ -1504,7 +1504,7 @@ theorem _root_.GlobalTheory.T.specialize_hodge_lattice_eigenbasis : ∀ (E : Typ
     IsEval ℓ ψ ρH ρHC HL ev → (∀ e : E, ∃ h : σ e ∈ R', ψ ⟨σ e, h⟩ = σC e) → (∀ a, ∀ h ∈ HL, ρH a h ∈ HL) →
     IsAdapted ρH σ b₁ b₂ u → (∀ i, b₁ i = comb ℓ (x₁ i)) → (∀ i, b₂ i = comb ℓ (x₂ i)) →
     IsAdapted ρHC σC (fun i k => ψ (x₁ i k)) (fun i k => ψ (x₂ i k)) (fun i => ev ⟨u i, hu i⟩) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.isAdapted_eval | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.isAdapted_eval | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.isAdapted_eval <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.isAdapted_eval
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.SpecializeHodgeLatticeEigenbasisStatement =====
@@ -1594,7 +1594,7 @@ theorem _root_.GlobalTheory.T.tied_action_compose_residue_map : ∀ (E : Type) [
     (ρK : 𝓞 E →+* Module.End K (Fin g → K)) (ρC : 𝓞 E →+* Module.End C (Fin g → C)),
     (∀ a i, ρ a (ℓ i) ∈ Submodule.span R' (Set.range ℓ)) → Tied ℓ ψ ρ ρK → Tied ℓ (j.comp ψ) ρ ρC →
     ∀ (a : 𝓞 E) (x : Fin g → K), ρC a (fun i => j (x i)) = fun i => j (ρK a x i) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.TiedMap.tied_map_comp | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.TiedMap.tied_map_comp | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.TiedMap.tied_map_comp <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.TiedMap.tied_map_comp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.TiedActionComposeResidueMapStatement =====
@@ -1929,7 +1929,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.eigen_line_p_adic_frame : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (β : O →+* c.F) (Y : Model Xo c β) (U : Set (Xo.XF c)) (Z : CptOver Y U) (τ : E →+* ℂ) (ϖ : O) (p : Nat.Primes) (κ : c.F →+* ℂ_[p]) (φ : FrameFn Xo c) (𝓗 : HodgeLat Z.M.lat Z.ρ H.bar (D.p + D.q)) (σ : E →+* Z.Ω) (v : Fin D.p → Z.V) (w : Fin D.q → Z.V) (u : Fin (D.p + D.q) → Z.V × Module.Dual Z.Ω Z.V) (α κ' : Z.Ω) (M : ℕ) (a : ℤ), τ (H.rt : E) = H.rt0 → Irreducible ϖ → Function.Injective β → (∀ x : c.F, ‖κ x‖ ≤ 1 ↔ x ∈ β.range) → (∀ b : 𝓞 E, σ (b : E) = Z.inc (tauIn c τ b)) → LinearIndependent Z.Ω v → Submodule.span Z.Ω (Set.range v) = HT.eigSp Z.ρ σ → LinearIndependent Z.Ω w → Submodule.span Z.Ω (Set.range w) = eigSp Z.ρ (Z.inc.comp (tauIn c (ComplexEmbedding.conjugate τ))) → IsAdapted 𝓗.ρH σ v w u → 0 < M → (∀ x, OrderAt (detLat (𝓗.quot σ) u) (α / κ') (Z.inc (β ϖ)) M a x) → κ' ≠ 0 → Represents Y U τ Z.M (α • exteriorPower.ιMulti Z.Ω D.p v) (κ' • exteriorPower.ιMulti Z.Ω D.q w) φ → IsLineFn U τ φ → ∃ t : ℝ, HasFinNorm U τ φ p κ t := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.value_at_point | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.value_at_point | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.value_at_point <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.value_at_point
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.EigenLinePAdicFrameStatement =====

@@ -114,7 +114,7 @@ theorem lowerWedge_sub_flip :
   ext i j
   simp only [lowerWedge, LinearMap.sub_apply, LinearMap.flip_apply, LinearMap.coe_comp,
     Function.comp_apply, Finsupp.lsingle_apply, Finsupp.linearCombination_single, one_smul,
-    LinearMap.smul_apply, wedgeBil_apply]
+    wedgeBil_apply]
   rcases lt_trichotomy i j with h | rfl | h
   · simp [h, h.not_gt]
   · simp only [lt_irrefl, if_false, sub_zero]
@@ -222,7 +222,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestric
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.exteriorPowerTwo_diagonal_additive_eq_zero_projective : ∀ (R M : Type) [CommRing R] [AddCommGroup M] [Module R M] [Module.Projective R M] (t : ⋀[R]^2 M), exteriorPower.map 2 (LinearMap.inl R M M + LinearMap.inr R M M) t = exteriorPower.map 2 (LinearMap.inl R M M) t + exteriorPower.map 2 (LinearMap.inr R M M) t → t = 0 := by
-  first | exact @GlobalTheory.WedgeDiag.eq_zero_of_diag_additive | exact GlobalTheory.WedgeDiag.eq_zero_of_diag_additive | (intros; apply GlobalTheory.WedgeDiag.eq_zero_of_diag_additive <;> assumption)
+  first | exact @GlobalTheory.WedgeDiag.eq_zero_of_diag_additive
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExteriorPowerTwoDiagonalAdditiveEqZeroProjectiveStatement =====
@@ -442,7 +442,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestric
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.additiveClassDegreeTwo_structureSheaf_vanish : (∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (g : ℕ), IsAbelianScheme A → SmoothOfRelativeDimension g A.hom → (Module.Finite R (HO1 A.hom) ∧ Module.Projective R (HO1 A.hom) ∧ ∀ p : PrimeSpectrum R, Module.rankAtStalk (HO1 A.hom) p = g) ∧ ∃ e : ⋀[R]^2 (HO1 A.hom) ≃ₗ[R] GlobalTheory.CatCoh.H2 (OAff A.hom), ∀ a b, e (exteriorPower.ιMulti R 2 ![a, b]) = GlobalTheory.CatCoh.cup (OAff A.hom) a b) → PrimitiveStructureSheafDegTwoVanish := by
-  first | exact @GlobalTheory.Obs.primitiveStructureSheafDegTwoVanish_of_cup_iso | exact GlobalTheory.Obs.primitiveStructureSheafDegTwoVanish_of_cup_iso | (intros; apply GlobalTheory.Obs.primitiveStructureSheafDegTwoVanish_of_cup_iso <;> assumption)
+  first | exact @GlobalTheory.Obs.primitiveStructureSheafDegTwoVanish_of_cup_iso
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdditiveClassDegreeTwoStructureSheafVanishStatement =====

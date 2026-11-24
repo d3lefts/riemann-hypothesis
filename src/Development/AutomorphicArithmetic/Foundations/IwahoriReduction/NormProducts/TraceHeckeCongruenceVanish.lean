@@ -486,7 +486,7 @@ private theorem near_one {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* 
   rcases hw1 with e | e
   · have e' : φ w = φ' w := e
     rw [e']
-    simp only [Set.mem_setOf_eq, max_lt_iff] at hw3
+    simp only [max_lt_iff] at hw3
     exact (hB w hw3.1.2).trans (hs _ hw3.1.1.le)
   · exact absurd hw2 e
 
@@ -732,8 +732,8 @@ private theorem jPoly_coe_eq_aeval_jK {Ω : Type} [Field Ω] [Algebra ℚ Ω] {�
   | add p q hp hq => simp only [map_add (f := _), Subfield.coe_add, hp, hq]
   | monomial n c =>
     rw [← Polynomial.C_mul_X_pow_eq_monomial]
-    simp only [jPoly, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_mul, Polynomial.eval₂_C,
-      Polynomial.eval₂_X_pow, Polynomial.eval₂_X, map_mul, map_pow, Polynomial.aeval_C, Polynomial.aeval_X]
+    simp only [jPoly, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_C,
+      Polynomial.eval₂_X, map_mul, map_pow, Polynomial.aeval_C, Polynomial.aeval_X]
     push_cast
     rfl
 

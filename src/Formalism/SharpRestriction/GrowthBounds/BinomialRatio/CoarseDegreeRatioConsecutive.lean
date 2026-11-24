@@ -813,8 +813,7 @@ theorem coarse_degree_prefix_sum {C0 Cde CE1 CE2 H : ℝ} {X : Loc} (hs : Std C0
     ∀ i : Fin (segS X.TT j), (∑ l : Fin (segS X.TT j), if l.val < i.val then (clA C0 CE1 CE2 X j rz ry l : ℝ) else 0) ≤
       4 * (clA C0 CE1 CE2 X j rz ry i : ℝ) / (X.p : ℝ) ^ 2 := by
   have hp : (25 : ℝ) ≤ (X.p : ℝ) ^ 2 := by
-    have : (5 : ℝ) ≤ X.p := by exact_mod_cast hs.p5
-    nlinarith
+    nlinarith [show (5 : ℝ) ≤ X.p by exact_mod_cast hs.p5]
   intro ⟨i, hi⟩
   induction i with
   | zero =>
@@ -841,7 +840,7 @@ theorem coarse_degree_prefix_sum {C0 Cde CE1 CE2 H : ℝ} {X : Loc} (hs : Std C0
     rw [div_eq_mul_inv] at ih' ⊢
     have hinv : (X.p : ℝ) ^ 2 * ((X.p : ℝ) ^ 2)⁻¹ = 1 := mul_inv_cancel₀ hp0.ne'
     have hinv0 : ((X.p : ℝ) ^ 2)⁻¹ ≤ 1 / 25 := by
-      rw [one_div]; exact inv_anti₀ (by norm_num) hp
+      simpa [one_div] using inv_anti₀ (by norm_num) hp
     nlinarith [inv_pos.mpr hp0]
 
 end Formalism.MainNotions.ColumnSystems.Pf

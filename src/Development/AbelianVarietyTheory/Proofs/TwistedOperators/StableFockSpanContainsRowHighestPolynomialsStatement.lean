@@ -131,7 +131,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.exists_realPoint_standardSource_unitaryComponents : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (v : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ), (∀ τ, (v τ)ᴴ * v τ = 1) → ∃ h ∈ GinfC S, ∀ τ, compAt C.θ τ (mt S h) = v τ := by
-  first | exact @GlobalTheory.StdRealLift.exists_real_point | exact GlobalTheory.StdRealLift.exists_real_point | (intros; apply GlobalTheory.StdRealLift.exists_real_point <;> assumption)
+  first | exact @GlobalTheory.StdRealLift.exists_real_point
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsRealPointStandardSourceUnitaryComponentsStatement =====
@@ -150,7 +150,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.fockPolynomialVector_injective_nonzeroVacuum : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (B : C.Bas), C.IsB B → ∀ f, C.IsTh f → C.IsFock B f → f ≠ 0 → Function.Injective (C.fvec B f) := by
-  first | exact @GlobalTheory.FockPolyInj.fvec_injective | exact GlobalTheory.FockPolyInj.fvec_injective | (intros; apply GlobalTheory.FockPolyInj.fvec_injective <;> assumption)
+  first | exact @GlobalTheory.FockPolyInj.fvec_injective
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FockPolynomialVectorInjectiveNonzeroVacuumStatement =====
@@ -299,7 +299,7 @@ theorem colDerM_single (t : T) (k l : κ) :
       · subst hj; rw [if_pos ht, if_pos ⟨ht, rfl⟩, ← xForm_single]
         congr 1; ext i; simp [single_apply, Pi.single_apply, eq_comm]
       · rw [if_pos ht, if_neg (fun h => hj h.2)]
-        have : (single l k (1 : R)) j = 0 := by ext i; simp [single_apply, Ne.symm hj, hj]
+        have : (single l k (1 : R)) j = 0 := by ext i; simp [Ne.symm hj]
         rw [this, map_zero]
     · rw [if_neg ht, if_neg (fun h => ht h.1)]
   · rw [colDerM_X_yVar, colDer_X_yVar]
@@ -308,7 +308,7 @@ theorem colDerM_single (t : T) (k l : κ) :
       · subst hj; rw [if_pos ht, if_pos ⟨ht, rfl⟩, ← yForm_single]
         congr 2; ext i; simp [single_apply, Pi.single_apply, eq_comm]
       · rw [if_pos ht, if_neg (fun h => hj h.2)]
-        have : (fun r => single l k (1 : R) r j) = 0 := by ext i; simp [single_apply, hj, Ne.symm hj]
+        have : (fun r => single l k (1 : R) r j) = 0 := by ext i; simp [Ne.symm hj]
         rw [this, map_zero, neg_zero]
     · rw [if_neg ht, if_neg (fun h => ht h.1)]
 
@@ -328,9 +328,9 @@ theorem blockMat_mul_star_eq {k l : κ} (hkl : k ≠ l) (c s s' : ℂ) :
   simp only [blockMat, star_eq_conjTranspose, conjTranspose_add, conjTranspose_one,
     conjTranspose_single, add_mul, mul_add, Matrix.one_mul, Matrix.mul_one,
     single_mul_single_same, single_mul_single_of_ne _ _ _ _ hkl, single_mul_single_of_ne _ _ _ _ hkl.symm,
-    Matrix.zero_mul, Matrix.mul_zero, add_zero, zero_add]
+    add_zero]
   ext i j
-  simp only [Matrix.add_apply, single_apply, one_apply]
+  simp only [Matrix.add_apply, single_apply]
   by_cases hik : i = k <;> by_cases hil : i = l <;> by_cases hjk : j = k <;> by_cases hjl : j = l <;>
     simp_all [eq_comm] <;> ring
 
@@ -351,7 +351,7 @@ theorem blockMat_conj_single {k l : κ} (hkl : k ≠ l) (c s s' : ℂ) :
   simp only [blockMat, star_eq_conjTranspose, conjTranspose_add, conjTranspose_one,
     conjTranspose_single, add_mul, mul_add, Matrix.one_mul, Matrix.mul_one,
     single_mul_single_same, single_mul_single_of_ne _ _ _ _ hkl, single_mul_single_of_ne _ _ _ _ hkl.symm,
-    Matrix.zero_mul, Matrix.mul_zero, add_zero, zero_add]
+    add_zero]
   ext i j
   simp only [Matrix.add_apply, single_apply]
   by_cases hik : i = k <;> by_cases hil : i = l <;> by_cases hjk : j = k <;> by_cases hjl : j = l <;>
@@ -451,14 +451,14 @@ theorem colActHom_diagInvAt_monomial (t : T) (k : κ) (u : Rˣ) (m : Var T p q �
       · subst ht
         by_cases hj : j = k <;> by_cases hi : j = i <;>
           simp [diagInvAt, diagonal_apply, Pi.single_apply, hj, hi, eq_comm] <;> simp_all [eq_comm]
-      · simp [Pi.mulSingle_eq_of_ne ht, Matrix.one_apply, Pi.single_apply, eq_comm, Ne.symm ht]
+      · simp [Matrix.one_apply, Pi.single_apply, eq_comm, Ne.symm ht]
     · rw [colAct_apply, colSubst_X_yVar, ← yForm_single, ← map_smul, colWeight_single_yVar]
       congr 1; ext i
       by_cases ht : t' = t
       · subst ht
         by_cases hj : j = k <;> by_cases hi : j = i <;>
           simp [diagInvAt, diagonal_apply, Pi.single_apply, hj, hi, eq_comm] <;> simp_all [eq_comm]
-      · simp [Pi.mulSingle_eq_of_ne ht, Matrix.one_apply, Pi.single_apply, eq_comm, Ne.symm ht]
+      · simp [Matrix.one_apply, Pi.single_apply, eq_comm, Ne.symm ht]
   have hpow (v : Var T p q κ) (e : ℕ) :
       colAct R T p q κ (Pi.mulSingle t (diagInvAt k u)) (monomial (Finsupp.single v e) 1) =
         ((u ^ colWeight (Finsupp.single v e) t k : Rˣ) : R) • monomial (Finsupp.single v e) 1 := by
@@ -506,7 +506,7 @@ theorem diagInvAt_mem_unitaryGroup (k : κ) (u : ℂˣ) (hu : (u : ℂ) * star (
   congr 1; ext i
   by_cases h : i = k
   · subst h
-    simp only [Function.update_self, Pi.star_apply, Units.val_inv_eq_inv_val, star_inv₀, Pi.one_apply]
+    simp only [Function.update_self, Pi.star_apply, Units.val_inv_eq_inv_val, star_inv₀]
     rw [← mul_inv, hu, inv_one]
   · simp [h]
 
@@ -811,7 +811,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.reversedMinorProduct_mem_harmonicRowHighest : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), T.rank ≤ S.rank → ∀ (ap am : D.what₂.Tau → ℕ → ℕ), ∃ (c : C.X.Ψ → Fin C.q0 → ℕ) (c' : C.X.Ψ → Fin C.X.p0 → ℕ), C.toH (MvPolynomial.rename (fun v : FVar D T.rank S.rank => (v.1, revPos C.X.p0 v.2.1, v.2.2)) (Formalism.IndefR.Datum.delta (m := T.rank) (n := S.rank) (fun _ => C.X.p0) (fun _ => C.q0) ap am)) ∈ Harm.rowHighest ℂ c c' ∧ C.toH (MvPolynomial.rename (fun v : FVar D T.rank S.rank => (v.1, revPos C.X.p0 v.2.1, v.2.2)) (Formalism.IndefR.Datum.delta (m := T.rank) (n := S.rank) (fun _ => C.X.p0) (fun _ => C.q0) ap am)) ≠ 0 := by
-  first | exact @GlobalTheory.RenamedMinors.renamed_delta_mem_rowHighest | exact GlobalTheory.RenamedMinors.renamed_delta_mem_rowHighest | (intros; apply GlobalTheory.RenamedMinors.renamed_delta_mem_rowHighest <;> assumption)
+  first | exact @GlobalTheory.RenamedMinors.renamed_delta_mem_rowHighest
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ReversedMinorProductMemHarmonicRowHighestStatement =====
@@ -862,7 +862,7 @@ theorem pureTensor_compAt {D : D7} {S T : HSp D} (C : Ctx S T) (h : GA D S) {B :
     rw [GlobalTheory.Ker.ColChange.crea_smul C hg τ (C.sB B τ) (unitMap 1 (B τ) i l) ((i : ℕ) < C.X.p0)
       (GlobalTheory.Ker.ColChange.sB_unitMap C hB τ i l), hU τ, Matrix.conjTranspose_apply, smul_smul, smul_smul]
     congr 1
-    split_ifs <;> simp [Complex.star_def, mul_comm]
+    split_ifs <;> simp [mul_comm]
   have Lc := fun P : MvPolynomial (FVar D T.rank S.rank) ℂ =>
     GlobalTheory.Ker.FockAlg.fock_vec_laws D S T C B hB (fun τ => compAt C.θ τ (Formalism.L2.Theta.mt S h)) f hf P
   have L1 := fun P : MvPolynomial (FVar D T.rank S.rank) ℂ =>
@@ -920,7 +920,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.weilAction_realPoint_fockVectors_scalar_columnAction : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)), IsWeak C.ψ S T om → ∀ B, C.IsB B → ∀ f, C.IsTh f → C.IsFock B f → ∀ h ∈ GinfC S, ∃ c : ℂ, c ≠ 0 ∧ ∀ Q Q' : MvPolynomial (FVar D T.rank S.rank) ℂ, C.toH Q' = Harm.colActHom (GlobalTheory.Ker.ColChange.colU C h) (C.toH Q) → om (h, 1) (C.fvec B f Q) = c • C.fvec B f Q' := by
-  first | exact @GlobalTheory.Ker.RealColAct.om_real_fvec | exact GlobalTheory.Ker.RealColAct.om_real_fvec | (intros; apply GlobalTheory.Ker.RealColAct.om_real_fvec <;> assumption)
+  first | exact @GlobalTheory.Ker.RealColAct.om_real_fvec
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.WeilActionRealPointFockVectorsScalarColumnActionStatement =====
@@ -1139,7 +1139,7 @@ open scoped TensorProduct ComplexConjugate Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.stableFockSpan_contains_rowHighestPolynomials : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)), IsWeak C.ψ S T om → T.rank ≤ S.rank → ∀ B₀, C.IsB B₀ → ∀ BS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ, (∀ τ, (BS τ)ᴴ * BS τ = 1) → ∀ f, C.IsTh f → C.IsFock B₀ f → f ≠ 0 → ∀ (p q : D.what₂.Tau → ℕ) (ap am : D.what₂.Tau → ℕ → ℕ), (∀ τ, p τ = C.X.p0) → (∀ τ, q τ = C.q0) → ∀ (pt : MvPolynomial (FVar D T.rank S.rank) ℂ → WO S T → ℂ) (U : Submodule ℂ (MvPolynomial (FVar D T.rank S.rank) ℂ)), (∀ P, pt P = pureTensorO C.ψ C.θ S T (fun _ => 1) (C.sB B₀) BS B₀ f P) → Formalism.IndefR.Datum.delta p q ap am ∈ U → (∀ h ∈ GinfC S, ∀ P ∈ U, ∃ P' ∈ U, om (h, 1) (pt P) = pt P') → C.IsB (revB C.X.p0 B₀) ∧ C.sB (revB C.X.p0 B₀) = C.sB B₀ ∧ ∃ (c : C.X.Ψ → Fin C.q0 → ℕ) (c' : C.X.Ψ → Fin C.X.p0 → ℕ) (Q₀ : MvPolynomial (FVar D T.rank S.rank) ℂ), C.toH Q₀ ∈ Harm.rowHighest ℂ c c' ∧ C.fvec (revB C.X.p0 B₀) f Q₀ = pt (Formalism.IndefR.Datum.delta p q ap am) ∧ pt (Formalism.IndefR.Datum.delta p q ap am) ≠ 0 ∧ ∀ Q, C.toH Q ∈ Harm.rowHighest ℂ c c' → ∃ P ∈ U, C.fvec (revB C.X.p0 B₀) f Q = pt P := by
-  first | exact @GlobalTheory.AdSpan.StableFock.fockSpan_rowHighest | exact GlobalTheory.AdSpan.StableFock.fockSpan_rowHighest | (intros; apply GlobalTheory.AdSpan.StableFock.fockSpan_rowHighest <;> assumption)
+  first | exact @GlobalTheory.AdSpan.StableFock.fockSpan_rowHighest
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.StableFockSpanContainsRowHighestPolynomialsStatement =====

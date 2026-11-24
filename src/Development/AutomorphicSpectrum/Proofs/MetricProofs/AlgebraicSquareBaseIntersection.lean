@@ -316,11 +316,11 @@ theorem key (n : ℕ) (i : ι k₀) (hi0 : (X (Q.v 0 ⟨k₀, i⟩) : MRing Q.ι
     by_cases ha : k = Q.κ 0 k₀
     · subst ha
       have hb : ¬ Q.κ 0 k₀ = Q.κ 1 k₀ := κ_ne Q
-      simp [Pi.single_apply, hb]
+      simp [hb]
     · by_cases hb : k = Q.κ 1 k₀
       · subst hb
-        simp [Pi.single_apply, ha]
-      · simp [Pi.single_apply, ha, hb]
+        simp [ha]
+      · simp [ha, hb]
   · simp only [map_pow, map_X, eval_X, norm_pow]
     exact hnorm z hz
 
@@ -373,7 +373,7 @@ theorem PositivityTheory.Xgp.t_sq_diag : ∀ (K : Type) [Fintype K] (ι : K → 
     exact PositivityTheory.Xgp.sq_diag.pull_norm Q A hc hk
   rcases le_or_gt 0 (A.a k₀) with hm | hm
   · obtain ⟨n, hn⟩ := Int.eq_ofNat_of_zero_le hm
-    refine PositivityTheory.Xgp.sq_diag.key Q n i hi0 hi1 A₀ A₁ (fun k => by rw [hdeg k, hn] <;> split_ifs <;> simp) fun z hz => ?_
+    refine PositivityTheory.Xgp.sq_diag.key Q n i hi0 hi1 A₀ A₁ (fun k => by rw [hdeg k, hn] <;> split_ifs) fun z hz => ?_
     obtain ⟨c, hc, hzc, hh⟩ := hnorm z hz
     rw [hh, hzc, hn, zpow_natCast, norm_mul, mul_pow]
     ring
@@ -557,7 +557,7 @@ section -- clump:auto
 open MvPolynomial MeasureTheory Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.algebraic_square_xi_intersection : Inputs → ∀ (II : IntersectionSystem), IsFullIntersectionSystem II → ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (d : ℕ) (k₀ : K) (xi2 : K → ℤ) (Q : AlgSq P d k₀ xi2) (Xi : HermLine ι) (X₀ X₁ : HermLine Q.ιW), Xi.a = xi2 → IsSmoothHerm Xi → IsPullHerm (Q.κ 0) (Q.v 0) Xi X₀ → IsPullHerm (Q.κ 1) (Q.v 1) Xi X₁ → ∀ T : Fin (d + 1) → HermLine Q.ιW, (∀ j, IsSmoothHerm (T j)) → II Q.KW Q.ιW Q.PW (d + 3) (Fin.cons X₀ (Fin.cons X₀ T)) - II Q.KW Q.ιW Q.PW (d + 3) (Fin.cons X₁ (Fin.cons X₁ T)) = 2 * (ptsIntegral Q.PW (pot (Fin.cons X₀ T : Fin (d + 2) → HermLine Q.ιW)) (Q.logNormT Xi) - ptsIntegral Q.PW (pot (Fin.cons X₁ T : Fin (d + 2) → HermLine Q.ιW)) (Q.logNormT Xi)) := by
-  first | exact @PositivityTheory.Xgp.t_sq_R | exact PositivityTheory.Xgp.t_sq_R
+  first | exact @PositivityTheory.Xgp.t_sq_R
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.MetricProofs.AlgebraicSquareXiIntersection =====
@@ -655,7 +655,7 @@ theorem consWord_left {V : Type*} {D : ℕ} (I : (Fin (D + 2) → V) → ℝ) (S
   congr 1
   funext j
   simp only [consWord, interp]
-  split_ifs <;> first | rfl | omega | contradiction
+  split_ifs <;> first | rfl | omega
 
 theorem consWord_right {V : Type*} {D : ℕ} (I : (Fin (D + 2) → V) → ℝ) (S : V → Prop)
     (hI : ∀ L : Fin (D + 2) → V, (∀ j, S (L j)) → ∀ σ : Equiv.Perm (Fin (D + 2)), I (L ∘ σ) = I L)
@@ -729,7 +729,7 @@ theorem firstHalf : Inputs → ∀ (II : IntersectionSystem), IsFullIntersection
       congr 1
       funext j
       simp only [interp, mix]
-      split_ifs <;> first | rfl | omega | contradiction
+      split_ifs <;> first | rfl | omega
     have hgk : g k = -2 * II K ι P (d + 2) (mix (2 * k) Xi A) := by
       have e := hP1 (mix (2 * k) Xi A) (mix (2 * k) X₀ A₀) X₁
         (fun j => by unfold mix; split_ifs <;> assumption)

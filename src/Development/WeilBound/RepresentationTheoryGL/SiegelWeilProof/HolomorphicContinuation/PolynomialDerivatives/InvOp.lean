@@ -85,7 +85,7 @@ theorem pderiv_comm (i j : Ix m n) (p : PX m n) : pderiv i (pderiv j p) = pderiv
     have hc : ∀ a b : Ix m n, pderiv a (pderiv b (X k : PX m n)) = 0 := by
       intro a b; rw [pderiv_X]; by_cases h : b = k
       · subst h; simp
-      · simp [Pi.single_apply, h]
+      · simp [h]
     simp only [pderiv_mul, map_add (f := _), hp, hc, mul_zero, add_zero]
     ring
 
@@ -128,7 +128,7 @@ theorem dvE_single (k : Ix m n) : dvE (Pi.single k 1) = Dk k := by
     exact @List.count_eq_one_of_mem _ instBEqOfDecidableEq inferInstance _ _ (Finset.nodup_toList _)
       (Finset.mem_toList.2 (Finset.mem_univ k))
   · intro a' ha' _
-    simp [Pi.single_apply, ha']
+    simp [ha']
 
 theorem opMono_eq (t : Ix m n ⊕ Ix m n →₀ ℕ) (f : PX m n) :
     opMono t f = monomial (t.comapDomain Sum.inl Sum.inl_injective.injOn) 1 * dvE (fun k => t (Sum.inr k)) f := rfl
@@ -201,9 +201,9 @@ theorem opMono_add_inl (t : Ix m n ⊕ Ix m n →₀ ℕ) (k : Ix m n) (f : PX m
   rw [opMono_eq, opMono_eq, comapDomain_inl_add]
   have h1 : (Finsupp.single (Sum.inl k) 1 : Ix m n ⊕ Ix m n →₀ ℕ).comapDomain Sum.inl Sum.inl_injective.injOn =
       Finsupp.single k 1 := by
-    ext j; simp [Finsupp.comapDomain_apply, Finsupp.single_apply]
-  have h2 : (fun j : Ix m n => (t + Finsupp.single (Sum.inl k) 1 : Ix m n ⊕ Ix m n →₀ ℕ) (Sum.inr j)) = fun j => t (Sum.inr j) := by
     ext j; simp [Finsupp.single_apply]
+  have h2 : (fun j : Ix m n => (t + Finsupp.single (Sum.inl k) 1 : Ix m n ⊕ Ix m n →₀ ℕ) (Sum.inr j)) = fun j => t (Sum.inr j) := by
+    ext j; simp
   rw [h1, h2, monomial_add_single, pow_one]
   ring
 
@@ -211,7 +211,7 @@ theorem opMono_add_inr (t : Ix m n ⊕ Ix m n →₀ ℕ) (k : Ix m n) (f : PX m
     opMono (t + Finsupp.single (Sum.inr k) 1) f = opMono t (pderiv k f) := by
   rw [opMono_eq, opMono_eq, comapDomain_inl_add]
   have h1 : (Finsupp.single (Sum.inr k) 1 : Ix m n ⊕ Ix m n →₀ ℕ).comapDomain Sum.inl Sum.inl_injective.injOn = 0 := by
-    ext j; simp [Finsupp.comapDomain_apply, Finsupp.single_apply]
+    ext j; simp
   have h2 : (fun j : Ix m n => (t + Finsupp.single (Sum.inr k) 1 : Ix m n ⊕ Ix m n →₀ ℕ) (Sum.inr j)) =
       (fun j => t (Sum.inr j)) + Pi.single k 1 := by
     ext j; simp [Finsupp.single_apply, Pi.single_apply, eq_comm]
@@ -237,13 +237,13 @@ theorem op_mul_inr (u : Sym m n) (k : Ix m n) (f : PX m n) : op (u * X (Sum.inr 
 theorem op_X_mul (u : Sym m n) : ∀ (k : Ix m n) (g : PX m n),
     op u (X k * g) = X k * op u g + op (pderiv (Sum.inr k) u) g := by
   induction u using MvPolynomial.induction_on with
-  | C a => intro k g; simp [op_C, op_zero, mul_smul_comm]
+  | C a => intro k g; simp [op_C, op_zero]
   | add p q hp hq => intro k g; rw [op_add, op_add, hp, hq, map_add (f := _), op_add]; ring
   | mul_X p j hp =>
     intro k g
     rcases j with j | j
     · rw [op_mul_inl, op_mul_inl, hp, pderiv_mul, pderiv_X, op_add, op_mul_inl]
-      simp only [Pi.single_apply, Sum.inl.injEq, reduceCtorEq, if_false, mul_zero, op_zero, add_zero]
+      simp only [Pi.single_apply, reduceCtorEq, if_false, mul_zero, op_zero, add_zero]
       ring
     · rw [op_mul_inr, op_mul_inr, pderiv_mul, pderiv_mul, pderiv_X, pderiv_X, op_add_f, op_add, hp, op_mul_inr]
       by_cases h : j = k
@@ -384,7 +384,7 @@ theorem first_family_symbol_mul_variable_pow {u : Sym m n} (hu : SymbolInFirstFa
     · subst h; exact ha
     · exact absurd rfl hk
   have h0 : (∑ k, (Finsupp.single (Sum.inl a) b : Ix m n ⊕ Ix m n →₀ ℕ) (Sum.inr k)) ≤ 0 := by
-    simp [Finsupp.single_apply]
+    simp
   rw [X_pow_eq_monomial]
   refine ⟨?_, fun d hd => ?_⟩
   · intro t ht k hk
@@ -691,7 +691,7 @@ theorem etaEq_one : EtaEq (1 : Sym m n) 0 := by
 theorem etaEq_X_inl (k : Fin m × Fin n × Bool) : EtaEq (X (Sum.inl k) : Sym m n) 0 := by
   intro t ht
   rw [support_X, Finset.mem_singleton] at ht
-  subst ht; simp [ed, Finsupp.single_apply]
+  subst ht; simp [ed]
 
 theorem etaEq_X_inr (k : Fin m × Fin n × Bool) : EtaEq (X (Sum.inr k) : Sym m n) 1 := by
   intro t ht
@@ -813,20 +813,20 @@ theorem opL_pair (ε : Fin m → Bool) (c : ℝ) (hc : c ≠ 0) (a b : Fin m) :
   cases ha : ε a <;> cases hb : ε b
   · refine ⟨1, LinearMap.ext fun f => ?_⟩
     rw [key]
-    simp [firstFamilyOperatorEnd, D1, vecVar, covVar, ha, hb, op_mul_X_inl, op_mul_X_inr, op_X_inl, op_X_inr]
+    simp [firstFamilyOperatorEnd, D1, vecVar, covVar, ha, hb, op_mul_X_inl, op_X_inr]
   · refine ⟨1 / (2 * (c : ℂ)), LinearMap.ext fun f => ?_⟩
     rw [key]
-    simp [firstFamilyOperatorEnd, D1, vecVar, covVar, ha, hb, op_mul_X_inl, op_mul_X_inr, op_X_inl, op_X_inr]
+    simp [firstFamilyOperatorEnd, D1, vecVar, covVar, ha, hb, op_mul_X_inr, op_X_inr]
     rw [smul_smul, show ((c : ℂ)⁻¹ * 2⁻¹) * (2 * c) = 1 by field_simp, one_smul]
     exact Finset.sum_congr rfl fun i _ => pderiv_comm' _ _ f
   · refine ⟨-(2 * (c : ℂ)), LinearMap.ext fun f => ?_⟩
     rw [key]
-    simp [firstFamilyOperatorEnd, D1, vecVar, covVar, ha, hb, op_mul_X_inl, op_mul_X_inr, op_X_inl, op_X_inr]
+    simp [firstFamilyOperatorEnd, D1, vecVar, covVar, ha, hb, op_mul_X_inl, op_X_inl]
     rw [smul_smul, show (2 * (c : ℂ)) * ((c : ℂ)⁻¹ * 2⁻¹) = 1 by field_simp, one_smul]
     exact Finset.sum_congr rfl fun i _ => by ring
   · refine ⟨-1, LinearMap.ext fun f => ?_⟩
     rw [key]
-    simp [firstFamilyOperatorEnd, D1, vecVar, covVar, ha, hb, op_mul_X_inl, op_mul_X_inr, op_X_inl, op_X_inr]
+    simp [firstFamilyOperatorEnd, D1, vecVar, covVar, ha, hb, op_mul_X_inr, op_X_inl]
 
 theorem symK_pair (ε : Fin m → Bool) (i j : Fin n) (a b : Fin m) : symK ε i j (pairSym (n := n) ε a b) = 0 := by
   unfold pairSym
@@ -835,7 +835,7 @@ theorem symK_pair (ε : Fin m → Bool) (i j : Fin n) (a b : Fin m) : symK ε i 
   simp only [Derivation.leibniz, smul_eq_mul]
   unfold vecVar covVar
   cases ha : ε a <;> cases hb : ε b <;>
-    simp [symK, mkDerivation_X, ha, hb, mul_ite, ite_mul, Finset.sum_add_distrib] <;> ring
+    simp [symK, mkDerivation_X, ha, hb, mul_ite, Finset.sum_add_distrib] <;> ring
 
 theorem pair_comm_K (ε : Fin m → Bool) (a b : Fin m) (i j : Fin n) :
     opL (pairSym (n := n) ε a b) * KopL ε i j = KopL ε i j * opL (pairSym (n := n) ε a b) := by
@@ -1223,11 +1223,11 @@ theorem fix_of_exp (δ : Derivation ℂ (MvPolynomial (FinalTheorems m n) ℂ) (
     · intro a
       simp [Φ, MvPolynomial.derivation_C, Polynomial.algebraMap_apply, MvPolynomial.algebraMap_eq]
     · intro p q hp hq
-      simp only [map_add (f := _), Polynomial.derivative_add, hp, hq, mul_add]
+      simp only [map_add (f := _), hp, hq, mul_add]
     · intro p v hp
       rw [map_mul, Polynomial.derivative_mul, hp, Derivation.leibniz, smul_eq_mul, smul_eq_mul]
-      simp only [mul_add, map_add (f := _), map_mul, hΦδ, hX, hC, Polynomial.derivative_add, Polynomial.derivative_C,
-        Polynomial.derivative_mul, Polynomial.derivative_X, zero_add, one_mul, mul_zero, add_zero, Polynomial.C_mul]
+      simp only [mul_add, map_add (f := _), map_mul, hΦδ, hX, hC, Polynomial.derivative_C,
+        Polynomial.derivative_mul, Polynomial.derivative_X, zero_add, one_mul, mul_zero, add_zero]
       ring
   have hev1 : ∀ q, Polynomial.eval 1 (Φ q) = φ q := by
     intro q
@@ -1300,7 +1300,7 @@ theorem act_transvection (t : Matrix.TransvectionStruct (Fin n) ℂ) (p : MvPoly
       by_cases hl : l = j0
       · subst hl
         rw [Fintype.sum_eq_add l i0 (Ne.symm hij) (fun x hx => by simp [hx.1, Ne.symm hx.2])]
-        simp [hij, Ne.symm hij]
+        simp [hij]
       · rw [Fintype.sum_eq_single l (fun x hx => by simp [hx, Ne.symm hl])]
         simp [hl, Ne.symm hl]
   · rintro (⟨l, a⟩ | ⟨l, b⟩)
@@ -1320,11 +1320,11 @@ theorem Dsrc_diag_X (l : Fin n) (v : FinalTheorems m n) :
   · rw [Dsrc_inl]
     by_cases hk : k = l
     · subst hk; simp [wgt, Finsupp.single_apply]
-    · simp [wgt, Finsupp.single_apply, hk, Ne.symm hk]
+    · simp [wgt, hk, Ne.symm hk]
   · rw [Dsrc_inr]
     by_cases hk : k = l
     · subst hk; simp [wgt, Finsupp.single_apply]
-    · simp [wgt, Finsupp.single_apply, hk, Ne.symm hk]
+    · simp [wgt, hk, Ne.symm hk]
 
 theorem wgt_add (l : Fin n) (d e : FinalTheorems m n →₀ ℕ) : wgt l (d + e) = wgt l d + wgt l e := by
   simp only [wgt, Finsupp.add_apply, Nat.cast_add, Finset.sum_add_distrib]; ring

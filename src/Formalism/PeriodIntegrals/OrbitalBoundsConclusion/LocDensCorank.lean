@@ -748,7 +748,7 @@ theorem fr_card {F E : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [Co
   let P : Submodule 𝒪[F] (Fin 2 → 𝒪[F]) := Submodule.pi Set.univ fun _ => Ideal.span {ϖ}
   have hmap : I'.map (b.equivFun : A →ₗ[𝒪[F]] (Fin 2 → 𝒪[F])) = P := by
     ext v
-    simp only [Submodule.mem_map, Submodule.restrictScalars_mem, P, Submodule.mem_pi, Set.mem_univ,
+    simp only [Submodule.mem_map, P, Submodule.mem_pi, Set.mem_univ,
       true_implies, Ideal.mem_span_singleton']
     constructor
     · rintro ⟨x, hx, rfl⟩ i
@@ -941,13 +941,12 @@ theorem fld_dvd_iff {F E : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]
     have hz' : z = algebraMap F E ((a : F) / ϖ) := by
       rw [div_eq_mul_inv, map_mul, he, mul_comm (algebraMap F E (ϖ : F)) z, mul_assoc, ← map_mul,
         mul_inv_cancel₀ hϖ0, map_one, mul_one]
-    have hm : (a : F) / ϖ ∈ 𝒪[F] :=
-      PI.UnitaryGroupMassFormula.CntFormula.fl_mem_int L (PI.UnitaryGroupMassFormula.CntFormula.fl_inj L) (hz' ▸ hz)
+    have hm := fl_mem_int L (fl_inj L) (hz' ▸ hz)
     refine ⟨⟨_, hm⟩, Subtype.ext ?_⟩
     show (a : F) = (ϖ : F) * ((a : F) / ϖ)
     field_simp
   · rintro ⟨c, rfl⟩
-    exact ⟨algebraMap F E (c : F), PI.UnitaryGroupMassFormula.CntFormula.fl_int_mem L c, by simp [map_mul]⟩
+    exact ⟨algebraMap F E (c : F), fl_int_mem L c, by simp [map_mul]⟩
 
 theorem fld_count_core {F E : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [CommRing E] [Algebra F E]
     [TopologicalSpace E] [MeasurableSpace E] (M : Loc.Model F E) (hl : IsNonarchimedeanLocalField F)
@@ -1447,11 +1446,10 @@ theorem locDensCorank_of (hC : CongStep) (hF : FieldCount) (hS : SplitCount) :
     PI.LocDensCorank.LocDensCorank := by
   intro F E _ _ _ _ _ _ _ M hloc hchar V _ _ H Λ hsd ϖ hϖ ι _ _ A a hA hdet hcard
   rw [hC F E M V H Λ ϖ ι A a hA hdet]
-  by_cases hE : ∀ x : E, x ≠ 0 → IsUnit x
-  · rw [if_pos hE]
-    exact hF F E M hloc hchar hE V H Λ hsd ϖ hϖ ι a hcard
-  · rw [if_neg hE]
-    exact hS F E M hloc hchar ((PI.UnitaryGroupMassFormula.CntFormula.locE_isUnit_or_exists_algEquiv_prod_swap M.L).resolve_left hE) V H Λ hsd ϖ hϖ ι a hcard
+  split_ifs with hE
+  · exact hF F E M hloc hchar hE V H Λ hsd ϖ hϖ ι a hcard
+  · exact hS F E M hloc hchar
+      ((PI.UnitaryGroupMassFormula.CntFormula.locE_isUnit_or_exists_algEquiv_prod_swap M.L).resolve_left hE) V H Λ hsd ϖ hϖ ι a hcard
 
 theorem locDensCorank_of_counts (hF : FieldCount) (hS : SplitCount) : PI.LocDensCorank.LocDensCorank := by
   exact locDensCorank_of congruence_density hF hS

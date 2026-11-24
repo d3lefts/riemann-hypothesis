@@ -334,9 +334,8 @@ def cvO (D : D7) (n : ℕ) : (Fin n → D.host.E) →ₛₗ[cO D] (Fin n → D.h
     ext i
     simp only [Pi.smul_apply, cO]
     rw [Algebra.smul_def, Algebra.smul_def]
-    simp only [smul_eq_mul, star_mul', mul_eq_mul_left_iff, map_mul, Pi.smul_apply]
+    simp only [star_mul']
     first
-      | exact Or.inl rfl
       | (simp [mul_comm]; exact Or.inl rfl)
 
 def cvE (D : D7) (n : ℕ) : (Fin n → D.host.E) →ₛₗ[starRingEnd D.host.E] (Fin n → D.host.E) where
@@ -448,7 +447,7 @@ theorem hasSig_map_conj {m a b : ℕ} {M : Matrix (Fin m) (Fin m) ℂ} (h : HasS
     ext i j; simp
   rw [e1, e2, hA, Matrix.fromBlocks_map]
   have e3 : (-1 : Matrix (Fin b) (Fin b) ℂ).map (starRingEnd ℂ) = -1 := by
-    ext i j; by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+    ext i j; by_cases hij : i = j <;> simp [hij]
   simp [e3]
 
 theorem hasSignature_all (hG : B.IsGood D.sp.cm.sig) {m a b : ℕ} (J : Matrix (Fin m) (Fin m) D.host.E)
@@ -528,7 +527,7 @@ theorem _root_.GlobalTheory.T.exists_selfDual_orientedModel_conjugate_hermitian 
     ∀ (n r p : ℕ) (V : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc D.host.F D.host.E n), V.IsHerm D.sp.cm.sig Bs r p →
       ∃ (B : HSp D) (Λ : Submodule (𝓞 D.host.E) (Fin B.rank → D.host.E)),
         IsSelfDualC B Λ ∧ NegIdx B p ∧ GlobalTheory.SqStepBig.OverH 1 B Λ V := by
-  first | exact @GlobalTheory.ConjSpace.main | exact GlobalTheory.ConjSpace.main | (intros; apply GlobalTheory.ConjSpace.main <;> assumption)
+  first | exact @GlobalTheory.ConjSpace.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSelfDualOrientedModelConjugateHermitianStatement =====
@@ -564,7 +563,7 @@ private theorem hasSignature_of_smul {n r s : ℕ} {M : Matrix (Fin n) (Fin n) �
   simp only [Matrix.map_mul] at h2
   have e2 : (Matrix.fromBlocks 1 0 0 (-1) : Matrix (Fin r ⊕ Fin s) (Fin r ⊕ Fin s) ℂ).map (starRingEnd ℂ) =
       Matrix.fromBlocks 1 0 0 (-1) := by
-    ext (i | i) (j | j) <;> simp [Matrix.fromBlocks, Matrix.one_apply] <;> split_ifs <;> simp
+    ext (i | i) (j | j) <;> simp [Matrix.fromBlocks, Matrix.one_apply] <;> split_ifs
   have hs : ((Real.sqrt κ : ℝ) : ℂ) * ((Real.sqrt κ : ℝ) : ℂ) = (κ : ℂ) := by
     exact_mod_cast Real.mul_self_sqrt hκ.le
   have t1 : (((Real.sqrt κ : ℝ) : ℂ) • A.map star)ᵀ = ((Real.sqrt κ : ℝ) : ℂ) • (Aᵀ).map (starRingEnd ℂ) := by
@@ -1023,7 +1022,7 @@ theorem _root_.GlobalTheory.T.quadratic_tower_exists : _root_.GlobalTheory.FunPr
     p ≤ pp D j → q ≤ qq D j → A.rank + 2 * pp D j = rankV D (i + 1) (j + 1) + 2 * p →
     A'.rank + 2 * qq D j = rankV D i j + 2 * q → NegIdx A p → NegIdx A' q → NegIdx WW (p + q) → A.rank + A'.rank = WW.rank →
       ∃ X : Tri T A A' WW, GlobalTheory.SqTower.IsStageC W i j p q X ∧ X.rA.Λ = ΛA ∧ X.rA'.Λ = ΛA' ∧ X.rW.Λ = ΛW := by
-  first | exact @_root_.GlobalTheory.SqTower.StageExists.exists_quadratic_tower_stage | exact _root_.GlobalTheory.SqTower.StageExists.exists_quadratic_tower_stage | (intros; apply _root_.GlobalTheory.SqTower.StageExists.exists_quadratic_tower_stage <;> assumption)
+  first | exact @_root_.GlobalTheory.SqTower.StageExists.exists_quadratic_tower_stage
 end
 end -- clump:auto
 end -- clump:auto
@@ -1274,7 +1273,7 @@ theorem _root_.GlobalTheory.T.witt_tower_norm_step_of_large_rank : _root_.Global
       (∀ t, IsHeckeL (nuH G t i j) (Lf t)) → ∃ (B B' WW₁ : HSp D) (Y : Tri T B B' WW₁) (c y : T → ℂ),
         GlobalTheory.SqTower.IsStageC W i j p 0 Y ∧ Y.IsConst W.ψ W.θ c ∧
         (∀ t, y t ≠ 0 ∧ lam t = y t * Lf t (e : ℂ) * c t) ∧ ∀ t, GlobalTheory.Square.StepRatio D.what₂.embLL (Qn G t) G.pl.S0 (condExp G.pl) (fun v => Ideal.absNorm v.asIdeal) (y t) (y μ₀) := by
-  first | exact @_root_.GlobalTheory.SqStepBig.theta_tower_norm_step_large_rank | exact _root_.GlobalTheory.SqStepBig.theta_tower_norm_step_large_rank | (intros; apply _root_.GlobalTheory.SqStepBig.theta_tower_norm_step_large_rank <;> assumption)
+  first | exact @_root_.GlobalTheory.SqStepBig.theta_tower_norm_step_large_rank
 end
 end -- clump:auto
 end -- clump:auto

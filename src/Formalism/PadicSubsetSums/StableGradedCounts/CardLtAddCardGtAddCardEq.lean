@@ -158,7 +158,7 @@ theorem charpolyFactorAnnihilator : CharpolyFactorAnnihilator := by
         Matrix.diagonal (fun _ => c) := by
       simp only [gB, map_smul, LinearMap.toMatrix_id]
       ext i j
-      by_cases h : i = j <;> simp [h, Matrix.one_apply]
+      by_cases h : i = j <;> simp [h]
     rw [hm, Matrix.charpoly_diagonal, Finset.prod_const, Finset.card_univ, Fintype.card_fin, ht]
   have hPA : P = gA.charpoly := by
     have h1 : γ₀.charpoly = gA.charpoly * gB.charpoly := by
@@ -297,7 +297,7 @@ theorem goodCuspidal_holds : GoodCuspidal := by
 
   have hr : r = ∑ l, n l := by
     rw [← hdeg v0, hprod v0, Polynomial.natDegree_prod _ _ (fun l _ => pow_ne_zero _ (hne l))]
-    simp [Polynomial.natDegree_pow, hd1, hhdeg]
+    simp [hd1, hhdeg]
   have hle : n i + n j ≤ ∑ l, n l := by
     classical
     rw [← Finset.sum_pair hij]

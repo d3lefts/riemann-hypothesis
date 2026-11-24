@@ -222,7 +222,7 @@ theorem norm_entry_le {b : ℝ} {X : Matrix m m ℂ} (hX : X.PosSemidef)
   have dN : ∀ k, (X k k).re ≤ b := by
     intro k
     have := h.diag_nonneg (i := k)
-    simp [Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply] at this
+    simp [Matrix.sub_apply, Matrix.smul_apply] at this
     simpa using (Complex.le_def.mp this).1
   by_cases hij : i = j
   · subst hij
@@ -249,25 +249,25 @@ theorem norm_entry_le {b : ℝ} {X : Matrix m m ℂ} (hX : X.PosSemidef)
     have hws : star w = s / (‖s‖ : ℂ) := by
       rw [hw, star_div₀, star_star]
       congr 1
-      simp [Complex.star_def]
+      simp
     have hww : star w * w = 1 := by
       rw [hws, hw, div_mul_div_comm, hss]
       field_simp
     have e2 : star w * star s = (‖s‖ : ℂ) := by
       rw [← star_mul, hsw]
-      simp [Complex.star_def]
+      simp
     have key : ∀ (N : Matrix m m ℂ), star (Pi.single i 1 + Pi.single j w : m → ℂ) ⬝ᵥ (N *ᵥ (Pi.single i 1 + Pi.single j w)) =
         N i i + N i j * w + star w * N j i + star w * N j j * w := by
       intro N
-      simp [Matrix.mulVec_add, dotProduct_add, add_dotProduct, Matrix.mulVec_single, Pi.star_single, single_dotProduct, hij, Ne.symm hij, Pi.single_apply]
+      simp [Matrix.mulVec_add, dotProduct_add, add_dotProduct, Matrix.mulVec_single, Pi.star_single, single_dotProduct]
       ring
     have Q := h.dotProduct_mulVec_nonneg (Pi.single i 1 + Pi.single j w)
     rw [key] at Q
     have n1 : ((b : ℂ) • (1 : Matrix m m ℂ) - X) i i = b - X i i := by simp [Matrix.sub_apply]
     have n2 : ((b : ℂ) • (1 : Matrix m m ℂ) - X) j j = b - X j j := by simp [Matrix.sub_apply]
-    have n3 : ((b : ℂ) • (1 : Matrix m m ℂ) - X) i j = - s := by simp [Matrix.sub_apply, Matrix.one_apply, hij, hs]
+    have n3 : ((b : ℂ) • (1 : Matrix m m ℂ) - X) i j = - s := by simp [Matrix.sub_apply, hij, hs]
     have n4 : ((b : ℂ) • (1 : Matrix m m ℂ) - X) j i = - star s := by
-      simp [Matrix.sub_apply, Matrix.one_apply, Ne.symm hij, hji]
+      simp [Matrix.sub_apply, Ne.symm hij, hji]
     rw [n1, n2, n3, n4] at Q
     have eQ : (b : ℂ) - X i i + -s * w + star w * -star s + star w * ((b : ℂ) - X j j) * w =
         2 * (b : ℂ) - X i i - X j j - 2 * (‖s‖ : ℂ) := by
@@ -737,7 +737,7 @@ open scoped ComplexOrder
 
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.exists_local_holo_isPeriodGram_blockG_baseGram : Given → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (Xo : ∀ l : Level H, Moduli D l) (l : Level H) (c : Coeff l) (Y : Model (Xo l) c (algebraMap (𝓞 c.F) c.F)) (S : Finset ℕ) (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Φ : Type) [Field Φ] (y : (Σ k, ι k) → Φ) (M : FlagModel y (CMType H) (D.p + D.q) D.p) (𝔐 : HodgeCpt Y S M.x) (tie : FlagTie M 𝔐), 1 ≤ D.p → 1 ≤ D.q → ∀ (n : ℕ) (Rb : AnLogRes (mCoordIdeal M.x) ⊤ n) (s : Rb.X → Rb.X → ℂ), (∀ (x : Rb.X) (z : Spec (CommRingCat.of ℂ) ⟶ 𝔐.X), CoordsAt 𝔐.ξ M.x z (Rb.lift x x) → (x ∉ bdry s ↔ 𝔐.Interior z)) → IsClosed (bdry s) → ∀ (F : FrameData ι (CMType H) (D.p + D.q) M.Ω M.blk), M.IsFrame F → ∀ (τ : CMType H) (x : Rb.X), x ∉ bdry s → M.GoodAt F (mCoordIdeal (Rb.lift x x)) → ∃ (V : Set Rb.X) (P : Rb.X → Matrix (Fin (D.p + D.q)) (Fin (D.p + D.q)) ℂ), IsOpen V ∧ x ∈ V ∧ (∀ a b, Rb.A.HoloOn V fun x' => P x' a b) ∧ ∀ x' ∈ V, IsPeriodGram D.p (P x') (blockG (baseGram tie F τ Rb x')) := by
-  first | exact @PositivityTheory.Xgp.t_c_bm_exists_period | exact PositivityTheory.Xgp.t_c_bm_exists_period
+  first | exact @PositivityTheory.Xgp.t_c_bm_exists_period
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.MetricProofs.ExistsLocalHoloIsPeriodGramBlockGBaseGram =====
@@ -753,7 +753,7 @@ open scoped ComplexOrder
 
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.flagModel_frame_height_comparison : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (Xo : ∀ l : Level H, Moduli D l) (l : Level H) (c : Coeff l) (Y : Model (Xo l) c (algebraMap (𝓞 c.F) c.F)) (S : Finset ℕ) (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Φ : Type) [Field Φ] (y : (Σ k, ι k) → Φ) (M : FlagModel y (CMType H) (D.p + D.q) D.p) (𝔐 : HodgeCpt Y S M.x) (tie : FlagTie M 𝔐), ∀ (F : FrameData ι (CMType H) (D.p + D.q) M.Ω M.blk), M.IsFrame F → ∀ (τ : CMType H) (w : (Σ k, baseIdx ι M.blk k) → ℂ) (z : Spec (CommRingCat.of ℂ) ⟶ 𝔐.X), CoordsAt 𝔐.ξ M.x z w → 𝔐.Interior z → M.GoodAt F (mCoordIdeal w) → 𝔐.M.GramAt 𝔐.t.PP.L z (gb tie F τ) (HodgeMetric.gramFn 𝔐 (gb tie F τ) w) ∧ (HodgeMetric.gramFn 𝔐 (gb tie F τ) w).PosDef ∧ ∀ a b, tie.omFrame F τ a (dualFam tie F τ b) = if a = b then 1 else 0 := by
-  first | exact @PositivityTheory.Xgp.t_c_bm_exists_gram | exact PositivityTheory.Xgp.t_c_bm_exists_gram
+  first | exact @PositivityTheory.Xgp.t_c_bm_exists_gram
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.MetricProofs.FlagModelFrameHeightComparison =====
@@ -895,7 +895,7 @@ open scoped ComplexOrder
 
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.flagModel_height_lower_estimate : Given → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (Xo : ∀ l : Level H, Moduli D l) (l : Level H) (c : Coeff l) (Y : Model (Xo l) c (algebraMap (𝓞 c.F) c.F)) (S : Finset ℕ) (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Φ : Type) [Field Φ] (y : (Σ k, ι k) → Φ) (M : FlagModel y (CMType H) (D.p + D.q) D.p) (𝔐 : HodgeCpt Y S M.x) (tie : FlagTie M 𝔐), 1 ≤ D.p → 1 ≤ D.q → ∀ (d : ℕ), 𝔐.IsCover d → ∀ (Rb : AnLogRes (mCoordIdeal M.x) ⊤ (Fintype.card (CMType H) * D.p * D.q)) (s : Rb.X → Rb.X → ℂ), (∀ (x : Rb.X) (z : Spec (CommRingCat.of ℂ) ⟶ 𝔐.X), CoordsAt 𝔐.ξ M.x z (Rb.lift x x) → (x ∉ bdry s ↔ 𝔐.Interior z)) → IsClosed (bdry s) → ∀ (q : ℕ) (O : Fin q → Set Rb.X) (F : Fin q → FrameData ι (CMType H) (D.p + D.q) M.Ω M.blk), (∀ l, IsOpen (O l)) → (∀ x, ∃ l, x ∈ O l) → (∀ l, M.IsFrame (F l)) → (∀ l, ∀ x ∈ O l, M.GoodAt (F l) (mCoordIdeal (Rb.lift x x))) → ∃ l, ∃ x ∈ O l \ bdry s, ∃ (V : Set Rb.X) (Pi : CMType H → Rb.X → Matrix (Fin (D.p + D.q)) (Fin (D.p + D.q)) ℂ), x ∈ V ∧ IsPeriodOn Rb.A D.p V Pi (fun τ x' => blockG (baseGram tie (F l) τ Rb x')) ∧ ∀ k, x ∈ (Rb.A.chart k).source → ∀ v : Fin (Fintype.card (CMType H) * D.p * D.q) → ℂ, (∀ τ (a b : Fin (D.p + D.q)), D.p + D.q - D.p ≤ (a : ℕ) → (b : ℕ) < D.p + D.q - D.p → ((Pi τ x)⁻¹ * Matrix.of fun a b => fderiv ℂ (fun w => Pi τ ((Rb.A.chart k).symm w) a b) (Rb.A.chart k x) v) a b = 0) → v = 0 := by
-  first | exact @PositivityTheory.Xgp.t_c_bm_exists_immersion | exact PositivityTheory.Xgp.t_c_bm_exists_immersion
+  first | exact @PositivityTheory.Xgp.t_c_bm_exists_immersion
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.MetricProofs.FlagModelHeightLowerEstimate =====
@@ -1598,7 +1598,7 @@ open scoped ComplexOrder
 
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.flagModel_resolution_integrability : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (Xo : ∀ l : Level H, Moduli D l) (l : Level H) (c : Coeff l) (Y : Model (Xo l) c (algebraMap (𝓞 c.F) c.F)) (S : Finset ℕ) (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι k)] (Φ : Type) [Field Φ] (y : (Σ k, ι k) → Φ) (M : FlagModel y (CMType H) (D.p + D.q) D.p) (𝔐 : HodgeCpt Y S M.x) (tie : FlagTie M 𝔐), ∀ (n : ℕ) (Rb : AnLogRes (mCoordIdeal M.x) ⊤ n) (s : Rb.X → Rb.X → ℂ), (∀ (x : Rb.X) (z : Spec (CommRingCat.of ℂ) ⟶ 𝔐.X), CoordsAt 𝔐.ξ M.x z (Rb.lift x x) → (x ∉ bdry s ↔ 𝔐.Interior z)) → ∀ (q : ℕ) (O : Fin q → Set Rb.X) (F : Fin q → FrameData ι (CMType H) (D.p + D.q) M.Ω M.blk), (∀ x, ∃ l, x ∈ O l) → (∀ l, M.IsFrame (F l)) → (∀ l, ∀ x ∈ O l, M.GoodAt (F l) (mCoordIdeal (Rb.lift x x))) → ∃ hom : CMType H × Fin (D.p + D.q) → HermLine ι, (∀ p, (hom p).a = M.dy p) ∧ (∀ l, ∀ x ∈ O l \ bdry s, ∀ p, M.IsInducedAt (F l) (Rb.lift x x) p (blockG (baseGram tie (F l) p.1 Rb x)) (hom p)) ∧ ∀ p, ∀ z ∈ mcPts (mCoordIdeal y), ∀ x, x ∉ bdry s → SameOrbit (basePart M.blk z) (Rb.lift x x) → (hom p).h (fun q => starRingEnd ℂ (z q)) = (hom p).h z := by
-  first | exact @PositivityTheory.Xgp.t_c_bm_exists_hom | exact PositivityTheory.Xgp.t_c_bm_exists_hom
+  first | exact @PositivityTheory.Xgp.t_c_bm_exists_hom
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.MetricProofs.FlagModelResolutionIntegrability =====
@@ -1643,7 +1643,7 @@ theorem mem_bdry_conj_iff : ∀ (K : Type) [Fintype K] (J : K → Type) [∀ k, 
       funext q
       simp only [GroundTheory.Heights₂.Heights.LowerBoundFree.torusSmul, GroundTheory.Heights₂.Heights.LowerBoundFree.conjVec]
       rw [e]
-      simp [inv_mul_cancel_left₀, (map_ne_zero (starRingEnd ℂ)).2 (hc q.1)]
+      simp [(map_ne_zero (starRingEnd ℂ)).2 (hc q.1)]
     rw [e2] at h2
     exact h2.2
   · intro h

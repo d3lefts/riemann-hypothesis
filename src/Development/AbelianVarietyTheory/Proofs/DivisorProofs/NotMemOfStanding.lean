@@ -263,7 +263,7 @@ theorem _root_.GlobalTheory.T.bigZetaIntegral_eq_smul_smallZetaIntegral_of_integ
         bigP (haarVol (KO k (Fin a))) ϖ σ₁ ν β Ξ = smallP (haarVol (KO k A')) σ₁ ν (ν * β) Ψ →
         bigP (haarVol (KO k (Fin a))) ϖ σ ν β (fun X => Ξ (reindex (Equiv.refl _) eC (gA.val * X * (invT c).val))) =
           (ν x : ℂ) • smallP (haarVol (KO k A')) σ ν (ν * β) fun Y => Ψ (reindex (Equiv.refl _) eC (gB.val * Y * c.val)) := by
-  first | exact @GlobalTheory.TopFlip.ZMatQ.bigZeta_eq_smul_smallZeta_change | exact GlobalTheory.TopFlip.ZMatQ.bigZeta_eq_smul_smallZeta_change | (intros; apply GlobalTheory.TopFlip.ZMatQ.bigZeta_eq_smul_smallZeta_change <;> assumption)
+  first | exact @GlobalTheory.TopFlip.ZMatQ.bigZeta_eq_smul_smallZeta_change
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BigZetaIntegralEqSmulSmallZetaIntegralOfIntegralStatement =====
@@ -437,7 +437,7 @@ theorem _root_.GlobalTheory.T.exists_mixed_chart_through_W_coordinate : ∀ {D :
         (Assignment.one.block _ _)ᶜ ∧
       ∀ u, chart jj (finCongr (rankW G t i j w)) (colsEq t e w) g (invT cc) (coX (Bs.τ v) (Γ.V.bas v) (Γ.W.bas v) u) =
         linA B t i j w (ptA e u) := by
-  first | exact @GlobalTheory.TopFlip.ChartA.exists_mixChart_lin | exact GlobalTheory.TopFlip.ChartA.exists_mixChart_lin | (intros; apply GlobalTheory.TopFlip.ChartA.exists_mixChart_lin <;> assumption)
+  first | exact @GlobalTheory.TopFlip.ChartA.exists_mixChart_lin
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMixedChartThroughWCoordinateStatement =====
@@ -634,7 +634,7 @@ open GlobalTheory.TopFlip
 theorem _root_.GlobalTheory.T.grid_frame_local_compact_membership : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} {G : GridData L sc} {μ₀ : T}, L.Is μ₀ → ∀ (B : Frames G) (t : T) (i j : Fin D.R.m) (X : TriG G i j), SquareStanding G t →
       IsFrame X.rA.β (G.Λ (.grid (i + 1) (j + 1))) → IsFrame X.rA'.β (G.Λ (.grid i j)) → IsFrame X.rW.β (latX G i j) →
       ∀ w ∈ locPl G t, chA B t X w ∈ KO (Kw w) _ ∧ chB B t X w ∈ KO (Kw w) _ ∧ chX B t X w ∈ KO (Kw w) _ := by
-  first | exact @GlobalTheory.TopFlip.ChKO.changes_mem_KO | exact GlobalTheory.TopFlip.ChKO.changes_mem_KO | (intros; apply GlobalTheory.TopFlip.ChKO.changes_mem_KO <;> assumption)
+  first | exact @GlobalTheory.TopFlip.ChKO.changes_mem_KO
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GridFrameLocalCompactMembershipStatement =====
@@ -776,7 +776,7 @@ theorem _root_.GlobalTheory.T.splitPlace_halves_eq_linear_model_lagrangians : �
         At (evFin D.host.F v) u ∧ u.map (piW (τ.comp D.sp.cm.sig)) = 0) ∧
       (IsHalf (cA D (atPl w 1)) (HMul.hMul (uᵀ.submatrix e id) (incM Gm) : Matrix (Fin d) (Fin m) (AE D)) ↔
         At (evFin D.host.F v) u ∧ u.map (piW τ) = 0) := by
-  first | exact @GlobalTheory.SplitHalves.halves | exact GlobalTheory.SplitHalves.halves | (intros; apply GlobalTheory.SplitHalves.halves <;> assumption)
+  first | exact @GlobalTheory.SplitHalves.halves
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SplitPlaceHalvesEqLinearModelLagrangiansStatement =====
@@ -1057,7 +1057,7 @@ theorem _root_.GlobalTheory.T.square_standing_triple_theta_first : ∀ {D : D7} 
         (Assignment.one.block _ _) ∧
       ∀ u, chart jj (finCongr (rankW₁ G t i j w)) (colsEq t e w) g cc
           (coY D.sp.cm.sig Γ.V' Γ.W (Bs.τ v) (Γ.V'.bas v) (Γ.W.bas v) u) = linB B t i j w (ptB e u) := by
-  first | exact @GlobalTheory.TopFlip.ChartB.exists_mixChart_linB | exact GlobalTheory.TopFlip.ChartB.exists_mixChart_linB | (intros; apply GlobalTheory.TopFlip.ChartB.exists_mixChart_linB <;> assumption)
+  first | exact @GlobalTheory.TopFlip.ChartB.exists_mixChart_linB
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareStandingTripleThetaFirstStatement =====
@@ -1161,7 +1161,7 @@ open GlobalTheory.TopFlip
 theorem _root_.GlobalTheory.T.standardPair_mem_schwartzBruhat_of_conductorExponentLE : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (ν : kˣ →* ℂˣ) (ϖ : kˣ) (n c a a' : ℕ), IsUnif ϖ → CondLE ϖ n ν →
       GlobalTheory.StdPairCone.stdA ν ϖ c a a' ∈ GlobalTheory.WeilM.SB (Matrix (Fin a) (Fin (a + a')) k) ∧
         GlobalTheory.StdPairCone.stdB ν ϖ c a a' ∈ GlobalTheory.WeilM.SB (Matrix (Fin a') (Fin (a + a')) k) := by
-  first | exact @GlobalTheory.StdPairSBDepth.stdPair_mem_SB | exact GlobalTheory.StdPairSBDepth.stdPair_mem_SB | (intros; apply GlobalTheory.StdPairSBDepth.stdPair_mem_SB <;> assumption)
+  first | exact @GlobalTheory.StdPairSBDepth.stdPair_mem_SB
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardPairMemSchwartzBruhatOfConductorExponentStatement =====
@@ -1196,7 +1196,7 @@ theorem blk₂_mul {m a a' : ℕ} (M : Matrix (Fin m) (Fin a) k) (X : Matrix (Fi
   ext i j; simp [blk₂, Matrix.mul_apply]
 
 theorem val_gdet {a : ℕ} (g : GL (Fin a) k) : ((gdet g : kˣ) : k) = g.val.det := by
-  first | rfl | exact Matrix.GeneralLinearGroup.val_det_apply g
+  first | rfl
 
 theorem isGLO_of_mem_KO {a : ℕ} {g : GL (Fin a) k} (hg : g ∈ KO k (Fin a)) : g.val.det ≠ 0 ∧ IsGLO g.val := by
   have hv : valuation k g.val.det = 1 := by rw [← val_gdet]; exact GlobalTheory.SplitFlip.valuation_gdet_of_mem_KO hg
@@ -1315,7 +1315,7 @@ theorem bigF_stdA_eq (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c a a' : ℕ) (hϖ : IsUn
     obtain ⟨x, hx, y, hy, e⟩ := mem_shellSet.1 hmem
     refine mem_shellSet.2 ⟨g * g₁ * x, mul_mem hg hx, y, hy, ?_⟩
     calc g = g * g₁ * g₁⁻¹ := by group
-      _ = _ := by rw [e]; simp only [mul_assoc]; try rfl
+      _ = _ := by rw [e]; simp only [mul_assoc]
   rw [bigF, shellSum, finsum_eq_single _ ⟨m₀, hm₀⟩]
   · rw [hshell, Set.inter_eq_right.2 hsub, hS1, one_smul]
   · intro m hm
@@ -1325,7 +1325,7 @@ theorem bigF_stdA_eq (ν : kˣ →* ℂˣ) (ϖ : kˣ) (c a a' : ℕ) (hϖ : IsUn
       obtain ⟨x, hx, y, hy, e⟩ := mem_shellSet.1 hg1
       refine mem_shellSet.2 ⟨(g * g₁)⁻¹ * x, mul_mem (inv_mem hg2) hx, y, hy, ?_⟩
       calc g₁⁻¹ = (g * g₁)⁻¹ * g := by group
-        _ = _ := by rw [e]; simp only [mul_assoc]; try rfl
+        _ = _ := by rw [e]; simp only [mul_assoc]
     simp [this]
 
 end GlobalTheory.StdPairZeta
@@ -1614,7 +1614,7 @@ open GlobalTheory.TopFlip
 theorem _root_.GlobalTheory.T.zetaIntegral_standardPair_first_eq_second : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (ν β : kˣ →* ℂˣ) (ϖ : kˣ) (c a a' : ℕ), IsUnif ϖ →
       bigP (haarVol (KO k (Fin a))) ϖ finSumFinEquiv ν β (GlobalTheory.StdPairCone.stdA ν ϖ c a a') =
         smallP (haarVol (KO k (Fin a'))) finSumFinEquiv ν (ν * β) (GlobalTheory.StdPairCone.stdB ν ϖ c a a') := by
-  first | exact @GlobalTheory.StdZetaAgree.bigZetaIntegral_stdA_eq_smallZetaIntegral_stdB | exact GlobalTheory.StdZetaAgree.bigZetaIntegral_stdA_eq_smallZetaIntegral_stdB | (intros; apply GlobalTheory.StdZetaAgree.bigZetaIntegral_stdA_eq_smallZetaIntegral_stdB <;> assumption)
+  first | exact @GlobalTheory.StdZetaAgree.bigZetaIntegral_stdA_eq_smallZetaIntegral_stdB
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ZetaIntegralStandardPairFirstEqSecondStatement =====

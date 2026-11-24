@@ -306,16 +306,13 @@ theorem tvm_apply (u : ι → Fin n → ℂ) (ξ : ι → ℂ) (v : Fin n → �
 
 theorem tvm_fix (u : ι → Fin n → ℂ) (ξ : ι → ℂ) {v : Fin n → ℂ} (hv : ∀ b, hJ ε (u b) v = 0) :
     tvm ε u ξ *ᵥ v = v := by
-  rw [tvm_apply]
-  simp [hv]
+  simp [tvm_apply, hv]
 
 theorem tvm_one (u : ι → Fin n → ℂ) (ξ : ι → ℂ) (j : ι) {v : Fin n → ℂ} (hj : ξ j * hJ ε (u j) v = 1)
     (hv : ∀ b, b ≠ j → hJ ε (u b) v = 0) : tvm ε u ξ *ᵥ v = v - u j := by
-  rw [tvm_apply, Finset.sum_eq_single j, hj, one_smul]
-  · intro b _ hb
-    rw [hv b hb, mul_zero, zero_smul]
-  · intro h
-    exact absurd (Finset.mem_univ j) h
+  rw [tvm_apply, Finset.sum_eq_single_of_mem j (Finset.mem_univ j), hj, one_smul]
+  intro b _ hb
+  rw [hv b hb, mul_zero, zero_smul]
 
 theorem tvm_isIsom (u : ι → Fin n → ℂ) (ξ : ι → ℂ) (horth : ∀ a b, a ≠ b → hJ ε (u a) (u b) = 0)
     (hξ : ∀ b, ξ b + conj (ξ b) = ξ b * conj (ξ b) * hJ ε (u b) (u b)) : IsIsom ε (tvm ε u ξ) := by

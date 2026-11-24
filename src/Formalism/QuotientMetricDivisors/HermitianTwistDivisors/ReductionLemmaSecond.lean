@@ -95,7 +95,7 @@ lemma majAt_eq {d : ℕ} (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ) (v
     (x y : Fin d → K) :
     Formalism.HermitianLatticesTheory.majAt (Pi.basisFun K (Fin d)) X v x y =
       star (cv v.embedding x) ⬝ᵥ (metMat X v *ᵥ cv v.embedding y) := by
-  simp only [Formalism.HermitianLatticesTheory.majAt, Formalism.HermitianLatticesTheory.fcoord, Formalism.HermitianLatticesTheory.vecAt, Pi.basisFun_repr]
+  simp only [Formalism.HermitianLatticesTheory.majAt, Formalism.HermitianLatticesTheory.fcoord]
   rw [metMat, ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, ← Matrix.star_mulVec]
   rfl
 
@@ -184,7 +184,7 @@ lemma det_of_scalar {D : ℕ} (σ : K →+* ℂ) {Ix : Type} [Fintype Ix]
   have hcol : ∀ a, (fun i => Qs i a) = cv σ (b (e.symm a)) := by
     intro a
     ext i
-    simp [hQs, hQdef, cv, Module.Basis.toMatrix_apply, Module.Basis.reindex_apply]
+    simp [hQs, hQdef, cv, Module.Basis.toMatrix_apply]
   have hmem : ∀ a, b (e.symm a) ∈ Qp (e.symm a).1 := fun a => hint.collectedBasis_mem _ _
   have key : Qsᴴ * N1 * Qs = Matrix.diagonal (fun a => c (e.symm a).1) * (Qsᴴ * N2 * Qs) := by
     ext a a'
@@ -239,7 +239,7 @@ theorem spectral_determinant_formula : SpecDet := by
     rw [h]
     exact Finset.prod_congr rfl (fun p _ => by rw [hdim j p])
   rw [h1, Finset.prod_congr rfl (fun j _ => h2 j)]
-  simp only [mul_pow, Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, hsum, Finset.prod_pow]
+  simp only [mul_pow, Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, hsum]
   congr 1
   rw [Finset.prod_comm]
   refine Finset.prod_congr rfl (fun p _ => ?_)
@@ -328,8 +328,7 @@ theorem Hmap_tw (K0 : Subfield K) (hK0 : IsCMSub K0) {n : ℕ} (H : Matrix (Fin 
 theorem gramStd {d : ℕ} (X : InfinitePlace K → Matrix (Fin d) (Fin d) ℂ) (v : InfinitePlace K) :
     gram X v (fun i => (Pi.single i 1 : Fin d → K)) = metMat X v := by
   ext a b
-  simp only [gram, Formalism.HN.gramPl, Matrix.of_apply]
-  rw [majAt_eq, cv_single, cv_single, single_dot_single]
+  simp [gram, Formalism.HN.gramPl, Matrix.of_apply, majAt_eq, cv_single]
 
 theorem gramR_std {D : ℕ} (Γ : Matrix (Fin D) (Fin D) K) :
     gramR Γ (fun i => (Pi.single i 1 : Fin D → K)) = Γ.det := by
@@ -354,10 +353,7 @@ theorem metMat_posDef {d : ℕ} (X : InfinitePlace K → Matrix (Fin d) (Fin d) 
 theorem pos_real {z : ℂ} (h : 0 < z) : z = ((z.re : ℝ) : ℂ) ∧ 0 < z.re := by
   rw [Complex.lt_def] at h
   have h1 : 0 < z.re := by simpa using h.1
-  have h2 : z.im = 0 := by
-    have := h.2
-    simp only [Complex.zero_im] at this
-    exact this.symm
+  have h2 : z.im = 0 := by simpa using h.2.symm
   exact ⟨Complex.ext (by simp) (by simp [h2]), h1⟩
 
 theorem Qd_place {n D : ℕ} (P : Matrix (Fin D) (Fin n) K) (H : Matrix (Fin n) (Fin n) K)

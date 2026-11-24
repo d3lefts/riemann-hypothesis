@@ -175,7 +175,7 @@ open GlobalTheory.WeilM GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHeck
 theorem _root_.GlobalTheory.T.restricted_eta_power_character : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
     _root_.UpperTheory.TP.W.GoodK σ B → ∀ (χ : (AF F ⊗[F] E)ˣ →* Circle) (n : ℕ),
       ResEtaPow (Units.map (algebraMap F (AF F)).toMonoidHom).range χ n → Formalism.IndefR.DatumF.ResEtaF χ n := by
-  first | exact @_root_.GlobalTheory.ResEtaFOfPow.resEtaF_of_resEtaPow_k | exact _root_.GlobalTheory.ResEtaFOfPow.resEtaF_of_resEtaPow_k | (intros; apply _root_.GlobalTheory.ResEtaFOfPow.resEtaF_of_resEtaPow_k <;> assumption)
+  first | exact @_root_.GlobalTheory.ResEtaFOfPow.resEtaF_of_resEtaPow_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -526,7 +526,7 @@ theorem _root_.GlobalTheory.T.lagrangian_darboux_schrodinger_action : ∀ (F E :
         (∀ z : Matrix (Fin nS) (Fin nT) (AF F ⊗[F] E), ∀ φ ∈ schA F κ,
           l ((GlobalTheory.WeilSchrodinger.transD (cA σ) co).rho B.ψ (z * ((diagCols (Fin nT) : Matrix (Fin nT ⊕ Fin nT) (Fin nT) (AF F ⊗[F] E)).submatrix finSumFinEquiv.symm id)ᵀ) φ) = l φ) →
         ∃ c : ℂ, ∀ Φ ∈ schA F κ, l Φ = c * GlobalTheory.LagrTheta.lagrInt ν 𝓕 ((diagCols (Fin nT) : Matrix (Fin nT ⊕ Fin nT) (Fin nT) (AF F ⊗[F] E)).submatrix finSumFinEquiv.symm id) (GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ Φ) := by
-  first | exact @_root_.GlobalTheory.LagrUniq.lagr_invariant_unique_k | exact _root_.GlobalTheory.LagrUniq.lagr_invariant_unique_k | (intros; apply _root_.GlobalTheory.LagrUniq.lagr_invariant_unique_k <;> assumption)
+  first | exact @_root_.GlobalTheory.LagrUniq.lagr_invariant_unique_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -962,7 +962,7 @@ theorem _root_.GlobalTheory.T.fundamental_domain_haar_parseval : ∀ (F E : Type
         GlobalTheory.LagrTheta.lagrInt ν 𝓕 ((diagCols (Fin nT) : Matrix (Fin nT ⊕ Fin nT) (Fin nT) (AF F ⊗[F] E)).submatrix finSumFinEquiv.symm id) f₀ ≠ 0 →
       ∀ e, IsSplitIdemF σ e → ∀ t : GL (Fin nT) (AF F ⊗[F] E),
         (∀ i j, (e + cAF σ e) * (t.1 - 1) i j = (t.1 - 1) i j) → α t = χS (Matrix.GeneralLinearGroup.det t) := by
-  first | exact @_root_.PositivityTheory.ThKW.fundamental_domain_parseval_global | exact _root_.PositivityTheory.ThKW.fundamental_domain_parseval_global | (intros; apply _root_.PositivityTheory.ThKW.fundamental_domain_parseval_global <;> assumption)
+  first | exact @_root_.PositivityTheory.ThKW.fundamental_domain_parseval_global
 end
 end -- clump:auto
 end -- clump:auto
@@ -1011,7 +1011,7 @@ theorem _root_.GlobalTheory.T.hecke_character_trivial_of_split : ∀ (F E : Type
     _root_.UpperTheory.TP.W.GoodK σ B → ∀ ν : (AF F ⊗[F] E)ˣ →* Circle, IsHeckeCharF ν →
       (∀ e, IsSplitIdemF σ e → ∀ x : (AF F ⊗[F] E)ˣ, (e + cAF σ e) * ((x : AF F ⊗[F] E) - 1) = (x : AF F ⊗[F] E) - 1 →
         ν x = 1) → ∀ x, ν x = 1 := by
-  first | exact @_root_.GlobalTheory.HeckeSplitBase.heckeChar_eq_one_of_split_k | exact _root_.GlobalTheory.HeckeSplitBase.heckeChar_eq_one_of_split_k | (intros; apply _root_.GlobalTheory.HeckeSplitBase.heckeChar_eq_one_of_split_k <;> assumption)
+  first | exact @_root_.GlobalTheory.HeckeSplitBase.heckeChar_eq_one_of_split_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -1122,8 +1122,6 @@ theorem main_law_k : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
   have hg : mtF σ JS 1 = ((1 : UG (cA σ) (incM F JB))⁻¹).1.1ᵀ := by
     first
       | (simp only [mtF, map_one, inv_one]; simp; done)
-      | (simp [mtF, matHomF]; exact map_one _)
-      | (simp [mtF, matHomF]; rfl)
   obtain ⟨hmem, heq⟩ := htr p 1 1 h hh hg Φ hΦ
   refine ⟨hmem, ?_⟩
   erw [heq]
@@ -1176,7 +1174,7 @@ theorem _root_.GlobalTheory.T.lagrangian_darboux_schrodinger_unitary : ∀ (F E 
             ((((adeleClass F).modu (Units.map (Algebra.norm (AF F) : AF F ⊗[F] E →* AF F)
               (Matrix.GeneralLinearGroup.det t)) : ℝ) ^ ((Fintype.card (Fin nS) : ℝ) / 2) : ℝ) : ℂ) *
             GlobalTheory.LagrTheta.lagrInt ν 𝓕 ((diagCols (Fin nT) : Matrix (Fin nT ⊕ Fin nT) (Fin nT) (AF F ⊗[F] E)).submatrix finSumFinEquiv.symm id) (GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ Φ) := by
-  first | exact @_root_.GlobalTheory.SiegelLawDblTargetF.main_law_k | exact _root_.GlobalTheory.SiegelLawDblTargetF.main_law_k | (intros; apply _root_.GlobalTheory.SiegelLawDblTargetF.main_law_k <;> assumption)
+  first | exact @_root_.GlobalTheory.SiegelLawDblTargetF.main_law_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -1261,7 +1259,7 @@ theorem _root_.GlobalTheory.T.splitting_character_restricted_eta : ∀ (F E : Ty
             (GlobalTheory.WeilSchrodinger.transD (cA σ) co) χS
             ((diagCols (Fin nT) : Matrix (Fin nT ⊕ Fin nT) (Fin nT) (AF F ⊗[F] E)).submatrix finSumFinEquiv.symm id)
             (omp.comp (MonoidHom.inl _ _)) := by
-  first | exact @_root_.GlobalTheory.WeilSchrodinger.DblTargetF.siegelRule_dblTarget_k | exact _root_.GlobalTheory.WeilSchrodinger.DblTargetF.siegelRule_dblTarget_k | (intros; apply _root_.GlobalTheory.WeilSchrodinger.DblTargetF.siegelRule_dblTarget_k <;> assumption)
+  first | exact @_root_.GlobalTheory.WeilSchrodinger.DblTargetF.siegelRule_dblTarget_k
 end
 end -- clump:auto
 end -- clump:auto

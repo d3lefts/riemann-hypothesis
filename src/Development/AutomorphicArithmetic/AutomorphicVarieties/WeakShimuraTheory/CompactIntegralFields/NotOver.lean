@@ -214,7 +214,7 @@ private theorem gsp_of_map {A B : Type} [CommRing A] [CommRing B] (f : A →+* B
   have e := congrFun (congrFun h i) j
   rw [Matrix.map_apply] at e
   rw [e]
-  by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+  by_cases hij : i = j <;> simp [hij]
 
 private theorem gsp_ex {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (hf : Function.Injective f) (ν : B) (X : M4 A)
     (h : IsGSp ν (X.map f)) : ∃ ν', IsGSp ν' X := by
@@ -341,7 +341,7 @@ private theorem key {R : Type} [CommRing R] {X Z Y : M4 R} (hX : IsBlock X) (hZ 
   have h2 : Y * (X * Y) = 0 := by rw [← mul_assoc, hAB_mul_hAB hYX hY]
   have h3 : Z * (X * Y) = 0 := by rw [← mul_assoc, hAB_mul_hAB hZX hY]
   have e : (1 - Y) * ((1 + Z) * X) * (1 + Y) = X + (Z * X + X * Y - Y * X) := by
-    simp only [sub_mul, mul_sub, add_mul, mul_add, one_mul, mul_one, mul_assoc, h1, h2, h3, zero_mul, mul_zero]
+    simp only [sub_mul, add_mul, mul_add, one_mul, mul_one, mul_assoc, h1, h2, h3, zero_mul]
     abel
   ext i j
   rw [Matrix.zero_apply]
@@ -611,7 +611,7 @@ theorem UpperTheory.V.Ws.bl :
     rw [map_mul, ← adj_map] at h1
     refine h1.trans ?_
     ext i j
-    by_cases h : i = j <;> simp [Matrix.one_apply, h]
+    by_cases h : i = j <;> simp [h]
   · rintro ⟨Y, hY, hblk⟩
     have h3 : IsUnit (2 : 𝔞.K) := by have := h2.map 𝔞.toK; rwa [map_ofNat] at this
     have h4 := noCompl _ _ (mapRep 𝔞.toK r) (fun g => ((z g).map f).map 𝔞.toK) D.cc Y h3 hBK (fun g => (hzK g).1)

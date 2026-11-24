@@ -257,7 +257,7 @@ theorem _root_.GlobalTheory.T.exists_archimedean_one_param_line_transposeGramUni
     (Z : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Spc D.host.F D.host.E k) (hJ : Z.J = D.host.xi0 • (X.gramᵀ).submatrix e e) (τ : D.what₂.Tau),
     ∀ Y ∈ lieAt X τ, ∃ γ ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Lines D.sp.cm.sig Z,
       ∀ t : ℝ, γ (Multiplicative.ofAdd t) = GlobalTheory.TripleRead.toUX X e hJ (oneP θ X τ Y t) := by
-  first | exact @GlobalTheory.TransportedLine.exists_line_toUX_oneP | exact GlobalTheory.TransportedLine.exists_line_toUX_oneP | (intros; apply GlobalTheory.TransportedLine.exists_line_toUX_oneP <;> assumption)
+  first | exact @GlobalTheory.TransportedLine.exists_line_toUX_oneP
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsArchimedeanOneParamLineTransposeGramUnitarStatement =====
@@ -287,7 +287,7 @@ theorem _root_.GlobalTheory.T.exists_real_lie_operator_theta_quotient_line : ∀
         GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ActsD (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) (fun t => om (1, γ (Multiplicative.ofAdd t))) f f₁ → R.p f₁ = T (R.p f)) ∧
       ∀ f' ∈ Γ.M'.Pol Bs.ψ Bs.emb, ∀ f₁' : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin a' × Fin (a + a')),
         GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ActsD (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) (fun t => om' (1, γ (Multiplicative.ofAdd t))) f' f₁' → R.p' f₁' = T (R.p' f') := by
-  first | exact @GlobalTheory.RealLieOp.exists_realOp | exact GlobalTheory.RealLieOp.exists_realOp | (intros; apply GlobalTheory.RealLieOp.exists_realOp <;> assumption)
+  first | exact @GlobalTheory.RealLieOp.exists_realOp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsRealLieOperatorThetaQuotientLineStatement =====
@@ -416,7 +416,7 @@ theorem _root_.GlobalTheory.T.tripleProduct_lieDeriv_left_pure_tensor : GlobalTh
           (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f₁ i) (φ i)) ∈ GlobalTheory.TripleAssembly.darbAlg Γ.M Bs.ψ Bs.emb ∧
           Φ = GlobalTheory.TripleRead.thO Γ.M ψ (sgn true W).gram e (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i)) ∧
           Φ' = GlobalTheory.TripleRead.thO Γ.M ψ (sgn true W).gram e (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f₁ i) (φ i)) := by
-  first | exact @_root_.GlobalTheory.TripleAssembly.exists_pure_tensor_lieDeriv_left_factor | exact _root_.GlobalTheory.TripleAssembly.exists_pure_tensor_lieDeriv_left_factor | (intros; apply _root_.GlobalTheory.TripleAssembly.exists_pure_tensor_lieDeriv_left_factor <;> assumption)
+  first | exact @_root_.GlobalTheory.TripleAssembly.exists_pure_tensor_lieDeriv_left_factor
 end
 end -- clump:auto
 end -- clump:auto
@@ -577,7 +577,7 @@ theorem _root_.GlobalTheory.T.tripleProduct_lieDeriv_readoff : GlobalTheory.Publ
           (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f₁ i) (φ i)) ∈ GlobalTheory.TripleAssembly.darbAlg Γ.M' Bs.ψ Bs.emb ∧
           Φ = GlobalTheory.TripleRead.thO Γ.M' ψ (sgn false W₁).gram e (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i)) ∧
           Φ' = GlobalTheory.TripleRead.thO Γ.M' ψ (sgn false W₁).gram e (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f₁ i) (φ i)) := by
-  first | exact @_root_.GlobalTheory.TripleAssembly.ReadDerB.tripleProduct_read_lieDeriv_second_factor | exact _root_.GlobalTheory.TripleAssembly.ReadDerB.tripleProduct_read_lieDeriv_second_factor | (intros; apply _root_.GlobalTheory.TripleAssembly.ReadDerB.tripleProduct_read_lieDeriv_second_factor <;> assumption)
+  first | exact @_root_.GlobalTheory.TripleAssembly.ReadDerB.tripleProduct_read_lieDeriv_second_factor
 end
 end -- clump:auto
 end -- clump:auto
@@ -699,7 +699,7 @@ theorem _root_.GlobalTheory.T.theta_triple_lift_lie_equivariant : GlobalTheory.P
             GlobalTheory.TripleAssembly.mapA ψ e Bs Γ R Rf Φ' = GlobalTheory.TripleAssembly.opLie θ ωA (algF ψ θ true A B) (GlobalTheory.TripleAssembly.mapA ψ e Bs Γ R Rf) τ Y (GlobalTheory.TripleAssembly.mapA ψ e Bs Γ R Rf Φ)) ∧
           ∀ τ, ∀ Y ∈ lieAt X τ, ∀ Φ ∈ algF ψ θ false A₁ B, ∀ Φ' ∈ algF ψ θ false A₁ B, IsDer θ X (fun g => ωB (1, g)) τ Y Φ Φ' →
             GlobalTheory.TripleAssembly.mapB ψ e Bs Γ R Rf Φ' = GlobalTheory.TripleAssembly.opLie θ ωA (algF ψ θ true A B) (GlobalTheory.TripleAssembly.mapA ψ e Bs Γ R Rf) τ Y (GlobalTheory.TripleAssembly.mapB ψ e Bs Γ R Rf Φ) := by
-  first | exact @_root_.GlobalTheory.TripleAssembly.theta_triple_maps_lie_equivariant | exact _root_.GlobalTheory.TripleAssembly.theta_triple_maps_lie_equivariant | (intros; apply _root_.GlobalTheory.TripleAssembly.theta_triple_maps_lie_equivariant <;> assumption)
+  first | exact @_root_.GlobalTheory.TripleAssembly.theta_triple_maps_lie_equivariant
 end
 end -- clump:auto
 end -- clump:auto

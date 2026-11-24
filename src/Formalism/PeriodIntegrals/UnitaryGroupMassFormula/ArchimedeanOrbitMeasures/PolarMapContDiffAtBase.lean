@@ -99,8 +99,7 @@ theorem exists_local_solution_contDiffAt {V : Type} [AddCommGroup V] [Topologica
   have hes : ∀ u w, e.symm (u + w) = e.symm u + e.symm w := by
     intro u w
     apply e.injective
-    rw [he]
-    simp
+    rw [he, e.apply_symm_apply, e.apply_symm_apply, e.apply_symm_apply]
   let b : (Fin N → ℝ) → (Fin N → ℝ) → (Fin N → ℝ) := fun u w => e (B (e.symm u) (e.symm w))
   let l : (Fin N → ℝ) → (Fin N → ℝ) := fun u => e (L (e.symm u))
   have hb1 : ∀ u u' w, b (u + u') w = b u w + b u' w := by
@@ -137,22 +136,15 @@ theorem exists_local_solution_contDiffAt {V : Type} [AddCommGroup V] [Topologica
     intro u
     simp only [Ft, hbL, hlL, b, l, he]
   set u0 := e x0 with hu0
-  have hy0 : Ft u0 = e (B x0 x0 + L x0) := by rw [hFt, hu0, e.symm_apply_apply]
+  have hy0 : Ft u0 = e (B x0 x0 + L x0) := by simp only [hFt, hu0, e.symm_apply_apply]
   have hTwo : ∀ w, bL u0 w + bL w u0 + lL w = (2 : ℝ) • w := by
     intro w
     have h := congrArg e (hD (e.symm w))
     rw [he, he, he, e.apply_symm_apply] at h
     rw [hbL, hbL, hlL, two_smul]
     simpa [b, l, hu0] using h
-  let f₁ : (Fin N → ℝ) →L[ℝ] (Fin N → ℝ) := (2 : ℝ) • ContinuousLinearMap.id ℝ (Fin N → ℝ)
-  let f₂ : (Fin N → ℝ) →L[ℝ] (Fin N → ℝ) := (1 / 2 : ℝ) • ContinuousLinearMap.id ℝ (Fin N → ℝ)
-  have h12 : Function.LeftInverse f₂ f₁ := fun w => by
-    simp only [f₁, f₂, ContinuousLinearMap.smul_apply, ContinuousLinearMap.id_apply, smul_smul]
-    norm_num
-  have h21 : Function.RightInverse f₂ f₁ := fun w => by
-    simp only [f₁, f₂, ContinuousLinearMap.smul_apply, ContinuousLinearMap.id_apply, smul_smul]
-    norm_num
-  let fe : (Fin N → ℝ) ≃L[ℝ] (Fin N → ℝ) := ContinuousLinearEquiv.equivOfInverse f₁ f₂ h12 h21
+  let fe : (Fin N → ℝ) ≃L[ℝ] (Fin N → ℝ) :=
+    (LinearEquiv.smulOfNeZero ℝ (Fin N → ℝ) 2 two_ne_zero).toContinuousLinearEquiv
   have hFs : HasStrictFDerivAt Ft (fe : (Fin N → ℝ) →L[ℝ] (Fin N → ℝ)) u0 := by
     have h0 := (bL.hasStrictFDerivAt_of_bilinear (hasStrictFDerivAt_id u0)
       (hasStrictFDerivAt_id u0)).add lL.hasStrictFDerivAt
@@ -174,6 +166,9 @@ theorem exists_local_solution_contDiffAt {V : Type} [AddCommGroup V] [Topologica
   have hGf : HasFDerivAt G ((fe.symm : (Fin N → ℝ) →L[ℝ] (Fin N → ℝ))) (Ft u0) :=
     hs.to_localInverse.hasFDerivAt
   rw [hy0] at hGc hGa hGr hGd hGf
+  have hfun : (fun y => e (e.symm (G (e (e.symm y))))) = G := by
+    funext y
+    simp
   refine ⟨fun y => e.symm (G (e y)), ?_, ?_, ?_, ?_, ?_⟩
   · exact e.symm.continuous.continuousAt.comp (hGc.comp e.continuous.continuousAt)
   · simp only [hGa, hu0, e.symm_apply_apply]
@@ -181,19 +176,14 @@ theorem exists_local_solution_contDiffAt {V : Type} [AddCommGroup V] [Topologica
       (e.continuous.tendsto (B x0 x0 + L x0)).eventually hGr
     filter_upwards [ht] with y hy
     rw [hFt] at hy
-    exact e.injective (by rw [he]; simpa [he] using hy)
-  · have hfun : (fun y => e (e.symm (G (e (e.symm y))))) = G := by
-      funext y
-      simp
-    rw [hfun]
+    exact e.injective hy
+  · rw [hfun]
     exact hGd
-  · have hfun : (fun y => e (e.symm (G (e (e.symm y))))) = G := by
-      funext y
-      simp
-    rw [hfun]
+  · rw [hfun]
     convert hGf using 1
     ext1 w
-    rfl
+    simp [fe, LinearEquiv.coe_toContinuousLinearEquiv_symm',
+      LinearEquiv.smulOfNeZero_symm_apply, Units.smul_def]
 
 end PI.AprimeInfW
 end -- clump:auto

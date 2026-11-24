@@ -124,7 +124,7 @@ open scoped GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
 
 theorem _root_.GlobalTheory.T.rank_schwartzBruhat_adicCompletion_pi_le_aleph0 : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] (v : HeightOneSpectrum (𝓞 F)),
     Module.rank ℂ (GlobalTheory.WeilM.SB (κ → v.adicCompletion F)) ≤ Cardinal.aleph0 := by
-  first | exact @GlobalTheory.TripleAssembly.rank_SB_adicCompletion_le | exact GlobalTheory.TripleAssembly.rank_SB_adicCompletion_le | (intros; apply GlobalTheory.TripleAssembly.rank_SB_adicCompletion_le <;> assumption)
+  first | exact @GlobalTheory.TripleAssembly.rank_SB_adicCompletion_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RankSchwartzBruhatAdicCompletionPiLeAleph0Statement =====
@@ -439,7 +439,7 @@ theorem _root_.GlobalTheory.T.restrictedTensorProduct_irreducible_countable_dime
     (∀ i, ∀ a ∈ Sv i, ∀ ξ, Formalism.MainNotions.KudlaSiegelWeil.Restr s ξ →
       Op i a (GlobalTheory.SmallThetaModules.pureT s ξ) = GlobalTheory.SmallThetaModules.pureT s (Function.update ξ i (a (ξ i)))) →
     ∀ Q : Submodule ℂ (GlobalTheory.SmallThetaModules.RTens s), (∀ i, ∀ a ∈ Sv i, ∀ x ∈ Q, Op i a x ∈ Q) → Q = ⊥ ∨ Q = ⊤ := by
-  first | exact @GlobalTheory.rtens_irreducible | exact GlobalTheory.rtens_irreducible | (intros; apply GlobalTheory.rtens_irreducible <;> assumption)
+  first | exact @GlobalTheory.rtens_irreducible
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RestrictedTensorProductIrreducibleCountableDimenStatement =====
@@ -874,7 +874,7 @@ theorem _root_.GlobalTheory.T.kFinite_subspace_kStable_iff_lie_stable : _root_.G
         R.p f ∈ N → R.p f₁ ∈ N) →
       ∀ k ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.KInf σ Γ.W Bs.emb, ∀ f ∈ Γ.M.Pol Bs.ψ Bs.emb, ∀ f₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin a × Fin (a + a')),
         GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) (om (1, k)) f f₁ → R.p f ∈ N → R.p f₁ ∈ N := by
-  first | exact @_root_.GlobalTheory.KStableLie.lie_stable_subspace_kStable | exact _root_.GlobalTheory.KStableLie.lie_stable_subspace_kStable | (intros; apply _root_.GlobalTheory.KStableLie.lie_stable_subspace_kStable <;> assumption)
+  first | exact @_root_.GlobalTheory.KStableLie.lie_stable_subspace_kStable
 end
 end -- clump:auto
 end -- clump:auto
@@ -1196,7 +1196,7 @@ theorem _root_.GlobalTheory.T.theta_triple_lift_irreducible : GlobalTheory.Publi
       GlobalTheory.TripleRead.IsTransp ψ false Γ.M' om' ωB e (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU W₁ (-1) h.JW₁) (GlobalTheory.TripleRead.toUX X e h.JX) →
       ∀ R Rf, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsMatched Bs Γ Xc om om' R Rf →
         IsIrred X (ModuleCat.of ℂ (GlobalTheory.TripleAssembly.PiT R Γ Rf)) (GlobalTheory.TripleAssembly.opFin ωA (algF ψ θ true A B) (GlobalTheory.TripleAssembly.mapA ψ e Bs Γ R Rf)) (GlobalTheory.TripleAssembly.opLie θ ωA (algF ψ θ true A B) (GlobalTheory.TripleAssembly.mapA ψ e Bs Γ R Rf)) := by
-  first | exact @_root_.GlobalTheory.TripleAssembly.Irred.theta_triple_piT_irreducible | exact _root_.GlobalTheory.TripleAssembly.Irred.theta_triple_piT_irreducible | (intros; apply _root_.GlobalTheory.TripleAssembly.Irred.theta_triple_piT_irreducible <;> assumption)
+  first | exact @_root_.GlobalTheory.TripleAssembly.Irred.theta_triple_piT_irreducible
 end
 end -- clump:auto
 end -- clump:auto

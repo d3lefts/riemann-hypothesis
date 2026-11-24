@@ -154,7 +154,7 @@ theorem thetaTr_coDbl_boxFun_k : ∀ (F E : Type) [Field F] [NumberField F] [Fie
     funext i; simp [hAdef]
   simp only [GlobalTheory.WeilM.schr, h3, map_mul, Complex.conj_conj, hc,
     Prod.fst_neg, Prod.snd_neg]
-  simp only [neg_dotProduct, dotProduct_neg, neg_neg, neg_add, sub_eq_add_neg, mul_neg]
+  simp only [neg_dotProduct, dotProduct_neg, neg_neg, neg_add, sub_eq_add_neg]
 end GlobalTheory.DblThetaProd
 end
 end
@@ -182,7 +182,7 @@ theorem _root_.GlobalTheory.T.lagrangian_darboux_theta_model : ∀ (F E : Type) 
         GlobalTheory.WeilSchrodinger.thetaTr F (GlobalTheory.WeilSchrodinger.DblTargetF.coDbl hA co) B.ψ (boxFun φ₁ φ₂) =
           GlobalTheory.DblTargetDelta.deltaT (GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ φ₁)
             (GlobalTheory.WeilSchrodinger.thetaTr F co B.ψ (fun x => starRingEnd ℂ (φ₂ (-x)))) := by
-  first | exact @_root_.GlobalTheory.DblThetaProd.thetaTr_coDbl_boxFun_k | exact _root_.GlobalTheory.DblThetaProd.thetaTr_coDbl_boxFun_k | (intros; apply _root_.GlobalTheory.DblThetaProd.thetaTr_coDbl_boxFun_k <;> assumption)
+  first | exact @_root_.GlobalTheory.DblThetaProd.thetaTr_coDbl_boxFun_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -276,7 +276,7 @@ theorem _root_.GlobalTheory.T.exists_nonzero_theta_function : ∀ (F E : Type) [
     _root_.UpperTheory.TP.W.GoodK σ B → ∀ (nS nT : ℕ) (JS : Matrix (Fin nS) (Fin nS) E) (JT : Matrix (Fin nT) (Fin nT) E),
       IsHermND σ JS → IsHermND σ JT → ∀ ξ₀ : E, ξ₀ ≠ 0 → σ ξ₀ = -ξ₀ →
       ∃ f₀ : Formalism.IndefR.DatumF.WOF F E nS nT → ℂ, Formalism.IndefR.DatumF.IsThetaFunOF σ JS JT ξ₀ B.ψ f₀ ∧ f₀ ≠ 0 := by
-  first | exact @_root_.GlobalTheory.ThetaNonzeroF.exists_isThetaFunOF_ne_zero_k | exact _root_.GlobalTheory.ThetaNonzeroF.exists_isThetaFunOF_ne_zero_k | (intros; apply _root_.GlobalTheory.ThetaNonzeroF.exists_isThetaFunOF_ne_zero_k <;> assumption)
+  first | exact @_root_.GlobalTheory.ThetaNonzeroF.exists_isThetaFunOF_ne_zero_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -539,7 +539,7 @@ theorem _root_.GlobalTheory.T.exists_theta_functional_split_idempotent : ∀ (F 
           (∀ u : WOF F E nS nT, (∀ i j, cAF σ e * u i j = u i j) → ∀ f, IsThetaFunOF σ JS JT ξ₀ B.ψ f →
             ℓ (heisOF σ JS JT ξ₀ B.ψ u f) = ℓ f) ∧
           ∃ f, IsThetaFunOF σ JS JT ξ₀ B.ψ f ∧ ℓ f ≠ 0 := by
-  first | exact @_root_.GlobalTheory.SplitInvFormF.exists_invForm_split_k | exact _root_.GlobalTheory.SplitInvFormF.exists_invForm_split_k | (intros; apply _root_.GlobalTheory.SplitInvFormF.exists_invForm_split_k <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitInvFormF.exists_invForm_split_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -630,7 +630,7 @@ theorem _root_.GlobalTheory.T.exists_split_functional_doubled : ∀ (F E : Type)
               ℓ (Formalism.IndefR.DatumF.heisOF σ JS (GlobalTheory.WeilSchrodinger.DblTargetF.dblG JT) ξ₀ B.ψ u f) = ℓ f) ∧
           ∃ f₁ f₂ : Formalism.IndefR.DatumF.WOF F E nS nT → ℂ, Formalism.IndefR.DatumF.IsThetaFunOF σ JS JT ξ₀ B.ψ f₁ ∧
             Formalism.IndefR.DatumF.IsThetaFunOF σ JS JT ξ₀ B.ψ f₂ ∧ ℓ (GlobalTheory.DblTargetDelta.deltaT f₁ f₂) ≠ 0 := by
-  first | exact @_root_.GlobalTheory.DblSplitForm.exists_invForm_dbl_k | exact _root_.GlobalTheory.DblSplitForm.exists_invForm_dbl_k | (intros; apply _root_.GlobalTheory.DblSplitForm.exists_invForm_dbl_k <;> assumption)
+  first | exact @_root_.GlobalTheory.DblSplitForm.exists_invForm_dbl_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -655,7 +655,7 @@ theorem _root_.GlobalTheory.T.theta_doubling_inner_product : ∀ (F E : Type) [F
         Formalism.IndefR.DatumF.heisOF σ JS (GlobalTheory.WeilSchrodinger.DblTargetF.dblG JT) ξ₀ B.ψ w (GlobalTheory.DblTargetDelta.deltaT f₁ f₂) =
           GlobalTheory.DblTargetDelta.deltaT (Formalism.IndefR.DatumF.heisOF σ JS JT ξ₀ B.ψ (GlobalTheory.DblTargetDelta.topR w) f₁)
             (Formalism.IndefR.DatumF.heisOF σ JS JT ξ₀ B.ψ (-GlobalTheory.DblTargetDelta.botR w) f₂) := by
-  first | exact @_root_.GlobalTheory.DblHeis.heisOF_dblG_deltaT_k | exact _root_.GlobalTheory.DblHeis.heisOF_dblG_deltaT_k | (intros; apply _root_.GlobalTheory.DblHeis.heisOF_dblG_deltaT_k <;> assumption)
+  first | exact @_root_.GlobalTheory.DblHeis.heisOF_dblG_deltaT_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -711,7 +711,7 @@ theorem _root_.GlobalTheory.T.theta_inner_product_formula : ∀ (F E : Type) [Fi
       ∀ f₁ f₂ : Formalism.IndefR.DatumF.WOF F E nS nT → ℂ,
         Formalism.IndefR.DatumF.IsThetaFunOF σ JS JT ξ₀ B.ψ f₁ → Formalism.IndefR.DatumF.IsThetaFunOF σ JS JT ξ₀ B.ψ f₂ →
         Formalism.IndefR.DatumF.IsThetaFunOF σ JS (GlobalTheory.WeilSchrodinger.DblTargetF.dblG JT) ξ₀ B.ψ (GlobalTheory.DblTargetDelta.deltaT f₁ f₂) := by
-  first | exact @_root_.GlobalTheory.DblTargetThetaF.main_k | exact _root_.GlobalTheory.DblTargetThetaF.main_k | (intros; apply _root_.GlobalTheory.DblTargetThetaF.main_k <;> assumption)
+  first | exact @_root_.GlobalTheory.DblTargetThetaF.main_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -859,7 +859,7 @@ theorem _root_.GlobalTheory.T.unitary_character_trivial_of_local : ∀ (F E : Ty
     _root_.UpperTheory.TP.W.GoodK σ B → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E), IsHermND σ J →
       ∀ ν : Formalism.IndefR.DatumF.GAF σ J →* Circle, Continuous ν → (∀ γ ∈ Formalism.IndefR.DatumF.GQF σ J, ν γ = 1) →
         (∀ e, Formalism.IndefR.DatumF.IsSplitIdemF σ e → ∀ g, Formalism.IndefR.DatumF.SuppAtF σ e J g → ν g = 1) → ∀ g, ν g = 1 := by
-  first | exact @_root_.PositivityTheory.ThKW.unitary_character_trivial_global | exact _root_.PositivityTheory.ThKW.unitary_character_trivial_global | (intros; apply _root_.PositivityTheory.ThKW.unitary_character_trivial_global <;> assumption)
+  first | exact @_root_.PositivityTheory.ThKW.unitary_character_trivial_global
 end
 end -- clump:auto
 end -- clump:auto
@@ -974,7 +974,7 @@ theorem _root_.GlobalTheory.T.weil_pair_global_character : ∀ (F E : Type) [Fie
       ∃ c : ℂ, ‖c‖ = 1 ∧ ∀ f₁ f₂ : Formalism.IndefR.DatumF.WOF F E nS nT → ℂ,
         Formalism.IndefR.DatumF.IsThetaFunOF σ JS JT ξ₀ B.ψ f₁ → Formalism.IndefR.DatumF.IsThetaFunOF σ JS JT ξ₀ B.ψ f₂ →
         ωd (1, hd) (GlobalTheory.DblTargetDelta.deltaT f₁ f₂) = c • GlobalTheory.DblTargetDelta.deltaT (ω (1, h) f₁) f₂ := by
-  first | exact @_root_.PositivityTheory.ThKW.weil_pair_global_character_lift | exact _root_.PositivityTheory.ThKW.weil_pair_global_character_lift | (intros; apply _root_.PositivityTheory.ThKW.weil_pair_global_character_lift <;> assumption)
+  first | exact @_root_.PositivityTheory.ThKW.weil_pair_global_character_lift
 end
 end -- clump:auto
 end -- clump:auto
@@ -1198,7 +1198,7 @@ theorem _root_.GlobalTheory.T.weil_pair_global_intertwiner : ∀ (F E : Type) [F
       ∀ f₁ f₂ : Formalism.IndefR.DatumF.WOF F E nS nT → ℂ,
         Formalism.IndefR.DatumF.IsThetaFunOF σ JS JT ξ₀ B.ψ f₁ → Formalism.IndefR.DatumF.IsThetaFunOF σ JS JT ξ₀ B.ψ f₂ →
         ωd (1, hd) (GlobalTheory.DblTargetDelta.deltaT f₁ f₂) = GlobalTheory.DblTargetDelta.deltaT (ω (1, h) f₁) f₂ := by
-  first | exact @_root_.GlobalTheory.DblTargetRestrictCore.restrict_core_k | exact _root_.GlobalTheory.DblTargetRestrictCore.restrict_core_k | (intros; apply _root_.GlobalTheory.DblTargetRestrictCore.restrict_core_k <;> assumption)
+  first | exact @_root_.GlobalTheory.DblTargetRestrictCore.restrict_core_k
 end
 end -- clump:auto
 end -- clump:auto
@@ -1252,7 +1252,7 @@ theorem restrict_boxFun_k : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
   have h1 : Formalism.IndefR.DatumF.mtF σ JS 1 = ((1 : UG (cA σ) (incM F JB))⁻¹).1.1ᵀ := by
     show (Formalism.IndefR.DatumF.matHomF σ JS 1).1 = _
     rw [map_one, inv_one]
-    first | rfl | simp | exact Matrix.transpose_one.symm
+    first | simp
   have hdm : Formalism.IndefR.DatumF.mtF σ (GlobalTheory.WeilSchrodinger.DblTargetF.dblG JT) hd =
       Matrix.reindex finSumFinEquiv finSumFinEquiv (Matrix.fromBlocks (Formalism.IndefR.DatumF.mtF σ JT h) 0 0 1) := by
     rw [hhd, hgd, hh]
@@ -1333,7 +1333,7 @@ theorem _root_.GlobalTheory.T.doubled_weil_apply_boxFun_eq_boxFun_left : ∀ (F 
       ∀ (g : UG (cA σ) (incM F JA)) (gd : UG (cA σ) (incM F (GlobalTheory.WeilSchrodinger.DblTargetF.dblG JT)ᵀ)),
         gd.1.1 = Matrix.reindex finSumFinEquiv finSumFinEquiv (Matrix.fromBlocks g.1.1 0 0 1) →
         ∀ φ₁ ∈ schA F κ, ∀ φ₂ ∈ schA F κ, omp (gd, 1) (boxFun φ₁ φ₂) = boxFun (om (g, 1) φ₁) φ₂ := by
-  first | exact @_root_.GlobalTheory.DblTargetRestrict.restrict_boxFun_k | exact _root_.GlobalTheory.DblTargetRestrict.restrict_boxFun_k | (intros; apply _root_.GlobalTheory.DblTargetRestrict.restrict_boxFun_k <;> assumption)
+  first | exact @_root_.GlobalTheory.DblTargetRestrict.restrict_boxFun_k
 end
 end -- clump:auto
 end -- clump:auto

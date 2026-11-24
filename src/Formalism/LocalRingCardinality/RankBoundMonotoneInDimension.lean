@@ -482,7 +482,6 @@ theorem factNc : FactNc := by
   · simp [hn]
   · first
     | (field_simp; done)
-    | (field_simp; ring)
 
 theorem bridge_ccb_unit_holds : bridge_ccb_unit := by
   intro R L _ _ _ _ _ w x hx
@@ -546,44 +545,12 @@ theorem factNatW : FactNatW := by
     simp only [DomWeight.natW, DomWeight.detShift, dif_pos h]
     simp
 
-theorem bridge_hc_rho_holds : bridge_hc_rho := by
-  intro N hc hanti hint
-  have hint' : ∀ i, ∃ z : ℤ, hcToWeightQ hc i = z := hint
-  choose z hz using hint'
-  refine ⟨⟨z, ?_⟩, fun i => (hz i).symm⟩
-  cases N with
-  | zero => intro i; exact i.elim0
-  | succ n =>
-    rw [Fin.antitone_iff_succ_le]
-    intro i
-    have h1 := hz i.succ
-    have h2 := hz (Fin.castSucc i)
-    have h3 := hanti (Fin.castSucc_lt_succ : Fin.castSucc i < i.succ)
-    simp only [hcToWeightQ, rhoVec, Fin.val_succ, Fin.coe_castSucc] at h1 h2
-    push_cast at h1 h2
-    have h4 : ((z (Fin.castSucc i) - z i.succ : ℤ) : ℚ) > -1 := by
-      push_cast
-      linarith
-    have h5 : z (Fin.castSucc i) - z i.succ > -1 := by exact_mod_cast h4
-    omega
-
-theorem bridge_hD_holds : Spaces.bridge_hD := by
-  intro E _ _ _ S x y
-  simp only [HSpace.hD]
-  rw [← S.herm.eq x y]
-  rfl
-
 theorem bridge_sigRank_holds : Spaces.bridge_sigRank := by
   intro E _ _ _ S hS τ
   obtain ⟨e, -, -⟩ := hS τ
   have h := Fintype.card_congr e
   simp only [Fintype.card_fin, Fintype.card_sum] at h
   omega
-
-theorem factSigYD (R : Ranks) : FactSigYD R := by
-  have h2 := R.two_le_m
-  obtain ⟨a, ha⟩ := R.m_even
-  refine ⟨Prod.ext ?_ ?_, Prod.ext ?_ ?_⟩ <;> simp only [sigYD, Ranks.sigY0, Ranks.rankY, Ranks.rS, Ranks.r] <;> omega
 
 theorem factWmPosDef (R : Ranks) (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E]
     [StarRing E] [Algebra F E] : FactWmPosDef R F E := by
@@ -593,36 +560,6 @@ theorem factWmPosDef (R : Ranks) (F E : Type) [Field F] [NumberField F] [Field E
     omega
   rw [S.W_sigval R.m h1 le_rfl τ, S.W_rank R.m h1 le_rfl]
   simp only [Ranks.sigW, Ranks.r, Nat.sub_self]
-
-theorem bridge_cols_conj_holds : bridge_cols_conj :=
-  fun D u => ⟨(D.mem u).A.Mu0, (D.mem u).A.Mu0_fd, rfl, rfl⟩
-
-theorem factSigYDceil : FactSigYDceil := by
-  intro R j hj
-  have hk := R.k_ge
-  have hle : (R.m - j) / 2 ≤ R.rankY j := by
-    unfold Ranks.rankY Ranks.r
-    have := Nat.zero_le (j * R.t)
-    omega
-  simp only [sigYD]
-  constructor <;> omega
-
-theorem factBuUnique : FactBuUnique := by
-  intro D hBu hsurj B' hB'
-  exact Rows.factBuDetermined D.R D.what₂ hBu hsurj B' hB'
-
-theorem factPsiCardViaTau : FactPsiCardViaTau := by
-  intro D
-  rw [← Nat.card_congr D.eTau, Nat.card_eq_fintype_card, D.what₂.card_Tau]
-
-theorem anisotropicLine_indep_of_member : AnisotropicLineIndepOfMember :=
-  fun D u => ⟨D.cOf u, D.cOf_ne u, D.cOf_eq u⟩
-
-theorem factUnitRuleAgree : FactUnitRuleAgree := by
-  intro D w x
-  simp only [Rows.unitRule, unitRule, D.ram_eq w]
-  push_cast
-  ring
 
 section host
 
@@ -753,7 +690,6 @@ theorem factFrobGeom : FactFrobGeom := by
   rw [h, Prod.snd_inv]
   first
   | rfl
-  | simp [Formalism.HC.Frame.iotaInv]
 
 end host
 
@@ -950,36 +886,6 @@ end sig
 
 namespace Rows
 
-theorem factQZ : FactQZ := by
-  intro R D μ hle
-  have hperp : (LinearMap.range (D.thetaUp μ))ᗮ = LinearMap.ker (D.iota μ) := by
-    ext y
-    simp only [Submodule.mem_orthogonal, LinearMap.mem_range, forall_exists_index,
-      forall_apply_eq_imp_iff, LinearMap.mem_ker, Data.thetaUp, LinearMap.adjoint_inner_left]
-    constructor
-    · intro h
-      exact inner_self_eq_zero.mp (h _)
-    · intro h z
-      rw [h, inner_zero_right]
-  have hR : LinearMap.range (D.thetaUp μ) = (LinearMap.ker (D.iota μ))ᗮ := by
-    rw [← hperp, Submodule.orthogonal_orthogonal]
-  rw [hR] at hle ⊢
-  unfold Data.Qsp Data.Usp
-  apply le_antisymm
-  · rintro x ⟨hx0, hx1⟩
-    obtain ⟨y, hy, z, hz, rfl⟩ := (LinearMap.ker (D.iota μ)).exists_add_mem_mem_orthogonal x
-    have hyV : y ∈ D.V0 μ := by
-      have e : y = (y + z) - z := by abel
-      rw [e]
-      exact Submodule.sub_mem _ hx0 (hle hz)
-    have hy0 : inner ℂ y (y + z) = 0 := (Submodule.mem_orthogonal _ _).mp hx1 y ⟨hyV, hy⟩
-    have hyz : inner ℂ y z = 0 := (Submodule.mem_orthogonal _ _).mp hz y hy
-    rw [inner_add_right, hyz, add_zero] at hy0
-    rw [inner_self_eq_zero.mp hy0, zero_add]
-    exact hz
-  · intro x hx
-    exact ⟨hle hx, Submodule.orthogonal_le inf_le_right hx⟩
-
 end Rows
 
 theorem factLpF : FactLpF := by
@@ -1123,11 +1029,6 @@ theorem nPl_two_mul (K : Type) [Field K] [NumberField K] [_root_.NumberField.IsT
   have h3 : NumberField.InfinitePlace.nrRealPlaces K = 0 := by
     first
     | exact NumberField.IsTotallyComplex.nrRealPlaces_eq_zero K
-    | exact NumberField.IsTotallyComplex.nrRealPlaces_eq_zero (K := K)
-    | exact (NumberField.IsTotallyComplex.nrRealPlaces_eq_zero (K := K)).1
-    | simp
-    | (simp only [NumberField.InfinitePlace.nrRealPlaces, Fintype.card_eq_zero_iff]
-       exact ⟨fun w => (NumberField.InfinitePlace.not_isReal_iff_isComplex.mpr (NumberField.IsTotallyComplex.isComplex w.1)) w.2⟩)
   exact_mod_cast (by omega : Fintype.card (NumberField.InfinitePlace K) * 2 = Module.finrank ℚ K)
 
 theorem HLat.L_ne_bot {K : Type} [Field K] [NumberField K] [StarRing K] (A : HLat K)
@@ -1186,13 +1087,6 @@ theorem bridge_dual_mu_holds : bridge_dual_mu := by
   have hc : Formalism.HN.logDisc K / (2 * (Module.finrank ℚ K : ℝ)) =
       Formalism.HN.logDisc K / (Module.finrank ℚ K : ℝ) / 2 := by rw [div_div, mul_comm]
   rw [hc] at e2
-  linarith
-
-theorem factHHcc : FactHHcc := by
-  intro K _ _ _ _ Words _ D hG hr
-  rw [bridge_dual_mu_holds K D.RR hG hr]
-  have := D.HH_ge
-  simp only [DivData.s]
   linarith
 
 section places

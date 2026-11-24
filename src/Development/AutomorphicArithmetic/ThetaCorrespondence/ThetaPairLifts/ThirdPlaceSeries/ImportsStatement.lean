@@ -214,7 +214,7 @@ open scoped TensorProduct Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.lift_s_last_eq_ci_succ_smul_io : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex) (u : D.what₂.Word), _root_.GlobalTheory.Fam.PackageHypotheses W → ∀ f : _root_.GlobalTheory.Fam.FamilyCharacter W u, f.RowOK → ∀ t j (h : j + 2 * 0 + 2 = D.R.m) (F : (f.t t).CT) P v, liftS ((f.t t).omT j h) f.c.volT.μ f.c.volT.𝓕 (F.1 v) ((f.t t).ptT j h P) = (f.t t).cI (j + 1) • ((f.t t).ioT j h F).1 (f.c.ItT j h P v) := by
-  first | exact @_root_.GlobalTheory.Fam.liftS_ptT_eq_cI_smul_ioT | exact _root_.GlobalTheory.Fam.liftS_ptT_eq_cI_smul_ioT | (intros; apply _root_.GlobalTheory.Fam.liftS_ptT_eq_cI_smul_ioT <;> assumption)
+  first | exact @_root_.GlobalTheory.Fam.liftS_ptT_eq_cI_smul_ioT
 end
 end -- clump:auto
 end -- clump:auto
@@ -273,7 +273,7 @@ open scoped TensorProduct Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.itSpans_MY_succ : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraModules → ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.PackageHypotheses W → ∀ j, j + 1 < D.R.m → GlobalTheory.Core.Mi.ItSpans ((_root_.GlobalTheory.Fam.pk_z W).MY j) ((_root_.GlobalTheory.Fam.pk_z W).MY (j + 1)) ((_root_.GlobalTheory.Fam.pk_z W).ItY j) := by
-  first | exact @_root_.GlobalTheory.Core.Mi.SpanY.itSpans_pk_alt | exact _root_.GlobalTheory.Core.Mi.SpanY.itSpans_pk_alt | (intros; apply _root_.GlobalTheory.Core.Mi.SpanY.itSpans_pk_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.Core.Mi.SpanY.itSpans_pk_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -333,7 +333,7 @@ open scoped TensorProduct Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.itSpans_MY_last_MX : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraModules → ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex), _root_.GlobalTheory.Fam.PackageHypotheses W → GlobalTheory.Core.Mi.ItSpans ((_root_.GlobalTheory.Fam.pk_z W).MY (D.R.m - 1)) (_root_.GlobalTheory.Fam.pk_z W).MX (_root_.GlobalTheory.Fam.pk_z W).ItX := by
-  first | exact @_root_.GlobalTheory.Core.Mi.SpanX.itSpans_pk_alt | exact _root_.GlobalTheory.Core.Mi.SpanX.itSpans_pk_alt | (intros; apply _root_.GlobalTheory.Core.Mi.SpanX.itSpans_pk_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.Core.Mi.SpanX.itSpans_pk_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -475,7 +475,7 @@ theorem liftS_pt_eq_cI_smul_io : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies 
   erw [hk2]
   show _ = (cIOf (_root_.GlobalTheory.Fam.pk_z W) (_root_.GlobalTheory.Fam.complexLevelStructure W) f.g t j • ((f.row t).io j G).1 ((_root_.GlobalTheory.Fam.pk_z W).ItY j P v)) g
   rw [hio]
-  simp only [Pi.smul_apply, cIOf, Complex.real_smul, smul_eq_mul, nsmul_eq_mul]
+  simp only [Pi.smul_apply, cIOf, Complex.real_smul, smul_eq_mul]
   push_cast
   ring
 end GlobalTheory.Fam.LiftVol
@@ -498,7 +498,7 @@ open scoped TensorProduct Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.lift_s_eq_ci_smul_io : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts} {Yd : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Yd cX} (W : _root_.GlobalTheory.MiS.RealPackAlt ex) (u : D.what₂.Word), _root_.GlobalTheory.Fam.PackageHypotheses W → ∀ f : _root_.GlobalTheory.Fam.FamilyCharacter W u, f.RowOK → ∀ t j, j + 1 < D.R.m → ∀ (G : (f.t t).CC (j + 1)) P v, liftS ((f.t t).om j) (f.c.vol (j + 1)).μ (f.c.vol (j + 1)).𝓕 (G.1 v) ((f.t t).pt j P) = (f.t t).cI j • ((f.t t).io j G).1 (f.c.It j P v) := by
-  first | exact @_root_.GlobalTheory.Fam.LiftVol.liftS_pt_eq_cI_smul_io | exact _root_.GlobalTheory.Fam.LiftVol.liftS_pt_eq_cI_smul_io | (intros; apply _root_.GlobalTheory.Fam.LiftVol.liftS_pt_eq_cI_smul_io <;> assumption)
+  first | exact @_root_.GlobalTheory.Fam.LiftVol.liftS_pt_eq_cI_smul_io
 end
 end -- clump:auto
 end -- clump:auto

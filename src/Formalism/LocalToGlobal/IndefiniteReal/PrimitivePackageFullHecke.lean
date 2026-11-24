@@ -253,8 +253,6 @@ theorem nOf_eq_nS {W : Type} [AddCommGroup W] [Module K W] (τ : Representation 
   unfold Formalism.IndefR.IndefiniteEpsilonOperator.nOf Formalism.IndefR.TransferLatticeStatement.nS
   first
   | (unfold Formalism.IndefR.IndefiniteEpsilonOperator.epSp; rw [epOp_eq_epP τ P ψ χ hχ])
-  | (simp only [Formalism.IndefR.IndefiniteEpsilonOperator.epSp, epOp_eq_epP τ P ψ χ hχ])
-  | (rw [← epOp_eq_epP τ P ψ χ hχ]; rfl)
 
 end Bridge
 
@@ -444,7 +442,7 @@ theorem exists_strictHenselian_absolutely_closed_local_ring (τ : Representation
       (∀ i j, c i j = LinearMap.trace K T (ε₀ ∘ₗ τ (δ i) ∘ₗ ε ∘ₗ τ (γ j))) ∧
       (∀ i j, ε₀ ∘ₗ τ (δ i) ∘ₗ ε ∘ₗ τ (γ j) ∘ₗ ε₀ = c i j • ε₀) ∧
       ∑ j, ∑ i, c⁻¹ j i • (ε ∘ₗ τ (γ j) ∘ₗ ε₀ ∘ₗ τ (δ i) ∘ₗ ε) = ε := by
-  first | exact Bl.RankOneOrbitForms.goal1 .. | (apply Bl.RankOneOrbitForms.goal1 <;> assumption) | (intros; apply Bl.RankOneOrbitForms.goal1 <;> assumption)
+  first | (apply Bl.RankOneOrbitForms.goal1 <;> assumption)
 
 end Lin
 
@@ -674,10 +672,7 @@ lemma charOf_conj {T : Type} [AddCommGroup T] [Module K T] (τ : Representation 
       inv_mul_cancel, map_one, one_mul]
   · have h0 : LinearMap.trace K T = 0 := by
       first
-      | exact LinearMap.trace_eq_zero_of_not_finite hf
-      | exact LinearMap.trace_eq_zero_of_not_finite (R := K) (M := T) hf
       | (rw [LinearMap.trace, dif_neg]; rintro ⟨_, ⟨b⟩⟩; exact hf (Module.Finite.of_basis b))
-      | (unfold LinearMap.trace; rw [dif_neg]; rintro ⟨_, ⟨b⟩⟩; exact hf (Module.Finite.of_basis b))
     simp [h0]
 
 lemma eS_mul_rho {T V : Type} [AddCommGroup T] [Module K T] [AddCommGroup V] [Module K V]
@@ -1071,14 +1066,13 @@ theorem rep_apply (h1 : I.ρf 1 = 1) (hm : ∀ g h, I.ρf (g * h) = I.ρf g * I.
     I.rep h1 hm g x = I.ρf g *ᵥ x := by
   first
   | rfl
-  | simp [rep, Matrix.toLin'_apply]
 
 theorem epM_eq (h1 : I.ρf 1 = 1) (hm : ∀ g h, I.ρf (g * h) = I.ρf g * I.ρf h) (P : Subgroup G) (ψ : P →* Kˣ)
     (χ : P →* (𝓞 K)ˣ) (hχ : ∀ h, (((χ h : (𝓞 K)ˣ) : 𝓞 K) : K) = ((ψ h : Kˣ) : K)) :
     (I.epM P ψ).mulVecLin = Formalism.IndefR.TransferLatticeStatement.epP P χ (I.rep h1 hm) := by
   rw [← Matrix.toLin'_apply']
 
-  simp only [epM, Formalism.IndefR.TransferLatticeStatement.epP, map_smul, map_sum, hχ, map_inv]
+  simp only [epM, Formalism.IndefR.TransferLatticeStatement.epP, map_smul, map_sum, map_inv]
   congr 1
   refine Finset.sum_congr (by congr; exact Subsingleton.elim _ _) (fun h _ => ?_)
   have e := hχ h⁻¹
@@ -1253,8 +1247,6 @@ theorem mulVec_sum_smul {n : ℕ} (c : G → K) (M : G → Matrix (Fin n) (Fin n
       rw [Finset.sum_insert ha, Finset.sum_insert ha, Matrix.add_mulVec, ← ih]
       first
         | rw [Matrix.smul_mulVec]
-        | rw [Matrix.smul_mulVec_assoc]
-        | simp [Matrix.mulVec, dotProduct, Finset.mul_sum, mul_assoc]
   exact key Finset.univ
 
 theorem cpt_sum_smul (σ : K →+* ℂ) {n : ℕ} (c : G → K) (y : G → Fin n → K) :
@@ -1380,7 +1372,6 @@ theorem iCg_fix {s : ℕ} (hH : I.Hyp s)
   erw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun g _ => ?_
   erw [LinearMap.map_smulₛₗ, map_smul]
-  first | done | rfl
 
 theorem pGood_of_rho (hρ : I.PRho) {S : Type} [Fintype S] {Ws : S → Type} [∀ s, AddCommGroup (Ws s)]
     [∀ s, Module K (Ws s)] (τ : ∀ s, Representation K G (Ws s)) : I.PGood τ := by
@@ -1544,8 +1535,6 @@ theorem rho_cv {s : ℕ} (H : I.Hyp s) (g : G) (x : Fin I.Sg.D → K) :
   rw [key, key, hy]
   first
   | exact (LinearMap.toMatrix_mulVec_repr _ _ _ _).symm
-  | (simp only [Basis.equivFun_apply]; exact (LinearMap.toMatrix_mulVec_repr _ _ _ _).symm)
-  | (simp only [Basis.equivFun_apply, CSD.actMat]; exact (LinearMap.toMatrix_mulVec_repr _ _ _ _).symm)
 
 theorem cv_epM {s : ℕ} (H : I.Hyp s) (P : Subgroup G) (ψ : P →* Kˣ) (y : Fin I.Sg.D → K) :
     cv (I.A.fam.R I.A3.fam3.base3.μ0) ⟨I.A.fam.X, ⊥, 1⟩ (I.X.zs.Z I.A3.fam3.base3.μ0) ((I.epM P ψ).mulVec y) =

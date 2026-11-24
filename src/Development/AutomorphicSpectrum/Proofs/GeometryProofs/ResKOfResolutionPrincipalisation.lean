@@ -51,6 +51,7 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.AbProj
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FirstCohomology.DimSplitPf
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 
@@ -140,12 +141,10 @@ theorem resK_of_resolution_principalisation (H₁ : ResolutionCharZero) (H₂ : 
   have : CompactSpace X₁ := by
     first
     | exact QuasiCompact.compactSpace_of_compactSpace (s ≫ i ≫ PSpace.str K M)
-    | exact (quasiCompact_over_affine_iff (s ≫ i ≫ PSpace.str K M)).mp inferInstance
   have : IsLocallyNoetherian X₁ := by
     first
     | exact LocallyOfFiniteType.isLocallyNoetherian (s ≫ i ≫ PSpace.str K M)
-    | infer_instance
-  have : IsNoetherian X₁ := by first | infer_instance | exact ⟨⟩
+  have : IsNoetherian X₁ := by first | exact ⟨⟩
   have : NoetherianSpace X₁ := inferInstance
   have hI : ∀ C ∈ irreducibleComponents X₁, ¬ C ⊆ (I.support : Set X₁) := by
     refine SncBlowup.not_subset_of_dense_compl ?_
@@ -173,7 +172,6 @@ theorem resK_of_resolution_principalisation (H₁ : ResolutionCharZero) (H₂ : 
   have : CompactSpace X₂ := by
     first
     | exact QuasiCompact.compactSpace_of_compactSpace (t ≫ s ≫ i ≫ PSpace.str K M)
-    | exact (quasiCompact_over_affine_iff (t ≫ s ≫ i ≫ PSpace.str K M)).mp inferInstance
   have hsm : Smooth ((t ≫ s) ≫ i ≫ PSpace.str K M) := by simpa using hsm₂
   obtain ⟨hDim, hC⟩ := _root_.GlobalTheory.CompanionTheory.Geo.SncCoordsSide.coordsStatement_side K D X₂ ((t ≫ s) ≫ i ≫ PSpace.str K M) ((t ≫ s) ⁻¹ᵁ U) _ hT inferInstance hsm hd₂
     (relDim_preimage (t ≫ s) _ U hU) hsncT

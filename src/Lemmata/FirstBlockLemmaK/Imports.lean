@@ -60,14 +60,10 @@ theorem goal1 :
     simp only [hc, map_sub, map_mul, AlgHom.commutes, map_one, Algebra.algebraMap_self, RingHom.id_apply]
     rw [← hu]
     simp
-  have hnil : IsNilpotent (c - 1) := by
-    refine ⟨n, ?_⟩
-    have h1 : (c - 1) ^ n ∈ (RingHom.ker aug) ^ n := Ideal.pow_mem_pow hker n
-    rw [hn] at h1
-    simpa using h1
+  have hnil : IsNilpotent (c - 1) :=
+    ⟨n, by simpa [hn] using Ideal.pow_mem_pow hker n⟩
   have hcu : IsUnit c := by
-    have := hnil.isUnit_one_add
-    simpa using this
+    simpa using hnil.isUnit_one_add
   exact isUnit_of_mul_isUnit_left hcu
 
 end Bl.FirstBlockLemmaK

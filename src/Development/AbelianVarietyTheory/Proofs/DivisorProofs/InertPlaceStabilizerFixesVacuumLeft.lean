@@ -346,9 +346,9 @@ theorem core {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (hX : X.L.IsFullLattice
       simp only [Matrix.vecMulVec_apply, Pi.smul_apply, Pi.single_apply, Matrix.single_apply]
       by_cases h1 : a = i <;> by_cases h2 : b = j
       · subst h1 h2
-        simp only [if_true, and_self, smul_eq_mul, mul_one]
+        simp only [if_true, and_self]
         rw [Algebra.smul_def (A := E) ((N * N' : ℤ) : F), map_intCast]
-        simp only [algebraMap_int_eq, eq_intCast, zsmul_eq_mul, mul_one]; push_cast; ring
+        simp only [zsmul_eq_mul, mul_one]; push_cast; ring
       all_goals simp [h1, h2, eq_comm (a := i), eq_comm (a := j)]
     have hev : ∀ c : F, evFin F v (c • (1 : AF F)) = algebraMap F (Fv F v) c := fun c => by
       rw [map_smul, map_one, Algebra.algebraMap_eq_smul_one]
@@ -1515,7 +1515,7 @@ theorem vecMulVec_mem_latAtV_left {n d : ℕ} (X : Spc F E n) (W : Spc F E d) (v
     rintro z ⟨a, ha, hai, x, hx, rfl⟩
     refine AddSubgroup.subset_closure ⟨a, ha, hai, x, hx, y, hy, ?_⟩
     ext i j
-    simp only [f, AddMonoidHom.coe_mk, ZeroHom.coe_mk, Matrix.vecMulVec_apply, Pi.smul_apply, Matrix.smul_apply, incM,
+    simp only [f, AddMonoidHom.coe_mk, ZeroHom.coe_mk, Matrix.vecMulVec_apply, Matrix.smul_apply, incM,
       Matrix.map_apply, map_mul, Algebra.smul_def, Pi.mul_apply, Pi.algebraMap_apply]
     ring
   exact this hz
@@ -1538,7 +1538,7 @@ theorem mul_left_inv_mem_latAtV {n d : ℕ} (X : Spc F E n) (W : Spc F E d) (v :
           (fun j => inclR (F := F) (AF F) (y j)) := by
       ext i j
       simp only [Matrix.mul_apply, Matrix.vecMulVec_apply, Matrix.smul_apply, Matrix.mulVec,
-        dotProduct, Pi.smul_apply, incM, Matrix.map_apply, map_mul, Algebra.smul_def, Pi.mul_apply, Pi.algebraMap_apply,
+        dotProduct, incM, Matrix.map_apply, map_mul, Algebra.smul_def, Pi.mul_apply, Pi.algebraMap_apply,
         Finset.sum_mul]
       refine Finset.sum_congr rfl fun l _ => ?_
       ring

@@ -176,7 +176,6 @@ theorem colL_block (hD : Disj bs) (T : Choice bs) (p : Σ j : Fin nb, Fin (bs j)
   convert h2 using 2
   all_goals first
     | rfl
-    | exact Multiset.filter_congr fun _ _ => Iff.rfl
 
 theorem colL_empty (hD : Disj bs) (T : Choice bs) {k : Fin n} (hk : owner bs k = none) :
     colL (lst X bs T) k = [] := by
@@ -236,8 +235,6 @@ theorem iteratedDeriv_list_bound (s : (Fin 1 → Vsp dim) → ℂ) (c : ℕ) (μ
     congr 1
     first
     | exact List.ofFn_get l
-    | exact List.ofFn_getElem l
-    | simp
   have hprod : ∏ j : Fin l.length, Hf (l.get j) y = ∏ r, Hf (g r) y := by
     calc ∏ j : Fin l.length, Hf (l.get j) y
         = ((Finset.univ.val.map (fun j : Fin l.length => l.get j)).map (fun x => Hf x y)).prod := by
@@ -335,17 +332,14 @@ theorem main_term (hD : Disj bs) (μ : (Σ j : Fin nb, Fin (bs j).i) → ℂ)
     simp_rw [hdet]
     first
     | simp_rw [Fintype.prod_sum]
-    | simp_rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
     refine Finset.sum_congr rfl fun T _ => ?_
     simp only [Finset.prod_mul_distrib, sgnT]
     congr 1
     first
     | rw [Fintype.prod_sigma]
-    | rw [← Finset.univ_sigma_univ, Finset.prod_sigma]
     refine Finset.prod_congr rfl fun j _ => ?_
     first
     | rw [Finset.prod_comm]
-    | exact Finset.prod_comm.symm
   calc ∑ T, sgnT bs T * ∏ k, idealA bs μ y ee T k
       = ∑ T : Choice bs, ((∏ k ∈ Finset.univ.filter (fun k => owner bs k = none), ee k) * ∏ p, μ p) *
           (sgnT bs T * ∏ p, ∏ r, Hf (eU bs p.1 (T p.1 r p.2)) (y p)) := by

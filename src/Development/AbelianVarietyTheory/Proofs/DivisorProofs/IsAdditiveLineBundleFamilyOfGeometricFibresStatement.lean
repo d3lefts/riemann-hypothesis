@@ -123,7 +123,7 @@ theorem triv_quad_iff {N : LB (A ⊗ T).left} (hN : N.IsLB) {Z : Over S} (x x' :
   rw [cls_linComb hN, Fin.sum_univ_four]
   have e : ∀ a b c d : Pic Z.left, (1 : ℤ) • a + (-1 : ℤ) • b + (-1 : ℤ) • c + (1 : ℤ) • d = a - b - c + d :=
     fun a b c d ↦ by simp only [one_smul, neg_smul]; abel
-  simp only [quad, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val, Matrix.head_cons]
+  simp only [quad, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val]
   rw [e]
   rfl
 
@@ -281,7 +281,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.isAdditive_lineBundleFamily_of_geometricFibres : ∀ (S : Scheme.{0}) (A T : Over S) [GrpObj A] [IsLocallyNoetherian T.left], IsAbelianScheme A → ∀ (N : LB (A ⊗ T).left) (hN : N.IsLB), Triv (ev N (1 : T ⟶ A) (𝟙 T)) → (∀ (K : Type) [Field K] [IsAlgClosed K] (s : Sp K ⟶ S) (t : Over.mk s ⟶ T), IsAdditive (ev N (fst A (Over.mk s)) (snd A (Over.mk s) ≫ t))) → IsAdditive N := by
-  first | exact @GlobalTheory.AddFib.isAdditive_of_geomFibres | exact GlobalTheory.AddFib.isAdditive_of_geomFibres | (intros; apply GlobalTheory.AddFib.isAdditive_of_geomFibres <;> assumption)
+  first | exact @GlobalTheory.AddFib.isAdditive_of_geomFibres
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsAdditiveLineBundleFamilyOfGeometricFibresStatement =====

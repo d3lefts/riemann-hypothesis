@@ -236,7 +236,7 @@ private theorem box_def {l : ℕ} [Fact l.Prime] {κ : Type} [Field κ] {F : Fra
           simp only [mul_assoc]
       _ = _ := by
           rw [a3, a2]
-          simp only [mul_assoc, Matrix.mul_assoc, Units.mul_inv, Matrix.mul_one, Units.mul_inv_cancel_left]
+          simp only [mul_assoc, Units.mul_inv, Matrix.mul_one, Units.mul_inv_cancel_left]
   have key' : ∀ v s, ((B.g v * e (Y v) : GL (Fin n) C) : Matrix (Fin n) (Fin n) C) * (r (F.loc v s)).mat *
       (((B.g v * e (Y v))⁻¹ : GL (Fin n) C) : Matrix (Fin n) (Fin n) C) = (1 + (z' v s).map μ) *
       ((B.g v : Matrix (Fin n) (Fin n) C) * (B.r (F.loc v s)).mat *
@@ -438,7 +438,7 @@ private theorem hom_alt {O : Type} [CommRing O] [IsDomain O] [IsPrincipalIdealRi
     refine ⟨(Finsupp.lapply i0) ∘ₗ (LinearMap.fst O _ _) ∘ₗ E.toLinearMap,
       (Finsupp.lapply i1) ∘ₗ (LinearMap.fst O _ _) ∘ₗ E.toLinearMap,
       E.symm (Finsupp.single i0 1, 0), E.symm (Finsupp.single i1 1, 0), ?_, ?_, ?_, ?_⟩ <;>
-    simp [i0, i1, Finsupp.single_apply]
+    simp [i0, i1]
   · right
     have hq : ∀ i, p i ^ e i ≠ 0 := fun i => pow_ne_zero _ (hp i).ne_zero
     haveI : ∀ i, Finite (O ⧸ Ideal.span {p i ^ e i}) := fun i => hfin _ (hq i)
@@ -1387,7 +1387,7 @@ private theorem lc_orbit {D M : Type} [Group D] [TopologicalSpace D] [IsTopologi
   rw [IsLocallyConstant.iff_exists_open]
   intro g
   refine ⟨(fun y => g⁻¹ * y) ⁻¹' (ρ.ker : Set D), h.preimage (continuous_const.mul continuous_id), ?_, ?_⟩
-  · simp [MonoidHom.mem_ker]
+  · simp
   · intro x hx
     have hk : ρ (g⁻¹ * x) = 1 := MonoidHom.mem_ker.mp hx
     have hx' : x = g * (g⁻¹ * x) := by group

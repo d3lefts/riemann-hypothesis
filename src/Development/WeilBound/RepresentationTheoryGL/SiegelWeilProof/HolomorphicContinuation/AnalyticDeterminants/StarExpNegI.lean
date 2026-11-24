@@ -102,7 +102,6 @@ theorem prod_conjDiag (d1 d2 : Fin n → ℂ) (h1 : ∀ a, d1 a ≠ 0) (h2 : ∀
   have hDD : D * D' = 1 := by
     rw [hD, hD', fromBlocks_multiply, ← fromBlocks_one]
     simp [diagonal_mul_diagonal, h1, h2]
-    done
   calc Cm n * D * CmI n * (Cm n * D' * CmI n) = Cm n * D * (CmI n * Cm n) * D' * CmI n := by
         simp only [Matrix.mul_assoc]
     _ = Cm n * (D * D') * CmI n := by
@@ -120,7 +119,6 @@ theorem cmI_N_cm (E : Matrix (Fin n) (Fin n) ℂ) :
   rw [CmI, Cm, Matrix.smul_mul, Matrix.smul_mul, fromBlocks_multiply, fromBlocks_multiply]
   congr 1
   simp
-  done
 
 theorem conj_nU (d1 d2 : Fin n → ℂ) (h1 : ∀ a, d1 a ≠ 0) (h2 : ∀ a, d2 a ≠ 0) (r s : Fin n) :
     Cm n * fromBlocks (diagonal d1) 0 0 (diagonal d2) * CmI n * nU (single r s 1) *
@@ -142,7 +140,6 @@ theorem conj_nU (d1 d2 : Fin n → ℂ) (h1 : ∀ a, d1 a ≠ 0) (h2 : ∀ a, d2
         congr 2
         rw [Matrix.mul_smul, Matrix.smul_mul, hD, hD', fromBlocks_multiply, fromBlocks_multiply]
         simp [diag_single_diag]
-        done
 
 end PositivityTheory.Rg.Sw.LVs.TC
 end -- clump:auto
@@ -215,7 +212,7 @@ theorem rot_conj (j : ℕ) (θ : ℝ) (r s : Fin n) :
   simp only [dA, dB, zLow, zMid, zTop, blkB, Finset.mem_compl, exp_neg_I]
   by_cases hr : r ∈ blkA j <;> by_cases hs : s ∈ blkA j <;>
     simp [hr, hs, fromBlocks_smul, fromBlocks_add, fromBlocks_neg, smul_single, fromBlocks_inj]
-  all_goals constructor <;> congr 1 <;> field_simp <;> ring
+  all_goals constructor <;> congr 1 <;> field_simp
 
 end PositivityTheory.Rg.Sw.LVs.TC
 end -- clump:auto

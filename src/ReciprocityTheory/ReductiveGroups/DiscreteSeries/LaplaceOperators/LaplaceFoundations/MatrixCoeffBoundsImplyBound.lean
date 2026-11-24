@@ -83,7 +83,7 @@ theorem ode_bound (U U' : ℝ → ℂ) (a b : ℂ) (ha : a.re = 0) {δ : ℝ} (h
   have hg : ∀ t : ℝ, HasDerivAt g (-(a + (t : ℂ) * b)) t := by
     intro t
     have h3 := ((hofs t).const_mul a).neg.sub (((hofs t).pow 2).mul_const b |>.div_const 2)
-    exact h3.congr_deriv (by first | ring | (norm_num; ring) | norm_num | (simp; ring) | simp)
+    exact h3.congr_deriv (by first | ring)
   set W : ℝ → ℂ := fun t => U t * cexp (g t) with hW
   have hWd : ∀ t ∈ Set.Icc (0 : ℝ) 1,
       HasDerivAt W ((U' t - (a + (t : ℂ) * b) * U t) * cexp (g t)) t := by
@@ -99,8 +99,8 @@ theorem ode_bound (U U' : ℝ → ℂ) (a b : ℂ) (ha : a.re = 0) {δ : ℝ} (h
       ring
     rw [hre]
     have hb1 : -b.re ≤ ‖b‖ := (neg_le_abs b.re).trans (Complex.abs_re_le_norm b)
-    have ht2 : t ^ 2 ≤ 1 := by nlinarith [ht.1, ht.2]
-    nlinarith [mul_le_mul_of_nonneg_left hb1 (sq_nonneg t), norm_nonneg b]
+    have ht2 : t ^ 2 ≤ 1 := pow_le_one₀ ht.1 ht.2
+    linarith [mul_le_mul_of_nonneg_left hb1 (sq_nonneg t), mul_le_mul_of_nonneg_right ht2 (norm_nonneg b)]
   have hmvt := norm_image_sub_le_of_norm_deriv_le_segment' (f := W)
     (C := δ * Real.exp (‖b‖ / 2)) (fun t ht => (hWd t ht).hasDerivWithinAt)
     (fun t ht => by
@@ -198,7 +198,7 @@ theorem one_param {V H : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
     simp only [map_smul, map_add (f := _), inner_smul_right, inner_add_right]
     rw [hm, hstρ, map_add (f := _), inner_add_left, e1, e3]
     simp only [map_add (f := _), map_smul, inner_add_right, inner_smul_right, inner_add_left, inner_smul_left,
-      hdst, map_mul, Complex.conj_ofReal, Complex.conj_conj, RCLike.conj_conj, hdX]
+      hdst, map_mul, Complex.conj_ofReal, Complex.conj_conj, hdX]
     linear_combination (d Yl * ⟪w, u s w⟫_ℂ) * h1 + (d ρ1 * ⟪w, u s w⟫_ℂ) * h2
   rw [hmain]
   have hT0 : (0 : ℝ) ≤ T := by linarith
@@ -215,7 +215,7 @@ theorem one_param {V H : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
       rw [hτs, ← hTs]
       calc Real.sqrt T * Real.sqrt T * (s * c) ^ 2 = s ^ 2 * (c * Real.sqrt T) ^ 2 := by ring
         _ = s ^ 2 := by rw [hcs, one_pow, mul_one]
-    rw [e]; nlinarith
+    rw [e]; exact pow_le_one₀ hs0 hs1
   have hde2 : ‖d e₂‖ ≤ Cd * (K * τ ^ 2) := (hd e₂).trans (mul_le_mul_of_nonneg_left he₂ hCd)
   have b4 : ‖(c : ℂ) * T * d e₂ * ⟪w, u s w⟫_ℂ‖ ≤ c * (Cd * K) := by
     rw [norm_mul, norm_mul, norm_mul, hcn, Complex.norm_of_nonneg hT0]
@@ -231,8 +231,8 @@ theorem one_param {V H : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
       _ ≤ τ * ‖ρ1‖ + K * τ ^ 2 := by
         rw [norm_smul, Complex.norm_of_nonneg hτ0]; linarith
   have hc1 : c ≤ 1 := by rw [hc_def]; exact inv_le_one_of_one_le₀ hsT
-  have hτc' : τ ≤ c := by rw [hτs]; nlinarith
-  have hτ2 : τ ^ 2 ≤ c := by nlinarith
+  have hτc' : τ ≤ c := by rw [hτs]; exact mul_le_of_le_one_left hc0.le hs1
+  have hτ2 : τ ^ 2 ≤ c := by linarith [mul_le_mul hτ1 hτc' hτ0 zero_le_one]
   have b5 : ‖(c : ℂ) * ⟪E3, u s w⟫_ℂ‖ ≤ C * Cs * (c * ‖ρ1‖ + K * c) := by
     rw [norm_mul, hcn]
     calc c * ‖⟪E3, u s w⟫_ℂ‖ ≤ c * (C * Real.sqrt T * (Cs * (τ * ‖ρ1‖ + K * τ ^ 2))) := by

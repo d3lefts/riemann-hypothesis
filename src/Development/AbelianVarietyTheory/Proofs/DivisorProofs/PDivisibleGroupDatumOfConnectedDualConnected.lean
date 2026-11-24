@@ -310,7 +310,7 @@ theorem single_castAdd {m n : ℕ} (i : Fin m) :
       simp only [Fin.val_natAdd, Fin.val_castAdd] at h''
       have := i.isLt
       omega
-    simp [Pi.single_apply, hne]
+    simp [hne]
 
 theorem single_natAdd {m n : ℕ} (j : Fin n) :
     (Pi.single (Fin.natAdd m j) 1 : Fin (m + n) → R) = Fin.append 0 (Pi.single j 1) := by
@@ -321,7 +321,7 @@ theorem single_natAdd {m n : ℕ} (j : Fin n) :
       simp only [Fin.val_natAdd, Fin.val_castAdd] at h''
       have := i.isLt
       omega
-    simp [Pi.single_apply, hne]
+    simp [hne]
   · simp [Pi.single_apply]
 
 end Fin
@@ -458,7 +458,7 @@ theorem bQuot_symm (hb : ∀ x y, D.bb (Fin.append x y) = Fin.append (D₁.bb x)
   obtain ⟨q, rfl⟩ := Q.surjective u
   obtain ⟨z, rfl⟩ := D.Fil.mkQ_surjective q
   rw [LinearEquiv.symm_apply_apply, hQ]
-  simp only [bQuot, Submodule.mkQ_apply, Submodule.liftQ_apply]
+  simp only [bQuot, Submodule.mkQ_apply]
   conv_lhs => rw [← Fin.append_castAdd_natAdd (f := z)]
   exact hb _ _
 
@@ -587,7 +587,7 @@ theorem isIntegrallyClosedIn_of_integers {C : Type} [Field C] {v : Valuation C N
 theorem exists_eq_apply_of_algHom {O : Type} [CommRing O] [IsDomain O] {N : ℕ}
     (f : (Fin N → O) →ₐ[O] O) : ∃ k, ∀ v, f v = v k := by
   have hsq : ∀ k, (Pi.single k (1 : O) : Fin N → O) * Pi.single k 1 = Pi.single k 1 := fun k => by
-    ext j; by_cases hj : j = k <;> simp [Pi.single_apply, hj]
+    ext j; by_cases hj : j = k <;> simp [hj]
   have hid : ∀ k, f (Pi.single k 1) = 0 ∨ f (Pi.single k 1) = 1 := fun k =>
     IsIdempotentElem.iff_eq_zero_or_one.1 (by
       change f _ * f _ = f _
@@ -606,7 +606,7 @@ theorem exists_eq_apply_of_algHom {O : Type} [CommRing O] [IsDomain O] {N : ℕ}
     exact zero_ne_one (h0.symm.trans hsum)
   refine ⟨k, fun v => ?_⟩
   have h1 : v * Pi.single k 1 = (v k) • (Pi.single k 1 : Fin N → O) := by
-    ext j; by_cases hj : j = k <;> simp [Pi.single_apply, hj]
+    ext j; by_cases hj : j = k <;> simp [hj]
   calc f v = f v * f (Pi.single k 1) := by rw [hk, mul_one]
     _ = v k := by rw [← map_mul, h1, map_smul, hk, smul_eq_mul, mul_one]
 
@@ -846,7 +846,6 @@ theorem omega_const : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
       exact ⟨L, fun n => (hsmod n _ _).1 (hL n)⟩
     choose L hL using hL
     refine ⟨L, Subtype.ext (funext fun n => ?_)⟩
-    change (Φ L).1 n = w.1 n
     rw [hval, ← hc n, ← sub_eq_zero, ← Finset.sum_sub_distrib]
     refine Finset.sum_eq_zero fun i _ => ?_
     obtain ⟨d, hd⟩ := hL i n
@@ -1103,7 +1102,7 @@ theorem hasDatum_dual : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlg
 
     rw [map_sum, map_sum]
     simp only [map_smul, ← hs, hj, Pi.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero,
-      Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true]
+      Finset.sum_ite_eq', Finset.mem_univ, if_true]
 
   let Φ : G.omega →ₗ[O] (Fin G.height → O) :=
     LinearMap.pi fun i => lie (D.Fil.mkQ (Pi.single i 1))

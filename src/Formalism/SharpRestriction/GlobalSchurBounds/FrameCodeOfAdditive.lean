@@ -419,8 +419,7 @@ section Shares
 variable {D : D7} {L : SizeData₂ D}
 
 theorem logWeight_nonneg (w : D.what₂.places.Pl) : 0 ≤ SizeData₂.lwP w := by
-  unfold SizeData₂.lwP lw
-  exact div_nonneg (Real.log_natCast_nonneg _) (Nat.cast_nonneg _)
+  simpa only [SizeData₂.lwP, lw] using div_nonneg (Real.log_natCast_nonneg _) (Nat.cast_nonneg _)
 
 theorem kapv_nonneg (X : G.Inst D L) (K : G.Consts) (hK : K.Nonneg) (hI : G.KapIDef X K) (a b : G.HH D → ℤ) (p : ℕ)
     (t0 : G.HH D) : 0 ≤ G.kapv X K a b p t0 := by
@@ -432,8 +431,7 @@ theorem kapv_nonneg (X : G.Inst D L) (K : G.Consts) (hK : K.Nonneg) (hI : G.KapI
   split_ifs
   · unfold G.kapIIf
     refine le_min zero_le_one ?_
-    refine mul_nonneg (mul_nonneg (mul_nonneg (mul_nonneg hk (Nat.cast_nonneg _)) (sq_nonneg _)) (Nat.cast_nonneg _)) ?_
-    exact Real.rpow_nonneg hx _
+    exact mul_nonneg (mul_nonneg (mul_nonneg (mul_nonneg hk (Nat.cast_nonneg _)) (sq_nonneg _)) (Nat.cast_nonneg _)) (Real.rpow_nonneg hx _)
   · unfold G.KapIDef at hI
     rw [hI]
     exact Real.sInf_nonneg (fun κ hκ => hκ.1)
@@ -687,7 +685,6 @@ theorem sign_group_pow_odd (g : G0) {i : ℕ} (hi : Odd i) : g ^ i = g := by
 theorem iotaH_nsmul (e : Formalism.HC.Frame) (x : e.A) (i : ℕ) : e.iota (i • x) = e.iota x ^ i := by
   unfold Formalism.HC.Frame.iota
   first
-  | exact ofAdd_nsmul x i
   | rfl
 
 theorem plGG_partner {p : ℕ} (h : ZetaZeroFreeRegion.InertK D p) (t : G.HH D) {i : ℕ} (hi : Odd i) :
@@ -764,10 +761,9 @@ theorem one_le_wAt (hN : NumN_at L) (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) 
   exact one_le_wj L hN j h1 h2 _
 
 theorem aT_toNat (t : D.host.TT) : (L.aT t : ℝ) = ((L.aT t).toNat : ℝ) := by
-  have h0 : (0 : ℝ) ≤ (L.aT t : ℝ) := le_trans (sc_a_pos L.sc).le (L.aT_win t).1
-  have h1 : 0 ≤ L.aT t := by exact_mod_cast h0
-  have h2 : ((L.aT t).toNat : ℤ) = L.aT t := Int.toNat_of_nonneg h1
-  calc (L.aT t : ℝ) = (((L.aT t).toNat : ℤ) : ℝ) := by rw [h2]
+  have h0 : 0 ≤ L.aT t := by
+    exact_mod_cast le_trans (sc_a_pos L.sc).le (L.aT_win t).1
+  calc (L.aT t : ℝ) = (((L.aT t).toNat : ℤ) : ℝ) := by rw [Int.toNat_of_nonneg h0]
     _ = ((L.aT t).toNat : ℝ) := by push_cast; rfl
 
 theorem term0 (t : D.host.TT) {W : ℝ} (hW : 1 ≤ W) {M : ℕ} (hM : (L.aT t).toNat < M) :
@@ -775,15 +771,9 @@ theorem term0 (t : D.host.TT) {W : ℝ} (hW : 1 ≤ W) {M : ℕ} (hM : (L.aT t).
   apply max_eq_right
   have hM0 : (0 : ℝ) < M := by exact_mod_cast (Nat.zero_le _).trans_lt hM
   rw [sub_nonpos]
-  refine le_trans ?_ hW
-  rw [div_le_one hM0]
-  rcases le_or_gt 0 (L.aT t) with h | h
-  · have h1 : ((L.aT t).toNat : ℤ) = L.aT t := Int.toNat_of_nonneg h
-    have h2 : ((L.aT t).toNat : ℝ) < M := by exact_mod_cast hM
-    calc (L.aT t : ℝ) = ((L.aT t).toNat : ℝ) := by exact_mod_cast h1.symm
-      _ ≤ M := h2.le
-  · have h3 : (L.aT t : ℝ) < 0 := by exact_mod_cast h
-    linarith
+  exact le_trans (by
+    rw [div_le_one hM0, aT_toNat L t]
+    exact_mod_cast hM.le) hW
 
 variable {L}
 

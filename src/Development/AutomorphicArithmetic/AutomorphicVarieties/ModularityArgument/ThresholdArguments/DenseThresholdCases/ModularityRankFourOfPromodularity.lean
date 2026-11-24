@@ -196,7 +196,7 @@ private theorem con_span {K Γ n : Type} [Field K] [Group Γ] [Fintype n] [Decid
     | smul_right r a b _ _ h => simp only [smul_mul_assoc, mul_smul_comm, h]
   obtain ⟨i, j, hij⟩ := exists_pair_ne n
   have := congrFun (congrFun (h3 (Matrix.single i j 1) (Matrix.single j j 1)) i) j
-  simp [hij, hij.symm] at this
+  simp [hij.symm] at this
 private def con_e : Fin 2 ⊕ Fin 2 ≃ Fin 4 where
   toFun := Sum.elim ixA ixB
   invFun := ![Sum.inl 0, Sum.inr 0, Sum.inl 1, Sum.inr 1]
@@ -409,7 +409,7 @@ private theorem conj_map (j : R →+* R') (n X : M4 R) :
 private theorem isGSp_map (j : R →+* R') {ν : R} {X : M4 R} (hX : IsGSp ν X) : IsGSp (j ν) (X.map j) := by
   have h : (j ν) • (1 : M4 R') = (ν • (1 : M4 R)).map j := by
     ext i i'
-    by_cases h : i = i' <;> simp [Matrix.one_apply, h]
+    by_cases h : i = i' <;> simp [h]
   unfold IsGSp at hX ⊢
   rw [_root_.adj_map, ← Matrix.map_mul, h, hX]
 private theorem isPair_map {O Γ : Type} [CommRing O] [Group Γ] (Φ : Fr O Γ) (a : O →+* R) (f : R →+* R')

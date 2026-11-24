@@ -288,7 +288,7 @@ theorem isPrimitiveRoot_residue_of_isUnit {W : Type*} [CommRing W] [IsDomain W] 
   have h3 := congrArg (IsLocalRing.residue W) h2
 
   simp only [map_sum, map_pow, hl, one_pow, map_zero, Finset.sum_const, Finset.card_range,
-  nsmul_eq_mul, mul_one] at h3
+  nsmul_eq_mul] at h3
   have h4 := hN.map (IsLocalRing.residue W)
   rw [map_natCast] at h4
   exact h4.ne_zero (by simpa using h3)
@@ -1471,7 +1471,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.UU
 
 theorem _root_.GlobalTheory.T.exists_functionalEquation_section_nonzero_class : Laws → Laws2 → AllPre fun {V} _ _ _ {D} {_} {_} _ _ U => D.TauBimult → ∀ k : ℕ, 1 ≤ k → U.FE (Kbar V) 1 → U.FE (Kbar V) k → (∃ β, U.Supp (Kbar V) 1 β) → (∃ β, U.Supp (Kbar V) k β) → ∀ α, ∃ t s, U.ExpF (Kbar V) (k + 1) t s ∧ DegPre.FamFE D (Kbar V) (k + 1) s ∧ ∃ j, (s α).f j ≠ 0 := by
-  first | exact @GlobalTheory.UU.FESection.main | exact GlobalTheory.UU.FESection.main | (intros; apply GlobalTheory.UU.FESection.main <;> assumption)
+  first | exact @GlobalTheory.UU.FESection.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsFunctionalEquationSectionNonzeroClassStatement =====
@@ -1605,7 +1605,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.UU
 
 theorem _root_.GlobalTheory.T.functional_equation_all_degrees_algebraic_closure : Laws → Laws2 → AllPre fun {V} _ _ _ {D} {_} {_} _ _ U => D.TauBimult → U.FE (Kbar V) 1 → ∀ N : ℕ, 1 ≤ N → U.FE (Kbar V) N := by
-  first | exact @GlobalTheory.UU.fe_all_degrees | exact GlobalTheory.UU.fe_all_degrees | (intros; apply GlobalTheory.UU.fe_all_degrees <;> assumption)
+  first | exact @GlobalTheory.UU.fe_all_degrees
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.UniformizationProofs.FunctionalEquationAllDegreesAlgebraicClosureStatement =====

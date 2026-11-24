@@ -425,7 +425,7 @@ theorem le_lstarDenom {P : Par} (H : P.Hyp) (G : P.Large) :
   have ht0 : (0 : ℝ) ≤ P.t := Nat.cast_nonneg _
   have hN : 0 ≤ P.N := by unfold Formalism.CohomologicalDescent.LogSmallConstantBounds.Par.N; positivity
   have h1 : (P.t : ℝ) ≤ P.n * (P.N + P.t) := by
-    nlinarith [mul_nonneg (sub_nonneg.2 nb.n1) (add_nonneg hN ht0)]
+    linarith [mul_nonneg (sub_nonneg.2 nb.n1) (add_nonneg hN ht0)]
   have h2 : 0 ≤ (P.k : ℝ) * (P.n : ℝ) ^ 2 * (P.S + P.t + P.L) :=
     mul_nonneg (by positivity) (by linarith)
   have h4 : 0 ≤ (P.t : ℝ) ^ 2 * P.L ^ 2 := by positivity
@@ -458,16 +458,18 @@ theorem two_mul_lstar_le_b {P : Par} (H : P.Hyp) (G : P.Large) : 2 * P.lstar ≤
   have hD := lstarDenom_pos H G
   have hle := le_lstarDenom H G
   have ht6 := nb.t6
-  have ht2 : (36 : ℝ) ≤ (P.t : ℝ) ^ 2 := by nlinarith
-  have hL2 : (16 : ℝ) ≤ P.L ^ 2 := by nlinarith
+  have ht2 : (36 : ℝ) ≤ (P.t : ℝ) ^ 2 := by linarith [pow_le_pow_left₀ (by norm_num) ht6 2]
+  have hL2 : (16 : ℝ) ≤ P.L ^ 2 := by linarith [pow_le_pow_left₀ (by norm_num) hL 2]
   have h36' := mul_le_mul ht2 hL2 (by norm_num) (by positivity)
   have h36 : (1 : ℝ) ≤ (P.t : ℝ) ^ 2 * P.L ^ 2 := by linarith
   have htt : (P.t : ℝ) ≤ (P.t : ℝ) ^ 3 * P.L ^ 2 := by
     have := mul_le_mul_of_nonneg_left h36 (by linarith : (0 : ℝ) ≤ P.t)
-    nlinarith
+    linarith
   have hm : 2 * (P.m : ℝ) ≤ lstarDenom P := by linarith [nb.mt, nb.m1]
   rw [lstar_eq_div, mul_div_assoc', div_le_iff₀ hD]
-  nlinarith
+  calc 2 * ((P.m : ℝ) * P.b) = 2 * (P.m : ℝ) * P.b := by ring
+    _ ≤ lstarDenom P * P.b := mul_le_mul_of_nonneg_right hm hb.le
+    _ = P.b * lstarDenom P := mul_comm _ _
 
 theorem eta_nonneg' {P : Par} (H : P.Hyp) : 0 ≤ P.η := le_trans (Nat.cast_nonneg _) H.t_le
 
@@ -537,7 +539,7 @@ theorem lJDenom_le {P : Par} (H : P.Hyp) (G : P.Large) :
     mul_le_mul a c2 c1.le (by linarith [nb.t6])
   have := mul_le_mul_of_nonneg_left e hk
   unfold indexDenominator
-  nlinarith
+  linarith
 
 theorem paramsLog_holds : Elem_a := by
   intro P H G
@@ -551,10 +553,11 @@ theorem paramsLog_holds : Elem_a := by
   rw [lJ_eq_div, div_le_iff₀ (lJDenom_pos H G)]
   unfold indexDenominator
   have e1 : (P.m : ℝ) ≤ P.k * (P.m + P.t) := by
-    nlinarith [nb.mlek, nb.k1, nb.t6, nb.m1]
+    calc (P.m : ℝ) ≤ P.k * 1 := by linarith [nb.mlek]
+      _ ≤ P.k * (P.m + P.t) := mul_le_mul_of_nonneg_left (by linarith [nb.t6, nb.m1]) (by linarith [nb.k1])
   have e2 : (P.m : ℝ) * P.L ≤ P.k * (P.m + P.t) * Real.log (3 * P.h) :=
-    mul_le_mul e1 h1 (by linarith) (by nlinarith [nb.k1, nb.t6, nb.m1])
-  nlinarith [mul_le_mul_of_nonneg_left e2 hb.le]
+    mul_le_mul e1 h1 (by linarith) (by linarith [nb.k1, nb.t6, nb.m1])
+  linarith [mul_le_mul_of_nonneg_left e2 hb.le]
 
 theorem seven_lt_lstar {P : Par} (H : P.Hyp) (G : P.Large) : 7 < P.lstar := by
   have h2 := H.win_lt
@@ -581,17 +584,19 @@ private theorem lJDenom_le_lstarDenom {P : Par} (H : P.Hyp) (G : P.Large) :
     unfold Formalism.CohomologicalDescent.LogSmallConstantBounds.Par.N
     have : 0 ≤ (P.m : ℝ) * (P.t + 1) := by positivity
     linarith
-  have h4 : (4 : ℝ) ≤ P.t * P.L := by nlinarith [nb.t6]
+  have h4 : (4 : ℝ) ≤ P.t * P.L := by
+    calc (4 : ℝ) ≤ 6 * 4 := by norm_num
+      _ ≤ P.t * P.L := mul_le_mul nb.t6 G.L_ge (by norm_num) (by linarith [nb.t6])
   have h0 : 0 ≤ (P.k : ℝ) * P.t * P.L := mul_nonneg (mul_nonneg hk0 ht0) (by linarith)
   have e1 := mul_le_mul_of_nonneg_left h4 h0
   have hkn : (P.k : ℝ) ≤ P.n * (P.N + P.t) := by
-    nlinarith [mul_nonneg (sub_nonneg.2 nb.n1) (le_trans hk0 hN)]
+    linarith [mul_nonneg (sub_nonneg.2 nb.n1) (le_trans hk0 hN)]
   have e2 := mul_le_mul_of_nonneg_left hkn (by positivity : (0 : ℝ) ≤ (P.t : ℝ) ^ 2 * P.L ^ 2)
   have e3 : 0 ≤ (P.k : ℝ) * (P.n : ℝ) ^ 2 * (P.S + P.t + P.L) :=
     mul_nonneg (by positivity) (by linarith)
   have e4 := lJDenom_le H G
   unfold lstarDenom
-  nlinarith
+  linarith
 
 theorem paramsLStar_holds : Elem_b := by
   intro P H G
@@ -600,7 +605,7 @@ theorem paramsLStar_holds : Elem_b := by
   have nb := natBounds H
   have hL := G.L_ge
   have h7 := seven_lt_lstar H G
-  refine ⟨?_, by nlinarith⟩
+  refine ⟨?_, by have h4l : 4 * P.lstar ≤ P.L * P.lstar := mul_le_mul_of_nonneg_right hL (by linarith); linarith⟩
   have key := lJDenom_le_lstarDenom H G
   rw [lstar_eq_div, lJ_eq_div]
   calc P.L * ((P.m : ℝ) * P.b / lstarDenom P) = (P.m : ℝ) * P.b * P.L / lstarDenom P := by ring
@@ -621,7 +626,7 @@ theorem b_div_le_lJ {P : Par} (H : P.Hyp) (G : P.Large) :
   have hkt : 0 < 4 * (P.k : ℝ) * (P.t : ℝ) :=
     mul_pos (mul_pos (by norm_num) (by linarith [nb.k1])) (by linarith [nb.t6])
   calc P.b / (4 * (P.k : ℝ) * (P.t : ℝ)) ≤ (P.m : ℝ) * P.b / (4 * (P.k : ℝ) * (P.t : ℝ)) :=
-        div_le_div_of_le_of_nonneg_right (by nlinarith [nb.m1]) hkt.le
+        div_le_div_of_le_of_nonneg_right (le_mul_of_one_le_left hb.le nb.m1) hkt.le
     _ = (P.m : ℝ) * P.b * P.L / (4 * (P.k : ℝ) * (P.t : ℝ) * P.L) :=
         (mul_div_mul_right _ _ (by linarith : P.L ≠ 0)).symm
     _ ≤ (P.m : ℝ) * P.b * P.L / indexDenominator P :=
@@ -666,7 +671,7 @@ theorem paramsLJ_holds : Elem_c := by
   have hsq2 := mul_self_le_mul_self hc0 hc
   have hNr := nb.nr2
   have hbl8 : 8 * (P.b / P.lstar) < P.lstar := by linarith
-  have hbl2 : P.b / P.lstar * 8 ≤ P.b / 2 := by nlinarith
+  have hbl2 : P.b / P.lstar * 8 ≤ P.b / 2 := by linarith
   refine ⟨hc, by linarith, ?_, ?_⟩
   · rw [a6]; linarith
   · linarith
@@ -687,7 +692,7 @@ theorem paramsLargePrime_holds : Elem_d := by
   have hl1p : 0 < (l : ℝ) - 1 := by linarith
   have hq : P.h / ((l : ℝ) - 1) ≤ 2 * P.b / P.lstar := by
     rw [div_le_div_iff₀ hl1p a10]
-    nlinarith [mul_le_mul_of_nonneg_right hbasic.2.2 a10.le,
+    linarith [mul_le_mul_of_nonneg_right hbasic.2.2 a10.le,
       mul_le_mul_of_nonneg_left hl1 (by linarith : (0 : ℝ) ≤ 2 * P.b)]
   have hkap : (P.kap l : ℝ) ≤ 2 * P.b / P.lstar := by
     have h0 : 0 ≤ P.h / ((l : ℝ) - 1) := div_nonneg (by linarith) hl1p.le
@@ -712,7 +717,7 @@ theorem paramsTop_holds : Elem_e := by
     mul_pos (mul_pos (by norm_num) (by linarith [nb.k1])) (by linarith [nb.t6])
   have : 3 * P.b' < P.b / (4 * (P.k : ℝ) * (P.t : ℝ)) := by
     rw [lt_div_iff₀ hkt]
-    nlinarith [G.bb']
+    linarith [G.bb']
   linarith
 
 theorem paramsThin_holds : Elem_f := by
@@ -723,7 +728,7 @@ theorem paramsThin_holds : Elem_f := by
   have e2 : 2 * P.b / P.lstar = 2 * (P.b / P.lstar) := by ring
   refine ⟨by linarith, ?_⟩
   unfold Formalism.CohomologicalDescent.LogSmallConstantBounds.Par.w''
-  exact div_le_self H.b'_pos.le (by nlinarith [H.x_ge, nb.n1])
+  exact div_le_self H.b'_pos.le (one_le_mul_of_one_le_of_one_le (by linarith [H.x_ge]) nb.n1)
 
 theorem noWindowResidue_holds : NoResidueInWindow := by
   intro P H G l hl hlJ U bot c e σ hS hK
@@ -944,7 +949,6 @@ theorem thinSum_holds : SumA := by
           mul_le_mul_of_nonneg_right hpcb.le hM
       _ = 1.26 * D.hw τ * (P.Nr.choose 2 : ℝ) := by
           field_simp
-          try ring
       _ ≤ 1.3 * (P.Nr : ℝ) ^ 2 * P.b' := by
           have k1 := mul_le_mul hhw hC hC0 (by linarith : (0 : ℝ) ≤ 2 * P.b')
           have k2 : 0 ≤ D.hw τ * (P.Nr.choose 2 : ℝ) := mul_nonneg (by linarith) hC0
@@ -952,7 +956,7 @@ theorem thinSum_holds : SumA := by
           have d1 : (1.26 : ℝ) = 63 / 50 := by norm_num
           have d2 : (1.3 : ℝ) = 13 / 10 := by norm_num
           rw [d1, d2]
-          nlinarith
+          linarith
 
 theorem log_h_bounds {P : Par} (H : P.Hyp) (G : P.Large) :
     0 < Real.log P.h ∧ Real.log P.h ≤ P.L + 0.7 := by
@@ -987,12 +991,14 @@ theorem ex_mul_log_le_of_thickA {P : Par} (H : P.Hyp) (G : P.Large) {ι : Type} 
   calc (D.ex τ l : ℝ) * Real.log (l : ℝ) ≤ (P.Nr.choose 2 : ℝ) * Real.log P.h := h2
     _ ≤ ((P.Nr : ℝ) ^ 2 / 2) * (P.L + 7 / 10) := mul_le_mul hC c2 c1.le (by positivity)
     _ ≤ (P.Nr : ℝ) ^ 2 * P.L := by
-        nlinarith [mul_nonneg (sq_nonneg (P.Nr : ℝ)) (by linarith : (0 : ℝ) ≤ P.L / 2 - 7 / 20)]
+        linarith [mul_nonneg (sq_nonneg (P.Nr : ℝ)) (by linarith : (0 : ℝ) ≤ P.L / 2 - 7 / 20)]
 
 theorem smaller_exponent_lt {P : Par} (H : P.Hyp) (G : P.Large) : P.b' < P.b := by
   have nb := natBounds H
   have hb' := H.b'_pos
-  have h1 : (1 : ℝ) ≤ 12 * P.k * P.t := by nlinarith [nb.k1, nb.t6]
+  have h1 : (1 : ℝ) ≤ 12 * P.k * P.t := by
+    calc (1 : ℝ) ≤ 12 * 1 * 6 := by norm_num
+      _ ≤ 12 * P.k * P.t := mul_le_mul (by linarith [nb.k1]) nb.t6 (by norm_num) (by linarith [nb.k1])
   have := mul_le_mul_of_nonneg_right h1 hb'.le
   linarith [G.bb']
 
@@ -1057,7 +1063,8 @@ theorem thickTerm_holds : TermC := by
     have hlg : Real.log (P.S + P.k) ≤ Real.log (3 * P.h) := Real.log_le_log (by linarith) hSk3
     have hlg0 : 0 ≤ Real.log (P.S + P.k) := Real.log_nonneg hSk
     have hkk : (P.k : ℝ) ^ 2 ≤ P.k * (P.m + P.t) := by
-      nlinarith [nb.kt, nb.m1]
+      rw [sq]
+      exact mul_le_mul_of_nonneg_left (by linarith [nb.kt, nb.m1]) (Nat.cast_nonneg _)
     have e1 : (P.k : ℝ) ^ 2 * Real.log (P.S + P.k) ≤ P.k * (P.m + P.t) * Real.log (3 * P.h) :=
       mul_le_mul hkk hlg hlg0 (by positivity)
     have e2 : (D.ex τ l : ℝ) * Real.log l ≤ 2 * indexDenominator P := by
@@ -1071,9 +1078,8 @@ theorem thickTerm_holds : TermC := by
     obtain ⟨c1, c2⟩ := log_h_pos_and_le H G
     have hC := choose_two_le_sq_div_two P.Nr
     have hNr2 : (P.Nr : ℝ) ^ 2 ≤ 4 * (P.t : ℝ) ^ 2 := by
-      have := nb.nr2
-      have h0 : (0 : ℝ) ≤ P.Nr := Nat.cast_nonneg _
-      nlinarith
+      calc (P.Nr : ℝ) ^ 2 ≤ (2 * (P.t : ℝ)) ^ 2 := pow_le_pow_left₀ (Nat.cast_nonneg _) (nb.nr2.trans (by linarith)) 2
+        _ = 4 * (P.t : ℝ) ^ 2 := by ring
     have e1 : (D.ex τ l : ℝ) * Real.log l ≤ ((P.Nr : ℝ) ^ 2 / 2) * (2 * P.L) :=
       h2.trans (mul_le_mul hC (by linarith) c1.le (by positivity))
     have e1' : (D.ex τ l : ℝ) * Real.log l ≤ 4 * (P.t : ℝ) ^ 2 * P.L := by
@@ -1084,7 +1090,7 @@ theorem thickTerm_holds : TermC := by
         (pow_pos (by linarith [nb.k1]) 3)
     have hηb : P.η * ((P.t : ℝ) ^ 3 * P.f * (P.k : ℝ) ^ 3) ≤ P.b := (le_div_iff₀ hpos).1 H.η_le
     have hk2 := mul_le_mul nb.k1 nb.k1 zero_le_one (by linarith [nb.k1])
-    have hk3' := mul_le_mul hk2 nb.k1 zero_le_one (by nlinarith [nb.k1])
+    have hk3' := mul_le_mul hk2 nb.k1 zero_le_one (by linarith [nb.k1])
     have hk3 : (1 : ℝ) ≤ (P.k : ℝ) ^ 3 := by
       calc (1 : ℝ) = 1 * 1 * 1 := by ring
         _ ≤ (P.k : ℝ) * P.k * P.k := hk3'
@@ -1115,7 +1121,8 @@ theorem log_lJ_bounds {P : Par} (H : P.Hyp) (G : P.Large) :
       have e : Real.exp 2 = Real.exp 1 * Real.exp 1 := by rw [← Real.exp_add]; norm_num
       rw [e]
       norm_num at h
-      nlinarith [Real.exp_pos 1]
+      calc Real.exp 1 * Real.exp 1 ≤ (13591409143 / 5000000000) * (13591409143 / 5000000000) := mul_le_mul h.le h.le (Real.exp_pos 1).le (by norm_num)
+        _ < 8 := by norm_num
     calc (2 : ℝ) = Real.log (Real.exp 2) := (Real.log_exp 2).symm
       _ < Real.log P.lJ := Real.log_lt_log (Real.exp_pos 2) (by linarith)
   · calc Real.log P.lJ ≤ Real.log P.b := Real.log_le_log (by linarith) hLJb
@@ -1132,7 +1139,7 @@ theorem cW_eq_of_eq_zero {ι : Type} (D : SizeData₂ ι) (P : Par) (τ : ι) (l
       + gatedCoefficientTerm D P τ l
       + ((D.q τ : ℝ) * P.h / (l : ℝ)) * (1 + max 0 (Real.log (P.h / (l : ℝ)))) := by
   simp only [SizeData₂.cW, SizeData₂.depth, gatedCoefficientTerm, h1, h2, h3, Nat.cast_zero, mul_zero, add_zero,
-    zero_mul, zero_add]
+    zero_mul]
 
 theorem sum_min_cW_le_split {P : Par} (H : P.Hyp) (G : P.Large) {ι : Type} {D : SizeData₂ ι}
     (hA : D.ThickA P) (hC : D.CloudA P) (hNW : D.NoWindow P) {τ : ι} (hτ : τ ∈ D.T2)
@@ -1178,7 +1185,7 @@ theorem sum_min_cW_le_split {P : Par} (H : P.Hyp) (G : P.Large) {ι : Type} {D :
                 ring
         · have hex := (hA τ hτ l hp).1 (not_le.1 hlh)
           rw [hex, Nat.cast_zero]
-          nlinarith [min_le_left (0 : ℝ) (D.cW P τ l)]
+          exact mul_nonpos_of_nonpos_of_nonneg (min_le_left _ _) hlog0
     _ = _ := by simp only [Finset.sum_add_distrib, Finset.mul_sum]
 
 theorem h_add_Nr_bounds {P : Par} (H : P.Hyp) (G : P.Large) :
@@ -1439,7 +1446,7 @@ theorem sum_J_mul_log_le_totalBound (rs3 : PrimeCountingBound) {P : Par} (H : P.
     refine le_trans (add_le_add (Finset.sum_le_sum (fun τ hτ => top_degree_le_two_b τ (Finset.mem_filter.1 hτ).2))
       (Finset.sum_le_sum (fun τ hτ => bN τ (Finset.mem_filter.1 hτ).2))) ?_
     rw [Finset.sum_const, Finset.sum_const, nsmul_eq_mul, nsmul_eq_mul, hF]
-    nlinarith [mul_le_mul_of_nonneg_right hcard2R hY0]
+    linarith [mul_le_mul_of_nonneg_right hcard2R hY0]
   rw [hQ1, hB1]
   unfold totalBound
   linarith
@@ -1612,7 +1619,7 @@ theorem small_terms_le_of_log_four {P : Par} (H : P.Hyp) (G : P.Large) (s3 s4 : 
     mul_le_mul_of_nonneg_left (by linarith) (mul_nonneg hk0 hS)
   have a2 : (P.k : ℝ) * s4 ≤ (P.k : ℝ) * ((P.S + 1) * (P.L + 7 / 10)) :=
     mul_le_mul_of_nonneg_left (h4.trans (mul_le_mul_of_nonneg_left c2 (by linarith))) hk0
-  nlinarith [mul_nonneg hk0 (show (0 : ℝ) ≤ 81 / 100 * P.S + P.L + 33 / 10 by linarith)]
+  linarith [mul_nonneg hk0 (show (0 : ℝ) ≤ 81 / 100 * P.S + P.L + 33 / 10 by linarith)]
 
 theorem largePrimeSumElementary_holds : SumDE := by
   intro P H G ι D hA hC hT hNW τ hτ Q hQ
@@ -1705,7 +1712,9 @@ theorem largePrimeSumElementary_holds : SumDE := by
   rw [d25]
   constructor
   · linarith
-  · have hq14 : (0 : ℝ) ≤ 14 * (P.L - 4) ^ 2 + 83 * (P.L - 4) + 9 := by nlinarith
+  · have hq14 : (0 : ℝ) ≤ 14 * (P.L - 4) ^ 2 + 83 * (P.L - 4) + 9 := by
+      have hL4 : 0 ≤ P.L - 4 := sub_nonneg.2 G.L_ge
+      positivity
     linarith [mul_nonneg hmb hq14]
 
 theorem totalElementary_holds : TotalElementary := by

@@ -341,8 +341,7 @@ theorem bad_le (κ : K ≃+* (W → ℂ)) (μ : Measure (Fin n → Fin M → K))
     obtain ⟨w, a, s, ⟨hsa, hsb⟩, hN⟩ := hU
     choose t ht hst using fun b => exists_grid hL (s b) (hsb b)
     refine Set.mem_biUnion (x := (w, a, t)) ?_ ?_
-    · simp only [I, Finset.coe_product, Set.mem_prod, Finset.mem_coe, Finset.mem_univ,
-        Fintype.mem_piFinset, true_and, Finset.coe_univ, Set.mem_univ]
+    · simp only [I, Finset.coe_product, Set.mem_prod, Finset.mem_coe, Fintype.mem_piFinset, true_and, Finset.coe_univ, Set.mem_univ]
       exact ht
     · refine ⟨_, shear_mem κ w a s t hε hL' (by linarith) hLε hsa hst hX hN, ?_⟩
       exact shearK_neg_shearK a _ (sig_self κ w a t) X
@@ -456,7 +455,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.density_bound_from_box_volume_growth : ∀ (K W : Type) [CommRing K] [Fintype W] (κ : K ≃+* (W → ℂ)) (n M : ℕ), 0 < n → 2 * n < M → ∀ (H : Type) [MeasurableSpace H] [MeasurableSpace (Fin n → Fin M → K)] (μ : Measure (Fin n → Fin M → K)) (ν : Measure H) (q : (Fin n → Fin M → K) → H) (C₀ : ℝ≥0∞), C₀ ≠ ⊤ → (∀ r : Fin n → W → ℝ, (∀ a w, 0 < r a w) → GlobalTheory.CompanionTheory.WhitFree.AvgInf.DenLE μ ν q (GlobalTheory.CompanionTheory.WhitFree.AvgInf.boxK κ r) (C₀ * ∏ a, ∏ w, ENNReal.ofReal (r a w) ^ (2 * (M - n)))) → (∀ (S : Set (Fin n → Fin M → K)) (C : ℝ≥0∞) (a : Fin n) (s : Fin n → K), s a = 0 → GlobalTheory.CompanionTheory.WhitFree.AvgInf.DenLE μ ν q S C → GlobalTheory.CompanionTheory.WhitFree.AvgInf.DenLE μ ν q (GlobalTheory.CompanionTheory.WhitFree.AvgInf.shearK a s '' S) C) → ∀ R : ℝ, 1 ≤ R → ∀ δ : ℝ≥0∞, δ ≠ 0 → ∃ ε : ℝ, 0 < ε ∧ GlobalTheory.CompanionTheory.WhitFree.AvgInf.DenLE μ ν q (GlobalTheory.CompanionTheory.WhitFree.AvgInf.boxK κ (fun _ _ => R) \ GlobalTheory.CompanionTheory.WhitFree.AvgInf.goodK κ R ε) δ := by
-  first | exact @GlobalTheory.CompanionTheory.WhitFree.AvgInf.Bad.bad_density | exact GlobalTheory.CompanionTheory.WhitFree.AvgInf.Bad.bad_density | (intros; apply GlobalTheory.CompanionTheory.WhitFree.AvgInf.Bad.bad_density <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.WhitFree.AvgInf.Bad.bad_density
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DensityBoundFromBoxVolumeGrowthStatement =====

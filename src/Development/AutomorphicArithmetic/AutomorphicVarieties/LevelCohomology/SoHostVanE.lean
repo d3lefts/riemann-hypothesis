@@ -273,7 +273,7 @@ theorem UpperTheory.Reformulated.B.LocallyConstantMaps.locConst :
   intro x
   refine ⟨(fun y => x⁻¹ * y) ⁻¹' (↑ψ.ker : Set Γ),
     h.preimage (continuous_const.mul continuous_id), ?_, ?_⟩
-  · simp [MonoidHom.mem_ker]
+  · simp
   · intro y hy
     have hy' : ψ (x⁻¹ * y) = 1 := MonoidHom.mem_ker.mp hy
     rw [map_mul, map_inv, inv_mul_eq_one] at hy'
@@ -461,7 +461,7 @@ theorem UpperTheory.V.X.So.locKill :
       rw [hc, ← Units.val_mul]
       congr 1
       simp only [map_inv, MonoidHom.mul_apply, MonoidHom.inv_apply, MonoidHom.zpow_apply, zpow_sub,
-        zpow_one, mul_inv, div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc]
+        zpow_one, mul_inv, mul_left_comm]
     have hmem : ∀ φ : H0 τ, ι (φ : TDual (ZMod (l ^ r)) M) ∈ Set.range ι₀ := by
       intro φ
       rw [← hι₀rng]
@@ -582,7 +582,7 @@ theorem UpperTheory.V.X.So.lineNeg :
     intro g
     have h1 : etaO F (F.π g) = η₀ g := by
       simp only [etaO, η₀, MonoidHom.comp_apply, hη]
-    simp only [lineChar, MonoidHom.mul_apply, MonoidHom.zpow_apply, MonoidHom.pow_apply, MonoidHom.inv_apply, hΨ, h1,
+    simp only [lineChar, MonoidHom.mul_apply, MonoidHom.pow_apply, MonoidHom.inv_apply, hΨ, h1,
       Chr.Psi, ψ', zpow_neg, zpow_natCast, mul_pow, pow_mul, mul_inv, inv_inv, mul_assoc]
   have ho : IsOpen (ψ'.ker : Set (G ℚ Ω)) := by
     refine Subgroup.isOpen_mono (H₁ := (Chr.cls ℚ Ω N).ker ⊓ (Chr.cls ℚ Ω 4).ker) (fun g hg => ?_)

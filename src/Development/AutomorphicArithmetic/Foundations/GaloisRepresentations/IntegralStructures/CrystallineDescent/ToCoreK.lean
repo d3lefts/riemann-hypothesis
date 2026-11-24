@@ -472,7 +472,7 @@ theorem lineSkew : LineSkew := by
     rw [hM, hθ]
     refine ⟨by simp, by simp, fun x hx => ?_⟩
     have key : (1 : Matrix (Fin d) (Fin d) ℂ) *ᵥ x ⬝ᵥ ((c : ℂ) • (1 : Matrix (Fin d) (Fin d) ℂ)) *ᵥ star x = ((c * ∑ i, Complex.normSq (x i) : ℝ) : ℂ) := by
-      simp [Matrix.smul_mulVec, dotProduct, Finset.mul_sum, Complex.mul_conj]
+      simp [Matrix.smul_mulVec, dotProduct, Finset.mul_sum]
       refine Finset.sum_congr rfl (fun j _ => ?_)
       rw [← Complex.mul_conj]
       ring
@@ -993,7 +993,6 @@ theorem wtId_holds : WtId := by
       simp only [Fin.coe_natAdd, Fin.val_rev] at h1 h2 ⊢
       rw [dite_eq_right (by omega)] at h1
       have hi := i.2
-      push_cast at h1
       omega
   · unfold wtJumps
     rw [multiset_map_fin_rev_eq, multiset_map_fin_rev_eq (fun k : Fin n => ((k : ℕ) : ℤ) - lam.dual.w k)]
@@ -1019,7 +1018,6 @@ theorem wtId_holds : WtId := by
         rw [Nat.cast_sub (by omega)]
         push_cast
         ring
-      push_cast at h1
       rw [hc]
       omega
 
@@ -1131,7 +1129,7 @@ theorem UpperTheory.Gal.TP.Sub.embSplit_holds :
     · right
       rw [← h]
       ext x
-      simp [ComplexEmbedding.conjugate_coe_eq]
+      simp
   · intro w w' h
     apply hinj
     rw [← (emb w).2, ← (emb w').2, h]

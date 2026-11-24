@@ -1215,11 +1215,11 @@ theorem UpperTheory.V.Ws.Bl.flagVec :
     refine ⟨?_, ?_⟩
     · show ∀ i j, ¬ lamW i < lamW j → Y i j = 0
       intro i j h
-      fin_cases i <;> fin_cases j <;> simp_all [lamW, Matrix.vecMulVec_apply]
+      fin_cases i <;> fin_cases j <;> simp_all [lamW]
     · show adj Y = -Y
       ext i j
       fin_cases i <;> fin_cases j <;>
-        (try simp [hYd, hw, hφ, adj_apply, sgn, Fin.rev, Matrix.vecMulVec_apply]) <;>
+        (try simp [hYd, hw, hφ, adj_apply, sgn, Fin.rev]) <;>
         first
           | linear_combination iso
           | linear_combination (-1 : R) * iso
@@ -1231,10 +1231,6 @@ theorem UpperTheory.V.Ws.Bl.flagVec :
         | linear_combination y * h10
         | linear_combination (-1 : R) * hy2
         | linear_combination y * h30
-        | linear_combination hy1
-        | linear_combination hy2
-        | linear_combination (-y) * h10
-        | linear_combination (-y) * h30
   have hA : Matrix.mulVec (adj u) w = ![-y, 1, 0, 0] := by
     rw [hv, Matrix.mulVec_mulVec, hinv, Matrix.one_mulVec]
   have hB0 : Matrix.vecMul φ u 0 = 0 := by
@@ -1251,7 +1247,6 @@ theorem UpperTheory.V.Ws.Bl.flagVec :
       first
         | (simp [hB0, hB1]; done)
         | (exfalso; simp at hji; done)
-        | (exfalso; revert hji; decide)
   rw [Submodule.ne_bot_iff]
   refine ⟨⟨Y, hYm⟩, ?_, ?_⟩
   · exact hsup
@@ -1259,19 +1254,19 @@ theorem UpperTheory.V.Ws.Bl.flagVec :
     have hY : Y = 0 := congrArg Subtype.val hY0
     have f1 : u 1 1 * u 2 0 = 0 := by
       have h := congrFun (congrFun hY 1) 0
-      simp [hYd, hw, hφ, Matrix.vecMulVec_apply, -mul_eq_zero] at h
-      first | linear_combination h | linear_combination (-1 : R) * h
+      simp [hYd, hw, hφ, -mul_eq_zero] at h
+      first | linear_combination h
     have f2 : u 1 1 * u 0 0 = 0 := by
       have h := congrFun (congrFun hY 1) 2
-      simp [hYd, hw, hφ, Matrix.vecMulVec_apply, -mul_eq_zero, -neg_eq_zero, -mul_neg] at h
+      simp [hYd, hw, hφ, -mul_eq_zero, -neg_eq_zero, -mul_neg] at h
       first | linear_combination h | linear_combination (-1 : R) * h
     have f3 : u 3 1 * u 2 0 = 0 := by
       have h := congrFun (congrFun hY 3) 0
-      simp [hYd, hw, hφ, Matrix.vecMulVec_apply, -mul_eq_zero] at h
-      first | linear_combination h | linear_combination (-1 : R) * h
+      simp [hYd, hw, hφ, -mul_eq_zero] at h
+      first | linear_combination h
     have f4 : u 3 1 * u 0 0 = 0 := by
       have h := congrFun (congrFun hY 3) 2
-      simp [hYd, hw, hφ, Matrix.vecMulVec_apply, -mul_eq_zero, -neg_eq_zero, -mul_neg] at h
+      simp [hYd, hw, hφ, -mul_eq_zero, -neg_eq_zero, -mul_neg] at h
       first | linear_combination h | linear_combination (-1 : R) * h
     have J : u 2 2 * u 1 1 - u 0 2 * u 3 1 = 1 := by
       linear_combination I11 - u 3 2 * hy1 + u 1 2 * hy2 - y * I10 + y * u 2 2 * h10 -
@@ -1471,7 +1466,7 @@ private theorem ac_mul {S A : Type} [TopologicalSpace S] [CommRing A] {I : Ideal
     ∀ a b, AdicCont I fun s => (M s * N s) a b := by
   intro a b n
 
-  simp only [Matrix.mul_apply, map_sum, map_mul, Fin.sum_univ_four, map_add (f := _)]
+  simp only [Matrix.mul_apply, map_mul, Fin.sum_univ_four, map_add (f := _)]
   exact ((((hM a 0 n).mul (hN 0 b n)).add ((hM a 1 n).mul (hN 1 b n))).add ((hM a 2 n).mul (hN 2 b n))).add
     ((hM a 3 n).mul (hN 3 b n))
 
@@ -1510,7 +1505,7 @@ theorem UpperTheory.V.Ws.Bl.cocA :
     have e2 := (hI _ _).1 (Submodule.smul_mem _ t e1) i j
     rw [Ideal.Quotient.eq]
     convert e2 using 1
-    simp [smul_sub, mul_sub]
+    simp [smul_sub]
   refine ⟨MonoidHom.mk ⟨fun g => (1 + (t • z g).1) * r g, by simp [z1]⟩
       (twist_mul hb.bg.blk (fun g => (t • z g).2.1) coc), fun g => (t • z g).1, (t • y).1, fun _ => rfl,
     ac_mul zc hb.cont, fun g => (t • z g).2, (t • y).2, fun g i j => ?_, by simp [hz.cz], fun g hg => by simp [hz.kill g hg],

@@ -564,7 +564,7 @@ theorem root_of_eig (Y : Mat C N) (μ : C) (v : Fin N → C) (hv : v ≠ 0) (h :
   rw [Polynomial.IsRoot, Matrix.eval_charpoly, ← Matrix.exists_mulVec_eq_zero_iff]
   refine ⟨v, hv, ?_⟩
   rw [Matrix.sub_mulVec, h, Matrix.scalar_apply]
-  ext k; simp [Matrix.mulVec_diagonal]
+  ext k; simp
 
 theorem deg_shift (x : Mat C N) (c : C) (h : Deg n x) : Deg n (x + algebraMap C (Mat C N) c) := by
   obtain ⟨q, hq, hd, ha⟩ := h
@@ -903,7 +903,7 @@ theorem Grade_of : Grade := by
   have heig : ∀ kl : Fin n × Fin n, adX X (p kl.1 * Y * p kl.2) = (e kl.1 - e kl.2) • (p kl.1 * Y * p kl.2) := by
     intro kl
     rw [adX_apply, ← mul_assoc, ← mul_assoc, hXp, mul_assoc (p kl.1 * Y), hpX]
-    simp [sub_smul, smul_mul_assoc, mul_smul_comm]
+    simp [sub_smul]
   have hstab : ∀ Z ∈ g, adX X Z ∈ g := fun Z hZ => by rw [adX_apply]; exact hg Z hZ
   let q : C[X] := ∏ kl ∈ (Finset.univ : Finset (Fin n × Fin n)).erase (i, j), (Polynomial.X - Polynomial.C (e kl.1 - e kl.2))
   have hq : aeval (adX X) q Y = q.eval (e i - e j) • (p i * Y * p j) := by
@@ -1106,7 +1106,7 @@ theorem DX_comm {C : Type} [Field C] {N : ℕ} (Y Z : Mat C N) :
   intro p
   rw [Derivation.commutator_apply, DX_X, DX_X, DX_X]
 
-  simp only [map_sum, MvPolynomial.C_mul', map_smul, DX_X, Finset.smul_sum, smul_smul]
+  simp only [map_sum, MvPolynomial.C_mul']
   simp only [Matrix.sub_apply, Matrix.mul_apply, ← Finset.sum_sub_distrib]
   simp only [sub_smul, Finset.sum_smul, ← Finset.sum_sub_distrib]
   rw [Finset.sum_comm]

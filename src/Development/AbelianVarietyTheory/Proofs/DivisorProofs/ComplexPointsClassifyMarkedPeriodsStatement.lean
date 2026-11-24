@@ -501,8 +501,8 @@ theorem pull_birig : ∀ (S : Scheme.{0}) (A A' : Over S) [GrpObj A] [IsCommMonO
       (pullGenLB t f.left) (pullGenLB_isGen ht f.left)
     exact GlobalTheory.RigidTranslate.gen_of_lbIso (pull_isLB hP _) (pull_isLB hP₂ _) e₂ s hs
   refine ⟨hP₂, triv _ _ ?_ t₁ ht₁, triv _ _ ?_ t₂ ht₂, ?_⟩
-  · apply CartesianMonoidalCategory.hom_ext <;> simp [one_comp_monHom, comp_one']
-  · apply CartesianMonoidalCategory.hom_ext <;> simp [one_comp_monHom, comp_one']
+  · apply CartesianMonoidalCategory.hom_ext <;> simp
+  · apply CartesianMonoidalCategory.hom_ext <;> simp
   · have eq : (lift (snd A A) (fst A A)).left ≫ φ₂ = φ₂ ≫ (lift (snd A' A') (fst A' A')).left := by
       rw [hφ₂, ← Over.comp_left, ← Over.comp_left]
       congr 1
@@ -653,7 +653,7 @@ open scoped Matrix
 open GlobalTheory.UPel.HT
 
 theorem _root_.GlobalTheory.T.nonempty_moduliMap_of_marked_period_isometry : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [CommRing R] (b : Base D R) (N : ℕ) (σ : R →+* ℂ) (ρ : D.O →+* Matrix (Fin D.g) (Fin D.g) ℂ) (o o' : Obj b N (spMap σ)) h hL h' hL' (D' D'' : PLat D.O D.inv) t t' Q Q' e e' (w : D'.La ≃ₗ[D.O] D''.La) (u : (Fin D.g → ℂ) ≃ₗ[ℂ] (Fin D.g → ℂ)), 0 < N → UnifAt (o.fam h hL) σ ρ N D' t Q (𝟙 _) e → UnifAt (o'.fam h' hL') σ ρ N D'' t' Q' (𝟙 _) e' → IsMarkedIsom N D' D'' t t' w → (∀ x, Q' (w x) = u (Q x)) → Nonempty (ObjMap o o' (𝟙 _)) := by
-  first | exact @GlobalTheory.HTIso.nonempty_objMap_of_markedIsom | exact GlobalTheory.HTIso.nonempty_objMap_of_markedIsom | (intros; apply GlobalTheory.HTIso.nonempty_objMap_of_markedIsom <;> assumption)
+  first | exact @GlobalTheory.HTIso.nonempty_objMap_of_markedIsom
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NonemptyModuliMapOfMarkedPeriodIsometryStatement =====
@@ -733,7 +733,7 @@ open scoped Matrix
 open GlobalTheory.UPel.HT
 
 theorem _root_.GlobalTheory.T.complexPoints_classify_markedPeriods : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [CommRing R] (b : Base D R) (N : ℕ) (σ : R →+* ℂ) (ρ : D.O →+* Matrix (Fin D.g) (Fin D.g) ℂ) (M : Model b N) h hL, 0 < N → N.Coprime p → b.IsType σ ρ → FineAt (M.univ.fam h hL) σ ρ N (D.Cls N) := by
-  first | (exact @GlobalTheory.UPel.HT.Model.fineAt_univ) | (exact GlobalTheory.UPel.HT.Model.fineAt_univ) | (intros; apply GlobalTheory.UPel.HT.Model.fineAt_univ <;> assumption)
+  first | (exact @GlobalTheory.UPel.HT.Model.fineAt_univ)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ComplexPointsClassifyMarkedPeriodsStatement =====

@@ -82,9 +82,8 @@ theorem pow_entry_commutator {A : Type} [Ring A] {n : ℕ} (E : Fin n → Fin n 
     rw [hs, hs, hs, Finset.mul_sum, Finset.sum_mul, ← Finset.sum_sub_distrib]
     simp_rw [key, ih, hE a b]
     simp only [sub_mul, mul_sub, Finset.sum_add_distrib, Finset.sum_sub_distrib, ite_mul, mul_ite,
-      zero_mul, mul_zero, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true,
-      Finset.sum_const_zero]
-    split_ifs <;> simp [Finset.sum_sub_distrib] <;> abel
+      zero_mul, mul_zero, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    split_ifs <;> simp <;> abel
 
 theorem target : ∀ {A : Type} [inst : Ring A] {n : ℕ} (E : Fin n → Fin n → A), Formalism.REAL.GlRel E →
     ∀ (a b : Fin n) (m : ℕ) (c e : Fin n),
@@ -150,11 +149,7 @@ theorem comm_pow_of_apply (E : Fin n → Fin n → A) (hE : Formalism.REAL.GlRel
     (c e : Fin n) : E a b * (Matrix.of E ^ m) c e - (Matrix.of E ^ m) c e * E a b =
       (if b = c then (Matrix.of E ^ m) a e else 0) - (if e = a then (Matrix.of E ^ m) c b else 0) := by
   first
-  | exact @_root_.GlobalTheory.PowEntryCommutator.target
-  | exact _root_.GlobalTheory.PowEntryCommutator.target
   | (apply _root_.GlobalTheory.PowEntryCommutator.target <;> assumption)
-  | (intros; apply _root_.GlobalTheory.PowEntryCommutator.target <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.PowEntryCommutator.target <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.PowEntryCommutator.target ..)
 
 end GelfandCentral

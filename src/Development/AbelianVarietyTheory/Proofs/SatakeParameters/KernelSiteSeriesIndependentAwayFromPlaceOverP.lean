@@ -181,11 +181,6 @@ theorem exists_nsmul_mem_of_mem_span {N : ℕ} (Lb : Submodule (𝓞 E) (Fin N �
   first
   | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.NatMulIsIntegralSatakeParameters.exists_nsmul_mem
   | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.NatMulIsIntegralSatakeParameters.exists_nsmul_mem
-  | exact @_root_.GlobalTheory.NatMulIsIntegralSatakeParameters.exists_nsmul_mem
-  | exact _root_.GlobalTheory.NatMulIsIntegralSatakeParameters.exists_nsmul_mem
-  | (apply _root_.GlobalTheory.NatMulIsIntegralSatakeParameters.exists_nsmul_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.NatMulIsIntegralSatakeParameters.exists_nsmul_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.NatMulIsIntegralSatakeParameters.exists_nsmul_mem <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.NatMulIsIntegralSatakeParameters.exists_nsmul_mem ..)
 
 end GlobalTheory.TwV.Xc
@@ -211,7 +206,7 @@ theorem exists_nsmul_mem_hatL {N : ℕ} (Lb : Submodule (𝓞 E) (Fin N → E))
       (fun j => inclE (F := F) 𝔸ᶠ[F] ((d₁ • (Pi.single i (1 : E) : Fin N → E)) j)) := by
     funext j
     rw [Finset.sum_apply, Finset.sum_eq_single j]
-    · simp only [Submonoid.smul_def, Pi.smul_apply, smul_eq_mul, Pi.single_eq_same, nsmul_eq_mul, mul_one, map_natCast]
+    · simp only [Pi.smul_apply, Pi.single_eq_same, nsmul_eq_mul, mul_one, map_natCast]
       show _ = ((d₂ : E ⊗[F] 𝔸ᶠ[F]) * z j) * _
       rw [Nat.cast_mul]; ring
     · intro i _ hij
@@ -256,7 +251,7 @@ theorem exists_nsmul_mulVec_mem_hatL {N : ℕ} (Lb : Submodule (𝓞 E) (Fin N �
       funext i
       rw [e]
 
-      simp [Finset.sum_apply, map_sum, map_zsmul]
+      simp [Finset.sum_apply, map_sum]
     show (fun i => inclE (F := F) 𝔸ᶠ[F] (w i)) ∈ Q
     rw [e2]
     have hj : ∀ j, (fun i => inclE (F := F) 𝔸ᶠ[F] ((s j : Fin N → E) i)) ∈ Q := fun j => hDj j
@@ -626,7 +621,7 @@ open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.MainNotions F
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.eqOffPrime_kernelLattices_of_agreeAway : Sites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S => ∀ v (P : HeightOneSpectrum (𝓞 D.host.E)), PrimeOf (D.what₂.places.resChar w) ((sysS H X std).G.P.W v) (J.rho std v) P → ∀ j (hj : j ≤ D.R.m) (La Lb : (sysS H X std).Lt j), SameAway (hT := hT) (H := H) (X := X) std v j La Lb → GL3Theta.EqOff D P ((J.fd std).kerN j La) ((J.fd std).kerN j Lb)) := by
-  first | exact @GlobalTheory.TwV.Xc.eqOff_kerN_of_sameAway | exact GlobalTheory.TwV.Xc.eqOff_kerN_of_sameAway | (intros; apply GlobalTheory.TwV.Xc.eqOff_kerN_of_sameAway <;> assumption)
+  first | exact @GlobalTheory.TwV.Xc.eqOff_kerN_of_sameAway
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.EqOffPrimeKernelLatticesOfAgreeAwayStatement =====
@@ -943,7 +938,7 @@ open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.MainNotions F
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.movedDatum_eq_of_latticeTuples_agreeAway : Sites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S => ∀ v j (hj : j < D.R.m) (La Lb : (sysS H X std).Lt j) (La' Lb' : (sysS H X std).Lt (j + 1)), SameAway (hT := hT) (H := H) (X := X) std v j La Lb → SameAway (hT := hT) (H := H) (X := X) std v (j + 1) La' Lb' → GlobalTheory.TwU.xiM (sysS H X std) (J.fd std) (J.xi0 std S.Xi) j La La' = GlobalTheory.TwU.xiM (sysS H X std) (J.fd std) (J.xi0 std S.Xi) j Lb Lb') := by
-  first | exact @GlobalTheory.TwV.Xc.xiM_eq_of_sameAway | exact GlobalTheory.TwV.Xc.xiM_eq_of_sameAway | (intros; apply GlobalTheory.TwV.Xc.xiM_eq_of_sameAway <;> assumption)
+  first | exact @GlobalTheory.TwV.Xc.xiM_eq_of_sameAway
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.MovedDatumEqOfLatticeTuplesAgreeAwayStatement =====
@@ -1271,7 +1266,7 @@ open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.MainNotions F
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.kernelSite_away_of_positive_pair : Sites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fact (D.what₂.places.resChar w).Prime] {std t J} S => KIn t → S.Pos → S.Pair → S.Away) := by
-  first | exact @GlobalTheory.TwV.Xc.AwayInd.away_of_pos_pair | exact GlobalTheory.TwV.Xc.AwayInd.away_of_pos_pair | (intros; apply GlobalTheory.TwV.Xc.AwayInd.away_of_pos_pair <;> assumption)
+  first | exact @GlobalTheory.TwV.Xc.AwayInd.away_of_pos_pair
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.KernelSiteAwayOfPositivePairStatement =====

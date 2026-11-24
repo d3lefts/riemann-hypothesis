@@ -339,7 +339,6 @@ private theorem Hf_swap_eq_conj' (a b : EuclideanSpace ℂ ι) : Hf b a = (starR
 private theorem norm_sq_eq_re_Hf_self (v : EuclideanSpace ℂ ι) : ‖v‖ ^ 2 = (Hf v v).re := by
   rw [EuclideanSpace.norm_eq, Real.sq_sqrt (Finset.sum_nonneg fun i _ => sq_nonneg _)]
   simp only [Hf, Complex.re_sum, Complex.mul_conj, Complex.ofReal_re, Complex.normSq_eq_norm_sq]
-  all_goals rfl
 
 private theorem Hf_neg_left' (a c : EuclideanSpace ℂ ι) : Hf (-a) c = -Hf a c := by
   simp [Hf, Finset.sum_neg_distrib]
@@ -348,7 +347,7 @@ private theorem Hf_neg_right' (a c : EuclideanSpace ℂ ι) : Hf a (-c) = -Hf a 
   simp [Hf, Finset.sum_neg_distrib]
 
 private theorem Hf_eq_inner_swap_euclidean (v w : EuclideanSpace ℂ ι) : Hf v w = @inner ℂ _ _ w v := by
-  simp [Hf, PiLp.inner_apply, mul_comm]
+  simp [Hf, PiLp.inner_apply]
 
 private theorem Hf_finset_sum_right {κ : Type} (s : Finset κ) (v : EuclideanSpace ℂ ι)
     (f : κ → EuclideanSpace ℂ ι) : Hf v (∑ k ∈ s, f k) = ∑ k ∈ s, Hf v (f k) :=
@@ -804,7 +803,7 @@ theorem ct_base_num (q c : ℕ) (hq : 1 ≤ q) {t0 : ℝ}
   have hc0 : (0 : ℝ) ≤ c := Nat.cast_nonneg c
   rcases Nat.eq_zero_or_pos c with hc | hc
   · subst hc
-    simp only [Nat.cast_zero, zero_mul, zero_add, pow_zero] at hC5 ⊢
+    simp only [Nat.cast_zero, zero_add, pow_zero] at hC5 ⊢
     exact Real.one_le_exp (by linarith)
   have hq1 : (1 : ℝ) ≤ q := by exact_mod_cast hq
   have hc1 : (1 : ℝ) ≤ c := by exact_mod_cast hc

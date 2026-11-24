@@ -129,7 +129,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem _root_.GlobalTheory.T.bilinearFockPairing_sq_le_hermitianNorms : ∀ {ι : Type} [Fintype ι] {m : ℕ} (w : ι → DomWeight m) (x y : VV ℂ w),
     ‖pairBK w x y‖ ^ 2 ≤ (pairK w (fun _ => (1 : Matrix (Fin m) (Fin m) ℂ)) x x).re *
       (pairK w (fun _ => (1 : Matrix (Fin m) (Fin m) ℂ)) y y).re := by
-  first | exact @GlobalTheory.FockCauchySchwarz.pairBK_sq_le | exact GlobalTheory.FockCauchySchwarz.pairBK_sq_le | (intros; apply GlobalTheory.FockCauchySchwarz.pairBK_sq_le <;> assumption)
+  first | exact @GlobalTheory.FockCauchySchwarz.pairBK_sq_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BilinearFockPairingSqLeHermitianNormsStatement =====
@@ -209,7 +209,7 @@ theorem _root_.GlobalTheory.T.branchingMap_hermitianNorm_le_prod_bounds : ∀ {�
     (∀ τ, Formalism.L2.Col.Br.Interlace hN (Λ τ) (σ τ)) → (∀ τ, Formalism.L2.Col.Br.SameShift (Λ τ) (σ τ)) → ∀ (x : VV ℂ Λ),
     (pairK σ (fun _ => (1 : Matrix (Fin n) (Fin n) ℂ)) (Formalism.L2.Col.Br.brStd hN Λ σ x) (Formalism.L2.Col.Br.brStd hN Λ σ x)).re ≤
       (∏ τ, Formalism.MainNotions.PrimeDegreeVariant.brBd hN.symm (Λ τ) (σ τ) ^ 2) * (pairK Λ (fun _ => (1 : Matrix (Fin N) (Fin N) ℂ)) x x).re := by
-  first | exact @GlobalTheory.BranchNormBound.brStd_norm_le | exact GlobalTheory.BranchNormBound.brStd_norm_le | (intros; apply GlobalTheory.BranchNormBound.brStd_norm_le <;> assumption)
+  first | exact @GlobalTheory.BranchNormBound.brStd_norm_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BranchingMapHermitianNormLeProdBoundsStatement =====
@@ -308,7 +308,7 @@ theorem _root_.GlobalTheory.T.branchingPairing_map_extendScalars_embedding : ∀
     (Λ : ι → DomWeight N) (σ : ι → DomWeight n) (u : VV K Λ) (v : VV K fun τ => (σ τ).dual),
     φ (GlobalTheory.BrPairF.brPairF σ hN Λ u v) =
       GlobalTheory.BrPairF.brPairF σ hN Λ (GlobalTheory.CoefModel.mapVV φ Λ u) (GlobalTheory.CoefModel.mapVV φ _ v) := by
-  first | exact @GlobalTheory.BrPairF.brPairF_map_descent | exact GlobalTheory.BrPairF.brPairF_map_descent | (intros; apply GlobalTheory.BrPairF.brPairF_map_descent <;> assumption)
+  first | exact @GlobalTheory.BrPairF.brPairF_map_descent
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BranchingPairingMapExtendScalarsEmbeddingStatement =====
@@ -524,7 +524,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem _root_.GlobalTheory.T.hermitianFockNorm_adjugateSubst_symm_le : ∀ {ι : Type} [Fintype ι] {n : ℕ} (σ : ι → DomWeight n) (w : VV ℂ fun τ => (σ τ).dual),
     (pairK σ (fun _ => (1 : Matrix (Fin n) (Fin n) ℂ)) ((GlobalTheory.FunObj.funEquiv σ).symm w) ((GlobalTheory.FunObj.funEquiv σ).symm w)).re ≤
       (pairK (fun τ => (σ τ).dual) (fun _ => (1 : Matrix (Fin n) (Fin n) ℂ)) w w).re := by
-  first | exact @GlobalTheory.FunIsom.pairK_funEquiv_symm_le | exact GlobalTheory.FunIsom.pairK_funEquiv_symm_le | (intros; apply GlobalTheory.FunIsom.pairK_funEquiv_symm_le <;> assumption)
+  first | exact @GlobalTheory.FunIsom.pairK_funEquiv_symm_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianFockNormAdjugateSubstSymmLeStatement =====
@@ -606,7 +606,7 @@ theorem _root_.GlobalTheory.T.branchingPairing_archimedean_bound_fockNorm : ∀ 
       (pairK Λ (fun _ => (1 : Matrix (Fin N) (Fin N) ℂ)) (GlobalTheory.CoefModel.mapVV φ Λ u) (GlobalTheory.CoefModel.mapVV φ Λ u)).re *
       (pairK (fun τ => (σ τ).dual) (fun _ => (1 : Matrix (Fin n) (Fin n) ℂ)) (GlobalTheory.CoefModel.mapVV φ _ v)
         (GlobalTheory.CoefModel.mapVV φ _ v)).re := by
-  first | exact @GlobalTheory.BrPairBound.inf_bound | exact GlobalTheory.BrPairBound.inf_bound | (intros; apply GlobalTheory.BrPairBound.inf_bound <;> assumption)
+  first | exact @GlobalTheory.BrPairBound.inf_bound
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BranchingPairingArchimedeanBoundFockNormStatement =====

@@ -388,7 +388,7 @@ theorem cas_tensor {K I J : Type} [Fintype K] [Fintype I] [DecidableEq I] [Finty
     smul_eq_mul, hΨ', hΨe, h3, Matrix.conjTranspose_apply, starRingEnd_apply, star_star,
     Finset.mul_sum, mul_add, Finset.sum_add_distrib] at h
     simp only [PositivityTheory.KReal.positionA, sum_inner, inner_smul_left, h3, Matrix.conjTranspose_apply,
-      starRingEnd_apply, star_star, Finset.mul_sum, mul_add, Finset.sum_add_distrib]
+      starRingEnd_apply, star_star, Finset.mul_sum, Finset.sum_add_distrib]
     linear_combination h - h'
   have hsum : ∑ k, PositivityTheory.KReal.formT (PositivityTheory.KReal.positionA (c (σ k)) Ψ) (fun w => ρ (σ k) (Ψ w)) +
       ∑ k, PositivityTheory.KReal.formT (PositivityTheory.KReal.positionA (c k) Ψ) (fun w => ρ k (Ψ w)) +
@@ -774,7 +774,7 @@ theorem count_cross {e f : Ix r s} (h : ¬ sameBlock e f) :
     (∑ a : Ix r s, ∑ b : Ix r s, if sameBlock a b then
       ((if e = a then 1 else 0) + (if f = b then 1 else 0) : ℂ) else 0) = (r : ℂ) + s := by
   rcases e with e | e <;> rcases f with f | f <;> simp [sameBlock] at h ⊢ <;>
-    simp [Fintype.sum_sum_type, sameBlock, Finset.sum_add_distrib] <;> ring
+    simp [Fintype.sum_sum_type, sameBlock, Finset.sum_add_distrib]
 
 theorem adC_cas : ∑ k : KI r s, adC k * adC (swK k) =
     ((((r : ℝ) + s : ℝ)) : ℂ) • (1 : Matrix (PIx r s) (PIx r s) ℂ) := by

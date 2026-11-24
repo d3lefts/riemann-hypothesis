@@ -228,7 +228,7 @@ open GlobalTheory.HeightCounting.Up (PrN)
 
 
 theorem _root_.GlobalTheory.T.coefficient_lattice_eq_small_coefficient_field : ∀ (D : D7) (S T : HSp D) (B : Base S T), B.Good → ∀ O : Subring ℂ, intLL D ≤ O → ∀ h, B.coefLat D.what₂.embLL (labLL D) O h = B.coefLat (embLL0 D) (labLL0 D) O h := by
-  first | exact @GlobalTheory.PlaceSmall.coefLat_eq_small | exact GlobalTheory.PlaceSmall.coefLat_eq_small | (intros; apply GlobalTheory.PlaceSmall.coefLat_eq_small <;> assumption)
+  first | exact @GlobalTheory.PlaceSmall.coefLat_eq_small
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CoefficientLatticeEqSmallCoefficientFieldStatement =====
@@ -293,7 +293,7 @@ theorem coefLatFn_le {K : Type} [Field K] [NumberField K] (σ : K →+* ℂ) (em
   refine Submodule.span_le.2 ?_
   rintro _ ⟨F, hF, rfl⟩
   have h3 : coefFn σ lam (((N : K) ^ GlobalTheory.NabScale.scaleExp lam • F : VV K lam) : Pol K D.what₂.Tau n) ∈ coefLatFn σ emb O lam M' :=
-    Submodule.subset_span ⟨_, nabAtr_scale emb lam N (by first | exact hM.toIsLattice | exact hM) h1 h2 F hF, rfl⟩
+    Submodule.subset_span ⟨_, nabAtr_scale emb lam N (by first | exact hM) h1 h2 F hF, rfl⟩
   have h4 := Submodule.smul_mem _ ((⟨_, hO⟩ : O) ^ GlobalTheory.NabScale.scaleExp lam) h3
   have h0 : (N : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hN
   rw [SetLike.mem_coe]
@@ -324,9 +324,9 @@ theorem coefLat_mul {B : Base S T} (hF : B.F.Good) {K : Type} [Field K] [NumberF
       let g : (Fin S.rank → D.host.E) →ₗ[D.host.E] Module.Dual D.host.E W :=
         { toFun := fun x => { toFun := fun y => ∑ i, ∑ j, x i * S.gram i j * y.1 j
                               map_add' := by intros; simp [mul_add, Finset.sum_add_distrib]
-                              map_smul' := by intros; simp [mul_comm, mul_left_comm, mul_assoc, Finset.mul_sum] }
+                              map_smul' := by intros; simp [mul_left_comm, mul_assoc, Finset.mul_sum] }
           map_add' := by intros; ext y; simp [add_mul, Finset.sum_add_distrib]
-          map_smul' := by intros; ext y; simp [mul_comm, mul_left_comm, mul_assoc, Finset.mul_sum] }
+          map_smul' := by intros; ext y; simp [mul_assoc, Finset.mul_sum] }
       have hdim : Module.finrank D.host.E (Module.Dual D.host.E W) < Module.finrank D.host.E (Fin S.rank → D.host.E) := by
         rw [Subspace.dual_finrank_eq]
         exact Submodule.finrank_lt hW
@@ -356,7 +356,7 @@ theorem coefLat_mul {B : Base S T} (hF : B.F.Good) {K : Type} [Field K] [NumberF
         simp only [map_zero, Pi.smul_apply, smul_eq_mul]
         calc
           0 = r * (∑ i, ∑ j, star (y i) * S.gram i j * v j) := by rw [hzy, mul_zero]
-          _ = ∑ i, ∑ j, star (y i) * S.gram i j * (r * v j) := by simp [Finset.mul_sum, mul_comm, mul_left_comm, mul_assoc]
+          _ = ∑ i, ∑ j, star (y i) * S.gram i j * (r * v j) := by simp [Finset.mul_sum, mul_comm, mul_assoc]
       obtain ⟨i, hi⟩ : ∃ i, v i ≠ 0 := by
         by_contra hn
         apply hv0
@@ -442,7 +442,7 @@ open GlobalTheory.HeightCounting.Up (PrN)
 theorem _root_.GlobalTheory.T.integral_forms_central_translate_iff : ∀ (D : D7) (j : Fin D.R.m) (B : Base (Vc D j) (Wc D j)), B.Good → ∀ (ψ : Twist D Circle) (K : Type) [Field K] [NumberField K] (σ : K →+* ℂ) (emb : D.what₂.Tau → (D.host.E →+* K)) (O : Subring ℂ), IsCoefRing σ emb O →
   ∀ (Q : Finset (Pl D.host.E)) (z : GA D (Vc D j)), IsCentAt j Q z → ∀ N : ℕ, N ≠ 0 → (∀ P ∈ Q, (N : 𝓞 D.host.E) ∈ P.asIdeal) → (N : ℂ)⁻¹ ∈ O →
   ∀ F : Amb D j, F ∈ B.mtLat σ emb O ψ ↔ (fun h => F (h * finPt (Vc D j) z)) ∈ B.mtLat σ emb O ψ := by
-  first | exact @GlobalTheory.CentralTranslate.mem_mtLat_iff_translate | exact GlobalTheory.CentralTranslate.mem_mtLat_iff_translate | (intros; apply GlobalTheory.CentralTranslate.mem_mtLat_iff_translate <;> assumption)
+  first | exact @GlobalTheory.CentralTranslate.mem_mtLat_iff_translate
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IntegralFormsCentralTranslateIffStatement =====
@@ -578,7 +578,7 @@ theorem _root_.GlobalTheory.T.liftForm_at_evaluationVector_eq_realisationLift : 
   ∀ x ∈ Idx.TjV D (D.what₂.muTw w) (j.1 + 1),
   (X.R.HW j (sg0 D X.A3.A)).e (Y.mj.eW j (D.what₂.thetaP (D.what₂.muTw w) (j.1 + 1) (D.what₂.jMt (D.what₂.muTw w) (j.1 + 1) x))) (X.geo.v₀ j (sg0 D X.A3.A)) =
     X.R.thF j (Y.tupT (D.what₂.muTw w)) (formOf Y (used_of_tw H.tw) j (D.what₂.jMt (D.what₂.muTw w) (j.1 + 1) x)) (X.geo.v₀ j (sg0 D X.A3.A)) := by
-  first | exact @GlobalTheory.PlaceLift.lift_read_at | exact GlobalTheory.PlaceLift.lift_read_at | (intros; apply GlobalTheory.PlaceLift.lift_read_at <;> assumption)
+  first | exact @GlobalTheory.PlaceLift.lift_read_at
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LiftFormAtEvaluationVectorEqRealisationLiftStatement =====

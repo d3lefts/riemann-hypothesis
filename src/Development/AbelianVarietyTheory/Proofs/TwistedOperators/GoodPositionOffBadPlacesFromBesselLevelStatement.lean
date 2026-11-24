@@ -93,7 +93,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.besselLevel_columns_carry_latticeLines_offExceptional : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m), ∀ v ∉ G.pl.S0, ColsAt (F.dB ρ h) (xZero (F.dJ ρ h)) (G.Λ (.grid (2 * ρ + 2) 0)) (G.Λ (.grid (2 * ρ + 1) 0)) v := by
-  first | exact @GlobalTheory.StairCols.colsAt_xZero | exact GlobalTheory.StairCols.colsAt_xZero | (intros; apply GlobalTheory.StairCols.colsAt_xZero <;> assumption)
+  first | exact @GlobalTheory.StairCols.colsAt_xZero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.LatticeColumnsOffFiniteSetStatement =====
@@ -187,7 +187,7 @@ open GlobalTheory.AscFin
 
 
 theorem _root_.GlobalTheory.T.lineId_oB_lat0_of_pl : OnStd fun {D} _ _ {sc} {G} _ F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m) (v : GlobalTheory.FinPl.Pl D), GlobalTheory.SeeSaw.LineId (F.oB ρ h) (F.ζ (ρ + 1)) (lat0 F ρ h) (FractionalIdeal.spanSingleton _ ((-D.host.xi0) ^ (ρ + 1))⁻¹ * (G.pl.stA sc ^ (ρ + 1) * (G.pl.stAbar sc ^ (ρ + 1))⁻¹)) v := by
-  first | exact @GlobalTheory.ZLineIdeal.bessel_core_lattice_meets_line_of_z_ideal | exact GlobalTheory.ZLineIdeal.bessel_core_lattice_meets_line_of_z_ideal | (intros; apply GlobalTheory.ZLineIdeal.bessel_core_lattice_meets_line_of_z_ideal <;> assumption)
+  first | exact @GlobalTheory.ZLineIdeal.bessel_core_lattice_meets_line_of_z_ideal
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.BesselCoreLatticeMeetsLineOfZIdealStatement =====
@@ -207,7 +207,7 @@ open GlobalTheory.AscFin
 
 
 theorem _root_.GlobalTheory.T.modulus_ideal_off_S0_trivial : ∀ {D : D7} {T : Type} {L : LevCh D T} (P : Places L) (sc : Consts) (v : GlobalTheory.FinPl.Pl D), v ∉ P.S0 → GlobalTheory.SeeSaw.idV ((P.modul sc : Ideal (𝓞 D.host.E)) : GlobalTheory.SeeSaw.FI D) v = GlobalTheory.SeeSaw.idV 1 v := by
-  first | exact @GlobalTheory.ModulUnit.idV_modul_eq_one | exact GlobalTheory.ModulUnit.idV_modul_eq_one | (intros; apply GlobalTheory.ModulUnit.idV_modul_eq_one <;> assumption)
+  first | exact @GlobalTheory.ModulUnit.idV_modul_eq_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ModulusIdealOffS0TrivialStatement =====
@@ -296,7 +296,7 @@ open GlobalTheory.AscFin
 
 
 theorem _root_.GlobalTheory.T.staircase_ideals_completion_eq_of_modulus_unit : ∀ {D : D7} {T : Type} {L : LevCh D T} (P : Places L) (sc : Consts) (ρ : ℕ) (v : GlobalTheory.FinPl.Pl D), 0 < ρ → GlobalTheory.SeeSaw.idV ((P.modul sc : Ideal (𝓞 D.host.E)) : GlobalTheory.SeeSaw.FI D) v = GlobalTheory.SeeSaw.idV 1 v → (FractionalIdeal.spanSingleton _ ((-D.host.xi0) ^ (ρ - 1 + 1))⁻¹ * (P.stA sc ^ (2 * ρ - (ρ - 1)) * (P.stAbar sc ^ (ρ - 1 + 1))⁻¹) ≠ 0) ∧ (FractionalIdeal.spanSingleton _ ((-D.host.xi0) ^ (ρ + 1))⁻¹ * (P.stA sc ^ (ρ + 1) * (P.stAbar sc ^ (ρ + 1))⁻¹) ≠ 0) ∧ ∀ s, s ∈ GlobalTheory.SeeSaw.idV ((D.host.AAbar : GlobalTheory.SeeSaw.FI D) * (FractionalIdeal.spanSingleton _ ((-D.host.xi0) ^ (ρ - 1 + 1))⁻¹ * (P.stA sc ^ (2 * ρ - (ρ - 1)) * (P.stAbar sc ^ (ρ - 1 + 1))⁻¹))⁻¹) v ↔ s ∈ GlobalTheory.SeeSaw.idV (FractionalIdeal.spanSingleton _ D.host.xi0⁻¹ * (FractionalIdeal.spanSingleton _ ((-D.host.xi0) ^ (ρ + 1))⁻¹ * (P.stA sc ^ (ρ + 1) * (P.stAbar sc ^ (ρ + 1))⁻¹))⁻¹) v := by
-  first | exact @GlobalTheory.StairIdealAt.completion_eq_of_modul_unit | exact GlobalTheory.StairIdealAt.completion_eq_of_modul_unit | (intros; apply GlobalTheory.StairIdealAt.completion_eq_of_modul_unit <;> assumption)
+  first | exact @GlobalTheory.StairIdealAt.completion_eq_of_modul_unit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.StaircaseIdealsCompletionEqOfModulusUnitStatement =====
@@ -316,7 +316,7 @@ open GlobalTheory.AscFin
 
 
 theorem _root_.GlobalTheory.T.staircase_lattice_isotropic_line_ideal_iff : OnStd fun {D} _ _ {sc} {G} _ F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m) (v : GlobalTheory.FinPl.Pl D) (i : Fin ρ), ∀ a ∈ idAt D (· = v), GlobalTheory.FinPl.colMul (F.dJ ρ h).jX i a ∈ latV _ (G.Λ (.grid (2 * ρ + 1) 0)) (· = v) ↔ a ∈ GlobalTheory.SeeSaw.idV (FractionalIdeal.spanSingleton _ ((-D.host.xi0) ^ (i.1 + 1))⁻¹ * (G.pl.stA sc ^ (2 * ρ - i.1) * (G.pl.stAbar sc ^ (i.1 + 1))⁻¹)) v := by
-  first | exact @GlobalTheory.StairLine.colMul_dJ_mem_iff | exact GlobalTheory.StairLine.colMul_dJ_mem_iff | (intros; apply GlobalTheory.StairLine.colMul_dJ_mem_iff <;> assumption)
+  first | exact @GlobalTheory.StairLine.colMul_dJ_mem_iff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.StaircaseLatticeIsotropicLineIdealIffStatement =====
@@ -349,7 +349,7 @@ theorem incAdj_yZero_mulVec_gen {D : D7} {S A L T T₀ : HSp D} (o : OrthDec S A
     intro i
     simp only [ell, Fin.ext_iff]
     split_ifs with h1 h2 h2 <;> first | omega | simp
-  simp only [HypDec.incAdj_apply, HypDec.incY_apply, yZero, zEll, adj_smul, adj_neg, GlobalTheory.FinPl.colMul, Matrix.mulVec, dotProduct,
+  simp only [HypDec.incAdj_apply, HypDec.incY_apply, yZero, zEll, GlobalTheory.FinPl.colMul, Matrix.mulVec, dotProduct,
     Matrix.mul_apply, Matrix.smul_apply, Matrix.neg_apply, adj, Matrix.transpose_apply, Matrix.map_apply,
     Matrix.vecMulVec_apply, smul_eq_mul, map_mul, map_neg, hell]
   rw [Finset.sum_congr rfl fun l _ => by
@@ -446,7 +446,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.lattice_membership_adjoint_iff : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m), ∀ v ∉ G.pl.S0, 0 < ρ → ∀ a ∈ idAt D (· = v), (F.dJ ρ h).incAdj (F.V₀ ρ) (a • yBF F ρ h) ∈ latO (F.V₀ ρ) _ (lat0 F ρ h : Set _) (G.Λ (.grid (2 * ρ + 1) 0) : Set _) (· = v) ↔ a ∈ intAt D (· = v) := by
-  first | exact @GlobalTheory.AscFin.incAdj_yBF_mem_latO_iff | exact GlobalTheory.AscFin.incAdj_yBF_mem_latO_iff | (intros; apply GlobalTheory.AscFin.incAdj_yBF_mem_latO_iff <;> assumption)
+  first | exact @GlobalTheory.AscFin.incAdj_yBF_mem_latO_iff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.LatticeMembershipAdjointIffStatement =====
@@ -465,7 +465,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.psi_primitive_standardFrames_besselLevel : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m), ∀ v ∉ G.pl.S0, PrimAt W.ψ (F.dB ρ h) (G.Λ (.grid (2 * ρ + 2) 0)) v := by
-  first | exact @GlobalTheory.AscFin.primAt_std_bessel | exact GlobalTheory.AscFin.primAt_std_bessel | (intros; apply GlobalTheory.AscFin.primAt_std_bessel <;> assumption)
+  first | exact @GlobalTheory.AscFin.primAt_std_bessel
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.PsiPrimitiveStandardFramesBesselLevelStatement =====
@@ -526,7 +526,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.exists_unit_mem_modulusDivConjugateIdeal : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc) (v : GlobalTheory.FinPl.Pl D), v ∉ G.pl.S0 → ∃ d : 𝓞 D.host.F, d ∉ v.asIdeal ∧ ((d : D.host.F) : D.host.E) ∈ shiftId G ∧ ∀ x ∈ shiftId G, ∃ y : 𝓞 D.host.E, (y : D.host.E) = ((d : D.host.F) : D.host.E) * x := by
-  first | exact @GlobalTheory.ShiftUnit.exists_d | exact GlobalTheory.ShiftUnit.exists_d | (intros; apply GlobalTheory.ShiftUnit.exists_d <;> assumption)
+  first | exact @GlobalTheory.ShiftUnit.exists_d
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsUnitMemModulusDivConjugateIdealStatement =====
@@ -595,7 +595,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.integralFiniteAdele_supported_div_prime_to_place : ∀ (D : D7) (v : GlobalTheory.FinPl.Pl D) (d : 𝓞 D.host.F), d ∉ v.asIdeal → ∀ α ∈ intAf D.host.F, (∀ w, ¬ w = v → evalV D.host.F w α = 0) → ∃ α' ∈ intAf D.host.F, (∀ w, ¬ w = v → evalV D.host.F w α' = 0) ∧ α = α' * algebraMap D.host.F (Af D.host.F) (d : D.host.F) := by
-  first | exact @GlobalTheory.intAf_div_prime_to_place' | exact GlobalTheory.intAf_div_prime_to_place' | (intros; apply GlobalTheory.intAf_div_prime_to_place' <;> assumption)
+  first | exact @GlobalTheory.intAf_div_prime_to_place'
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IntegralFiniteAdeleSupportedDivPrimeToPlaceStatement =====
@@ -787,7 +787,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.standard_lattice_off_S0 : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m), ∀ v ∉ G.pl.S0, StdAt (F.dB ρ h) (F.dJ ρ h) (pcBF W F ρ h) (G.Λ (.grid (2 * ρ + 2) 0)) (G.Λ (.grid (2 * ρ + 1) 0)) v := by
-  first | exact @GlobalTheory.AscFin.stdAt_pcBF | exact GlobalTheory.AscFin.stdAt_pcBF | (intros; apply GlobalTheory.AscFin.stdAt_pcBF <;> assumption)
+  first | exact @GlobalTheory.AscFin.stdAt_pcBF
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.StandardLatticeOffS0Statement =====
@@ -838,7 +838,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.goodPosition_and_incAdj_mem_latO_iff_mem_intAt : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m), ∀ v ∉ G.pl.S0, GoodAt (F.dB ρ h) (F.dJ ρ h) (xZero (F.dJ ρ h)) W.ψ (G.Λ (.grid (2 * ρ + 2) 0)) (lat0 F ρ h) (G.Λ (.grid (2 * ρ + 1) 0)) (G.Λ (.core (2 * ρ + 1))) v ∧ StdAt (F.dB ρ h) (F.dJ ρ h) (pcBF W F ρ h) (G.Λ (.grid (2 * ρ + 2) 0)) (G.Λ (.grid (2 * ρ + 1) 0)) v ∧ (0 < ρ → ∀ a ∈ idAt D (· = v), (F.dJ ρ h).incAdj (F.V₀ ρ) (a • yBF F ρ h) ∈ latO (F.V₀ ρ) _ (lat0 F ρ h : Set _) (G.Λ (.grid (2 * ρ + 1) 0) : Set _) (· = v) ↔ a ∈ intAt D (· = v)) := by
-  first | exact @GlobalTheory.GoodPosBF.goodPosition_offBadPlaces_from_besselLevel | exact GlobalTheory.GoodPosBF.goodPosition_offBadPlaces_from_besselLevel | (intros; apply GlobalTheory.GoodPosBF.goodPosition_offBadPlaces_from_besselLevel <;> assumption)
+  first | exact @GlobalTheory.GoodPosBF.goodPosition_offBadPlaces_from_besselLevel
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.GoodPositionOffBadPlacesFromBesselLevelStatement =====

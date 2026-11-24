@@ -552,7 +552,7 @@ theorem cz_zero (p q : ℕ) (e : ℤ) (a b : M2 n) (ha : InG a) (hb : InG b) (ψ
   have hmul : ∀ g h : GR n, mR (g * h) = mR g * mR h := fun _ _ => rfl
   have hdetN : ∀ x, (nU (herm x) : M2 n).det = 1 := by
     intro x
-    simp [nU, det_fromBlocks_zero₂₁]
+    simp [nU]
   unfold czLoc
   rw [← integral_const_mul]
   congr 1
@@ -564,7 +564,7 @@ theorem cz_zero (p q : ℕ) (e : ℤ) (a b : M2 n) (ha : InG a) (hb : InG b) (ψ
       exact det_one
     exact left_ne_zero_of_mul_eq_one h1
   unfold jLoc
-  simp only [Complex.cpow_zero, one_mul, F0, hmul, mR_mkG, nbEl, det_mul, hdetN, mul_one, mul_zpow,
+  simp only [Complex.cpow_zero, one_mul, F0, hmul, mR_mkG, nbEl, det_mul, hdetN, mul_zpow,
     mul_assoc, integral_const_mul]
   generalize (mR (k : GR n)).det ^ e = D at hk ⊢
   have hD := inv_mul_cancel₀ hk
@@ -799,7 +799,7 @@ lemma dense_cell (y : GR n) : y ∈ closure {z : GR n | ((mR z).toBlocks₂₁).
     exact (Matrix.isUnit_iff_isUnit_det _).mp hpd.isUnit |>.ne_zero
   have hprod : (C + Complex.I • D) * (C + Complex.I • D)ᴴ = C * Cᴴ + D * Dᴴ := by
     simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_smul, Matrix.add_mul, Matrix.mul_add,
-      Matrix.smul_mul, Matrix.mul_smul, smul_smul, Complex.star_def, Complex.conj_I]
+      Matrix.smul_mul, Matrix.mul_smul, Complex.star_def, Complex.conj_I]
     rw [← hherm, smul_add, smul_smul, neg_mul, Complex.I_mul_I, neg_neg, one_smul, neg_smul]
     abel
   have hI : (C + Complex.I • D).det ≠ 0 := by
@@ -972,7 +972,7 @@ theorem continuous_Ac (X : Fin n → ℝ) : Continuous (Ac X) := by
 
 theorem differentiable_Ac_entry (X : Fin n → ℝ) (a b : Fin n ⊕ Fin n) : Differentiable ℂ fun z => Ac X z a b := by
   rcases a with a | a <;> rcases b with b | b <;> by_cases hab : a = b <;>
-    simp [Ac, diagonal_apply, hab] <;> fun_prop
+    simp [Ac, hab]
 
 theorem differentiable_det_entries {m : Type} [Fintype m] [DecidableEq m] (A : ℂ → Matrix m m ℂ)
     (hA : ∀ i j, Differentiable ℂ fun z => A z i j) : Differentiable ℂ fun z => (A z).det := by

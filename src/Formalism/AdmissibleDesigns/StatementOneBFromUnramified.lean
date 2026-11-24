@@ -192,7 +192,7 @@ variable (O) in
 def lRep : Representation O GG A where
   toFun g := LinearMap.mulLeft O (uElt r χ g)
   map_one' := LinearMap.ext fun a => by simp [uElt_one]
-  map_mul' g h := LinearMap.ext fun a => by simp [uElt_mul, mul_assoc]
+  map_mul' g h := LinearMap.ext fun a => by simp [uElt_mul]
 
 abbrev aVG : Representation LL G (TrV e (MK (O := O) A)) :=
   repL e (locRep (resRep (lRep O r χ) Dw)) eG.symm.toMonoidHom
@@ -204,8 +204,8 @@ theorem projection_equivariant (g : GG) (m : ↥(Ymod r χ E) × O) : j1 r χ E 
   have hu : ((↑(χ g)⁻¹ : T') • r g : A) = uElt r χ g := by simp [uElt]
   simp only [j1, ytEmb, ytRep, lRep, LinearMap.comp_apply, LinearMap.fst_apply, LinearMap.coe_mk, AddHom.coe_mk,
     MonoidHom.coe_mk, OneHom.coe_mk, LinearMap.mulLeft_apply, Submodule.coe_add, Submodule.coe_smul_of_tower]
-  simp [yY, ycoc, hu, sub_mul, smul_sub, mul_add, mul_smul_comm, smul_eq_mul]
-  all_goals first | abel1 | exact trivial
+  simp [yY, ycoc, hu, sub_mul, smul_sub, mul_add, smul_eq_mul]
+  all_goals first | abel1
 
 def jK : MK (O := O) (↥(Ymod r χ E) × O) →ₗ[O] MK (O := O) A := liftK (mkK ∘ₗ j1 r χ E)
 
@@ -346,7 +346,6 @@ theorem ytEmbW_of {w : HeightOneSpectrum (𝓞 D.host.E)} (hw : w ∈ placesOver
   obtain ⟨x₀, v₀, hv₀, hfix⟩ := hL
   haveI hK : NoZeroSMulDivisors (D.nd.O i) (FractionRing (D.nd.O i)) := by
     first
-    | exact inferInstance
     | exact ⟨fun {c x} h => by
         rw [Algebra.smul_def, mul_eq_zero] at h
         exact h.imp_left (fun h' => (map_eq_zero_iff _ (IsFractionRing.injective _ _)).1 h')⟩
@@ -373,7 +372,6 @@ theorem msW_entry {w : HeightOneSpectrum (𝓞 D.host.E)} (hw : w ∈ placesOver
   ext a b
   simp only [Matrix.map_apply]
   first
-  | rfl
   | (simp [MsW, TruncatedSeriesCountingIdentities.locC, Br.loc, mapM, Br.locM, decS, eS, Br.locO, eK, Br.iota, Br.toLLK, toK]; done)
   | (simp [MsW, TruncatedSeriesCountingIdentities.locC, Br.loc, mapM, Br.locM, decS, eS, Br.locO, eK, Br.iota, Br.toLLK]
      erw [RingEquiv.ofBijective_apply, IsFractionRing.lift_algebraMap]
@@ -399,8 +397,6 @@ theorem fixK (hD : TruncatedSeriesCountingIdentities.SemisimpleDecomposition i r
       intro s M u
       first
       | exact Matrix.smul_mulVec s M u
-      | exact Matrix.smul_mulVec_assoc s M u
-      | (funext j; simp [Matrix.mulVec, dotProduct, Finset.mul_sum, mul_assoc])
     rw [hM, hsm, map_smul, he, LinearEquiv.apply_symm_apply]
     refine Prod.ext ?_ ?_
     · simp
@@ -472,7 +468,6 @@ theorem msW_apply {w : HeightOneSpectrum (𝓞 D.host.E)} (hw : w ∈ placesOver
   rw [msW_entry]
   first
   | rfl
-  | simp [Matrix.map_apply]
 
 
 set_option maxHeartbeats 2000000 in
@@ -900,8 +895,6 @@ theorem rowTieIn_of
     StD.RowTieIn i r ρ π dc g0 eB e₁ s Dd hD hc := by
   refine ⟨?_, ?_, hMat, ?_, ?_, hcob⟩
   · first
-    | exact rowSub_S (hc := hc) ..
-    | exact rowSub_S ..
     | (have hD' := hD
        obtain ⟨-, -, -, -, -, -, hr', -, hsm, -, -, hχ, -⟩ := hD'
        have hFF := idempotent_part_finite_and_free (hD := hD) ..
@@ -910,15 +903,11 @@ theorem rowTieIn_of
        intro n _ hn
        exact rowSub_at (hr' := hr') (hsm := hsm) (hχ := hχ) (hn := hn) ..)
   · first
-    | exact rowOrb_S (hc := hc) ..
     | exact rowOrb_S i r π dc g0 eB e₁ s Dd hD hc
   · first
     | exact rowTop1_S i dc r π g0 eB e₁ s Dd hD
-    | exact rowTop1_S (dc := dc) (hD := hD)
-    | exact fun n hn hn' c hcont => rowTop1_S (hD := hD) .. n hn hn' c hcont
   · first
     | exact rowFin_S ..
-    | exact rowFin_S i r π dc g0 eB e₁ s Dd hD hc
 
 end Formalism.MainNotions.N.KRowA
 
@@ -1059,7 +1048,6 @@ theorem rep_memQ (y : ↥(Formalism.RepresentationBoundsCohomology.LocallyConsta
     rw [map_smul, rep_mk]
     first
       | exact y.2.2
-      | simpa [divBy] using y.2.2
   have h := hW _ hlc hmem
   have e : trC Cd ((((ℓ : O') ^ cB • rep F ℓ cB y : coZ1s _)) : Dw → M) =
       σ ((ℓ : O') ^ cB) • trC Cd ((rep F ℓ cB y : coZ1s _) : Dw → M) := by

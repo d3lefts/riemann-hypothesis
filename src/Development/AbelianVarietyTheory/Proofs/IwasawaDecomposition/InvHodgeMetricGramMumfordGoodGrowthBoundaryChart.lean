@@ -584,7 +584,7 @@ theorem inv_entry_norm_le_of_sub_posSemidef (g : ℕ) (Y : Matrix (Fin g) (Fin g
   have hYw : Y *ᵥ w = Pi.single j 1 := by
     rw [hw, mulVec_mulVec, hYinv, one_mulVec]
   have hwi : ∀ k, w k = Y⁻¹ k j := by
-    intro k; simp [hw, mulVec_single_one]
+    intro k; simp [hw]
   have hqw : c * (w ⬝ᵥ w) ≤ w j := by
     have := hq w
     rw [hYw, dotProduct_single, mul_one] at this
@@ -631,8 +631,8 @@ theorem psd_real_quad_single (g : ℕ) (Y : Matrix (Fin g) (Fin g) ℝ) (hY : Y.
     (hij : i ≠ j) (c : ℝ) : 0 ≤ Y i i + c * Y i j + c * Y j i + c * c * Y j j := by
   have h := hY.dotProduct_mulVec_nonneg (Pi.single i 1 + Pi.single j c)
   simp only [star_trivial, mulVec_add, add_dotProduct, dotProduct_add, mulVec_single,
-    single_dotProduct, dotProduct_single] at h
-  simp [Pi.single_apply, hij, hij.symm] at h
+    single_dotProduct] at h
+  simp at h
   linarith
 
 theorem abs_entry_le_of_psd_le (g : ℕ) (Y : Matrix (Fin g) (Fin g) ℝ) (M : ℝ)
@@ -934,7 +934,7 @@ theorem norm_apply_le_opNorm {g : ℕ} (A : Matrix (Fin g) (Fin g) ℂ) (i j : F
   rw [h1, mul_one] at h
   refine le_trans ?_ h
   set w := A *ᵥ Pi.single j 1 with hw
-  have hwi : w i = A i j := by simp [hw, mulVec_single_one]
+  have hwi : w i = A i j := by simp [hw]
   rw [gnorm, form, one_mulVec, ← hwi]
   apply Real.le_sqrt_of_sq_le
   have e : w ⬝ᵥ star w = ∑ k, ((‖w k‖ ^ 2 : ℝ) : ℂ) := by

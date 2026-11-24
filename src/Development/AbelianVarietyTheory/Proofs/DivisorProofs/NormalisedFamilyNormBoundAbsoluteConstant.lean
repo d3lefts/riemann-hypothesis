@@ -863,10 +863,6 @@ theorem multipliable_odd {x : ℂ} (hx : ‖x‖ < 1) :
     (hs.congr fun k ↦ by simp [norm_pow, pow_succ, pow_mul]; ring)
   simpa [sub_eq_add_neg] using this
 
-theorem multipliable_euler {x : ℂ} (hx : ‖x‖ < 1) :
-    Multipliable fun n : ℕ ↦ 1 - x ^ (n + 1) :=
-  ModularForm.multipliable_one_sub_pow hx
-
 theorem eulerProd_split {y : ℂ} (hy : ‖y‖ < 1) : eulerProd y = oddProd y * eulerProd (y ^ 2) := by
   have hy2 : ‖y ^ 2‖ < 1 := by rw [norm_pow]; nlinarith [norm_nonneg y]
   have e1 : (fun k : ℕ ↦ (fun n : ℕ ↦ 1 - y ^ (n + 1)) (2 * k)) = fun k ↦ 1 - y ^ (2 * k + 1) := rfl
@@ -874,7 +870,8 @@ theorem eulerProd_split {y : ℂ} (hy : ‖y‖ < 1) : eulerProd y = oddProd y *
       fun k ↦ 1 - (y ^ 2) ^ (k + 1) := by
     funext k; rw [← pow_mul]; ring_nf
   have h := tprod_even_mul_odd (f := fun n : ℕ ↦ 1 - y ^ (n + 1))
-    (by rw [e1]; exact multipliable_odd hy) (by rw [e2]; exact multipliable_euler hy2)
+    (by rw [e1]; exact multipliable_odd hy)
+        (by rw [e2]; exact ModularForm.multipliable_one_sub_pow hy2)
   rw [e1, e2] at h
   rw [eulerProd, eulerProd, oddProd, h]
 
@@ -897,7 +894,6 @@ theorem eulerProd_identity {t : ℂ} (ht : ‖t‖ < 1) :
   rw [← pow_mul] at c
   norm_num at c
   have d := oddProd_neg_mul ht
-  norm_num at c
   linear_combination (eulerProd t * eulerProd (t ^ 4)) * a + (oddProd (-t) * eulerProd (t ^ 2) * eulerProd (t ^ 4)) * b +
     (eulerProd (t ^ 2) ^ 2 * eulerProd (t ^ 4)) * d - eulerProd (t ^ 2) ^ 2 * c
 

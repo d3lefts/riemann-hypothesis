@@ -272,7 +272,7 @@ theorem good_comp (A S T : Type) [CommRing A] [CommRing S] [CommRing T] (φ : A 
     ⟨(Ideal.Quotient.lift (I.map φ) r1 (fun a ha => hk ha)).comp r2, ?_⟩, fun t => ?_, ?_⟩
   · ext a
     have e2 : r2 (ψ (φ a)) = Ideal.Quotient.mk (I.map φ) (φ a) := congrArg (fun f : S →+* S ⧸ I.map φ => f (φ a)) hr2
-    simp only [RingHom.comp_apply, e2, Ideal.Quotient.lift_mk]
+    simp only [RingHom.comp_apply, e2]
     exact congrArg (fun f : A →+* A ⧸ I => f a) hr1
   · obtain ⟨s, hs⟩ := h2.surj t
     obtain ⟨a, ha⟩ := h1.surj s
@@ -864,9 +864,7 @@ theorem sup_retr (hr : ∃ r : S →+* A ⧸ I, r.comp (algebraMap A S) = Ideal.
   let f : S →ₐ[A] A ⧸ I := { r with commutes' := c1 }
   let g : S' →ₐ[A] A ⧸ I := { r' with commutes' := c2 }
   refine ⟨(Algebra.TensorProduct.productMap f g).toRingHom, ?_⟩
-  ext a
-  simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, AlgHom.commutes,
-    Ideal.Quotient.algebraMap_eq]
+  rw [AlgHom.toRingHom_eq_coe, AlgHom.comp_algebraMap, Ideal.Quotient.algebraMap_eq]
 
 theorem mem_map_of_algHom {B : Type} [CommRing B] [Algebra A B] (f : S →ₐ[A] B) {s : S} {a : A}
     (h : s - algebraMap A S a ∈ I.map (algebraMap A S)) : f s - algebraMap A B a ∈ I.map (algebraMap A B) := by
@@ -904,8 +902,8 @@ theorem sup_univ (hu : Univ (algebraMap A S) I) (hu' : Univ (algebraMap A S') I)
     Univ (algebraMap A (S ⊗[A] S')) I := by
   intro B _ J hB ψ hIJ
   let _ : Algebra A B := ψ.toAlgebra
-  obtain ⟨χ, hχ, -⟩ := hu B J hB ψ hIJ
-  obtain ⟨χ', hχ', -⟩ := hu' B J hB ψ hIJ
+  obtain ⟨χ, hχ, hχ_unique⟩ := hu B J hB ψ hIJ
+  obtain ⟨χ', hχ', hχ'_unique⟩ := hu' B J hB ψ hIJ
   let f : S →ₐ[A] B := { χ with commutes' := fun a => RingHom.congr_fun hχ a }
   let g : S' →ₐ[A] B := { χ' with commutes' := fun a => RingHom.congr_fun hχ' a }
   refine ⟨(Algebra.TensorProduct.productMap f g).toRingHom, ?_, ?_⟩
@@ -913,24 +911,14 @@ theorem sup_univ (hu : Univ (algebraMap A S) I) (hu' : Univ (algebraMap A S') I)
     exact (Algebra.TensorProduct.productMap f g).commutes a
   · intro χ₁ h₁
     have hl : χ₁.comp (Algebra.TensorProduct.includeLeft (R := A) (S := A) (A := S) (B := S') : S →ₐ[A] S ⊗[A] S').toRingHom = χ := by
-      refine (hu B J hB ψ hIJ).unique ?_ hχ
+      apply hχ_unique
       rw [RingHom.comp_assoc, AlgHom.toRingHom_eq_coe, AlgHom.comp_algebraMap, h₁]
     have hr : χ₁.comp (Algebra.TensorProduct.includeRight (R := A) (A := S) (B := S') : S' →ₐ[A] S ⊗[A] S').toRingHom = χ' := by
-      refine (hu' B J hB ψ hIJ).unique ?_ hχ'
+      apply hχ'_unique
       rw [RingHom.comp_assoc, AlgHom.toRingHom_eq_coe, AlgHom.comp_algebraMap, h₁]
-    refine RingHom.ext fun t => ?_
-    induction t using TensorProduct.induction_on with
-    | zero => simp
-    | tmul s s' =>
-      have e : s ⊗ₜ[A] s' = Algebra.TensorProduct.includeLeft (S := A) s * Algebra.TensorProduct.includeRight s' := by
-        simp
-      rw [e, map_mul, map_mul]
-      have a1 := RingHom.congr_fun hl s
-      have a2 := RingHom.congr_fun hr s'
-      simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe] at a1 a2
-      rw [a1, a2]
-      simp [f, g]
-    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
+    apply Algebra.TensorProduct.ringHom_ext
+    · exact hl.trans (congrArg AlgHom.toRingHom (Algebra.TensorProduct.productMap_left f g)).symm
+    · exact hr.trans (congrArg AlgHom.toRingHom (Algebra.TensorProduct.productMap_right f g)).symm
 
 theorem sup_good (h : Good (algebraMap A S) I) (h' : Good (algebraMap A S') I) :
     Good (algebraMap A (S ⊗[A] S')) I :=

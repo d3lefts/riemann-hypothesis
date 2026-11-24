@@ -147,7 +147,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.primitive_axes_descend_field : ∀ (K L : Type) [Field K] [Field L] [Algebra K L] (A : Over (Sp K)) [GrpObj A] (B : Over (Sp L)) [GrpObj B] (φ : B.left ⟶ A.left), IsGrpPullback B A (spMap (algebraMap K L)) φ → IsAbelianScheme A → (NoPrimitiveStructureSheafH2 B → NoPrimitiveStructureSheafH2 A) ∧ (AxesVanishingStructureSheafDegOne B → AxesVanishingStructureSheafDegOne A) := by
-  first | exact @GlobalTheory.AbCoh.noPrimO2_axesO1_descend | exact GlobalTheory.AbCoh.noPrimO2_axesO1_descend | (intros; apply GlobalTheory.AbCoh.noPrimO2_axesO1_descend <;> assumption)
+  first | exact @GlobalTheory.AbCoh.noPrimO2_axesO1_descend
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrimitiveAxesDescendFieldStatement =====
@@ -195,7 +195,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.structure_h1_rank_descends_field : ∀ (K L : Type) [Field K] [Field L] [Algebra K L] (A : Over (Sp K)) [GrpObj A] (B : Over (Sp L)) [GrpObj B] (φ : B.left ⟶ A.left), IsGrpPullback B A (spMap (algebraMap K L)) φ → IsAbelianScheme A → ∀ g : ℕ, Module.Finite L (HO1 B.hom) → Module.finrank L (HO1 B.hom) = g → Module.Finite K (HO1 A.hom) ∧ Module.finrank K (HO1 A.hom) = g := by
-  first | exact @GlobalTheory.AbCoh.finrank_HO1_descend_field | exact GlobalTheory.AbCoh.finrank_HO1_descend_field | (intros; apply GlobalTheory.AbCoh.finrank_HO1_descend_field <;> assumption)
+  first | exact @GlobalTheory.AbCoh.finrank_HO1_descend_field
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StructureH1RankDescendsFieldStatement =====
@@ -230,7 +230,7 @@ theorem exteriorSquare_equiv_of_baseChange : ∀ (K L : Type) [Field K] [Field L
     apply e₂.injective
     have h0 : exteriorPower.ιMulti L 2 ![e₁ (1 ⊗ₜ a), e₁ (1 ⊗ₜ a)] = 0 :=
       AlternatingMap.map_eq_zero_of_eq _ _ (i := 0) (j := 1) rfl (by decide)
-    simp only [TensorProduct.mk_apply, hcomp, TensorProduct.tmul_zero, map_zero, ← heL, h0]
+    simp only [TensorProduct.mk_apply, hcomp, map_zero, ← heL, h0]
   let f : M [⋀^Fin 2]→ₗ[K] N :=
     { toFun := fun w => c (w 0) (w 1)
       map_update_add' := by
@@ -241,7 +241,7 @@ theorem exteriorSquare_equiv_of_baseChange : ∀ (K L : Type) [Field K] [Field L
         fin_cases i <;> simp
       map_eq_zero_of_eq' := by
         intro w i j hij hne
-        fin_cases i <;> fin_cases j <;> simp_all [hc] }
+        fin_cases i <;> fin_cases j <;> simp_all }
   let φ := exteriorPower.alternatingMapLinearEquiv f
   have hφ : ∀ w : Fin 2 → M, φ (exteriorPower.ιMulti K 2 w) = c (w 0) (w 1) := fun w =>
     exteriorPower.alternatingMapLinearEquiv_apply_ιMulti f w
@@ -305,7 +305,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.exteriorSquare_equiv_of_baseChange_field : ∀ (K L : Type) [Field K] [Field L] [Algebra K L] (M N M' N' : Type) [AddCommGroup M] [Module K M] [AddCommGroup N] [Module K N] [AddCommGroup M'] [Module L M'] [AddCommGroup N'] [Module L N'] (c : M →ₗ[K] M →ₗ[K] N) (c' : M' →ₗ[L] M' →ₗ[L] N') (e₁ : L ⊗[K] M ≃ₗ[L] M') (e₂ : L ⊗[K] N ≃ₗ[L] N'), (∀ a b, e₂ (1 ⊗ₜ c a b) = c' (e₁ (1 ⊗ₜ a)) (e₁ (1 ⊗ₜ b))) → (∃ e : ⋀[L]^2 M' ≃ₗ[L] N', ∀ a b, e (exteriorPower.ιMulti L 2 ![a, b]) = c' a b) → ∃ e : ⋀[K]^2 M ≃ₗ[K] N, ∀ a b, e (exteriorPower.ιMulti K 2 ![a, b]) = c a b := by
-  first | exact @GlobalTheory.AbCoh.exteriorSquare_equiv_of_baseChange | exact GlobalTheory.AbCoh.exteriorSquare_equiv_of_baseChange | (intros; apply GlobalTheory.AbCoh.exteriorSquare_equiv_of_baseChange <;> assumption)
+  first | exact @GlobalTheory.AbCoh.exteriorSquare_equiv_of_baseChange
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExteriorSquareEquivOfBaseChangeFieldStatement =====
@@ -345,7 +345,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.wedge_property_descends_field : ∀ (K L : Type) [Field K] [Field L] [Algebra K L] (A : Over (Sp K)) [GrpObj A] (B : Over (Sp L)) [GrpObj B] (φ : B.left ⟶ A.left), IsGrpPullback B A (spMap (algebraMap K L)) φ → IsAbelianScheme A → WedgeO (OAff B.hom) → WedgeO (OAff A.hom) := by
-  first | exact @GlobalTheory.AbCoh.wedgeO_descends_field | exact GlobalTheory.AbCoh.wedgeO_descends_field | (intros; apply GlobalTheory.AbCoh.wedgeO_descends_field <;> assumption)
+  first | exact @GlobalTheory.AbCoh.wedgeO_descends_field
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WedgePropertyDescendsFieldStatement =====
@@ -391,7 +391,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.abelianVariety_structureSheaf_cohomology_anyField : ∀ (K : Type) [Field K] (A : Over (Sp K)) [GrpObj A] (g : ℕ), IsAbelianScheme A → SmoothOfRelativeDimension g A.hom → Module.Finite K (HO1 A.hom) ∧ Module.finrank K (HO1 A.hom) = g ∧ WedgeO (OAff A.hom) ∧ NoPrimitiveStructureSheafH2 A ∧ AxesVanishingStructureSheafDegOne A := by
-  first | exact @GlobalTheory.AbCoh.abelian_HO_field_any | exact GlobalTheory.AbCoh.abelian_HO_field_any | (intros; apply GlobalTheory.AbCoh.abelian_HO_field_any <;> assumption)
+  first | exact @GlobalTheory.AbCoh.abelian_HO_field_any
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AbelianVarietyStructureSheafCohomologyAnyFieldStatement =====

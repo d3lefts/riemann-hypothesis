@@ -590,7 +590,7 @@ theorem conj_blockLower_mem_theta : ∀ (k : Type) [Field k] [ValuativeRel k] [T
     have e : (z⁻¹ * g * z).val.toSquareBlockProp (fun i => i ≤ m) =
         of fun (i j : {a // a ≤ m}) => (d i)⁻¹ * (of fun (i j : {a // a ≤ m}) => d j * G i j) i j := by
       ext i j
-      simp only [hG, toSquareBlockProp_def, toBlock_apply, of_apply, hent]
+      simp only [hG, toSquareBlockProp_def, of_apply, hent]
       ring
     rw [e, det_mul_column (fun i : {a // a ≤ m} => (d i)⁻¹), det_mul_row (fun j : {a // a ≤ m} => d j) G,
       ← mul_assoc, ← Finset.prod_mul_distrib]
@@ -1187,8 +1187,6 @@ theorem not_intertwine : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalS
       rw [map_mul]
       first
         | exact mul_le_of_le_one_left' hs
-        | exact (mul_le_mul' hs le_rfl).trans_eq (one_mul _)
-        | exact mul_le_of_le_one_left (zero_le _) hs
     · simp only [Matrix.add_apply, Matrix.one_apply, Matrix.vecMulVec_apply, Pi.single_eq_of_ne hi', mul_zero,
         if_neg (ne_of_lt hii'), add_zero]
       exact hprops.2.2.1 _
@@ -1197,7 +1195,7 @@ theorem not_intertwine : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalS
       intro i
       by_cases hi : i = a
       · subst hi; simp [hsu]
-      · simp [Pi.single_eq_of_ne hi, hi]
+      · simp [hi]
     rw [hθj, hθ]
     intro h
     exact hne (Units.ext h).symm

@@ -101,7 +101,7 @@ theorem gal_alg (X : Tower Ω ε) (s : Ω ≃ₐ[ℚ] Ω) (c : Ω) :
   apply exp_inj X
   ext r
   rw [X.gal_exp, AlgHom.commutes, AlgHom.commutes, HahnSeries.algebraMap_apply', HahnSeries.algebraMap_apply']
-  by_cases h : r = 0 <;> simp [h, HahnSeries.coeff_single]
+  by_cases h : r = 0 <;> simp [h]
 
 theorem gal_j (X : Tower Ω ε) (s : Ω ≃ₐ[ℚ] Ω) : X.gal s X.jK = X.jK := by
   apply exp_inj X
@@ -819,7 +819,7 @@ private lemma exists_finset_lev_mem_closure_bddRing (X : _root_.GlobalTheory.KZ.
     have hg' : 0 < g.det ∧ g 1 0 = 0 ∧ g 0 0 ≠ 0 ∧ g 1 1 ≠ 0 := by
       simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hg
       have hm'' : (0 : ℤ) < m := by exact_mod_cast hm0
-      rcases hg with rfl | rfl | rfl <;> simp [Matrix.det_fin_two, hm', hm'', hm0, hm0.ne']
+      rcases hg with rfl | rfl | rfl <;> simp [Matrix.det_fin_two, hm0, hm0.ne']
     obtain ⟨hd, h10, h00, h11⟩ := hg'
     have hE : ∀ i j, _root_.GlobalTheory.KZ.ent (_root_.GlobalTheory.KZ.toGQ g) i j = g i j := fun i j => by
       unfold _root_.GlobalTheory.KZ.ent _root_.GlobalTheory.KZ.toGQ
@@ -968,7 +968,7 @@ theorem toGQ_mul_pos' (m m' : Matrix (Fin 2) (Fin 2) ℤ) (h : 0 < m.det) (h' : 
   rw [dite_eq_left hmm, dite_eq_left h, dite_eq_left h']
   apply Subtype.ext
   apply Units.ext
-  simp only [Matrix.GeneralLinearGroup.mkOfDetNeZero, Units.val_mul] at *
+  simp only [Matrix.GeneralLinearGroup.mkOfDetNeZero] at *
   exact Matrix.map_mul (f := Int.castRingHom ℚ)
 
 theorem sl_trans_of_lev {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} (X : Tower Ω ε) (M : ℕ) (f : X.K)
@@ -1132,7 +1132,7 @@ theorem nq_sub_gal_small : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClo
     have h := X.exp_upper (toGQ !![1, ((j : ℤ) * M : ℤ); 0, (q : ℤ)]) (by rw [ent_toGQ _ (hdet j)]; simp) f (t * q)
     rw [ent_toGQ _ (hdet j), ent_toGQ _ (hdet j), ent_toGQ _ (hdet j)] at h
     simp at h
-    convert h using 2 <;> first | field_simp | (congr 1; field_simp)
+    convert h using 2 <;> first | field_simp
   have hw : ∀ (j : ℕ) (t : ℚ), c.coeff (t * q) ≠ 0 → ∃ h : eOm ε (t * j * M) ∈ V, ρ ⟨_, h⟩ = 1 := by
     intro j t ht
     have h1 : eOm ε (t * j * M) ^ q = 1 := by

@@ -72,20 +72,19 @@ private lemma Hpk_mul_self_eq_one : Hpk k r * Hpk k r = 1 := by
   rw [Finset.sum_eq_single p]
   · unfold Hpk
     simp only [Fin.ext_iff]
-    split_ifs at hp ⊢ <;> first | omega | (norm_num; done) | (simp; done)
+    split_ifs at hp ⊢ <;> first | omega | (norm_num; done)
   · intro l _ hl
     rw [Ne, Fin.ext_iff] at hl
     unfold Hpk
     simp only [Fin.ext_iff]
-    split_ifs at hp ⊢ <;> first | omega | (simp; done) | (norm_num; done)
+    split_ifs at hp ⊢ <;> first | omega | (simp; done)
   · intro h
     exact absurd (Finset.mem_univ p) h
 
 private lemma Hpk_conjTranspose_Hpk_mul_eq_one_of_mem_UH {a : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ}
     (hU : a ∈ UH (Hpk k r)) : (Hpk k r * aᴴ * Hpk k r) * a = 1 := by
   have h : aᴴ * Hpk k r * a = Hpk k r := hU
-  calc (Hpk k r * aᴴ * Hpk k r) * a = Hpk k r * (aᴴ * Hpk k r * a) := by simp only [Matrix.mul_assoc]
-    _ = 1 := by rw [h, Hpk_mul_self_eq_one]
+  simpa only [Matrix.mul_assoc, Hpk_mul_self_eq_one] using congrArg (fun M => Hpk k r * M) h
 
 private lemma isUnit_det_of_mem_UH {a : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ}
     (hU : a ∈ UH (Hpk k r)) : IsUnit a.det :=
@@ -106,8 +105,7 @@ lemma frame_inv_mulVec_negativeVector {z : Fin (2 * r + k + 1) → ℂ} {g : Mat
 
 lemma fix_of_smul {m : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ} {s : ℂ} (hs : s ≠ 0)
     {w : Fin (2 * r + k + 1) → ℂ} (h : m *ᵥ (s • w) = s • w) : m *ᵥ w = w := by
-  rw [Matrix.mulVec_smul] at h
-  exact smul_right_injective _ hs h
+  exact smul_right_injective _ hs (by simpa [Matrix.mulVec_smul] using h)
 
 lemma sqrtT_ne {z : Fin (2 * r + k + 1) → ℂ} (hT : 0 < Tz k r z) :
     (((Real.sqrt (Tz k r z) : ℝ) : ℂ)) ≠ 0 := Complex.ofReal_ne_zero.mpr (Real.sqrt_pos.mpr hT).ne'

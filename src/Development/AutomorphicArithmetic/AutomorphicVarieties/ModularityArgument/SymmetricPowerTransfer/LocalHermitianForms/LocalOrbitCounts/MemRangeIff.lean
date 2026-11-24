@@ -171,7 +171,7 @@ theorem UpperTheory.V.Z.Sym.Loc.splitJ : UpperTheory.V.Z.Sym.Loc.SplitJ := by
     · linear_combination -hh * hνν - hh * e * w * w * hνν + hh * e * hww + hh * heu + hh2
   have h3 : Pm.map star = ν • (Pm * !![0, 1; -1, 0]) := by
     refine Matrix.ext fun i j => ?_
-    fin_cases i <;> fin_cases j <;> simp [Pm, Matrix.mul_apply, Fin.sum_univ_two, hsw]
+    fin_cases i <;> fin_cases j <;> simp [Pm, hsw]
     · linear_combination hνν
     · linear_combination -w * hνν
   refine ⟨⟨Pm, Qm, hPQ, hQP⟩, ?_, ?_⟩
@@ -312,7 +312,6 @@ theorem UpperTheory.V.Z.Sym.Loc.dIso :
     simp only [← hr']
     rfl
   · rw [Units.ext_iff, ← minj.eq_iff]
-    beta_reduce
     rw [hm, Units.mul_inv_eq_iff_eq_mul]
     have e : ((Matrix.GeneralLinearGroup.scalar (Fin 2) z : GL (Fin 2) K) : Matrix (Fin 2) (Fin 2) K).map (algebraMap K (Lsq K Δ)) =
         Matrix.scalar (Fin 2) (algebraMap K (Lsq K Δ) z) := by

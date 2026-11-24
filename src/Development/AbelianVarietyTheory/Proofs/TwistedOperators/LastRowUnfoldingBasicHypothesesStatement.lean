@@ -130,7 +130,7 @@ open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Ro
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.rowTest_exists_combinations_of_expansion : Big fun ch => ∀ t Φ β τ, ch.S.IsExpansion t Φ β τ → ∃ c, IsCombs ch.W τ c := by
-  first | exact @GlobalTheory.CombsExist.combs_exist | exact GlobalTheory.CombsExist.combs_exist | (intros; apply GlobalTheory.CombsExist.combs_exist <;> assumption)
+  first | exact @GlobalTheory.CombsExist.combs_exist
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RowTestExistsCombinationsOfExpansionStatement =====
@@ -175,7 +175,7 @@ open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Ro
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.rowTest_flippedFiniteTensor_row_isThetaFunction : Big fun ch => ∀ t Φ τ, IsFlipFin t ch.S.B ch.rm Φ τ → ∀ d ∈ τ.support, ∀ i, IsThetaFunO ch.W.ψ _ _ (d.1 i) := by
-  first | exact @GlobalTheory.FlipRowTheta.row_isThetaFunO | exact GlobalTheory.FlipRowTheta.row_isThetaFunO | (intros; apply GlobalTheory.FlipRowTheta.row_isThetaFunO <;> assumption)
+  first | exact @GlobalTheory.FlipRowTheta.row_isThetaFunO
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RowTestFlippedFiniteTensorRowIsThetaFunctionStatement =====
@@ -327,7 +327,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.rowTest_heisenberg_combinations_joint_row_good : Big fun {D} _ _ _ _ _ _ _ _ _ _ _ ch => ∀ C, IsRealFam ch.W C → ∀ c : Combs ch.G, (∀ j, j < D.R.m → IsFinComb (c.1 j)) →
     Good ch.W (combC ch.W c C) (combR ch.rm c) := by
-  first | exact @GlobalTheory.RowCombGood.comb_good | exact GlobalTheory.RowCombGood.comb_good | (intros; apply GlobalTheory.RowCombGood.comb_good <;> assumption)
+  first | exact @GlobalTheory.RowCombGood.comb_good
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RowTestHeisenbergCombinationsJointRowGoodStatement =====
@@ -441,7 +441,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.unfoldingJointData_jointlySmoothTheta_evenIndex : Big fun {D} _ _ _ _ _ _ _ _ _ _ _ ch => ∀ t Φ τ, IsFlipFin t ch.S.B ch.rm Φ τ → ∀ (M : Vol ch.G) (hM : M.Is t), ∀ d ∈ τ.support, ∀ P h,
     ∀ j, Even j → j < D.R.m → IsBiTheta ch.W.ψ _ _ _ (conAt ch.W hM (fockD ch.W t d.2 P) h j) := by
-  first | exact @GlobalTheory.ThetaJoint.main | exact GlobalTheory.ThetaJoint.main | (intros; apply GlobalTheory.ThetaJoint.main <;> assumption)
+  first | exact @GlobalTheory.ThetaJoint.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnfoldingJointDataJointlySmoothThetaEvenIndexStatement =====
@@ -500,7 +500,7 @@ open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Ro
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.lastRow_unfolding_basicHypotheses : Big fun ch => BasicAt ch := by
-  first | exact @GlobalTheory.RowBasic.basicAt | exact GlobalTheory.RowBasic.basicAt | (intros; apply GlobalTheory.RowBasic.basicAt <;> assumption)
+  first | exact @GlobalTheory.RowBasic.basicAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.LastRowUnfoldingBasicHypothesesStatement =====

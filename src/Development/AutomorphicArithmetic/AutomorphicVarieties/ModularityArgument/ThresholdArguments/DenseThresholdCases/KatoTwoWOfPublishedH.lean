@@ -409,7 +409,7 @@ private theorem algNorm_diag {a : Weil h →* (w.adicCompletion E)ˣ} {ha : IsLo
   have e := GlobalTheory.RecT.SphLaw.sat ((GlobalTheory.RecT.lawsT_iff a ha rc).2 L) (IrrGL.of σ.ρ σ.smooth σ.irred) α hx
   rw [algNorm, L.nu, e, WD.lpTw_mk]
   refine WD.sound ⟨.refl _ _, fun g v => funext fun i => ?_, fun v => rfl⟩
-  simp [mul_zpow, mul_comm, mul_left_comm, mul_assoc]
+  simp [mul_zpow, mul_comm, mul_assoc]
   change (_ : ℂ) * ((_ : ℂ) * v i) = _ * (_ * v i)
   ring
 end UpperTheory.V.Z.Kato.WeilSphericalRecords
@@ -477,6 +477,7 @@ private theorem eq_one_of_root {x : WD h} (hu : x.unr) (t : Ine (F := E) A) {z :
     (hz : (x.charPol (ineIncl h t)).IsRoot z) : z = 1 := by
   obtain ⟨m, b, rfl⟩ := x.exists_rep
   rw [WD.unr_mk] at hu
+  haveI : Module.Free ℂ (Fin m → ℂ) := Module.Free.of_basis (Pi.basisFun ℂ (Fin m))
   rw [WD.charPol_mk, hu.2 t, ← Module.End.hasEigenvalue_iff_isRoot_charpoly] at hz
   obtain ⟨v, hv⟩ := hz.exists_hasEigenvector
   have h3 := hv.apply_eq_smul
@@ -676,7 +677,7 @@ theorem _root_.GlobalTheory.T.exists_cuspidal_attached_satake_eq_hecke_poly_of_n
     ∃ π : TR.CuspSub ℚ 2, π.IsRegAlg ∧ AttR ι V π ∧ ∀ w : HeightOneSpectrum (𝓞 ℚ), ((l : ℕ) : 𝓞 ℚ) ∈ w.asIdeal →
       ∃ B, π.HasSat w B ∧
         ((algSat 2 l B).map fun b => Polynomial.X - Polynomial.C ((l : ℂ) ^ e * b)).prod = g.heckePoly l := by
-  first | exact @_root_.GlobalTheory.NewformAutAtL.exists_cuspidal_satake_prod_eq_hecke_poly_of_not_dvd_level | exact _root_.GlobalTheory.NewformAutAtL.exists_cuspidal_satake_prod_eq_hecke_poly_of_not_dvd_level | (intros; apply _root_.GlobalTheory.NewformAutAtL.exists_cuspidal_satake_prod_eq_hecke_poly_of_not_dvd_level <;> assumption)
+  first | exact @_root_.GlobalTheory.NewformAutAtL.exists_cuspidal_satake_prod_eq_hecke_poly_of_not_dvd_level
 end
 end
 end -- clump:auto
@@ -892,7 +893,7 @@ theorem _root_.GlobalTheory.T.weilDeligne_frobenius_eigenvalue_of_full_flag : �
         (WD.charPol (wdAt (Loc.PP l) ι Bw h hj (r.comp (Dec (F := F) A).subtype)) φ).IsRoot
           (((normV w : ℕ) : ℂ) ^ m i * ι ((κ i (Subgroup.inclusion (Weil_le_Dec h) φ) *
             cycBar F Ω l (φ : G F Ω) ^ (-m i) : (Qbar l)ˣ) : Qbar l)) := by
-  first | exact @GlobalTheory.FlagFrob.isRoot_charPol_wdAt | exact GlobalTheory.FlagFrob.isRoot_charPol_wdAt | (intros; apply GlobalTheory.FlagFrob.isRoot_charPol_wdAt <;> assumption)
+  first | exact @GlobalTheory.FlagFrob.isRoot_charPol_wdAt
 
 end
 end -- clump:auto
@@ -947,7 +948,6 @@ private theorem tri_avg {G : Type} [Group G] [Finite G] {n : ℕ} (R : G →* Ma
     congr 3
     funext i
     rw [← hm]
-    congr 2
     group
 
 theorem tridiagonal_weil_deligne : UpperTheory.V.Af.Wd.TriDiag := by
@@ -985,7 +985,7 @@ theorem tridiagonal_weil_deligne : UpperTheory.V.Af.Wd.TriDiag := by
   rw [LinearMap.toMatrix_apply, h3, map_smul, Basis.repr_self, Matrix.diagonal_apply]
   by_cases h : i = j
   · subst h; simp
-  · simp [h, Finsupp.single_apply, Ne.symm h]
+  · simp [h]
 
 end UpperTheory
 end -- clump:auto
@@ -1482,11 +1482,11 @@ private theorem range_of_sign {K Ω : Type} [Field K] [NumberField K] [Field Ω]
 private theorem dualTw_det {Γ k : Type} [Group Γ] [Field k] (r : Γ →* GL (Fin 2) k) :
     DualTw r (Matrix.GeneralLinearGroup.det.comp r) := by
   refine ⟨⟨!![0, 1; -1, 0], !![0, -1; 1, 0], ?_, ?_⟩, fun s => ?_⟩
-  · ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_fin_two]
-  · ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_fin_two]
+  · ext i j; fin_cases i <;> fin_cases j <;> simp
+  · ext i j; fin_cases i <;> fin_cases j <;> simp
   · have e : (r s : Matrix (Fin 2) (Fin 2) k) = !![(r s : Matrix (Fin 2) (Fin 2) k) 0 0, (r s : Matrix (Fin 2) (Fin 2) k) 0 1;
         (r s : Matrix (Fin 2) (Fin 2) k) 1 0, (r s : Matrix (Fin 2) (Fin 2) k) 1 1] := Matrix.eta_fin_two _
-    simp only [MonoidHom.comp_apply, Matrix.GeneralLinearGroup.val_det_apply, Matrix.coe_units_inv]
+    simp only [MonoidHom.comp_apply, Matrix.GeneralLinearGroup.val_det_apply]
     rw [e, Matrix.det_fin_two_of]
     ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two] <;> ring
 private theorem polar_of_lift (hP : _root_.UpperTheory.V.Af.Hypotheses') {K Ω : Type} [Field K] [NumberField K] [IsCMField K] (hK : Module.finrank ℚ K = 2)

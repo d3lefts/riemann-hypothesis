@@ -259,7 +259,7 @@ theorem _root_.GlobalTheory.T.congruent_pairs_fix_vacuum_weilDatum : ∀ {D : D7
     {χS χT : (Formalism.L2.Theta.AE D)ˣ →* Circle} {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)}, IsVacO ψ θ S T sS sT (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) v → IsSelfDualC S ΛS → IsSelfDualC T ΛT →
     (∀ τ, IsCartanInv (gramAt D S τ) (sS τ)) → (∀ τ, IsCartanInv (gramAt D T τ) (sT τ)) → IsWeilDatumO ψ S T χS χT om →
     ∃ N : ℕ, 0 < N ∧ ∀ k ∈ GfC S, ∀ k' ∈ GfC T, GlobalTheory.Member.FinCong S N k → GlobalTheory.Member.FinCong T N k' → om (k, k') v = v := by
-  first | exact @GlobalTheory.VacFixPair.pair_fix_vacO | exact GlobalTheory.VacFixPair.pair_fix_vacO | (intros; apply GlobalTheory.VacFixPair.pair_fix_vacO <;> assumption)
+  first | exact @GlobalTheory.VacFixPair.pair_fix_vacO
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.CongruentPairsFixVacuumWeilDatumStatement =====
@@ -488,7 +488,7 @@ theorem _root_.GlobalTheory.T.exists_algebraicInvariantForm_vacuum_splitPlace : 
     ∀ e : Formalism.L2.Theta.AE D, IsSplitIdem D e → ∀ (n : ℕ) (w : Fin n → WO S T), (∀ p, (w p).map (infPart D) = 0) →
     ∃ ℓ : (WO S T → ℂ) →ₗ[ℂ] ℂ, (∀ u : WO S T, (∀ i j, cA D e * u i j = u i j) → ∀ f, IsThetaFunO ψ S T f → ℓ (heisO ψ S T u f) = ℓ f) ∧
       ℓ v = 1 ∧ ∀ p, IsAlgebraic ℚ (ℓ (heisO ψ S T (w p) v)) := by
-  first | exact @GlobalTheory.SplitAlgForm.exists_alg_form | exact GlobalTheory.SplitAlgForm.exists_alg_form | (intros; apply GlobalTheory.SplitAlgForm.exists_alg_form <;> assumption)
+  first | exact @GlobalTheory.SplitAlgForm.exists_alg_form
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsAlgebraicInvariantFormVacuumSplitPlaceStatement =====
@@ -1010,7 +1010,7 @@ open GlobalTheory.RowEx MeasureTheory
 
 theorem _root_.GlobalTheory.T.finiteUnitaryPoints_mem_of_level_and_split_place : ∀ {D : D7} (V : HSp D) (H : Subgroup (GA D V)) (N : ℕ), 0 < N → (∀ g ∈ GfC V, ∀ m : ℕ, 0 < m → g ^ m ∈ H → g ∈ H) →
     (∀ k ∈ GfC V, GlobalTheory.Member.FinCong V N k → k ∈ H) → (∀ e, IsSplitIdem D e → ∀ g, Formalism.L2.Theta.SuppAt e V g → g ∈ H) → ∀ g ∈ GfC V, g ∈ H := by
-  first | exact @GlobalTheory.FinPtsGen.mem_of_level_of_split | exact GlobalTheory.FinPtsGen.mem_of_level_of_split | (intros; apply GlobalTheory.FinPtsGen.mem_of_level_of_split <;> assumption)
+  first | exact @GlobalTheory.FinPtsGen.mem_of_level_of_split
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FiniteUnitaryPointsMemOfLevelAndSplitPlaceStatement =====
@@ -1197,7 +1197,7 @@ theorem isAlgebraic_of_infPart_eq_one : ∀ {D : D7} {θ : InfFam D} {χ : (Form
     exact isAlgebraic_unit_zpow (GlobalTheory.isAlgebraic_embedding_apply _ _) _
   have e2 : χ x ^ (h * m) = χ y ^ m := by
     have := congrArg (fun g => χ g ^ m) e
-    simp only [map_mul, mul_pow, hum u hu, mul_one, hχ.2 k, one_pow, map_pow] at this
+    simp only [map_mul, mul_pow, hum u hu, mul_one, hχ.2 k, map_pow] at this
     rw [pow_mul]
     exact this
   refine IsAlgebraic.of_pow (Nat.mul_pos hh hm) ?_
@@ -1231,7 +1231,7 @@ open GlobalTheory.RowEx MeasureTheory
 
 theorem _root_.GlobalTheory.T.heckeChar_finiteIdeles_isAlgebraic_of_resEta : ∀ {D : D7} {θ : InfFam D} {χ : (Formalism.L2.Theta.AE D)ˣ →* Circle} {n : ℕ}, IsInfFam θ → IsHeckeChar D χ → ResEta D χ n →
     ∀ x : (Formalism.L2.Theta.AE D)ˣ, infPart D (x : Formalism.L2.Theta.AE D) = 1 → IsAlgebraic ℚ ((χ x : Circle) : ℂ) := by
-  first | exact @GlobalTheory.FinValAlg.finite_values_isAlgebraic | exact GlobalTheory.FinValAlg.finite_values_isAlgebraic | (intros; apply GlobalTheory.FinValAlg.finite_values_isAlgebraic <;> assumption)
+  first | exact @GlobalTheory.FinValAlg.finite_values_isAlgebraic
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.HeckeCharFiniteIdelesIsAlgebraicOfResEtaStatement =====
@@ -1423,7 +1423,7 @@ theorem _root_.GlobalTheory.T.vacuum_self_dual_lattices : ∀ {D : D7} {ψ : Add
     {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)} {ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)} {v : WO S T → ℂ}, IsVacO ψ θ S T sS sT (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) v → IsSelfDualC S ΛS → IsSelfDualC T ΛT →
     ∀ (μ : Measure (WO S T)) (𝓕 : Set (WO S T)), IsCovolOne (ratL T S) μ 𝓕 → ∀ F F' : WO S T → ℂ,
     GlobalTheory.MovedAlg.IsAlgComb ψ S T v F → GlobalTheory.MovedAlg.IsAlgComb ψ S T v F' → IsAlgebraic ℚ (GlobalTheory.RawLift.thetaIP μ 𝓕 F F') := by
-  first | exact @GlobalTheory.AlgPair.thetaIP_algComb | exact GlobalTheory.AlgPair.thetaIP_algComb | (intros; apply GlobalTheory.AlgPair.thetaIP_algComb <;> assumption)
+  first | exact @GlobalTheory.AlgPair.thetaIP_algComb
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.VacuumSelfDualLatticesStatement =====

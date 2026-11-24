@@ -189,7 +189,7 @@ theorem _root_.GlobalTheory.T.heisenberg_realPoint_fockVacuum_pairing_scalar : �
     (∀ τ, IsFockVacAt (heisO ψ S T) θ τ (cplxO (sS τ) (sT τ)) h) →
     (∀ τ, IsFockVacAt (heisO ψ S T) θ τ (cplxO (sS τ) (sT τ)) e) →
     thetaIP μ 𝓕 h (heisO ψ S T w e) = κ * thetaIP μ 𝓕 h e := by
-  first | exact @GlobalTheory.RealVacScalar.compress_real | exact GlobalTheory.RealVacScalar.compress_real | (intros; apply GlobalTheory.RealVacScalar.compress_real <;> assumption)
+  first | exact @GlobalTheory.RealVacScalar.compress_real
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HeisenbergRealPointFockVacuumPairingScalarStatement =====
@@ -415,7 +415,7 @@ theorem _root_.GlobalTheory.T.thetaFunction_heisenberg_irreducible_orthogonal : 
     ∀ (μ : Measure (WO S T)) (𝓕 : Set (WO S T)), IsCovolOne (ratL T S) μ 𝓕 →
     ∀ h e : WO S T → ℂ, IsThetaFunO ψ S T h → IsThetaFunO ψ S T e →
     (∀ w : WO S T, thetaIP μ 𝓕 h (heisO ψ S T w e) = 0) → h = 0 ∨ e = 0 := by
-  first | exact @GlobalTheory.ThetaIrred.orth_heis_translates | exact GlobalTheory.ThetaIrred.orth_heis_translates | (intros; apply GlobalTheory.ThetaIrred.orth_heis_translates <;> assumption)
+  first | exact @GlobalTheory.ThetaIrred.orth_heis_translates
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ThetaFunctionHeisenbergIrreducibleOrthogonalStatement =====

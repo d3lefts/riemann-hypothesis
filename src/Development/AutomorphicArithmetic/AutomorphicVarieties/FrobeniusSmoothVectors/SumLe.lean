@@ -199,7 +199,7 @@ theorem UpperTheory.V.Fr.ep_cw :
   · let f : LinearMap.ker (h.ad 0 c - 1) →ₗ[K] K :=
       { toFun := fun v => (((v : adp K 0) : Matrix (Fin 3) (Fin 3) K) * (B.r c).mat) 0 0
         map_add' := by intro v w; simp [Matrix.add_mul]
-        map_smul' := by intro a v; simp [Matrix.smul_mul] }
+        map_smul' := by intro a v; simp }
     have hf : Function.Injective f := by
       rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
       intro v hv
@@ -219,7 +219,7 @@ theorem UpperTheory.V.Fr.ep_cw :
       { toFun := fun v => ((((v : adp K 1) : Matrix (Fin 3) (Fin 3) K) * (B.r c).mat) 0 1,
           (((v : adp K 1) : Matrix (Fin 3) (Fin 3) K) * (B.r c).mat) 1 0)
         map_add' := by intro v w; simp [Matrix.add_mul]
-        map_smul' := by intro a v; simp [Matrix.smul_mul] }
+        map_smul' := by intro a v; simp }
     have hf : Function.Injective f := by
       rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
       intro v hv
@@ -357,7 +357,7 @@ end Av
 private theorem sg_sub_eq_mul {R : Type} [CommRing R] (j k : ZMod 2) : sg R (j - k) = sg R j * sg R k := by
   obtain rfl | rfl : j = 0 ∨ j = 1 := by revert j; decide
   all_goals obtain rfl | rfl : k = 0 ∨ k = 1 := by revert k; decide
-  all_goals simp [sg, show (0:ZMod 2) - 1 = 1 from rfl, show (1:ZMod 2) - 1 = 0 from rfl, ZMod.val_one]
+  all_goals simp [sg, show (0:ZMod 2) - 1 = 1 from rfl, ZMod.val_one]
 
 private theorem sg_mul_self_eq_one {R : Type} [CommRing R] (j : ZMod 2) : sg R j * sg R j = 1 := by
   unfold sg
@@ -690,7 +690,7 @@ private theorem ns_coeff {O σ : Type} [CommRing O] [DecidableEq σ] (s t : σ) 
   · rw [if_neg h, if_neg]
     intro hle
     have := hle t
-    simp [Finsupp.single_apply, Ne.symm h] at this
+    simp [Ne.symm h] at this
 
 private theorem ns_dec {O σ : Type} [CommRing O] [IsLocalRing O] [Fintype σ] (g : MvPowerSeries σ O)
     (hg : ∀ s, MvPowerSeries.coeff (Finsupp.single s 1) g ∈ maximalIdeal O) :

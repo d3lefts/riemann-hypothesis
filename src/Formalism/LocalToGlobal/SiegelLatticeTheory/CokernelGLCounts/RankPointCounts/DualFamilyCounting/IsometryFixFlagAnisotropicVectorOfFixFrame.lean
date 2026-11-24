@@ -82,9 +82,7 @@ def rlift_Spl (Λ : Submodule (𝓞 E) S.V) (X : Submodule E S.V) (P P' : S.V �
   LAdj S P P' ∧ (∀ x ∈ X, P x = x) ∧ (∀ y, P y ∈ X) ∧ LInt Λ P ∧ LInt Λ P' ∧ ∀ w y, S.hT (P' w) (P' y) = 0
 
 theorem rlift_swap {x y : S.V} (h : S.hT x y = 0) : S.hT y x = 0 := by
-  have := S.herm.eq x y
-  rw [h, map_zero] at this
-  exact this.symm
+  simpa [h] using (S.herm.eq x y).symm
 
 theorem rlift_spl_of_retr (hcm : Formalism.HermitianLatticesTheory.IsCMUnram E) (Λ : Submodule (𝓞 E) S.V) (X : Submodule E S.V)
     (huni : Formalism.HermitianLatticesTheory.IsUnimodular S.hT Λ) (hiso : ∀ x ∈ X, ∀ y ∈ X, S.hT x y = 0)

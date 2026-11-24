@@ -388,8 +388,7 @@ variable {W Qq F : Type} [CommRing W] [Field Qq] [Algebra W Qq] [Field F] [Algeb
 def gUp (p : ℕ) (g : Matrix (Fin n) (Fin n) Qq) : Matrix (Fin n) (Fin n) Qq := ((p : Qq))⁻¹ • g
 
 theorem pQ_ne {p : ℕ} (h : Res (p : W) F) : (p : Qq) ≠ 0 := by
-  rw [← map_natCast (algebraMap W Qq) p]
-  exact (map_ne_zero_iff _ (IsFractionRing.injective W Qq)).mpr h.ne
+  simpa only [map_natCast] using (map_ne_zero_iff _ (IsFractionRing.injective W Qq)).mpr h.ne
 
 theorem smul_psi_gUp {p : ℕ} (h : Res (p : W) F) (g : Matrix (Fin n) (Fin n) Qq) (w : Fin n → W) :
     (p : W) • psi (gUp p g) w = psi g w := by
@@ -407,10 +406,8 @@ private theorem psi_injective_of_isUnit_det (g : Matrix (Fin n) (Fin n) Qq) (hg 
     Function.Injective (psi (W := W) g) := by
   intro a b hab
   rw [psi_apply, psi_apply] at hab
-  have hinj : Function.Injective g.mulVec :=
-    Matrix.mulVec_injective_iff_isUnit.mpr ((Matrix.isUnit_iff_isUnit_det g).mpr hg)
-  funext c
-  exact IsFractionRing.injective W Qq (congrFun (hinj hab) c)
+  exact funext fun c => IsFractionRing.injective W Qq (congrFun
+    ((Matrix.mulVec_injective_iff_isUnit.mpr ((Matrix.isUnit_iff_isUnit_det g).mpr hg)) hab) c)
 
 theorem psi_gUp_mem {p : ℕ} (h : Res (p : W) F) (g : Matrix (Fin n) (Fin n) Qq) (hg : IsUnit g.det)
     (w : Fin n → W) : psi (gUp p g) w ∈ colSpan W g ↔ red F n w = 0 := by
@@ -435,12 +432,8 @@ theorem card_up {p : ℕ} (h : Res (p : W) F) (g : Matrix (Fin n) (Fin n) Qq) (h
   let f : M →ₗ[W] U.restrictScalars W := (red F n).restrict (fun x hx => hx)
   have hf : Function.Surjective f := by
     rintro ⟨u, hu⟩
-    choose w hw using fun c => h.surj (u c)
-    have hred : red F n w = u := funext fun c => by rw [red_apply, hw]
-    refine ⟨⟨w, ?_⟩, ?_⟩
-    · show red F n w ∈ U
-      rw [hred]; exact hu
-    · exact Subtype.ext hred
+    obtain ⟨w, rfl⟩ := red_surj h u
+    exact ⟨⟨w, hu⟩, rfl⟩
   have hQ : (LinearMap.ker f).map (e : M →ₗ[W] M.map (psi (gUp p g))) =
       Submodule.comap (M.map (psi (gUp p g))).subtype (colSpan W g) := by
     ext z

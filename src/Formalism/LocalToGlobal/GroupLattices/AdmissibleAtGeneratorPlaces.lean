@@ -71,8 +71,6 @@ theorem mEatT_nat (D : D7) (u : D.what₂.Word) (w : D.what₂.places.Pl) : ∃ 
   split_ifs with hs
   · first
     | simp only [Formalism.MainNotions.G.Nm]
-    | simp only [Formalism.Nm]
-    | skip
     refine ⟨D.R.m * (2 * ∑ τ : D.what₂.Tau, Wtau D u τ) + D.R.m * D.R.f * D.R.N D.R.m +
       (topsOf D.host D.eTau).card * (b + 1) * a * (2 * a + 1), ?_⟩
     push_cast
@@ -423,9 +421,6 @@ theorem atG_coreU {Xe : ErrX D} {C1 : ℝ} (hCL : UsedTuplesBoundByConstant D L 
   have he : (0 : ℝ) < D.what₂.places.ramIdx w := by
     first
       | exact_mod_cast D.what₂.places.ramIdx_pos w
-      | exact_mod_cast Nat.pos_of_ne_zero (D.what₂.places.ramIdx_ne_zero w)
-      | exact_mod_cast D.what₂.places.ram_pos w
-      | positivity
   unfold ur
   unfold LiftErrorLocal.vG at hb
   rw [le_div_iff₀ he] at hb

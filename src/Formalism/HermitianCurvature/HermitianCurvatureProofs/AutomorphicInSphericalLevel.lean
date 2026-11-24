@@ -624,12 +624,10 @@ variable {k r : ℕ}
 lemma uMap_cont (z : Fin (2 * r + k + 1) → ℂ) : Continuous fun s : B.Mat k r => C2.uMap k r z s := by
   unfold C2.uMap herm
   refine continuous_pi fun a => continuous_pi fun b => ?_
-  by_cases h : a.val < r
-  · simp only [dif_pos h]
-    exact continuous_const.dotProduct (continuous_const.matrix_mulVec
+  split_ifs
+  · exact continuous_const.dotProduct (continuous_const.matrix_mulVec
       (continuous_id.matrix_mulVec continuous_const))
-  · simp only [dif_neg h]
-    exact (continuous_const.dotProduct (continuous_const.matrix_mulVec
+  · exact (continuous_const.dotProduct (continuous_const.matrix_mulVec
       (continuous_id.matrix_mulVec continuous_const))).div_const _
 
 lemma isClosed_N0set (z : Fin (2 * r + k + 1) → ℂ) : IsClosed (C2.N0set k r z) := by
@@ -684,8 +682,7 @@ lemma skew_mul (Ba B : Matrix (Fin r) (Fin (k + 1)) ℂ) (Sa S : Matrix (Fin r) 
     rw [Matrix.diagonal_conjTranspose]
     congr 1
     funext j
-    unfold hW
-    split_ifs with hj <;> simp [hj]
+    exact NBk.star_hW j
   have hX : (B * Matrix.diagonal (hW k) * Baᴴ)ᴴ = Ba * Matrix.diagonal (hW k) * Bᴴ := by
     simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, hD, Matrix.mul_assoc]
   have hY : (Ba * Matrix.diagonal (hW k) * Bᴴ)ᴴ = B * Matrix.diagonal (hW k) * Baᴴ := by

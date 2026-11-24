@@ -259,7 +259,7 @@ open NumberField Matrix MeasureTheory GlobalTheory.CuspRep GlobalTheory.CuspRep.
 open scoped Pointwise
 
 theorem _root_.GlobalTheory.T.decaysAtShortRationalVectors_rapidKernelOperator : ∀ (E : Type) [Field E] [NumberField E] [_root_.NumberField.IsTotallyComplex E] (a : ℕ) (F : GA E a → ℂ) (X : Type) [MeasurableSpace X] (ν : Measure X) [SFinite ν] (k : X → ℂ) (γ : X → GL (Fin a) (Cinf E)), GlobalTheory.JSW.IsRapidInf ν k γ → GlobalTheory.ShortVecDecay.Decays F → GlobalTheory.ShortVecDecay.Decays (fun g : GA E a => ∫ x, k x * F (g * infGL E a (γ x)) ∂ν) := by
-  first | exact @GlobalTheory.RapidKernelDecay.decays_integral | exact GlobalTheory.RapidKernelDecay.decays_integral | (intros; apply GlobalTheory.RapidKernelDecay.decays_integral <;> assumption)
+  first | exact @GlobalTheory.RapidKernelDecay.decays_integral
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DecaysAtShortRationalVectorsRapidKernelOperatorStatement =====
@@ -554,7 +554,7 @@ theorem hasFDerivAt_chart_kernel : ∀ (E : Type) [Field E] [NumberField E] [_ro
       ContinuousOn.measurable_piecewise hΨc continuousOn_const isOpen_invSet.measurableSet
     have e : (fun x => Ψ (Γ x)) = (invSet E a).piecewise Ψ 0 ∘ Γ := by
       funext x
-      simp [Set.piecewise, Γ, val_mem_invSet (γ x)]
+      simp [Γ, val_mem_invSet (γ x)]
     have h3 : AEStronglyMeasurable (fun x => Ψ (Γ x)) ν := by
       rw [e]; exact (hm.comp hΓm).aestronglyMeasurable
     exact hk.aestronglyMeasurable.smul h3

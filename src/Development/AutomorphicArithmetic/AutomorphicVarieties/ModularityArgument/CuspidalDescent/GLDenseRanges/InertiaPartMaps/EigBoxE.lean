@@ -264,7 +264,7 @@ private theorem eigBoxL_lemma_7 {W Z : Type} [AddCommGroup W] [Module ℂ W] [Ad
     have key : (Finsupp.lapply i) ∘ₗ e.toLinearMap = sl (b.coord i) := by
       apply TensorProduct.ext'
       intro w z
-      simp [he_def, TensorProduct.equivFinsuppOfBasisRight_apply_tmul_apply, sl_tmul]
+      simp [he_def, sl_tmul]
     exact LinearMap.congr_fun key t
   have ht' : t = (e t).sum fun i w => w ⊗ₜ[ℂ] b i := by
     rw [← TensorProduct.equivFinsuppOfBasisRight_symm_apply, LinearEquiv.symm_apply_apply]
@@ -282,7 +282,7 @@ private theorem eigBoxL_lemma_8 {W Z : Type} [AddCommGroup W] [Module ℂ W] [Ad
     have key : (Finsupp.lapply i) ∘ₗ e.toLinearMap = sr (b.coord i) := by
       apply TensorProduct.ext'
       intro w z
-      simp [he_def, TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply, sr_tmul]
+      simp [he_def, sr_tmul]
     exact LinearMap.congr_fun key t
   have ht' : t = (e t).sum fun i z => b i ⊗ₜ[ℂ] z := by
     rw [← TensorProduct.equivFinsuppOfBasisLeft_symm_apply, LinearEquiv.symm_apply_apply]

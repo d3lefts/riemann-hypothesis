@@ -226,7 +226,7 @@ lemma wt_int {n : ℕ} (ε : Fin n → Bool) {H : Type} [NormedAddCommGroup H] [
       simp only [Pi.single_eq_same, Pi.zero_apply, Complex.ofReal_zero, zero_mul, Complex.exp_zero]
       push_cast
       exact Complex.exp_two_pi_mul_I
-    · simp [Pi.single_apply, hb]
+    · simp [hb]
   rw [sum_single] at h1
   rw [hD, h0] at h1
   simp only [Pi.zero_apply, mul_zero, Finset.sum_const_zero, Complex.ofReal_zero, zero_mul,
@@ -433,7 +433,7 @@ theorem dT_zero {n : ℕ} : dT (0 : Fin n → ℝ) = 1 := by
 theorem dT_two_pi {n : ℕ} (a : Fin n) : dT (Pi.single a (2 * Real.pi)) = 1 := by
   rw [dT, ← Matrix.diagonal_one]; congr 1; funext b
   by_cases h : b = a
-  · subst h; simp only [Pi.single_eq_same, Pi.one_apply]
+  · subst h; simp only [Pi.single_eq_same]
     rw [Complex.exp_eq_one_iff]; exact ⟨1, by push_cast; ring⟩
   · simp [Pi.single_eq_of_ne h]
 

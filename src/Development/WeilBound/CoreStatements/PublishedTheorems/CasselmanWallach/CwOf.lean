@@ -672,7 +672,6 @@ theorem e3d : SobolevNormDomination := by
       · have e : sobNorm σ (l :: S) w = ‖Dw σ l w‖ + sobNorm σ S w := by
           first
             | rfl
-            | simp [sobNorm]
         rw [e, Seminorm.add_apply]
         exact add_le_add (hw l hl w hw') (h' w hw')
   exact main S hS
@@ -875,8 +874,8 @@ theorem e3c : SmoothMapSeminormBound := by
     have hw : Sm ε σ w := hD.1 _ (((1 + casimirK ε A) ^ m) y).2
     let F : kfin ε σ →ₗ[ℂ] (Matrix (Fin n) (Fin n) ℂ → ℂ) :=
       { toFun := fun η g => ⟪w, σ g (η : H)⟫_ℂ
-        map_add' := fun a b => by funext g; simp [inner_add_right]
-        map_smul' := fun c a => by funext g; simp [inner_smul_right] }
+        map_add' := fun a b => by funext g; simp
+        map_smul' := fun c a => by funext g; simp }
     have hF : ∀ (η : kfin ε σ) g, F η g = ⟪w, σ g (η : H)⟫_ℂ := fun _ _ => rfl
     have h1 : ∀ η : kfin ε σ, ContinuousOn (F η) (ReciprocityTheory.ChartRestriction.DS.UJset ε) := fun η => by
       have := (continuousOn_const (c := w) (s := UJset ε)).inner (𝕜 := ℂ) (hU.2.2 (η : H))
@@ -1609,7 +1608,7 @@ theorem B_eq_zero (B : V →ₗ⋆[ℂ] V →ₗ[ℂ] ℂ) (hB : ∀ v y, B (cas
     (hv : casimirK ε E v = (μ : ℂ) • v) (hy : casimirK ε E y = (μ' : ℂ) • y) : B v y = 0 := by
   have h := hB v y
   rw [hv, hy] at h
-  simp only [map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul, Complex.conj_ofReal,
+  simp only [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, Complex.conj_ofReal,
     RingHom.id_apply] at h
   have h2 : ((μ : ℂ) - μ') * B v y = 0 := by rw [sub_mul, h, sub_self]
   rcases mul_eq_zero.1 h2 with h3 | h3

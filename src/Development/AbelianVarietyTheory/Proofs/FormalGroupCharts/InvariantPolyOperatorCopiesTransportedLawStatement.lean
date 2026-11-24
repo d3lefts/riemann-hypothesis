@@ -68,7 +68,7 @@ theorem dofN_ev {m : ℕ} (F : Fin d → PS k 2 d) (b : Fin n) (u : Fin d → k)
     DofN F b u (ev V g) = ∑ c : Fin m, ∑ l : Fin d, ev V (pderiv (c, l) g) * DofN F b u (V c l) := by
   unfold DofN
   simp only [pderiv_ev V hV]
-  simp only [Finset.mul_sum (s := (Finset.univ : Finset (Fin m))), Finset.mul_sum (f := fun l => ev V _ * _)]
+  simp only [Finset.mul_sum (s := (Finset.univ : Finset (Fin m)))]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun c _ => ?_
   simp only [Finset.mul_sum]
@@ -172,7 +172,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.ChartCmp
 
 theorem _root_.GlobalTheory.T.invariantPolyOperatorCopies_transportedLaw : ∀ (k : Type) [CommRing k] (d n : ℕ) (G : FGLaw k d) (φ φi : Pt k 1 d), IsInvPair φ φi → ∀ (Ix : Type) [Fintype Ix] (cp : Ix → Fin n) (u : Ix → Fin d → k) (P : MvPolynomial Ix k) (g : PS k n d), DpolyN (transF G.F φ φi) cp u P (ev (n := n) (fun b => comp1 φ (pt k (n := n) d b)) g) = ev (n := n) (fun b => comp1 φ (pt k (n := n) d b)) (DpolyN G.F cp (fun l => (dLin φ).mulVec (u l)) P g) := by
-  first | exact @GlobalTheory.ChartTransN.dpolyN_transF | exact GlobalTheory.ChartTransN.dpolyN_transF | (intros; apply GlobalTheory.ChartTransN.dpolyN_transF <;> assumption)
+  first | exact @GlobalTheory.ChartTransN.dpolyN_transF
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.InvariantPolyOperatorCopiesTransportedLawStatement =====

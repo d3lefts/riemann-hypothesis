@@ -1040,10 +1040,10 @@ theorem log_shortFamilyNumbers_le : ∀ (N n a f : ℕ) (rd L : ℝ), 1 ≤ N �
     linarith
   have bN : (N : ℝ) ≤ E := hNn'.trans bn
   have b2 : (2 : ℝ) ≤ E := by linarith
-  have b2N : (2 * N + 1 : ℝ) ≤ E ^ 2 := by nlinarith
-  have bN1 : (N + 1 : ℝ) ≤ E ^ 2 := by nlinarith
+  have b2N : (2 * N + 1 : ℝ) ≤ E ^ 2 := by linarith [mul_le_mul_of_nonneg_right hE3 (by linarith : (0:ℝ) ≤ E)]
+  have bN1 : (N + 1 : ℝ) ≤ E ^ 2 := by linarith [mul_le_mul_of_nonneg_right hE3 (by linarith : (0:ℝ) ≤ E)]
   have bsq : Real.sqrt n ≤ E := by
-    rw [Real.sqrt_le_left (by linarith)]; nlinarith
+    rw [Real.sqrt_le_left (by linarith)]; linarith [mul_le_mul_of_nonneg_right hE1 (by linarith : (0:ℝ) ≤ E)]
   have bf32 : (f : ℝ) ^ ((3 : ℝ) / 2) ≤ (E ^ 2) ^ 2 := by
     calc (f : ℝ) ^ ((3 : ℝ) / 2) ≤ (f : ℝ) ^ ((2 : ℕ) : ℝ) :=
           Real.rpow_le_rpow_of_exponent_le hf' (by norm_num)

@@ -231,7 +231,7 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.UnitaryBC GlobalTheory.CuspR
 theorem _root_.GlobalTheory.T.covolume_unitDetNormSlab_latticeAut_lt_top : ∀ (E : Type) [Field E] [NumberField E], IsTotallyComplex E → ∀ j : ℕ, 1 ≤ j → ∀ Λ : Submodule (𝓞 E) (Fin j → E), Submodule.IsFullLattice E Λ → GlobalTheory.FlagMeas.covol (GlobalTheory.FlagMeas.autGL E j Λ) (GlobalTheory.FlagMeas.haarGL E j) {x | 1 ≤ GlobalTheory.FlagMeas.detNorm E j x ∧ GlobalTheory.FlagMeas.detNorm E j x < Real.exp 1} < ⊤ := by
   intro E _ _ hE j hj Λ hΛ
   letI : Submodule.IsFullLattice E Λ := hΛ
-  apply GlobalTheory.SlabFinVol.covol_unitSlab_lt_top <;> first | assumption | infer_instance
+  apply GlobalTheory.SlabFinVol.covol_unitSlab_lt_top <;> first | assumption
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CovolumeUnitDetNormSlabLatticeAutLtTopStatement =====
@@ -362,7 +362,7 @@ theorem isHaarMeasure_nuGL : (nuGL E j).IsHaarMeasure := by
     ext s hs
     rw [Measure.map_apply (measurable_const_mul g) hs, nuGL_apply, nuGL_apply]
     have e1 : (fun h => g * h) ⁻¹' s = (fun h => g⁻¹ * h) '' s := by
-      ext y; simp [Set.mem_image, eq_inv_mul_iff_mul_eq]
+      ext y; simp
     have e2 : ent E j '' ((fun h => g⁻¹ * h) '' s) =
         (fun x : MatInf E j => ent E j g⁻¹ * x) '' (ent E j '' s) := by
       rw [Set.image_image, Set.image_image]

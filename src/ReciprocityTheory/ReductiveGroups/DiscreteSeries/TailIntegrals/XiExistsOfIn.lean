@@ -416,8 +416,6 @@ private lemma gN_right_lemma_3 {k r : ℕ} {κ : Mat k r} (hκ : κᴴ * κ = 1)
   have hκ' : κ * κᴴ = 1 := by
     first
       | exact mul_eq_one_comm.mp hκ
-      | exact (Matrix.mul_eq_one_comm).1 hκ
-      | exact Matrix.mul_eq_one_comm_of_equiv (Equiv.refl _) hκ
   unfold gN
   congr 1
   apply Complex.ofReal_injective
@@ -941,13 +939,11 @@ theorem slowWeightBound' : SLOW := by
     rw [hc, hq, hRk]
     have : (1 - κ) ≠ 0 := by linarith
     field_simp
-    try ring
   have hsT : (3 : ℝ) ^ (∑ i, t i) ≤ 3 ^ T := Real.rpow_le_rpow_of_exponent_le (by norm_num) hT
   have hRp : 0 < R ^ (-κ) := Real.rpow_pos_of_pos hR _
   have hreal : c * (2 * q) + R ^ (-κ) ≤ (3 ^ T / (1 - κ) + 1) * R ^ (-κ) := by
     rw [hcq, add_mul, one_mul, div_mul_eq_mul_div]
     gcongr
-    try linarith
   calc ∫⁻ β, slowly t A b β * ENNReal.ofReal (|β| ^ (-κ))
       = (∫⁻ β in Icc (-R) R, f β * ENNReal.ofReal (|β| ^ (-κ))) +
           ∫⁻ β in (Icc (-R) R)ᶜ, f β * ENNReal.ofReal (|β| ^ (-κ)) :=
@@ -1129,24 +1125,18 @@ private theorem side {k r : ℕ} (s : Fin (r + 1) → ℝ) (hs : ∀ l, 0 ≤ s 
     split_ifs with ha
     · first
         | (simp only [Matrix.of_apply]; fun_prop)
-        | fun_prop
-        | exact (continuous_apply _).comp (continuous_apply _)
     · first
         | (simp only [Matrix.mulVec, dotProduct, Matrix.of_apply]; fun_prop)
-        | (simp only [Matrix.mulVec, Matrix.dotProduct, Matrix.of_apply]; fun_prop)
-        | exact (continuous_apply _).comp (Continuous.matrix_mulVec continuous_id continuous_const)
   have hWfin : μW Set.univ < ∞ := by
     have h2 : μW Set.univ ≤ μW (UWset k r z) + μW (UWset k r z)ᶜ := by
       first
         | exact measure_univ_le_add_compl _
-        | (rw [← Set.union_compl_self (UWset k r z)]; exact measure_union_le _ _)
     rw [hW.conc, add_zero] at h2
     exact lt_of_le_of_lt h2 (hW.finite_compact _ hcomp)
   have hae : ∀ᵐ x ∂μW, Matrix.of x ∈ UWset k r z := by
     rw [ae_iff]
     first
       | exact hW.conc
-      | exact measure_mono_null (fun a ha => ha) hW.conc
   have hinner : ∀ h ∈ UWset k r z, (∫⁻ n : Mt k r, (xiN k r s (Matrix.of n * h) : ℝ≥0∞) *
       ENNReal.ofReal ((1 + |lam k r z (Matrix.of n)|) ^ (-(2 : ℝ))) ∂μN) ≤
       ENNReal.ofReal C * IInt μN z s (1 / 2) := by
@@ -1160,8 +1150,6 @@ private theorem side {k r : ℕ} (s : Fin (r + 1) → ℝ) (hs : ∀ l, 0 ≤ s 
       first
         | exact continuous_pi fun i => continuous_pi fun j => by
             simp only [conjM, Matrix.mul_apply, Matrix.of_apply]; fun_prop
-        | (unfold conjM; fun_prop)
-        | (unfold conjM; exact (continuous_const.matrix_mul continuous_id).matrix_mul continuous_const)
     have hG : Measurable (fun m : Mt k r => ENNReal.ofReal (xiR k r s (Matrix.of m)) *
         ENNReal.ofReal ((1 + |lam k r z (Matrix.of m)|) ^ (-(1 / 2 : ℝ)))) := by
       have hm1 : Measurable (fun m : Mt k r => ENNReal.ofReal (xiR k r s (Matrix.of m))) :=
@@ -1218,7 +1206,6 @@ private theorem side {k r : ℕ} (s : Fin (r + 1) → ℝ) (hs : ∀ l, 0 ≤ s 
     _ < ∞ := by
         first
           | exact ENNReal.mul_lt_top (ENNReal.mul_lt_top ENNReal.ofReal_lt_top hI) hWfin
-          | exact ENNReal.mul_lt_top (ENNReal.mul_lt_top ENNReal.ofReal_ne_top hI.ne) hWfin.ne
 
 end XI
 
@@ -1441,7 +1428,7 @@ theorem dot_H (v w : Fin (2 * r + k + 1) → ℂ) :
     star (Hpk k r *ᵥ v) ⬝ᵥ (Hpk k r *ᵥ w) = star v ⬝ᵥ w := by
   have h := HE_adj (HE k r (WithLp.toLp 2 v)) (WithLp.toLp 2 w)
   rw [HE_HE] at h
-  simp only [HE_apply, EuclideanSpace.inner_eq_star_dotProduct, WithLp.ofLp_toLp] at h
+  simp only [HE_apply, EuclideanSpace.inner_eq_star_dotProduct] at h
   rw [dotProduct_comm (star (Hpk k r *ᵥ v)), ← h, dotProduct_comm]
 
 theorem ga_H (l : Fin (r + 1)) (Y : Fin (r + 1) → Fin (2 * r + k + 1) → ℂ) :

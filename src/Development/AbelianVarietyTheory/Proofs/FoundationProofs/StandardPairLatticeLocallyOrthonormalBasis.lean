@@ -203,17 +203,16 @@ private theorem exists_orthonormal_mem_span_of_diagonal_square_prod {K V : Type}
       linear_combination hqK - ((a 0 : K) * (q₁ : K) ^ 2 + (a 1 : K) * (q₂ : K) ^ 2) * hθ2
     have hww' : h w w' = 0 := by
       simp only [hw, hw', map_add (f := _), map_sub, map_smul, map_smulₛₗ, LinearMap.add_apply,
-        LinearMap.sub_apply, LinearMap.smul_apply, smul_eq_mul, hv00, hv11, hv01, hv10, map_mul,
+        LinearMap.smul_apply, smul_eq_mul, hv00, hv11, hv01, hv10, map_mul,
         map_ratCast, hθ]
       ring
     have hw'w : h w' w = 0 := by
-      simp only [hw, hw', map_add (f := _), map_sub, map_smul, map_smulₛₗ, LinearMap.add_apply,
-        LinearMap.sub_apply, LinearMap.smul_apply, smul_eq_mul, hv00, hv11, hv01, hv10, map_mul,
+      simp only [hw, hw', map_add (f := _), map_sub, map_smul, map_smulₛₗ, LinearMap.sub_apply, LinearMap.smul_apply, smul_eq_mul, hv00, hv11, hv01, hv10, map_mul,
         map_ratCast, hθ]
       ring
     have hw'w' : h w' w' = ((a 0 * a 1 : ℚ) : K) := by
       simp only [hw', map_sub, map_smul, map_smulₛₗ, LinearMap.sub_apply, LinearMap.smul_apply,
-        smul_eq_mul, hv00, hv11, hv01, hv10, map_mul, map_ratCast, hθ, map_neg]
+        smul_eq_mul, hv00, hv11, hv01, hv10, map_mul, map_ratCast, hθ]
       push_cast
       linear_combination (a 0 : K) * (a 1 : K) * hqK -
         (a 0 : K) * (a 1 : K) * ((a 0 : K) * (q₁ : K) ^ 2 + (a 1 : K) * (q₂ : K) ^ 2) * hθ2
@@ -321,20 +320,15 @@ theorem exists_unit_norm_of_selfDual_hermitian_lattice :
   have hpK : (p : K) ≠ 0 := by exact_mod_cast hp.ne_zero
   have hpQ : (p : ℚ) ≠ 0 := by exact_mod_cast hp.ne_zero
   have hp1 : (1 : ℚ) < p := by exact_mod_cast hp.one_lt
-  have hθ0 : θ ≠ 0 := by
-    rintro rfl
-    have : (d : K) = 0 := by simpa using hθ
-    exact hd.ne_zero (by exact_mod_cast this)
 
   have hrat : ∀ x : V, ∃ u : ℚ, h x x = (u : K) := by
     intro x
     obtain ⟨a, b, hab⟩ := hK (h x x)
-    have h1 := hherm x x
-    rw [hab, map_add (f := _), map_mul, map_ratCast, map_ratCast, hσθ] at h1
-    have h2 : (b : K) * θ = 0 := by
-      have : (2 : K) * ((b : K) * θ) = 0 := by linear_combination h1
-      simpa using this
-    exact ⟨a, by rw [hab, h2, add_zero]⟩
+    have h1 : (b : K) * θ = 0 := by
+      have h2 := hherm x x
+      rw [hab, map_add, map_mul, map_ratCast, map_ratCast, hσθ] at h2
+      linear_combination h2 / 2
+    exact ⟨a, by rw [hab, h1, add_zero]⟩
   have hnp : padicNorm p (p : ℚ) = (p : ℚ)⁻¹ := padicNorm.padicNorm_p_of_prime
   by_contra hcon
   push_neg at hcon
@@ -344,15 +338,13 @@ theorem exists_unit_norm_of_selfDual_hermitian_lattice :
     have h1 : padicNorm p u ≤ 1 := (hO u).1 (hu ▸ hLO y hy y hy)
     have h2 := hcon y hy hyW u hu
     have h3 : ((u / p : ℚ) : K) ∈ O := by
-      rw [hO, padicNorm.div, hnp]
+      rw [hO, padicNorm.div, hnp, div_inv_eq_mul]
       by_cases hu0 : u = 0
       · simp [hu0]
       obtain ⟨z, hz⟩ := padicNorm.values_discrete (p := p) hu0
       rw [hz] at h1 h2 ⊢
-      have hz0 : -z < 0 := by
-        have := lt_of_le_of_ne h1 h2
-        exact (zpow_lt_one_iff_right₀ hp1).1 this
-      rw [div_inv_eq_mul, ← zpow_add_one₀ hpQ]
+      have hz0 : -z < 0 := (zpow_lt_one_iff_right₀ hp1).1 (lt_of_le_of_ne h1 h2)
+      rw [← zpow_add_one₀ hpQ]
       exact zpow_le_one_of_nonpos₀ hp1.le (by omega)
     rw [hu]
     simpa using h3
@@ -361,8 +353,7 @@ theorem exists_unit_norm_of_selfDual_hermitian_lattice :
     have h1 := O.sub_mem (O.sub_mem (hdiv _ (L.add_mem hx hy) (W.add_mem hxW hyW)) (hdiv x hx hxW))
       (hdiv y hy hyW)
     convert h1 using 1
-    simp only [map_add (f := _), LinearMap.add_apply]
-    rw [← hherm x y]
+    simp only [map_add, LinearMap.add_apply, ← hherm x y]
     ring
   have hstep : ∀ x ∈ L, x ∈ W → (θ / p) • x ∈ L := by
     intro x hx hxW
@@ -372,7 +363,7 @@ theorem exists_unit_norm_of_selfDual_hermitian_lattice :
     have r2 := htr _ (hL _ hω x hx) (W.smul_mem _ hxW) y hy hyW
     have h1 := O.add_mem r2 (O.mul_mem (O.sub_mem hω O.one_mem) r1)
     convert h1 using 1
-    simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, map_div₀, map_add (f := _), map_one,
+    simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, map_div₀, map_add, map_one,
       hσθ, map_ofNat]
     field_simp
     ring
@@ -401,9 +392,9 @@ theorem exists_unit_norm_of_selfDual_hermitian_lattice :
       rw [padicNorm.padicNorm_of_prime_of_ne hpd]
       exact inv_le_one_of_one_le₀ hp1.le
   have hc : (p : ℚ) ≤ padicNorm p ((d : ℚ) / (p * p)) := by
-    rw [padicNorm.div, padicNorm.mul, hnp, le_div_iff₀ (by positivity)]
-    calc (p : ℚ) * ((p : ℚ)⁻¹ * (p : ℚ)⁻¹) = (p : ℚ)⁻¹ := by field_simp
-      _ ≤ _ := hnd
+    rw [padicNorm.div, padicNorm.mul, hnp, le_div_iff₀ (by positivity), ← mul_assoc,
+      mul_inv_cancel₀ hpQ, one_mul]
+    exact hnd
   have hpow : ∀ (q : ℚ) (k : ℕ), padicNorm p (q ^ k) = padicNorm p q ^ k := by
     intro q k
     induction k with
@@ -416,16 +407,15 @@ theorem exists_unit_norm_of_selfDual_hermitian_lattice :
       rw [h.map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, hu, smul_eq_mul, smul_eq_mul,
         map_pow, map_div₀, hσθ, map_natCast, ← mul_assoc, ← mul_pow]
       push_cast
-      congr 2
-      field_simp
-      linear_combination -hθ
+      rw [show θ / ↑p * (-θ / ↑p) = (↑d : K) / (↑p * ↑p) by
+        field_simp
+        linear_combination -hθ]
     rw [h2, hO, padicNorm.mul, hpow] at h1
     refine le_trans ?_ h1
     gcongr
   obtain ⟨k, hk⟩ := pow_unbounded_of_one_lt (padicNorm p u)⁻¹ hp1
-  have := hbound k
   rw [inv_lt_iff_one_lt_mul₀ hupos] at hk
-  linarith
+  linarith [hbound k]
 
 end GlobalTheory
 end -- clump:auto
@@ -539,8 +529,7 @@ theorem exists_lattice_norm_one_of_norm_one_mod (K V : Type) [Field K] [CharZero
       L.sub_mem (L.add_mem hyL (hL _ (O.mul_mem htO hpO) y hyL)) (hL _ htO _ hm),
       W.sub_mem (W.add_mem hyW (W.smul_mem _ hyW)) (W.smul_mem _ (W.smul_mem _ heW)), ?_⟩
     simp only [map_smul, map_smulₛₗ, map_add (f := _), map_sub, LinearMap.smul_apply, LinearMap.add_apply,
-      LinearMap.sub_apply, smul_eq_mul, hu, hee, map_mul, map_pow, map_ratCast, map_natCast,
-      RingHom.id_apply]
+      LinearMap.sub_apply, smul_eq_mul, hu, hee, map_mul, map_pow, map_ratCast, map_natCast]
     linear_combination (1 + (t : K) * (p : K) ^ m) * hs' -
       ((t : K) * (p : K) ^ m) * (1 + (t : K) * (p : K) ^ m) * hT
   obtain ⟨T, hT⟩ : ∃ T : ℚ, h e y + h y e = (T : K) := by
@@ -1040,9 +1029,9 @@ theorem hYY_single (D : D7) {N N' : ℕ} (x : Matrix (Fin N') (Fin N) D.host.E) 
   congr 1
   rw [Finset.sum_eq_single i, Finset.sum_eq_single j]
   · simp
-  · intro b _ hb; simp [Matrix.single_apply, hb.symm]
+  · intro b _ hb; simp [hb.symm]
   · simp
-  · intro b _ hb; simp [Matrix.single_apply, hb.symm]
+  · intro b _ hb; simp [hb.symm]
   · simp
 
 theorem exists_orthonormal (D : D7) (N N' : ℕ) (hev : Even (N * N')) :
@@ -1084,7 +1073,7 @@ theorem exists_orthonormal (D : D7) (N N' : ℕ) (hev : Even (N * N')) :
       simp only [Equiv.symm_apply_apply, Fintype.prod_prod_type, Finset.prod_const, Finset.card_univ,
         Fintype.card_fin, ← pow_mul, Finset.prod_pow]
       have hev' : Even (N' * N) := mul_comm N N' ▸ hev
-      first | exact hev.isSquare_pow _ | exact hev'.isSquare_pow _)
+      first | exact hev.isSquare_pow _)
   exact ⟨e, fun i j => by rw [← hh]; exact he i j⟩
 
 theorem natCast_mul_mem (D : D7) (t : ℕ) {x : D.host.E} (hx : x ∈ D.host.AA0) :

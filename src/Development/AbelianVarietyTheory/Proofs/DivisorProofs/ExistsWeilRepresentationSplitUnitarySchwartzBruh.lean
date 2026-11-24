@@ -717,7 +717,7 @@ theorem gauss_cancel : ∀ (F : Type) [Field F] [CharZero F] [ValuativeRel F] [T
       simp only [m]
       congr 1
       funext z
-      simp [map_mul, mul_comm, mul_left_comm, mul_assoc]
+      simp [map_mul, mul_comm, mul_left_comm]
     simp only [n]
     rw [h2, h1, Measure.map_smul _ (hm a).aemeasurable, smul_smul, map_mul, mul_right_comm,
       mul_inv_cancel₀ (distribHaarChar_pos).ne', one_mul]
@@ -794,9 +794,9 @@ theorem setIntegral_addSubgroup_add {X : Type} [AddCommGroup X] [MeasurableSpace
     funext x
     by_cases hx : x ∈ H
     · have hx' : x + h ∈ H := H.add_mem hx hh
-      simp [Set.indicator_apply, hx, hx']
+      simp [hx, hx']
     · have hx' : x + h ∉ H := fun h' => hx (by simpa using H.sub_mem h' hh)
-      simp [Set.indicator_apply, hx, hx']
+      simp [hx, hx']
   rw [key, integral_add_right_eq_self (Set.indicator (H : Set X) g) h]
 
 theorem setIntegral_pair_char {X : Type} [AddCommGroup X] [TopologicalSpace X] [MeasurableSpace X]
@@ -1193,16 +1193,15 @@ namespace GlobalTheory.KSp
 theorem pr_eq_half_trace_mat (F : Type) [Field F] (E : Type) [Field E] [Algebra F E] (c : E →ₐ[F] E)
   {α : Type} [Fintype α] [DecidableEq α] {ν : Type} [Fintype ν] [DecidableEq ν] (Q : Matrix α α E) (x y : Matrix α ν E) :
   pr c Q x y = 2⁻¹ * Algebra.trace F E (Matrix.trace (Qᵀ * (x * (y.map c)ᵀ))) := by
-  simp only [pr, form, GlobalTheory.WeilM.hTens, Fintype.sum_sum_type, fromCols_apply_inl, fromCols_apply_inr, stdJ, fromBlocks_apply₁₁,
-    fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂, Pi.zero_apply, Matrix.zero_apply, map_zero, mul_zero, zero_mul,
-    Finset.sum_const_zero, add_zero, zero_add, one_apply, Matrix.trace, Matrix.mul_apply, transpose_apply, map_apply, diag_apply]
+  simp only [pr, form, GlobalTheory.WeilM.hTens, Fintype.sum_sum_type, fromCols_apply_inl, fromCols_apply_inr, stdJ, fromBlocks_apply₁₂, fromBlocks_apply₂₂, Matrix.zero_apply, map_zero, mul_zero, zero_mul,
+    Finset.sum_const_zero, add_zero, zero_add, Matrix.trace, Matrix.mul_apply, transpose_apply, map_apply, diag_apply]
   congr 2
-  simp only [mul_ite, ite_mul, mul_one, mul_zero, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true, Finset.mul_sum]
+  simp only [Finset.mul_sum]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun j _ => ?_
-  simp [Matrix.one_apply, mul_ite, ite_mul, mul_comm, mul_left_comm, mul_assoc]
+  simp [Matrix.one_apply, mul_ite, ite_mul, mul_comm, mul_assoc]
 
 theorem pr_diag_norm : ∀ (F : Type) [Field F] [CharZero F] (E : Type) [Field E] [Algebra F E] (c : E →ₐ[F] E) (δ : E) (hE : IsQuad c δ) (α : Type) [Fintype α] [DecidableEq α] (ν : Type) [Fintype ν] [DecidableEq ν] (Q : Matrix α α E) (_ : IsHerm c Q) (u : Matrix α α E) (D' : α → F) (a : Matrix ν ν E) (D : ν → F), Q = u * diagonal (fun i => algebraMap F E (D' i)) * (u.map c)ᵀ → ∀ x : Matrix α ν E, 2⁻¹ * pr c Q x (x * (a * diagonal (fun j => algebraMap F E (D j)) * (a.map c)ᵀ)) = ∑ i, ∑ j, (2⁻¹ * D' i * D j) * Algebra.norm F ((uᵀ * x * a) i j) := by
   intro F _ _ E _ _ c δ hE α _ _ ν _ _ Q _ u D' a D hQu x
@@ -1210,7 +1209,7 @@ theorem pr_diag_norm : ∀ (F : Type) [Field F] [CharZero F] (E : Type) [Field E
   have hmm : ∀ {m n : Type} (M : Matrix m n E), (M.map c).map c = M := fun M => by ext i j; simp [hc]
   have hd : ∀ {m : Type} [Fintype m] [DecidableEq m] (d : m → F),
       (diagonal (fun i => algebraMap F E (d i))).map c = diagonal (fun i => algebraMap F E (d i)) := by
-    intro m _ _ d; ext i j; by_cases h : i = j <;> simp [diagonal_apply, h]
+    intro m _ _ d; ext i j; by_cases h : i = j <;> simp [h]
   set dD' := diagonal (fun i => algebraMap F E (D' i))
   set dD := diagonal (fun j => algebraMap F E (D j))
   set Y := uᵀ * x * a with hY
@@ -1422,7 +1421,7 @@ theorem splitUnitaryElementMatrix_bigCell_product (b : Matrix ν ν E) (hb : (b.
       fromBlocks (-b⁻¹) 1 0 (-b) := by
   have h1 : b * b⁻¹ = 1 := mul_nonsing_inv b (isUnit_iff_ne_zero.mpr hb0)
   rw [mat_mul, mat_mul, mat_mul, mat_mul, mat_weyl_inv, mat_unip_inv, mat_unip, mat_weyl]
-  simp only [stdJ, fromBlocks_multiply, fromBlocks_neg, h1]
+  simp only [stdJ, fromBlocks_multiply, fromBlocks_neg]
   simp [h1]
 
 theorem conj_levi_mem (hc : ∀ z, c (c z) = z) (a : GL ν E) :
@@ -1478,7 +1477,7 @@ theorem GlobalTheory.KSp.WeylCellRel.gauss_const_ne_zero : ∀ (F : Type) [Field
     convert this using 1
     funext y
     exact (LocallyConstant.indicator_apply (1 : LocallyConstant (Matrix α ν E) ℂ) hLcl y).symm
-  have hφ0 : φ 0 = 1 := by simp [hφd, Set.indicator_of_mem (zero_mem L)]
+  have hφ0 : φ 0 = 1 := by simp [hφd]
   have hfφ : fou c ψ Q μ φ ∈ SB (Matrix α ν E) := by
     rw [hfou]; exact _root_.GlobalTheory.KSp.FourMem.four_mem_SB (Matrix α ν E) hgood μ _ hpair φ hφ
   have h1 : ((1 : Matrix ν ν E).map c)ᵀ = 1 := by

@@ -259,7 +259,7 @@ theorem _root_.GlobalTheory.T.archimedean_component_discreteSeries : _root_.Glob
       ∀ γ ∈ RLines (σ := σ) JB, ∀ Y, IsGen τ C γ Y → ∀ (T : Tens F P Q R S) (L : SInf F κ →L[ℂ] ℂ),
         HasDerivAt (fun t : ℝ => L (ρ (γ (Multiplicative.ofAdd t)) (Φ T)))
           (L (Φ (sumPl (fun w => fockAct2 P Q R S (Y w) + (c₀ w * (Y w).trace) • 1) T))) 0 := by
-  first | exact @_root_.GlobalTheory.ArchRep.exists_archimedean_component | exact _root_.GlobalTheory.ArchRep.exists_archimedean_component | (intros; apply _root_.GlobalTheory.ArchRep.exists_archimedean_component <;> assumption)
+  first | exact @_root_.GlobalTheory.ArchRep.exists_archimedean_component
 end
 end -- clump:auto
 end -- clump:auto
@@ -368,7 +368,7 @@ theorem _root_.GlobalTheory.T.isGeneric_localComponent : _root_.GlobalTheory.Fun
       (∀ l ∈ (adeleClass F).adm κ, ∀ φ ∈ schA F κ,
         ContinuousOn (fun g => l (ω₀ g φ)) {g : UG (cA σ) JB | At (evI F) ((g.1 : Matrix β β (AE F E)) - 1)}) ∧
       ActsBy τ C ω₀ Φ (fockAct2 P Q R S) c₀ := by
-  first | exact @_root_.GlobalTheory.GenRep.exists_generic_representation | exact _root_.GlobalTheory.GenRep.exists_generic_representation | (intros; apply _root_.GlobalTheory.GenRep.exists_generic_representation <;> assumption)
+  first | exact @_root_.GlobalTheory.GenRep.exists_generic_representation
 end
 end -- clump:auto
 end -- clump:auto
@@ -470,13 +470,13 @@ theorem adelic_schur_lemma : _root_.GlobalTheory.FunPr.ThetaLocalInputs → ∀ 
       · rw [Complex.zero_re, ← RCLike.re_to_complex, ← integral_re hI]
         have e : (fun x => RCLike.re (ψ (x ⬝ᵥ y) * (D x : ℂ))) = fun x => ((1 : ℂ) * ψ (x ⬝ᵥ y)).re * D x := by
           funext x
-          simp [Complex.mul_re]
+          simp
         rw [e]
         exact hre y 1
       · rw [Complex.zero_im, ← RCLike.im_to_complex, ← integral_im hI]
         have e : (fun x => RCLike.im (ψ (x ⬝ᵥ y) * (D x : ℂ))) = fun x => ((-Complex.I) * ψ (x ⬝ᵥ y)).re * D x := by
           funext x
-          simp [Complex.mul_re, Complex.mul_im]
+          simp [Complex.mul_re]
         rw [e]
         exact hre y (-Complex.I)
     have hD0 := GlobalTheory.CharFourierInj.real_eq_zero (G := κ → AF F) (A := κ → AF F) (fun y x => ψ (x ⬝ᵥ y)) hcy
@@ -527,7 +527,7 @@ theorem _root_.GlobalTheory.T.adelic_intertwiner_eq_scalar : _root_.GlobalTheory
     (∀ μ : @Measure (κ → AF F) (borel _), @Measure.IsAddHaarMeasure _ _ _ (borel _) μ →
       ∀ φ ∈ schA F κ, ∫⁻ x, ‖M φ x‖ₑ ^ 2 ∂μ = ∫⁻ x, ‖φ x‖ₑ ^ 2 ∂μ) →
     ∃ z : ℂ, ∀ φ ∈ schA F κ, M φ = z • φ := by
-  first | exact @_root_.GlobalTheory.AdelicSchur.adelic_schur_lemma | exact _root_.GlobalTheory.AdelicSchur.adelic_schur_lemma | (intros; apply _root_.GlobalTheory.AdelicSchur.adelic_schur_lemma <;> assumption)
+  first | exact @_root_.GlobalTheory.AdelicSchur.adelic_schur_lemma
 end
 end -- clump:auto
 end -- clump:auto
@@ -648,7 +648,7 @@ theorem _root_.GlobalTheory.T.metaplectic_splitting_unique_up_to_character : _ro
         ν (g * h) = ν g * ν h) ∧
       ContinuousOn ν {g : UG (cA σ) JB | At (evI F) ((g.1 : Matrix β β (AE F E)) - 1)} ∧
       ∀ g : UG (cA σ) JB, At (evI F) ((g.1 : Matrix β β (AE F E)) - 1) → ν g ≠ 0 := by
-  first | exact @_root_.GlobalTheory.SplitScalar.metaplectic_splittings_differ_by_character | exact _root_.GlobalTheory.SplitScalar.metaplectic_splittings_differ_by_character | (intros; apply _root_.GlobalTheory.SplitScalar.metaplectic_splittings_differ_by_character <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitScalar.metaplectic_splittings_differ_by_character
 end
 end -- clump:auto
 end -- clump:auto
@@ -707,7 +707,7 @@ section
 open scoped TensorProduct GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
 
 theorem _root_.GlobalTheory.T.weil_lie_algebra_scalar_action : _root_.GlobalTheory.FunPr.ThetaLocalInputs → GlobalTheory.RealLift.DerEx → GlobalTheory.RealLift.VacLine → GlobalTheory.RealLift.LieScalar := by
-  first | exact @_root_.GlobalTheory.LieScal.lie_algebra_acts_by_scalar | exact _root_.GlobalTheory.LieScal.lie_algebra_acts_by_scalar | (intros; apply _root_.GlobalTheory.LieScal.lie_algebra_acts_by_scalar <;> assumption)
+  first | exact @_root_.GlobalTheory.LieScal.lie_algebra_acts_by_scalar
 end
 end -- clump:auto
 end -- clump:auto

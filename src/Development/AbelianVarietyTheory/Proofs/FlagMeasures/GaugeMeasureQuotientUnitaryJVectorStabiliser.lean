@@ -169,7 +169,7 @@ theorem ballVol_succ_sq (P Q : ℕ) (r : ℝ) (hr : 0 < r) :
       Prod.map (Prod.map id fun y : Sp P Q => (√2 : ℝ) • y) id ⁻¹'
       {p | p.1.1 ^ 2 + ∑ i, ‖p.1.2 i‖ ^ 2 + ‖p.2‖ ^ 2 < r ^ 2} := by
     ext p
-    simp [tanSq, norm_smul, mul_pow, Finset.mul_sum, mul_add]
+    simp [tanSq, mul_pow, Finset.mul_sum, mul_add]
   rw [h3, h2, ← mul_assoc, ENNReal.mul_inv_cancel hne hnt, one_mul]
 
 end GlobalTheory.GaugeQuot.BallProd
@@ -943,7 +943,7 @@ open MeasureTheory Matrix Filter Topology Formalism.BasicNotions Formalism.MainN
 open scoped ENNReal NNReal
 
 theorem _root_.GlobalTheory.T.polar_tanSq_ptSq_compare : ∀ (P Q P' Q' : ℕ) (e : Option (Fin P' ⊕ Fin Q') ≃ (Fin P ⊕ Fin Q)) (t : ℝ), 1 < t → ∀ᶠ r in 𝓝[>] (0 : ℝ), ∀ u : ℝ × Sp P' Q', u.1 ∈ Set.Ioo (-Real.pi) Real.pi → (tanSq u < (t⁻¹ * r) ^ 2 → ptSq e (polarPt e u) < r ^ 2) ∧ (ptSq e (polarPt e u) < r ^ 2 → tanSq u < (t * r) ^ 2) := by
-  first | exact @GlobalTheory.PolarCompare.polar_sq_compare | exact GlobalTheory.PolarCompare.polar_sq_compare | (intros; apply GlobalTheory.PolarCompare.polar_sq_compare <;> assumption)
+  first | exact @GlobalTheory.PolarCompare.polar_sq_compare
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.PolarSqCompareStatement =====

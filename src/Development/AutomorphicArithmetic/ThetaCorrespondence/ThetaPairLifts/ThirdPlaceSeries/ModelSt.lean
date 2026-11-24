@@ -150,7 +150,7 @@ theorem exists_semilinear_extension_rep :
     rw [Finset.sum_eq_single k]
     · simp
     · intro j _ hj
-      simp [Finsupp.single_apply, hj.symm]
+      simp [hj.symm]
     · simp
   have hcu : ∀ F, f (cu F) = R F := by
     intro F
@@ -388,8 +388,7 @@ theorem rdLin_linearIndependent {D : D7} {L : SizeData₂ D} {hT : GatTies D} {G
     · have hy : castFrame (psi_eq ha c).symm x ∈ M.dom :=
         (mem_dom_iff ha c _).1 (by rw [castFrame_castFrame_symm]; exact hx)
       have := congrFun (congrFun hg c) ⟨_, hy⟩
-      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply, rdLin_apply, rdFun,
-        castFrame_castFrame_symm] at this
+      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at this
       exact this
     · exact Finset.sum_eq_zero fun k _ => by rw [hoff k (e c) x hx, mul_zero]
   funext k'
@@ -523,7 +522,7 @@ theorem reading_of_runModel (p : PtAt ex Csz) (r : TwoRuns p.T p.P.Gp) (h : Runs
       obtain ⟨m', α, Fs, hGe⟩ := _root_.GlobalTheory.ShareOn.Reading.rdFun_onto h ha hb hb0 hn G hG
       have hGs : M.res G = ∑ k, α k • rdLin h ha (Fs k) := by
         funext c x
-        simp only [TwoLevels.res, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, rdLin_apply]
+        simp only [TwoLevels.res, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
         exact hGe c x.1 x.2
       rw [hGs]
       exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨Fs k, rfl⟩)
@@ -764,7 +763,7 @@ theorem _root_.GlobalTheory.T.levelChange_unitriangular_unipotent_modPlace : ∀
     ∀ x : LaMod (p.T.Q.Dw ((i : ℕ) + 1)) p.T.Q.l,
       (((r.lev i u).toLinearMap - LinearMap.id : Module.End (𝓞 D.host.E) (LaMod (p.T.Q.Dw ((i : ℕ) + 1)) p.T.Q.l)) ^ D.R.r) x ∈
         ((D.naut.plGw k v).asIdeal • ⊤ : Submodule (𝓞 D.host.E) (LaMod (p.T.Q.Dw ((i : ℕ) + 1)) p.T.Q.l)) := by
-  first | exact @GlobalTheory.ShareOn.UnipLevel.levUnip_mod_place | exact GlobalTheory.ShareOn.UnipLevel.levUnip_mod_place | (intros; apply GlobalTheory.ShareOn.UnipLevel.levUnip_mod_place <;> assumption)
+  first | exact @GlobalTheory.ShareOn.UnipLevel.levUnip_mod_place
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LevelChangeUnitriangularUnipotentModPlaceStatement =====
@@ -887,7 +886,7 @@ theorem _root_.GlobalTheory.T.prime_over_typePrime_fixedPlace_or_conj : ∀ (D :
       P = (D.naut.plGw k v).asIdeal.map
         ((RingOfIntegers.mapRingEquiv (IsCMField.complexConj D.host.E).toRingEquiv : 𝓞 D.host.E ≃+* 𝓞 D.host.E) :
           𝓞 D.host.E →+* 𝓞 D.host.E) := by
-  first | exact @GlobalTheory.TypePrimesOnto.prime_eq_plGw_or_conj | exact GlobalTheory.TypePrimesOnto.prime_eq_plGw_or_conj | (intros; apply GlobalTheory.TypePrimesOnto.prime_eq_plGw_or_conj <;> assumption)
+  first | exact @GlobalTheory.TypePrimesOnto.prime_eq_plGw_or_conj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrimeOverTypePrimeFixedPlaceOrConjStatement =====
@@ -1050,7 +1049,7 @@ theorem _root_.GlobalTheory.T.unipotent_mod_ideal_of_trivial_mod_half : ∀ {E :
     (∀ w : L', ∃ hw : Matrix.mulVec t w ∈ L',
       Submodule.Quotient.mk (p := Mb • (⊤ : Submodule (𝓞 E) L')) ⟨_, hw⟩ = φ ((ℓ ^ n) (φ.symm (Submodule.Quotient.mk w)))) →
     ∀ w ∈ L', Matrix.mulVec ((γ * t - 1) ^ r) w ∈ P • L' := by
-  first | exact @GlobalTheory.UnipModHalf.unip_mod_half | exact GlobalTheory.UnipModHalf.unip_mod_half | (intros; apply GlobalTheory.UnipModHalf.unip_mod_half <;> assumption)
+  first | exact @GlobalTheory.UnipModHalf.unip_mod_half
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnipotentModIdealOfTrivialModHalfStatement =====
@@ -1238,7 +1237,7 @@ theorem _root_.GlobalTheory.T.unitary_unipotent_mod_ideal_mod_conjIdeal : ∀ {E
     ∀ P : Ideal (𝓞 E), (∀ v ∈ X.L', Matrix.mulVec (((β : Matrix (Fin r) (Fin r) E) - 1) ^ r) v ∈ P • X.L') →
     ∀ v ∈ X.L', Matrix.mulVec (((β : Matrix (Fin r) (Fin r) E) - 1) ^ r) v ∈
       P.map ((RingOfIntegers.mapRingEquiv (IsCMField.complexConj E).toRingEquiv : 𝓞 E ≃+* 𝓞 E) : 𝓞 E →+* 𝓞 E) • X.L' := by
-  first | exact @GlobalTheory.UnipConjIdeal.pow_sub_one_mem_conj_ideal_smul | exact GlobalTheory.UnipConjIdeal.pow_sub_one_mem_conj_ideal_smul | (intros; apply GlobalTheory.UnipConjIdeal.pow_sub_one_mem_conj_ideal_smul <;> assumption)
+  first | exact @GlobalTheory.UnipConjIdeal.pow_sub_one_mem_conj_ideal_smul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitaryUnipotentModIdealModConjIdealStatement =====

@@ -132,7 +132,7 @@ theorem coe_sum_fin {d : ℕ} (a : Fin d → O) :
 
 theorem coeff_sum_fin {d : ℕ} (a : Fin d → O) (j : Fin d) :
     (∑ i : Fin d, Polynomial.C (a i) * Polynomial.X ^ (i : ℕ) : Polynomial O).coeff j = a j := by
-  simp [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Fin.val_inj]
+  simp [Fin.val_inj]
 
 theorem coe_eq_sum_fin {d : ℕ} {r : Polynomial O} (hr : r.degree < d) :
     (r : PowerSeries O) = ∑ i : Fin d, C (r.coeff i) * X ^ (i : ℕ) := by
@@ -674,7 +674,7 @@ theorem cvr_step {ϖ : O} (hϖ : Irreducible ϖ) {e : ℕ} (he : 1 ≤ e) {ℓ :
     calc _ ≤ (a : ℝ≥0∞) + 2 * ∑ s ∈ Finset.range ell, (g : ℝ≥0∞) * (e : ℝ≥0∞) +
           b₀ * ENNReal.ofReal (τ / ℓ) := by
           gcongr with s _
-          all_goals first | exact hF s | exact hF0
+          all_goals first | exact hF s
       _ = ENNReal.ofReal ((a : ℝ) + 2 * e * g * ell + b₀ / ℓ * τ) := by
           have h1 : (a : ℝ) + 2 * e * g * ell + b₀ / ℓ * τ =
               (a : ℝ) + ((2 * e * g * ell : ℕ) : ℝ) + b₀ * (τ / ℓ) := by push_cast; ring
@@ -745,7 +745,6 @@ theorem lemmaCValRam_proof : LemmaCValRam := by
     have hne : B - c ≠ 0 := hD0.ne'
     first
     | (field_simp; ring)
-    | field_simp
   refine ⟨hmain.trans hD.le, (hmain.trans hD.le).trans ?_⟩
   rw [div_le_iff₀ hD0]
   nlinarith [mul_le_mul_of_nonneg_left h2' hA0]
@@ -1352,9 +1351,6 @@ theorem lt_parM (ℓ hh g : ℕ) (hℓ : 2 ≤ ℓ) : hh + 2 * g < (ℓ - 1) * p
   have hm : 0 < ℓ - 1 := by omega
   first
     | exact Nat.lt_mul_div_succ _ hm
-    | (have h1 := Nat.div_add_mod (hh + 2 * g) (ℓ - 1)
-       have h2 := Nat.mod_lt (hh + 2 * g) hm
-       nlinarith)
 
 section shape
 variable {O : Type} [CommRing O]
@@ -1390,7 +1386,6 @@ theorem QQ.map {l : O} (f : PowerSeries O →ₐ[O] PowerSeries O) {x : PowerSer
   have hC : f (C l) = C l := by
     first
       | exact f.commutes l
-      | simpa [PowerSeries.algebraMap_eq] using f.commutes l
   refine ⟨w, b + f a, hw, ?_⟩
   rw [map_add (f := _), map_mul, map_mul, map_pow, hC, hwb]
   ring
@@ -1418,7 +1413,6 @@ theorem p_eq (B : Base O) (s : ℕ) : B.p s = (⇑B.φ)^[s] X + C (B.ℓ : O) :=
   have hC : ∀ c : O, B.φ (C c) = C c := fun c => by
     first
       | exact B.φ.commutes c
-      | simpa [PowerSeries.algebraMap_eq] using B.φ.commutes c
   unfold Base.p Base.q
   induction s with
   | zero => simp
@@ -1711,8 +1705,6 @@ theorem unit_phiIt {V₀ : Type} [AddCommGroup V₀] [Module (PowerSeries O) V�
   | succ k ih =>
     first
       | rw [Lat.phiIt, ih, L₀.φ_semi, h, Function.iterate_succ_apply']
-      | (simp only [Lat.phiIt]
-         rw [ih, L₀.φ_semi, h, Function.iterate_succ_apply'])
 
 theorem unit_phiFree {ϖ : O} (hϖ : Irreducible ϖ) {e : ℕ} (hB : PrimBase B ϖ e)
     {V₀ : Type} [AddCommGroup V₀] [Module (PowerSeries O) V₀] {L₀ : Lat B n V₀} {e₀ : V₀}
@@ -1826,7 +1818,6 @@ theorem theorem_E_primitive_form : ThmEPrim := by
   · unfold parA
     first
       | omega
-      | nlinarith [Nat.zero_le (2 * g * ellmax)]
   · exact Prim.arcHyp hϖ hB (hN.ell_le c hc) (hA c hc)
 
 end Formalism.ExponentWindows.E

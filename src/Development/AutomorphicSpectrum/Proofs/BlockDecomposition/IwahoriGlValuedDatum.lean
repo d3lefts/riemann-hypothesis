@@ -415,13 +415,13 @@ theorem key {O : Type} [CommRing O] [IsLocalRing O] {α β : O} (hab : ¬ IsUnit
       · simp
       · simp [Fin.castSucc_lt_last, (Fin.castSucc_lt_last j).ne', not_lt_of_gt (Fin.castSucc_lt_last j)]
       · simp [Fin.castSucc_lt_last, (Fin.castSucc_lt_last i).ne, not_lt_of_gt (Fin.castSucc_lt_last i)]
-        first | exact hr i | exact (hr i).mul_right _
+        first | exact hr i
       · simpa using hU i j
     · intro i j
       refine Fin.lastCases ?_ (fun i => ?_) i <;> refine Fin.lastCases ?_ (fun j => ?_) j
       · simp
       · simp [Fin.castSucc_lt_last, (Fin.castSucc_lt_last j).ne', not_lt_of_gt (Fin.castSucc_lt_last j)]
-        first | exact hc j | exact (hc j).mul_left _
+        first | exact hc j
       · simp [Fin.castSucc_lt_last, (Fin.castSucc_lt_last i).ne, not_lt_of_gt (Fin.castSucc_lt_last i)]
       · simpa using hL i j
     · ext i j
@@ -434,7 +434,7 @@ theorem key {O : Type} [CommRing O] [IsLocalRing O] {α β : O} (hab : ¬ IsUnit
         done
       · have e := congrFun (congrFun hUDL i) j
         rw [udl_apply] at e
-        simp only [Matrix.of_apply, Fin.lastCases_castSucc, Fin.lastCases_last, mul_zero, add_zero, mul_one]
+        simp only [Matrix.of_apply, Fin.lastCases_castSucc, Fin.lastCases_last]
         rw [← e]
         simp only [G]
         linear_combination (-(r i * ↑a⁻¹ * c j)) * hinv
@@ -599,11 +599,7 @@ theorem exists_factor [IsLocalRing O] {α β : O} (hαβ : ¬ IsUnit (α * β)) 
         UpperUnip α u ∧ LowerUnip β l ∧ g = u * Matrix.diagonal (fun i => (d i : O)) * l ∧
           ∀ i, α * β ∣ (d i : O) - g i i := by
   first
-  | exact @_root_.GlobalTheory.UnipotentDecomposition.main
-  | exact _root_.GlobalTheory.UnipotentDecomposition.main
   | (apply _root_.GlobalTheory.UnipotentDecomposition.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.UnipotentDecomposition.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.UnipotentDecomposition.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.UnipotentDecomposition.main ..)
 
 theorem isUnit_diag [IsLocalRing O] {α β : O} (hβ : ¬ IsUnit β) {g : Matrix (Fin n) (Fin n) O}
@@ -661,11 +657,7 @@ theorem existsUnique_factor [IsLocalRing O] {α β : O} (hβ : ¬ IsUnit β) (g 
       UpperUnip α p.1 ∧ LowerUnip β p.2.2 ∧
         (g : Matrix (Fin n) (Fin n) O) = p.1 * Matrix.diagonal (fun i => (p.2.1 i : O)) * p.2.2 := by
   first
-  | exact @_root_.GlobalTheory.UnipotentBorder.iwahori_factorisation
-  | exact _root_.GlobalTheory.UnipotentBorder.iwahori_factorisation
   | (apply _root_.GlobalTheory.UnipotentBorder.iwahori_factorisation <;> assumption)
-  | (intros; apply _root_.GlobalTheory.UnipotentBorder.iwahori_factorisation <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.UnipotentBorder.iwahori_factorisation <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.UnipotentBorder.iwahori_factorisation ..)
 
 theorem existsUnique_factor_opp [IsLocalRing O] {α β : O} (hβ : ¬ IsUnit β) (g : GL (Fin n) O)
@@ -878,20 +870,9 @@ theorem isIw_of_pres {m : Matrix (Fin n) (Fin n) L}
       omega
     simpa [Matrix.col, hi] using h1
 
-theorem stab_iff {G X : Type*} [Group G] [MulAction G X] (f : G) (S : Set X) :
-    f ∈ MulAction.stabilizer G S ↔ ∀ x, f • x ∈ S ↔ x ∈ S := by
-  rw [MulAction.mem_stabilizer_iff]
-  constructor
-  · intro h x
-    conv_lhs => rw [← h]
-    exact Set.smul_mem_smul_set_iff
-  · intro h
-    ext y
-    rw [Set.mem_smul_set_iff_inv_smul_mem, ← h, smul_inv_smul]
-
 theorem mem_IwGL_iff_pres {g : GL (Fin n) L} : g ∈ IwGL L n ↔
     ∀ k : Fin (n + 1), ∀ x, (g : Matrix (Fin n) (Fin n) L) *ᵥ x ∈ latK L n k ↔ x ∈ latK L n k := by
-  simp only [IwGL, Subgroup.mem_iInf, Subgroup.mem_comap, stab_iff]
+  simp only [IwGL, Subgroup.mem_iInf, Subgroup.mem_comap, MulAction.mem_stabilizer_set]
   exact Iff.rfl
 
 theorem mem_IwGL_iff_isIw {g : GL (Fin n) L} : g ∈ IwGL L n ↔

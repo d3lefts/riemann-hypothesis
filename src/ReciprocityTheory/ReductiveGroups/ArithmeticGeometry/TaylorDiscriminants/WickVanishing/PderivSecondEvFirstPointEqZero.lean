@@ -101,7 +101,7 @@ theorem pderiv_prim (ω : τ → MvPowerSeries τ k)
       rw [if_neg (by omega), h2, h1]
       push_cast
       ring
-    · have h1 : n w = m w := by simp [hn, Finsupp.single_apply, hw, Ne.symm hw]
+    · have h1 : n w = m w := by simp [hn, hw]
       by_cases hm : m w = 0
       · rw [if_pos (by rw [h1, hm]), h1, hm]
         simp
@@ -113,7 +113,7 @@ theorem pderiv_prim (ω : τ → MvPowerSeries τ k)
           rw [hn]; exact tsub_add_eq_add_tsub hle
         have e2 : m - Finsupp.single w 1 + Finsupp.single w 1 = m := tsub_add_cancel_of_le hle
         have e3 : (m - Finsupp.single w 1 : τ →₀ ℕ) v = m v := by
-          simp [Finsupp.single_apply, hw, Ne.symm hw]
+          simp [Ne.symm hw]
         have e4' : (m - Finsupp.single w 1 : τ →₀ ℕ) w + 1 = m w := by
           rw [Finsupp.tsub_apply, Finsupp.single_eq_same]; omega
         have e4 : ((m - Finsupp.single w 1 : τ →₀ ℕ) w : k) + 1 = (m w : k) := by
@@ -197,7 +197,6 @@ theorem d_evY (h : PS k 1 d) (b : Fin d) :
     show constantCoeff (X ((1 : Fin 2), i) : PS k 2 d) = 0
     first
     | exact MvPowerSeries.constantCoeff_X _
-    | simp
   rw [pderiv_ev hcz, Fintype.sum_eq_single ((0 : Fin 1), b)]
   · show ev _ (pderiv (R := k) ((0 : Fin 1), b) h) * pderiv (R := k) ((1 : Fin 2), b) (X ((1 : Fin 2), b)) = _
     rw [hXd, if_pos rfl, mul_one]
@@ -229,7 +228,6 @@ theorem d_evX (h : PS k 1 d) (a : Fin d) :
     show constantCoeff (X ((0 : Fin 2), i) : PS k 2 d) = 0
     first
     | exact MvPowerSeries.constantCoeff_X _
-    | simp
   rw [pderiv_ev hcz, Fintype.sum_eq_single ((0 : Fin 1), a)]
   · show ev _ (pderiv (R := k) ((0 : Fin 1), a) h) * pderiv (R := k) ((0 : Fin 2), a) (X ((0 : Fin 2), a)) = _
     rw [hXd, if_pos rfl, mul_one]
@@ -260,7 +258,6 @@ theorem pderiv_first_ev_second_point_eq_zero (h : PS k 1 d) (a : Fin d) : pderiv
     show constantCoeff (X ((1 : Fin 2), i) : PS k 2 d) = 0
     first
     | exact MvPowerSeries.constantCoeff_X _
-    | simp
   rw [pderiv_ev hcz]
   refine Finset.sum_eq_zero fun p _ => ?_
   obtain ⟨j, i⟩ := p
@@ -289,7 +286,6 @@ theorem pderiv_second_ev_first_point_eq_zero (h : PS k 1 d) (b : Fin d) : pderiv
     show constantCoeff (X ((0 : Fin 2), i) : PS k 2 d) = 0
     first
     | exact MvPowerSeries.constantCoeff_X _
-    | simp
   rw [pderiv_ev hcz]
   refine Finset.sum_eq_zero fun p _ => ?_
   obtain ⟨j, i⟩ := p
@@ -347,8 +343,6 @@ theorem addPt : (![G.add (pt k (n := 2) d 0) (pt k d 1)] : Fin 1 → Pt k 2 d) =
     rw [hfam]
     first
     | exact congrFun MvPowerSeries.subst_self f
-    | (rw [MvPowerSeries.subst_self]; rfl)
-    | simp [MvPowerSeries.subst_self]
   funext j i
   have hj : j = 0 := Subsingleton.elim _ _
   subst hj
@@ -365,7 +359,6 @@ theorem ez_y (h : PS k 1 d) : ev (n := 1) ![pt k d 0, 0] (ev (n := 2) ![pt k d 1
     · show constantCoeff (X ((0 : Fin 1), i) : PS k 1 d) = 0
       first
       | exact MvPowerSeries.constantCoeff_X _
-      | simp
     · show constantCoeff (0 : PS k 1 d) = 0
       exact map_zero _
   have hb : CZ (![pt k d 1] : Fin 1 → Pt k 2 d) := by
@@ -375,7 +368,6 @@ theorem ez_y (h : PS k 1 d) : ev (n := 1) ![pt k d 0, 0] (ev (n := 2) ![pt k d 1
     show constantCoeff (X ((1 : Fin 2), i) : PS k 2 d) = 0
     first
     | exact MvPowerSeries.constantCoeff_X _
-    | simp
   have hc : CZ (fun (j : Fin 0) (_ : Fin d) => (0 : PS k 1 d)) := fun j => Fin.elim0 j
   have hz : CZ (fun (_ : Fin 1) (_ : Fin d) => (0 : PS k 0 d)) := fun _ _ => map_zero _
   have hev0 : ev (fun (j : Fin 0) (_ : Fin d) => (0 : PS k 1 d)) (0 : PS k 0 d) = 0 := by
@@ -399,11 +391,9 @@ theorem ez_y (h : PS k 1 d) : ev (n := 1) ![pt k d 0, 0] (ev (n := 2) ![pt k d 1
     have he : e = 0 := by
       first
       | exact Subsingleton.elim _ _
-      | exact Finsupp.ext fun p => Fin.elim0 p.1
     subst he
     first
     | (simp; done)
-    | rw [MvPowerSeries.coeff_zero_C, MvPowerSeries.coeff_zero_eq_constantCoeff_apply]
   rw [ev_ev ha hb, hfam, ← ev_ev hc hz, hconst (ev (fun (_ : Fin 1) (_ : Fin d) => (0 : PS k 0 d)) h),
     cc_ev hz, ev_C hc]
 

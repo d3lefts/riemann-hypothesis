@@ -106,7 +106,6 @@ theorem br_ddiv_monomial (M α : Fin r →₀ ℕ) :
   split_ifs with h
   · congr 1
     rw [Finsupp.prod]
-    push_cast
     apply Finset.prod_subset (Finset.subset_univ _)
     intro a _ ha
     have h0 : α a = 0 := by simpa using ha
@@ -386,7 +385,7 @@ namespace Formalism.MainNotions.G.Joints.PlaneGramSpan
 open Formalism.MainNotions.G Formalism.MainNotions.G.Joints
 
 theorem card_val_lt {n h : ℕ} (hh : h ≤ n) : (univ.filter fun m : Fin n => m.val < h).card = h := by
-  first | exact GlobalTheory.CardFilterLt.card_filter_val_lt .. | (apply GlobalTheory.CardFilterLt.card_filter_val_lt <;> assumption) | (intros; apply GlobalTheory.CardFilterLt.card_filter_val_lt <;> assumption) | (apply @GlobalTheory.CardFilterLt.card_filter_val_lt <;> assumption) | (intros; apply @GlobalTheory.CardFilterLt.card_filter_val_lt <;> assumption) | (apply @GlobalTheory.CardFilterLt.card_filter_val_lt <;> first | assumption | infer_instance) | exact @GlobalTheory.CardFilterLt.card_filter_val_lt n h hh | exact @GlobalTheory.CardFilterLt.card_filter_val_lt n h | exact @GlobalTheory.CardFilterLt.card_filter_val_lt n
+  first | (apply GlobalTheory.CardFilterLt.card_filter_val_lt <;> assumption) | exact @GlobalTheory.CardFilterLt.card_filter_val_lt n h hh | exact @GlobalTheory.CardFilterLt.card_filter_val_lt n h | exact @GlobalTheory.CardFilterLt.card_filter_val_lt n
 
 theorem colH_le {n : ℕ} (mu : Fin n → ℤ) (c : ℤ) : colH mu c ≤ n := by
   unfold colH

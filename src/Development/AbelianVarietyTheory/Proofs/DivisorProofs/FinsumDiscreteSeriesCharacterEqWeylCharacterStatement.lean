@@ -324,7 +324,7 @@ theorem _root_.GlobalTheory.T.finsum_discreteSeriesCharacter_eq_weylCharacter : 
     Function.Bijective (fun p : compactWeyl ε × ι => (y p.2)⁻¹ * p.1.1) →
     (∀ q a, Complex.exp (θ q a * Complex.I) = α ((y q)⁻¹ a)) →
     ∑ᶠ q, dsChar ε (fun a => (lam a : ℝ)) (θ q) = glChar (hiWt lam) α := by
-  first | exact @GlobalTheory.dsChar_finsum_eq_glChar | exact GlobalTheory.dsChar_finsum_eq_glChar | (intros; apply GlobalTheory.dsChar_finsum_eq_glChar <;> assumption)
+  first | exact @GlobalTheory.dsChar_finsum_eq_glChar
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinsumDiscreteSeriesCharacterEqWeylCharacterStatement =====

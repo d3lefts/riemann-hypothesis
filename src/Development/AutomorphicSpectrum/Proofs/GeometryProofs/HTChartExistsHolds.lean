@@ -76,7 +76,7 @@ theorem chart_build : ∀ (A K : Type) [CommRing A] [IsDomain A] [Field K] [Alge
   let ρΩ : 𝓞 E →+* Module.End K Ω :=
     { toFun := fun a => hj.equiv.toLinearMap ∘ₗ T a ∘ₗ hj.equiv.symm.toLinearMap
       map_one' := by ext x; simp
-      map_mul' := by intro a b; ext x; simp [Module.End.mul_apply]
+      map_mul' := by intro a b; ext x; simp
       map_zero' := by ext x; simp
       map_add' := by intro a b; ext x; simp }
   have hρ : ∀ a w, ρΩ a (j w) = j (ρ a w) := by
@@ -113,7 +113,7 @@ theorem chart_build : ∀ (A K : Type) [CommRing A] [IsDomain A] [Field K] [Alge
             om_lat := by
               have hfull : Submodule.IsFullLattice K (LinearMap.range j) :=
                 { toIsLattice := Submodule.IsLattice.of_fg K hfg, span_eq_top := hspan }
-              first | exact hfull | exact hfull.toIsLattice
+              first | exact hfull
             om_proj := hproj
             ρΩ := ρΩ
             om_stable := ?_
@@ -304,7 +304,7 @@ def dualAct {L : Type} [AddCommGroup L] [Module R L] (ρ : 𝓞 E →+* Module.E
   map_mul' a b := by
     rw [mul_comm a b]
     ext w l
-    simp [Module.End.mul_apply]
+    simp
   map_zero' := by ext w l; simp
   map_add' a b := by ext w l; simp
 
@@ -365,7 +365,7 @@ theorem htChartExists : HTChartExists := by
     induction hy using AddSubgroup.closure_induction with
     | mem y hy =>
       obtain ⟨k, rfl⟩ := hy
-      have : h (b k) = wb k := by simp [h, Module.Basis.constr_basis]
+      have : h (b k) = wb k := by simp [h]
       rw [this]; exact hwb k
     | zero => rw [map_zero, show χ 0 = 1 from charOf_zero _ _ _ _ _ _ _]; exact hzero
     | add y y' _ _ h1 h2 =>

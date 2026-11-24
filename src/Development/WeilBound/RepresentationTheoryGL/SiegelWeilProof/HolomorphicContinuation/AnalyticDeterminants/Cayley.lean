@@ -82,12 +82,12 @@ theorem fsum_line (t : ℤ) (c k0 : Fin N) (y : Matrix (Fin N) (Fin (N + 1)) ℂ
       fsum t c y - s * fderiv ℂ (H N t) (piF y) (Matrix.single k0 c 1) := by
   have hp : piF (y + s • Matrix.single k0 0 1) = piF y := by
     ext k l
-    simp [piF, Matrix.single_apply, Fin.succ_ne_zero]
+    simp [piF, Matrix.single_apply]
     intro _ h
     exact absurd h.symm (Fin.succ_ne_zero l)
   simp only [fsum, hp]
-  (simp [Matrix.add_apply, Matrix.smul_apply, Matrix.single_apply, add_mul, Finset.sum_add_distrib,
-    ite_mul, Finset.sum_ite_eq, Finset.sum_ite_eq']) <;> ring
+  (simp [Matrix.add_apply, Matrix.single_apply, add_mul, Finset.sum_add_distrib,
+    ite_mul, Finset.sum_ite_eq]) <;> ring
 
 theorem fderiv_fsum (t : ℤ) (c k0 : Fin N) (y : Matrix (Fin N) (Fin (N + 1)) ℂ) (hy : (1 + piF y).det ≠ 0) :
     fderiv ℂ (fsum t c) y (Matrix.single k0 0 1) = -fderiv ℂ (H N t) (piF y) (Matrix.single k0 c 1) := by
@@ -154,7 +154,6 @@ theorem iterated_derivative_column_case_int (t : ℤ) (M : ℕ) (e : Equiv.Perm 
   have h0 : (1 + piF (0 : Matrix (Fin (M + 1)) (Fin (M + 1 + 1)) ℂ)).det ≠ 0 := by
     simp [piF_zero]
   rw [ipeel (fsum t c) 0 (analyticAt_fsum t c 0 h0) M _ (e.symm c)]
-  beta_reduce
   have hu0 : Equiv.swap 0 c.succ (e (e.symm c)).succ = 0 := by simp
   rw [hu0]
   have hev2 : (fun y => fderiv ℂ (fsum t c) y (Matrix.single (e.symm c) 0 1)) =ᶠ[𝓝 0]
@@ -224,7 +223,7 @@ theorem rec_step (t : ℤ) (N : ℕ) : detD (H (N + 1) t) = ((t : ℂ) + N) * de
   rw [detD_fin _ _ (analyticAt_determinant_power_zero_int _ _), detD_fin _ _ (analyticAt_determinant_power_zero_int _ _),
     Finset.univ_perm_fin_succ, ← Finset.univ_product_univ, Finset.sum_map, Finset.sum_product,
     Fin.sum_univ_succ]
-  simp only [Equiv.toEmbedding_apply, term_p, Equiv.Perm.decomposeFin.symm_sign, if_pos rfl]
+  simp only [Equiv.toEmbedding_apply, term_p, Equiv.Perm.decomposeFin.symm_sign]
   have h0 : ∀ e : Equiv.Perm (Fin N),
       (iteratedFDeriv ℂ N (fun y => fderiv ℂ (H (N + 1) t) y (Matrix.single 0 (0 : Fin (N + 1)) 1)) 0)
         (fun k => Matrix.single k.succ (Equiv.Perm.decomposeFin.symm ((0 : Fin (N + 1)), e) k.succ) 1) =
@@ -236,8 +235,8 @@ theorem rec_step (t : ℤ) (N : ℕ) : detD (H (N + 1) t) = ((t : ℂ) + N) * de
   cases N with
   | zero => simp
   | succ M =>
-    simp only [iterated_derivative_column_case_int, Units.val_mul, Units.val_neg, Units.val_one, Int.cast_mul, Int.cast_neg,
-      Int.cast_one, neg_one_mul, neg_mul_neg]
+    simp only [iterated_derivative_column_case_int, Units.val_neg, Int.cast_neg,
+      neg_one_mul, neg_mul_neg]
     rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, add_mul, Finset.mul_sum, Finset.mul_sum,
       nsmul_eq_mul, Finset.mul_sum]
     congr 1 <;> refine Finset.sum_congr rfl fun _ _ => ?_ <;> push_cast <;> ring

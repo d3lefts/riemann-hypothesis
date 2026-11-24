@@ -71,10 +71,9 @@ theorem sgl_mul_ne {w w' : HeightOneSpectrum (𝓞 F)} (h : w ≠ w') (a : w.adi
     sgl F w a * sgl F w' b = 0 := by
   apply adele_ext
   intro v
-  rw [map_mul (evalV F v), map_zero]
   by_cases hv : v = w
-  · subst hv; rw [sgl_apply_ne F w' b h, mul_zero]
-  · rw [sgl_apply_ne F w a hv, zero_mul]
+  · subst hv; simp [sgl_apply_ne F w' b h]
+  · simp [sgl_apply_ne F w a hv]
 
 theorem iE_mul_ne {w w' : HeightOneSpectrum (𝓞 F)} (h : w ≠ w') (x : E ⊗[F] w.adicCompletion F)
     (y : E ⊗[F] w'.adicCompletion F) : iE F E w x * iE F E w' y = 0 := by

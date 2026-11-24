@@ -606,7 +606,7 @@ theorem hYY_putB (D : D7) {n n' : ℕ} (k k' : Fin n' × Fin n) (x y : Fin 4 →
     intro a _
     by_cases h1 : k'' = k
     · subst h1
-      simp [Ne.symm h, h]
+      simp [h]
     · simp [h1]
 
 end GlobalTheory.BaseVacuum
@@ -745,7 +745,7 @@ theorem blockVacuum_coordinate_eq_coordinateEquiv_numbering (D : D7) (cc : Ideal
     simp only [xv, LinearEquiv.apply_symm_apply]
     by_cases h : w' = w
     · subst h; simp
-    · simp [Pi.single_apply, h]
+    · simp [h]
   have hA : ((Formalism.L2.Th1.F.area B.L : ℝ) : ℂ) ≠ 0 := by
     exact_mod_cast (Formalism.L2.Th1.F.areaPos_thm B.L).ne'
   have hI := B.isomOK (blk D k z) (emb4 D (xv B w))

@@ -86,8 +86,7 @@ private theorem coe_iota_eq_algebraMap_coe (a : 𝓞 F) : jK (ι a) = algebraMap
 
 private theorem jK_iota_ne_zero {a : 𝓞 F} (ha : a ≠ 0) : jK (ι a) ≠ 0 := by
   rw [coe_iota_eq_algebraMap_coe]
-  refine (map_ne_zero (algebraMap F K)).mpr ?_
-  exact (map_ne_zero_iff _ (IsFractionRing.injective (𝓞 F) F)).mpr ha
+  exact (map_ne_zero (algebraMap F K)).mpr ((map_ne_zero_iff _ (IsFractionRing.injective (𝓞 F) F)).mpr ha)
 
 theorem h_phi (horth : ∀ i j, i ≠ j → h (b i) (b j) = 0)
     (hdiag : ∀ i, h (b i) (b i) = algebraMap F K ((a i : 𝓞 F) : F)) (ha : ∀ i, a i ≠ 0)

@@ -201,11 +201,9 @@ private theorem charZero_KK_of_uniformizedDVR (S : UniformizedDVR p O) (hp : p.P
   have hCu : p ^ N.factorization p * (N / p ^ N.factorization p) = N := by
     first
       | exact Nat.ordProj_mul_ordCompl_eq_self N p
-      | exact Nat.ord_proj_mul_ord_compl_eq_self N p
   have hu : ¬ p ∣ (N / p ^ N.factorization p) := by
     first
       | exact Nat.not_dvd_ordCompl hp hN0
-      | exact Nat.not_dvd_ord_compl hp hN0
   rw [← hCu, Nat.cast_mul, Nat.cast_pow] at hN'
   rcases mul_eq_zero.mp hN' with h | h
   · exact S.p_ne (pow_eq_zero_iff'.mp h).1
@@ -219,11 +217,9 @@ private theorem exists_integral_p_pow_div_choose_of_log_le (S : UniformizedDVR p
       N.choose k := by
     first
       | exact Nat.ordProj_mul_ordCompl_eq_self (N.choose k) p
-      | exact Nat.ord_proj_mul_ord_compl_eq_self (N.choose k) p
   have hu : ¬ p ∣ (N.choose k / p ^ (N.choose k).factorization p) := by
     first
       | exact Nat.not_dvd_ordCompl hp hC0
-      | exact Nat.not_dvd_ord_compl hp hC0
   have ha : (N.choose k).factorization p ≤ d := Nat.factorization_choose_le_log.trans hN
   generalize (N.choose k).factorization p = a at hCu hu ha
   generalize N.choose k / p ^ a = u at hCu hu
@@ -242,7 +238,6 @@ private theorem exists_integral_p_pow_div_choose_of_log_le (S : UniformizedDVR p
   push_cast
   conv_rhs => rw [← Nat.sub_add_cancel ha, pow_add]
   field_simp
-  try ring
 
 theorem scaled_casimirPower_integral_bound (S : UniformizedDVR p O) (hp : p.Prime) {E : GLOps n (KK O) V} (hE : IsGLRep E)
     {M : Submodule O V} (hM : UZStable (O := O) E M) (c : Fin n) (L : ℕ) (s : Finset (Fin n)) :
@@ -279,7 +274,6 @@ theorem scaled_casimirPower_integral_bound (S : UniformizedDVR p O) (hp : p.Prim
           casimirPowerScaled E c s b (q - k) (divPowE E i c k y)) := by
       first
         | rw [Finset.card_insert_of_notMem his]
-        | rw [Finset.card_insert_of_not_mem his]
       simp only [← algebraMap_smul (R := O) (KK O), map_smul, smul_smul]
       congr 1
       rw [ho]
@@ -338,7 +332,6 @@ theorem casimirConjugation_apply (E : GLOps n K V) (c : Fin n) (s : Finset (Fin 
 theorem casimirPowerW_zero (E : GLOps n K V) (c : Fin n) (s : Finset (Fin n)) : casimirPower E c s 0 = 1 := by
   first
   | rfl
-  | simp [casimirPower]
   | unfold casimirPower
     done
 
@@ -352,7 +345,7 @@ theorem casimirPowerW_succ (E : GLOps n K V) (c : Fin n) (s : Finset (Fin n)) (q
 theorem casimirPowerW_succ_apply (E : GLOps n K V) (c : Fin n) (s : Finset (Fin n)) (q : ℕ) (y : V) :
     casimirPower E c s (q + 1) y = ∑ i ∈ s, E c i (casimirPower E c s q (E i c y)) := by
   rw [casimirPowerW_succ]
-  simp [LinearMap.sum_apply, Module.End.mul_apply]
+  simp [LinearMap.sum_apply]
 
 theorem commutator_triple_product_leibniz {R : Type*} [Ring R] (A F W G : R) :
     A * (F * W * G) - (F * W * G) * A =

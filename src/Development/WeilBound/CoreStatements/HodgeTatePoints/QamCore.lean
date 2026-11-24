@@ -204,7 +204,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.artin_schreier_cocycle_root : ∀ (Z : Scheme.{0}) [IsIntegral Z] (p : ℕ) [Fact p.Prime] [CharP Z.functionField p], IsNormalScheme Z → ∀ (J : Type) (U : J → Z.Opens) (n : ∀ a b, Γ(Z, U a ⊓ U b)) (h : ∀ a, Γ(Z, U a)) (a₀ : J) [Nonempty (U a₀)], (∀ a b, n a b ^ p = (Z.presheaf.map (homOfLE (inf_le_left : U a ⊓ U b ≤ U a)).op).hom (h a) - (Z.presheaf.map (homOfLE (inf_le_right : U a ⊓ U b ≤ U b)).op).hom (h b)) → (∃ r : Z.functionField, r ^ p = (Z.germToFunctionField (U a₀)).hom (h a₀)) → ∃ s : ∀ a, Γ(Z, U a), ∀ a b, n a b = (Z.presheaf.map (homOfLE (inf_le_left : U a ⊓ U b ≤ U a)).op).hom (s a) - (Z.presheaf.map (homOfLE (inf_le_right : U a ⊓ U b ≤ U b)).op).hom (s b) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.CechP.coboundary_of_pow_coboundary | exact GlobalTheory.CompanionTheory.Ar.CechP.coboundary_of_pow_coboundary | (intros; apply GlobalTheory.CompanionTheory.Ar.CechP.coboundary_of_pow_coboundary <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.CechP.coboundary_of_pow_coboundary
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ArtinSchreierCocycleRootStatement =====
@@ -299,7 +299,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.line_bundle_cocycle_pullback_transform : ∀ (X Y : Scheme.{0}) (L : LB X), L.IsLB → ∀ (a b : Y ⟶ X), (∀ y, a y = b y) → ∀ (t : ∀ j, Γ(Y, b ⁻¹ᵁ L.U j)ˣ), (∀ (j j' : L.ι) (h : b ⁻¹ᵁ (L.U j ⊓ L.U j') ≤ a ⁻¹ᵁ (L.U j ⊓ L.U j')), res (show b ⁻¹ᵁ (L.U j ⊓ L.U j') ≤ b ⁻¹ᵁ L.U j from fun _ hy => hy.1) (t j) = Units.map (a.appLE _ _ h).hom.toMonoidHom (L.g j j') * (pullU b _ (L.g j j'))⁻¹ * res (show b ⁻¹ᵁ (L.U j ⊓ L.U j') ≤ b ⁻¹ᵁ L.U j' from fun _ hy => hy.2) (t j')) → ∃ c : LB.Gen (LB.LinComb L (K := Fin 2) ![a, b] ![1, -1]), c.IsGen := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Coc.exists_gen_of_units | exact GlobalTheory.CompanionTheory.Ar.Coc.exists_gen_of_units | (intros; apply GlobalTheory.CompanionTheory.Ar.Coc.exists_gen_of_units <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Coc.exists_gen_of_units
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.LineBundleCocyclePullbackTransformStatement =====
@@ -471,7 +471,7 @@ theorem spec_case {Y : Scheme.{0}} (p : Y ⟶ Sp A) (q : Y ⟶ Sp J)
     rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hl, hr, ← map_mul, Algebra.TensorProduct.basis_apply]
-    simp [B, Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul']
+    simp [TensorProduct.smul_tmul']
   obtain ⟨w, rfl⟩ := hΦ.2 f
   refine ⟨fun i => B.repr w i, ?_, fun c hc => ?_⟩
   · show Φ w = ∑ i, p.appTop.hom (toΓ A (B.repr w i)) * q.appTop.hom (toΓ J (b i))
@@ -629,7 +629,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.power_series_expansion_in_delta_unique : ∀ (X0 : Scheme.{0}) (G : Over X0) (k : Type) [Field k] (x : Sp k ⟶ X0) (m : ℕ) (W : (pullback G.hom x).Opens) (f : Γ(Ym G x m, prZ G x m ⁻¹ᵁ W)), ∃! c : Fin (m + 1) → Γ(pullback G.hom x, W), f = ∑ i, ((prZ G x m).app W).hom (c i) * dltOn G x m _ ^ (i : ℕ) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Coc.Thick.sections_thick | exact GlobalTheory.CompanionTheory.Ar.Coc.Thick.sections_thick | (intros; apply GlobalTheory.CompanionTheory.Ar.Coc.Thick.sections_thick <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Coc.Thick.sections_thick
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.PowerSeriesExpansionInDeltaUniqueStatement =====
@@ -714,7 +714,7 @@ theorem coeff_comparison : ∀ (A B : Type) [CommRing A] [CommRing B] (π : A �
     by_cases hi : i = Fin.last p
     · subst hi
       simp [add_mul]
-    · simp [Function.update_of_ne hi, hi]
+    · simp [hi]
   have hsum : ∑ i, π (c₁ i) * δ ^ (i : ℕ) = ∑ i,
       π (Function.update c₂ (Fin.last p) (c₂ (Fin.last p) + u ⟨1, h1⟩ ^ p) i) * δ ^ (i : ℕ) := by
     simp only [hlast, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, if_true]
@@ -739,7 +739,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.truncated_expansion_pth_power_coeff : ∀ (A B : Type) [CommRing A] [CommRing B] (π : A →+* B) (δ : B) (p : ℕ) [Fact p.Prime], (p : B) = 0 → δ ^ (p + 1) = 0 → (∀ c c' : Fin (p + 1) → A, ∑ i, π (c i) * δ ^ (i : ℕ) = ∑ i, π (c' i) * δ ^ (i : ℕ) → c = c') → ∀ (u c₁ c₂ : Fin (p + 1) → A), u 0 = 1 → c₁ 0 = 1 → c₂ 0 = 1 → ∑ i, π (c₁ i) * δ ^ (i : ℕ) = (∑ i, π (u i) * δ ^ (i : ℕ)) ^ p * ∑ i, π (c₂ i) * δ ^ (i : ℕ) → c₁ (Fin.last p) = c₂ (Fin.last p) + u ⟨1, Nat.succ_lt_succ (Nat.Prime.pos Fact.out)⟩ ^ p := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.CoefAlg.coeff_comparison | exact GlobalTheory.CompanionTheory.Ar.CoefAlg.coeff_comparison | (intros; apply GlobalTheory.CompanionTheory.Ar.CoefAlg.coeff_comparison <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.CoefAlg.coeff_comparison
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.TruncatedExpansionPthPowerCoeffStatement =====
@@ -798,7 +798,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.zero_section_surjective : ∀ (X0 : Scheme.{0}) (G : Over X0) (k : Type) [Field k] (x : Sp k ⟶ X0) (m : ℕ), Function.Surjective (secZ G x m).base := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Coc.secZ_surj | exact GlobalTheory.CompanionTheory.Ar.Coc.secZ_surj | (intros; apply GlobalTheory.CompanionTheory.Ar.Coc.secZ_surj <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Coc.secZ_surj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ZeroSectionSurjectiveStatement =====
@@ -835,7 +835,7 @@ theorem trU_pull (L : LB X) (a b : Y ⟶ X) (j j' : L.ι) (V : Y.Opens)
         Units.map ((h ≫ c).appLE _ V' hC').hom.toMonoidHom (L.g j j') := by
     intro c hC hC'
     ext
-    simp only [Units.coe_map, MonoidHom.coe_coe]
+    simp only [Units.coe_map]
     have := Scheme.Hom.appLE_comp_appLE h c _ V V' hC hV
     exact congrArg (fun q => q.hom (L.g j j' : Γ(X, L.U j ⊓ L.U j'))) this
   rw [trU, trU, map_mul, map_inv, e a hA hA', e b hB hB']

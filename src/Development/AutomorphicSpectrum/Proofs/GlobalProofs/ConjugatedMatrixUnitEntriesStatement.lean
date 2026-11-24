@@ -254,14 +254,14 @@ private theorem valuation_single_one_le_one {u : ℕ} (A B : Matrix (Fin u) (Fin
     (A * Matrix.single q p (1 : ℂ) * B : Matrix (Fin u) (Fin u) ℂ) a b = A a q * B p b := by
   rw [Matrix.mul_apply, Finset.sum_eq_single p]
   · rw [Matrix.mul_apply, Finset.sum_eq_single q]
-    · simp [Matrix.single_apply]
+    · simp
     · intro y _ hy
-      simp [Matrix.single_apply, Ne.symm hy]
+      simp [Ne.symm hy]
     · intro h
       exact absurd (Finset.mem_univ q) h
   · intro x _ hx
     rw [Matrix.mul_apply]
-    simp [Matrix.single_apply, Ne.symm hx]
+    simp [Ne.symm hx]
   · intro h
     exact absurd (Finset.mem_univ p) h
 
@@ -404,7 +404,7 @@ theorem _root_.GlobalTheory.T.adapted_basis_conjugate_zero_entries : ∀ (D : D7
     (∃ e : ℕ, (e = l ∨ e = l + d ∨ e + l + d = V.rank ∨ e + l = V.rank) ∧ p.val < e ∧ e ≤ q.val) →
     ((C.1.map (tauE D τ))⁻¹ * conjAt V τ (C.1.map (tauE D τ) * Matrix.single p q 1 * (C.1.map (tauE D τ))⁻¹) * C.1.map (tauE D τ)) a b ≠ 0 →
       ∃ e : ℕ, (e = l ∨ e = l + d ∨ e + l + d = V.rank ∨ e + l = V.rank) ∧ a.val < e ∧ e ≤ b.val := by
-  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.ConjAdapted.conj_strict | exact GlobalTheory.CompanionTheory.Hypotheses₂.ConjAdapted.conj_strict | (intros; apply GlobalTheory.CompanionTheory.Hypotheses₂.ConjAdapted.conj_strict <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.ConjAdapted.conj_strict
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GlobalProofs.ConjugatedMatrixUnitEntriesStatement =====

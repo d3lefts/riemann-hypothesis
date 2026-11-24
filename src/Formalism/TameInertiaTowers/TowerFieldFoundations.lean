@@ -245,8 +245,6 @@ lemma neg_one_ne_one_int : (-1 : ℤˣ) ≠ 1 := by
 lemma card_units_int : Nat.card ℤˣ = 2 := by
   first
     | (rw [Nat.card_eq_fintype_card, Fintype.card_units_int])
-    | rfl
-    | simp [Nat.card_eq_fintype_card]
 
 lemma card_unitsTwoPow (n : ℕ) (hn : 1 ≤ n) : Nat.card (ZMod (2 ^ n))ˣ = 2 ^ (n - 1) := by
   haveI : NeZero (2 ^ n) := ⟨by positivity⟩
@@ -279,7 +277,6 @@ lemma mem_zpowers_JJ {n : ℕ} {g : GalL n} (h : g ∈ zpowers (JJ n)) : g = 1 �
 lemma mem_decomposition_subgroup_iff {n : ℕ} {g : GalL n} : g ∈ D2 n ↔ g.2.2 = 1 := by
   first
     | exact Iff.rfl
-    | simp [D2]
 
 end ModelEmbedding
 
@@ -351,10 +348,6 @@ lemma unitsMap_five_mod_four (n : ℕ) (h : 4 ∣ 2 ^ n) : ZMod.unitsMap h (u5 n
   apply Units.ext
   first
     | (rw [ZMod.unitsMap_def, Units.coe_map, u5, ZMod.coe_unitOfCoprime, MonoidHom.coe_coe, map_natCast]
-       decide)
-    | (simp only [ZMod.unitsMap_def, Units.coe_map, u5, ZMod.coe_unitOfCoprime, MonoidHom.coe_coe, map_natCast]
-       decide)
-    | (rw [ZMod.unitsMap_def, Units.coe_map, u5, ZMod.coe_unitOfCoprime, ZMod.castHom_apply, ZMod.cast_natCast h]
        decide)
 
 lemma unitsMap_neg_one (n m : ℕ) (h : m ∣ n) :
@@ -471,14 +464,14 @@ private lemma chi4_unitsMap_neg_one_eq_neg_one {N : ℕ} (h : 4 ∣ N) :
   rw [unitsMap_neg_one]
   apply Units.ext
   rw [MulChar.coe_toUnitHom]
-  first | rfl | decide | simp | (simp; decide)
+  first | rfl
 
 private lemma chi8_unitsMap_neg_one_eq_one {N : ℕ} (h : 8 ∣ N) :
     ZMod.χ₈.toUnitHom (ZMod.unitsMap h (-1 : (ZMod N)ˣ)) = 1 := by
   rw [unitsMap_neg_one]
   apply Units.ext
   rw [MulChar.coe_toUnitHom]
-  first | rfl | decide | simp | (simp; decide)
+  first | rfl
 
 private lemma chi8_unitsMap_u5_eq_neg_one (k : ℕ) (h : 8 ∣ 2 ^ (k + 3)) :
     ZMod.χ₈.toUnitHom (ZMod.unitsMap h (u5 (k + 3))) = -1 := by
@@ -487,10 +480,8 @@ private lemma chi8_unitsMap_u5_eq_neg_one (k : ℕ) (h : 8 ∣ 2 ^ (k + 3)) :
   have h5 : ((ZMod.unitsMap h (u5 (k + 3)) : (ZMod 8)ˣ) : ZMod 8) = 5 := by
     first
       | (rw [ZMod.unitsMap_def, Units.coe_map, u5, ZMod.coe_unitOfCoprime, MonoidHom.coe_coe, map_natCast]; rfl)
-      | (simp only [ZMod.unitsMap_def, Units.coe_map, u5, ZMod.coe_unitOfCoprime, MonoidHom.coe_coe, map_natCast]; rfl)
-      | (rw [ZMod.unitsMap_def, Units.coe_map, u5, ZMod.coe_unitOfCoprime, ZMod.castHom_apply, ZMod.cast_natCast h]; rfl)
   rw [h5]
-  first | rfl | decide
+  first | rfl
 
 lemma index_KK_le (k : ℕ) : (KK (k + 3)).index ≤ 8 := by
   have h4 : 4 ∣ 2 ^ (k + 3) := ⟨2 ^ (k + 1), by ring⟩
@@ -714,8 +705,7 @@ noncomputable def r4 (n : ℕ) : (ZMod (2 ^ (n + 2)))ˣ →* (ZMod (2 ^ 2))ˣ :=
 
 lemma five_unit_mod_four : u5 2 = 1 := by
   ext
-  rw [five_unit_coe_int, Units.val_one]
-  exact (intCast_five_zmod_two_pow_eq_one_iff 2).2 ⟨1, by norm_num⟩
+  simpa [five_unit_coe_int] using (intCast_five_zmod_two_pow_eq_one_iff 2).2 ⟨1, by norm_num⟩
 
 lemma mod_four_reduction_five (n : ℕ) : r4 n (u5 (n + 2)) = 1 := by rw [r4, unitsMap_five, five_unit_mod_four]
 
@@ -768,8 +758,7 @@ lemma card_units (s : ℕ) : Nat.card (ZMod (2 ^ (s + 2)))ˣ = 2 ^ (s + 1) := by
   norm_num
 
 lemma card_zp_neg (s : ℕ) : Nat.card (Subgroup.zpowers (-1 : (ZMod (2 ^ (s + 2)))ˣ)) = 2 := by
-  rw [Nat.card_zpowers]
-  exact orderOf_eq_prime neg_one_sq_units (neg_ne_one s)
+  rw [Nat.card_zpowers, orderOf_eq_prime neg_one_sq_units (neg_ne_one s)]
 
 lemma card_QQ (s : ℕ) : Nat.card (QQ s) = 2 ^ s := by
   have h := Subgroup.card_eq_card_quotient_mul_card_subgroup (Subgroup.zpowers (-1 : (ZMod (2 ^ (s + 2)))ˣ))
@@ -881,9 +870,7 @@ lemma mod_four_generator_eq_one (s m : ℕ) : r4 m (wgen s m) = 1 := by rw [wgen
 
 lemma um_w {s m : ℕ} (h : s ≤ m) :
     ZMod.unitsMap (pow_dvd_pow 2 (by omega : s + 2 ≤ m + 2)) (wgen s m) = 1 := by
-  rw [wgen, map_pow, unitsMap_five]
-  have h1 := pow_orderOf_eq_one (u5 (s + 2))
-  rwa [ord5] at h1
+  rw [wgen, map_pow, unitsMap_five, ← ord5 s, pow_orderOf_eq_one]
 
 noncomputable def psi {s m : ℕ} (h : s ≤ m) :
     ℤˣ × Multiplicative (ZMod (2 ^ (m - s))) →* GalL (m + 2) :=

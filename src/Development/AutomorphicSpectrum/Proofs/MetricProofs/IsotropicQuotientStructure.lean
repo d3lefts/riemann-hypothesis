@@ -170,7 +170,7 @@ theorem ringAction_descends_along_surjection
     fun a z => hF a z⟩
   · exact hext _ _ fun z => by simp [hF]
   · intro a b
-    exact hext _ _ fun z => by simp [hF, Module.End.mul_apply]
+    exact hext _ _ fun z => by simp [hF]
   · exact hext _ _ fun z => by simp [hF]
   · intro a b
     exact hext _ _ fun z => by simp [hF]
@@ -861,7 +861,7 @@ theorem exists_quot (hb : Function.Bijective form) (halt : ∀ x, form x x = 0) 
     { carrier := {x | ∀ y ∈ I, form x y = 0}
       add_mem' := by
         intro x z hx hz y hy
-        simp only [Set.mem_setOf_eq, map_add (f := _), LinearMap.add_apply, hx y hy, hz y hy, add_zero]
+        simp only [map_add (f := _), LinearMap.add_apply, hx y hy, hz y hy, add_zero]
       zero_mem' := by
         intro y _
         simp
@@ -1118,7 +1118,7 @@ section -- clump:auto
 open NumberField Matrix Filter Topology GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Cusp GroundTheory.Heights₂.Heights.LowerBoundFree GroundTheory.Heights₂.Heights.Regular
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.quotient_lattice_by_isotropic_submodule : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (g : ℕ) (Λ : Type) [AddCommGroup Λ] [Module (𝓞 E) Λ] (Ψ : Type) [Fintype Ψ] (R : RiemLat E g Λ) (I : Submodule (𝓞 E) Λ), IsSaturated I → IsIsoSub R.form I → ∃ (g' : ℕ) (Λ' : Type) (_ : AddCommGroup Λ') (_ : Module (𝓞 E) Λ') (R' : RiemLat E g' Λ') (q : (Fin g → ℂ) →ₗ[ℂ] (Fin g' → ℂ)), Function.Surjective q ∧ LinearMap.ker q = Submodule.span ℂ (R.P '' I) ∧ (∀ a x, q (R.B a x) = R'.B a (q x)) ∧ Set.range R'.P = q '' (R.P '' {x | ∀ y ∈ I, R.form x y = 0}) ∧ ∀ x y, (∀ v ∈ I, R.ip (R.P v) x = 0) → R'.ip (q x) (q y) = R.ip x y := by
-  first | exact @LevelTowerAlt.isotropic_quotient_lattice | exact LevelTowerAlt.isotropic_quotient_lattice
+  first | exact @LevelTowerAlt.isotropic_quotient_lattice
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.MetricProofs.QuotientLatticeByIsotropicSubmodule =====

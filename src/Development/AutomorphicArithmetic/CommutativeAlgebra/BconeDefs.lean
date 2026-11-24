@@ -58,7 +58,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.mem_etale_covering_sieves_iff_points : ∀ (U : Scheme.{0}) (S : Sieve U), S ∈ Scheme.etaleTopology.{0} U ↔ ∀ u : U, ∃ (V : Scheme.{0}) (j : V ⟶ U) (v : V), Etale j ∧ j v = u ∧ S.arrows j := by
-  first | (exact @GlobalTheory.etale_mem_iff_points) | (exact GlobalTheory.etale_mem_iff_points) | (intros; apply GlobalTheory.etale_mem_iff_points  <;> assumption)
+  first | (exact @GlobalTheory.etale_mem_iff_points)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleMemIffPointsStatement =====

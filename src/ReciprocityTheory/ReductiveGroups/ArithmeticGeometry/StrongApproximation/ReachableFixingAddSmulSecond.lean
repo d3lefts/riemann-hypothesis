@@ -102,7 +102,6 @@ theorem hm_mul (M M' : Matrix (Fin 2) (Fin 2) K) :
   have matrix_eq_of_mulVec_eq_lemma_2 {ι : Type _} [Fintype ι] [DecidableEq ι] {K : Type _} [CommRing K] {A B : Matrix ι ι K} (h : ∀ x, A *ᵥ x = B *ᵥ x) : A = B := by
     first
       | exact Matrix.ext_of_mulVec_single fun i => h _
-      | exact Matrix.toLin'.injective (LinearMap.ext fun x => by simpa using h x)
   have hfe : hf σ J f e = 1 := hf_fe hσ hJ he hff hef
   refine matrix_eq_of_mulVec_eq_lemma_2 fun x => ?_
   rw [← Matrix.mulVec_mulVec]
@@ -139,7 +138,6 @@ theorem unitaryTransvection_zero_first (e f : ι → K) (c : K) : eich σ J e 0 
     simp
   ext i j
   simp [eich, hm, h0, vecMulVec_apply]
-  try ring
 
 variable (σ J) in
 theorem unitaryTransvection_zero_second (e f : ι → K) (c : K) : eich σ J f 0 c = hm σ J e f !![1, 0; c, 1] := by
@@ -148,14 +146,12 @@ theorem unitaryTransvection_zero_second (e f : ι → K) (c : K) : eich σ J f 0
     simp
   ext i j
   simp [eich, hm, h0, vecMulVec_apply]
-  try ring
 
 variable (σ J) in
 theorem tor_hm (e f : ι → K) (l m : K) :
     tor (σ := σ) (J := J) e f l m = hm σ J e f !![l, 0; 0, m] := by
   ext i j
   simp [tor, hm, vecMulVec_apply]
-  try ring
 
 variable (σ J) in
 theorem tor_swap (e f : ι → K) (l m : K) :
@@ -265,8 +261,8 @@ theorem tor_conj_e {e f : ι → K} (he : hf σ J e e = 0) (hff : hf σ J f f = 
   rw [ext_iff_mulVec]
   intro x
   rw [← mulVec_mulVec, ← mulVec_mulVec, eich_mulVec, tor_mulVec, tor_mulVec, eich_mulVec]
-  simp only [hf_add_left, hf_sub_left, hf_smul_left, hf_smul_right, hσ, he, hff, hef, hfe, hue, huf,
-    heu, hfu, mul_zero, mul_one, add_zero, sub_zero, zero_add]
+  simp only [hf_add_left, hf_sub_left, hf_smul_left, hf_smul_right, hσ, he, hef, hfe, hue, huf,
+    heu, hfu, mul_zero, mul_one, add_zero, sub_zero]
   ext i
   simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
   linear_combination (-(hf σ J x e * u i) - l * c * hf σ J x e * e i) * hml

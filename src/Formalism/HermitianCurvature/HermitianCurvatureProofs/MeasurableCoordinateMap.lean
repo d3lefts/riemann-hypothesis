@@ -125,13 +125,10 @@ theorem measM_rhoX {X : Type*} [MeasurableSpace X] {x : X → C2.Lstidx w → �
   have hg : Dx2.Rad.Good S γ w d := by
     first
     | exact good S hγ hd hZw hpos
-    | exact good S hγ hd hZw
-    | exact good S hγ hZw hd
   obtain ⟨-, hinj, -⟩ := hg
   have hs : ∀ x, rhoX S γ w x ∈ C6.Rset γ ∧ C2.uMap k r S.z (rhoX S γ w x) = (lowS w x)ᴴ := fun x => by
     first
     | exact rhoX_spec S hγ hd hZw hpos x
-    | exact rhoX_spec S hγ hd hZw x
 
   have hR : IsClosed (C6.Rset γ) := by
     have hN : IsClosed (Nset k r) := (Formalism.FourierDecayAlt.P.B2x2.closedN k r).closed
@@ -442,7 +439,7 @@ theorem muSS_eq (S : B.RealPlaceData k r Wp Wq) (w : Equiv.Perm (Fin (r + 1)))
     have := h3.comp (h2.comp h1)
     simp only [OD.nuR]
     convert this using 1
-    all_goals first | rfl | (funext p; rfl)
+    all_goals first | rfl
   have hB : Measurable (Prod.map
       (Prod.map (id : Mt k r → Mt k r) (fun p : (G.UT (r + 1) → ℂ) × Mt k r =>
         Matrix.of.symm (C2.tauM k r S.z (G.upper p.1) * Matrix.of p.2)))

@@ -320,7 +320,7 @@ private theorem qR_smul_place_vec {L : Type} [Field L] [NumberField L] {N : ℕ}
   refine Finset.sum_congr rfl fun w _ => ?_
   simp only [Pi.smul_apply, star_smul, Matrix.mulVec_smul, dotProduct_smul, smul_dotProduct,
     star_trivial]
-  simp [Complex.smul_re, pow_two, mul_assoc]
+  simp [pow_two, mul_assoc]
 
 private theorem qR_le_two_mul_qR_sub_add_two_mul_of_mem_Pos {L : Type} [Field L] [NumberField L] {N : ℕ} {h : HS L N}
     (hh : h ∈ Pos L N) (x a : InfinitePlace L → Fin N → ℂ) :
@@ -1152,7 +1152,7 @@ private theorem actL_mul_apply_eq_actL_actL {L : Type} [Field L] [NumberField L]
   unfold mkHS
   apply Subtype.ext
   funext w i j
-  simp only [mat, Pi.mul_apply, _root_.mul_inv_rev, Units.val_mul, Matrix.conjTranspose_mul, Matrix.of_apply]
+  simp only [mat, Pi.mul_apply, _root_.mul_inv_rev, Units.val_mul, Matrix.conjTranspose_mul]
   rw [show ∀ X : Matrix (Fin N) (Fin N) ℂ, (of fun i j => X i j) = X from fun _ => rfl]
   simp only [Matrix.mul_assoc]
 

@@ -181,7 +181,7 @@ theorem _root_.GlobalTheory.EtC.TensEx.D_comp (I J : _root_.GlobalTheory.EtC.Cx 
       _root_.GlobalTheory.EtC.TensEx.D I J (w + 1) = 0 := by
   refine NatTrans.ext (funext fun U => ModuleCat.hom_ext (DirectSum.linearMap_ext _
     fun ⟨⟨s, t⟩, h⟩ => TensorProduct.ext' fun a b => ?_))
-  simp only [LinearMap.comp_apply, LinearMap.zero_apply]
+  simp only
   show _root_.GlobalTheory.EtC.TensEx.dT I J U.unop (w + 1) (_root_.GlobalTheory.EtC.TensEx.dT I J U.unop w
     (DirectSum.lof (ULift.{1} R) _ (fun p : {p : ℤ × ℤ // p.1 + p.2 = w} =>
       _root_.GlobalTheory.EtC.Sec (I.X p.1.1) U.unop ⊗[ULift.{1} R] _root_.GlobalTheory.EtC.Sec (J.X p.1.2) U.unop)
@@ -189,7 +189,7 @@ theorem _root_.GlobalTheory.EtC.TensEx.D_comp (I J : _root_.GlobalTheory.EtC.Cx 
   rw [_root_.GlobalTheory.EtC.TensEx.dT_lof, map_add (f := _), map_zsmul, _root_.GlobalTheory.EtC.TensEx.dT_lof,
     _root_.GlobalTheory.EtC.TensEx.dT_lof, sec_map_d_map_d_eq_zero, sec_map_d_map_d_eq_zero,
     TensorProduct.zero_tmul, TensorProduct.tmul_zero, map_zero, map_zero]
-  simp [Int.negOnePow_succ, smul_add]
+  simp [Int.negOnePow_succ]
 
 end GlobalTheory.EtC.TensEx
 
@@ -287,7 +287,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.exists_isTensor_etaleSheafComplexPairing : ∀ (R : Type) [CommRing R] (I J : Cx R), ∃ (K : Cx R) (τ : Pair I J K), τ.IsTensor := by
-  first | (exact @GlobalTheory.EtC.tensor_exists) | (exact GlobalTheory.EtC.tensor_exists) | (intros; apply GlobalTheory.EtC.tensor_exists  <;> assumption)
+  first | (exact @GlobalTheory.EtC.tensor_exists)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsTensorEtaleSheafComplexPairingStatement =====

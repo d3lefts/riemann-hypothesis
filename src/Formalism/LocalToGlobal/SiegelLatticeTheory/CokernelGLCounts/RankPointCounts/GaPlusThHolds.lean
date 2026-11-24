@@ -180,8 +180,8 @@ theorem zzrel_G (hs : M.split = some g) {X X' L P : Matrix (Fin (r + 1)) (Fin (r
     · simp only [Matrix.map_apply, hZ, hπ1, map_sub, Prod.fst_sub, AlgEquiv.apply_symm_apply, if_pos hab,
         Matrix.add_apply, Matrix.smul_apply, Ec, Matrix.of_apply, smul_eq_mul, mul_one]
       ring
-    · simp only [Matrix.map_apply, hZ, hπ1, map_sub, Prod.fst_sub, AlgEquiv.apply_symm_apply, if_neg hab,
-        map_zero, Prod.fst_zero, sub_zero, Matrix.add_apply, Matrix.smul_apply, Ec, Matrix.of_apply, smul_eq_mul,
+    · simp only [Matrix.map_apply, hZ, hπ1, AlgEquiv.apply_symm_apply, if_neg hab,
+        sub_zero, Matrix.add_apply, Matrix.smul_apply, Ec, Matrix.of_apply, smul_eq_mul,
         mul_zero, add_zero]
       ring
   have hZ2 : ∀ Y : Matrix (Fin (r + 1)) (Fin (r + 1)) E, (Formalism.MainNotions.S.Loc.HermSp.ZZplusOf M Y T T').map (π2 M g) =
@@ -193,8 +193,8 @@ theorem zzrel_G (hs : M.split = some g) {X X' L P : Matrix (Fin (r + 1)) (Fin (r
         Matrix.sub_apply, Matrix.neg_apply, Matrix.smul_apply, Matrix.transpose_apply, Ec, Matrix.of_apply,
         smul_eq_mul, mul_one]
       ring
-    · simp only [Matrix.map_apply, hZ, hπ2, map_sub, Prod.snd_sub, AlgEquiv.apply_symm_apply, if_neg hab,
-        map_zero, Prod.snd_zero, sub_zero, Matrix.sub_apply, Matrix.neg_apply, Matrix.smul_apply,
+    · simp only [Matrix.map_apply, hZ, hπ2, AlgEquiv.apply_symm_apply, if_neg hab,
+        sub_zero, Matrix.sub_apply, Matrix.neg_apply, Matrix.smul_apply,
         Matrix.transpose_apply, Ec, Matrix.of_apply, smul_eq_mul, mul_zero]
       ring
   have hE : ∀ φ : E →+* F, L.map φ * Ec * P.map φ = Ec := by
@@ -709,7 +709,7 @@ theorem liftOrb_of (hSR : SRLift) : LiftOrb := by
     rw [this]
     by_cases h : j = Fin.last m
     · subst h; simp
-    · simp [Pi.single_apply, h, Ne.symm h]
+    · simp [h, Ne.symm h]
 
   have hlu : IsUnit (l.det) := hdet
   have honto : ∀ x, ∃ y, ρ₀.mulVec y = x := by
@@ -1109,8 +1109,6 @@ theorem finite_max_of_equiv {R S : Type*} [CommRing R] [CommRing S] (e : R ≃+*
   refine ⟨Ideal.map e m, Ideal.map_isMaximal_of_equiv e, ?_⟩
   first
   | exact Ideal.comap_map_of_bijective _ e.bijective
-  | exact Ideal.comap_map_of_bijective e e.bijective
-  | simp
 
 variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]
   {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] [MeasurableSpace E]

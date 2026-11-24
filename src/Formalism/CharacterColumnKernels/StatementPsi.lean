@@ -63,8 +63,7 @@ theorem uElt_one (r : G →* A) (χ : G →* T'ˣ) : uElt r χ 1 = 1 := by
 
 theorem uElt_mul (r : G →* A) (χ : G →* T'ˣ) (g h : G) :
     uElt r χ (g * h) = uElt r χ g * uElt r χ h := by
-  simp only [uElt, map_mul, mul_inv, Units.val_mul]
-  rw [smul_mul_smul_comm]
+  simp only [uElt, map_mul, mul_inv, Units.val_mul, smul_mul_smul_comm]
 
 def uRep (O : Type*) [CommRing O] {M : Type*} [AddCommGroup M] [Module A M] [Module O M]
     [SMulCommClass A O M] (r : G →* A) (χ : G →* T'ˣ) : Representation O G M where
@@ -100,10 +99,7 @@ theorem yGen_mul (r : G →* A) (χ : G →* T'ˣ) (E e₁ : A) (δ : T') {ι : 
   unfold yGen
   rw [← Submodule.Quotient.mk_smul, ← Submodule.Quotient.mk_add]
   congr 1
-  refine Prod.ext ?_ ?_
-  · apply Subtype.ext
-    simp [ycoc_mul]
-  · simp
+  ext <;> simp [ycoc_mul]
 
 def colPsi (r : G →* A) (χ : G →* T'ˣ) (E e₁ : A) (δ : T') {ι : Type*} [DecidableEq ι]
     (D : ι → Subgroup G) (j : ι → ℕ) (Kc : ∀ l, Fin (j l) → G → A) (k0 : ι → G → A) :

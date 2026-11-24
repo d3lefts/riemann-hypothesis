@@ -242,7 +242,7 @@ theorem Test.fourier {S S' : Set (E × E)} (h : Test S) (hS : ∀ w ∈ S, (-w.2
   refine integral_congr_ae (Filter.Eventually.of_forall fun v => ?_)
   simp only [hec, hr v, smul_eq_mul, ← mul_assoc, ← ec_add]
   congr 2
-  simp only [inner_add_left, inner_add_right, inner_neg_left, inner_neg_right, real_inner_comm x]
+  simp only [inner_add_left, inner_add_right, inner_neg_right, real_inner_comm x]
   ring
 
 theorem Test.shear {S S' : Set (E × E)} (h : Test S) (b : E →ₗ[ℝ] E) (hb : ∀ x y, ⟪x, b y⟫ = ⟪y, b x⟫)
@@ -562,7 +562,7 @@ theorem inv_of_mem {R : Type} [CommRing R] [Algebra F R] [Invertible (2 : R)] (�
   let u : κ → (κ → F) × (κ → F) := fun i => (C *ᵥ Pi.single i 1, D *ᵥ Pi.single i 1)
   have e : (C.map (algebraMap F R) *ᵥ x, D.map (algebraMap F R) *ᵥ x) = ∑ i, x i • emb R (u i) := by
     refine Prod.ext (funext fun j => ?_) (funext fun j => ?_) <;>
-      simp [u, emb_apply, Prod.fst_sum, Prod.snd_sum, mulVec, dotProduct, mul_comm, Pi.single_apply]
+      simp [u, emb_apply, Prod.fst_sum, Prod.snd_sum, mulVec, dotProduct, mul_comm]
   rw [e]
   induction (Finset.univ : Finset κ) using Finset.induction_on with
   | empty => intro φ _; rw [Finset.sum_empty, schr_zero]
@@ -738,7 +738,7 @@ theorem test (hR : RealTest) (hψ : IsStd ψ) (hP : P * P = P) (hb : bᵀ = b) :
       have e1 : (q (F := F)) ∘ (fun i => mk 0 (p i)) = 0 := funext fun i => q_upF _
       have e2 : (p2 (F := F)) ∘ (fun i => mk 0 (p i)) = p := rfl
       refine Eq.trans (congrArg l (Eq.trans ?_ (schr_pure hψ _ _ _).symm)) (h1 (fun i => mk 0 (p i)) _ (hmem f₀ _ (hc φ hφ)))
-      simp only [comp_mulVec, e1, e2, Matrix.map_mul, ← mulVec_mulVec, hp, mulVec_zero, dotProduct_zero, map_zero]
+      simp only [comp_mulVec, e1, e2, ← mulVec_mulVec, hp, mulVec_zero, dotProduct_zero, map_zero]
       rw [hm]
       congr 1
       · funext y; simp
@@ -790,7 +790,7 @@ theorem test (hR : RealTest) (hψ : IsStd ψ) (hP : P * P = P) (hb : bᵀ = b) :
       rw [← hT, ← hT]
       refine Eq.trans (congrArg l ?_) (h1 (fun i => upI (p i)) _ (hmem f _ hg))
       rw [schr_pure hψ]
-      simp only [comp_mulVec, e1, e2, Matrix.map_mul, ← mulVec_mulVec, hp, mulVec_zero, dotProduct_zero, map_zero]
+      simp only [comp_mulVec, e1, e2, ← mulVec_mulVec, hp, mulVec_zero, dotProduct_zero]
       congr 1
       · exact funext hf
       · funext z; simp

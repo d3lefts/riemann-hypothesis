@@ -329,7 +329,7 @@ theorem unip_pi_iff {ι S : Type} [Fintype ι] [DecidableEq ι] [CommRing S] {n 
         · show (∑ k, K j k * y' k) i' = 0
           rw [Finset.sum_apply]
           refine Finset.sum_eq_zero fun k _ => ?_
-          simp [y', Pi.single_apply, hi]
+          simp [y', hi]
       obtain ⟨a, ha⟩ := h2 y' hy'
       refine ⟨fun l => φ (a l), ?_⟩
       have h0 : (fun k => φ (y' k)) = y := by
@@ -532,7 +532,7 @@ theorem perp_mulVec (I : Formalism.MainNotions.S.AutInst) (v : InfinitePlace I.F
   rw [Matrix.map_mul]
   simp only [Matrix.mulVec, dotProduct, Matrix.mul_apply, Formalism.UG.cT, Matrix.map_apply, Matrix.transpose_apply,
     Matrix.of_apply, Finset.mul_sum, Finset.sum_mul, map_mul, starRingEnd_apply, Formalism.MainNotions.BridgeUnipRad.emb_star,
-    Pi.star_apply, star_mul]
+    Pi.star_apply]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 
@@ -665,7 +665,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.linearIndependent_scaledBasisColumnsMatrix_transpose : ∀ {D : D7} (X : HidaSetting D) (h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D) (t lam : D.host.E), t ≠ 0 → lam ≠ 0 → LinearIndependent D.host.E (GlobalTheory.Core.SBesEx.eM X h t lam).transpose := by
-  first | exact @GlobalTheory.Core.SBesEx.eM_transpose_linearIndependent | exact GlobalTheory.Core.SBesEx.eM_transpose_linearIndependent | (intros; apply GlobalTheory.Core.SBesEx.eM_transpose_linearIndependent <;> assumption)
+  first | exact @GlobalTheory.Core.SBesEx.eM_transpose_linearIndependent
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.LinearIndependentScaledBasisColumnsMatrixTranspoStatement =====

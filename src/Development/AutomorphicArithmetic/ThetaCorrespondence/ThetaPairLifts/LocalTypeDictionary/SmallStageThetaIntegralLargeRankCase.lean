@@ -326,7 +326,7 @@ theorem pd_X (v w : Formalism.IndefR.Datum.FVar D b a) (P : PolF D b a) :
   rw [Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_mul]
   by_cases h : v = w
   · subst h; simp
-  · simp [h, Pi.single_apply, Ne.symm h]
+  · simp [h, Ne.symm h]
 
 theorem pd_pd (v w : Formalism.IndefR.Datum.FVar D b a) (P : PolF D b a) :
     pderiv v (pderiv w P) = pderiv w (pderiv v P) := by
@@ -336,7 +336,7 @@ theorem pd_pd (v w : Formalism.IndefR.Datum.FVar D b a) (P : PolF D b a) :
   | add p q hp hq => simp [hp, hq]
   | mul_X p j hp =>
     rw [mul_comm, pd_X, pd_X, map_add (f := _), map_add (f := _), pd_X, pd_X, hp]
-    split_ifs <;> simp [add_assoc, add_comm, add_left_comm]
+    split_ifs <;> simp [add_comm, add_left_comm]
 
 theorem rai_rai (i l : Fin b) (j k : Fin a) :
     raiO τ ε ε' i j * raiO τ ε ε' l k = raiO τ ε ε' l k * raiO τ ε ε' i j := by
@@ -538,7 +538,7 @@ theorem killed_capelli (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (A : Fr V
       ext r s
       by_cases h : i = r
       · subst h; simp [Matrix.sum_apply, vecMulVec_apply, Matrix.single_apply]
-      · simp [Matrix.sum_apply, vecMulVec_apply, h, Pi.single_apply, Ne.symm h]
+      · simp [Matrix.sum_apply, vecMulVec_apply, h, Ne.symm h]
     have e4 : ∑ a, (v ᵥ* A.onb τ) a • unitMap (A.onb τ) (B.onb τ) i a =
         B.onb τ * (∑ a, (v ᵥ* A.onb τ) a • Matrix.single i a (1 : ℂ)) * (A.onb τ)⁻¹ := by
       simp only [unitMap, Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_smul, Matrix.smul_mul]
@@ -1041,7 +1041,7 @@ theorem _root_.GlobalTheory.T.torus_mixedCoordinate_sum_rapid_decay : ∀ {D : D
         ENNReal.ofReal (∏ i, t i ^ e) *
           ∑' ξ : Matrix (Fin X.rank) (Fin r) D.host.E, ‖d.mixS X ψ μ' 𝓕' Ψ (HMul.hMul (ξ.map (incA D) : Mx D X.rank r) α) 0‖ₑ ≤
           ENNReal.ofReal (C * (n : ℝ) ^ A * (GlobalTheory.Size.sobO (V := V) (W := X) ψ θ μ 𝓕 k Ψ).toReal) := by
-  first | exact @GlobalTheory.TorusMixedDecay.prod_mul_sum_mixS_le | exact GlobalTheory.TorusMixedDecay.prod_mul_sum_mixS_le | (intros; apply GlobalTheory.TorusMixedDecay.prod_mul_sum_mixS_le <;> assumption)
+  first | exact @GlobalTheory.TorusMixedDecay.prod_mul_sum_mixS_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorusMixedCoordinateSumRapidDecayStatement =====
@@ -1228,7 +1228,7 @@ theorem _root_.GlobalTheory.T.thetaKernel_integrableOn_fundamentalDomain : Globa
       (𝓕' : Set (Mx D X.rank r)), IsCovolOne (GlobalTheory.MixModel.ratMx D X.rank r) μ' 𝓕' →
       ∀ (x : Mx D X.rank r) (i : Fin r), (∀ j, compAt θ τ₀ x j i = 0) → (_root_.I195MixedCoordinates_74ccb184947b854a25a0cacd.source d) X ψ μ' 𝓕' (ω (g, h) Φ) x 0 = 0) →
     ∀ h, IntegrableOn (fun g => thetaKO ω g h Φ) 𝓕 ν := by
-  first | exact @GlobalTheory.ThetaCuspInteg.integrableOn_thetaKO | exact GlobalTheory.ThetaCuspInteg.integrableOn_thetaKO | (intros; apply GlobalTheory.ThetaCuspInteg.integrableOn_thetaKO <;> assumption)
+  first | exact @GlobalTheory.ThetaCuspInteg.integrableOn_thetaKO
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaKernelIntegrableOnFundamentalDomainStatement =====
@@ -1353,7 +1353,7 @@ theorem _root_.GlobalTheory.T.fock_model_admissible_polynomial_exists : _root_.G
     ∀ ωA ωB Pi rf rl p p', IsMatch ψ θ A A₁ B α β ωA ωB Pi rf rl p p' → ∀ f, IsFinF ψ θ false A₁ B f →
       (∀ (ν₁ : Measure (GA D W₁)) (𝓕₁ : Set (GA D W₁)), IsHaarFD W₁ ν₁ 𝓕₁ → ∀ h, IntegrableOn (fun g => thetaKO ωB g h (fockF ψ θ false A₁ B f P')) 𝓕₁ ν₁) ∧
       (p' (fockF ψ θ false A₁ B f P') = 0 → ∀ P'', p' (fockF ψ θ false A₁ B f P'') = 0) := by
-  first | exact @_root_.GlobalTheory.GoodFock.exists_admissible_fock_polynomial | exact _root_.GlobalTheory.GoodFock.exists_admissible_fock_polynomial | (intros; apply _root_.GlobalTheory.GoodFock.exists_admissible_fock_polynomial <;> assumption)
+  first | exact @_root_.GlobalTheory.GoodFock.exists_admissible_fock_polynomial
 end
 end -- clump:auto
 end -- clump:auto
@@ -1883,7 +1883,7 @@ theorem _root_.GlobalTheory.T.smallStage_thetaIntegral_large_rank_case : _root_.
   GBig fun {D} T _ _ G μ₀ _ _ _ => ∀ (W : G.Weil) (S : GridChoice W Set.univ), IsStdChar D W.ψ (-1) →
     NumbersIn D.what₂.embLL S μ₀ → ∀ (i j : Fin D.R.m) (p q : ℕ) (A A' WW : HSp D) (X : Tri T A A' WW), GlobalTheory.SqTower.IsStageC W i j p q X →
       1 ≤ q → ∃ P' : PolF D WW.rank A'.rank, (∀ t h, MeasureTheory.IntegrableOn (X.ker' W.ψ W.θ t P' h) X.fd' X.m') ∧ ∀ t, X.I' W.ψ W.θ t P' ≠ 0 := by
-  first | exact @_root_.GlobalTheory.StageSmallBig.smallStage_thetaIntegral_of_large_rank | exact _root_.GlobalTheory.StageSmallBig.smallStage_thetaIntegral_of_large_rank | (intros; apply _root_.GlobalTheory.StageSmallBig.smallStage_thetaIntegral_of_large_rank <;> assumption)
+  first | exact @_root_.GlobalTheory.StageSmallBig.smallStage_thetaIntegral_of_large_rank
 end
 end -- clump:auto
 end -- clump:auto

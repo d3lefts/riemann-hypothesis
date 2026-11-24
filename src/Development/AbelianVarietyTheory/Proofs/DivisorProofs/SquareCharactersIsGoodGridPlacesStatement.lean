@@ -72,7 +72,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 theorem _root_.GlobalTheory.T.gridLocalTensorPlaces_over_split_places : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {μ₀ : T} (_hL : L.Is μ₀) (t : T)
     (w : HeightOneSpectrum (𝓞 D.host.E)), w ∈ locPl G t →
       Nonempty (D.host.E →ₐ[D.host.F] Fv D.host.F (w.under (𝓞 D.host.F))) := by
-  first | exact @GlobalTheory.LocPlSplit.locPl_split | exact GlobalTheory.LocPlSplit.locPl_split | (intros; apply GlobalTheory.LocPlSplit.locPl_split <;> assumption)
+  first | exact @GlobalTheory.LocPlSplit.locPl_split
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GridLocalTensorPlacesOverSplitPlacesStatement =====
@@ -185,7 +185,7 @@ theorem _root_.GlobalTheory.T.squareCharacters_isGood_gridPlaces : ∀ {D : D7} 
       ∀ B : Base D.host.F D.host.E, S₀ ∪ Q ⊆ B.P → B.v₁ ∉ S₀ ∪ Q → SplitsFully D.host.E B.v₁ →
         HasExp B.emb (alpha G t i j) B.mα → HasExp B.emb (beta G i j) B.mβ →
         Chars.IsGood B ⟨alpha G t i j, beta G i j, S₀, Q⟩ (spW G i j).rank (spW₁ G i j).rank := by
-  first | exact @GlobalTheory.FunObj.squareChars_isGood | exact GlobalTheory.FunObj.squareChars_isGood | (intros; apply GlobalTheory.FunObj.squareChars_isGood <;> assumption)
+  first | exact @GlobalTheory.FunObj.squareChars_isGood
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareCharactersIsGoodGridPlacesStatement =====

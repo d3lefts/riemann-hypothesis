@@ -900,7 +900,7 @@ open IsDedekindDomain NumberField Matrix GlobalTheory.ChiGrid GlobalTheory.FunOb
 open Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.StandardLatticesGL3 GlobalTheory.SumSize GlobalTheory.KerConjMean
 
 theorem _root_.GlobalTheory.T.conjRowAt_of_dict_depth : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → DictK → DepthK → ∀ C1 : ℝ, 0 < C1 → BigC fun _ ch C b => ConjRowAt ch C b C1 := by
-  first | exact @_root_.GlobalTheory.KerConjRow.conjugate_row_mem_kernel | exact _root_.GlobalTheory.KerConjRow.conjugate_row_mem_kernel | (intros; apply _root_.GlobalTheory.KerConjRow.conjugate_row_mem_kernel <;> assumption)
+  first | exact @_root_.GlobalTheory.KerConjRow.conjugate_row_mem_kernel
 end
 end -- clump:auto
 end -- clump:auto
@@ -959,7 +959,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim GlobalTheory.SumSize.OppConj
 
 theorem _root_.GlobalTheory.T.conj_mean_kernel_pairing : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → DictK → DepthK → PairStdK := by
-  first | exact @_root_.GlobalTheory.KerConjMean.kernel_conj_mean_pairing_standard_KType | exact _root_.GlobalTheory.KerConjMean.kernel_conj_mean_pairing_standard_KType | (intros; apply _root_.GlobalTheory.KerConjMean.kernel_conj_mean_pairing_standard_KType <;> assumption)
+  first | exact @_root_.GlobalTheory.KerConjMean.kernel_conj_mean_pairing_standard_KType
 end
 end -- clump:auto
 end -- clump:auto
@@ -982,7 +982,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 
 theorem _root_.GlobalTheory.T.sum_size_bound_opposite_conjugation : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → DictK → DepthK → InfRowK := by
-  first | exact @_root_.GlobalTheory.SumSize.OppConj.archimedean_sum_size_opposite_conjugate | exact _root_.GlobalTheory.SumSize.OppConj.archimedean_sum_size_opposite_conjugate | (intros; apply _root_.GlobalTheory.SumSize.OppConj.archimedean_sum_size_opposite_conjugate <;> assumption)
+  first | exact @_root_.GlobalTheory.SumSize.OppConj.archimedean_sum_size_opposite_conjugate
 end
 end -- clump:auto
 end -- clump:auto

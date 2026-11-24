@@ -260,7 +260,7 @@ theorem val_blockScalar (e : (Σ a, m a) ≃ n) (a : α) (z : kˣ) :
     by_cases hb : b = a
     · subst hb
       simp [GeneralLinearGroup.scalar, diagonal_apply]
-    · simp [Pi.mulSingle_eq_of_ne hb, diagonal_apply, hb, Matrix.one_apply]
+    · simp [diagonal_apply, hb, Matrix.one_apply]
   · rw [blockScalar, leviEmb_apply_ne k e _ h, diagonal_apply_ne]
     intro h'
     exact h (congrArg Sigma.fst (e.injective h'))
@@ -470,7 +470,7 @@ theorem inSupport_of_flag_jac (π : Representation ℂ (GL n k) V) (f : (Σ j, c
         by_cases hj : b = j₀
         · subst hj
           simp [val_blockScalar, diagonal_apply, hE, heq, ht0]
-        · simp [Pi.mulSingle_eq_of_ne hj, diagonal_apply, hE, heq, hj, Matrix.one_apply]
+        · simp [diagonal_apply, hE, heq, hj, Matrix.one_apply]
       · rw [leviEmb_apply_ne k f _ hb, diagonal_apply_ne]
         intro h'
         exact hb (congrArg Sigma.fst (f.injective h'))
@@ -534,7 +534,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SplitWeil
 
 theorem _root_.GlobalTheory.T.charInCuspidalSupport_of_jacquet_subquotient_factor : GlobalTheory.Published.BernsteinZelevinskyFiniteness → GlobalTheory.Published.GeometricLemma → ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (r : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ (GL (Fin r) k) V) (β : Type) [Fintype β] [LinearOrder β] (c : β → ℕ) (f : (Σ j, Fin (c j)) ≃ Fin r) (s : ∀ j, IrrRep (GL (Fin (c j)) k)) (j₀ : β) (ψ : kˣ →* ℂˣ), IsSmooth ρ → IsSubquotient (piTensor fun j => (s j).ρ) (jac f ρ) → InSupport (s j₀).ρ ψ → InSupport ρ ψ := by
-  first | exact @GlobalTheory.SuppStage.main | exact GlobalTheory.SuppStage.main | (intros; apply GlobalTheory.SuppStage.main <;> assumption)
+  first | exact @GlobalTheory.SuppStage.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.CharInCuspidalSupportOfJacquetSubquotientFactorStatement =====

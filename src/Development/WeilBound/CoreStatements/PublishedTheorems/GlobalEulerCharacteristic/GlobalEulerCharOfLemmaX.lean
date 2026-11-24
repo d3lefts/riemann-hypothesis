@@ -1150,6 +1150,7 @@ noncomputable def gsIso (S : Set (HeightOneSpectrum (𝓞 F))) :
   have hq : Continuous q := continuous_coinduced_dom.2 hφc
   have : CompactSpace (G F Ω) := inferInstance
   have : CompactSpace (GS Ω S) := Quotient.compactSpace
+  haveI : T2Space Gal(E/F) := krullTopology_t2
   exact { q with
     continuous_toFun := hq
     continuous_invFun := Continuous.continuous_symm_of_equiv_compact_to_t2 (f := q.toEquiv) hq }
@@ -1223,7 +1224,7 @@ theorem isCCAt_conj {w : InfinitePlace F} (hw : w.IsReal) {c c' : G F Ω} (hc : 
     · exact h
     · calc j'.comp (algebraMap F Ω)
           = ComplexEmbedding.conjugate (ComplexEmbedding.conjugate (j'.comp (algebraMap F Ω))) :=
-            by ext x; simp [ComplexEmbedding.conjugate_coe_eq]
+            by ext x; simp
         _ = ComplexEmbedding.conjugate (j.comp (algebraMap F Ω)) := by rw [h]
         _ = j.comp (algebraMap F Ω) := ComplexEmbedding.isReal_iff.1 hreal
   let _ : Algebra Ω ℂ := j.toAlgebra

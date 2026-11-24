@@ -186,11 +186,6 @@ theorem kapG_ne_zero (j : ℕ) (c : X.Lv.comp j) (γ : (X.Lv.lev j c).Γ) : kapG
   rw [kapG_eq]
   exact mul_ne_zero (mul_ne_zero (chiC_ne_zero X Kc j c γ) (cA_ne_zero X Kc j _)) (pPart_ne_zero X hp0 j _)
 
-theorem kapG_one (j : ℕ) (c : X.Lv.comp j) : kapG X Kc j c 1 = 1 := by
-  have h := kapG_mul X Kc hp0 j c 1 1
-  rw [mul_one] at h
-  exact (mul_eq_left₀ (kapG_ne_zero X Kc hp0 j c 1)).1 h.symm
-
 omit hp0
 
 variable (hfin : ∀ j c, (X.Lv.lev j c).FinClasses)

@@ -252,7 +252,6 @@ theorem mem_of_app_mem {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} (F : 
     rw [Hom.app_apply, Matrix.mulVec_mulVec, hΛ]
     first
       | rw [Matrix.smul_mulVec, Matrix.one_mulVec]
-      | (ext j; simp [Matrix.mulVec, dotProduct, Matrix.one_apply])
   have h2 : (Matrix.mulVec Λ (F.app w τ)) i ∈ Rpi O K l e := by
     simp only [Matrix.mulVec, dotProduct]
     exact Subalgebra.sum_mem _ fun j _ => mul_mem (A_le_Rpi l e (hΛA i j))
@@ -368,7 +367,7 @@ section -- clump:auto
 open PowerSeries GlobalTheory.BK
 
 theorem _root_.GlobalTheory.T.breuilKisin_jumps_subset_of_split_mono : ∀ (O K : Type) [CommRing O] [NormedField K] [IsUltrametricDist K] [CompleteSpace K] [Algebra O K] [IsUnitBall O K] (l e a : ℕ) [Fact l.Prime] [NormedAlgebra ℚ_[l] K] [NeZero e] [NeZero a] [TameDescentExponentData K l e a] (ι κ : Type) [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ] (η H : ℕ) (D₀ : BKDat O K l e a ι η H) (D₁ : BKDat O K l e a κ η H) (F : GlobalTheory.BK.Hom D₀.toPhiMod D₁.toPhiMod) (n : ℕ), (∀ τ : ZMod a, ∃ Λ : Matrix ι κ K⟦X⟧, (∀ i k, Λ i k ∈ A O K) ∧ Λ * F.mat τ = (l : K) ^ n • (1 : Matrix ι ι K⟦X⟧)) → D₀.jumps ⊆ D₁.jumps := by
-  first | exact @GlobalTheory.BK.jumps_subset_of_split_mono | exact GlobalTheory.BK.jumps_subset_of_split_mono | (intros; apply GlobalTheory.BK.jumps_subset_of_split_mono <;> assumption)
+  first | exact @GlobalTheory.BK.jumps_subset_of_split_mono
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.BreuilKisinJumpsSubsetOfSplitMonoStatement =====

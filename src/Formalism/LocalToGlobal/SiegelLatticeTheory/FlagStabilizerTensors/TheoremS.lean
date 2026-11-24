@@ -468,8 +468,7 @@ theorem intK_eq_sum (R : Subring K) (Λ L : AddSubgroup K) (d : ℕ)
   congr 1
   apply finsum_eq_sum_of_support_subset
   intro y hy
-  simp only [Set.Finite.coe_toFinset, Set.mem_ofPred_eq]
-  exact hg _ hy
+  simpa only [Set.Finite.coe_toFinset, Set.mem_ofPred_eq] using hg _ hy
 
 theorem ball_piece (R : Subring K) (m : ℕ) (B Λ : AddSubgroup K) (hΛB : Λ ≤ B) (z : K)
     (φ : (Fin m → K) → (Fin m → K))
@@ -569,15 +568,11 @@ theorem hess_scale (m : ℕ) (z t : Kˣ) :
   rw [smul_smul, mul_inv, Units.val_mul, mul_comm]
 
 theorem psi_ne_zero (ψ : AddChar K ℂ) (a : K) : ψ a ≠ 0 := by
-  intro h
-  have h1 : ψ (a + -a) = 1 := by simp
-  rw [AddChar.map_add_eq_mul, h, zero_mul] at h1
-  exact zero_ne_one h1
+  exact (AddChar.val_isUnit ψ a).ne_zero
 
 theorem amp_const (Λ₁ : AddSubgroup K) {m : ℕ} (A : (Fin m → K) → ℂ) (hA : LatInvN Λ₁ A) (z : K)
     (x : Fin m → K) (hx : ∀ k, x k - z ∈ Λ₁) : A x = A (fun _ => z) := by
-  have := hA (fun _ => z) (fun k => x k - z) hx
-  rw [← this]; congr 1; ext k; simp
+  simpa only [show (fun _ => z) + (fun k => x k - z) = x by ext k; simp] using hA (fun _ => z) (fun k => x k - z) hx
 
 
 open Classical in
@@ -656,8 +651,7 @@ theorem root_piece [TopologicalSpace K] (R : Subring K) (ψ : AddChar K ℂ) (m 
 theorem ball_iff (B : AddSubgroup K) {m : ℕ} (x l : Fin m → K) (z : K) (hl : ∀ k, l k ∈ B) :
     (∀ k, (x + l) k - z ∈ B) ↔ ∀ k, x k - z ∈ B := by
   refine forall_congr' fun k => ?_
-  have h1 : (x + l) k - z = x k - z + l k := by simp only [Pi.add_apply]; ring
-  rw [h1]
+  rw [show (x + l) k - z = x k - z + l k by simp only [Pi.add_apply]; ring]
   exact B.add_mem_cancel_right (hl k)
 
 end Formalism.FourierDecayAlt.P.HessianScalingIntegrals

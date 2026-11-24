@@ -215,9 +215,8 @@ lemma inv_eq {y : Mat k r} (hy : y ∈ GV k r) : y⁻¹ = Hpk k r * yᴴ * Hpk k
 
 lemma hy_apply (y : Mat k r) (i l : Fin (2 * r + k + 1)) :
     (Hpk k r * yᴴ) i l = ep k r i * star (y l (sg k r i)) := by
-  rw [Matrix.mul_apply]
-  simp only [hpk_apply, ite_mul, zero_mul, Matrix.conjTranspose_apply]
-  rw [Finset.sum_ite_eq' Finset.univ (sg k r i)]
+  simp only [Matrix.mul_apply, hpk_apply, ite_mul, zero_mul, Matrix.conjTranspose_apply,
+    Finset.sum_ite_eq' Finset.univ (sg k r i)]
   simp
 
 lemma inv_apply {y : Mat k r} (hy : y ∈ GV k r) (i j : Fin (2 * r + k + 1)) :
@@ -362,8 +361,7 @@ lemma ep_eI (a : Fin r) : ep k r (eI k r a) = 1 := by
 
 lemma Lm_apply {n : Mat k r} (hn : n ∈ Nset k r) (a c : Fin r) :
     Lm n a c = star (n (eI k r c) (eI k r a)) := by
-  simp only [Lm, Matrix.of_apply]
-  rw [inv_apply (n_mem_G hn), sg_esI, sg_esI, ep_esI, ep_esI, one_mul, mul_one]
+  simp only [Lm, Matrix.of_apply, inv_apply (n_mem_G hn), sg_esI, sg_esI, ep_esI, ep_esI, one_mul, mul_one]
 
 lemma Lm_upper {n : Mat k r} (hn : n ∈ Nset k r) (a c : Fin r) (h : a < c) : Lm n a c = 0 := by
   rw [Lm_apply hn, n_colE hn a (eI k r c) (by simp [eI]; omega),
@@ -621,14 +619,12 @@ lemma transpose_upper_unitriangular {U : Matrix (Fin r) (Fin r) ℂ} (hU : IsUU 
 lemma transpose_lower_unitriangular {L : Matrix (Fin r) (Fin r) ℂ} (hL : IsLU L) : IsUU Lᵀ := ⟨fun i j h => hL.1 j i h, fun i => hL.2 i⟩
 
 lemma T_smul_mem_dual_lattice (Y : Matrix (Fin r) (Fin r) ℂ) (b : Fin r) : ld Yᵀ b = ld Y b := by
-  unfold ld mn
-  rw [rs_self]
+  simp only [ld, mn, rs_self]
   rw [show Yᵀ.submatrix (cs b) (cs b) = (Y.submatrix (cs b) (cs b))ᵀ from rfl, Matrix.det_transpose]
 
 lemma norm_det_le {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (B : ℝ) (hA : ∀ i j, ‖A i j‖ ≤ B) :
     ‖A.det‖ ≤ (n.factorial : ℝ) * B ^ n := by
-  have := Formalism.FourierDecayAlt.P.Ux5.det_norm_le A (m := B) hA
-  simpa using this
+  simpa using (Formalism.FourierDecayAlt.P.Ux5.det_norm_le A (m := B) hA)
 
 lemma norm_mn_le (Y : Matrix (Fin r) (Fin r) ℂ) (B : ℝ) (hB : 1 ≤ B) (hY : ∀ i j, ‖Y i j‖ ≤ B) (a b : Fin r) :
     ‖mn Y a b‖ ≤ (r.factorial : ℝ) * B ^ r := by
@@ -661,7 +657,6 @@ lemma norm_adj_le {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (B : ℝ) (hB : 1 �
 lemma norm_inv_le {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (B δ : ℝ) (hB : 1 ≤ B) (hδ : 0 < δ)
     (hA : ∀ i j, ‖A i j‖ ≤ B) (hdet : δ ≤ ‖A.det‖) (i j : Fin n) :
     ‖A⁻¹ i j‖ ≤ (n.factorial : ℝ) * B ^ n / δ := by
-  have hd : A.det ≠ 0 := fun h => by rw [h, norm_zero] at hdet; linarith
   have h1 := norm_adj_le A B hB hA i j
   have h2 := inv_anti₀ hδ hdet
   rw [Matrix.inv_def, Matrix.smul_apply, Ring.inverse_eq_inv', smul_eq_mul, norm_mul, norm_inv, div_eq_mul_inv]
@@ -886,8 +881,7 @@ lemma Pm_Es (y : Mat k r) (hy : IsUnit (Zm y).det) (a' a : Fin r) :
     Pm y (esI k r a') a = if a' = a then 1 else 0 := by
   have e := congrFun (congrFun (Matrix.mul_nonsing_inv (Zm y) hy) a') a
   rw [Matrix.one_apply] at e
-  rw [← e]
-  simp only [Pm, Matrix.mul_apply, cE, Zm, Matrix.of_apply]
+  simpa [Pm, Matrix.mul_apply, cE, Zm, Matrix.of_apply] using e
 
 lemma unit_of_det {δ : ℝ} (hδ : 0 < δ) {A : Matrix (Fin r) (Fin r) ℂ} (h : δ ≤ ‖A.det‖) : IsUnit A.det :=
   isUnit_iff_ne_zero.2 fun h' => by rw [h', norm_zero] at h; linarith
@@ -924,9 +918,8 @@ lemma Pmg_bd (hΓ : 1 ≤ Γ) (hδ : 0 < δ) (hgΓ : gN g ≤ Γ) (hdet : δ ≤
 lemma Q_bd (hΓ : 1 ≤ Γ) (hδ : 0 < δ) (hg : g ∈ GV k r) (hgΓ : gN g ≤ Γ) (hld : ∀ b, δ ≤ ‖ld (Zm g) b‖)
     (hdet : δ ≤ ‖(Zm g).det‖) (hn : n ∈ Nset k r) (hn' : n' ∈ Nset k r) (i : Fin (2 * r + k + 1)) (a : Fin r) :
     ‖(Pm (n⁻¹ * g * n') * Lm n) i a‖ ≤ c9 r Γ δ * gN (n⁻¹ * g * n') ^ (2 * r + 1) := by
-  have h := norm_mul_entry _ _ _ _ (by have := orbit_constant_eight_nonneg (r := r) hΓ hδ; have := gN_nonneg (n⁻¹ * g * n'); positivity)
-    (Pmx_bd hδ hg hdet hn hn') (Lm_bd hΓ hδ hg hgΓ hld hn hn') i a
-  refine h.trans (le_of_eq ?_)
+  refine (norm_mul_entry _ _ _ _ (by have := orbit_constant_eight_nonneg (r := r) hΓ hδ; have := gN_nonneg (n⁻¹ * g * n'); positivity)
+    (Pmx_bd hδ hg hdet hn hn') (Lm_bd hΓ hδ hg hgΓ hld hn hn') i a).trans (le_of_eq ?_)
   simp only [Fintype.card_fin, c9]; ring
 
 lemma rowM_eq (hδ : 0 < δ) (hdet : δ ≤ ‖(Zm g).det‖) (hn : n ∈ Nset k r) (hn' : n' ∈ Nset k r)
@@ -1136,8 +1129,7 @@ lemma both_bd {Γ δ : ℝ} {g n n' : Mat k r} (hΓ : 1 ≤ Γ) (hδ : 0 < δ) (
     (fun b => by rw [Zm_inv hg, ld_conjT]; exact hld b) (by rw [Zm_inv hg, det_conjT]; exact hdet) hn' hn
   have hnn : (n⁻¹)⁻¹ = n := Matrix.nonsing_inv_nonsing_inv n (closedN.unit n hn)
   have e : n'⁻¹ * g⁻¹ * n = (n⁻¹ * g * n')⁻¹ := by rw [xinv_eq hn hn', hnn]
-  rw [e, gN_inv (x_mem hg hn hn')] at h
-  exact h
+  simpa [e, gN_inv (x_mem hg hn hn')] using h
 
 lemma dot_bvec (e : Fin (2 * r + k + 1)) (v : Fin (2 * r + k + 1) → ℂ) : star (bvec e) ⬝ᵥ v = v e := by
   simp [bvec, dotProduct, Pi.single_apply]
@@ -1343,8 +1335,7 @@ lemma gN_heis_le (x : HPar k r') (n' : Mat k r') :
 lemma rpow_split {X A B a θ : ℝ} (hA : 0 < A) (hB : 0 < B) (hXA : A ≤ X) (hXB : B ≤ X) (ha : 0 ≤ a)
     (hθ0 : 0 ≤ θ) (hθ1 : θ ≤ 1) : X ^ (-a) ≤ A ^ (-(θ * a)) * B ^ (-((1 - θ) * a)) := by
   have hX : 0 < X := lt_of_lt_of_le hA hXA
-  have e : -a = -(θ * a) + -((1 - θ) * a) := by ring
-  rw [e, Real.rpow_add hX]
+  rw [show -a = -(θ * a) + -((1 - θ) * a) by ring, Real.rpow_add hX]
   apply mul_le_mul
   · exact Real.rpow_le_rpow_of_nonpos hA hXA (by nlinarith)
   · exact Real.rpow_le_rpow_of_nonpos hB hXB (by nlinarith)
@@ -1365,8 +1356,7 @@ lemma lint_heis_fin (k r' : ℕ) {c : ℝ} (hc : ((2 * (2 * r' + k + 1) + 1 : �
     intro x
     have hu : 0 ≤ 1 + ‖x‖ := by positivity
     rw [Real.div_rpow hu (by norm_num), Real.rpow_neg (by norm_num : (0:ℝ) ≤ 2), div_inv_eq_mul, mul_comm]
-  simp_rw [e]
-  simp_rw [ENNReal.ofReal_mul (Real.rpow_nonneg (by norm_num : (0:ℝ) ≤ 2) c)]
+  simp_rw [e, ENNReal.ofReal_mul (Real.rpow_nonneg (by norm_num : (0:ℝ) ≤ 2) c)]
   rw [lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
   refine ENNReal.mul_lt_top ENNReal.ofReal_lt_top ?_
   apply finite_integral_one_add_norm
@@ -1526,10 +1516,8 @@ lemma orbit3 (z z' : Fin (2 * r + k + 1) → ℂ) (K : Set (Mat k r)) (hK : IsCo
       gN n ≤ C * gN (n⁻¹ * g * n') ^ (3 * r) ∧ gN n' ≤ C * gN (n⁻¹ * g * n') ^ (3 * r) := by
   rcases Nat.eq_zero_or_pos r with rfl | hr
   · refine ⟨gN (1 : Mat k 0), Orb.gN_nonneg _, fun g _ n hn n' hn' => ?_⟩
-    have hN := Formalism.FourierDecayAlt.P.unipotent_haar_base_case k
-    rw [hN] at hn hn'
-    rw [Set.mem_singleton_iff.1 hn, Set.mem_singleton_iff.1 hn']
-    simp
+    rw [Formalism.FourierDecayAlt.P.unipotent_haar_base_case k, Set.mem_singleton_iff] at hn hn'
+    simp [hn, hn']
   · obtain ⟨C, hC, h⟩ := Orb.orbit z z' K hK hKO
     refine ⟨C, hC, fun g hg n hn n' hn' => ?_⟩
     have hX := Orb.one_le_X (hKO hg).1 hn hn'
@@ -1548,8 +1536,7 @@ lemma sup_le_gN (M : Mat k r) : ‖M‖ ≤ gN M :=
   (Matrix.norm_le_iff (Orb.gN_nonneg M)).2 fun i j => Orb.ent_le M i j
 
 lemma gN_unit {X : Mat k r} (hX : unitLie k r X) : gN X ≤ ((2 * r + k + 1 : ℕ) : ℝ) := by
-  have := Orb.gN_le_of_ent X 1 zero_le_one (fun i j => hX.2 i j)
-  simpa using this
+  simpa using Orb.gN_le_of_ent X 1 zero_le_one (fun i j => hX.2 i j)
 
 lemma ad_bd {s X : Mat k r} (hs : s ∈ GV k r) (hX : unitLie k r X) :
     ‖s⁻¹ * X * s‖ ≤ ((2 * r + k + 1 : ℕ) : ℝ) * gN s ^ 2 := by

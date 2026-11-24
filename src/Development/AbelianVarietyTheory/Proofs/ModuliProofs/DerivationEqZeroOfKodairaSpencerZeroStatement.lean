@@ -238,8 +238,6 @@ private theorem valAt'_comp' {Y X : Scheme.{0}} (y : Sp ℂ ⟶ Y) (m : Y ⟶ X)
   · have hy' : ⊤ ≤ y ⁻¹ᵁ (m ⁻¹ᵁ W) := hy
     rw [valAt', dif_pos hy, valAt', dif_pos hy', valAt, valAt]
     first
-      | (rw [Scheme.comp_appLE]; rfl)
-      | simp [Scheme.comp_appLE]
       | simp [Scheme.Hom.comp_appLE]
   · have hy' : ¬ ⊤ ≤ y ⁻¹ᵁ (m ⁻¹ᵁ W) := hy
     rw [valAt', dite_eq_right hy, valAt', dite_eq_right hy']
@@ -1722,7 +1720,7 @@ open scoped CategoryTheory.Obj TensorProduct ContDiff
 open GlobalTheory.ZM GlobalTheory.KS
 
 theorem _root_.GlobalTheory.T.derivation_eq_zero_of_kodairaSpencer_zero : Out.Laws → Out.Laws2 → ThetaUnifAV → ∀ (o : Type) [CommRing o] (g k : ℕ) (J : Type) (b : TBase o k) (R : Type) [CommRing R] [Algebra o R] [Algebra o ℂ] [Algebra R ℂ] [IsScalarTower o R ℂ] (t : TObj g k J b (spMap (algebraMap o R))) (s₀ : Sp ℂ ⟶ Sp o) (t₀ : TObj g k J b s₀) (m : t₀.A.left ⟶ t.A.left) (u : HolUnif t₀.pol.A t₀.pol.L t₀.pol.g) (Hm : Matrix (Fin t₀.pol.g) (Fin t₀.pol.g) ℂ) (χ : u.Λ → ℂ), GoodU u Hm χ → (IsGrpPullback t₀.A t.A (spMap (algebraMap R ℂ)) m ∧ LBIso t₀.L (t.L.pull m) ∧ (∀ i, (t₀.pt i).left ≫ m = (spMap (algebraMap R ℂ)) ≫ (t.pt i).left) ∧ ∀ jj, (t₀.act jj).left ≫ m = m ≫ (t.act jj).left) → (∀ (x : Sp (DualNumber ℂ) ⟶ Sp R) (t' : TObj g k J b (x ≫ spMap (algebraMap o R))), x ≫ spMap (algebraMap o R) = constPt x ≫ spMap (algebraMap o R) → TMap t' t x → TMap t' t (constPt x) → x = constPt x) → ∀ (D : Derivation o R ℂ) s, KSRel u t.A.hom m (fun r => D r) 0 s → D = 0 := by
-  first | exact @GlobalTheory.KS.KerZero.derivation_eq_zero_of_ks_zero | exact GlobalTheory.KS.KerZero.derivation_eq_zero_of_ks_zero | (intros; apply GlobalTheory.KS.KerZero.derivation_eq_zero_of_ks_zero <;> assumption)
+  first | exact @GlobalTheory.KS.KerZero.derivation_eq_zero_of_ks_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.ModuliProofs.DerivationEqZeroOfKodairaSpencerZeroStatement =====

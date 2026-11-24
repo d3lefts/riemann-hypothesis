@@ -129,14 +129,12 @@ theorem exists_excisionNbhd_adjoin_root : ∀ (A : Type) [CommRing A] (h : A) (q
     intro a
     first
       | rfl
-      | simp [ψ, Ideal.Quotient.liftₐ_apply, IsScalarTower.algebraMap_apply A P.Ring (P.Ring ⧸ J)]
   have hcomp : ψ.comp φ = Ideal.Quotient.mkₐ A J := by
     apply P.hom_ext
     simp only [AlgHom.comp_apply, φ, StandardEtalePair.lift_X, Ideal.Quotient.mkₐ_eq_mk]
     show ψ (Ideal.Quotient.mk I r) = _
     rw [hψ, Ideal.Quotient.eq]
     first
-      | exact hX
       | (have := J.neg_mem hX; rwa [neg_sub] at this)
   refine ⟨P.Ring, inferInstance, inferInstance, ⟨inferInstance, ?_, ?_⟩, P.X, e2.symm⟩
   · intro a'
@@ -167,7 +165,7 @@ section -- clump:auto
 open GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.exists_excisionNbhd_with_root_of_isUnit : ∀ (A : Type) [CommRing A] (h : A) (q : ℕ), IsUnit (q : A) → ∀ ε r : A, IsUnit ε → ε - r ^ q ∈ Ideal.span {h} → ∃ (A' : Type) (_ : CommRing A') (_ : Algebra A A'), IsExcisionNbhd A A' h ∧ ∃ x : A', algebraMap A A' ε = x ^ q := by
-  first | (exact @GlobalTheory.EtC.exists_excisionNbhd_adjoin_root) | (exact GlobalTheory.EtC.exists_excisionNbhd_adjoin_root) | (intros; apply GlobalTheory.EtC.exists_excisionNbhd_adjoin_root  <;> assumption)
+  first | (exact @GlobalTheory.EtC.exists_excisionNbhd_adjoin_root)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsExcisionNbhdAdjoinRootStatement =====

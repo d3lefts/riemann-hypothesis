@@ -1092,8 +1092,7 @@ theorem recAux (X B0 Nc m C0 ce Eb lx2 A : ℝ) (hX : 0 < X) (hNc : 0 ≤ Nc)
   · field_simp
 
 theorem constant_factor_le_sixty (C0 ce : ℝ) (hC0 : 1 ≤ C0) (hce : 0 ≤ ce) : (50 * C0 + 10) * (ce / C0) ≤ 60 * ce := by
-  have hC : 0 < C0 := by linarith
-  rw [mul_div_assoc', div_le_iff₀ hC]
+  rw [mul_div_assoc', div_le_iff₀ (by linarith : 0 < C0)]
   nlinarith [mul_nonneg hce (sub_nonneg.2 hC0)]
 
 theorem divIneqRecord_of (H : TheoremDivIneq) : DivIneqRecord := by
@@ -1105,7 +1104,6 @@ theorem divIneqRecord_of (H : TheoremDivIneq) : DivIneqRecord := by
   have hb : 0 < b := by rw [z4]; exact Real.exp_pos _
   have hB0' : 0 ≤ B0 := by rw [hB0]; positivity
   obtain ⟨t0, t1, t2, t3⟩ := recAux (x ^ eps) B0 Nc m C0 ce Eb ((Real.log x) ^ 2) ((TT.card : ℝ) * a * La) hX hNc hC0 hce (sq_nonneg _) e2
-  have hc : 0 < 50 * C0 + 10 := by linarith only [hC0]
   have hC00 : 0 ≤ C0 := by linarith only [hC0]
   have p2' : N ^ 2 * 1 ≤ b := by rw [mul_one]; exact p2
   have key := H J Pl TT muC mu0 Fo hu hP mlam logT hK aT phν nν fa
@@ -1116,10 +1114,9 @@ theorem divIneqRecord_of (H : TheoremDivIneq) : DivIneqRecord := by
     (fun j => eKaux C0 f N La m L (eK j) hC0 c4 r2 (e3 j))
     e4 e5 e6' e7
   rw [t3] at key
-  have hfac : (50 * C0 + 10) * (ce / C0) ≤ 60 * ce := constant_factor_le_sixty C0 ce hC0 (by linarith only [hC0, hce])
   have hnn : 0 ≤ m * (x ^ eps * B0 + (Real.log x) ^ 2 * Nc) :=
     mul_nonneg (by linarith only [c3]) (add_nonneg (mul_nonneg hX.le hB0') (mul_nonneg (sq_nonneg _) hNc))
-  have hmul := mul_le_mul_of_nonneg_right hfac hnn
+  have hmul := mul_le_mul_of_nonneg_right (constant_factor_le_sixty C0 ce hC0 (by linarith only [hC0, hce])) hnn
   linarith only [key, hmul]
 
 end DivisorInequalityBounds

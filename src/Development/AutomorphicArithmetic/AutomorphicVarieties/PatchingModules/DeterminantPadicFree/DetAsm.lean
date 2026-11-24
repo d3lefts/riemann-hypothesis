@@ -258,14 +258,14 @@ theorem UpperTheory.V.Pa.Det.w1sAct :
       ((1 : Matrix (Fin n) (Fin n) (DD X k.g)) + DD.epM K).map DD.eta = 0 := by
     refine ⟨?_, fun c => ?_, fun c => ?_, ?_⟩ <;> funext i j <;> by_cases h : i = j <;>
       simp [Matrix.one_apply, h, DD.epM, DD.add_a, DD.add_ep, DD.add_ep', DD.add_eta, DD.one_a, DD.one_ep,
-        DD.one_ep', DD.one_eta, DD.zero_a, DD.zero_ep, DD.zero_ep', DD.zero_eta]
+        DD.one_ep', DD.one_eta]
   have hM : ((1 : Matrix (Fin n) (Fin n) (DD X k.g)) - DD.epM K).map DD.a = 1 ∧
       (∀ c, ((1 : Matrix (Fin n) (Fin n) (DD X k.g)) - DD.epM K).map (fun d => d.ep c) = -K c) ∧
       (∀ c, ((1 : Matrix (Fin n) (Fin n) (DD X k.g)) - DD.epM K).map (fun d => d.ep' c) = 0) ∧
       ((1 : Matrix (Fin n) (Fin n) (DD X k.g)) - DD.epM K).map DD.eta = 0 := by
     refine ⟨?_, fun c => ?_, fun c => ?_, ?_⟩ <;> funext i j <;> by_cases h : i = j <;>
       simp [sub_eq_add_neg, Matrix.one_apply, h, DD.epM, DD.add_a, DD.add_ep, DD.add_ep', DD.add_eta, DD.one_a,
-        DD.one_ep, DD.one_ep', DD.one_eta, DD.zero_a, DD.zero_ep, DD.zero_ep', DD.zero_eta, DD.neg_a, DD.neg_ep,
+        DD.one_ep, DD.one_ep', DD.one_eta, DD.neg_a, DD.neg_ep,
         DD.neg_ep', DD.neg_eta]
   have htr : ∀ M : Matrix (Fin n) (Fin n) (DD X k.g), M.trace.eta = (M.map DD.eta).trace := by
     intro M
@@ -283,13 +283,13 @@ theorem UpperTheory.V.Pa.Det.w1sAct :
     have hY : ∀ c, Z.map (fun d => d.ep' c) ∈ Od x.A X n x.a := hW.2
     have hK : ∀ c, K c ∈ Od x.A X n x.a := fun c => (map_algebraMap_mem_ev_of_mem_and_mem_od_of_mem _).2 ((k.mem c).1 g)
     apply mem_pairedDualFirstOrderDualMatrixSpace_of_mem_od_of_mem_ev
-    · simp only [matrix_map_dd_a_mul, matrix_map_dd_ep_mul, matrix_map_dd_ep'_mul, matrix_map_dd_eta_mul, hCa, hCe, hCe', hCt, hCa2, hCe2, hCe'2, hCt2, hPa, hPe, hPe', hPt, hMa, hMe, hMe', hMt, hZa, hZe]
+    · simp only [matrix_map_dd_a_mul, hCa, hCa2, hPa, hMa, hZa]
       simp
     · intro c
-      simp only [matrix_map_dd_a_mul, matrix_map_dd_ep_mul, matrix_map_dd_ep'_mul, matrix_map_dd_eta_mul, hCa, hCe, hCe', hCt, hCa2, hCe2, hCe'2, hCt2, hPa, hPe, hPe', hPt, hMa, hMe, hMe', hMt, hZa, hZe]
+      simp only [matrix_map_dd_a_mul, matrix_map_dd_ep_mul, hCa, hCe, hCa2, hCe2, hPa, hPe, hMa, hMe, hZa, hZe]
       simp
     · intro c
-      simp only [matrix_map_dd_a_mul, matrix_map_dd_ep_mul, matrix_map_dd_ep'_mul, matrix_map_dd_eta_mul, hCa, hCe, hCe', hCt, hCa2, hCe2, hCe'2, hCt2, hPa, hPe, hPe', hPt, hMa, hMe, hMe', hMt, hZa, hZe]
+      simp only [matrix_map_dd_a_mul, matrix_map_dd_ep'_mul, hCa, hCe', hCa2, hCe'2, hPa, hPe', hMa, hMe', hZa]
       simp
       exact (ev_od_graded_mul_mem _ _).2.2.1 ((ev_od_graded_mul_mem _ _).2.1 hρ (hY c)) hρ'
     · simp only [matrix_map_dd_a_mul, matrix_map_dd_ep_mul, matrix_map_dd_ep'_mul, matrix_map_dd_eta_mul, hCa, hCe, hCe', hCt, hCa2, hCe2, hCe'2, hCt2, hPa, hPe, hPe', hPt, hMa, hMe, hMe', hMt, hZa, hZe]
@@ -298,16 +298,15 @@ theorem UpperTheory.V.Pa.Det.w1sAct :
         ((ev_od_graded_mul_mem _ _).1 (add_mem ((ev_od_graded_mul_mem _ _).1 hρ hY0)
           (sum_mem fun c _ => (ev_od_graded_mul_mem _ _).2.2.2 ((ev_od_graded_mul_mem _ _).2.2.1 (hK c) hρ) (hY c))) hρ')
         (neg_mem (sum_mem fun c _ => (ev_od_graded_mul_mem _ _).2.2.2 ((ev_od_graded_mul_mem _ _).2.1 hρ (hY c)) ((ev_od_graded_mul_mem _ _).2.1 hρ' (hK c))))
-  · simp only [ep'M, matrix_map_dd_a_mul, matrix_map_dd_ep_mul, matrix_map_dd_ep'_mul, matrix_map_dd_eta_mul, hCa, hCe, hCe', hCt, hCa2, hCe2, hCe'2, hCt2, hPa, hPe,
-      hPe', hPt, hMa, hMe, hMe', hMt, hZa, hZe]
+  · simp only [ep'M, matrix_map_dd_a_mul, matrix_map_dd_ep'_mul, hCa, hCe', hCa2, hCe'2, hPa, hPe', hMa, hMe', hZa]
     simp
   · simp only [etaM, ep'M, matrix_map_dd_a_mul, matrix_map_dd_ep_mul, matrix_map_dd_ep'_mul, matrix_map_dd_eta_mul, hCa, hCe, hCe', hCt, hCa2, hCe2, hCe'2, hCt2, hPa, hPe,
       hPe', hPt, hMa, hMe, hMe', hMt, hZa, hZe]
     simp
-    simp only [hKdef, Matrix.add_mul, Finset.sum_mul, Matrix.mul_assoc, Finset.sum_sub_distrib]
+    simp only [hKdef, Matrix.add_mul, Finset.sum_mul, Matrix.mul_assoc]
     abel
-  · simp only [etaM, ep'M, matrix_map_dd_a_mul, matrix_map_dd_ep_mul, matrix_map_dd_ep'_mul, matrix_map_dd_eta_mul, hCa, hCe, hCe', hCt, hCa2, hCe2, hCe'2, hCt2, hPa, hPe,
-      hPe', hPt, hMa, hMe, hMe', hMt, hZa, hZe]
+  · simp only [etaM, ep'M, matrix_map_dd_a_mul, matrix_map_dd_ep_mul, matrix_map_dd_ep'_mul, matrix_map_dd_eta_mul, hCa, hCe, hCe', hCt, hPa, hPe,
+      hPe', hPt, hZa, hZe]
     simp
     simp only [hKdef, Matrix.mul_assoc]
 end -- clump:auto
@@ -931,7 +930,7 @@ private theorem coc_comb {F G : Type} [Field F] [Group G] {n m : ℕ} (χ : G �
   show ∑ k, α k • z k (g * h) = ∑ k, α k • z k g + χ g • (r g * (∑ k, α k • z k h) * r g⁻¹)
   rw [Finset.sum_congr rfl fun k _ => by rw [hz k g (Set.mem_univ _) h (Set.mem_univ _)]]
   simp [smul_add, Finset.sum_add_distrib, Finset.mul_sum, Finset.sum_mul, Finset.smul_sum,
-    Matrix.mul_smul, Matrix.smul_mul, smul_smul, mul_comm]
+    smul_smul, mul_comm]
 
 private theorem cut_mul {F : Type} [Field F] {n : ℕ} (p q : Fin n → Prop) [∀ i j, Decidable (p i ∧ q j)]
     (Z B : Matrix (Fin n) (Fin n) F) (hB : ∀ k j, ¬ (q k ↔ q j) → B k j = 0) (i j : Fin n) :
@@ -1064,7 +1063,7 @@ theorem UpperTheory.V.Pa.Det.ann :
     Det.shapiro D D.χF s L Y2 (fun g => by simp [DetFr.χF, D.χσ]) hla.sq hLc hLo hLp hL2
   have hT : YKᵀ = -YK := by
     have h := congrArg Matrix.transpose hYKs
-    simp only [Matrix.transpose_smul, Matrix.transpose_transpose, neg_smul, one_smul] at h
+    simp only [neg_smul, one_smul] at h
     exact h.symm
   have hα : α = 0 := hκ.indep α YK hYKo hT fun g => by
     have := hYK g
@@ -1129,7 +1128,7 @@ theorem UpperTheory.V.Pa.Det.relPair :
     rw [hχ g hg, one_smul] at e
     rw [e, map_mul]
     simp only [eK, eL g hg]
-    simp only [add_mul, mul_add, sub_mul, mul_sub, Finset.sum_add_distrib, Finset.sum_sub_distrib, Finset.sum_mul,
+    simp only [add_mul, mul_add, sub_mul, Finset.sum_add_distrib, Finset.sum_sub_distrib, Finset.sum_mul,
       Finset.mul_sum, mul_assoc, hP]
     abel
   let pr : (G →₀ F) → (G →₀ F) → (G →₀ F) := fun c d =>
@@ -1246,7 +1245,7 @@ theorem UpperTheory.V.Pa.Det.relPair :
       (A * Matrix.single j j 1 * (B * Matrix.single i i 1)).trace = A i j * B j i := by
     intro A B
     rw [← mul_assoc, Matrix.trace_mul_single]
-    simp [Matrix.mul_apply, Matrix.single_apply, ite_and, Finset.sum_ite_eq, Finset.sum_ite_eq', ite_mul]
+    simp [Matrix.mul_apply, Matrix.single_apply, ite_and, Finset.sum_ite_eq, ite_mul]
   have key := trQ _ (prS _ (prS c hS dj hdj) _ (prS c' hS' di hdi))
   rw [mQ _ (prS c hS dj hdj)] at key
   simp only [mR, mK, mL c hS, mL c' hS', hR0, hR0', hi, hj, zero_mul, mul_zero, add_zero, zero_add] at key
@@ -1268,8 +1267,7 @@ private theorem comb_entry {F G : Type} [Field F] {n m : ℕ} (r : G → Matrix 
     (κ la : Fin m → G → Matrix (Fin n) (Fin n) F) (α β : Fin m → F) (c : G →₀ F) (i j : Fin n) :
     (c.sum fun g x => x • ((∑ k, α k • κ k g + ∑ k, β k • la k g) * r g)) i j =
       ∑ k, ((c.sum fun g x => x • (κ k g * r g)) i j * α k + (c.sum fun g x => x • (la k g * r g)) i j * β k) := by
-  simp only [Finsupp.sum, Matrix.sum_apply, Matrix.smul_apply, Matrix.add_mul, Matrix.sum_mul,
-    Matrix.smul_mul, Matrix.add_apply, smul_eq_mul, Finset.sum_mul, Finset.mul_sum,
+  simp only [Finsupp.sum, Matrix.sum_apply, Matrix.smul_apply, Matrix.add_mul, Matrix.smul_mul, Matrix.add_apply, smul_eq_mul, Finset.sum_mul, Finset.mul_sum,
     Finset.sum_add_distrib, mul_add]
   rw [Finset.sum_comm (s := c.support) (f := fun x k => c x * (α k * (κ k x * r x) i j)),
     Finset.sum_comm (s := c.support) (f := fun x k => c x * (β k * (la k x * r x) i j))]
@@ -1442,8 +1440,7 @@ theorem UpperTheory.V.Pa.Det.detAlg :
       simp only [c, hRσ, hK.pol, Matrix.transpose_sum, Finset.smul_sum, Matrix.transpose_sub,
         Matrix.transpose_mul]
       refine Finset.sum_congr rfl fun k _ => ?_
-      simp only [neg_mul, mul_neg, mul_smul_comm, smul_mul_assoc, smul_sub, sub_neg_eq_add, neg_smul,
-        one_smul, smul_neg]
+      simp only [neg_mul, mul_neg, mul_smul_comm, smul_mul_assoc, smul_sub, sub_neg_eq_add, smul_neg]
       abel
     rw [hc, Matrix.transpose_sub, Matrix.transpose_smul, smul_sub, smul_comm s (D.χF g)]
   have htr : ∀ g ∈ D.G', (ψ g * D.r g).trace = 0 := fun g hg => by
@@ -1685,7 +1682,7 @@ private theorem eta_C : etaM ((DD.C c : DD A g) • P) = c • etaM P := by
   have hp : (DD.C c : DD A g).ep = 0 := rfl
   have hq : (DD.C c : DD A g).ep' = 0 := rfl
   ext i j
-  simp [etaM, ha, he, hp, hq]
+  simp [etaM, ha, he]
 private theorem eta_smul : etaM (c • P) = c • etaM P := eta_C P c
 private theorem ep_add (j) : ep'M j (P + Q) = ep'M j P + ep'M j Q := rfl
 private theorem ep_neg (j) : ep'M j (-P) = -ep'M j P := rfl
@@ -1695,7 +1692,7 @@ private theorem ep_C (j) : ep'M j ((DD.C c : DD A g) • P) = c • ep'M j P := 
   have ha : (DD.C c : DD A g).a = c := rfl
   have hq : (DD.C c : DD A g).ep' = 0 := rfl
   ext i k
-  simp [ep'M, ha, hq]
+  simp [ep'M, ha]
 private theorem ep_smul (j) : ep'M j (c • P) = c • ep'M j P := ep_C P c j
 
 private theorem constant_smul_mem_symmetric_deformation (h : P ∈ pairedDualFirstOrderDualMatrixSpace n A A g a) : (DD.C c : DD A g) • P ∈ pairedDualFirstOrderDualMatrixSpace n A A g a := by
@@ -1710,16 +1707,16 @@ private theorem constant_smul_mem_symmetric_deformation (h : P ∈ pairedDualFir
     refine ⟨by simp [h1], ?_, ?_⟩
     · funext k
       have e : (P i j).ep k = 0 := congrFun h2 k
-      simp [ha, hp, h1, e]
+      simp [ha, h1, e]
     · funext k
       have e : (P i j).ep' k = 0 := congrFun h3 k
-      simp [ha, hq, h1, e]
+      simp [ha, h1, e]
   · intro hij
     obtain ⟨h1, h2, h3⟩ := (h i j).2 hij
     refine ⟨by simp [h1], ?_, by simp [h3]⟩
     funext k
     have e : (P i j).ep k = 0 := congrFun h2 k
-    simp [ha, hp, h1, e]
+    simp [ha, h1, e]
 
 private theorem transpose_mem_symmetric_deformation (h : P ∈ pairedDualFirstOrderDualMatrixSpace n A A g a) : Pᵀ ∈ pairedDualFirstOrderDualMatrixSpace n A A g a := by
   simp [pairedDualFirstOrderDualMatrixSpace, blkMat, ddPart] at h ⊢
@@ -1776,7 +1773,7 @@ private theorem isKap {l : ℕ} [Fact l.Prime] {F : GFrame l} {n : ℕ} {x : NP 
       simp only [Pi.smul_apply, map_sum, mp_smul, hc', mul_smul]
       rw [← Finset.smul_sum, hc g]
       simp only [dTw, dY, one_smul, map_sub, map_mul, hY', hr]
-      simp [smul_sub, Matrix.mul_smul, Matrix.smul_mul]
+      simp [smul_sub]
     have hzero := k.indep c' ⟨Y', hY'od, hY't, hfun⟩
     funext j
     have e := hc' j
@@ -1868,12 +1865,12 @@ theorem UpperTheory.V.Pa.Det.detAsm :
     · apply mp_inj hinj
       rw [heps, eta_neg, eta_C, eta_tr, hZeta, map_neg, mp_smul, mp_tr, hY₀']
       conv_rhs => rw [← hY₀s]
-      simp only [s, Matrix.transpose_smul, smul_smul, neg_smul, smul_neg, mul_neg, mul_comm]
+      simp only [s, Matrix.transpose_smul, smul_smul, neg_smul, smul_neg, mul_comm]
     · intro j
       apply mp_inj hinj
       rw [heps, ep_neg, ep_C, ep_tr, hZep, map_neg, mp_smul, mp_tr, hY']
       conv_rhs => rw [← (hY j).2.1]
-      simp only [s, Matrix.transpose_smul, smul_smul, neg_smul, smul_neg, mul_neg, mul_comm]
+      simp only [s, Matrix.transpose_smul, smul_smul, neg_smul, smul_neg, mul_comm]
   · funext g
     apply hW.2.1
     · exact Submodule.smul_mem _ _ (hzW g)

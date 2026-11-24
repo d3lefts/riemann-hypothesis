@@ -161,7 +161,7 @@ theorem levi_stepPot_cell : ∀ (N j : ℕ), j ≤ N → ∀ (i : Fin N) (w : Pa
     have hb := b.2
     dsimp only
     simp only [hσ]
-    split_ifs <;> first | (exfalso; omega) | norm_num | ring
+    split_ifs <;> first | (exfalso; omega) | norm_num
   · have h1 : N - j ≤ N := by omega
     have h2 : (i : ℕ) + 1 - j ≤ N := by omega
     have hN : N ≤ N := le_refl N
@@ -191,7 +191,7 @@ theorem levi_stepPot_cell : ∀ (N j : ℕ), j ≤ N → ∀ (i : Fin N) (w : Pa
     have hb := b.2
     dsimp only
     simp only [hσ]
-    split_ifs <;> first | (exfalso; omega) | norm_num | ring
+    split_ifs <;> first | (exfalso; omega) | norm_num
 
 end GlobalTheory.CompanionTheory.Ar.PB
 end -- clump:auto
@@ -265,7 +265,7 @@ theorem gramOf_isHermitian {N : ℕ} (hd : Fin N → ℝ) (g : Matrix (Fin N) (F
   ext i j
   by_cases h : i = j
   · subst h; simp
-  · simp [diagonal_apply, h, Ne.symm h]
+  · simp [h, Ne.symm h]
 
 theorem continuous_gramHead {N : ℕ} (hd : Fin N → ℝ) (k : ℕ) :
     Continuous fun g : Matrix (Fin N) (Fin N) ℂ => gramHead hd k g := by
@@ -483,7 +483,7 @@ theorem inFlagDomain_base {j : ℕ} : InFlagDomain N j 1 := by
     · subst hab
       simp [gramHead, gramOf, sigForm, ha]
     · have : (⟨a, ha⟩ : {a : Fin N // (a : ℕ) < N - j}) ≠ ⟨b, hb⟩ := fun h => hab (congrArg Subtype.val h)
-      simp [gramHead, gramOf, Matrix.one_apply, hab, this]
+      simp [gramHead, gramOf, hab, this]
   rw [h]
   exact Matrix.PosDef.one
 

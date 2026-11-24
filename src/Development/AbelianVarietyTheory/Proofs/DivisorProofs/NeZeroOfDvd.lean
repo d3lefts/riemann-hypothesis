@@ -113,7 +113,7 @@ theorem defectSec_res : ∀ (Q q : ℕ) [NeZero Q], q ∣ Q → ∀ (U : Scheme.
   refine _root_.GlobalTheory.EtC.RedChern.res_defectSec Q q hqQ U u hQ W (h ≫ g) v ?_
   rw [hv]
   ext
-  simp [Scheme.Hom.comp_appTop] <;> rfl
+  simp <;> rfl
 
 end GlobalTheory.EtC.RedChern
 end -- clump:auto
@@ -273,7 +273,7 @@ theorem coefficientReduction_firstChernClass_tateTwist : ∀ (Q q : ℕ) [NeZero
     obtain rfl : t = 1 := by omega
     have key := (GlobalTheory.T.etaleCochainEvalOnSimplex_differential_values (ZMod q) (by norm_num) α U).2 0 0 1 (by simp) ht x
     rw [key]
-    simp only [hα, corrFam_zero, smul_zero, Finset.sum_const_zero, add_zero, corrFam_one]
+    simp only [hα, corrFam_zero, smul_zero, Finset.sum_const_zero, add_zero]
     refine (_root_.GlobalTheory.EtC.RedChern.red_chern_deg_one Q q hqQ U (lineUnit L x) (hE U ⟨x.face 0⟩) _ _ (fun V g v hv => ?_) (fun V g w hw => ?_)).symm
     · rw [(GlobalTheory.T.etaleCochainEvalOnSimplex_basic_properties (ZMod Q)).2.1 γ.1 1 1 _ V U g x]
       exact hγ1 V (x.res g) v (by simpa only [lineUnit_res] using hv)
@@ -325,9 +325,6 @@ theorem map_zero' {R : Type} [CommRing R] {F G : Shv R} {U : Scheme.{0}} (z : Se
     Sec.map (0 : F ⟶ G) z = 0 := by
   first
   | rfl
-  | (show ((0 : F ⟶ G).hom.app (op U)).hom z = 0
-     rw [Sheaf.Hom.zero_hom]; rfl)
-  | (simp [Sec.map, Sheaf.zero_val])
 
 variable {Q : ℕ} {R : Type} [CommRing R] {I J T : Cx (ZMod Q)} {I' J' K' : Cx R}
 
@@ -341,7 +338,7 @@ theorem pairHom_smul (ν : Pair I' J' K') (ρ₁ : SemiMap I I') (ρ₂ : SemiMa
     pairHom ν ρ₁ ρ₂ U s t w h (r • a) b = pairHom ν ρ₁ ρ₂ U s t w h a (r • b) := by
   obtain ⟨n, rfl⟩ : ∃ n : ℤ, (n : ULift.{1} (ZMod Q)) = r :=
     ⟨(r.down.cast : ℤ), ULift.ext (by change ((r.down.cast : ℤ) : ZMod Q) = r.down; exact ZMod.intCast_zmod_cast _)⟩
-  simp [pairHom, Int.cast_smul_eq_zsmul, map_zsmul, LinearMap.smul_apply]
+  simp [pairHom, Int.cast_smul_eq_zsmul, map_zsmul]
 
 def bmap (ν : Pair I' J' K') (ρ₁ : SemiMap I I') (ρ₂ : SemiMap J J') (U : Scheme.{0}) (w : ℤ) :
     Tens I J U w →+ Sec (K'.X w) U := by
@@ -441,7 +438,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.exists_semiMap_of_tensorPairing : ∀ (Q : ℕ) (R : Type) [CommRing R] {I J T : Cx (ZMod Q)} {I' J' K' : Cx R} (τ : Pair I J T), τ.IsTensor → ∀ (ν : Pair I' J' K') (ρ₁ : SemiMap I I') (ρ₂ : SemiMap J J'), ∃ σ : SemiMap T K', ∀ (U : Scheme.{0}) (s t w : ℤ) (h : s + t = w) (a : Sec (I.X s) U) (b : Sec (J.X t) U), σ.app U w (τ.mul U s t w h a b) = ν.mul U s t w h (ρ₁.app U s a) (ρ₂.app U t b) := by
-  first | (exact @GlobalTheory.EtC.semiMap_of_tensorPair) | (exact GlobalTheory.EtC.semiMap_of_tensorPair) | (intros; apply GlobalTheory.EtC.semiMap_of_tensorPair  <;> assumption)
+  first | (exact @GlobalTheory.EtC.semiMap_of_tensorPair)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSemiMapOfTensorPairingStatement =====
@@ -516,11 +513,7 @@ theorem loc_trans {P : ∀ V : Scheme.{0}, (V ⟶ U) → Prop}
 theorem loc_finset {ι : Type*} (s : Finset ι) {P : ι → ∀ V : Scheme.{0}, (V ⟶ U) → Prop}
     (h : ∀ i ∈ s, Loc U (P i)) : Loc U fun V g => ∀ i ∈ s, P i V g := by
   first
-  | exact @_root_.GlobalTheory.LocalizedFinsetForAll.loc_forall_finset
-  | exact _root_.GlobalTheory.LocalizedFinsetForAll.loc_forall_finset
   | (apply _root_.GlobalTheory.LocalizedFinsetForAll.loc_forall_finset <;> assumption)
-  | (intros; apply _root_.GlobalTheory.LocalizedFinsetForAll.loc_forall_finset <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.LocalizedFinsetForAll.loc_forall_finset <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.LocalizedFinsetForAll.loc_forall_finset ..)
 
 end Loc
@@ -548,7 +541,7 @@ def tensP {ι : Type} (A B : ι → Scheme.{0}ᵒᵖ ⥤ ModuleCat.{1} (ULift.{1
     classical
     ext1
     refine DirectSum.linearMap_ext _ fun i => TensorProduct.ext' fun a b => ?_
-    simp [DirectSum.lof_eq_of, DirectSum.lmap_of]
+    simp [DirectSum.lof_eq_of]
   map_comp f g := by
     classical
     ext1
@@ -861,7 +854,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.flat_tensor_of_flat_complexes : ∀ (R : Type) [CommRing R] {I J T : Cx R} (τ : Pair I J T), τ.IsTensor → (∀ t, FlatS (I.X t)) → (∀ t, FlatS (J.X t)) → ∀ w, FlatS (T.X w) := by
-  first | (exact @GlobalTheory.EtC.FlatTens.flatS_tens) | (exact GlobalTheory.EtC.FlatTens.flatS_tens) | (intros; apply GlobalTheory.EtC.FlatTens.flatS_tens  <;> assumption)
+  first | (exact @GlobalTheory.EtC.FlatTens.flatS_tens)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatTensorOfFlatComplexesStatement =====
@@ -1016,7 +1009,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.semiMap_eq_of_flat_tateTwist_resolution : ∀ (Q q : ℕ) [NeZero Q], q ∣ Q → ∀ (k : ℤ) {T : Cx (ZMod Q)} (e : ∀ U : Scheme.{0}, Prim Q Γ(U, ⊤) → Sec (T.X 0) U), IsTwRes Q k T e → (∀ t, FlatS (T.X t)) → ∀ σ σ' : SemiMap T (res _ (tw q k)), (∀ (U : Scheme.{0}) (ζ : Prim Q Γ(U, ⊤)), σ.app U 0 (e U ζ) = σ'.app U 0 (e U ζ)) → ∀ (E : Spc) (n : ℤ) (x : CohomologyClass ((chains (ZMod Q)).obj E) T n), σ.op.app E n x = σ'.op.app E n x := by
-  first | (exact @GlobalTheory.EtC.ScalarExt.semiMap_op_eq_of_flat_res) | (exact GlobalTheory.EtC.ScalarExt.semiMap_op_eq_of_flat_res) | (intros; apply GlobalTheory.EtC.ScalarExt.semiMap_op_eq_of_flat_res  <;> assumption)
+  first | (exact @GlobalTheory.EtC.ScalarExt.semiMap_op_eq_of_flat_res)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SemiMapEqOfFlatTateTwistResolutionStatement =====
@@ -1203,8 +1196,6 @@ open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComp
 theorem _root_.GlobalTheory.T.tateTwistCoefficientReduction_unitClass : ∀ (Q q : ℕ) [NeZero Q], q ∣ Q → ∀ E : Spc, Inv Q E → red Q q E 0 0 (one Q E) = one q E := by
   first
   | exact @GlobalTheory.EtC.red_one
-  | exact GlobalTheory.EtC.red_one
-  | (intros; apply GlobalTheory.EtC.red_one <;> assumption)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TateTwistCoefficientReductionUnitClassStatement =====
@@ -1308,7 +1299,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.extendScalars_tateTwistResolution_hom_ext_augmentation : ∀ (Q q : ℕ) [NeZero Q] (hq : q ∣ Q) (i : ℤ) (K : Cx (ZMod q)) (u u' : extCx (ZMod.castHom hq (ZMod q)) (res _ (tw Q i)) ⟶ K), (∀ (U : Scheme.{0}) (ζ : Prim Q Γ(U, ⊤)), Sec.map (u.f 0) ((extπ (ZMod.castHom hq (ZMod q)) _).app U 0 (resGen i ζ)) = Sec.map (u'.f 0) ((extπ (ZMod.castHom hq (ZMod q)) _).app U 0 (resGen i ζ))) → extAug (ZMod.castHom hq (ZMod q)) (tw Q i) ≫ u = extAug (ZMod.castHom hq (ZMod q)) (tw Q i) ≫ u' := by
-  first | (exact @GlobalTheory.EtC.extAug_comp_ext) | (exact GlobalTheory.EtC.extAug_comp_ext) | (intros; apply GlobalTheory.EtC.extAug_comp_ext  <;> assumption)
+  first | (exact @GlobalTheory.EtC.extAug_comp_ext)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExtendScalarsTateTwistResolutionHomExtAugmentatiStatement =====

@@ -640,7 +640,7 @@ private theorem dC_prism_sum_eq_snd_sub_fst {Y : Type} {n : ℕ} (F : (Fin (n + 
     congr 1
     funext p
     simp only [FP, uu, s]
-    split_ifs <;> (congr 2; apply Fin.ext; rw [val_succAbove_eq_ite_lt]; simp only [Fin.val_mk]; split_ifs <;> omega)
+    split_ifs <;> (congr 2; apply Fin.ext; rw [val_succAbove_eq_ite_lt]; simp only; split_ifs <;> omega)
   let M : ℕ → Fin (n + 2) → Y := fun i r ↦ if (r : ℕ) < i then (uu r).1 else (uu r).2
   have hstep : ∀ i, i < n + 2 → F (M i) - F (M (i + 1)) =
       ∑ p ∈ Finset.range i, S p (i - 1) + ∑ q ∈ Finset.Ico (i + 1) (n + 2), S q i := by
@@ -712,14 +712,14 @@ private theorem dC_prism_sum_eq_snd_sub_fst {Y : Type} {n : ℕ} (F : (Fin (n + 
     simp only [M, uu, Nat.not_lt_zero, if_false]
     congr 2
     apply Fin.ext
-    simp only [Fin.val_mk]
+    simp only
     omega
   have hM1 : M (n + 2) = fun p ↦ (u p).1 := by
     funext r
     simp only [M, uu, r.isLt, if_true]
     congr 2
     apply Fin.ext
-    simp only [Fin.val_mk]
+    simp only
     omega
   rw [hL, ← hM0, ← hM1, ← Finset.sum_range_sub' (fun i ↦ F (M i)),
     Finset.sum_congr rfl (fun i hi ↦ hstep i (Finset.mem_range.mp hi)), Finset.sum_add_distrib,
@@ -755,7 +755,7 @@ theorem sEv_of : SEv := by
         fun u ↦ F (fun p ↦ (u p).2) - F (fun p ↦ (u p).1) := funext (dC_prism_sum_eq_snd_sub_fst F hd)
     rw [e] at h0
     simp only [ev, Finsupp.sum, Prod.smul_fst, Prod.smul_snd, mul_sub, Finset.sum_sub_distrib,
-      map_zero, Finsupp.support_zero, Finset.sum_empty] at h0
+      Finsupp.support_zero, Finset.sum_empty] at h0
     simp only [ev, Finsupp.sum]
     linarith
 
@@ -1094,7 +1094,7 @@ private theorem isBd_cmap_pi_sub_sum_cmap_mulSingle_of_isPrim (hC : SChain) {G :
       cases j using Fin.cases <;> simp [φ]
     have e2 : φ.comp (MonoidHom.inl G G) = MonoidHom.mulSingle (fun _ : Fin (q + 2) => G) 0 := by
       refine MonoidHom.ext fun a => funext fun j => ?_
-      cases j using Fin.cases <;> simp [φ, Pi.mulSingle_apply]
+      cases j using Fin.cases <;> simp [φ]
     have e3 : φ.comp (MonoidHom.inr G G) = ψ.comp (MonoidHom.pi fun _ => MonoidHom.id G) := by
       refine MonoidHom.ext fun a => funext fun j => ?_
       cases j using Fin.cases <;> simp [φ, ψ]

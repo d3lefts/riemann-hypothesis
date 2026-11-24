@@ -83,7 +83,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.kaehlerOneForm_eq_zero_of_uniformised_values : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), IsAbelianScheme A → ∀ (U : A.left.affineOpens) (ξ : Ω[Sec (str A) U.1⁄ℂ]), (∀ z ∈ pre u.ex U.1, evForm u.ex U.1 z ξ = 0) → ξ = 0 := by
-  first | exact @GlobalTheory.form_eq_zero_of_evForm_eq_zero | exact GlobalTheory.form_eq_zero_of_evForm_eq_zero | (intros; apply GlobalTheory.form_eq_zero_of_evForm_eq_zero <;> assumption)
+  first | exact @GlobalTheory.form_eq_zero_of_evForm_eq_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.KaehlerOneFormEqZeroOfUniformisedValuesStatement =====

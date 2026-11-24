@@ -69,7 +69,7 @@ noncomputable def bcIso {E : Spc} {S : Scheme.{0}} (p : E ⟶ sch.obj S) :
       (pullbackSymmetry p (sch.map U.hom)).hom ≫ pullback.lift (f := sch.map V.hom) (g := p)
         (pullback.fst (sch.map U.hom) p ≫ sch.map g.left) (pullback.snd (sch.map U.hom) p)
         (by rw [Category.assoc, ← sch.map_comp, Over.w g, pullback.condition])
-    apply pullback.hom_ext <;> simp [pullback.map, pullback.lift_fst, pullback.lift_snd])
+    apply pullback.hom_ext <;> simp [pullback.map])
 
 theorem bc_preserves {E : Spc} {S : Scheme.{0}} (p : E ⟶ sch.obj S) (J : Type) [SmallCategory J] [IsConnected J]
     [FinCategory J] : PreservesLimitsOfShape J (bc p) := by
@@ -81,12 +81,12 @@ theorem bc_isPullback {E : Spc} {S : Scheme.{0}} (p : E ⟶ sch.obj S) {U V : Ov
   refine IsPullback.flip (IsPullback.of_right (h₁₂ := pullback.fst p (sch.map V.hom)) (h₂₂ := sch.map V.hom) (v₁₃ := p) ?_ ?_
     (IsPullback.of_hasPullback p (sch.map V.hom)))
   · have h1 : (bc p).map g ≫ pullback.fst p (sch.map V.hom) = pullback.fst p (sch.map U.hom) := by
-      simp [bc, pullback.map, pullback.lift_fst]
+      simp [bc, pullback.map]
     have h2 : sch.map g.left ≫ sch.map V.hom = sch.map U.hom := by rw [← sch.map_comp, Over.w g]
     have h3 := IsPullback.of_hasPullback p (sch.map U.hom)
     rw [h2]
     exact h1 ▸ h3
-  · simp [bc, pullback.map, pullback.lift_snd]
+  · simp [bc, pullback.map]
 
 theorem hyp_coAug : ∀ (R : Type) [CommRing R] (S : Scheme.{0}) (E : Spc) (p : E ⟶ sch.obj S) [HasFiniteWidePushouts (S.Etale)ᵒᵖ] (U V : (S.Etale)ᵒᵖ) (g : U ⟶ V), Surjective g.unop.left → Hyp R ((Scheme.Etale.forget S ⋙ bc p).op) (coAug g) := by
   intro R _ S E p _ U V g hg k
@@ -120,7 +120,7 @@ section -- clump:auto
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex TensorProduct GlobalTheory.EtC
 
 theorem _root_.GlobalTheory.T.smallEtale_cechNerve_resolution_of_surjective : ∀ (R : Type) [CommRing R] (S : Scheme.{0}) (E : Spc) (p : E ⟶ sch.obj S) [HasFiniteWidePushouts (S.Etale)ᵒᵖ] (U V : (S.Etale)ᵒᵖ) (g : U ⟶ V), Surjective g.unop.left → Hyp R ((Scheme.Etale.forget S ⋙ bc p).op) (coAug g) := by
-  first | (exact @GlobalTheory.EtC.SmallEtaleCech.hyp_coAug) | (exact GlobalTheory.EtC.SmallEtaleCech.hyp_coAug) | (intros; apply GlobalTheory.EtC.SmallEtaleCech.hyp_coAug <;> assumption)
+  first | (exact @GlobalTheory.EtC.SmallEtaleCech.hyp_coAug)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmallEtaleCechNerveResolutionOfSurjectiveStatement =====

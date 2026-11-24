@@ -1222,11 +1222,6 @@ theorem span_inner {n : ℕ} (L M : Hn n →L[ℂ] Hn n) (s t : Set (Hn n))
   first
   | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.InnerSumZeroSpan.main
   | (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.InnerSumZeroSpan.main
-  | exact @_root_.GlobalTheory.InnerSumZeroSpan.main
-  | exact _root_.GlobalTheory.InnerSumZeroSpan.main
-  | (apply _root_.GlobalTheory.InnerSumZeroSpan.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.InnerSumZeroSpan.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.InnerSumZeroSpan.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.InnerSumZeroSpan.main ..)
 
 theorem sp_orth (w : InfinitePlace I.E) {A B : Submodule (𝓞 I.E) (Fin I.n → I.E)}
@@ -1720,7 +1715,7 @@ theorem integral_count_dens (n f q a : ℕ) (j : Fin a → ℕ) (de lo M : ℝ) 
               ∏ i, 2 * (f : ℝ) * j i / τ i := by ring
         _ ≤ M * 2 * ∏ i, 2 * (f : ℝ) * j i / τ i :=
           mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left h2 hM) hP
-    · simp [Set.indicator_apply, hl]
+    · simp [hl]
   have hcont : ContinuousOn (fun τ : Fin a → ℝ => M * 2 * ∏ i, 2 * (f : ℝ) * j i / τ i) S := by
     refine continuousOn_const.mul (continuousOn_finsetProd _ fun i _ => ?_)
     exact continuousOn_const.div (continuous_apply i).continuousOn

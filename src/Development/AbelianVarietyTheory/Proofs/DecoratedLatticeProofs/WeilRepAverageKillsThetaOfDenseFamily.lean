@@ -141,7 +141,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.map_mt_mul_left_adelicMatrix_haar_eq : ∀ (D : D7) (V : HSp D) (m : ℕ) (g : GA D V) (μ : Measure (Mx D V.rank m)), μ.IsAddHaarMeasure → μ.map (fun x : Mx D V.rank m => (HMul.hMul (mt V g) (x : Matrix (Fin V.rank) (Fin m) (AE D)) : Mx D V.rank m)) = μ := by
-  first | exact @GlobalTheory.map_mt_mul_eq | exact GlobalTheory.map_mt_mul_eq | (intros; apply GlobalTheory.map_mt_mul_eq <;> assumption)
+  first | exact @GlobalTheory.map_mt_mul_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MapMtMulLeftAdelicMatrixHaarEqStatement =====
@@ -156,7 +156,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.map_mul_right_unitaryGram_adelicMatrix_haar_eq : ∀ (D : D7) (N m : ℕ) (K : Matrix (Fin N) (Fin N) D.host.E), (∀ a b, D.sp.cm.sig (K b a) = K a b) → K.det ≠ 0 → ∀ (g : HA (AF D.host.F) D.sp.cm.sig K) (μ : Measure (Mx D m N)), μ.IsAddHaarMeasure → μ.map (fun x : Mx D m N => (HMul.hMul (x : Matrix (Fin m) (Fin N) (AE D)) ((HA.mat (AF D.host.F) D.sp.cm.sig K g).1 : Matrix (Fin N) (Fin N) (AE D)) : Mx D m N)) = μ := by
-  first | exact @GlobalTheory.mul_unitary_map_haar | exact GlobalTheory.mul_unitary_map_haar | (intros; apply GlobalTheory.mul_unitary_map_haar <;> assumption)
+  first | exact @GlobalTheory.mul_unitary_map_haar
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MapMulRightUnitaryGramAdelicMatrixHaarEqStatement =====
@@ -191,7 +191,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.map_mul_right_unitaryAdelicMatrix_addHaar : ∀ (D : D7) (V : HSp D) (m : ℕ) (g : GA D V) (μ : Measure (Mx D m V.rank)), μ.IsAddHaarMeasure → μ.map (fun x : Mx D m V.rank => (HMul.hMul (x : Matrix (Fin m) (Fin V.rank) (AE D)) (mt V g) : Mx D m V.rank)) = μ := by
-  first | exact @GlobalTheory.AdelicModulus.map_mul_right_unitary | exact GlobalTheory.AdelicModulus.map_mul_right_unitary | (intros; apply GlobalTheory.AdelicModulus.map_mul_right_unitary <;> assumption)
+  first | exact @GlobalTheory.AdelicModulus.map_mul_right_unitary
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MapMulRightUnitaryAdelicMatrixAddHaarStatement =====
@@ -434,7 +434,7 @@ theorem average_kills_theta : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T
     have hΦw : ∀ w, Φ w = ∫ x, F (f - g) x w ∂μ := by
       intro w
       have e : ∀ x, F (f - g) x w = F f x w - F g x w := by
-        intro x; simp only [F, map_sub, LinearMap.sub_apply, Pi.sub_apply, mul_sub]
+        intro x; simp only [F, map_sub, Pi.sub_apply, mul_sub]
       simp_rw [e]
       rw [integral_sub (hint w) (hintg w), hgz g hgM w, sub_zero]
     let G : WO S T → X → ℝ≥0∞ := fun w x =>

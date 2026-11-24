@@ -98,7 +98,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.le_iSup_of_uniformisationParameters_cover : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), IsAbelianScheme A → ∀ (U : A.left.Opens) (K : Type) (W : K → A.left.Opens), (∀ z ∈ pre u.ex U, ∃ i, z ∈ pre u.ex (W i)) → U ≤ ⨆ i, W i := by
-  first | exact @GlobalTheory.CechPer.le_iSup_of_pre_cover | exact GlobalTheory.CechPer.le_iSup_of_pre_cover | (intros; apply GlobalTheory.CechPer.le_iSup_of_pre_cover <;> assumption)
+  first | exact @GlobalTheory.CechPer.le_iSup_of_pre_cover
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LeISupOfUniformisationParametersCoverStatement =====
@@ -155,7 +155,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.G
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.isRegularOnOpenUniformised_of_locally : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), IsAbelianScheme A → ∀ (U : A.left.Opens) (k : (Fin g → ℂ) → ℂ), (∀ z ∈ pre u.ex U, ∃ W : A.left.Opens, W ≤ U ∧ z ∈ pre u.ex W ∧ IsReg u.ex W k) → IsReg u.ex U k := by
-  first | exact @GlobalTheory.CechPer.isReg_of_locally | exact GlobalTheory.CechPer.isReg_of_locally | (intros; apply GlobalTheory.CechPer.isReg_of_locally <;> assumption)
+  first | exact @GlobalTheory.CechPer.isReg_of_locally
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsRegularOnOpenUniformisedOfLocallyStatement =====

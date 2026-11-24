@@ -56,10 +56,8 @@ variable {s r : ℕ}
 
 theorem coarseA_mul (p : ℕ) (S : SegData s) (b : SegBlock s r) (i : Fin s) :
     (coarseA p S b i : ℝ) * (p : ℝ) ^ (S.G - S.d i) ≤ (S.bTop i : ℝ) := by
-  have h : coarseA p S b i * p ^ (S.G - S.d i) ≤ S.bTop i := by
-    unfold coarseA SegData.P
-    exact (Nat.div_mul_le_self _ _).trans (Nat.sub_le _ _)
-  exact_mod_cast h
+  unfold coarseA SegData.P
+  exact_mod_cast (Nat.div_mul_le_self _ _).trans (Nat.sub_le _ _)
 
 theorem cap_le (p : ℕ) (S : SegData s) (b : SegBlock s r) (l : ℕ) :
     (cap p S b l : ℝ) ≤ (S.A0 p : ℝ) + ∑ i : Fin s, if (i : ℕ) < l then (coarseA p S b i : ℝ) else 0 := by
@@ -69,8 +67,7 @@ theorem cap_le (p : ℕ) (S : SegData s) (b : SegBlock s r) (l : ℕ) :
   apply Finset.sum_le_sum
   intro i _
   split_ifs
-  · have h0 : (0 : ℝ) ≤ (oEff S b i : ℝ) := Nat.cast_nonneg _
-    linarith
+  · linarith [show (0 : ℝ) ≤ (oEff S b i : ℝ) from Nat.cast_nonneg _]
   · exact le_rfl
 
 theorem base_exponent_le_a (p : ℕ) (hp : 0 < p) (S : SegData s) (hE : 0 ≤ S.E0) :
@@ -78,7 +75,6 @@ theorem base_exponent_le_a (p : ℕ) (hp : 0 < p) (S : SegData s) (hE : 0 ≤ S.
   unfold SegData.A0 SegData.Qj
   push_cast
   have hp' : (0 : ℝ) < (p : ℝ) := by exact_mod_cast hp
-  have hq : (0 : ℝ) < (p : ℝ) ^ S.G := pow_pos hp' _
   refine (Int.floor_le _).trans ?_
   gcongr
   linarith
@@ -110,11 +106,8 @@ theorem SegHyp.p0 (H : SegHyp p S b' de be aS Q) : (5 : ℝ) ≤ (p : ℝ) := by
   exact_mod_cast H.p5
 
 theorem SegHyp.top_degree_le_two_b (H : SegHyp p S b' de be aS Q) (i : Fin s) : (S.bTop i : ℝ) ≤ 2 * b' := by
-  have h1 := (H.bT i).2
-  have hb := H.bpos
   have hbe : be ≤ 1 := by linarith [H.beLe, H.de6, H.be0]
-  have h2 : b' * be ≤ b' * 1 := mul_le_mul_of_nonneg_left hbe hb.le
-  nlinarith [h1, h2]
+  nlinarith [(H.bT i).2, mul_le_mul_of_nonneg_left hbe H.bpos.le]
 
 private theorem mul_sum_pow_lt_le_pow_of_segHyp (H : SegHyp p S b' de be aS Q) :
     ∀ n : ℕ, ∀ hn : n < s, (p : ℝ) * (∑ j : Fin s, if (j : ℕ) < n then (p : ℝ) ^ (S.d j) else 0) ≤
@@ -401,12 +394,10 @@ theorem SegHyp.dig (H : SegHyp p S b' de be aS Q) {aTop : Fin s → ℕ} {b : Se
   have h1r : (T : ℝ) ≤ ((r : ℝ) + 1) * (S.P p i : ℝ) := by exact_mod_cast h1
   have h2r : (b.ry i 0 : ℝ) ≤ (S.P p i : ℝ) := by exact_mod_cast h2
   have hQ0 : (0 : ℝ) ≤ Q := (Nat.cast_nonneg _).trans hP
-  have hr : (0 : ℝ) ≤ r := Nat.cast_nonneg r
   have h3 : ((r : ℝ) + 1) * (S.P p i : ℝ) ≤ ((r : ℝ) + 1) * Q :=
-    mul_le_mul_of_nonneg_left hP (by linarith)
-  have h4 : 0 ≤ (r : ℝ) * Q := mul_nonneg hr hQ0
+    mul_le_mul_of_nonneg_left hP (by positivity)
   push_cast
-  linarith
+  linarith [h1r, h2r, h3, mul_nonneg (Nat.cast_nonneg r) hQ0]
 
 theorem SegHyp.oplus (H : SegHyp p S b' de be aS Q) (b : SegBlock s r) :
     Oplus p r S b ≤ S.a / (p : ℝ) ^ 2 + (s : ℝ) * (2 * (b' / p)) +
@@ -635,9 +626,8 @@ theorem ord_all {C0 Cde CE1 CE2 H Ct : ℝ} {X : Loc} (St : Std C0 Cde CE1 CE2 H
         ((X.aT (segStart X.TT j) : ℝ) / (X.p : ℝ) ^ ((segDists X.TT j).get i))) +
       ((segS X.TT j : ℝ) + 1) * (30 * R) := by
     intro j
-    have h := (segHyp_of St j).seg_ord (hK j)
     rw [hRdef]
-    exact h
+    exact (segHyp_of St j).seg_ord (hK j)
   have h1 : ((∑ j, blockOrd X.p (X.seg C0 CE1 CE2 j) (bs j) : ℕ) : ℝ) ≤
       ∑ j, ((∑ i : Fin (segS X.TT j), min (X.bT (segPos X.TT j i) : ℝ)
         ((X.aT (segStart X.TT j) : ℝ) / (X.p : ℝ) ^ ((segDists X.TT j).get i))) +
@@ -677,7 +667,6 @@ theorem restAlt3 (D : Formalism.BasicNotions.D7) : RemainderSegmentBoundThird D 
   intro C0 CYb Cde Ck CD Cb CE1 CE2 Cm Cc hCc hC0 _ h1 h2 _ _ _ _ _ _ _ _ _ t1 t2 t3 t4 t5
   refine ⟨30, by norm_num, fun Ct hCt => ?_⟩
   intro X hD hI hc bs hK
-  have St : Std C0 Cde CE1 CE2 1 X := std_of hCc hC0 h1 h2 le_rfl t1 t2 t3 t4 t5 hD hI hc
-  exact ord_all St hCt bs hK
+  exact ord_all (std_of hCc hC0 h1 h2 le_rfl t1 t2 t3 t4 t5 hD hI hc) hCt bs hK
 
 end Formalism.MainNotions.ColumnSystems.Pf

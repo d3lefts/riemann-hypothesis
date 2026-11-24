@@ -276,7 +276,7 @@ theorem evalAt_detPol {n : ℕ} {K : Type} [CommRing K] (w : Matrix (Fin n) (Fin
 
 theorem eval_eq_evalAt {n : ℕ} {K : Type} [CommRing K] (v : Fin n × Fin n → K) (p : Pol n K) :
     eval v p = DualWeyl.evalAt (Matrix.of fun a s => v (a, s)) p := by
-  simp [DualWeyl.evalAt, coe_aeval_eq_eval]
+  simp [DualWeyl.evalAt]
 
 theorem eq_zero_of_evalAt {n : ℕ} {K : Type} [Field K] [Infinite K] (p : Pol n K)
     (h : ∀ w : Matrix (Fin n) (Fin n) K, w.det ≠ 0 → DualWeyl.evalAt w p = 0) : p = 0 := by
@@ -485,7 +485,7 @@ theorem evalFr_map_tpoly {T : Type} [Fintype T] [DecidableEq T] {N : T → ℕ} 
   congr 1
   refine Finset.prod_congr rfl fun t _ => ?_
   rw [show φ.comp (Int.castRingHom K) = Int.castRingHom S from RingHom.ext_int _ _]
-  simp [bval, DualWeyl.evalAt, coe_aeval_eq_eval, Function.comp_def]
+  simp [bval, DualWeyl.evalAt, Function.comp_def]
 
 theorem transfer {T : Type} [Fintype T] [DecidableEq T] {N : T → ℕ} (la : ∀ t, Fin (N t) → ℕ) {K : Type} [Field K]
     [CharZero K] (G : MvPolynomial (FrVar N) K) (x : TIdx la → K)
@@ -811,7 +811,7 @@ theorem exists_coord {f : Rul Xo c} (hf : f ∈ sec Xo c a n) (hs : f ∈ suppOn
   rw [hG _ _ z z₁ Y hY hz h₁, hx, evR_of_frMap_test hf.1
     (frMap_unique_refl_iff E H Dw l Xo c _ _ (AlgHom.id c.F _) z₂).2.1] at e
   refine e.trans ?_
-  simp only [wchar, Fintype.prod_option, Fintype.prod_sigma, ex, t, Units.val_one, one_pow, Finset.prod_const_one,
+  simp only [wchar, Fintype.prod_option, ex, t, Units.val_one, one_pow, Finset.prod_const_one,
     mul_one]
   rfl
 

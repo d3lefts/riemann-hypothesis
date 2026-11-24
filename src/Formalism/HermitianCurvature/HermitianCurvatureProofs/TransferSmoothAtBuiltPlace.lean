@@ -98,7 +98,7 @@ lemma gg_eval (ζ : ℂ) : gg TT ζ = MvPolynomial.eval ![ζ, conj ζ, sig TT ζ
     (MvPolynomial.X 0 * MvPolynomial.X 1 - MvPolynomial.C (TT : ℂ)) := by
   unfold Formalism.FourierDecayAlt.P.CutMP.JA.SSn.Rep.Core.TC.PR.gg
   simp only [MvPolynomial.eval_sub, MvPolynomial.eval_mul, MvPolynomial.eval_X, MvPolynomial.eval_C,
-    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, Complex.mul_conj]
+    Matrix.cons_val_zero, Matrix.cons_val_one, Complex.mul_conj]
   push_cast
   ring
 
@@ -446,7 +446,7 @@ private lemma Hpk_apply_wI_right_eq_ite (i : Fin (2 * r + k + 1)) (m : Fin (k + 
     Hpk k r i (wI k r m) = if i = wI k r m then Hb k m m else 0 := by
   have hm := m.isLt
   simp only [Formalism.QuantumDeterminants.Hpk, Formalism.QuantumDeterminants.Hb, Matrix.diagonal_apply_eq, wI, Fin.ext_iff, Fin.val_mk, Fin.val_last]
-  split_ifs <;> first | rfl | omega | (exfalso; omega)
+  split_ifs <;> first | rfl | omega
 
 private lemma Hpk_wI_apply_left_eq_ite (j : Fin (2 * r + k + 1)) (m : Fin (k + 1)) :
     Hpk k r (wI k r m) j = if j = wI k r m then Hb k m m else 0 := by
@@ -524,7 +524,7 @@ lemma wbPart_e (a : Fin r) : wbPart k r (bvec (eI k r a)) = 0 := by
   simp only [wbPart, bvec, Pi.zero_apply]
   rw [Pi.single_eq_of_ne]
   intro h
-  simp only [wI, eI, Fin.ext_iff, Fin.val_mk] at h
+  simp only [wI, eI, Fin.ext_iff] at h
   omega
 
 lemma wbPart_es (a : Fin r) : wbPart k r (bvec (esI k r a)) = 0 := by
@@ -534,7 +534,7 @@ lemma wbPart_es (a : Fin r) : wbPart k r (bvec (esI k r a)) = 0 := by
   simp only [wbPart, bvec, Pi.zero_apply]
   rw [Pi.single_eq_of_ne]
   intro h
-  simp only [wI, esI, Fin.ext_iff, Fin.val_mk] at h
+  simp only [wI, esI, Fin.ext_iff] at h
   omega
 
 lemma embed_mem_unitary_lie_algebra (z : Fin (2 * r + k + 1) → ℂ) (Y : Mb k) (hY : Yᴴ * Hb k + Hb k * Y = 0)
@@ -1475,7 +1475,7 @@ theorem coeff_listSum {σ' : Type*} {α : Type*} (m : σ' →₀ ℕ) (l : List 
     AddMonoidAlgebra.coeff ((l.map F).sum) m = (l.map fun a => AddMonoidAlgebra.coeff (F a) m).sum := by
   induction l with
   | nil => simp
-  | cons a l ih => simp [MvPolynomial.coeff_add, ih]
+  | cons a l ih => simp [ih]
 
 theorem eval_listSum {σ' : Type*} {α : Type*} (x : σ' → ℂ) (l : List α) (F : α → MvPolynomial σ' ℂ) :
     MvPolynomial.eval x ((l.map F).sum) = (l.map fun a => MvPolynomial.eval x (F a)).sum := by

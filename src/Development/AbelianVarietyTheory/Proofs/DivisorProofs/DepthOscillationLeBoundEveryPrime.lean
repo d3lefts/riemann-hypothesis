@@ -460,7 +460,7 @@ theorem lgSum_mulMatrix {d M : ℕ} (p : ℕ) (c : Fin d → ℕ → Fin d → C
     lgSum p (fun a n b => ∑ e, c a n e * N e b) t b = ∑ e, N e b • lgSum p c t e := by
   ext α
 
-  simp only [lgSum, map_sum, coeff_smul, smul_eq_mul]
+  simp only [map_sum, coeff_smul]
   show (∑ n ∈ Finset.range (Finsupp.degree α + 1), ∑ a, (∑ e, c a n e * N e b) * coeff α (t a ^ p ^ n))
     = ∑ e, N e b * (∑ n ∈ Finset.range (Finsupp.degree α + 1), ∑ a, c a n e * coeff α (t a ^ p ^ n))
   simp only [Finset.sum_mul, Finset.mul_sum]
@@ -1095,7 +1095,7 @@ theorem two_mul_card_psi_le :
       (Finset.univ.filter (fun τ : E →+* ℂ => ¬ InPsi H τ)).card := by
     refine Finset.card_le_card_of_injOn (fun τ => (starRingEnd ℂ).comp τ) ?_ ?_
     · intro τ hτ
-      simp only [Finset.coe_filter, Finset.mem_filter, Finset.mem_coe, Finset.mem_univ, true_and, Set.mem_setOf_eq] at hτ ⊢
+      simp only [Finset.coe_filter, Finset.mem_univ, true_and, Set.mem_setOf_eq] at hτ ⊢
       unfold InPsi at hτ ⊢
       simp only [RingHom.coe_comp, Function.comp_apply, hτ]
       exact hne
@@ -1116,7 +1116,7 @@ theorem card_big_fiber_le {Dw : Datum H} {F k m : ℕ} (hS : Shape Dw F k m) (τ
   calc _ ≤ (Finset.Ico (k - 2) Dw.p).card := by
         refine Finset.card_le_card_of_injOn (fun f => f.2.val) ?_ ?_
         · intro f hf
-          simp only [Finset.coe_filter, Finset.mem_filter, Finset.mem_coe, Finset.mem_univ, true_and,
+          simp only [Finset.coe_filter, Finset.mem_coe, Finset.mem_univ, true_and,
             Set.mem_setOf_eq, Finset.mem_Ico] at hf ⊢
           obtain ⟨⟨hpsi, hk⟩, -⟩ := hf
           have hlt := f.2.isLt
@@ -1124,7 +1124,7 @@ theorem card_big_fiber_le {Dw : Datum H} {F k m : ℕ} (hS : Shape Dw F k m) (τ
           have hk' : k ≤ f.2.val + 1 + 1 := hk
           omega
         · intro f hf g hg hfg
-          simp only [Finset.coe_filter, Finset.mem_filter, Finset.mem_coe, Finset.mem_univ, true_and,
+          simp only [Finset.coe_filter, Finset.mem_univ, true_and,
             Set.mem_setOf_eq] at hf hg
           obtain ⟨τ1, j1⟩ := f
           obtain ⟨τ2, j2⟩ := g
@@ -1645,7 +1645,7 @@ theorem oscLe_zero_above_and_degree : ∀ (E : Type) [Field E] [NumberField E] [
     intro T io e ho y
     obtain ⟨h1, h2⟩ := h T io e ho y
     refine ⟨by simpa using h1, fun ha => (h2 ha).trans ?_⟩
-    simp only [Finset.sum_const_zero, Nat.cast_zero, zero_add]
+    simp only [Nat.cast_zero, zero_add]
     exact EReal.coe_le_coe_iff.2 hsum
 
 end GlobalTheory.RefSum

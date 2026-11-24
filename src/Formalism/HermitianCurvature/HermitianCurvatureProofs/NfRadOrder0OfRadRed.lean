@@ -136,7 +136,6 @@ theorem smulR_apply {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] [Norme
     (c : X →L[ℝ] ℂ) (e : E) (v : X) : smulR c e v = c v • e := by
   first
   | rfl
-  | simp [smulR]
 
 theorem jetR_iter (p : X →L[ℝ] ℂ) {U : Set ℂ} {V : Set X} (hU : IsOpen U) (hV : IsOpen V)
     (hVU : ∀ x ∈ V, p x ∈ U) {q : X} (hq : q ∈ V) (j : ℕ) :
@@ -280,23 +279,11 @@ variable {k r : ℕ} {z z' : Fin (2 * r + k + 1) → ℂ} {μsec : ℂ → Matri
 
 theorem zeta_muZ (hB : RadBase k r z z' μsec π π') {ζ : ℂ} (hζ : Tz k r z * Tz k r z' < Complex.normSq ζ) :
     zetaL k r z z' (Fin.last r) (muZ k r μsec ζ) = ζ := by
-  have hz : inWb k r z := hB.2.1
-  have hz' : inWb k r z' := hB.2.2.1
-  have hS := (hB.2.2.2.2.2.1.2 ζ hζ).2
-  have e1 : fvec k r z (Fin.last r) = z := by simp [fvec]
-  have e2 : fvec k r z' (Fin.last r) = z' := by simp [fvec]
-  unfold zetaL muZ
-  rw [e1, e2, ← TwoByOneBlock.jV_wbPart hz, ← TwoByOneBlock.jV_wbPart hz', TwoByOneBlock.emb_mulVec_jV, TwoByOneBlock.herm_jV]
-  exact hS
+  obtain ⟨-, hz, hz', -, -, hsec, -, -, -, -⟩ := hB
+  exact Formalism.FourierDecayAlt.P.NFRadRedA.zeta_muZ hz hz' hsec hζ
 
 theorem isOpen_QR : IsOpen (QR k r z z') := by
-  have h1 : IsOpen (OmX r) := by
-    have e : OmX r = ⋂ l : Fin r, {x : Fin r → ℂ | x l ≠ 0} := by ext x; simp [OmX]
-    rw [e]
-    exact isOpen_iInter_of_finite fun l => isOpen_ne_fun (continuous_apply l) continuous_const
-  have h2 : IsOpen {ζ : ℂ | Tz k r z * Tz k r z' < Complex.normSq ζ} :=
-    isOpen_lt continuous_const Complex.continuous_normSq
-  exact (h1.preimage continuous_fst).inter (h2.preimage continuous_snd)
+  exact Formalism.FourierDecayAlt.P.NFRadRedA.qr_open
 
 theorem radR_mulZ (hB : RadBase k r z z' μsec π π') (f : ℂ → ℂ) {Φ : Fn k r (Wq →L[ℂ] Wp)}
     (hΦ : Φ ∈ RadSp k r z z' π π') {x : (Fin r → ℂ) × ℂ} (hx : x ∈ QR k r z z') :
@@ -305,18 +292,15 @@ theorem radR_mulZ (hB : RadBase k r z z' μsec π π') (f : ℂ → ℂ) {Φ : F
 
 theorem radR_sub {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] (F G : Fn k r E) (x : (Fin r → ℂ) × ℂ) :
     radR k r z z' μsec (F - G) x = radR k r z z' μsec F x - radR k r z z' μsec G x := by
-  unfold radR
-  by_cases hx : x ∈ QR k r z z' <;> simp [hx]
+  by_cases hx : x ∈ QR k r z z' <;> simp [radR, hx]
 
 theorem radR_add {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] (F G : Fn k r E) (x : (Fin r → ℂ) × ℂ) :
     radR k r z z' μsec (F + G) x = radR k r z z' μsec F x + radR k r z z' μsec G x := by
-  unfold radR
-  by_cases hx : x ∈ QR k r z z' <;> simp [hx]
+  by_cases hx : x ∈ QR k r z z' <;> simp [radR, hx]
 
 theorem radR_zero' {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] (x : (Fin r → ℂ) × ℂ) :
     radR k r z z' μsec (0 : Fn k r E) x = 0 := by
-  unfold radR
-  by_cases hx : x ∈ QR k r z z' <;> simp [hx]
+  by_cases hx : x ∈ QR k r z z' <;> simp [radR, hx]
 
 theorem mulZ_congr {f g : ℂ → ℂ} (h : Set.EqOn f g {ζ | Tz k r z * Tz k r z' < Complex.normSq ζ}) {E : Type}
     [NormedAddCommGroup E] [NormedSpace ℂ E] (Φ : Fn k r E) : mulZ k r z z' f Φ = mulZ k r z z' g Φ := by
@@ -324,25 +308,20 @@ theorem mulZ_congr {f g : ℂ → ℂ} (h : Set.EqOn f g {ζ | Tz k r z * Tz k r
   simp only [mulZ]
   by_cases hx : (c, g0) ∈ DomR k r z z'
   · rw [Set.indicator_of_mem hx, Set.indicator_of_mem hx]
-    have h2 : 0 < GGl k r z z' g0 := hx.2.2
-    unfold GGl at h2
-    show f (zetaL k r z z' (Fin.last r) g0) • Φ c g0 = g (zetaL k r z z' (Fin.last r) g0) • Φ c g0
-    rw [h (show Tz k r z * Tz k r z' < Complex.normSq (zetaL k r z z' (Fin.last r) g0) by linarith)]
+    have hζ : Tz k r z * Tz k r z' < Complex.normSq (zetaL k r z z' (Fin.last r) g0) := by
+      simpa [GGl, sub_pos] using hx.2.2
+    rw [h hζ]
   · rw [Set.indicator_of_notMem hx, Set.indicator_of_notMem hx]
 
 theorem mulZ_mul {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] (f g : ℂ → ℂ) (Φ : Fn k r E) :
     mulZ k r z z' f (mulZ k r z z' g Φ) = mulZ k r z z' (fun ζ => f ζ * g ζ) Φ := by
   funext c g0
-  by_cases hx : (c, g0) ∈ DomR k r z z'
-  · simp only [mulZ, Set.indicator_of_mem hx, mul_smul]
-  · simp only [mulZ, Set.indicator_of_notMem hx]
+  by_cases hx : (c, g0) ∈ DomR k r z z' <;> simp [mulZ, hx, mul_smul]
 
 theorem mulZ_add_left {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] (f g : ℂ → ℂ) (Φ : Fn k r E) :
     mulZ k r z z' (fun ζ => f ζ + g ζ) Φ = mulZ k r z z' f Φ + mulZ k r z z' g Φ := by
   funext c g0
-  by_cases hx : (c, g0) ∈ DomR k r z z'
-  · simp only [mulZ, Pi.add_apply, Set.indicator_of_mem hx, add_smul]
-  · simp only [mulZ, Pi.add_apply, Set.indicator_of_notMem hx, add_zero]
+  by_cases hx : (c, g0) ∈ DomR k r z z' <;> simp [mulZ, Pi.add_apply, hx, add_smul]
 
 theorem mulZ_add_right (f : ℂ → ℂ) (Φ Ψ : Fn k r (Wq →L[ℂ] Wp)) :
     mulZ k r z z' f (Φ + Ψ) = mulZ k r z z' f Φ + mulZ k r z z' f Ψ := by

@@ -405,7 +405,7 @@ theorem _root_.GlobalTheory.T.archimedean_weil_representation_continuous : _root
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) (om (1, γ (Multiplicative.ofAdd t))) ⇑f ⇑(T t f)) →
     (∀ s t (f : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin n × Fin d)), T (s + t) f = T s (T t f)) →
     (∀ f : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin n × Fin d), T 0 f = f) → ∀ t, Continuous (T t) := by
-  first | exact @_root_.GlobalTheory.ArchCont.continuous_weil_action_on_line | exact _root_.GlobalTheory.ArchCont.continuous_weil_action_on_line | (intros; apply _root_.GlobalTheory.ArchCont.continuous_weil_action_on_line <;> assumption)
+  first | exact @_root_.GlobalTheory.ArchCont.continuous_weil_action_on_line
 end
 end -- clump:auto
 end -- clump:auto
@@ -612,12 +612,12 @@ theorem lift_splits_locally : _root_.GlobalTheory.FunPr.ThetaLocalInputs → ∀
   have trace_pi_real_eq_sum' {ι : Type} [Fintype ι] (f : ι → ℝ) :
       Algebra.trace ℝ (ι → ℝ) f = ∑ i, f i := by
     rw [Algebra.trace_eq_matrix_trace (Pi.basisFun ℝ ι)]
-    simp [Matrix.trace, Algebra.leftMulMatrix_eq_repr_mul, Pi.single_apply]
+    simp [Matrix.trace, Algebra.leftMulMatrix_eq_repr_mul]
 
   have trace_pi_complex_eq_sum_two_mul_re {ι : Type} [Fintype ι] (f : ι → ℂ) :
       Algebra.trace ℝ (ι → ℂ) f = ∑ i, 2 * (f i).re := by
     rw [Algebra.trace_eq_matrix_trace (Pi.basis fun _ : ι => Complex.basisOneI)]
-    simp [Matrix.trace, Algebra.leftMulMatrix_eq_repr_mul, Fintype.sum_sigma, Pi.single_apply, Fin.sum_univ_two,
+    simp [Matrix.trace, Algebra.leftMulMatrix_eq_repr_mul, Fintype.sum_sigma, Fin.sum_univ_two,
       Complex.coe_basisOneI, Complex.coe_basisOneI_repr]
     refine Finset.sum_congr rfl fun i _ => ?_
     ring
@@ -689,7 +689,7 @@ theorem _root_.GlobalTheory.T.schwartz_function_slope_estimate : _root_.GlobalTh
     (∀ f : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin n × Fin d), T 0 f = f) →
     ∀ f : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin n × Fin d), ∃ g : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin n × Fin d),
       Filter.Tendsto (fun t : ℝ => t⁻¹ • (T t f - f)) (nhdsWithin 0 {0}ᶜ) (nhds g) := by
-  first | exact @_root_.GlobalTheory.SchwartzSlope.lift_splits_locally | exact _root_.GlobalTheory.SchwartzSlope.lift_splits_locally | (intros; apply _root_.GlobalTheory.SchwartzSlope.lift_splits_locally <;> assumption)
+  first | exact @_root_.GlobalTheory.SchwartzSlope.lift_splits_locally
 end
 end -- clump:auto
 end -- clump:auto
@@ -788,7 +788,7 @@ theorem _root_.GlobalTheory.T.archimedean_product_rule_derivative : _root_.Globa
     ∀ (f : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin n × Fin d)) (y : Fin n × Fin d → mixedEmbedding.mixedSpace F) (c : Fin k → ℂ),
     (∀ i, HasDerivAt (fun t : ℝ => T i t f y) (c i) 0) →
     HasDerivAt (fun t : ℝ => (List.ofFn fun i => T i t).prod f y) (∑ i, c i) 0 := by
-  first | exact @_root_.GlobalTheory.ArchProdRule.archimedean_hasDerivAt_prod | exact _root_.GlobalTheory.ArchProdRule.archimedean_hasDerivAt_prod | (intros; apply _root_.GlobalTheory.ArchProdRule.archimedean_hasDerivAt_prod <;> assumption)
+  first | exact @_root_.GlobalTheory.ArchProdRule.archimedean_hasDerivAt_prod
 end
 end -- clump:auto
 end -- clump:auto

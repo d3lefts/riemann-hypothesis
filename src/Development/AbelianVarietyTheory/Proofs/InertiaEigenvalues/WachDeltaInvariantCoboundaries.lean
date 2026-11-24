@@ -485,7 +485,7 @@ theorem existsUnique_algHom_of_padic_localization {O A E B : Type} [CommRing O] 
     have := dvd_sub (dvd_sub h1 ((hg y k a m h).mul_left (g y')))
       ((hg y' k a' m' h').mul_left (f a * v ^ m))
     convert this using 1
-    simp only [map_add (f := _), map_mul, map_pow, pow_add]
+    simp only [map_mul, pow_add]
     ring
   refine ⟨
     { toFun := g
@@ -896,7 +896,7 @@ theorem exists_frTie [IsDiscreteValuationRing O] [IsAdicComplete (IsLocalRing.ma
   have hΔ : (Δ : Set ℤ_[l]ˣ) = ↑(W.DelF.image χ) := by
     ext x
     simp only [Δ, Subgroup.coe_map, Set.mem_image, SetLike.mem_coe, CommGroup.mem_torsion,
-      Finset.coe_image, Finset.mem_coe, mem_DelF_iff]
+      Finset.coe_image, mem_DelF_iff]
   have hfa : ∀ p : ℤ_[l]ˣ → Prop, (∀ δ ∈ Δ, p δ) ↔ ∀ δ ∈ W.DelF, p (χ δ) := by
     intro p
     simp only [← SetLike.mem_coe, hΔ, Finset.coe_image, Set.forall_mem_image]

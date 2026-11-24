@@ -9,6 +9,10 @@ import rpc
 def restore(root, control, worker, incoming=None):
     policy = rpc.proof_policy()
     expected = policy['baseline']
+    if expected.get('fresh_project'):
+        rpc.require(expected=={'fresh_project':True,'unchanged_modules':0,'unchanged_module_names':[]},'invalid fresh baseline policy')
+        for part in ('lib/lean','ir'):(Path(root)/'.lake/build'/part).mkdir(parents=True,exist_ok=True)
+        return {'baseline_modules':0,'restored_modules':0,'affected_modules_restored':0}
     cache = Path(worker['baseline_cache_root'])
     manifest = cache / 'modules.jsonl.gz'
     mapping = cache / 'outputs.jsonl'

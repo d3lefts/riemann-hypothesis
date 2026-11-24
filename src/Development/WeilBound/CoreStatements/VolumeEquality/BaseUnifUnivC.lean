@@ -525,11 +525,11 @@ theorem im_terms_separate (P Q R S : Matrix I I ℂ)
   have hs : ∀ (c : I) (γ : ℂ), star (Pi.single c γ : I → ℂ) = Pi.single c (star γ) := by
     intro c γ; ext i; by_cases hi : i = c
     · subst hi; simp
-    · simp [Pi.single_apply, hi]
+    · simp [hi]
   have he : ∀ (T : Matrix I I ℂ) (a b : I) (α β : ℂ),
       (Pi.single a α : I → ℂ) ⬝ᵥ T *ᵥ (Pi.single b β : I → ℂ) = α * β * T a b := by
     intro T a b α β
-    simp [single_dotProduct, mulVec, dotProduct_single]
+    simp [single_dotProduct]
     ring
   have key : ∀ (a b : I) (α β : ℂ), (α * star β * P a b + α * β * Q a b
       + star α * star β * R a b + star α * β * S a b).im = 0 := by
@@ -820,7 +820,7 @@ namespace GlobalTheory.CompanionTheory.Ar.Cusp.Univ
 
 theorem star_dotProduct_mulVec_eq {I : Type} [Fintype I] (M : Matrix I I ℂ) (a b : I → ℂ) :
     star (a ⬝ᵥ M *ᵥ b) = star a ⬝ᵥ (Mᴴ)ᵀ *ᵥ star b := by
-  simp only [dotProduct, mulVec, Finset.sum_apply, star_sum, star_mul', Pi.star_apply, transpose_apply,
+  simp only [dotProduct, mulVec, star_sum, star_mul', Pi.star_apply, transpose_apply,
     conjTranspose_apply, Finset.mul_sum, RCLike.star_def]
 
 theorem im_tz_form {I : Type} [Fintype I] [DecidableEq I] (Z : Matrix I I ℂ) (hZ : Zᵀ = Z)
@@ -1419,7 +1419,7 @@ theorem tz_support [DecidableEq I] (Z : Matrix I I ℂ) (d : I → ℂ) (M : (I 
       simp
     · simp [Pi.single_eq_of_ne hak]
   rw [s1, s2] at this
-  simp only [Pi.mul_apply, mulVec_single, MulOpposite.op_mul] at this
+  simp only [Pi.mul_apply, mulVec_single] at this
   simpa [mul_comm] using this.symm
 
 theorem tz_unique [DecidableEq I] (S : Set (I → ℂ)) (hS : Submodule.span ℝ S = ⊤) (A A' : (I → ℂ) ≃ₗ[ℂ] (I → ℂ))

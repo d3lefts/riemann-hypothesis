@@ -1,6 +1,5 @@
 module
 
-public import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.CubicalLineBundles.MorphismsSpreadOutToFgSubalgebra
 public import Development.AbelianVarietyTheory.Proofs.AbelianSchemeLawProofs.AbelianSchemeLawsUnconditional
 public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.SemistableExtensionMultiplesOfSemistable
@@ -16,6 +15,8 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBasePo
 public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.AbelianSchemeQuotients.IsAbelianScheme
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAbelianEndomorphismSpreadSpecialise
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SpreadEndomorphismTorsionSectionEqSpecialisation
+import Mathlib
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 
@@ -99,7 +100,6 @@ theorem endo_descent (B : Over (Sp k₀)) [GrpObj B] (hB : IsAbelianScheme B)
     letI : Algebra k₀ Ω := ((algebraMap K Ω).comp (algebraMap k₀ K)).toAlgebra
     have hιj : qΩ ≫ spMap (algebraMap k₀ K) = spMap (algebraMap k₀ Ω) := by
       simp only [qΩ, spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
-      try rfl
     haveI := hf₀
     haveI := hΨ
     apply ActDescent.pullback_map_injective qΩ
@@ -116,7 +116,8 @@ theorem endo_descent (B : Over (Sp k₀)) [GrpObj B] (hB : IsAbelianScheme B)
     have h₂ := isGrpPullback_pullback ((Over.pullback (spMap (algebraMap k₀ K))).obj B) qΩ
     have h₁₂ := h₂.comp h₁
     let u := pushHom h₁₂ (𝟙_ _) y
-    have hu : u ^ (l ^ a) = 1 := by rw [← map_pow, hy, map_one]
+    have hu : u ^ (l ^ a) = 1 := by
+      rw [← (pushHom h₁₂ (𝟙_ _)).map_pow, hy, (pushHom h₁₂ (𝟙_ _)).map_one]
     obtain ⟨y₀, hy₀, huy⟩ := torsion_descent (K := Ω) B hB (l ^ a)
       (by rw [Nat.cast_pow]; exact pow_ne_zero _ hlk)
       (t := (𝟙_ (Over (Sp Ω))).hom ≫ qΩ ≫ spMap (algebraMap k₀ K))

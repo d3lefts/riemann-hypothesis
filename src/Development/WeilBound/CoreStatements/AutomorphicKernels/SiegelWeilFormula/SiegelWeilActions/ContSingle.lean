@@ -87,8 +87,6 @@ theorem ptEx' (d : SD σ) {ε : ℤˣ} (hε : d.b.1ᵀ * dbl d.Y.J * d.b.1.map �
   have hM'M : ∀ c, M' c * M c = 1 := fun c => by
     first
     | exact mul_eq_one_comm.mp (h c)
-    | exact Matrix.mul_eq_one_comm.mp (h c)
-    | exact Matrix.mul_eq_one_symm (h c)
   let N : X → Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n ⊕ Fin d.n) (AE F E) :=
     fun c => incM F d.b.1 * M c * incM F (d.b⁻¹).1
   let N' : X → Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n ⊕ Fin d.n) (AE F E) :=
@@ -188,7 +186,7 @@ theorem cLawEx : CLawEx := by
     rw [hW]
     refine CL.wM_unitary L.i₀ (cA σ).toRingHom 1 e e ?_ ?_
     · simp only [AlgHom.toRingHom_eq_coe, map_one, mul_one, hee]
-    · simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, he_def, map_intCast, one_mul]
+    · simp only [AlgHom.toRingHom_eq_coe, he_def, map_intCast, one_mul]
   obtain ⟨w₁, hw₁⟩ := kunf.exists_of_frame hε (incM F M₀) (incM F M₀') hWW hWu
   have hw₁' : inFrame d.b w₁ = CL.wM L.i₀ (1 : AE F E) e := hw₁.trans hW
 
@@ -268,7 +266,7 @@ theorem cLawEx : CLawEx := by
     · rw [hsc2, hrm, ← Real.exp_neg, neg_neg, ← Real.exp_nat_mul, ← Atop.LD.n_succ L]
       congr 2
       push_cast; ring
-  · simp [map_intCast]
+  · simp
   · rw [hw₁']; simp [CL.wM, map_intCast, map_one, he_def]
 
 end PositivityTheory.SiegelWeilFormula.Act

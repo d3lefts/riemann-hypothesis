@@ -120,8 +120,6 @@ namespace GlobalTheory.BigTop.Fun.PolBound
 
 open Formalism.BasicNotions Formalism.MainNotions NumberField
 
-theorem rpow_mono {x a b : ℝ} (hx : 1 ≤ x) (h : a ≤ b) : x ^ a ≤ x ^ b := Real.rpow_le_rpow_of_exponent_le hx h
-
 theorem factors_le {D : D7} (L : SizeData₂ D) (hS : SizesAt L) (T : ℕ) (hT : L.Ct + 1 ≤ T) :
     (D.R.f : ℝ) ≤ L.sc.x ^ (T + 9) ∧ (D.R.m : ℝ) ≤ L.sc.x ^ (T + 9) ∧ (D.R.k : ℝ) ≤ L.sc.x ^ (T + 9) ∧
       (D.R.t : ℝ) ≤ L.sc.x ^ (T + 9) ∧ Real.log L.sc.b ≤ L.sc.x ^ (T + 9) ∧ 0 ≤ Real.log L.sc.b ∧
@@ -136,7 +134,7 @@ theorem factors_le {D : D7} (L : SizeData₂ D) (hS : SizesAt L) (T : ℕ) (hT :
   have hth : szTh L = L.sc.eps / 100 := rfl
   have hpow : ∀ j : ℕ, j ≤ T + 9 → x ^ j ≤ x ^ (T + 9) := fun j hj => pow_le_pow_right₀ hx1 hj
   have hrp : ∀ (a : ℝ) (j : ℕ), a ≤ j → x ^ a ≤ x ^ j := fun a j h => by
-    rw [← Real.rpow_natCast]; exact rpow_mono hx1 h
+    rw [← Real.rpow_natCast]; exact Real.rpow_le_rpow_of_exponent_le hx1 h
 
   have hLd : L.sc.L = x ^ L.sc.eps := by rw [hxdef]; rfl
   have hlb : Real.log L.sc.b = x ^ L.sc.eps := by
@@ -291,7 +289,7 @@ theorem desPol_alt : _root_.GlobalTheory.BigTop.Fun.DescentPolynomialCondition :
         rw [hp]; exact mul_le_mul_of_nonneg_right hXA (by positivity)
     _ = X ^ ((16 * (T + 9) + 1 : ℕ) : ℝ) := by rw [Real.rpow_natCast, pow_succ, mul_comm]
     _ ≤ X ^ CH := by
-        refine rpow_mono hX1 ?_
+        refine Real.rpow_le_rpow_of_exponent_le hX1 ?_
         rw [hTdef] at *
         push_cast
         linarith
@@ -312,7 +310,7 @@ section
 open Formalism.BasicNotions Formalism.MainNotions NumberField Formalism.L2.Indef Formalism.L2.Indef.Tree GlobalTheory.BigTop GlobalTheory.BigTop.Fun
 
 theorem _root_.GlobalTheory.T.polynomial_descent_estimate' : _root_.GlobalTheory.BigTop.Fun.DescentPolynomialCondition := by
-  first | exact @_root_.GlobalTheory.BigTop.Fun.desPol_alt | exact _root_.GlobalTheory.BigTop.Fun.desPol_alt | (intros; apply _root_.GlobalTheory.BigTop.Fun.desPol_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigTop.Fun.desPol_alt
 end
 end -- clump:auto
 end -- clump:auto

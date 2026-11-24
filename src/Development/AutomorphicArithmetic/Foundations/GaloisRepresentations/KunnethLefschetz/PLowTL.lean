@@ -87,7 +87,7 @@ theorem free_ext (R : Type) [CommRing R] (P : PSh) {G : Shv R} (f g : (free R).o
   have := h U.unop x
   simp only [freeGen] at this
   simp only [freeP, ModuleCat.freeMk] at this
-  simp only [NatTrans.comp_app, ConcreteCategory.comp_apply]
+  simp only
   exact this
 
 theorem cocEq : CocEq := by
@@ -470,8 +470,6 @@ theorem tateTwistSection_constantOnPoints_of_connLoc_lift (hT : LateralTheory.Et
       first
         | (rw [mul_nsmul, q_nsmul, nsmul_zero])
         | (rw [mul_nsmul', q_nsmul, nsmul_zero])
-        | (rw [mul_nsmul', q_nsmul, smul_zero])
-        | (rw [mul_nsmul, q_nsmul, smul_zero])
     · right
       intro W h hW hz
       haveI := hW
@@ -510,7 +508,7 @@ theorem freeGen_nat (R : Type) [CommRing R] (P : PSh) {V U : Scheme.{0}} (g : V 
     Sec.res g (freeGen R P U x) = freeGen R P V (P.map g.op x) := by
   have h := congrArg (fun f => f.hom (ModuleCat.freeMk (ULift.up x : uliftFunctor.{1, 0}.obj (P.obj (op U)))))
     ((toSheafify Scheme.etaleTopology ((freeP R).obj P)).naturality g.op)
-  simp only [ModuleCat.hom_comp, LinearMap.coe_comp, Function.comp_apply] at h
+  simp only [ModuleCat.hom_comp, LinearMap.coe_comp] at h
   simp only [Sec.res, freeGen]
   refine h.symm.trans ?_
   exact congrArg (ModuleCat.Hom.hom ((toSheafify Scheme.etaleTopology ((freeP R).obj P)).app (op V)))
@@ -980,7 +978,7 @@ private theorem res_twGen_zero_eq_twGen_prim_map {q : ℕ} {U V : Scheme.{0}} (x
   have hn := congrArg (fun φ => (ModuleCat.Hom.hom φ)
     (Submodule.Quotient.mk (Finsupp.single ζ 1) : (Scheme.Γ ⋙ twF q 0).obj (Opposite.op U)))
     ((toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ twF q 0)).naturality x.op)
-  simp only [ModuleCat.hom_comp, LinearMap.comp_apply] at hn
+  simp only [ModuleCat.hom_comp] at hn
   refine hn.symm.trans ?_
   refine congrArg (ModuleCat.Hom.hom ((toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ twF q 0)).app (Opposite.op V))) ?_
   exact congrArg Submodule.Quotient.mk Finsupp.mapDomain_single

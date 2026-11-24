@@ -8,6 +8,7 @@ public import Development.AutomorphicArithmetic.TwistedTraces.ExistsAlgHomEndFix
 public import Development.AutomorphicArithmetic.TwistedTraces.InfFixedLeSpanFixOfDenseSpanAll
 public import Development.AutomorphicArithmetic.TwistedTraces.TrOnRestrictAndEqOfMapsInto
 public import Development.AutomorphicArithmetic.TwistedTraces.ExistsCompactOpenFamilyInfFixedNeBot
+import Development.AutomorphicArithmetic.TwistedTraces.LinearFormEqMulTraceOfTwistedInvariant
 import Mathlib.Algebra.Module.StablyFree.Basic
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
@@ -68,43 +69,11 @@ import Std.Tactic.BVDecide.Normalize.Prop
 -- Members: Development.AutomorphicArithmetic.TwistedTraces.TracePairingSeparatesEndomorphisms, Development.AutomorphicArithmetic.TwistedTraces.CommutingSmoothIrreducibleFixedVectors, Development.AutomorphicArithmetic.TwistedTraces.LeClosureSpanAllOfCommutingUnitaryReps
 
 -- ===== clump member: Development.AutomorphicArithmetic.TwistedTraces.TracePairingSeparatesEndomorphisms =====
--- clump-header: {"m": "Development.AutomorphicArithmetic.TwistedTraces.TracePairingSeparatesEndomorphisms", "h": "module\n\npublic import Mathlib.Basic.Complex.Basic\npublic import Mathlib.LinearAlgebra.Trace\nimport Mathlib.Algebra.Module.StablyFree.Basic\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Bernstein\nimport Mathlib.Analysis.SpecialFunctions.Gamma.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.PiTensorProduct\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.SimpleRing.Principal\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Lemma\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\n\n"}
+-- clump-header: {"m": "Development.AutomorphicArithmetic.TwistedTraces.TracePairingSeparatesEndomorphisms", "h": "module\n\npublic import Mathlib.Basic.Complex.Basic\npublic import Mathlib.LinearAlgebra.Trace\nimport Development.AutomorphicArithmetic.TwistedTraces.LinearFormEqMulTraceOfTwistedInvariant\nimport Mathlib.Algebra.Module.StablyFree.Basic\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Bernstein\nimport Mathlib.Analysis.SpecialFunctions.Gamma.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.PiTensorProduct\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.SimpleRing.Principal\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Lemma\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\n\n"}
 section -- clump:auto
 @[expose] public section
 
 open scoped BigOperators
-
-open TensorProduct in
-private lemma traceForm {S : Type} [AddCommGroup S] [Module ℂ S] [FiniteDimensional ℂ S]
-    (τ : Module.End ℂ S →ₗ[ℂ] ℂ) (hτ : ∀ a b, τ (a * b) = τ (b * a))
-    (ξ : Module.Dual ℂ S) (e : S) (h : ξ e = 1) (t : Module.End ℂ S) :
-    τ t = LinearMap.trace ℂ S t * τ (dualTensorHom ℂ S S (ξ ⊗ₜ e)) := by
-  obtain ⟨u, rfl⟩ := (dualTensorHomEquiv ℂ S S).surjective t
-  induction u using TensorProduct.induction_on with
-  | zero => simp
-  | add x y hx hy => simp only [map_add (f := _), add_mul, hx, hy]
-  | tmul f x =>
-    have hab : (dualTensorHom ℂ S S (f ⊗ₜ x)) =
-        (dualTensorHom ℂ S S (ξ ⊗ₜ x)) * (dualTensorHom ℂ S S (f ⊗ₜ e)) := by
-      ext y
-      simp [dualTensorHom_apply, h]
-    have hba : (dualTensorHom ℂ S S (f ⊗ₜ e)) * (dualTensorHom ℂ S S (ξ ⊗ₜ x)) =
-        f x • dualTensorHom ℂ S S (ξ ⊗ₜ e) := by
-      ext y
-      simp [dualTensorHom_apply, smul_smul, mul_comm]
-    have hE : dualTensorHomEquiv ℂ S S (f ⊗ₜ x) = dualTensorHom ℂ S S (f ⊗ₜ x) := rfl
-    rw [hE, LinearMap.trace_eq_contract_apply, contractLeft_apply, hab, hτ, hba, map_smul,
-      smul_eq_mul]
-
-private lemma existsDual (S : Type) [AddCommGroup S] [Module ℂ S] [FiniteDimensional ℂ S]
-    [Nontrivial S] : ∃ (ξ : Module.Dual ℂ S) (e : S), ξ e = 1 := by
-  obtain ⟨e, he⟩ := exists_ne (0 : S)
-  have : ∃ f : Module.Dual ℂ S, f e ≠ 0 := by
-    by_contra hc
-    push_neg at hc
-    exact he ((Module.forall_dual_apply_eq_zero_iff ℂ e).1 hc)
-  obtain ⟨f, hf⟩ := this
-  exact ⟨(f e)⁻¹ • f, e, by simp [hf]⟩
 
 open TensorProduct in
 private lemma commuting_idempotent_trace {X : Type} [AddCommGroup X] [Module ℂ X] [FiniteDimensional ℂ X] :
@@ -125,7 +94,8 @@ private lemma commuting_idempotent_trace {X : Type} [AddCommGroup X] [Module ℂ
     simpa using this
   | succ r ih =>
     intro S _ _ _ _ c hc B hB hcomm
-    obtain ⟨ξ, e, h1⟩ := existsDual (S 0)
+    obtain ⟨e, he⟩ := exists_ne (0 : S 0)
+    obtain ⟨ξ, h1⟩ := Module.Projective.exists_dual_eq_one ℂ he
     set E : Module.End ℂ (S 0) := dualTensorHom ℂ (S 0) (S 0) (ξ ⊗ₜ e) with hEdef
     have hE : IsIdempotentElem E := by
       show E * E = E
@@ -153,17 +123,16 @@ private lemma commuting_idempotent_trace {X : Type} [AddCommGroup X] [Module ℂ
     have hτv : ∀ s, τ s = LinearMap.trace ℂ X (B * c 0 s * A) := fun s => rfl
     have hτ : ∀ a b, τ (a * b) = τ (b * a) := by
       intro a b
-      rw [hτv, hτv, map_mul (c 0), map_mul (c 0)]
-      have e1 : B * (c 0 a * c 0 b) * A = c 0 a * (B * c 0 b * A) := by
-        rw [← mul_assoc B, (hcomm 0 a).eq]
-        simp only [mul_assoc]
-      have e2 : (B * c 0 b * A) * c 0 a = B * (c 0 b * c 0 a) * A := by
-        rw [mul_assoc (B * c 0 b) A, ← (hAc a).eq]
-        simp only [mul_assoc]
-      rw [e1, LinearMap.trace_mul_comm, e2]
-    have key := traceForm τ hτ ξ e h1 (t 0)
+      simp only [hτv, map_mul, mul_assoc]
+      rw [(hcomm 0 a).left_comm, LinearMap.trace_mul_comm]
+      simp only [mul_assoc]
+      rw [← (hAc a).eq]
+    have key := UpperTheory.linearForm_eq_mul_trace_of_twisted_invariant (S 0) 1 E τ
+      (by simpa [hEdef, LinearMap.trace_eq_contract_apply, contractLeft_apply] using h1)
+      (fun a a' b ha => by simp only [mul_one, one_mul] at ha; simpa [ha] using hτ b a) (t 0)
+    simp only [mul_one] at key
     have hN' := hN (fun i => t i.succ)
-    rw [← mul_assoc, ← hτv, key, hτv, ← hEdef, hN']
+    rw [← mul_assoc, ← hτv, key, hτv, hN']
     ring
 
 theorem UpperTheory.trace_pairing_separates_endomorphisms :

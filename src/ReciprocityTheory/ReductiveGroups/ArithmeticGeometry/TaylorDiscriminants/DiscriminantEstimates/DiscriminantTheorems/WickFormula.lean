@@ -151,7 +151,7 @@ theorem ordX_holds : OrdX := by
       (fun j => (m + Finsupp.single (Sum.inl i) 1 : Fin r ⊕ Fin s →₀ ℕ) (Sum.inl j)) i
       (by simp) (fun i' hi' => by simp [Finsupp.single_apply, Ne.symm hi'])
     rw [hb, mul_assoc]
-    simp [Finsupp.single_apply]
+    simp
   · rw [mul_add, ordEval_add, ordEval_add, hp, hq, mul_add]
 
 end PI.WickFormula
@@ -250,7 +250,7 @@ theorem lprod_comm {n : ℕ} (c : Fin n → AA) (hc : ∀ i i', Commute (c i) (c
       (fun i => e i.succ)
     rw [key, ← mul_assoc, comm_pow b (c 0) (t 0) (h 0) (e 0), add_mul, mul_assoc, ih', Fin.sum_univ_succ]
     simp only [key, Fin.succ_ne_zero, (Fin.succ_ne_zero _).symm, Fin.succ_inj, if_true, if_false, tsub_zero,
-      mul_add, Finset.mul_sum, mul_smul_comm, smul_mul_assoc, ← mul_assoc, ite_true, ite_false]
+      mul_add, Finset.mul_sum, mul_smul_comm, smul_mul_assoc, ← mul_assoc]
     abel
 
 end comm
@@ -529,7 +529,7 @@ theorem claim (h1 : OrdLin) (h2 : OrdX) (h3 : Base) (h4 : BComm) (g1 : Gen.PowXL
         · subst hx
           simp [hm'd]
           omega
-        · simp [hm'd, Finsupp.single_apply, Ne.symm hx]
+        · simp [hm'd, Ne.symm hx]
       have hxm' : xdeg m' ≤ d := by
         have := xdeg_add (Finsupp.single (Sum.inl i : Fin r ⊕ Fin s) 1) m'
         rw [← hm', xdeg_single] at this

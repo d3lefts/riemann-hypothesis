@@ -138,7 +138,7 @@ theorem _root_.GlobalTheory.T.eventually_integral_lift_coprime_derivative : ∀ 
     ∀ᶠ w : HeightOneSpectrum (𝓞 E) in cofinite, ∃ P₀ : (w.adicCompletionIntegers E)[X],
       P₀.map (algebraMap (w.adicCompletionIntegers E) (w.adicCompletion E)) = P.map (algebraMap E (w.adicCompletion E)) ∧
       IsCoprime P₀ (derivative P₀) := by
-  first | exact @GlobalTheory.IntCop.eventually_integral_coprime | exact GlobalTheory.IntCop.eventually_integral_coprime | (intros; apply GlobalTheory.IntCop.eventually_integral_coprime <;> assumption)
+  first | exact @GlobalTheory.IntCop.eventually_integral_coprime
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyIntegralLiftCoprimeDerivativeStatement =====

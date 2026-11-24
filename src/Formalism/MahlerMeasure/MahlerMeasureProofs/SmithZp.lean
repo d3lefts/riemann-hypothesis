@@ -155,7 +155,6 @@ theorem nonempty_smith_normal_form {R M : Type} [CommRing R] [IsDomain R] [IsPri
   · rw [hB2 i, hσ i, Sum.elim_inr]
 
 theorem smith_form_exists : SmithExists := by
-  unfold SmithExists
   intro R M _ _ _ _ _ _ _ y
   exact nonempty_smith_normal_form y
 

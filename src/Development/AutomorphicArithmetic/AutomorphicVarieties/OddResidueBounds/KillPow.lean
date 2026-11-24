@@ -443,7 +443,7 @@ private theorem ev_eq_sum {A : Type} [CommRing A] {Ω : Type} [Field Ω] [Algebr
     rw [ev_single, Finset.sum_eq_single g]
     · simp
     · intro b _ hb
-      simp [Finsupp.single_apply, hb, hb.symm]
+      simp [hb]
     · simp
 
 theorem UpperTheory.V.B5.sum_char_mul_quotientMatrix_eq_charEval_mul :
@@ -1045,7 +1045,6 @@ theorem UpperTheory.V.Odd.yNear :
     rw [hz _, MonoidAlgebra.smul_single]
     first
       | rw [← MonoidAlgebra.single_sub]
-      | erw [← Finsupp.single_sub]
     congr 1
     simp only [smul_eq_mul]
     push_cast
@@ -1206,7 +1205,7 @@ theorem UpperTheory.V.Odd.resKill :
   refine ⟨max n r + 2, fun m hm M _ h hM u hu => ?_⟩
   have key : ∀ b : (ZMod M)ˣ, (actRep D (↑e) ρ).asAlgebraHom (((MonoidAlgebra.lift ℤ (MonoidAlgebra ℤ_[l] (Gq ρ)) (Gq ρ)) (MonoidAlgebra.of ℤ_[l] (Gq ρ))).toRingHom (MonoidAlgebra.single (((piQ ρ)⁻¹.comp (ZMod.unitsMap h)) b)⁻¹ (↑(↑b : ZMod M).val ^ e * Eone M a ↑b))) = (((↑(↑b : ZMod M).val ^ e * Eone M a ↑b : ℤ) : ℤ_[l])) • galoisActionOnCohomology D (↑e) (ρ (ZMod.unitsMap h b)).toRingEquiv := by
     intro b
-    simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, MonoidAlgebra.lift_single, MonoidHom.comp_apply, MonoidHom.inv_apply, inv_inv, MonoidAlgebra.of_apply, MonoidAlgebra.smul_single, map_zsmul]
+    simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, MonoidAlgebra.lift_single, MonoidHom.comp_apply, MonoidHom.inv_apply, inv_inv, MonoidAlgebra.of_apply, MonoidAlgebra.smul_single]
     rw [Representation.asAlgebraHom_single, zsmul_eq_mul, mul_one]
     rfl
 
@@ -1429,7 +1428,7 @@ theorem UpperTheory.V.Odd.killPow :
   obtain ⟨hconj, hne⟩ := actConj E Ω (N * l) ρ hρ
   have hlM : l ∣ N * l := dvd_mul_left l N
   have hcop : (2 * (N * l) + 1).Coprime (N * l) := by
-    simp [Nat.coprime_mul_left_add_left]
+    simp
   have hodd : Odd (2 * (N * l) + 1) := odd_two_mul_add_one _
   obtain ⟨z, hzI, hzK⟩ := zKill E Ω l D e (N * l) ρ hρ he hproc hlM _ hcop hodd
   have hφs : Function.Surjective ⇑((piQ ρ)⁻¹) := by

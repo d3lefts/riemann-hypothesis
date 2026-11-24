@@ -105,7 +105,7 @@ open PositivityTheory.Rg.Sw PositivityTheory.Rg.Sw.LVs
 variable {n : ℕ}
 
 theorem det_nU (H : Matrix (Fin n) (Fin n) ℂ) : (nU H).det = 1 := by
-  simp [nU, Matrix.det_fromBlocks_zero₂₁]
+  simp [nU]
 
 theorem fz_twist (m : ℕ) (e : ℤ) (z : ℂ) (y : M2 n) : fz m e z y = y.det ^ e * fz m 0 z y := by
   simp [fz, mul_assoc]
@@ -547,7 +547,7 @@ private theorem iteratedFDeriv_comp_clm_mul_const {E : Type} [NormedAddCommGroup
       (by exact_mod_cast (WithTop.coe_lt_top _).le),
     iteratedFDerivWithin_of_isOpen N hU hy]
   ext v
-  simp [mul_comm]
+  simp
 
 private theorem exists_ne_zero_smul_mem_of_mem_span' {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [FiniteDimensional ℂ E]
     {Kg : Type} [TopologicalSpace Kg] [CompactSpace Kg] [MeasurableSpace Kg] [BorelSpace Kg]
@@ -801,12 +801,12 @@ theorem embOn_single_pf (s : Finset (Fin n)) (a b : s) :
   ext i j
   by_cases hi : i = (a : Fin n) <;> by_cases hj : j = (b : Fin n)
   · subst hi hj
-    simp [embOn, Matrix.single_apply]
-  · simp only [embOn, Matrix.single_apply, hj, and_false, if_false]
+    simp [embOn]
+  · simp only [embOn, Matrix.single_apply]
     split_ifs with h h' <;> simp_all [Subtype.ext_iff]
-  · simp only [embOn, Matrix.single_apply, hi, false_and, if_false]
+  · simp only [embOn, Matrix.single_apply]
     split_ifs with h h' <;> simp_all [Subtype.ext_iff]
-  · simp only [embOn, Matrix.single_apply, hi, false_and, if_false]
+  · simp only [embOn, Matrix.single_apply]
     split_ifs with h h' <;> simp_all [Subtype.ext_iff]
 
 theorem deriv_prod_range_sub_mul_prod_ne_zero (n m : ℕ) (hmn : m < n) :

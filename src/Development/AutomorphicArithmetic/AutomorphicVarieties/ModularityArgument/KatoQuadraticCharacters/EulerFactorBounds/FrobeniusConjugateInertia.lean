@@ -435,7 +435,7 @@ private theorem exists_card_ker_red_eq_prime_pow (p b : ℕ) [Fact p.Prime] :
         A ^ 2 * ∑ m ∈ Finset.range (r + 1), A ^ m * ((r + 2).choose (m + 2) : Matrix _ _ _) := by
     intro A r
     rw [(Commute.one_right A).add_pow, Finset.sum_range_succ', Finset.sum_range_succ']
-    simp only [one_pow, mul_one, pow_zero, one_mul, Nat.choose_zero_right, Nat.cast_one, Finset.mul_sum]
+    simp only [one_pow, mul_one, pow_zero, Nat.choose_zero_right, Nat.cast_one, Finset.mul_sum]
     have : ∀ m, A ^ (m + 1 + 1) * ((r + 2).choose (m + 1 + 1) : Matrix _ _ _) =
         A ^ 2 * (A ^ m * ((r + 2).choose (m + 2) : Matrix _ _ _)) := by
       intro m; rw [← mul_assoc, ← pow_add]; ring_nf
@@ -786,9 +786,9 @@ theorem slTwo_zmod_mul_crt_exists_and_eq_one : ∀ a b : ℕ, Nat.Coprime a b �
       rw [← e2]; rfl
     refine Prod.ext ?_ ?_
     · rw [h1, h1, f1]
-      by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+      by_cases hij : i = j <;> simp [hij]
     · rw [h2, h2, f2]
-      by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+      by_cases hij : i = j <;> simp [hij]
 
 theorem glue : ∀ (k : ℕ) (G G₁ G₂ : Type) [Group G] [Group G₁] [Group G₂] (ρ₁ : G →* G₁) (ρ₂ : G →* G₂), (∀ g₁ g₂, ∃ g, ρ₁ g = g₁ ∧ ρ₂ g = g₂) → (∀ g, ρ₁ g = 1 → ρ₂ g = 1 → g = 1) → commutator G₁ = ⊤ → (∀ (E : Type) [Group E] (π : E →* G₁), Function.Surjective π → π.ker ≤ Subgroup.center E → (∀ x ∈ π.ker, x ^ k = 1) → ∀ x ∈ π.ker, x ∈ commutator E → x ^ 2 = 1) → (∀ (E : Type) [Group E] (π : E →* G₂), Function.Surjective π → π.ker ≤ Subgroup.center E → (∀ x ∈ π.ker, x ^ k = 1) → ∀ x ∈ π.ker, x ∈ commutator E → x ^ 2 = 1) → (∀ (E : Type) [Group E] (π : E →* G), Function.Surjective π → π.ker ≤ Subgroup.center E → (∀ x ∈ π.ker, x ^ k = 1) → ∀ x ∈ π.ker, x ∈ commutator E → x ^ 2 = 1) := by
   intro k G G₁ G₂ _ _ _ ρ₁ ρ₂ hsur hinj hperf Q₁ Q₂ E _ π hs hc hk x hx hxc
@@ -1518,7 +1518,6 @@ theorem UpperTheory.V.Z.Kato.Nb.sEsT : UpperTheory.V.Z.Kato.Nb.SEsT := by
       Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.coe_inv, Matrix.adjugate_fin_two]
     simp only [Matrix.mul_apply, Fin.sum_univ_two]
     simp
-    push_cast
     generalize (sgD N l q : Matrix (Fin 2) (Fin 2) ℤ) = S at *
     generalize (γ : Matrix (Fin 2) (Fin 2) ℤ) = G at *
     refine ⟨⟨?_, ?_, ?_⟩, ?_⟩
@@ -1691,7 +1690,7 @@ private theorem es_of (h1 : SEsLev) (h2 : SEsFrob) (h3 : SEsT)
     simpa using this
   rw [← h4.smul_eq_zero, ← map_smul, ← fin, t1, t2]
   congr 1
-  simp only [Pi.sub_apply, Pi.add_apply, Pi.smul_apply, Finset.sum_apply, smul_sub, smul_add, Finset.smul_sum, map_smul]
+  simp only [Pi.add_apply, Pi.smul_apply, Finset.sum_apply, smul_sub, smul_add, Finset.smul_sum, map_smul]
   congr 1
   change _ + (4 : ℤ_[l]) • (q : ℤ_[l]) ^ (w + 1) • X.kmap l (X.gal σ⁻¹) (X.kmap l _ (b _)) = _
   rw [smul_smul, smul_smul, smul_smul]

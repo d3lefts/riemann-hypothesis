@@ -546,7 +546,7 @@ private theorem smul_add_smul_mem_selZ {l : ℕ} [Fact l.Prime] {n : ℕ} {A : T
         = d₁ • (wi v * (z₁ (F.φ v γ) - dY F ρ Y1 (F.φ v γ)) * w v)
           + d₂ • (wi v * (z₂ (F.φ v γ) - dY F ρ Y2 (F.φ v γ)) * w v) := by
       simp only [dY, Matrix.mul_add, Matrix.add_mul, Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_smul,
-        Matrix.smul_mul, smul_sub, smul_add]
+        Matrix.smul_mul, smul_sub]
       abel
     refine ⟨fun i j hij => ?_, fun hg i => ?_⟩
     · show (wi v * ((d₁ • z₁ (F.φ v γ) + d₂ • z₂ (F.φ v γ)) - dY F ρ (d₁ • Y1 + d₂ • Y2) (F.φ v γ)) * w v) i j = 0
@@ -758,7 +758,7 @@ theorem UpperTheory.V.Pa.linAlg :
     rw [← hrow a ha i]
     refine Finset.sum_congr rfl fun j _ => ?_
     simp only [Pi.basisFun_apply, Pi.single_apply, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq',
-      Finset.sum_ite_eq, Finset.mem_univ, if_true, hXκ]
+      Finset.mem_univ, if_true, hXκ]
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SelmerScaling.LinAlg =====
@@ -823,7 +823,7 @@ theorem UpperTheory.V.Pa.pres :
     by_cases hj : j' = j
     · subst hj
       simp
-    · simp [Pi.single_apply, hj, hz]
+    · simp [hj, hz]
   haveI := hfin
   obtain ⟨X, c, hXspan, hcind, hrel⟩ := linAlg S.F S.Tp S.k.g D0 U hA hB
   choose Xb hXm hXv using fun k => hlift (X k)

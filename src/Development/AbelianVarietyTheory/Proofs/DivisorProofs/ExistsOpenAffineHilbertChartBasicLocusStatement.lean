@@ -109,7 +109,7 @@ theorem isPullback_pbMap {T T' : Scheme.{0}} (a : T' ⟶ T) (y : (functor A B r)
       (isPullback_bc A B y.1 a)
   refine IsPullback.of_iso H (y.2.1.comapIso (bc A B y.1 a)).symm (Iso.refl _) (Iso.refl _)
     (Iso.refl _) ?_ ?_ ?_ ?_
-  · simp only [pbMap, Iso.symm_hom, Iso.refl_hom, Category.comp_id, Category.id_comp]
+  · simp only [pbMap, Iso.symm_hom, Iso.refl_hom, Category.comp_id]
     exact (Iso.inv_hom_id_assoc _ _).symm
   · change _ = (y.2.1.comapIso (bc A B y.1 a)).inv ≫
       (y.2.1.comap (bc A B y.1 a)).subschemeι ≫ pullback.snd _ (a ≫ y.1)
@@ -189,7 +189,7 @@ section -- clump:auto
 
 
 theorem _root_.GlobalTheory.T.linearCombination_bijective_of_rankAtStalk_eq : ∀ (R M : Type) [CommRing R] [AddCommGroup M] [Module R M] [Module.Finite R M] [Module.Flat R M] (r : ℕ), (∀ p : PrimeSpectrum R, Module.rankAtStalk M p = r) → ∀ s : Fin r → M, Module.support R (M ⧸ Submodule.span R (Set.range s)) = ∅ → Function.Bijective (Fintype.linearCombination R s) := by
-  first | (exact @GlobalTheory.bijective_linearCombination_of_rankAtStalk) | (exact GlobalTheory.bijective_linearCombination_of_rankAtStalk) | (intros; apply GlobalTheory.bijective_linearCombination_of_rankAtStalk  <;> assumption)
+  first | (exact @GlobalTheory.bijective_linearCombination_of_rankAtStalk)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BijectiveLinearCombinationOfRankAtStalkStatement =====
@@ -361,7 +361,7 @@ theorem exists_local_det {R M : Type} [CommRing R] [AddCommGroup M] [Module R M]
       rw [Matrix.mulVec_smul, Pi.smul_apply, smul_eq_mul, hk]
       by_cases hkj : k = j
       · subst hkj; simp
-      · simp [Pi.single_apply, hkj]
+      · simp [hkj]
     choose τ hτ w hw using hcol
     let B : Matrix (Fin r) (Fin r) R := Matrix.of fun k j => w j k
     have hAB : A * B = Matrix.diagonal τ := by
@@ -373,7 +373,7 @@ theorem exists_local_det {R M : Type} [CommRing R] [AddCommGroup M] [Module R M]
       rw [h, Matrix.diagonal_apply]
       by_cases hkj : k = j
       · subst hkj; simp
-      · simp [Pi.single_apply, hkj]
+      · simp [hkj]
     have hprod : A.det * B.det ∉ q.asIdeal := by
       rw [← Matrix.det_mul, hAB, Matrix.det_diagonal]
       exact q.asIdeal.primeCompl.prod_mem (fun j _ => hτ j)
@@ -431,7 +431,7 @@ section -- clump:auto
 
 
 theorem _root_.GlobalTheory.T.free_module_complement_support_compact : ∀ (R M : Type) [CommRing R] [AddCommGroup M] [Module R M] [Module.Finite R M] [Module.Flat R M] (r : ℕ), (∀ p : PrimeSpectrum R, Module.rankAtStalk M p = r) → ∀ s : Fin r → M, IsCompact (Module.support R (M ⧸ Submodule.span R (Set.range s)))ᶜ := by
-  first | (exact @GlobalTheory.isCompact_compl_support_quotient_span) | (exact GlobalTheory.isCompact_compl_support_quotient_span) | (intros; apply GlobalTheory.isCompact_compl_support_quotient_span  <;> assumption)
+  first | (exact @GlobalTheory.isCompact_compl_support_quotient_span)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FreeModuleComplementSupportCompact =====
@@ -588,7 +588,7 @@ theorem basic_iff (e : Module.Basis (Fin N) A B) (σ : Fin r ↪ Fin N) {T : Sch
   have hf : (fun c : Fin r → Γ(T, U) => ∑ k, ((proj y).app U).hom (c k) * gens e σ y U k) =
       Fintype.linearCombination Γ(T, U) (gens e σ y U) := by
     ext c
-    simp [Fintype.linearCombination_apply, Algebra.smul_def]
+    simp
     rfl
   change Function.Bijective (fun c : Fin r → Γ(T, U) =>
     ∑ k, ((proj y).app U).hom (c k) * gens e σ y U k) ↔ _
@@ -748,7 +748,7 @@ section -- clump:auto
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Opposite
 
 theorem _root_.GlobalTheory.T.exists_open_affineHilbertChartBasic_locus : ∀ (A B : Type) [CommRing A] [CommRing B] [Algebra A B] (N r : ℕ) (e : Module.Basis (Fin N) A B) (σ : Fin r ↪ Fin N) (Z : Scheme.{0}) (y : (GlobalTheory.HilbAff.functor A B r).obj (op Z)), ∃ W : Z.Opens, (∀ (Z' : Scheme.{0}) (a : Z' ⟶ Z), Set.range a ⊆ (W : Set Z) ↔ GlobalTheory.HilbAff.Basic A B e σ ((GlobalTheory.HilbAff.functor A B r).map a.op y)) ∧ (CompactSpace Z → IsCompact (W : Set Z)) := by
-  first | (exact @GlobalTheory.HilbAff.Locus.exists_basic_locus) | (exact GlobalTheory.HilbAff.Locus.exists_basic_locus) | (intros; apply GlobalTheory.HilbAff.Locus.exists_basic_locus  <;> assumption)
+  first | (exact @GlobalTheory.HilbAff.Locus.exists_basic_locus)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOpenAffineHilbertChartBasicLocusStatement =====

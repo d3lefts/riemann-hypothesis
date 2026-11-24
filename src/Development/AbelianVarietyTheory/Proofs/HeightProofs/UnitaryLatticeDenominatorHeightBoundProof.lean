@@ -1,12 +1,12 @@
 module
 
+import Mathlib
 public import Development.AbelianVarietyTheory.Proofs.HeightProofs.DenomBound
 public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FactPrincipalDatum
 public import Formalism.LocalToGlobal.ProjectiveLattices.HostInt
 public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 public import Mathlib.Analysis.Normed.Ring.Ultra
 public import Development.AbelianVarietyTheory.Proofs.HeightProofs.ExistsNatMulMemRingOfIntegers
-import Mathlib
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
@@ -244,7 +244,7 @@ theorem column_expand {F E R W n κ : Type} [Field F] [Field E] [Algebra F E] [C
 
 theorem natCast_mul_apply {F : Type} [Field F] [NumberField F] (N : ℕ) (a : FiniteAdeleRing (𝓞 F) F)
     (v : HeightOneSpectrum (𝓞 F)) :
-    ((N : FiniteAdeleRing (𝓞 F) F) * a) v = (N : v.adicCompletion F) * a v := by first | rfl | simp
+    ((N : FiniteAdeleRing (𝓞 F) F) * a) v = (N : v.adicCompletion F) * a v := by first | rfl
 
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.L2.Theta
 

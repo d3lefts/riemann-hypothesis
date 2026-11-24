@@ -216,7 +216,7 @@ open GlobalTheory.RowEx
 
 
 theorem _root_.GlobalTheory.T.conjugate_idempotent_chart_places_injective : ∀ {D : D7} (e : AE D) (P : Finset (Formalism.L2.DIV.Pl D.host.E)) (es : Formalism.L2.DIV.Pl D.host.E → AE D), (∀ Q ∈ P, Formalism.L2.NTheta.IsIdemAt (es Q) Q) → e = ∑ Q ∈ P, es Q → e * cA D e = 0 → ∀ v : ↥P → HeightOneSpectrum (𝓞 D.host.F), (∀ Q : ↥P, ∃ π : AE D →+* Fv D.host.F (v Q), GlobalTheory.SplitHecke.Chart (cA D (es Q)) (v Q) π) → Function.Injective v := by
-  first | exact @GlobalTheory.ChartPlaces.chart_places_injective | exact GlobalTheory.ChartPlaces.chart_places_injective | (intros; apply GlobalTheory.ChartPlaces.chart_places_injective <;> assumption)
+  first | exact @GlobalTheory.ChartPlaces.chart_places_injective
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ConjugateIdempotentChartPlacesInjectiveStatement =====
@@ -277,7 +277,7 @@ open GlobalTheory.RowEx
 
 
 theorem _root_.GlobalTheory.T.prod_card_adicCompletionIntegers_quot_dvd_pow_finrank : ∀ (F : Type) [Field F] [NumberField F] (s : Finset (HeightOneSpectrum (𝓞 F))) (k : ℕ), 0 < k → ∏ v ∈ s, Nat.card (v.adicCompletionIntegers F ⧸ Ideal.span {(k : v.adicCompletionIntegers F)}) ∣ k ^ Module.finrank ℚ F := by
-  first | exact @GlobalTheory.prod_card_quot_natCast_dvd_pow_finrank | exact GlobalTheory.prod_card_quot_natCast_dvd_pow_finrank | (intros; apply GlobalTheory.prod_card_quot_natCast_dvd_pow_finrank <;> assumption)
+  first | exact @GlobalTheory.prod_card_quot_natCast_dvd_pow_finrank
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ProdCardAdicCompletionIntegersQuotDvdPowFinrankStatement =====
@@ -449,7 +449,7 @@ open GlobalTheory.RowEx
 
 
 theorem _root_.GlobalTheory.T.relIndex_nsmul_half_orthogonal_idempotent_sum : ∀ {D : D7} (S T : HSp D) (Λ : AddSubgroup (WO S T)) {ι : Type} (P : Finset ι) (cs : ι → AE D), (∀ i ∈ P, cs i * cs i = cs i) → (∀ i ∈ P, ∀ j ∈ P, i ≠ j → cs i * cs j = 0) → (∀ i ∈ P, ∀ u ∈ Λ, cs i • u ∈ Λ) → ∀ k : ℕ, (AddSubgroup.map (nsmulAddMonoidHom k) (Λ ⊓ GlobalTheory.PlaceModel.half S T (∑ i ∈ P, cs i))).relIndex (Λ ⊓ GlobalTheory.PlaceModel.half S T (∑ i ∈ P, cs i)) = ∏ i ∈ P, (AddSubgroup.map (nsmulAddMonoidHom k) (Λ ⊓ GlobalTheory.PlaceModel.half S T (cs i))).relIndex (Λ ⊓ GlobalTheory.PlaceModel.half S T (cs i)) := by
-  first | exact @GlobalTheory.HalfSplit.relIndex_nsmul_half_sum | exact GlobalTheory.HalfSplit.relIndex_nsmul_half_sum | (intros; apply GlobalTheory.HalfSplit.relIndex_nsmul_half_sum <;> assumption)
+  first | exact @GlobalTheory.HalfSplit.relIndex_nsmul_half_sum
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RelIndexNsmulHalfOrthogonalIdempotentSumStatement =====
@@ -611,10 +611,8 @@ theorem halfCoset_reps_card : ∀ {D : D7} (S T : HSp D) (ΛS : Submodule (𝓞 
       ← Finset.prod_attach P]
     refine Finset.prod_congr rfl fun Q _ => ?_
     exact GlobalTheory.T.relIndex_nsmul_idempotentHalf_at_splitPlace S T ΛS ΛT
-      (by first | exact GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S ΛS hS
-                | exact (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S ΛS hS).toIsLattice)
-      (by first | exact GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull T ΛT hT
-                | exact (GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull T ΛT hT).toIsLattice) _ (v Q) (π Q)
+      (by first | exact GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull S ΛS hS)
+      (by first | exact GlobalTheory.FinPl.PlacesAdeles.selfDual_isFull T ΛT hT) _ (v Q) (π Q)
       (GlobalTheory.PlaceModelSum.isSplitIdem_cA (hes Q Q.2).1) (hπ Q) k hk
   have hdvd : (AddSubgroup.map (nsmulAddMonoidHom k) (Λ ⊓ GlobalTheory.PlaceModel.half S T c)).relIndex
       (Λ ⊓ GlobalTheory.PlaceModel.half S T c) ∣ k ^ (D.R.f * S.rank * T.rank) := by
@@ -684,7 +682,7 @@ open GlobalTheory.RowEx
 
 
 theorem _root_.GlobalTheory.T.exists_halfCosetRepresentatives_card_dvd : ∀ {D : D7} (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)), IsSelfDualC S ΛS → IsSelfDualC T ΛT → ∀ (e : AE D) (P : Finset (Pl D.host.E)), IsIdemSum e P → ∀ k : ℕ, 0 < k → ∃ R : Finset (WO S T), (∀ y ∈ R, IsHalf (cA D e) y ∧ k • y ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun _ => True) ∧ (∀ y : WO S T, IsHalf (cA D e) y → k • y ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) (fun _ => True) → ∃! r, r ∈ R ∧ y - r ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun _ => True) ∧ R.card ∣ k ^ (D.R.f * S.rank * T.rank) := by
-  first | exact @GlobalTheory.HalfCosetCount.halfCoset_reps_card | exact GlobalTheory.HalfCosetCount.halfCoset_reps_card | (intros; apply GlobalTheory.HalfCosetCount.halfCoset_reps_card <;> assumption)
+  first | exact @GlobalTheory.HalfCosetCount.halfCoset_reps_card
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsHalfCosetRepresentativesCardDvdStatement =====
@@ -808,7 +806,7 @@ open GlobalTheory.RowEx
 
 
 theorem _root_.GlobalTheory.T.halfLattice_charSum_detects_nsmul_multiple : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (Λ : AddSubgroup (WO S T)) (e : AE D) (k : ℕ) (R : Finset (WO S T)), 0 < k → (∀ u ∈ Λ, IsHalf e u → ∀ y ∈ Λ, IsHalf (cA D e) y → ψ (symplO S T u y) = 1) → (∀ x : WO S T, IsHalf e x → (∀ y ∈ Λ, IsHalf (cA D e) y → ψ (symplO S T x y) = 1) → x ∈ Λ) → (∀ y ∈ R, IsHalf (cA D e) y ∧ k • y ∈ Λ) → (∀ y : WO S T, IsHalf (cA D e) y → k • y ∈ Λ → ∃! r, r ∈ R ∧ y - r ∈ Λ) → ∀ t ∈ Λ, IsHalf e t → ((∃ u ∈ Λ, IsHalf e u ∧ t = k • u) → ∑ r ∈ R, ψ (symplO S T t r) = R.card) ∧ ((¬ ∃ u ∈ Λ, IsHalf e u ∧ t = k • u) → ∑ r ∈ R, ψ (symplO S T t r) = 0) := by
-  first | exact @GlobalTheory.CharSumHalf.charSum_detects_multiple | exact GlobalTheory.CharSumHalf.charSum_detects_multiple | (intros; apply GlobalTheory.CharSumHalf.charSum_detects_multiple <;> assumption)
+  first | exact @GlobalTheory.CharSumHalf.charSum_detects_multiple
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.HalfLatticeCharSumDetectsNsmulMultipleStatement =====
@@ -901,7 +899,7 @@ open GlobalTheory.RowEx
 
 
 theorem _root_.GlobalTheory.T.mem_gridPairWeilLattice_iff_standard_of_half : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} {G : GridData L sc} {W : G.Weil} (S : GridChoice W Set.univ) (t : T) (p : Pair T), DefPair D.R.m p → ∀ (e : AE D), IsIdemSum e (locPl G t) → ∀ x : WO (G.pS p) (G.pT p), IsHalf e x → (x ∈ pairLat G p ↔ x ∈ latO (G.pS p) (G.pT p) (S.N.latS p : Set (Fin (G.pS p).rank → D.host.E)) (S.N.latT p : Set (Fin (G.pT p).rank → D.host.E)) fun _ => True) := by
-  first | exact @GlobalTheory.StdHalfLat.mem_pairLat_iff_std | exact GlobalTheory.StdHalfLat.mem_pairLat_iff_std | (intros; apply GlobalTheory.StdHalfLat.mem_pairLat_iff_std <;> assumption)
+  first | exact @GlobalTheory.StdHalfLat.mem_pairLat_iff_std
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.MemGridPairWeilLatticeIffStandardOfHalfStatement =====
@@ -1162,7 +1160,7 @@ open GlobalTheory.RowEx
 
 
 theorem _root_.GlobalTheory.T.cosetDatumVector_finite_heisenbergCombination : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} {G : GridData L sc} {W : G.Weil} (S : GridChoice W Set.univ) (t : T) (p : Pair T), DefPair D.R.m p → ∀ (k : ℕ) (d : FinDatum G t p), 0 < k → IsCosetDatum k d → d.z = 1 → d.P = locPl G t → ∃ (n : ℕ) (c : Fin n → Formalism.MainNotions.TaylorLogMetric.Qbar) (w : Fin n → WO (G.pS p) (G.pT p)), (∀ i, k • w i ∈ latO (G.pS p) (G.pT p) (S.N.latS p : Set _) (S.N.latT p : Set _) fun _ => True) ∧ (∀ i, (w i).map (infPart D) = 0) ∧ (∀ i, IsIntegral ℤ ((k : Formalism.MainNotions.TaylorLogMetric.Qbar) ^ (D.R.f * (G.pS p).rank * (G.pT p).rank) * c i)) ∧ (∀ ρ : Formalism.MainNotions.TaylorLogMetric.Qbar →+* ℂ, ∑ i, ‖ρ (c i)‖ ≤ 1) ∧ S.Z.vec d = ∑ i, (c i : ℂ) • heisO W.ψ (G.pS p) (G.pT p) (w i) (S.Z.vac p) := by
-  first | exact @GlobalTheory.RowEx.fourierVec | exact GlobalTheory.RowEx.fourierVec | (intros; apply GlobalTheory.RowEx.fourierVec <;> assumption)
+  first | exact @GlobalTheory.RowEx.fourierVec
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.CosetDatumVectorFiniteHeisenbergCombinationStatement =====
@@ -1279,7 +1277,7 @@ theorem _root_.GlobalTheory.T.finiteHeisenbergTranslate_selfDualVacuum_fockJets 
       S.Z.c0 p * opp p ((k.prod fun v e => period S.Z.δ v.1 ^ e) * Formalism.MainNotions.GL3Theta.applyAt0 D (MvPolynomial.monomial k 1) fun z =>
         κ * ((ζ : ℂ) * Formalism.MainNotions.TaylorLogMetric.U D (tor0 D D.host.ccK S.Z.δ) s
           (Iop D (tor0 D D.host.ccK S.Z.δ) (La0 D (tor0 D D.host.ccK S.Z.δ) _ _) (Formalism.MainNotions.TaylorLogMetric.La D (tor0 D D.host.ccK S.Z.δ) Ls Lt) (S.Z.e0 p)) z)) := by
-  first | exact @GlobalTheory.HeisTrans.main | exact GlobalTheory.HeisTrans.main | (intros; apply GlobalTheory.HeisTrans.main <;> assumption)
+  first | exact @GlobalTheory.HeisTrans.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FiniteHeisenbergTranslateSelfDualVacuumFockJetsStatement =====
@@ -1442,7 +1440,7 @@ theorem _root_.GlobalTheory.T.movedKappa_fock_jets_span : _root_.GlobalTheory.Fu
       fockIn ch.W ch.S.N.frC p (ch.W.om p (ch.G.toPair p ((x * ch.S.N.u p.small : FinPt ch.G p.small) : Formalism.L2.Theta.GA D (ch.G.V p.small)) ((y * ch.S.N.u p.big : FinPt ch.G p.big) : Formalism.L2.Theta.GA D (ch.G.V p.big))) (ch.S.Z.vac p))
         (MvPolynomial.monomial k 1) 0 = ch.S.Z.c0 p * opp p ((k.prod fun v e => period ch.S.Z.δ v.1 ^ e) *
           Formalism.MainNotions.GL3Theta.applyAt0 D (MvPolynomial.monomial k 1) fun z => κ * Iop D (tor0 D D.host.ccK ch.S.Z.δ) (La0 D (tor0 D D.host.ccK ch.S.Z.δ) _ _) (Formalism.MainNotions.TaylorLogMetric.La D (tor0 D D.host.ccK ch.S.Z.δ) (GlobalTheory.MovedDict.srcLat ch.S.toGridChoice p x y) (GlobalTheory.MovedDict.tgtLat ch.S.toGridChoice p x y)) (ch.S.Z.e0 p) z) := by
-  first | exact @_root_.GlobalTheory.MovedKappa.fock_jets_of_moved_vacuum | exact _root_.GlobalTheory.MovedKappa.fock_jets_of_moved_vacuum | (intros; apply _root_.GlobalTheory.MovedKappa.fock_jets_of_moved_vacuum <;> assumption)
+  first | exact @_root_.GlobalTheory.MovedKappa.fock_jets_of_moved_vacuum
 end
 end -- clump:auto
 end -- clump:auto
@@ -1591,7 +1589,7 @@ theorem _root_.GlobalTheory.T.movedKappa_rational_of_arithmetic : _root_.GlobalT
           Formalism.MainNotions.GL3Theta.applyAt0 D (MvPolynomial.monomial k 1) fun z => κ * Iop D (tor0 D D.host.ccK ch.S.Z.δ) (La0 D (tor0 D D.host.ccK ch.S.Z.δ) _ _) (Formalism.MainNotions.TaylorLogMetric.La D (tor0 D D.host.ccK ch.S.Z.δ) (GlobalTheory.MovedDict.srcLat ch.S.toGridChoice p x y) (GlobalTheory.MovedDict.tgtLat ch.S.toGridChoice p x y)) (ch.S.Z.e0 p) z)) →
     Mod1All κ ∧ (∀ (q : ℕ) [Fact q.Prime], EqAt D q (GlobalTheory.SumSize.latAt ch.S.toGridChoice p.small x) (stdL D _) →
       EqAt D q (GlobalTheory.SumSize.latAt ch.S.toGridChoice p.big y) (stdL D _) → ∀ lam : Qbar →+* ℂ_[q], ‖lamC lam κ‖ = 1) := by
-  first | exact @_root_.GlobalTheory.MovedKappaArith.movedKappa_arithmetic | exact _root_.GlobalTheory.MovedKappaArith.movedKappa_arithmetic | (intros; apply _root_.GlobalTheory.MovedKappaArith.movedKappa_arithmetic <;> assumption)
+  first | exact @_root_.GlobalTheory.MovedKappaArith.movedKappa_arithmetic
 end
 end -- clump:auto
 end -- clump:auto
@@ -1655,7 +1653,7 @@ theorem _root_.GlobalTheory.T.twisted_moved_vacuum_kappa : _root_.GlobalTheory.F
       fockIn ch.W ch.S.N.frC p (ch.W.om p (ch.G.toPair p ((x * ch.S.N.u p.small : FinPt ch.G p.small) : Formalism.L2.Theta.GA D (ch.G.V p.small)) ((y * ch.S.N.u p.big : FinPt ch.G p.big) : Formalism.L2.Theta.GA D (ch.G.V p.big))) (ch.S.Z.vac p))
         (MvPolynomial.monomial k 1) 0 = ch.S.Z.c0 p * opp p ((k.prod fun v e => period ch.S.Z.δ v.1 ^ e) *
           Formalism.MainNotions.GL3Theta.applyAt0 D (MvPolynomial.monomial k 1) fun z => κ * Iop D (tor0 D D.host.ccK ch.S.Z.δ) (La0 D (tor0 D D.host.ccK ch.S.Z.δ) _ _) (Formalism.MainNotions.TaylorLogMetric.La D (tor0 D D.host.ccK ch.S.Z.δ) (GlobalTheory.MovedDict.srcLat ch.S.toGridChoice p x y) (GlobalTheory.MovedDict.tgtLat ch.S.toGridChoice p x y)) (ch.S.Z.e0 p) z) := by
-  first | exact @_root_.GlobalTheory.MovedDict.moved_vacuum_kappa_eval | exact _root_.GlobalTheory.MovedDict.moved_vacuum_kappa_eval | (intros; apply _root_.GlobalTheory.MovedDict.moved_vacuum_kappa_eval <;> assumption)
+  first | exact @_root_.GlobalTheory.MovedDict.moved_vacuum_kappa_eval
 end
 end -- clump:auto
 end -- clump:auto
@@ -1740,7 +1738,7 @@ theorem _root_.GlobalTheory.T.twist_moved_vacuum_correspondence : _root_.GlobalT
           Formalism.MainNotions.GL3Theta.applyAt0 D (MvPolynomial.monomial k 1) fun z => κ *
             Iop D (tor0 D D.host.ccK ch.S.Z.δ) (La0 D (tor0 D D.host.ccK ch.S.Z.δ) _ _)
               (Formalism.MainNotions.TaylorLogMetric.La D (tor0 D D.host.ccK ch.S.Z.δ) Ls Lt) (ch.S.Z.e0 p) z) := by
-  first | exact @_root_.GlobalTheory.MovedDict.moved_vacuum_vector_correspondence | exact _root_.GlobalTheory.MovedDict.moved_vacuum_vector_correspondence | (intros; apply _root_.GlobalTheory.MovedDict.moved_vacuum_vector_correspondence <;> assumption)
+  first | exact @_root_.GlobalTheory.MovedDict.moved_vacuum_vector_correspondence
 end
 end -- clump:auto
 end -- clump:auto
@@ -1791,7 +1789,7 @@ open GlobalTheory.RowEx
 open Formalism.MainNotions.TaylorLogMetric Formalism.MainNotions.StandardLatticesGL3
 
 theorem _root_.GlobalTheory.T.translated_jets_dictionary : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → Big fun {D} _ _ _ _ _ _ _ _ _ _ _ ch => ∀ (p : Pair _), DefPair D.R.m p → ∀ (x : FinPt ch.G p.small) (y : FinPt ch.G p.big), ∃ (Ls : Submodule (𝓞 D.host.E) (Fin (ch.G.pS p).rank → D.host.E)) (Lt : Submodule (𝓞 D.host.E) (Fin (ch.G.pT p).rank → D.host.E)) (κ : ℂ), SD D Ls ∧ SD D Lt ∧ Mod1All κ ∧ Differentiable ℂ (Iop D (tor0 D D.host.ccK ch.S.Z.δ) (La0 D (tor0 D D.host.ccK ch.S.Z.δ) _ _) (Formalism.MainNotions.TaylorLogMetric.La D (tor0 D D.host.ccK ch.S.Z.δ) Ls Lt) (ch.S.Z.e0 p)) ∧ (∀ (q : ℕ) [Fact q.Prime], EqAt D q (GlobalTheory.SumSize.latAt ch.S.toGridChoice p.small x) (stdL D _) → EqAt D q (GlobalTheory.SumSize.latAt ch.S.toGridChoice p.big y) (stdL D _) → EqAt D q Ls (stdL D _) ∧ EqAt D q Lt (stdL D _) ∧ ∀ lam : Qbar →+* ℂ_[q], ‖lamC lam κ‖ = 1) ∧ ∀ (k : ℕ), 0 < k → ∀ w : WO (ch.G.pS p) (ch.G.pT p), k • w ∈ latO (ch.G.pS p) (ch.G.pT p) (ch.S.N.latS p : Set _) (ch.S.N.latT p : Set _) (fun _ => True) → ∃ (ζ : Qbar) (s : VC D (ch.G.pS p).rank (ch.G.pT p).rank), (∃ m : ℕ, 0 < m ∧ ζ ^ m = 1) ∧ k • s ∈ Formalism.MainNotions.TaylorLogMetric.La D (tor0 D D.host.ccK ch.S.Z.δ) Ls Lt ∧ ∀ mon, jetTab ch.W ch.S.N.frC p (heisO ch.W.ψ (ch.G.pS p) (ch.G.pT p) w (ch.S.Z.vac p)) (x * ch.S.N.u _) (y * ch.S.N.u _) mon = ch.S.Z.c0 p * opp p (((mon.mapDomain (fvar ch.G p)).prod fun v e => period ch.S.Z.δ v.1 ^ e) * Formalism.MainNotions.GL3Theta.applyAt0 D (MvPolynomial.monomial (mon.mapDomain (fvar ch.G p)) 1) fun z => κ * ((ζ : ℂ) * Formalism.MainNotions.TaylorLogMetric.U D (tor0 D D.host.ccK ch.S.Z.δ) s (Iop D (tor0 D D.host.ccK ch.S.Z.δ) (La0 D (tor0 D D.host.ccK ch.S.Z.δ) _ _) (Formalism.MainNotions.TaylorLogMetric.La D (tor0 D D.host.ccK ch.S.Z.δ) Ls Lt) (ch.S.Z.e0 p)) z)) := by
-  first | exact @_root_.GlobalTheory.MovedDict.jets_moved_by_translation | exact _root_.GlobalTheory.MovedDict.jets_moved_by_translation | (intros; apply _root_.GlobalTheory.MovedDict.jets_moved_by_translation <;> assumption)
+  first | exact @_root_.GlobalTheory.MovedDict.jets_moved_by_translation
 end
 end -- clump:auto
 end -- clump:auto
@@ -1880,7 +1878,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.RowEx
 
 theorem _root_.GlobalTheory.T.twisted_dictionary_correspondence : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → Big fun ch => GlobalTheory.SumSize.DictAt ch := by
-  first | exact @_root_.GlobalTheory.DictFree.twisted_dictionary_eventually_large | exact _root_.GlobalTheory.DictFree.twisted_dictionary_eventually_large | (intros; apply _root_.GlobalTheory.DictFree.twisted_dictionary_eventually_large <;> assumption)
+  first | exact @_root_.GlobalTheory.DictFree.twisted_dictionary_eventually_large
 end
 end -- clump:auto
 end -- clump:auto

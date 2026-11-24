@@ -527,7 +527,7 @@ theorem fr_apply (x : InfinitePlace E × Fin a × Fin a) (p q : Fin a) (w : Infi
     by_cases h1 : i = p <;> by_cases h2 : j = q <;> by_cases h3 : j = p <;> by_cases h4 : i = q <;>
       simp [h1, h2, h3, h4]
     all_goals by_cases hc : p = q
-    all_goals first | simp [hc] | simp [hc, Ne.symm hc]
+    all_goals first | simp [hc]
   · have hv' : ¬ w = v := fun h => hv h.symm
     simp [hv, hv']
 
@@ -1266,7 +1266,7 @@ theorem tensForm_holds : TensForm := by
     exact Finset.sum_pos' (fun j _ => hnn _) ⟨k, Finset.mem_univ _, hpos _ hk⟩
   · intro φ ψ v w
     simp only [B, LinearMap.mk₂'ₛₗ_apply, ec, TensorProduct.piScalarRightHom_tmul, map_smulₛₗ,
-      LinearMap.smul_apply, map_smul, smul_eq_mul, dotProduct, Finset.mul_sum, Pi.star_apply]
+      LinearMap.smul_apply, smul_eq_mul, dotProduct, Finset.mul_sum, Pi.star_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
     simp only [starRingEnd_apply, RingHom.id_apply]
     ring

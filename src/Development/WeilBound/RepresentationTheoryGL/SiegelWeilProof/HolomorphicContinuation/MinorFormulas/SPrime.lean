@@ -119,10 +119,10 @@ theorem sum_del (ρ : ℕ) :
     congr 2
     ext p q
     by_cases h : q = c
-    · subst h; simp [Xm, updateCol_apply, Equiv.swap_apply_right]
+    · subst h; simp [Xm, Equiv.swap_apply_right]
     · have h3 : q.succ ≠ 0 := Fin.succ_ne_zero q
       have h4 : q.succ ≠ c.succ := fun e => h (Fin.succ_injective _ e)
-      simp [Xm, updateCol_apply, h, Equiv.swap_apply_of_ne_of_ne h3 h4]
+      simp [Xm, h, Equiv.swap_apply_of_ne_of_ne h3 h4]
   simp_rw [h1, Finset.mul_sum]
   rw [Finset.sum_comm]
   simp_rw [h2]
@@ -337,7 +337,7 @@ theorem iter : Iter := by
     have h1 : (C r : Pm R ρ) = C r * 1 := (mul_one _).symm
     rw [hc, mul_comm, detE_det_pow_mul, h1, detE_C_mul, core]
     rw [Finset.prod_range_succ, hc]
-    simp only [map_prod, map_sub, map_add (f := _), map_natCast]
+    simp only [map_add (f := _), map_natCast]
     ring
 
 end PositivityTheory.Rg.Sw.SP.Mi
@@ -378,7 +378,7 @@ theorem deriv_part (s : ℂ) (m : ℕ) (b : Bool) {ρ : ℕ} (I J : Fin ρ ↪ F
   | C r =>
     simp [phi, del]
   | add f g hf hg =>
-    simp only [map_add (f := _), Derivation.leibniz, mul_add, Finset.sum_add_distrib, hf, hg]
+    simp only [map_add (f := _), mul_add, Finset.sum_add_distrib, hf, hg]
   | mul_X f pq hf =>
     have e : phi b I J (f * X pq) = phi b I J f * yv b (J pq.1) (I pq.2) := by rw [map_mul, phi_X]
     have hdx : del p q (X pq : Pm (Polynomial ℂ) ρ) = X (pq.1, p) * X (q, pq.2) := by simp [del, mkDerivation_X]
@@ -411,7 +411,7 @@ theorem opH_phi (s : ℂ) (m : ℕ) (b : Bool) {ρ : ℕ} (I J : Fin ρ ↪ Fin 
     opH s m b (I p) (J q) (phi b I J f) = (-(cMn s b)) • phi b I J (opE (alMn m b) p q f) := by
   have h := deriv_part s m b I J p q f
   simp only [opH, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.restrictScalars_apply, LinearMap.mulLeft_apply,
-    LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.coe_restrictScalars, Derivation.coeFn_coe, opE, map_add, map_mul]
+    LinearMap.sum_apply, LinearMap.comp_apply, Derivation.coeFn_coe, opE, map_add, map_mul]
   have hs : (∑ a : Fin n, ∑ d : Fin n, (-(if b = true then Complex.I * s else -(Complex.I * s))) •
       (yv b a (I p) * yv b (J q) d * (pderiv (b, a, d)) (phi b I J f))) =
       (-(if b = true then Complex.I * s else -(Complex.I * s))) • ∑ a : Fin n, ∑ d : Fin n,

@@ -629,7 +629,7 @@ section -- clump:auto
 open MeasureTheory ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.StepData GlobalTheory.SymChain
 
 theorem _root_.GlobalTheory.T.symmetricLevelChain_oneIndexAt_of_class_support : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (ν : Measure k), IsUnitVol ν → ∀ (s κ : ℕ) (S : SymData k s κ) (t : Type) [Fintype t] [DecidableEq t], S.ClassAt t ν → S.SupportAt t → S.OneIndexAt t ν := by
-  first | exact @GlobalTheory.SymChain.oneIndexAt_of_classAt_supportAt | exact GlobalTheory.SymChain.oneIndexAt_of_classAt_supportAt | (intros; apply GlobalTheory.SymChain.oneIndexAt_of_classAt_supportAt <;> assumption)
+  first | exact @GlobalTheory.SymChain.oneIndexAt_of_classAt_supportAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SymmetricLevelChainOneIndexAtOfClassSupportStatement =====
@@ -807,7 +807,7 @@ theorem exists_factor {g : GL (n ⊕ Fin c) k} (hg : g ∈ KO k _) (p : ℕ) (T 
     · rcases a with y | l
       · simp at hab
       · have hl' : p ≤ l.val + 1 := by simpa [lev] using hl
-        simp only [Matrix.mul_zero, Matrix.mul_one, add_zero, fromBlocks_apply₂₁, Matrix.add_apply]
+        simp only [Matrix.mul_zero, Matrix.mul_one, fromBlocks_apply₂₁, Matrix.add_apply]
         by_cases hT : T x
         · have : (M.toBlocks₂₂ * D) l x = 0 := by
             rw [Matrix.mul_apply]
@@ -820,9 +820,9 @@ theorem exists_factor {g : GL (n ⊕ Fin c) k} (hg : g ∈ KO k _) (p : ℕ) (T 
           rw [this, Matrix.mul_neg, ← Matrix.mul_assoc, hUV, Matrix.one_mul]
           simp
     · rcases a with y | l
-      · simp only [Matrix.mul_zero, Matrix.mul_one, add_zero, fromBlocks_apply₁₂]
+      · simp only [Matrix.mul_zero, Matrix.mul_one, fromBlocks_apply₁₂]
         simpa [toBlocks₁₂] using m2 (.inl y) i hl
-      · simp only [Matrix.mul_zero, Matrix.mul_one, add_zero, fromBlocks_apply₂₂]
+      · simp only [Matrix.mul_zero, Matrix.mul_one, fromBlocks_apply₂₂]
         simpa [toBlocks₂₂] using m2 (.inr l) i hl
 
 end Local
@@ -1377,7 +1377,7 @@ theorem opE_step (ν : Measure k) (hν : IsUnitVol ν) {s κ : ℕ} (S : SymData
   have mB : MeasurableSet sB := oB.measurableSet
   have fA : ν sA ≠ ⊤ := (isCompact_cball a).measure_lt_top.ne
   have fB : ν sB ≠ ⊤ := ((isCompact_cball b⁻¹).measure_lt_top.trans_le' (measure_mono sBc)).ne
-  have pA : 0 < ν sA := (isOpen_cball a).measure_pos ν ⟨0, by simp [sA, cball]⟩
+  have pA : 0 < ν sA := (isOpen_cball a).measure_pos ν ⟨0, by simp [cball]⟩
   have pB : 0 < ν sB := oB.measure_pos ν ⟨0, by simp [sB]⟩
   let G : Matrix (XIx (Fin κ) t (j + 1)) (XIx (Fin κ) t j) k → (I → k) → ℂ := fun x₀ m =>
     Φ (basePt c x₀ + Matrix.of fun r s' => m (r, s')) * (S.ψ (-ch (basePt c x₀ + Matrix.of fun r s' => m (r, s'))) : ℂ)

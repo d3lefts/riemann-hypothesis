@@ -69,7 +69,7 @@ open GlobalTheory.Hk3
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.normal_subgroup_containing_hyperspecial_eq_top_unramifiedUnitary : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicative ℤ))] [CompleteSpace L] (ϖ : L) (σ : L →+* L) (q n : ℕ) (J : GL (Fin n) L), Formalism.UG.IsUnramInv ϖ σ q → Odd q → J ∈ Formalism.UG.GLint (Fin n) (Formalism.UG.intL L) → (∀ i j, σ ((J : Matrix (Fin n) (Fin n) L) i j) = (J : Matrix (Fin n) (Fin n) L) j i) → ∀ N : Subgroup (Formalism.UG.UJ σ (J : Matrix (Fin n) (Fin n) L)), N.Normal → (∀ g : Formalism.UG.UJ σ (J : Matrix (Fin n) (Fin n) L), (g : GL (Fin n) L) ∈ Formalism.UG.GLint (Fin n) (Formalism.UG.intL L) → g ∈ N) → N = ⊤ := by
-  first | exact @GlobalTheory.NormalHyp.normal_closure_hyp | exact GlobalTheory.NormalHyp.normal_closure_hyp | (intros; apply GlobalTheory.NormalHyp.normal_closure_hyp <;> assumption)
+  first | exact @GlobalTheory.NormalHyp.normal_closure_hyp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.NormalSubgroupContainingHyperspecialEqTopUnramifStatement =====
@@ -209,7 +209,7 @@ open GlobalTheory.Hk3
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.vacuumTranslate_relation_map_preserving_vacua : ∀ (L : Type) [Field L] [CharZero L] [Valued L (WithZero (Multiplicative ℤ))] [CompleteSpace L] (ϖ : L) (σ : L →+* L) (q : ℕ) (δ : L) (n n' : ℕ) (JS : GL (Fin n) L) (JT : GL (Fin n') L) (ψ : AddChar L ℂ) (M : Type) [AddCommGroup M] [Module ℂ M] (ρ : Matrix (Fin n') (Fin n) L → Module.End ℂ M) (ω : Formalism.UG.UJ σ (JS : Matrix (Fin n) (Fin n) L) × Formalism.UG.UJ σ (JT : Matrix (Fin n') (Fin n') L) →* Module.End ℂ M), LocPair ϖ σ q δ JS JT ψ ρ ω → ∀ φ : M →ₗ[ℂ] M, (∀ s, LocVac ρ s → LocVac ρ (φ s)) → ∀ f : Matrix (Fin n') (Fin n) L →₀ M, (∀ x, LocVac ρ (f x)) → (f.sum fun x m => ρ x m) = 0 → (f.sum fun x m => ρ x (φ m)) = 0 := by
-  first | exact @GlobalTheory.Hk3.locVac_rel_map | exact GlobalTheory.Hk3.locVac_rel_map | (intros; apply GlobalTheory.Hk3.locVac_rel_map <;> assumption)
+  first | exact @GlobalTheory.Hk3.locVac_rel_map
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.VacuumTranslateRelationMapPreservingVacuaStatement =====
@@ -265,14 +265,14 @@ theorem locPair_extend_vac : ∀ (L : Type) [Field L] [CharZero L] [Valued L (Wi
       apply Finsupp.lhom_ext
       intro x v
       simp only [LinearMap.comp_apply, Sh, T, Finsupp.lsum_single, LinearMap.smul_apply, Finsupp.lsingle_apply, map_smul]
-      simp only [LinearMap.coe_comp, Function.comp_apply, Submodule.coe_subtype]
+      simp only [Submodule.coe_subtype]
       rw [← Module.End.mul_apply, hP.rho_mul]
       rfl
     have h2 : ρ y ∘ₗ T' = T' ∘ₗ Sh := by
       apply Finsupp.lhom_ext
       intro x v
       simp only [LinearMap.comp_apply, Sh, T', Finsupp.lsum_single, LinearMap.smul_apply, Finsupp.lsingle_apply, map_smul]
-      simp only [LinearMap.coe_comp, Function.comp_apply, Submodule.coe_subtype]
+      simp only [Submodule.coe_subtype]
       rw [← Module.End.mul_apply, hP.rho_mul]
       rfl
     apply LinearMap.ext
@@ -410,7 +410,7 @@ theorem locPair_act_vac_comb : ∀ (L : Type) [Field L] [CharZero L] [Valued L (
       obtain ⟨cb, hcb⟩ := hb
       refine ⟨a • cb, ?_⟩
       rw [map_smul, hcb, Finsupp.sum_smul_index' (h := fun x z => z • ρ x s0) (fun _ => zero_smul ℂ _), Finsupp.smul_sum]
-      simp [Finsupp.sum, Finset.smul_sum, smul_smul]
+      simp [Finsupp.sum, smul_smul]
   obtain ⟨c, hc⟩ := hspan (ω p s0)
   have hps0 : ω p s0 = c.sum fun x z => z • ρ x s0 := by
     have e := congrArg (fun F => F s0) (hpN B0 hB0)

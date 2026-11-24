@@ -118,7 +118,7 @@ theorem HL_refl {p n' : ℕ} {W Qq O Kf : Type} [CommRing W] [IsDomain W] [IsDis
       obtain ⟨k, rfl⟩ := hv
       by_cases hik : k = i
       · exact ⟨1, by simp [hik]⟩
-      · exact ⟨0, by simp [Finsupp.single_apply, hik]⟩
+      · exact ⟨0, by simp [hik]⟩
     | zero => exact ⟨0, by simp⟩
     | add a b _ _ ha hb =>
       obtain ⟨a', ha'⟩ := ha
@@ -559,7 +559,7 @@ theorem ordMax_top {n' m : ℕ} (hm : 2 ≤ m) {TT : Finset (Fin n')} {aT bT : F
     by_cases hs : s ∈ TT
     · have e1 : restW TT lam0 s (Fin.last m) = lam0 s (Fin.last m) := by
         unfold restW flW
-        simp [Pi.single_apply, hl0]
+        simp [hl0]
       have e0 : restW TT lam0 s 0 = lam0 s 0 - (dT TT lam0 s : ℤ) := by
         unfold restW flW
         simp

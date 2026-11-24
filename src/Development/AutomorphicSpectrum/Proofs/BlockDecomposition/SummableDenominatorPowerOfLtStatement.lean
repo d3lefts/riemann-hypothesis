@@ -405,7 +405,7 @@ theorem map_proj_lam {m : ℕ} (σ : E →ₐ[F] E) (c : Matrix (Fin m) (Fin m) 
         = (proj E m x + c.mulVec (proj E m y)) + o • u := by
       funext i
       have := blk_mulVec_castSucc σ c u d y i
-      simp only [proj_apply, Pi.add_apply, map_add (f := _), LinearMap.restrictScalars_apply,
+      simp only [proj_apply, Pi.add_apply, LinearMap.restrictScalars_apply,
         Matrix.mulVecLin_apply, Pi.smul_apply, Algebra.smul_def, ho]
       rw [this, add_assoc]
       rfl
@@ -471,7 +471,7 @@ theorem comap_lastInc_intVec (m : ℕ) :
     by_cases hi : i = Fin.last m
     · subst hi
       exact ⟨o, by simp⟩
-    · exact ⟨0, by simp [Pi.single_apply, hi]⟩
+    · exact ⟨0, by simp [hi]⟩
 
 theorem map_lastInc_lastFib {m : ℕ} (C : Matrix (Fin (m + 1)) (Fin (m + 1)) E) :
     (lastFib C).toAddSubgroup.map (lastInc E m)
@@ -482,7 +482,7 @@ theorem map_lastInc_lastFib {m : ℕ} (C : Matrix (Fin (m + 1)) (Fin (m + 1)) E)
     refine AddSubgroup.mem_inf.mpr ⟨hx, ?_⟩
     rw [AddMonoidHom.mem_ker]
     funext i
-    simp [lastInc, Pi.single_apply, Fin.castSucc_ne_last]
+    simp [lastInc, Fin.castSucc_ne_last]
   · intro hv
     obtain ⟨h1, h2⟩ := AddSubgroup.mem_inf.mp hv
     rw [AddMonoidHom.mem_ker] at h2
@@ -492,7 +492,7 @@ theorem map_lastInc_lastFib {m : ℕ} (C : Matrix (Fin (m + 1)) (Fin (m + 1)) E)
       · simp [lastInc]
       · have := congrFun h2 j
         simp only [LinearMap.toAddMonoidHom_coe, proj_apply, Pi.zero_apply] at this
-        simp [lastInc, Pi.single_apply, Fin.castSucc_ne_last, this]
+        simp [lastInc, Fin.castSucc_ne_last, this]
     refine ⟨v (Fin.last m), ?_, hv'⟩
     change lastInc E m (v (Fin.last m)) ∈ lam C
     rw [hv']
@@ -1032,7 +1032,7 @@ theorem sO_mem_tor (σ : E →ₐ[F] E) (hinv : ∀ x, σ (σ x) = x)
       by_cases h : i = j
       · subst h
         exact ⟨1, by simp⟩
-      · exact ⟨0, by simp [Pi.single_apply, h]⟩
+      · exact ⟨0, by simp [h]⟩
     have hent : ∀ j, ∃ o : 𝓞 E, algebraMap (𝓞 E) E o = a' j := by
       intro j
       have h1 := hL _ (Submodule.mem_sup_left (hstd j) : _ ∈ lam c)
@@ -1049,7 +1049,7 @@ theorem sO_mem_tor (σ : E →ₐ[F] E) (hinv : ∀ x, σ (σ x) = x)
       obtain ⟨p, hp⟩ := h1
       refine ⟨p, ?_⟩
       rw [hp]
-      simp [dotProduct, Matrix.mulVec_single_one, Matrix.col_apply]
+      simp [dotProduct, Matrix.col_apply]
     have hy : (fun j => sO σ (o j)) ∈ Kc c := by
       intro i
       obtain ⟨p, hp⟩ := hcol i
@@ -1750,7 +1750,7 @@ open NumberField
 theorem _root_.GlobalTheory.T.summable_denominator_power_of_lt : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E),
     IsCMExt F E σ → ∀ (n : ℕ) (s : ℝ), (n : ℝ) < s →
     Summable (fun x : hermE σ n ⧸ hermO σ n => (delta (Quotient.out x).1 : ℝ) ^ (-s)) := by
-  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.HS.summable_delta_rpow | exact GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.HS.summable_delta_rpow | (intros; apply GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.HS.summable_delta_rpow <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.HS.summable_delta_rpow
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SummableDenominatorPowerOfLtStatement =====

@@ -335,7 +335,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.adaptEx' : _root_.GlobalTheory.BigOn.Exp.AdaptedExistence₂ := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.adaptEx_alt | exact _root_.GlobalTheory.BigOn.Exp.adaptEx_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.adaptEx_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.adaptEx_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -387,7 +387,7 @@ theorem li_one_tmul_of_li {O K' M : Type} [CommRing O] [IsDomain O] [Field K'] [
       AlgHom.toLinearMap_apply]
     by_cases h : k = a
     · subst h; simp
-    · simp [Pi.single_apply, h]
+    · simp [h]
   refine LinearIndependent.of_comp F ?_
   have : (F ∘ fun a => ((1 : K') ⊗ₜ[O] m a : K' ⊗[O] M)) = fun a => Pi.single a (1 : K') := funext hF
   rw [this]
@@ -619,7 +619,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.bigOn_canEx : _root_.GlobalTheory.BigOn.Exp.CanonicalExists := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.canEx_holds_alt | exact _root_.GlobalTheory.BigOn.Exp.canEx_holds_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.canEx_holds_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.canEx_holds_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -769,7 +769,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.bigOn_canProj : _root_.GlobalTheory.BigOn.Exp.CanonicalProjection₂ := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.canProj_alt | exact _root_.GlobalTheory.BigOn.Exp.canProj_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.canProj_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.canProj_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -786,7 +786,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.lowAt : _root_.GlobalTheory.BigOn.Exp.LowerBoundAtPlace := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.lowAt_holds_alt | exact _root_.GlobalTheory.BigOn.Exp.lowAt_holds_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.lowAt_holds_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.lowAt_holds_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -860,7 +860,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.reciprocity_side_of_twAdm : _root_.GlobalTheory.BigOn.Exp.TwAdmAlt → _root_.GlobalTheory.BigOn.Exp.RecursiveSide := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.recSide_of_twAdm_alt | exact _root_.GlobalTheory.BigOn.Exp.recSide_of_twAdm_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.recSide_of_twAdm_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.recSide_of_twAdm_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -953,7 +953,7 @@ theorem _root_.GlobalTheory.T.exists_rational_data_realization_alt : GlobalTheor
     (O' : ∀ j, OMDat T'.toCore Rl'.toRealDat j Unit (fun _ => p.P.A3.A.μ0)) (hV' : T'.V ((j : ℕ) + 1) T'.σ₀ = Wc (Fm.D x i) j),
     RatHyp T' Rl' F' κ' v₀' O' t j hV' ∧ (∀ ρ : Setup (Fm.D x i).ntw, RealPin p.R p.cG ρ → RealPin Rl' cG' ρ) ∧
       ∀ (ρ : Setup (Fm.D x i).ntw) (hρ : ρ.Good) (b : Bool), RatRow YS' v₀' hρ t j b → RatRow p.nexp p.v₀ hρ t j b := by
-  first | exact @_root_.GlobalTheory.UnframePt.rat_unframe_alt | exact _root_.GlobalTheory.UnframePt.rat_unframe_alt | (intros; apply _root_.GlobalTheory.UnframePt.rat_unframe_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.UnframePt.rat_unframe_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -998,7 +998,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.at_statement_of_low_weight_twAdm : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.SerStd.SeriesRatS → _root_.GlobalTheory.BigOn.Exp.LowerBoundAtPlace → _root_.GlobalTheory.BigOn.Exp.TwAdmAlt → _root_.GlobalTheory.BigOn.Exp.ConditionAtPlace := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.rowAt_of_alt | exact _root_.GlobalTheory.BigOn.Exp.rowAt_of_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.rowAt_of_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.rowAt_of_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1043,7 +1043,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.tieRat_of_twAdm_and_at : _root_.GlobalTheory.BigOn.Exp.TwAdmAlt → _root_.GlobalTheory.BigOn.Exp.ConditionAtPlace → _root_.GlobalTheory.BigOn.Exp.CompatibilityRational := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.tieRat_of_alt | exact _root_.GlobalTheory.BigOn.Exp.tieRat_of_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.tieRat_of_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.tieRat_of_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1060,7 +1060,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.twist_admissible' : _root_.GlobalTheory.BigOn.Exp.TwAdmAlt := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.twAdm_alt | exact _root_.GlobalTheory.BigOn.Exp.twAdm_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.twAdm_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.twAdm_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1110,7 +1110,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.twist_character_of_artin' : GlobalTheory.Published.GlobalArtinReciprocity → _root_.GlobalTheory.BigOn.Exp.TwAdmAlt → _root_.GlobalTheory.BigOn.Exp.TwistCharacter := by
-  first | exact @_root_.GlobalTheory.TwistChr.twChr_of_twAdm_alt | exact _root_.GlobalTheory.TwistChr.twChr_of_twAdm_alt | (intros; apply _root_.GlobalTheory.TwistChr.twChr_of_twAdm_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.TwistChr.twChr_of_twAdm_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1250,7 +1250,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.tuple_coef_le : _root_.GlobalTheory.BigOn.Exp.TupLe.CoefficientCondition' := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.TupLe.CoefPf.coefSt_alt | exact _root_.GlobalTheory.BigOn.Exp.TupLe.CoefPf.coefSt_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.TupLe.CoefPf.coefSt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.TupLe.CoefPf.coefSt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1295,7 +1295,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.small_tuple_statement_alt : _root_.GlobalTheory.BigOn.Exp.TupLe.SmallnessCondition := by
-  first | exact @_root_.GlobalTheory.SmallSpan.smallSt_alt | exact _root_.GlobalTheory.SmallSpan.smallSt_alt | (intros; apply _root_.GlobalTheory.SmallSpan.smallSt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.SmallSpan.smallSt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1352,7 +1352,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.twist_upper_bound_of_prints : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → _root_.GlobalTheory.BigOn.Exp.TwAdmAlt → _root_.GlobalTheory.BigOn.Exp.TwistCharacter → _root_.GlobalTheory.BigOn.Exp.TwistUpperBound₂ := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.TupLe.twLe_alt | exact _root_.GlobalTheory.BigOn.Exp.TupLe.twLe_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.TupLe.twLe_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.TupLe.twLe_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1395,7 +1395,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.exportSt_of_discrete_series_cover : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.CasselmanWallach → GlobalTheory.SerStd.SeriesRatS → _root_.GlobalTheory.BigOn.ExportedStatement := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.exportSt_of_hypotheses_alt | exact _root_.GlobalTheory.BigOn.Exp.exportSt_of_hypotheses_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.exportSt_of_hypotheses_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.exportSt_of_hypotheses_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1433,7 +1433,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.exportSt_of_reciprocity_and_casselman_wallach : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.CasselmanWallach → GlobalTheory.SerStd.SeriesRatS → _root_.GlobalTheory.BigOn.ExportedStatement := by
-  first | exact @_root_.GlobalTheory.BigOn.exportSt_of_reading_alt | exact _root_.GlobalTheory.BigOn.exportSt_of_reading_alt | (intros; apply _root_.GlobalTheory.BigOn.exportSt_of_reading_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.exportSt_of_reading_alt
 end
 end -- clump:auto
 end -- clump:auto

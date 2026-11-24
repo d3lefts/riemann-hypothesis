@@ -730,7 +730,7 @@ theorem arMono_add_single (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) (M
     refine Fin.lastCases ?_ (fun k => ?_) j
     · intro hj
       have : ((Finsupp.toMultiset (m.mapDomain some)).toList ++ [some r])[((Fin.last (dimFl Ψ N) : Fin _) : ℕ)] = some r := by
-        simp [List.getElem_append, hlen₀]
+        simp [hlen₀]
       rw [this, hL, Fin.snoc_last]
       rfl
     · intro hj
@@ -820,7 +820,6 @@ theorem exists_eq_mul_mult_of_units (F : Type) [Field F] [NumberField F]
           have hm : (mult v.1 : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr mult_ne_zero
           simp only [a]
           field_simp
-          try ring
       _ = 0 := by
           rw [Finset.sum_sub_distrib, ← Finset.mul_sum, e1, e2]
           field_simp

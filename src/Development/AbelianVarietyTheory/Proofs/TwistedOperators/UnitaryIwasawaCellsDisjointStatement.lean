@@ -68,7 +68,7 @@ theorem blk_eq_zero_iff {l : Fin (N + 2)} : blk N l = 0 ↔ l = 0 := by
   rcases idx_cases l with rfl | ⟨j, rfl⟩ | rfl
   · simp
   · simp [mid_ne_zero]
-  · simp [last_ne_zero]
+  · simp
 
 theorem blk_eq_two_iff {l : Fin (N + 2)} : blk N l = 2 ↔ l = Fin.last (N + 1) := by
   rcases idx_cases l with rfl | ⟨j, rfl⟩ | rfl
@@ -153,7 +153,7 @@ section -- clump:auto
 open GlobalTheory.InertZeta
 
 theorem _root_.GlobalTheory.T.unitary_iwasawa_cells_disjoint : CosetInj := by
-  first | exact @GlobalTheory.InertZeta.cosetInj | exact GlobalTheory.InertZeta.cosetInj | (intros; apply GlobalTheory.InertZeta.cosetInj <;> assumption)
+  first | exact @GlobalTheory.InertZeta.cosetInj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnitaryIwasawaCellsDisjointStatement =====

@@ -202,7 +202,7 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.AdelicU GlobalTheory.Doublin
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.anisotropy_of_range : PositivityTheory.PfSWUS.AnisoOfRange := by
-  first | exact @GlobalTheory.CompanionTheory.AnisoRange.anisoOfRange | exact GlobalTheory.CompanionTheory.AnisoRange.anisoOfRange | (intros; apply GlobalTheory.CompanionTheory.AnisoRange.anisoOfRange <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.AnisoRange.anisoOfRange
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -252,7 +252,7 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.AdelicU GlobalTheory.Doublin
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.dictionary_maximal_compact_parts : PositivityTheory.PfSWUS.DictKAOfParts := by
-  first | exact @GlobalTheory.CompanionTheory.SWDict.dictKA_of_parts | exact GlobalTheory.CompanionTheory.SWDict.dictKA_of_parts | (intros; apply GlobalTheory.CompanionTheory.SWDict.dictKA_of_parts <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SWDict.dictKA_of_parts
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -505,7 +505,7 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.AdelicU GlobalTheory.Doublin
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.fock_splitting_maximal_compact : PositivityTheory.PfSWUS.FockSplitK := by
-  first | exact @GlobalTheory.CompanionTheory.PfSWUS.fockSplitK | exact GlobalTheory.CompanionTheory.PfSWUS.fockSplitK | (intros; apply GlobalTheory.CompanionTheory.PfSWUS.fockSplitK <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.PfSWUS.fockSplitK
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -523,7 +523,7 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.AdelicU GlobalTheory.Doublin
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.nondegenerate_of_whittaker : PositivityTheory.PfSWUS.NDOfWhit := by
-  first | exact @GlobalTheory.CompanionTheory.SWGlue.ndOfWhit | exact GlobalTheory.CompanionTheory.SWGlue.ndOfWhit | (intros; apply GlobalTheory.CompanionTheory.SWGlue.ndOfWhit <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SWGlue.ndOfWhit
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -541,7 +541,7 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.AdelicU GlobalTheory.Doublin
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.theta_coefficient_of_convergence : GlobalTheory.Published.WeilThetaConvergence → PositivityTheory.PfSWUS.ThetaCoef := by
-  first | exact @GlobalTheory.CompanionTheory.ThetaCoefND.thetaCoef | exact GlobalTheory.CompanionTheory.ThetaCoefND.thetaCoef | (intros; apply GlobalTheory.CompanionTheory.ThetaCoefND.thetaCoef <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ThetaCoefND.thetaCoef
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -559,7 +559,7 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.AdelicU GlobalTheory.Doublin
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.whittaker_additivity : PositivityTheory.PfSWUS.WhitTAdd := by
-  first | exact @GlobalTheory.CompanionTheory.WhitAdd.whitTAdd | exact GlobalTheory.CompanionTheory.WhitAdd.whitTAdd | (intros; apply GlobalTheory.CompanionTheory.WhitAdd.whitTAdd <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.WhitAdd.whitTAdd
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -661,7 +661,7 @@ open GlobalTheory.AutomorphicL2Unitary GlobalTheory.AdelicU GlobalTheory.Doublin
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.whittaker_maximal_compact_general : PositivityTheory.PfSWUS.WhitKAOfGenLt := by
-  first | exact @GlobalTheory.CompanionTheory.IwaAd.whitKAOfGenLt | exact GlobalTheory.CompanionTheory.IwaAd.whitKAOfGenLt | (intros; apply GlobalTheory.CompanionTheory.IwaAd.whitKAOfGenLt <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.IwaAd.whitKAOfGenLt
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -930,7 +930,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.whittaker_nondegenerate_of_iwasawa : GlobalTheory.CompanionTheory.IwaAd.WhitKA → PositivityTheory.PfSWUS.WhitNDg := by
-  first | exact @GlobalTheory.CompanionTheory.IwaAd.iwaRedA | exact GlobalTheory.CompanionTheory.IwaAd.iwaRedA | (intros; apply GlobalTheory.CompanionTheory.IwaAd.iwaRedA <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.IwaAd.iwaRedA
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto

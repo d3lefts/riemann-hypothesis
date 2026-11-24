@@ -70,38 +70,17 @@ theorem UpperTheory.fixed_quadratic_mem_base :
   intro F E _ _ _ h σ α hα x hx
   by_contra hxr
   have hfin : FiniteDimensional F E := Module.finite_of_finrank_pos (by omega)
-  have li : LinearIndependent F ![(1 : E), x] := by
-    rw [LinearIndependent.pair_iff]
-    intro s t hst
-    have ht : t = 0 := by
-      by_contra ht
-      apply hxr
-      refine ⟨-(s / t), ?_⟩
-      have hst' : algebraMap F E s + algebraMap F E t * x = 0 := by
-        simpa [Algebra.smul_def] using hst
-      have ht' : algebraMap F E t ≠ 0 := by
-        simpa using ht
-      rw [map_neg, map_div₀]
-      field_simp
-      linear_combination -hst'
-    subst ht
-    simp only [zero_smul, add_zero, Algebra.smul_def, mul_one] at hst
-    exact ⟨by simpa using hst, rfl⟩
-  have hspan : Submodule.span F (Set.range ![(1 : E), x]) = ⊤ :=
+  have li : LinearIndependent F ![x, (1 : E)] := by
+    rw [linearIndependent_fin2]
+    refine ⟨by simp, fun a ha => hxr ⟨a, ?_⟩⟩
+    simpa [Algebra.smul_def] using ha
+  have hspan : Submodule.span F (Set.range ![x, (1 : E)]) = ⊤ :=
     li.span_eq_top_of_card_eq_finrank' (by simp [h])
-  have hmem : α ∈ Submodule.span F (Set.range ![(1 : E), x]) := by
-    rw [hspan]; exact Submodule.mem_top
-  refine hα ?_
-  clear hα
-  induction hmem using Submodule.span_induction with
-  | mem y hy =>
-    obtain ⟨i, rfl⟩ := hy
-    fin_cases i
-    · simp
-    · simpa using hx
-  | zero => simp
-  | add a b _ _ ha hb => rw [map_add (f := _), ha, hb]
-  | smul c a _ ha => rw [map_smul, ha]
+  have heq : σ.toLinearMap = LinearMap.id := by
+    apply LinearMap.ext_on_range hspan
+    intro i
+    fin_cases i <;> simp [hx]
+  exact hα (LinearMap.congr_fun heq α)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FixedQuadraticMemBase =====
@@ -165,15 +144,14 @@ private theorem Dz.sum {E A B : Type} [Field E] [StarRing E] [Fintype A] [Decida
       conjTranspose_conjTranspose, hXi, h4.eq, Matrix.mul_assoc]
   have key : Uᴴ * fromBlocks X Y Yᴴ W * U = fromBlocks X 0 0 S := by
     rw [hU, fromBlocks_conjTranspose, fromBlocks_multiply, fromBlocks_multiply]
-    simp only [conjTranspose_one, conjTranspose_zero, conjTranspose_neg, conjTranspose_mul, hXi,
-      h1.eq]
+    simp only [conjTranspose_one, conjTranspose_zero, conjTranspose_neg, conjTranspose_mul, hXi]
     have hXX' : X⁻¹ * X = 1 := nonsing_inv_mul X hu
     congr 1
     · simp
     · have hY : X * (X⁻¹ * Y) = Y := by rw [← Matrix.mul_assoc, hXX, Matrix.one_mul]
       simp [hY]
     · simp [Matrix.mul_assoc, hXX']
-    · simp [Matrix.mul_assoc, hXX, hXX', hS, Matrix.add_mul, Matrix.mul_add]
+    · simp [Matrix.mul_assoc, hXX', hS]
       abel
   refine Dz.of_congr hUdet ?_
   rw [key]

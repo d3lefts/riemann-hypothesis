@@ -1081,10 +1081,8 @@ theorem exists_eval : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (d
         map_add' := Matrix.mulVec_add _
         map_smul' := fun c x => Matrix.mulVec_smul _ c x
         left_inv := fun x => by
-          change (S.ε (a₀.comp f) (h₀.comp g)).mulVec ((S.ε (h₀.comp g) (a₀.comp f)).mulVec x) = x
           rw [Matrix.mulVec_mulVec, hE2, Matrix.one_mulVec]
         right_inv := fun x => by
-          change (S.ε (h₀.comp g) (a₀.comp f)).mulVec ((S.ε (a₀.comp f) (h₀.comp g)).mulVec x) = x
           rw [Matrix.mulVec_mulVec, hE1, Matrix.one_mulVec] }
     let w0 : P →ₛₗ[h₀.f.comp a.f] (Fin d → Q₀.A) :=
       { toFun := fun x j => a₀.f (u x j)
@@ -1416,7 +1414,7 @@ theorem semiBC_frob {Q : Type} [CommRing Q] {d : ℕ} {α β : B →+* Q} (σ : 
       show W' (fun j => σ ((Pi.single i (1 : Q) : Fin d → Q) j)) = W' (Pi.single i 1)
       congr 1; funext j; by_cases hj : j = i
       · subst hj; simp
-      · simp [Pi.single_apply, hj]
+      · simp [hj]
     rw [← h3, h1]
 
 end Algebra
@@ -1526,7 +1524,7 @@ theorem map_A_mul {l : ℕ} [Fact l.Prime] {K : FinExt l} {bk : BK K} {d : ℕ} 
     (g : bk.S →+* R) : S.A.map g * S.A'.map g = g bk.E ^ S.b • (1 : Matrix (Fin d) (Fin d) R) := by
   rw [← Matrix.map_mul, S.A_mul]
   ext i j
-  by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+  by_cases hij : i = j <;> simp [hij]
 
 theorem exists_kappa {l : ℕ} [Fact l.Prime] {K : FinExt l} {bk : BK K} {d : ℕ} {S : Strat bk d}
     {B : Obj l ↥(OL K)} {N : Type} [AddCommGroup N] [Module B.A N] (V : Eval S B N) {P : Type} [AddCommGroup P]

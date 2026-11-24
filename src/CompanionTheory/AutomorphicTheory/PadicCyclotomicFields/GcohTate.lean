@@ -186,7 +186,7 @@ theorem tate_core (hRep : SgcRep) (h0 : Sgc0) (h1 : Sgc1) (h2 : Sgc2) {n : ℕ} 
   have : Finite D := Finite.of_equiv _ eD.toEquiv
   have hAn : ∀ a : A, n • a = 0 := fun a => by
     obtain ⟨m, rfl⟩ := eA.surjective a
-    rw [← map_nsmul, nsmul_zmod, map_zero]
+    rw [← map_nsmul, ZModModule.char_nsmul_eq_zero, map_zero]
   have hDn : ∀ a : D, n • a = 0 := nsmul_eq_zero_of_nonempty_addEquiv ⟨eD.symm⟩
   let ι := MonoidHom.id G
   have hid : Function.Bijective (evalPair (R := ZMod n) (M := M)).flip :=

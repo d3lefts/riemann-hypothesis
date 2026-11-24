@@ -226,7 +226,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.exists_pow_eq_of_kaehlerD_eq_zero_smooth_affineOpen : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [IsAlgClosed k] (hk : (p : k) = 0) (X : Scheme.{0}) [IsIntegral X] (s : X ⟶ Sp k) [Smooth s] (U : X.affineOpens) (u : GlobalTheory.CechDR.Sec s U.1), KaehlerDifferential.D k (GlobalTheory.CechDR.Sec s U.1) u = 0 → ∃ h : GlobalTheory.CechDR.Sec s U.1, h ^ p = u := by
-  first | exact @GlobalTheory.ConjSeq.sec_exists_pow_of_D_eq_zero | exact GlobalTheory.ConjSeq.sec_exists_pow_of_D_eq_zero | (intros; apply GlobalTheory.ConjSeq.sec_exists_pow_of_D_eq_zero <;> assumption)
+  first | exact @GlobalTheory.ConjSeq.sec_exists_pow_of_D_eq_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPowEqOfKaehlerDEqZeroSmoothAffineOpenStatement =====
@@ -241,31 +241,21 @@ theorem UpperTheory.Reformulated.B.NonvanishingPoint.exists_point_nonvanishing_r
     [inst_2 : CommRing B] [inst_3 : Algebra k B] [Algebra.FiniteType k B] [IsReduced B] {c : B},
     c ≠ (0 : B) → ∃ (x : B →ₐ[k] k), (x : B → k) c ≠ (0 : k) := by
   intro k _ _ B _ _ _ _ c hc
-  haveI : IsJacobsonRing B := isJacobsonRing_of_finiteType (A := k)
-  have hrad : (⊥ : Ideal B).IsRadical := by
-    intro x hx
-    obtain ⟨n, hn⟩ := hx
-    exact (Ideal.mem_bot).2 (IsNilpotent.eq_zero ⟨n, (Ideal.mem_bot).1 hn⟩)
-  have hj : (⊥ : Ideal B).jacobson = ⊥ := IsJacobsonRing.out ‹_› hrad
+  have : IsJacobsonRing B := isJacobsonRing_of_finiteType (A := k)
+  have hj : (⊥ : Ideal B).jacobson = ⊥ :=
+    IsJacobsonRing.out inferInstance Ideal.isRadical_bot
   have hcj : c ∉ (⊥ : Ideal B).jacobson := by
     rw [hj]
     exact fun h => hc ((Ideal.mem_bot).1 h)
   rw [Ideal.jacobson, Ideal.mem_sInf] at hcj
   push Not at hcj
   obtain ⟨m, ⟨-, hm⟩, hcm⟩ := hcj
-  letI : Field (B ⧸ m) := Ideal.Quotient.field m
-  haveI : Module.Finite k (B ⧸ m) := finite_of_finite_type_of_isJacobsonRing k (B ⧸ m)
-  let f : (B ⧸ m) →ₐ[k] k := (by
-    refine @_root_.IsAlgClosed.lift _ _ _ _ _ _ _ _ _ _ _ ?_ ?_ ?_
-    solve_by_elim* (maxDepth := 2) only [*,
-      @_root_.DivisionSemiring.to_moduleIsTorsionFree,
-      @_root_.Algebra.IsIntegral.isAlgebraic, @_root_.inferInstance])
+  let : Field (B ⧸ m) := Ideal.Quotient.field m
+  have : Module.Finite k (B ⧸ m) := finite_of_finite_type_of_isJacobsonRing k (B ⧸ m)
+  let f : (B ⧸ m) →ₐ[k] k := IsAlgClosed.lift
   refine ⟨f.comp (Ideal.Quotient.mkₐ k m), ?_⟩
   intro h
-  apply hcm
-  have h1 : f (Ideal.Quotient.mk m c) = 0 := h
-  have h2 : Ideal.Quotient.mk m c = 0 := (map_eq_zero f).1 h1
-  exact Ideal.Quotient.eq_zero_iff_mem.1 h2
+  exact hcm (Ideal.Quotient.eq_zero_iff_mem.mp ((map_eq_zero f).mp h))
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NonvanishingPoint =====

@@ -959,7 +959,7 @@ theorem _root_.GlobalTheory.T.flat_aeval_dvrPlaceRing_uniformiser_residueLifts :
     (MvPolynomial.aeval (Fin.cons (⟨(t : K), t.2⟩ : placeAlg E)
         (fun i => (⟨(zR i : K), hER _ (zR i).2⟩ : placeAlg E))) :
         MvPolynomial (Fin (k + 1)) ℂ →ₐ[ℂ] placeAlg E).toRingHom.Flat := by
-  first | exact @GlobalTheory.GraphLocal.FlatPlace.flat_aeval_placeAlg | exact GlobalTheory.GraphLocal.FlatPlace.flat_aeval_placeAlg | (intros; apply GlobalTheory.GraphLocal.FlatPlace.flat_aeval_placeAlg <;> assumption)
+  first | exact @GlobalTheory.GraphLocal.FlatPlace.flat_aeval_placeAlg
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FlatAevalDvrPlaceRingUniformiserResidueLiftsStatement =====
@@ -1468,7 +1468,6 @@ theorem exists_place_weighted_over_place : ∀ {K κ κ' L : Type} [Field K] [Fi
     change V.formOrd _ + 1 ≤ M * (E.formOrd _ + 1) + (k + 1)
     rw [hform, V.formOrd_smul hw hd (mul_ne_zero (hne q hq) (zpow_ne_zero _ hz0')), hmul q _ hq]
     rw [hs] at h1
-    push_cast
     linarith
 
 end GlobalTheory.FieldPair

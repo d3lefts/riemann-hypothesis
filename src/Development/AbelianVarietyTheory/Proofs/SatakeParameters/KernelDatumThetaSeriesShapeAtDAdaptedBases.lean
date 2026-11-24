@@ -162,7 +162,7 @@ theorem frameM_coef_eq_chgB : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (lm : Taylor
     rw [Fintype.sum_prod_type]
   rw [hJ, Fintype.sum_sigma]
   simp only [GlobalTheory.DFrame.coef, GlobalTheory.DFrame.gc, GlobalTheory.DFrame.pc]
-  simp only [mul_ite, ite_mul, mul_zero, zero_mul, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true, Finset.sum_const_zero]
+  simp only [mul_ite, ite_mul, mul_zero, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   rw [Finset.sum_eq_single x.1 (fun z _ hz => by simp [hz]) (by simp)]
   simp only [if_true, GlobalTheory.DFrame.vecF, GlobalTheory.DFrame.mat, GlobalTheory.DFrame.colR, GlobalTheory.DFrame.rowL, Matrix.of_apply, map_mul, RingEquiv.coe_toRingHom]
   have hsum' := hsum x.1 (s.iT i.1)
@@ -195,7 +195,6 @@ theorem frameM_coef_eq_chgB : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (lm : Taylor
     simp only [Matrix.map_apply, RingHom.comp_apply, RingEquiv.coe_toRingHom]
     rw [← htp] at h1 h2 ⊢
     field_simp
-    try ring
   · rw [if_neg h, TaylorLogMetric.chgB, if_neg (fun e => h e.symm)]
     simp
 
@@ -1442,7 +1441,7 @@ theorem thetaKernelShapeAtD_ofKer_of_hyp_adapted : GlobalTheory.ThLoc.Inputs →
   have hpd : D.what₂.places.resChar w = D.host.d := by
     have h := hcls
     simp only [Host.cls, primeClass] at h
-    split_ifs at h with h1 h2 h3 <;> first | exact h3 | cases h
+    split_ifs at h with h1 h2 h3 <;> first | exact h3
   have hAd : AdPl D w := Or.inr (Or.inr hcls)
   have hlev' : LevFree Y u μ w := hlev
   obtain ⟨Pm, hBas, -, hConj, hTh⟩ := hA w hAd u μ hlev'

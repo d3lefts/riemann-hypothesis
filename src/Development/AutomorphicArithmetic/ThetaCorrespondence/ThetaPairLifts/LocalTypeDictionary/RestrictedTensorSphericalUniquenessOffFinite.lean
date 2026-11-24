@@ -210,7 +210,7 @@ theorem _root_.GlobalTheory.T.doubleVacuum_line_eigenspace_split : _root_.Global
     ∀ R : (Fin a' × Fin (a + a') → AF F) → ℂ, R 0 ≠ 0 → Rest (evFin F v) (G.M'.vac v) R →
     ∀ g ∈ GlobalTheory.InertDbl.KAtD σ G.W v, ∃ c : ℂ, omd g (GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R)) =
       c • GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R) := by
-  first | exact @_root_.GlobalTheory.DblVacLineSplit.doubleLine_eigenfunction_split | exact _root_.GlobalTheory.DblVacLineSplit.doubleLine_eigenfunction_split | (intros; apply _root_.GlobalTheory.DblVacLineSplit.doubleLine_eigenfunction_split <;> assumption)
+  first | exact @_root_.GlobalTheory.DblVacLineSplit.doubleLine_eigenfunction_split
 end
 end -- clump:auto
 end -- clump:auto
@@ -285,7 +285,7 @@ theorem _root_.GlobalTheory.T.nabla_preserves_split_fixed : _root_.GlobalTheory.
     ∀ R : (Fin a' × Fin (a + a') → AF F) → ℂ, R 0 ≠ 0 → Rest (evFin F v) (G.M'.vac v) R →
     ∀ n ∈ GlobalTheory.InertDbl.NabD σ G.W v, omd n (GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R)) =
       GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R) := by
-  first | exact @_root_.GlobalTheory.NabFixSplit.gradient_fixes_split_vector | exact _root_.GlobalTheory.NabFixSplit.gradient_fixes_split_vector | (intros; apply _root_.GlobalTheory.NabFixSplit.gradient_fixes_split_vector <;> assumption)
+  first | exact @_root_.GlobalTheory.NabFixSplit.gradient_fixes_split_vector
 end
 end -- clump:auto
 end -- clump:auto
@@ -379,7 +379,7 @@ theorem _root_.GlobalTheory.T.split_place_weil_scalar_trivial : _root_.GlobalThe
     ∀ (v : Pl F), Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v → v ∉ X.T → PsiUnr B.ψ v → (2 : 𝓞 F) ∉ v.asIdeal →
     G.M'.vac v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1 →
     ∀ k ∈ GlobalTheory.InertSph.KAt σ G.W v, ∀ c : ℂ, Acts (evFin F v) (om' (1, k)) (G.M'.vac v) (c • G.M'.vac v) → c = 1 := by
-  first | exact @_root_.GlobalTheory.SplitScalar.weil_scalar_eq_one_of_split | exact _root_.GlobalTheory.SplitScalar.weil_scalar_eq_one_of_split | (intros; apply _root_.GlobalTheory.SplitScalar.weil_scalar_eq_one_of_split <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitScalar.weil_scalar_eq_one_of_split
 end
 end -- clump:auto
 end -- clump:auto
@@ -491,7 +491,7 @@ theorem _root_.GlobalTheory.T.restricted_tensor_spherical_uniqueness_off_finite 
     (om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ G.V G.W) (om' : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ G.V' G.W), GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsTriple B G X om om' →
     ∃ S₀ : Finset (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)), ∀ v, v ∉ S₀ → ∀ k ∈ GlobalTheory.InertSph.KAt σ G.W v,
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.AdelicU.evFin F v) (om' (1, k)) (G.M'.vac v) (G.M'.vac v) := by
-  first | exact @_root_.GlobalTheory.SphOffFinite.spherical_vacuum_fixed_off_finite_set | exact _root_.GlobalTheory.SphOffFinite.spherical_vacuum_fixed_off_finite_set | (intros; apply _root_.GlobalTheory.SphOffFinite.spherical_vacuum_fixed_off_finite_set <;> assumption)
+  first | exact @_root_.GlobalTheory.SphOffFinite.spherical_vacuum_fixed_off_finite_set
 end
 end -- clump:auto
 end -- clump:auto

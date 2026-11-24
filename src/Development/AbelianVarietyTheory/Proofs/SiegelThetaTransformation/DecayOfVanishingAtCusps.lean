@@ -482,16 +482,16 @@ private lemma one_le_prod_re_of_isType_of_isIntegral_pos {E : Type} [Field E] [N
       ComplexEmbedding.conjugate (ComplexEmbedding.conjugate τ) = τ := by
     intro τ
     ext x
-    simp [ComplexEmbedding.conjugate_coe_eq]
+    simp
   have hcompl : ∏ τ ∈ Ψᶜ, τ d = ∏ σ ∈ Ψ, ComplexEmbedding.conjugate σ d := by
     refine Finset.prod_nbij' ComplexEmbedding.conjugate ComplexEmbedding.conjugate ?_ ?_
       (fun τ _ => hconj τ) (fun τ _ => hconj τ) ?_
     · intro τ hτ
-      simp only [Finset.mem_coe, Finset.mem_compl] at hτ ⊢
+      simp only [Finset.mem_compl] at hτ ⊢
       by_contra h
       exact hτ ((hΨ τ).2 h)
     · intro τ hτ
-      simp only [Finset.mem_coe, Finset.mem_compl] at hτ ⊢
+      simp only [Finset.mem_compl] at hτ ⊢
       exact (hΨ τ).1 hτ
     · intro τ _
       rw [hconj]
@@ -872,7 +872,7 @@ theorem coef_sing (hXc : Continuous X) (hX : ∀ x τ, (X x τ).IsHermitian) (hT
   have hpush : ∀ x t, (fun τ => X x τ + I • Y t τ) = pushZ Ψ (fun τ => X x τ + I • Y 0 τ) v t := by
     intro x t
     funext τ
-    simp only [hYdef, pushZ, hP, smul_add, smul_smul, ofReal_zero, mul_zero, zero_smul, add_zero,
+    simp only [hYdef, pushZ, hP, smul_add, smul_smul, ofReal_zero, zero_smul, add_zero,
       add_assoc]
     rfl
   have hpr : ∀ x t, pr T (fun τ => X x τ + I • Y t τ) = pr T (fun τ => X x τ + I • Y 0 τ) := by

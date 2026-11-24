@@ -148,7 +148,7 @@ section Main
 
 theorem lin_bound {ι : Type*} [Fintype ι] [DecidableEq ι] (L : Matrix ι ι ℂ →ₗ[ℂ] ℂ) :
     ∃ K : ℝ, 0 ≤ K ∧ ∀ (B : Matrix ι ι ℂ) (C : ℝ), (∀ i j, ‖B i j‖ ≤ C) → ‖L B‖ ≤ K * C := by
-  first | exact UpperTheory.Reformulated.B.Qj19.lin_bound .. | (apply UpperTheory.Reformulated.B.Qj19.lin_bound <;> assumption) | (intros; apply UpperTheory.Reformulated.B.Qj19.lin_bound <;> assumption) | (apply @UpperTheory.Reformulated.B.Qj19.lin_bound <;> assumption) | (intros; apply @UpperTheory.Reformulated.B.Qj19.lin_bound <;> assumption) | (apply @UpperTheory.Reformulated.B.Qj19.lin_bound <;> first | assumption | infer_instance) | exact @UpperTheory.Reformulated.B.Qj19.lin_bound ι ‹_› ‹_› L | exact @UpperTheory.Reformulated.B.Qj19.lin_bound ι ‹_› ‹_› | exact @UpperTheory.Reformulated.B.Qj19.lin_bound ι ‹_› | exact @UpperTheory.Reformulated.B.Qj19.lin_bound ι
+  first | exact UpperTheory.Reformulated.B.Qj19.lin_bound .. | exact @UpperTheory.Reformulated.B.Qj19.lin_bound ι ‹_› ‹_› L | exact @UpperTheory.Reformulated.B.Qj19.lin_bound ι ‹_› ‹_› | exact @UpperTheory.Reformulated.B.Qj19.lin_bound ι ‹_› | exact @UpperTheory.Reformulated.B.Qj19.lin_bound ι
 
 theorem eq_zero_of_nat_mul_le {x K : ℝ} (h : ∀ m : ℕ, 1 ≤ m → |(m : ℝ) * x| ≤ K) : x = 0 := by
   by_contra hx
@@ -298,7 +298,7 @@ theorem lamPat2_holds : LamPat2 := by
       · have : ¬ b.1 < a.1 := fun h => hk ⟨b, h, rfl⟩
         simp only [lvk, Sum.elim_inl] at hl ⊢; omega
       · simp only [lvk, Sum.elim_inl, Sum.elim_inr] at hl ⊢; have := a.2; omega
-      · simp only [lvk, Sum.elim_inl, Sum.elim_inr] at hl ⊢; have := a.2; have := b.2; omega
+      · simp only [lvk, Sum.elim_inr] at hl ⊢; have := a.2; have := b.2; omega
   have e : (Bv X v * A * Bv' X v) *ᵥ nxt (fun b => rv X.B.I v (X.eR b)) (rv X.B.I v (X.zR w)) a =
       Bv X v *ᵥ (A *ᵥ (Bv' X v *ᵥ nxt (fun b => rv X.B.I v (X.eR b)) (rv X.B.I v (X.zR w)) a)) := by
     simp only [Matrix.mulVec_mulVec, Matrix.mul_assoc]
@@ -336,9 +336,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E} {r : �
 
 theorem lieN_map (γ : S.V ≃ₗ[E] S.V) (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT) (F : FlagG S r T) (Y : S.V →ₗ[E] S.V)
     (h : (γ.symm.toLinearMap ∘ₗ Y ∘ₗ γ.toLinearMap) ∈ F.LieN) : Y ∈ (mapFlag γ hγ F).LieN := by
-  have hiso : ∀ x y, S.hT (γ x) (γ y) = S.hT x y := by
-    unfold HermitianLatticesTheory.isom at hγ
-    exact hγ
+  have hiso : ∀ x y, S.hT (γ x) (γ y) = S.hT x y := hγ
   have hXa : ∀ a, (mapFlag γ hγ F).Xa a = (F.Xa a).map γ.toLinearMap := by
     intro a
     unfold FlagG.Xa
@@ -415,9 +413,8 @@ theorem lieN_fvec_mem (F : FlagG S r T) {Z : S.V →ₗ[E] S.V} (hZ : Z ∈ F.Li
 
 theorem ell_eq_dual (F : FlagG S r T) (fd : Fin r → S.V) (hfd : ∀ a b, S.hT (fd a) (F.e b) = if b = a then 1 else 0)
     {Z : S.V →ₗ[E] S.V} (hZ : Z ∈ F.LieN) : F.ell Z = ∑ a, S.hT (fd a) (Z (F.fvec a.succ)) := by
-  unfold FlagG.ell
-  refine Finset.sum_congr rfl fun a _ => ?_
-  exact (hT_eq_coefX F (fd a) a (hfd a) (lieN_fvec_mem F hZ a)).symm
+  simpa [FlagG.ell] using Finset.sum_congr rfl fun a _ =>
+    (hT_eq_coefX F (fd a) a (hfd a) (lieN_fvec_mem F hZ a)).symm
 
 end Gen
 
@@ -526,9 +523,7 @@ theorem ell_coord (w : D.what₂.Word) (W : Matrix (Kap X) (Kap X) X.B.I.E) (Z :
   refine Finset.sum_congr rfl fun a _ => ?_
   have hM : (X.B.I.P v)⁻¹ * (Bm X * W * Bm' X).map (X.B.I.φ v) * X.B.I.P v =
       Bv X v * W.map (X.B.I.φ v) * Bv' X v := by
-    unfold Bv Bv'
-    rw [Matrix.map_mul, Matrix.map_mul]
-    simp only [Matrix.mul_assoc]
+    simp only [Bv, Bv', Matrix.map_mul, Matrix.mul_assoc]
   have hn : rv X.B.I v (X.crd (nxt X.eX (X.zu w) a)) =
       nxt (fun b => rv X.B.I v (X.eR b)) (rv X.B.I v (X.zR w)) a := by
     rw [nxt_map (fun y => rv X.B.I v (X.crd y))]; rfl

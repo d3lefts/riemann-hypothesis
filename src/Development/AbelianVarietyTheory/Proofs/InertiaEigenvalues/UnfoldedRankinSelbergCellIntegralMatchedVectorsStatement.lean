@@ -289,7 +289,7 @@ theorem blockGL_finGL {j n : ℕ} (hj : j ≤ n) (k : GL (Fin j) (Af E)) :
   apply Units.ext
   ext a b
   rw [coe_blockGL, blockMat_apply, hf, coe_blockGL, blockMat_apply]
-  split_ifs with h1 h2 h3 <;> simp only [hf, Matrix.one_apply, Fin.ext_iff] <;> split_ifs <;> first | (simp; done) | (exfalso; omega) | (exfalso; simp_all; done) | (simp only [map_zero]; abel)
+  split_ifs with h1 h2 h3 <;> simp only [hf, Matrix.one_apply, Fin.ext_iff] <;> split_ifs <;> first | (simp; done) | (exfalso; omega)
 
 theorem blockGL_mem_KGL (w : HeightOneSpectrum (𝓞 E)) {j n : ℕ} (hj : j ≤ n) {y : GL (Fin j) (w.adicCompletion E)}
     (hy : y ∈ KGL w (n := j)) : blockGL hj y ∈ KGL w (n := n) := by
@@ -1188,7 +1188,7 @@ theorem _root_.GlobalTheory.T.rankinSelberg_cell_integral_finite_part_nonneg : �
           F ∈ GroundTheory.Automorphic.GJMatrix.schwartzBruhatPi (K := E) (ι := Fin (m + 1)) → ∀ x : ℝ, 1 < x →
           ∫⁻ g in 𝓕₀ ∩ GlobalTheory.CellDec.C0 E (m + 1) S, (‖GlobalTheory.JSW.whit φ' (g)‖ₑ ^ 2 * ‖GroundTheory.Automorphic.GJMatrix.adelicFourierPi E F (GlobalTheory.ZEul.lastRow (g))‖ₑ *
           ENNReal.ofReal (GlobalTheory.RSnm.detAbs (g) ^ x)) ∂μ ≠ ⊤) := by
-  first | (exact @GlobalTheory.RSnmFT.exists_cellPart_unfoldedIntegral_positive_alt) | (exact GlobalTheory.RSnmFT.exists_cellPart_unfoldedIntegral_positive_alt) | (intros; apply GlobalTheory.RSnmFT.exists_cellPart_unfoldedIntegral_positive_alt  <;> assumption)
+  first | (exact @GlobalTheory.RSnmFT.exists_cellPart_unfoldedIntegral_positive_alt)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RankinSelbergCellIntegralFinitePartNonnegStatement =====
@@ -1551,7 +1551,7 @@ theorem _root_.GlobalTheory.T.unfolded_rankinSelberg_cellIntegral_matchedVectors
               ∑' l : {w : HeightOneSpectrum (𝓞 E) // w ∉ S} →₀ (Fin (m + 1) → ℤ),
                 l.prod fun w v => GlobalTheory.RSnmUnf.rsTermNM (Ideal.absNorm w.1.asIdeal) (fun i => (α w.1 i : ℂ))
                   (fun i => (β w.1 i : ℂ)) x v := by
-  first | (exact @GlobalTheory.RSnmCells.unfolded_cells_eq) | (exact GlobalTheory.RSnmCells.unfolded_cells_eq) | (intros; apply GlobalTheory.RSnmCells.unfolded_cells_eq  <;> assumption)
+  first | (exact @GlobalTheory.RSnmCells.unfolded_cells_eq)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.UnfoldedRankinSelbergCellIntegralMatchedVectorsStatement =====

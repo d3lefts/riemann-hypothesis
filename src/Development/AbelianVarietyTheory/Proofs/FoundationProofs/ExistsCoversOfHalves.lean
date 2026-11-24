@@ -77,7 +77,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.character_at_detRoot_cong_one_odd_eq_one : ∀ (D : D7) (V : HSp D) (c : (AE D)ˣ →* Circle) (N : ℕ), Odd N → (∀ a, c (idF D a) = 1) → (∀ x : (AE D)ˣ, finPart D (x : AE D) = 1 → c x = 1) → (∀ x : (AE D)ˣ, FinUnit x → (∃ y ∈ intAE D, finPart D (x : AE D) - 1 = N • y) → c x = 1) → ∀ (g : GA D V) (x : (AE D)ˣ), IsDetRoot V g x → (∃ w ∈ intAE D, (((Matrix.GeneralLinearGroup.det (finHom V g)) : (Af D.host.F ⊗[D.host.F] D.host.E)ˣ) : (Af D.host.F ⊗[D.host.F] D.host.E)) - 1 = N • w) → c x = 1 := by
-  first | exact @GlobalTheory.DetRootCong.char_root_eq_one | exact GlobalTheory.DetRootCong.char_root_eq_one | (intros; apply GlobalTheory.DetRootCong.char_root_eq_one <;> assumption)
+  first | exact @GlobalTheory.DetRootCong.char_root_eq_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FoundationProofs.CharacterAtDetRootCongOneOddEqOneStatement =====
@@ -92,7 +92,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_finiteIdeleChar_at_determinantRoots : ∀ (D : D7) (V : HSp D) (c : (AE D)ˣ →* Circle), (∀ a, c (idF D a) = 1) → (∀ x : (AE D)ˣ, finPart D (x : AE D) = 1 → c x = 1) → ∃ xi : (Af D.host.F ⊗[D.host.F] D.host.E)ˣ →* ℂˣ, ∀ (g : GA D V) (x : (AE D)ˣ), IsDetRoot V g x → ((xi (Matrix.GeneralLinearGroup.det (finHom V g)) : ℂˣ) : ℂ) = ((c x : Circle) : ℂ) := by
-  first | exact @GlobalTheory.DetRootChar.exists_finite_char | exact GlobalTheory.DetRootChar.exists_finite_char | (intros; apply GlobalTheory.DetRootChar.exists_finite_char <;> assumption)
+  first | exact @GlobalTheory.DetRootChar.exists_finite_char
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsFiniteIdeleCharAtDeterminantRootsStatement =====
@@ -107,7 +107,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_nthRoot_idele_finitePart_one : ∀ (D : D7) (n : ℕ), 0 < n → ∀ x : (AE D)ˣ, finPart D (x : AE D) = 1 → ∃ y : (AE D)ˣ, y ^ n = x := by
-  first | exact @GlobalTheory.IdeleDiv.exists_pow_eq_of_finPart_eq_one | exact GlobalTheory.IdeleDiv.exists_pow_eq_of_finPart_eq_one | (intros; apply GlobalTheory.IdeleDiv.exists_pow_eq_of_finPart_eq_one <;> assumption)
+  first | exact @GlobalTheory.IdeleDiv.exists_pow_eq_of_finPart_eq_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsNthRootIdeleFinitePartOneStatement =====
@@ -122,7 +122,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.idelicCharacter_trivial_baseFiniteIdeles : ∀ (D : D7) (c : (AE D)ˣ →* Circle) (χ : HChar D.host.E), ChrEq c χ → χ.TrivOn D.host.F → ∀ a : (AF D.host.F)ˣ, infPart D (idF D a : AE D) = 1 → c (idF D a) = 1 := by
-  first | exact @GlobalTheory.BaseIdeleTriv.finite_idele_base_trivial | exact GlobalTheory.BaseIdeleTriv.finite_idele_base_trivial | (intros; apply GlobalTheory.BaseIdeleTriv.finite_idele_base_trivial <;> assumption)
+  first | exact @GlobalTheory.BaseIdeleTriv.finite_idele_base_trivial
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FoundationProofs.IdelicCharacterTrivialBaseFiniteIdelesStatement =====
@@ -137,7 +137,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.tameHeckeChar_trivial_on_finiteUnits_cong_one : ∀ (D : D7) (c : (AE D)ˣ →* Circle) (χ : HChar D.host.E), ChrEq c χ → (∀ P, χ.TameAt P) → ∀ m : ℕ, (∀ P : HeightOneSpectrum (𝓞 D.host.E), (m : 𝓞 D.host.E) ∉ P.asIdeal → χ.UnrAt P) → ∀ x : (AE D)ˣ, FinUnit x → (∃ y ∈ intAE D, finPart D (x : AE D) - 1 = m • y) → c x = 1 := by
-  first | exact @GlobalTheory.tame_heckeChar_eq_one_of_finUnit | exact GlobalTheory.tame_heckeChar_eq_one_of_finUnit | (intros; apply GlobalTheory.tame_heckeChar_eq_one_of_finUnit <;> assumption)
+  first | exact @GlobalTheory.tame_heckeChar_eq_one_of_finUnit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FoundationProofs.TameHeckeCharTrivialOnFiniteUnitsCongOneStatement =====
@@ -297,7 +297,6 @@ theorem unrAt_of_not_mem {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.w
   · obtain ⟨c', hc', e⟩ := h _ (hN P' hP')
     have e' : c' = (N : 𝓞 D.host.E) := RingOfIntegers.ext (by
       rw [e]
-      change star ((N : 𝓞 D.host.E) : D.host.E) = ((N : 𝓞 D.host.E) : D.host.E)
       rw [show ((N : 𝓞 D.host.E) : D.host.E) = (N : D.host.E) from map_natCast (algebraMap (𝓞 D.host.E) D.host.E) N,
         star_natCast])
     exact hP (e' ▸ hc')

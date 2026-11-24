@@ -357,12 +357,6 @@ theorem asksAll_of (X : Inst D L) (hSz : Nm D + 1 ≤ L.sc.w'' D.R.n) : Requires
   have ha1 : 1 ≤ L.sc.a := by
     show 1 ≤ L.sc.x * L.sc.b
     nlinarith
-  have hX1 : 1 ≤ L.sc.X' := by
-    show 1 ≤ Real.exp (L.sc.x ^ (L.sc.eps / 3))
-    exact Real.one_le_exp (Real.rpow_nonneg (by linarith) _)
-  have hb'0 : 0 ≤ L.sc.b' := by
-    show 0 ≤ L.sc.a / L.sc.X'
-    exact div_nonneg (by linarith) (by linarith)
   intro a b ha hb p hp j hj s hs
   have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast hp.two_le
   obtain ⟨hk0, hkN⟩ := kaJ_bounds D j hj
@@ -475,12 +469,6 @@ theorem fl_succ (D : D7) (s : Scale) (C : ℝ) (p : ℕ) (hp : p.Prime) : fl D s
   have ha1 : 1 ≤ s.a := by
     show 1 ≤ s.x * s.b
     nlinarith
-  have hX1 : 1 ≤ s.X' := by
-    show 1 ≤ Real.exp (s.x ^ (s.eps / 3))
-    exact Real.one_le_exp (Real.rpow_nonneg (by linarith) _)
-  have hb'0 : 0 ≤ s.b' := by
-    show 0 ≤ s.a / s.X'
-    exact div_nonneg (by linarith) (by linarith)
   have hp1 : (1 : ℝ) < p := by exact_mod_cast hp.one_lt
   have hl : 0 ≤ Real.logb p s.a := Real.logb_nonneg hp1 ha1
   have h1 : 0 ≤ (D.R.f : ℝ) * Nm D ^ 2 * Real.logb p s.a := mul_nonneg (by positivity) hl
@@ -571,8 +559,7 @@ theorem mul_bound {s B c R : ℝ} (hs : s ≤ B) (hc : 0 ≤ c) (hBc : B * c ≤
   le_trans (mul_le_mul_of_nonneg_right hs hc) hBc
 
 theorem rpow_neg_le_inv (s : Scale) (u : ℝ) (hu : u ≤ -1) : s.x ^ u ≤ 1 / s.x := by
-  have h := Real.rpow_le_rpow_of_exponent_le s.one_lt_alt.le hu
-  rwa [Real.rpow_neg_one, ← one_div] at h
+  simpa [Real.rpow_neg_one, one_div] using Real.rpow_le_rpow_of_exponent_le s.one_lt_alt.le hu
 
 theorem rpow_le_inv_of_le_neg_two (s : Scale) (h : 120 ≤ s.x) (u : ℝ) (hu : u ≤ -2) : s.x ^ u ≤ 1 / s.x / 120 := by
   have h1 := Real.rpow_le_rpow_of_exponent_le s.one_lt_alt.le hu
@@ -1274,7 +1261,6 @@ namespace Formalism.MainNotions.AuxBlock8.Pf.G5
 
 theorem prime_sum_facts_of_scaled {D : D7} {L : SizeData₂ D} {K : Consts} {C bo : ℝ} (hC : 0 ≤ C) (N : Nu.NumG5' D L K (40 * C) bo) :
     PrimeSumNumericFacts D L K C bo := by
-  have hx := sc_x_pos L.sc
   have e1 : c1 L (40 * C) = 40 * c1 L C := by unfold c1; ring
   have e1' : cfl D L.sc (40 * C) = 40 * cfl D L.sc C := by unfold cfl; ring
   have e2 : c2 L (40 * C) = 40 * c2 L C := by unfold c2; ring
@@ -1312,8 +1298,7 @@ theorem prime_sum_facts_along_family {eps : ℝ} (Fm : FamP eps) (K : Consts) (h
       PrimeSumNumericFacts (Fm.D x i) (Fm.L x i) K C ((Fm.L x i).sc.b ^ (x ^ (-(eps / 2)))) := by
   have he : 0 < eps := by
     obtain ⟨i⟩ := Fm.Ix_zero
-    have := (Fm.L 0 i).sc.eps_pos
-    rwa [Fm.L_eps] at this
+    simpa only [Fm.L_eps] using (Fm.L 0 i).sc.eps_pos
   obtain ⟨x1, _, H1⟩ := hA (eps / 48) (by positivity)
   obtain ⟨x2, H2⟩ := Filter.eventually_atTop.1 (Nu.prime_sum_facts_eventually eps K hK (40 * C) (by positivity))
   refine ⟨max (Fm.x1 + 1) (max x1 x2), fun x hx i => ?_⟩
@@ -1802,8 +1787,7 @@ private theorem eventually_adm_of_admFam {eps : ℝ} (Fm : FamP eps) {K : Consts
       ∀ i : Fm.Ix x, admitted (Fm.D x i) (Fm.L x i) (X x i) (Y x i) K ⟨C31, Ce, Cm, 1⟩ := by
   obtain ⟨x0, -, h⟩ := hA 1 one_pos
   refine ⟨max x0 (Fm.x1 + 1), fun x hx => ⟨?_, h x (le_trans (le_max_left _ _) hx)⟩⟩
-  have := le_trans (le_max_right _ _) hx
-  linarith
+  linarith [le_trans (le_max_right _ _) hx]
 
 theorem rest0 {eps : ℝ} (Fm : FamP eps) : FamilyAskBounds Fm := by
   intro K _ C31 Ce Cm _ _ _ X Y hA
@@ -1864,8 +1848,7 @@ theorem restT {eps : ℝ} (Fm : FamP eps) : RestT Fm := by
   exact G5.third_estimate_along_family Fm K hK C31 Ce Cm C hC X Y hA
 
 theorem restStar {eps : ℝ} (Fm : FamP eps) : RestStar Fm := by
-  intro K hK C31 Ce Cm hC31
-  exact St.star_fam Fm K hK C31 Ce Cm hC31
+  exact St.star_fam Fm
 
 theorem stmtEF {eps : ℝ} (Fm : FamP eps) : FamilyClosedForm Fm :=
   stmtEF_of Fm (rest0 Fm) (remainingCountingStatement_of_restStar Fm (restStar Fm)) (rest2 Fm) (restW Fm) (rest3 Fm) (restT Fm)

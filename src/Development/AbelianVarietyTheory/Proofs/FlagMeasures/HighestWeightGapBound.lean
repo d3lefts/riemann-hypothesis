@@ -122,7 +122,7 @@ theorem jmW_zero (E : Fin n → Fin n → Module.End ℂ V) (α : Fin 0 → Fin 
 theorem jmW_succ (E : Fin n → Fin n → Module.End ℂ V) {j : ℕ} (α : Fin (j + 1) → Fin n × Fin n) :
     jmW E α = E (α (Fin.last j)).1 (α (Fin.last j)).2 * jmW E (Fin.init α) := by
   simp only [jmW, List.ofFn_succ', List.concat_eq_append, List.reverse_append, List.reverse_singleton,
-    List.singleton_append, ew, Fin.init]
+    List.singleton_append, ew]
   rfl
 
 private lemma update_castSucc_apply_last {X : Type*} {j : ℕ} (α : Fin (j + 1) → X) (k : Fin j) (x : X) :
@@ -177,17 +177,17 @@ private lemma sum_jmW_slotE_eq_sum_sub (E : Fin n → Fin n → Module.End ℂ V
     have hβ : Function.update β i (a, b) = β := by rw [← hb]; exact Function.update_eq_self i β
     by_cases h : a = d
     · subst h
-      simp [hb, hβ]
+      simp [hβ]
     · have h' : d ≠ a := Ne.symm h
-      simp [hb, h, h', Equiv.swap_apply_eq_iff]
+      simp [h, h', Equiv.swap_apply_eq_iff]
   · rw [sum_eq_sum_update_involutive i (fun x : Fin n × Fin n => (x.1, Equiv.swap c d x.2)) (by intro x; simp)]
     refine Finset.sum_congr rfl (fun β _ => ?_)
     rcases hb : β i with ⟨a, b⟩
     have hβ : Function.update β i (a, b) = β := by rw [← hb]; exact Function.update_eq_self i β
     by_cases h : b = c
     · subst h
-      simp [hb, hβ]
-    · simp [hb, h, Equiv.swap_apply_eq_iff]
+      simp [hβ]
+    · simp [h, Equiv.swap_apply_eq_iff]
 
 theorem jm_theta_equiv (E : Fin n → Fin n → Module.End ℂ V) (hE : GlRel E) {j : ℕ} (c d : Fin n)
     (F : Arr V n j) : thetaA E j (arrE E j c d F) = E c d (thetaA E j F) := by
@@ -712,9 +712,9 @@ theorem exists_jet (W : Submodule ℂ V) [FiniteDimensional ℂ W] (F : Matrix (
   have hmem : ∀ x : W, (((x : W) : V) : H) ∈ W.map V.subtype := fun x => Submodule.mem_map_of_mem x.2
   have hsm : ∀ x i, SmoothOnG ε (φ x i) := fun x i => hs _ (hmem x) _
   have hadd : ∀ (x x' : W) i, φ (x + x') i = fun g => φ x i g + 1 * φ x' i g := by
-    intro x x' i; funext g; simp [φ, inner_add_right]
+    intro x x' i; funext g; simp [φ]
   have hsmul : ∀ (c : ℂ) (x : W) i, φ (c • x) i = fun g => 0 + c * φ x i g := by
-    intro c x i; funext g; simp [φ, inner_smul_right]
+    intro c x i; funext g; simp [φ]
   let J : W →ₗ[ℂ] (List (Fin n × Fin n) → V) :=
     { toFun := fun x w => ∑ i, Eword ε w (φ x i) 1 • ((b i : W) : V)
       map_add' := by
@@ -735,7 +735,7 @@ theorem exists_jet (W : Submodule ℂ V) [FiniteDimensional ℂ W] (F : Matrix (
       intro g hg
       obtain ⟨z, hz, hzx⟩ := Submodule.mem_map.1 (hF g hg _ (hmem x))
       have e2 := congrArg (fun t : W => ((t : V) : H)) (b.sum_repr' ⟨z, hz⟩)
-      simp only [Submodule.coe_sum, Submodule.coe_smul, Submodule.coe_mk] at e2
+      simp only [Submodule.coe_sum, Submodule.coe_smul] at e2
       rw [← hzx, Submodule.subtype_apply, ← e2, inner_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [inner_smul_right, mul_comm]

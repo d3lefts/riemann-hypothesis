@@ -4,7 +4,6 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjLinApply
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjLocalOperator
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalOperatorLeftPartialPure
 public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-public import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique
 public import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicSchwartzConjMem
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSchwartzNe
@@ -170,7 +169,7 @@ end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalOperatorRightPartialPure =====
 
 -- ===== clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdaptedPlanePairRestrictionFirst =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdaptedPlanePairRestrictionFirst", "h": "module\n\npublic import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjLinApply\npublic import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique\npublic import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicSchwartzConjMem\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjLocalOperatorStatement\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSchwartzNe\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalOperatorLeftPartialPure\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalOperatorRightPartialPure\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardTraceAddCharIsStandardCharOfAdmissibleCM\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Development.AbelianVarietyTheory.Definitions.Divisors.MatchingOfParts\n\n"}
+-- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdaptedPlanePairRestrictionFirst", "h": "module\n\npublic import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjLinApply\npublic import Development.AbelianVarietyTheory.Definitions.Divisors.HilbertNinetyQuotientHomEqIff\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicSchwartzConjMem\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjLocalOperatorStatement\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSchwartzNe\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalOperatorLeftPartialPure\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocalOperatorRightPartialPure\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardTraceAddCharIsStandardCharOfAdmissibleCM\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Development.AbelianVarietyTheory.Definitions.Divisors.MatchingOfParts\n\n"}
 section -- clump:auto
 @[expose] public section
 
@@ -384,92 +383,6 @@ theorem isLocOp_of_isEv {B : Base F E} {n d n₁ d₁ : ℕ} {X : Spc F E n} {W 
   rw [← h.1, (hev v).1, h.2]
 
 end Ev
-
-section Thm
-
-theorem exists_dblEv : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d)
-    (M : Model σ X W) (χX χW : Chr F E) (om : Rep σ X W) (r s r' s' : ℕ), IsPair B M χX χW om r s r' s' →
-    ∀ (n₁ : ℕ) (X₁ : Spc F E n₁) (H : Plane E n n₁) (j₀ j₁ : ℕ) (M₁ : Model σ X₁ W) (om₁ : Rep σ X₁ W) (r₁ s₁ : ℕ),
-      H.IsAdapted σ B X X₁ j₀ j₁ → IsPair B M₁ χX χW om₁ r₁ s₁ r' s' →
-      ∀ e, IsEv B M M₁ H.ι 1 {u | ∃ z, u = Matrix.vecMulVec (incV F H.x) z} e →
-      (∃ Φ ∈ schA F (Fin n × Fin d), e Φ ≠ 0) →
-      ∀ (dd : Darboux (symp (cA σ) (-1) (incM F X.J) (dbl (incM F W.J))) (Fin n × Fin d ⊕ Fin n × Fin d))
-        (dd₁ : Darboux (symp (cA σ) (-1) (incM F X₁.J) (dbl (incM F W.J))) (Fin n₁ × Fin d ⊕ Fin n₁ × Fin d)),
-      IsDblCoord (cA σ) (-1) (incM F X.J) (incM F W.J) M.co dd → IsDblCoord (cA σ) (-1) (incM F X₁.J) (incM F W.J) M₁.co dd₁ →
-      ∃ (ed : ((Fin n × Fin d ⊕ Fin n × Fin d → AF F) → ℂ) →ₗ[ℂ] ((Fin n₁ × Fin d ⊕ Fin n₁ × Fin d → AF F) → ℂ)) (e₂ : Fn F n d →ₗ[ℂ] Fn F n₁ d),
-        (∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d), ed Φ ∈ schA F (Fin n₁ × Fin d ⊕ Fin n₁ × Fin d)) ∧
-        (∀ (z : Matrix (Fin n₁) (Fin d ⊕ Fin d) (AE F E)), ∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d), ed (dd.rho B.ψ (incM F H.ι * z) Φ) = dd₁.rho B.ψ z (ed Φ)) ∧
-        (∀ z : Fin d ⊕ Fin d → AE F E, ∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d), ed (dd.rho B.ψ (Matrix.vecMulVec (incV F H.x) z) Φ) = ed Φ) ∧
-        (∀ l ∈ (adeleClass F).adm (Fin n₁ × Fin d ⊕ Fin n₁ × Fin d), l ∘ₗ ed ∈ (adeleClass F).adm (Fin n × Fin d ⊕ Fin n × Fin d)) ∧
-        (∀ φ₁ ∈ schA F (Fin n × Fin d), ∀ φ₂ ∈ schA F (Fin n × Fin d), ed (boxFun φ₁ φ₂) = boxFun (e φ₁) (e₂ φ₂)) ∧
-        (∀ φ ∈ schA F (Fin n × Fin d), e₂ φ ∈ schA F (Fin n₁ × Fin d)) ∧
-        ∃ φ ∈ schA F (Fin n × Fin d), e₂ φ ≠ 0 := by
-  intro _ F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hpair n₁ X₁ H j₀ j₁ M₁ om₁ r₁ s₁ _ hpair₁ e he hne dd dd₁ hdd hdd₁
-  have hψ : ∀ t, ‖B.ψ t‖ = 1 := GlobalTheory.StdCharWeilDatum.norm_psi hpair.base.std
-  have hL : IsLocOp e := isLocOp_of_isEv hpair.good hpair₁.good he
-  have hL₂ : IsLocOp (conjLin e) := GlobalTheory.T.conj_local_operator e hL
-  have hone : (incM F (1 : Matrix (Fin d) (Fin d) E))ᵀ = 1 := by
-    rw [incM, Matrix.map_one _ (map_zero _) (map_one _), Matrix.transpose_one]
-  have Heisenberg₂ : ∀ (z : Matrix (Fin n₁) (Fin d) (AE F E)), ∀ φ ∈ schA F (Fin n × Fin d),
-      e (M.co.rho B.ψ (incM F H.ι * z) φ) = M₁.co.rho B.ψ z (e φ) := fun z φ hφ => by
-    have := he.Heisenberg₂ z φ hφ
-    rwa [hone, Matrix.mul_one] at this
-  have heis₂ : ∀ (z : Matrix (Fin n₁) (Fin d) (AE F E)), ∀ φ ∈ schA F (Fin n × Fin d),
-      conjLin e (M.co.rho B.ψ⁻¹ (incM F H.ι * z) φ) = M₁.co.rho B.ψ⁻¹ z (conjLin e φ) := fun z φ hφ => by
-    funext y
-    rw [conjLin_apply]
-    have h1 : (fun x => starRingEnd ℂ (M.co.rho B.ψ⁻¹ (incM F H.ι * z) φ x)) =
-        M.co.rho B.ψ (incM F H.ι * z) (fun x => starRingEnd ℂ (φ x)) :=
-      funext fun x => conj_schr_inv B.ψ hψ _ _ _
-    rw [h1, Heisenberg₂ z _ (_root_.GlobalTheory.ConjSch.conj_mem_schA φ hφ)]
-    exact conj_schr B.ψ hψ _ _ _
-  have inv₁ : ∀ (z : Fin d → AE F E), ∀ φ ∈ schA F (Fin n × Fin d),
-      e (M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) z) φ) = e φ := fun z φ hφ => he.inv _ ⟨z, rfl⟩ φ hφ
-  have inv₂ : ∀ (z : Fin d → AE F E), ∀ φ ∈ schA F (Fin n × Fin d),
-      conjLin e (M.co.rho B.ψ⁻¹ (Matrix.vecMulVec (incV F H.x) z) φ) = conjLin e φ := fun z φ hφ => by
-    funext y
-    rw [conjLin_apply, conjLin_apply]
-    have h1 : (fun x => starRingEnd ℂ (M.co.rho B.ψ⁻¹ (Matrix.vecMulVec (incV F H.x) z) φ x)) =
-        M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) z) (fun x => starRingEnd ℂ (φ x)) :=
-      funext fun x => conj_schr_inv B.ψ hψ _ _ _
-    rw [h1, inv₁ z _ (_root_.GlobalTheory.ConjSch.conj_mem_schA φ hφ)]
-  refine ⟨partRₗ (conjLin e) ∘ₗ partLₗ e, conjLin e, fun Φ hΦ => ?_, fun z Φ hΦ => ?_, fun z Φ hΦ => ?_,
-    fun l hl => ?_, fun φ₁ _ φ₂ _ => ?_, fun φ hφ => ?_, ?_⟩
-  · exact partR_mem (conjLin e) hL₂ _ (partL_mem e hL Φ hΦ)
-  · rw [← Matrix.fromCols_toCols z, Matrix.mul_fromCols, rho_dbl _ _ _ _ _ _ hdd, rho_dbl _ _ _ _ _ _ hdd₁]
-    simp only [LinearMap.comp_apply, partLₗ_apply, partRₗ_apply]
-    rw [partL_intertwine e (M.co.rho B.ψ (incM F H.ι * z.toCols₁)) (M₁.co.rho B.ψ z.toCols₁) e _ (fun φ hφ => Heisenberg₂ _ φ hφ)
-        (fun b => by rw [sliceL_partR_rho]; exact Submodule.smul_mem _ _ (sliceL_mem hΦ _)),
-      partL_partR_rho, partR_partL_rho,
-      partR_intertwine (conjLin e) (M.co.rho B.ψ⁻¹ (incM F H.ι * z.toCols₂)) (M₁.co.rho B.ψ⁻¹ z.toCols₂) (conjLin e) _
-        (fun φ hφ => heis₂ _ φ hφ) (fun a => sliceR_mem (partL_mem e hL Φ hΦ) a)]
-  · have hv : Matrix.vecMulVec (incV F H.x) z = Matrix.fromCols (Matrix.vecMulVec (incV F H.x) (z ∘ Sum.inl))
-        (Matrix.vecMulVec (incV F H.x) (z ∘ Sum.inr)) := by
-      ext i j; cases j <;> rfl
-    rw [hv, rho_dbl _ _ _ _ _ _ hdd]
-    simp only [LinearMap.comp_apply, partLₗ_apply, partRₗ_apply]
-    rw [partL_intertwine e (M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) (z ∘ Sum.inl))) (fun φ => φ) e _
-        (fun φ hφ => inv₁ _ φ hφ) (fun b => by rw [sliceL_partR_rho]; exact Submodule.smul_mem _ _ (sliceL_mem hΦ _)),
-      partL_id, partL_partR_rho,
-      partR_intertwine (conjLin e) (M.co.rho B.ψ⁻¹ (Matrix.vecMulVec (incV F H.x) (z ∘ Sum.inr))) (fun φ => φ) (conjLin e) _
-        (fun φ hφ => inv₂ _ φ hφ) (fun a => sliceR_mem (partL_mem e hL Φ hΦ) a), partR_id]
-  · rw [← LinearMap.comp_assoc]
-    exact partL_adm e hL _ (partR_adm (conjLin e) hL₂ l hl)
-  · funext y
-    simp only [LinearMap.comp_apply, partLₗ_apply, partRₗ_apply, partR, partL, boxFun, Sum.elim_comp_inl,
-      Sum.elim_comp_inr]
-    have h1 : (fun x => e (fun x' => φ₁ x' * φ₂ x) (y ∘ Sum.inl)) = e φ₁ (y ∘ Sum.inl) • φ₂ := funext fun x => by
-      rw [show (fun x' => φ₁ x' * φ₂ x) = φ₂ x • φ₁ from funext fun x' => by simp [mul_comm], map_smul]
-      simp [mul_comm]
-    rw [h1, map_smul]
-    rfl
-  · exact _root_.GlobalTheory.ConjSch.conj_mem_schA _ (he.maps _ (_root_.GlobalTheory.ConjSch.conj_mem_schA φ hφ))
-  · obtain ⟨Φ₀, h₀, hne⟩ := hne
-    refine ⟨fun x => starRingEnd ℂ (Φ₀ x), _root_.GlobalTheory.ConjSch.conj_mem_schA _ h₀, fun h => hne (funext fun y => ?_)⟩
-    have := congrFun h y
-    simpa [conjLin_apply] using this
-
-end Thm
 
 end GlobalTheory.DblEval
 end -- clump:auto

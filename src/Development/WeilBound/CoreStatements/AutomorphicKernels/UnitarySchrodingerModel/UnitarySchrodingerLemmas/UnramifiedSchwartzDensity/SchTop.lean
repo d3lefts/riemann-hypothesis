@@ -394,7 +394,7 @@ theorem continuousOn_extend (A : {g : Matrix (Fin n) (Fin n) K // IsUnit g.det} 
       {g | IsUnit g.det} := by
   rw [continuousOn_iff_continuous_restrict]
   refine hA.congr fun g => ?_
-  simp [Set.restrict, g.2]
+  simp [g.2]
 
 end Mat
 
@@ -437,7 +437,7 @@ theorem conjT_one (σ : E →ₐ[F] E) {n : ℕ} :
   ext a b
   by_cases h : a = b
   · subst h; simp [conjT]
-  · simp [conjT, Matrix.one_apply, h, Ne.symm h]
+  · simp [conjT, h, Ne.symm h]
 
 theorem mem_hermR_iff (σ : E →ₐ[F] E) {n : ℕ} (S : Matrix (Fin n) (Fin n) (R ⊗[F] E)) :
     S ∈ HermR R σ n ↔ conjT R σ S = S := by
@@ -819,7 +819,7 @@ theorem exists_quadratic_section {N : ℕ} (q : (Fin N → ℝ) → (Fin N → �
     have hval : Φ p.1 - Φ p.2 - ((ContinuousLinearEquiv.refl ℝ (Fin N → ℝ) : (Fin N → ℝ) ≃L[ℝ] (Fin N → ℝ)) :
         (Fin N → ℝ) →L[ℝ] (Fin N → ℝ)) (p.1 - p.2) = q (p.1 - p.2) p.1 + q p.2 (p.1 - p.2) := by
       rw [← hexp]
-      simp only [hΦ, ContinuousLinearEquiv.coe_refl', id]
+      simp only [hΦ]
       simp
       abel
     rw [hval]
@@ -1197,7 +1197,7 @@ open HeckeCharacterZeroLocus.SiegelWeilU NumberField IsDedekindDomain MeasureThe
 open scoped TensorProduct ENNReal NNReal Matrix
 
 theorem _root_.GlobalTheory.T.density_integral : PositivityTheory.PfSWUS.SchInf.DensInt := by
-  first | exact @GlobalTheory.CompanionTheory.SW.DensInt.density_identity_inf | exact GlobalTheory.CompanionTheory.SW.DensInt.density_identity_inf | (intros; apply GlobalTheory.CompanionTheory.SW.DensInt.density_identity_inf <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.SW.DensInt.density_identity_inf
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto

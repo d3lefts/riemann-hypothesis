@@ -169,7 +169,7 @@ theorem _root_.GlobalTheory.T.idempotentCut_mem_latticeStabilizer_of_productLeve
     x ∈ prodLev β P h K → ∀ (b : Lev.EAf D) (hb : b * b = b),
     (∀ w : Pl D.host.E, (∃ PP ∈ P, w.under (𝓞 D.host.F) = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) → GlobalTheory.StdFrames.cpt (D := D) w b = 0) →
     GlobalTheory.UnitaryIdemCut.cutGL b hb x ∈ St β := by
-  first | exact @GlobalTheory.CutProdLev.cutGL_mem_St_of_mem_prodLev | exact GlobalTheory.CutProdLev.cutGL_mem_St_of_mem_prodLev | (intros; apply GlobalTheory.CutProdLev.cutGL_mem_St_of_mem_prodLev <;> assumption)
+  first | exact @GlobalTheory.CutProdLev.cutGL_mem_St_of_mem_prodLev
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IdempotentCutMemLatticeStabilizerOfProductLevelStatement =====
@@ -238,7 +238,7 @@ open Matrix
 theorem _root_.GlobalTheory.T.idempotentSum_add_conj_component_indicator : ∀ {D : D7} {e : AE D} {P : Finset (Pl D.host.E)}, IsIdemSum e P → ∀ w : Pl D.host.E,
     ((w ∈ P ∨ GlobalTheory.IdemSupport.cP w ∈ P) → GlobalTheory.StdFrames.cpt (D := D) w (toEAf D (e + cA D e)) = 1) ∧
     (w ∉ P → GlobalTheory.IdemSupport.cP w ∉ P → GlobalTheory.StdFrames.cpt (D := D) w (toEAf D (e + cA D e)) = 0) := by
-  first | exact @GlobalTheory.IdemPairCpt.cpt_add_cA_idemSum | exact GlobalTheory.IdemPairCpt.cpt_add_cA_idemSum | (intros; apply GlobalTheory.IdemPairCpt.cpt_add_cA_idemSum <;> assumption)
+  first | exact @GlobalTheory.IdemPairCpt.cpt_add_cA_idemSum
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IdempotentSumAddConjComponentIndicatorStatement =====
@@ -465,7 +465,7 @@ theorem compAt_fin {θ : InfFam D} {V : HSp D} {h : GA D V} (hh : h ∈ GfC V) (
   split_ifs <;> simp
 
 theorem actO_one_one {S T : HSp D} (u : WO S T) : actO S T 1 1 u = u := by
-  simp [actO, GlobalTheory.AdelicLatMove.mt_one]
+  simp [actO]
 
 theorem om_keep_vac {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D} {χS χT : (AE D)ˣ →* Circle}
     {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)} (hW : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam θ)
@@ -511,7 +511,7 @@ theorem actO_cut_half {S T : HSp D} {b e : AE D} (hbe : b * e = 0) {g : GA D T}
   have hby : ∀ i j, b * y i j = 0 := fun i j => by rw [← hy i j, ← mul_assoc, hbe, zero_mul]
   have h1 : actO S T 1 g y = (HMul.hMul (Formalism.L2.Theta.mt T g) (y : Matrix (Fin T.rank) (Fin S.rank) (AE D)) :
       Matrix (Fin T.rank) (Fin S.rank) (AE D)) := by
-    simp [actO, GlobalTheory.AdelicLatMove.mt_one]
+    simp [actO]
   rw [h1, hg, Matrix.add_mul, Matrix.smul_mul, Matrix.smul_mul, Matrix.one_mul]
   ext i j
   rw [Matrix.add_apply, Matrix.smul_apply, Matrix.smul_apply, smul_eq_mul, smul_eq_mul, Matrix.mul_apply,
@@ -530,7 +530,7 @@ theorem cut_mul_cut {n : Type} [Fintype n] [DecidableEq n] {a : AE D} (ha : a * 
   have h0' : (1 - a) * a = 0 := by rw [mul_comm, h0]
   have h1 : (1 - a) * (1 - a) = 1 - a := by rw [sub_mul, one_mul, h0, sub_zero]
   rw [sub_sub_cancel]
-  simp only [Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.mul_smul, smul_smul, Matrix.one_mul, Matrix.mul_one]
+  simp only [Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul, Matrix.mul_one]
   simp only [smul_add, smul_smul, h0, h0', ha, h1, zero_smul, zero_add, add_zero]
   rw [← add_smul, sub_add_cancel, one_smul]
 
@@ -665,7 +665,7 @@ theorem _root_.GlobalTheory.T.columnArrow_realAverage_howeDuality_fockComponent 
       IsPlaceModel W.ψ (symplO _ _) (heisO W.ψ _ _) e (stdLatO S (.top t j)) 1 (S.Z.vac (.top t j)) Tm →
       ∃ c : ℂ, W.om (.top t j) (1, ((((S.N.u (.top (j + 1)))⁻¹ * k * S.N.u (.top (j + 1)) : FinPt G (.top (j + 1))) : FinPt G (.top (j + 1))) : GA D (G.V (.top (j + 1))))) (S.Z.vac (.top t j)) =
         c • Tm fun x => halfInd e (stdLatO S (.top t j)) (actO _ _ 1⁻¹ ((((S.N.u (.top (j + 1)))⁻¹ * k * S.N.u (.top (j + 1)) : FinPt G (.top (j + 1))) : FinPt G (.top (j + 1))) : GA D (G.V (.top (j + 1))))⁻¹ x) := by
-  first | exact @GlobalTheory.ExpansionInvariance.vac_move_low | exact GlobalTheory.ExpansionInvariance.vac_move_low | (intros; apply GlobalTheory.ExpansionInvariance.vac_move_low <;> assumption)
+  first | exact @GlobalTheory.ExpansionInvariance.vac_move_low
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ColumnArrowRealAverageHoweDualityFockComponentStatement =====
@@ -696,7 +696,7 @@ theorem _root_.GlobalTheory.T.unfoldingExpansion_productFunction_localInvariant 
       (y : ∀ i : Fin D.R.m, WO (G.pS (.chi i D.R.m : Pair T)) (G.pT (.chi i D.R.m : Pair T))),
       (τ.sum fun d a => a * (c₁ * c₂) * (∏ j', movedFn S d j hj ((S.N.u (.top (j + 1)))⁻¹ * k * S.N.u (.top (j + 1)) : FinPt G (.top (j + 1))) j' (x j')) * ∏ i, (d.2 i).fn (y i)) =
         τ.sum fun d a => a * (∏ j', (d.1 j').fn (x j')) * ∏ i, (d.2 i).fn (y i) := by
-  first | exact @GlobalTheory.TopLevelInv.local_invariant | exact GlobalTheory.TopLevelInv.local_invariant | (intros; apply GlobalTheory.TopLevelInv.local_invariant <;> assumption)
+  first | exact @GlobalTheory.TopLevelInv.local_invariant
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.UnfoldingExpansionProductFunctionLocalInvariantStatement =====
@@ -717,7 +717,7 @@ theorem _root_.GlobalTheory.T.offPlacesPart_movedLevel_keeps_standardHomLattice 
       u ∈ stdLatO S (.top t (j + 1)) ↔ ∃ u₀ ∈ stdLatO S (.top t (j + 1)),
         u = actO _ _ (cutPart (1 - (e + cA D e)) (G.V (.top (j + 1)))
           ((((S.N.u (.top (j + 1)))⁻¹ * k * S.N.u (.top (j + 1)) : FinPt G (.top (j + 1))) : GA D (G.V (.top (j + 1)))))) 1 u₀ := by
-  first | exact @GlobalTheory.OffPartLattice.offPart_keeps_stdLatO | exact GlobalTheory.OffPartLattice.offPart_keeps_stdLatO | (intros; apply GlobalTheory.OffPartLattice.offPart_keeps_stdLatO <;> assumption)
+  first | exact @GlobalTheory.OffPartLattice.offPart_keeps_stdLatO
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.OffPlacesPartMovedLevelKeepsStandardHomLatticeStatement =====
@@ -969,7 +969,7 @@ theorem _root_.GlobalTheory.T.expansion_product_invariant_inner_vertex_level : �
       (τ.sum fun d a => a * (∏ j', movedCol S d j hj ((S.N.u (.top (j + 1)))⁻¹ * k * S.N.u (.top (j + 1))) j' (w j')) *
           ∏ i, S.Z.vec (d.2 i) (z i)) =
         τ.sum fun d a => a * (∏ j', S.Z.vec (d.1 j') (w j')) * ∏ i, S.Z.vec (d.2 i) (z i) := by
-  first | exact @GlobalTheory.ExpansionInvariance.product_invariant | exact GlobalTheory.ExpansionInvariance.product_invariant | (intros; apply GlobalTheory.ExpansionInvariance.product_invariant <;> assumption)
+  first | exact @GlobalTheory.ExpansionInvariance.product_invariant
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExpansionProductInvariantInnerVertexLevelStatement =====
@@ -1323,7 +1323,7 @@ theorem pairPts_update_top : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Const
   set u := S.N.u (.top (j + 1)) with hu
   set g : FinPt G (.top (j + 1)) := u⁻¹ * k * u with hg
   have thv : ∀ d ∈ τ.support, ∀ j' : Fin D.R.m, IsThetaFunO W.ψ (G.pS (.top t j' : Pair T)) (G.pT (.top t j' : Pair T)) (S.Z.vec (d.1 j')) :=
-    fun d hd j' => GlobalTheory.VecThetaDef.vec_isThetaFunO S.Z (d.1 j') (show j'.1 + 1 ≤ D.R.m by omega) (by simp [Pair.InRange, Node.InRange]; try omega) ((hv d hd).1 j')
+    fun d hd j' => GlobalTheory.VecThetaDef.vec_isThetaFunO S.Z (d.1 j') (show j'.1 + 1 ≤ D.R.m by omega) (by simp [Pair.InRange, Node.InRange]) ((hv d hd).1 j')
   have hcol : ∀ d ∈ τ.support, colMapV S t (fun j' => S.Z.vec (d.1 j')) (Function.update x (j + 1) (x (j + 1) * k)) =
       colMapV S t (movedCol S d j hjm g) x := by
     intro d hd
@@ -1396,7 +1396,7 @@ theorem _root_.GlobalTheory.T.expansionPairing_invariant_inner_vertex_level : �
     ∀ (x : ∀ j, FinPt G (.top j)) (y : ∀ i, FinPt G (.grid i D.R.m)) (j : ℕ) (hj : 0 < j) (hjm : j < D.R.m) (k : FinPt G (.top j)),
       finG (G.V (.top j)) k ∈ S.levTop t Φ β j hjm →
       pairPts S τ (Function.update x j (x j * k)) y (Ψ (Function.update x j (x j * k) 0)) (F (y 0)) = pairPts S τ x y (Ψ (x 0)) (F (y 0)) := by
-  first | exact @GlobalTheory.ExpansionInvariance.pairPts_update_top | exact GlobalTheory.ExpansionInvariance.pairPts_update_top | (intros; apply GlobalTheory.ExpansionInvariance.pairPts_update_top <;> assumption)
+  first | exact @GlobalTheory.ExpansionInvariance.pairPts_update_top
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExpansionPairingInvariantInnerVertexLevelStatement =====

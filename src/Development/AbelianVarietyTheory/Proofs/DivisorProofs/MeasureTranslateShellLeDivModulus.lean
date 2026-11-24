@@ -81,7 +81,7 @@ theorem map_mul_right_eq_of_fundamentalDomain {H : Type} [Group H] [TopologicalS
   have hmap : (ρ.map (· * x₀)) 𝓡 = ρ ((· * x₀) ⁻¹' 𝓡) :=
     MeasurableEquiv.map_apply (MeasurableEquiv.mulRight x₀) 𝓡
   have h1 : (c : ℝ≥0∞) * ρ 𝓡 = 1 * ρ 𝓡 := by
-    calc (c : ℝ≥0∞) * ρ 𝓡 = (c • ρ) 𝓡 := by simp [Measure.smul_apply]
+    calc (c : ℝ≥0∞) * ρ 𝓡 = (c • ρ) 𝓡 := by simp
       _ = (ρ.map (· * x₀)) 𝓡 := by rw [hc]
       _ = 1 * ρ 𝓡 := by rw [one_mul]; exact hmap.trans hm
   have hc1 : c = 1 := by
@@ -172,7 +172,7 @@ theorem map_conj_eq_self_of_lattice : ∀ (H : Type) [Group H] [TopologicalSpace
   have hdK : ∀ x, (d x : ℝ≥0∞) = β (conjB ι B hB x ⁻¹' K) / β K := by
     intro x
     rw [ENNReal.eq_div_iff hK0 hKt, ← Measure.map_apply (hφm x) hKc.isClosed.measurableSet, hdβ x]
-    simp [Measure.smul_apply, mul_comm]
+    simp [mul_comm]
   have hdm : Measurable d := by
     apply measurable_coe_nnreal_ennreal_iff.1
     simp_rw [hdK]
@@ -280,7 +280,7 @@ theorem map_eq_self_of_normalises_lattice {B : Type} [Group B] [TopologicalSpace
   have hmap : (ν.map φ) D = ν (φ ⁻¹' D) :=
     MeasurableEquiv.map_apply φ.toHomeomorph.toMeasurableEquiv D
   have h3 : (c : ℝ≥0∞) * ν D = 1 * ν D := by
-    calc (c : ℝ≥0∞) * ν D = (c • ν) D := by simp [Measure.smul_apply]
+    calc (c : ℝ≥0∞) * ν D = (c • ν) D := by simp
       _ = (ν.map φ) D := by rw [hc]
       _ = 1 * ν D := by rw [one_mul]; exact hmap.trans hm
   have hc1 : c = 1 := by

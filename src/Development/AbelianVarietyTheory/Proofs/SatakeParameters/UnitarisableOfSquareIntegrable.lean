@@ -131,7 +131,7 @@ private lemma diag_conj_transvection (i j : Fin N) (hij : i ≠ j) (y c : k) :
   simp only [diagonal_mul, mul_diagonal, transvection, Matrix.add_apply, Matrix.one_apply,
     Matrix.single_apply, Pi.mulSingle_apply]
   by_cases ha : a = i <;> by_cases hb : b = j <;> by_cases hab : a = b <;>
-    simp_all [eq_comm] <;> ring
+    simp_all [eq_comm]
 
 private lemma transvection_trivial (φ : GL (Fin N) k →* NNReal) (hx : ∃ x : k, x ≠ 0 ∧ x ≠ 1)
     (i j : Fin N) (hij : i ≠ j) (c : k) (g : GL (Fin N) k)
@@ -384,7 +384,7 @@ theorem main : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [I
     intro v w x
     obtain ⟨g, rfl⟩ := QuotientGroup.mk_surjective x
     rw [hΦ, hF1, hF1]
-    simp [f, norm_mul]
+    simp [f]
   have hint : ∀ v w, Integrable (Φ v w) μ := by
     intro v w
     refine Integrable.mono' ((hF2 v).integrable_mul (hF2 w)) (hΦc v w).aestronglyMeasurable

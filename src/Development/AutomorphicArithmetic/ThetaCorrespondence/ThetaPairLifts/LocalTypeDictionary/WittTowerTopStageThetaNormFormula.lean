@@ -316,7 +316,7 @@ theorem exists_rig_of_frame {D : D7} {V : HSp D} (A : Fr V) (Λ : Submodule (�
         refine ⟨b + c, ?_⟩
         change (b : D.host.E) + c = _
         rw [hb, hc]
-        simp [f, map_add, add_mul, Finset.sum_add_distrib, mul_add]
+        simp [f, add_mul, Finset.sum_add_distrib, mul_add]
       smul_mem' := by
         rintro c x ⟨b, hb⟩
         refine ⟨RingOfIntegers.mapRingHom (starRingEnd D.host.E) c * b, ?_⟩
@@ -499,7 +499,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 
 theorem _root_.GlobalTheory.T.exists_grid_of_square_tower : _root_.GlobalTheory.FunPr.ThetaLocalInputs →
   GBig fun {D} T _ _ G _ _ _ _ => ∀ (W : G.Weil) (i j : Fin D.R.m), ∃ X : TriG G i j, TopGrid W i j X ∧ IsStageC W i j (pp D j) (qq D j) X := by
-  first | exact @_root_.GlobalTheory.SqTower.TopGridExists.square_tower_grid_exists | exact _root_.GlobalTheory.SqTower.TopGridExists.square_tower_grid_exists | (intros; apply _root_.GlobalTheory.SqTower.TopGridExists.square_tower_grid_exists <;> assumption)
+  first | exact @_root_.GlobalTheory.SqTower.TopGridExists.square_tower_grid_exists
 end
 end -- clump:auto
 end -- clump:auto
@@ -891,11 +891,11 @@ theorem standing {large₂ : SizeData₂ D} (hS : GlobalTheory.IndefiniteRowSide
     have hd' : p ≠ D.host.d := fun e => by
       have h := P.level_split p hp
       rw [Host.cls, primeClass] at h
-      split_ifs at h <;> contradiction
+      split_ifs at h
     have hq' : p ≠ D.host.q := fun e => by
       have h := P.level_split p hp
       rw [Host.cls, primeClass] at h
-      split_ifs at h <;> contradiction
+      split_ifs at h
     exact ((D.host.level_coprimeS p hp).mul_right ((Nat.coprime_primes hpp hq).2 hq')).mul_right
       ((Nat.coprime_primes hpp hd).2 hd')
   refine ⟨hx, fun w hw => ?_⟩
@@ -1129,7 +1129,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 theorem _root_.GlobalTheory.T.theta_real_places_separation : _root_.GlobalTheory.FunPr.ThetaLocalInputs → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ThetaIntegralsAgree → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.LocalMatching →
   GBig fun {D} T _ _ G _ _ _ _ => ∀ (W : G.Weil) (B : Frames G) (ρ ρ₀ : RealMatch W), ρ₀.vX = ρ.vX → ρ₀.vT = ρ.vT →
     ∀ i j : Fin D.R.m, ∃ lam : ℂ, lam ≠ 0 ∧ ∀ (t : T) (c' c₀ : ℂ), IsSquareConst W B ρ t i j c' → RegConst W B ρ₀ t i j c₀ → c₀ ≠ 0 ∧ c' = lam * c₀ := by
-  first | exact @_root_.GlobalTheory.RealSep.realPlace_theta_matching | exact _root_.GlobalTheory.RealSep.realPlace_theta_matching | (intros; apply _root_.GlobalTheory.RealSep.realPlace_theta_matching <;> assumption)
+  first | exact @_root_.GlobalTheory.RealSep.realPlace_theta_matching
 end
 end -- clump:auto
 end -- clump:auto
@@ -1482,7 +1482,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 theorem _root_.GlobalTheory.T.exists_tied_theta_pair : _root_.GlobalTheory.FunPr.ThetaLocalInputs → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ThetaIntegralsAgree → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.LocalMatching →
   GBig fun {D} T _ _ G _ _ _ _ => ∀ (W : G.Weil) (B : Frames G) (ρ : RealMatch W), ∃ ρ₀ : RealMatch W, ρ₀.vX = ρ.vX ∧ ρ₀.vT = ρ.vT ∧ ρ₀.Tied ∧
     ∀ (i j : Fin D.R.m) (t : T), ∃ c₀ : ℂ, RegConst W B ρ₀ t i j c₀ := by
-  first | exact @_root_.GlobalTheory.GridFrameExistence.exists_tied_pair | exact _root_.GlobalTheory.GridFrameExistence.exists_tied_pair | (intros; apply _root_.GlobalTheory.GridFrameExistence.exists_tied_pair <;> assumption)
+  first | exact @_root_.GlobalTheory.GridFrameExistence.exists_tied_pair
 end
 end -- clump:auto
 end -- clump:auto
@@ -1538,7 +1538,7 @@ theorem _root_.GlobalTheory.T.theta_square_norm_comparison : _root_.GlobalTheory
     TopGrid W i j X → IsStageC W i j (pp D j) (qq D j) X → Factor X W.ψ W.θ lam →
     ∃ κ : T → ℂ, (∀ t, κ t ≠ 0 ∧ ∃ ζ : D.what₂.LL, GlobalTheory.Square.IsAwayUnit (Qn G t) ζ ∧ κ t = D.what₂.embLL ζ * κ μ₀) ∧
       ∀ (t : T) (c' : ℂ), SquareNonzero W S.B ρ t i j → IsSquareConst W S.B ρ t i j c' → c' = κ t * lam t := by
-  first | exact @_root_.GlobalTheory.SqCompare.theta_square_comparison | exact _root_.GlobalTheory.SqCompare.theta_square_comparison | (intros; apply _root_.GlobalTheory.SqCompare.theta_square_comparison <;> assumption)
+  first | exact @_root_.GlobalTheory.SqCompare.theta_square_comparison
 end
 end -- clump:auto
 end -- clump:auto
@@ -1596,7 +1596,7 @@ theorem _root_.GlobalTheory.T.witt_tower_top_stage_theta_norm_formula : _root_.G
       GlobalTheory.SqTower.IsStageC W i j (pp D j) (qq D j) X ∧ X.IsConst W.ψ W.θ c ∧
       (∀ t, κ t ≠ 0 ∧ ∃ ζ : D.what₂.LL, GlobalTheory.Square.IsAwayUnit (Qn G t) ζ ∧ κ t = D.what₂.embLL ζ * κ μ₀) ∧
       ∀ (t : T) (c' : ℂ), SquareNonzero W S.B ρ t i j → IsSquareConst W S.B ρ t i j c' → c' = κ t * c t := by
-  first | exact @_root_.GlobalTheory.SqTower.theta_tower_top_stage_norm_eq | exact _root_.GlobalTheory.SqTower.theta_tower_top_stage_norm_eq | (intros; apply _root_.GlobalTheory.SqTower.theta_tower_top_stage_norm_eq <;> assumption)
+  first | exact @_root_.GlobalTheory.SqTower.theta_tower_top_stage_norm_eq
 end
 end -- clump:auto
 end -- clump:auto

@@ -312,7 +312,7 @@ theorem lineVert_prod_weight [Fintype K] (m : (Σ k, ι k) →₀ ℕ) :
       Finset.prod_eq_single p.1]
     · simp [blockWeight]
     · intro k _ hk
-      simp [blockWeight, Pi.single_apply, hk]
+      simp [blockWeight, hk]
     · simp
 
 theorem lineVert_cone_homog [Fintype K] (y : (Σ k, ι k) → Ω) {h : MRing ι ℤ} {b : K → ℕ}
@@ -1824,7 +1824,7 @@ open AlgebraicGeometry CategoryTheory NumberField ReciprocityTheory.ChartRestric
 open GroundTheory.Heights₂.Heights.LowerBoundFree (ComponentData ComponentSetting degMu ArLimExists slX)
 
 theorem _root_.GlobalTheory.T.good_tower_global_conditions : GlobalTheory.CompanionTheory.Ar.Cmp.CmpSt → PB.AgreementPos → HodgeLatticeFlagBound → TrivFlagOnHodge → Given → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] [IsAbelianGalois ℚ E] (H : Host E) (D : Datum H) (Xo : ∀ l : Level H, Moduli D l) (l : Level H) (c : Coeff l) (Y : Model (Xo l) c (algebraMap (𝓞 c.F) c.F)) [DecidableEq (CMType H)] (T : RootTower (CMType H) (D.p + D.q)) (o : GoodOrigin Y T) (II : IntersectionSystem), IsGlobal Xo l c Y → o.Extra → IsFullIntersectionSystem II → 1 ≤ D.p → 1 ≤ D.q → ∃ φ : ℕ → Equiv.Perm (CMType H ⊕ CMType H), FrobShape (fun p τ n => (φ p ^ (n + 1)) (Sum.inl τ)) ∧ Num.LinkedTower T II φ := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Top.Link.goodOrigin_linked | exact GlobalTheory.CompanionTheory.Ar.Top.Link.goodOrigin_linked | (intros; apply GlobalTheory.CompanionTheory.Ar.Top.Link.goodOrigin_linked <;> assumption)
+  first | exact GlobalTheory.CompanionTheory.Ar.Top.Link.goodOrigin_linked
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.GoodTowerGlobalConditionsStatement =====

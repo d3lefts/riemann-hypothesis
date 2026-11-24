@@ -374,7 +374,7 @@ theorem isTangent_iff_push (y : epsR k ⟶ (Over.pullback (spMap f)).obj G) :
     · rw [Category.assoc, Over.w y, Over.w η[(Over.pullback (spMap f)).obj G]]
       simp only [Over.mk_hom, spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
       have : (TrivSqZeroExt.fstHom k k k).toRingHom.comp (algebraMap k (DualNumber k)) = RingHom.id k := by
-        ext s; simp [TrivSqZeroExt.algebraMap_eq_inl]
+        ext s; simp
       rw [this]
       simp
 
@@ -584,7 +584,7 @@ theorem exists_vecMul_eq_zero {W Ω ι κ : Type} [CommRing W] [IsDomain W] [Fie
     rw [← LinearMap.toMatrix'_mulVec G] at this
     rw [Matrix.mul_apply, Matrix.one_apply,
       show (if i = j then (1:L) else 0) = (Pi.single i (1:L) : ι → L) j by simp [Pi.single_apply, eq_comm], ← this]
-    simp [Matrix.mulVec, dotProduct, P, mul_comm, Matrix.vecMulLinear_apply]
+    simp [Matrix.mulVec, dotProduct, P, mul_comm]
   have hAf : AL.map g = A.map f := by ext i j; simp [AL, hg]
   have hP' : A.map f * (P.transpose.map g) = 1 := by
     rw [← hAf, ← Matrix.map_mul, hP, Matrix.map_one _ (map_zero g) (map_one g)]
@@ -647,7 +647,7 @@ theorem exists_primitive_annihilator : ∀ (F : Type) [Field F] [NumberField F] 
       intro i τ
       have e := congrArg (fun t : 𝓞 F => τ (algebraMap (𝓞 F) F t)) (b.sum_repr (a * b i))
 
-      simp only [map_sum, map_zsmul, map_mul, zsmul_eq_mul] at e
+      simp only [map_sum, map_mul, zsmul_eq_mul] at e
       simpa [hb'] using e
     have := inj (fun j => ∑ i, x i * (b.repr (a * b i) j : Ω) - σ a * x j) (fun τ => by
       have key : ∑ j, (∑ i, x i * (b.repr (a * b i) j : Ω)) * τ (b' j) =
@@ -817,7 +817,7 @@ theorem finrank_eq_zero_of_dual_killed : ∀ (F : Type) [Field F] [NumberField F
       B.repr (ρ (∑ i, e i • b i) χ) r = ∑ i, e i * B.repr (ρ (b i) χ) r := by
     intro e χ r
 
-    simp [map_sum, map_zsmul, LinearMap.sum_apply, Finsupp.finsetSum_apply]
+    simp [map_sum, LinearMap.sum_apply, Finsupp.finsetSum_apply]
   rcases CharP.char_is_prime_or_zero k (ringChar k) with hp | hp
   · set p := ringChar k with hpdef
     haveI : Fact p.Prime := ⟨hp⟩
@@ -838,7 +838,7 @@ theorem finrank_eq_zero_of_dual_killed : ∀ (F : Type) [Field F] [NumberField F
       push_cast
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_zsmul, zsmul_eq_mul, hedef]
-      simp [ZMod.natCast_zmod_val, mul_comm]
+      simp [mul_comm]
     have h := GlobalTheory.dvd_coord_of_action_dvd F X ρ ι b p (by exact_mod_cast hp.ne_zero) _ hdiv i0
     rw [Module.Basis.repr_sum_self] at h
     apply hπ

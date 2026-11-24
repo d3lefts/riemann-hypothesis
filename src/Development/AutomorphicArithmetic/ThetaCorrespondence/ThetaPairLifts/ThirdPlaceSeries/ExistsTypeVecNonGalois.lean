@@ -84,14 +84,14 @@ theorem pi_ind {ι : Type} [Fintype ι] [DecidableEq ι] {M : ι → Type} [∀ 
         funext i
         by_cases hi : i = a
         · subst hi; simp [ha]
-        · simp [Finset.mem_insert, hi, Pi.mulSingle_apply]
+        · simp [Finset.mem_insert, hi]
       rw [e]; exact hm _ _ _ ih
   simpa using key Finset.univ
 
 def conjL {X : Type} : (X → ℂ) →ₛₗ[starRingEnd ℂ] (X → ℂ) where
   toFun f := fun g => star (f g)
   map_add' f f' := by funext g; simp
-  map_smul' c f := by funext g; simp [mul_comm]
+  map_smul' c f := by funext g; simp
 
 theorem loc_piece {L : Type} [Field L] [NumberField L] [IsCMField L] {n g : ℕ} [Fact g.Prime] (π : NG.FinTyp L n)
     (s : SplitPlace L) {w : HeightOneSpectrum (𝓞 L)} (h : s.w = w)
@@ -357,7 +357,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.TypeRec.factG
 
 theorem _root_.GlobalTheory.T.nonGalois_typeVec_fixed_by_e0 : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → OverRows fun _ _ _ _ w Z _ _ z _ Y => ∀ (I : GlobalTheory.TypeRec.Ident (w.st Z).toD7) cp, GlobalTheory.TypeRec.IsComp I (repOf Y) cp → ∀ σ, ∃ (V : Type) (_ : AddCommGroup V) (_ : Module ℂ V) (ρ : Representation ℂ (G0g (w.st Z).toD7.nd) V) (W : Submodule ℂ V) (x : V), (∀ k v, GlobalTheory.GoodTypes.ConjIn ρ W (GlobalTheory.GoodTypes.facHom (w.st Z).toD7 k v) (cp σ k v).ρ) ∧ x ≠ 0 ∧ (∀ a, ρ.asAlgebraHom a x ∈ W) ∧ ρ.asAlgebraHom (w.st Z).toD7.ntypes.e0 x = x := by
-  first | exact @_root_.GlobalTheory.TypeVec.exists_typeVec_nonGalois_ne_zero | exact _root_.GlobalTheory.TypeVec.exists_typeVec_nonGalois_ne_zero | (intros; apply _root_.GlobalTheory.TypeVec.exists_typeVec_nonGalois_ne_zero <;> assumption)
+  first | exact @_root_.GlobalTheory.TypeVec.exists_typeVec_nonGalois_ne_zero
 end
 end
 end -- clump:auto

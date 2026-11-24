@@ -248,10 +248,10 @@ theorem exists_integral_posDef_perturbation : ∀ (E : Type) [Field E] [NumberFi
     intro k i j σ
     by_cases h1 : σ ∈ Ψ
     · have h2 : ComplexEmbedding.conjugate σ ∉ Ψ := hΨ σ h1
-      simp [c, h1, h2, complexEmbedding_conjugate_conjugate]
+      simp [c, h1, h2]
     · by_cases h2 : ComplexEmbedding.conjugate σ ∈ Ψ
       · simp [c, h1, h2]
-      · simp [c, h1, h2, complexEmbedding_conjugate_conjugate]
+      · simp [c, h1, h2]
   choose a ha using fun (k : ℕ) (i : I) (j : J) => hB (c k i j) (hc k i j)
   let D : ℕ → (E →+* ℂ) → Matrix I J ℂ := fun k τ =>
     Matrix.of fun i j => ((n : ℂ) / k) * (τ (a k i j : E) - c k i j τ)
@@ -264,7 +264,7 @@ theorem exists_integral_posDef_perturbation : ∀ (E : Type) [Field E] [NumberFi
     simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, Matrix.of_apply, D, c, f,
       if_pos hτ, smul_eq_mul]
     push_cast
-    simp only [map_add (f := _), map_nsmul, nsmul_eq_mul, map_mul, map_natCast]
+    simp only [map_add (f := _), nsmul_eq_mul, map_mul, map_natCast]
     field_simp
     ring
   have hD : ∀ τ, Filter.Tendsto (fun k : ℕ => D k τ) Filter.atTop (nhds 0) := by
@@ -516,8 +516,6 @@ theorem family_orthogonal_sum_injective (D : Datum H) {p : ℕ} (x' : Fin p → 
     simp only [Pi.zero_apply, map_eq_zero] at ha
     first
       | simpa using ha
-      | exact RingOfIntegers.coe_eq_zero_iff.mp ha
-      | exact_mod_cast ha
   refine ⟨hc, ?_⟩
   subst hc
   have h1 : familyCombination D x' 0 = 0 := map_zero _
@@ -926,7 +924,7 @@ theorem per_span (hn0 : 0 < n) (hcx : ∀ m, c (x m) = Finsupp.single m (n : �
         z.re • (Pi.single k (1 : ℂ) : Fin g → ℂ) + z.im • (Pi.single k Complex.I : Fin g → ℂ) := by
       ext j
       rcases eq_or_ne j k with rfl | hj
-      · simp [Complex.ext_iff]
+      · simp
       · simp [hj]
     rw [hz, map_add (f := _), map_smul, map_smul]
     simp [hl, Complex.mul_re, smul_eq_mul] <;> ring
@@ -1100,8 +1098,7 @@ theorem Q_re_inl (σ : E →+* ℂ) (h : σ (H.rt : E) = H.rt0)
   have hQ : Q hty G σ z z =
       2 * (star x ⬝ᵥ (Matrix.of fun a b : Fin p => Complex.I * σ (G (.inl a) (.inl b))) *ᵥ x) := by
     rw [Q_inl hty G σ h]
-    simp only [hx, dotProduct, mulVec, Matrix.of_apply, Finset.mul_sum, Pi.star_apply, star_star,
-      Complex.star_def, Complex.conj_conj]
+    simp only [hx, dotProduct, mulVec, Matrix.of_apply, Finset.mul_sum, Pi.star_apply, Complex.star_def, Complex.conj_conj]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     ring
   obtain ⟨h0, h1⟩ := re_star_dotProduct_mulVec_pos_of_posDef _ hG1 x
@@ -1217,7 +1214,7 @@ open Matrix GlobalTheory GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionT
 open scoped ComplexOrder
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.gram_signature_orthogonal_split : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (p q : ℕ) (x : Fin p ⊕ Fin q → D.La), IsTypeFn H p q ty → p + q = D.p + D.q → LinearIndependent (𝓞 E) x → (∀ a b, sesq D (x (.inl a)) (x (.inr b)) = 0) → (∀ τ : E →+* ℂ, τ (H.rt : E) = H.rt0 → ((gramE D (x ∘ Sum.inl)).map fun a => Complex.I * τ a).PosDef ∧ (-((gramE D (x ∘ Sum.inr)).map fun a => Complex.I * τ a)).PosDef) → ∃ (P : D.La →+ (Fin g → ℂ)) (hP : IsPeriod D ty P), IsPure hP x := by
-  first | exact @PositivityTheory.Xgf.gram_signature_orthogonal_split | exact PositivityTheory.Xgf.gram_signature_orthogonal_split
+  first | exact @PositivityTheory.Xgf.gram_signature_orthogonal_split
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.GramSignatureOrthogonalSplit =====
@@ -1315,7 +1312,7 @@ private theorem add_mul_mul_conjTranspose_add_eq_of_two_smul {r p q : ℕ} (C : 
     (C * V + C * V) * M * (C * V + C * V)ᴴ = C * N * Cᴴ + C * N * Cᴴ := by
   rw [← key]
   simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_mul, Matrix.add_mul, Matrix.mul_add,
-    Matrix.mul_smul, Matrix.smul_mul, two_smul, Matrix.mul_assoc]
+    two_smul, Matrix.mul_assoc]
 
 theorem signature_of_factor {p q : ℕ} (M W : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ)
     (G₁ : Matrix (Fin p) (Fin p) ℂ) (G₂ : Matrix (Fin q) (Fin q) ℂ) (h₁ : G₁.PosDef) (h₂ : G₂.PosDef)

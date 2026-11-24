@@ -1045,7 +1045,7 @@ theorem cupH11_add_flip (rho : Representation R G M) (rho' : Representation R G 
   refine (separated_dvr_second_cohomology_mem _ _).2 ⟨fun g => -b (x.1 g) (y.1 g), (hb.comp (x.2.1.prodMk y.2.1)).neg, ?_⟩
   funext p
   obtain ⟨g, h⟩ := p
-  simp only [d1_apply, Submodule.coe_subtype, Submodule.coe_add, Pi.add_apply, cupCocycleZ1Z1_apply,
+  simp only [d1_apply, Submodule.coe_subtype, Pi.add_apply, cupCocycleZ1Z1_apply,
     LinearMap.flip_apply, map_neg, ← hbe, x.2.2 g h, y.2.2 g h, map_add, LinearMap.add_apply]
   abel
 
@@ -1277,7 +1277,7 @@ theorem exists_eq_of_nondeg {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValu
       funext j
       by_cases h : i = j
       · subst h; simp
-      · simp [h, Pi.single_apply, Ne.symm h]
+      · simp [h, Ne.symm h]
     rw [this, map_smul, hi, smul_zero, LinearMap.zero_apply]
   obtain ⟨a, ha⟩ : (fun i => f (e i : W)) ∈ S := hS ▸ Submodule.mem_top
   refine ⟨a, fun w => ?_⟩
@@ -1816,7 +1816,7 @@ section -- clump:auto
 
 
 theorem _root_.GlobalTheory.T.local_duality_class_field_facts_of_artin_tate_euler : GlobalTheory.Published.GlobalArtinReciprocity → Formalism.GaloisCohomology.LocalTateDualityK → Formalism.GaloisCohomology.LocalEulerCharK → ReciprocityTheory.ChartRestriction.T2.Core := by
-  first | exact @GlobalTheory.langRecCore_of_artinReciprocity | exact GlobalTheory.langRecCore_of_artinReciprocity | (intros; apply GlobalTheory.langRecCore_of_artinReciprocity <;> assumption)
+  first | exact @GlobalTheory.langRecCore_of_artinReciprocity
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.LocalDualityClassFieldFactsOfArtinTateEulerStatement =====

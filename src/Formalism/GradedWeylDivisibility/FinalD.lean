@@ -164,9 +164,7 @@ theorem nablaLDiag_of (h1 : RowActMul) (h2 : RowActDiagWeight) (h3 : NablaLBasis
     funext i
     rw [Matrix.mul_inv_rev, ← h1 K k n g⁻¹ (Matrix.diagonal t)⁻¹, AlgHom.comp_apply, hDinv,
       h2 K k n _ (μ i) _ (ldlat_isWH_map _ (hb.2.2 i)), map_smul]
-    congr 1
-    rw [← Finset.prod_inv_distrib]
-    simp [inv_pow]
+    simp [Finset.prod_inv_distrib, inv_pow]
   obtain ⟨hl, hs⟩ := h3 R K hinj k n ν b μ hb (g * Matrix.diagonal t) hgD
   rw [hfam] at hl hs
   exact ⟨hl, hs⟩

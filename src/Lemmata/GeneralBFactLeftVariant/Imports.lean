@@ -74,10 +74,8 @@ theorem goal1 :
     fun x => (hf.integral_hasStrictDerivAt 0 x).hasDerivAt
   set F : ℝ → ℂ := fun u : ℝ => ∫ s in (0:ℝ)..u, f s with hF
   have hF0 : F 0 = 0 := by simp [hF]
-  obtain ⟨δ, hδ⟩ : ∃ δ : ℝ, F δ ≠ 0 := by
-    have h1 : ∀ᶠ z in nhdsWithin (0:ℝ) {0}ᶜ, F z ≠ 0 := (hFd 0).eventually_ne (by rw [h0]; exact one_ne_zero)
-    obtain ⟨δ, hδ⟩ := h1.exists
-    exact ⟨δ, hδ⟩
+  obtain ⟨δ, hδ⟩ : ∃ δ : ℝ, F δ ≠ 0 :=
+    ((hFd 0).eventually_ne (by rw [h0]; exact one_ne_zero)).exists
   have key : ∀ t : ℝ, F (t + δ) - F t = f t * F δ := by
     intro t
     simp only [hF]

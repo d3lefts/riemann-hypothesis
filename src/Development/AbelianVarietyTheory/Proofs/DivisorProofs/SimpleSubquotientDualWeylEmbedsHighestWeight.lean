@@ -311,9 +311,9 @@ theorem PSh_rowGen_X (a b : Fin N) (hab : a ≠ b) (v : Fin N × Fin N) :
       simp [wZ, δ, hv]
     · simp [hv]; exact isWeightedHomogeneous_zero _ _ _
   · by_cases hv : v.1 = b
-    · simp [hv, Polynomial.coeff_X, Polynomial.coeff_C]
+    · simp [hv]
       exact isWeightedHomogeneous_zero _ _ _
-    · simp [hv, Polynomial.coeff_C]; exact isWeightedHomogeneous_zero _ _ _
+    · simp [hv]; exact isWeightedHomogeneous_zero _ _ _
 
 theorem PSh.add {a b : Fin N} {u : Fin N → ℤ} {P Q : Polynomial (MvPolynomial (Fin N × Fin N) O)}
     (hP : PSh a b u P) (hQ : PSh a b u Q) : PSh a b u (P + Q) := fun j => by
@@ -380,7 +380,7 @@ theorem proj_rowDiv (a b : Fin N) (hab : a ≠ b) (j k : ℕ) (w : Fin N → ℕ
   · by_contra hne
     have := congrFun (hg hne) a
     rw [weight_wZ, h1] at this
-    simp [shiftW, δ, hab, Pi.single_apply] at this
+    simp [shiftW, δ, hab] at this
     omega
   · subst h2
     by_contra hne
@@ -523,7 +523,7 @@ theorem key_injective (N : ℕ) : Function.Injective (key N) := by
   · omega
   · have h3 : Nat.pair a b = Nat.pair a' b' := by omega
     rw [Nat.pair_eq_pair] at h3
-    ext <;> simp [Fin.ext_iff, h3.1, h3.2]
+    ext <;> simp [h3.1, h3.2]
 
 def Var (N : ℕ) : Type := Fin N × Fin N
 
@@ -579,7 +579,7 @@ theorem lead_apply (v w : Fin N × Fin N) :
     lead N v w = (if v = w then 1 else 0) +
       (if v.1 = v.2 then 0 else if (min v.1 v.2, min v.1 v.2) = w then 1 else 0) := by
   unfold lead
-  split_ifs <;> simp_all [Finsupp.single_apply]
+  split_ifs <;> simp_all
 
 theorem entry_lead [Nontrivial O] (a b : Fin N) :
     (ord N).degree (lduHom O N (X (a, b))) = lead N (a, b) ∧
@@ -598,7 +598,7 @@ theorem entry_lead [Nontrivial O] (a b : Fin N) :
       have e2 : lead N (a, b) = Finsupp.single (a, a) 1 + Finsupp.single (a, b) 1 := by
         simp [lead, h.ne, min_eq_left h.le, add_comm]
       rw [e1, e2]
-      simp [lowGen, upGen, h, h.ne, X, monomial_mul]
+      simp [lowGen, upGen, h, h.ne, X]
     · subst h
       have e1 : d = a := hd.trans (min_self a)
       rw [e1]
@@ -607,7 +607,7 @@ theorem entry_lead [Nontrivial O] (a b : Fin N) :
       have e2 : lead N (a, b) = Finsupp.single (a, b) 1 + Finsupp.single (b, b) 1 := by
         simp [lead, h.ne', min_eq_right h.le]
       rw [e1, e2]
-      simp [lowGen, upGen, h, h.ne', X, monomial_mul]
+      simp [lowGen, upGen, h, h.ne', X]
   have hpos : 0 < (ord N).toSyn (lead N (a, b)) := by
     rw [MonomialOrder.toSyn_lt_iff_ne_zero, Ne, (ord N).toSyn_eq_zero_iff]
     exact lead_ne_zero N _
@@ -622,7 +622,7 @@ theorem entry_lead [Nontrivial O] (a b : Fin N) :
       have hcb : c < b := lt_of_lt_of_le hcd hdb
       have hm : lowGen O N a c * X (c, c) * upGen O N c b =
           monomial (Finsupp.single (a, c) 1 + Finsupp.single (c, c) 1 + Finsupp.single (c, b) 1) 1 := by
-        simp [lowGen, upGen, hca.ne', hca, hcb.ne, hcb, X, monomial_mul]
+        simp [lowGen, upGen, hca.ne', hca, hcb.ne, hcb, X]
       rw [hm]
       have h1 : (d : ℕ) ≤ a := hda
       have h2 : (d : ℕ) ≤ b := hdb
@@ -690,7 +690,7 @@ theorem image_monomial_lead [Nontrivial O] (m : Fin N × Fin N →₀ ℕ) :
     have hle : leadExp N (Finsupp.single (a, b) k) = k • lead N (a, b) := by
       rw [leadExp, Finset.sum_eq_single (a, b)]
       · simp
-      · intro w _ hw; simp [Finsupp.single_apply, Ne.symm hw]
+      · intro w _ hw; simp [Ne.symm hw]
       · simp
     refine ⟨?_, h2.pow⟩
     rw [MonomialOrder.degree_pow_of_pow_leadingCoeff_ne_zero (by rw [h2.leadingCoeff_eq_one, one_pow]; exact one_ne_zero),
@@ -1014,11 +1014,11 @@ theorem rowSubst_transvection (O : Type) [CommRing O] (N : ℕ) (R : Type) [Comm
       simp [rowSubst, rowGen, MvPolynomial.algebraMap_eq]
     · intro v
       simp [rowSubst, rowGen, Matrix.transvection, Matrix.add_apply, Matrix.one_apply, Matrix.single_apply,
-        Finset.sum_add_distrib, add_mul, ite_mul, Finset.sum_ite_eq, Finset.sum_ite_eq']
+        Finset.sum_add_distrib, add_mul, ite_mul, Finset.sum_ite_eq]
       by_cases h : v.1 = a
       · have h' : a = v.1 := h.symm
         simp only [h', true_and, if_true]
-        simp [apply_ite C, ite_mul, Finset.sum_ite_eq']
+        simp [apply_ite C, ite_mul]
         ring
       · have h' : ¬ a = v.1 := fun e => h e.symm
         simp [h, h']
@@ -1083,12 +1083,12 @@ theorem one_add_strictLower_mem_closure_transvection (R : Type) [CommRing R] (N 
               hS i j (by simp only [Finset.mem_insert, not_or]; exact ⟨h, hij⟩)
             have h' : ¬ (a = i ∧ b = j) := by
               rintro ⟨rfl, rfl⟩; exact h rfl
-            simp [hc', h0, Matrix.single_apply, h']
+            simp [hc', h0, h']
         have h1 : ∀ i j, i ≤ j → c' i j = 0 := by
           intro i j hij
           have h' : ¬ (a = i ∧ b = j) := by
             rintro ⟨rfl, rfl⟩; exact hab hij
-          simp [hc', hc i j hij, Matrix.single_apply, h']
+          simp [hc', hc i j hij, h']
         have h3 : c' * Matrix.single a b (c a b) = 0 := by
           ext i j
           have hz : c' i a = 0 := by
@@ -1099,7 +1099,7 @@ theorem one_add_strictLower_mem_closure_transvection (R : Type) [CommRing R] (N 
           refine Finset.sum_eq_zero fun e _ => ?_
           by_cases he : a = e
           · subst he; simp [hz]
-          · simp [Matrix.single_apply, he]
+          · simp [he]
         have h4 : 1 + c = (1 + c') * Matrix.transvection a b (c a b) := by
           rw [Matrix.transvection, add_mul, one_mul, mul_add, mul_one, h3, add_zero, hc']
           abel
@@ -1236,7 +1236,7 @@ theorem rowSubst_mul_comp (O : Type) [CommRing O] (N : ℕ) (R : Type) [CommRing
     intro v
 
     simp only [rowSubst, AlgHom.comp_apply, AlgHom.restrictScalars_apply, aeval_X, map_sum, map_mul,
-    algHom_C, Algebra.algebraMap_self, RingHom.id_apply, Matrix.mul_apply]
+    algHom_C, Matrix.mul_apply]
     simp only [Finset.mul_sum, Finset.sum_mul, mul_assoc]
     exact Finset.sum_comm
   rw [h]; rfl
@@ -1468,8 +1468,8 @@ theorem coef_mem (O : Type) [CommRing O] (N : ℕ) (ν : Fin N → ℕ) (m : Fin
     rw [rowSubst_eq_sum_genSub_of_parts]
     refine Finset.sum_subset (fun m' hm' => hs m' (genSub_coeff_le_of_parts O N D _ (totalDegree_le_of_mem_of_parts O N ν _ f.2) m'
       (MvPolynomial.mem_support_iff.1 hm'))) (fun m' _ hm' => ?_) |>.trans (Finset.sum_congr rfl fun m' _ => ?_)
-    · simp [Cm, MvPolynomial.notMem_support_iff.1 hm']
-    · simp only [Cm, LinearMap.coe_mk, AddHom.coe_mk, lduHom, aeval_monomial, map_one, one_mul]
+    · simp [MvPolynomial.notMem_support_iff.1 hm']
+    · simp only [Cm, lduHom, aeval_monomial, map_one, one_mul]
       rfl
   have hcoef : ∀ k : Fin N × Fin N →₀ ℕ, ∑ m' ∈ s, (lduHom O N (monomial m' 1)).coeff k • Cm m' =
       ∑ i, (r i).coeff k • Φ (p i) := by

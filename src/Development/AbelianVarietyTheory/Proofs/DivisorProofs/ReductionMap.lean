@@ -156,7 +156,7 @@ theorem coeff_single_op {τ : Type} {μ : Fin d → MvPowerSeries (Fin d ⊕ Fin
   unfold op
   rw [coeff_single_linear_substitution_pair _ _ _ hu hv]
   simp only [hμ, addLaw, map_add (f := _), GlobalTheory.FormalCalc.coeff_single_X]
-  simp [add_mul, Finset.sum_add_distrib]
+  simp
 
 theorem coeff_single_coc {μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) R}
     (hμ0 : ∀ i, constantCoeff (μ i) = 0)
@@ -186,8 +186,7 @@ theorem coeff_single_coc {μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) R}
     unfold swap at h
     rw [coeff_single_linear_substitution_pair _ _ _ (fun _ => constantCoeff_X _) (fun _ => constantCoeff_X _)] at h
     simp only [GlobalTheory.FormalCalc.coeff_single_X] at h
-    simp only [Sum.inr.injEq, reduceCtorEq, if_false, mul_zero, Finset.sum_const_zero, zero_add,
-      mul_ite, mul_one, Finset.sum_ite_eq', Finset.mem_univ, if_true] at h
+    simp only [Sum.inr.injEq, reduceCtorEq, if_false, mul_zero, Finset.sum_const_zero, mul_ite, mul_one] at h
     rw [← h]
     simp [hinl]
 
@@ -1470,11 +1469,7 @@ theorem exists_seq_of_step {A : Type} (P : ℕ → A → Prop) (Q : ℕ → A �
     (h₀ : P 0 a₀) (hs : ∀ n a, P n a → ∃ b, P (n + 1) b ∧ Q n a b) :
     ∃ F : ℕ → A, F 0 = a₀ ∧ ∀ n, P n (F n) ∧ Q n (F n) (F (n + 1)) := by
   first
-  | exact @_root_.GlobalTheory.SequenceFromIteration.exists_seq_of_step
-  | exact _root_.GlobalTheory.SequenceFromIteration.exists_seq_of_step
   | (apply _root_.GlobalTheory.SequenceFromIteration.exists_seq_of_step <;> assumption)
-  | (intros; apply _root_.GlobalTheory.SequenceFromIteration.exists_seq_of_step <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.SequenceFromIteration.exists_seq_of_step <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.SequenceFromIteration.exists_seq_of_step ..)
 
 theorem exists_limit_of_steps {R σ : Type} [CommRing R] (F : ℕ → MvPowerSeries σ R)
@@ -1746,7 +1741,7 @@ theorem Katz.reductionMap : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [C
   have hlinsmul : ∀ (r : WittVector p k) (f : MvPowerSeries (Fin d) (Fr p k)),
       lin (r • f) = fun i => algebraMap _ (Fr p k) r * lin f i := by
     intro r f; funext i
-    simp only [lin, ← algebraMap_smul (Fr p k) r f, coeff_smul, smul_eq_mul]
+    simp only [lin, ← algebraMap_smul (Fr p k) r f, coeff_smul]
   have hcobs : ∀ (r : WittVector p k) (f : MvPowerSeries (Fin d) (Fr p k)),
       cob1 (fun i => Katz.lift p (μ i)) (r • f) = r • cob1 (fun i => Katz.lift p (μ i)) f := by
     intro r f

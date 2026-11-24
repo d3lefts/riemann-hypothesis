@@ -147,7 +147,7 @@ theorem UpperTheory.V.Ws.X1.coneTan :
         simp only at h1 ⊢
         rw [e]
         exact (b v).sub_mem h1 h2
-      · simp [Submodule.mem_pi, hPn]
+      · simp [hPn]
     refine ⟨⟨_, hmem⟩, ?_⟩
     simp only [q, LinearMap.comp_apply, Submodule.mkQ_apply]
     rw [Submodule.Quotient.eq]
@@ -169,7 +169,7 @@ theorem UpperTheory.V.Ws.X1.coneTan :
       simp only
       rw [e]
       exact h2
-    · simp [Submodule.mem_pi, hPn]
+    · simp [hPn]
   let f : W →ₗ[k] S :=
     { toFun := fun X => ⟨_, fmem X⟩
       map_add' := fun X Y => by
@@ -248,7 +248,7 @@ private theorem UpperTheory.V.Ws.X1.exists_symplectic_diagonalizing_lift {A R : 
     rw [← hmap, Ef]; ext i j; simp [adj_apply]
   have aD : adj D = Matrix.diagonal fun i => X i.rev i.rev := by
     ext i j
-    fin_cases i <;> fin_cases j <;> simp [adj_apply, sgn, Fin.rev, hD, Matrix.diagonal_apply]
+    fin_cases i <;> fin_cases j <;> simp [adj_apply, sgn, Fin.rev, hD]
   have key : adj D * D + (adj D * E + adj E * D) = ν • (1 : M4 A) := by
     have h : adj (D + E) * (D + E) = ν • (1 : M4 A) := by rw [← hXE]; exact hX
     rw [hadd, add_mul, mul_add, mul_add, mz _ _ aEf Ef] at h
@@ -329,11 +329,11 @@ private theorem lowOf_low (a b c d : A) : IsLow (lowOf a b c d) := by
   · unfold IsGSp
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [adj, lowOf, Matrix.mul_apply, Fin.sum_univ_four, sgn, Fin.rev, Matrix.one_apply] <;> ring
+      simp [adj, lowOf, Matrix.mul_apply, Fin.sum_univ_four, sgn, Fin.rev] <;> ring
   · intro i
     fin_cases i <;> simp [lowOf]
   · intro i j hij
-    fin_cases i <;> fin_cases j <;> simp_all [lowOf] <;> omega
+    fin_cases i <;> fin_cases j <;> simp_all [lowOf]
 
 private theorem eq_lowOf {n : M4 A} (h : IsLow n) : n = lowOf (n 1 0) (n 2 0) (n 2 1) (n 3 0) := by
   obtain ⟨hg, hd, hu⟩ := h
@@ -342,8 +342,7 @@ private theorem eq_lowOf {n : M4 A} (h : IsLow n) : n = lowOf (n 1 0) (n 2 0) (n
   have d0 := hd 0; have d1 := hd 1; have d2 := hd 2; have d3 := hd 3
   have e1 := congrFun (congrFun hg 1) 0
   have e4 := congrFun (congrFun hg 3) 1
-  simp [adj, Matrix.mul_apply, Fin.sum_univ_four, sgn, Fin.rev, Matrix.one_apply, h01, h02, h03, h12, h13,
-    h23, d0, d1, d2, d3] at e1 e4
+  simp [adj, Matrix.mul_apply, Fin.sum_univ_four, sgn, Fin.rev, h01, h02, h12, d0, d1, d2] at e1 e4
   ext i j
   fin_cases i <;> fin_cases j <;> simp [lowOf, h01, h02, h03, h12, h13, h23, d0, d1, d2, d3]
   · linear_combination e4
@@ -356,7 +355,7 @@ private theorem low_mul {m n : M4 A} (hm : IsLow m) (hn : IsLow n) : IsLow (m * 
     fin_cases i <;> simp [lowOf, Matrix.mul_apply, Fin.sum_univ_four]
   · intro i j hij
     rw [eq_lowOf hm, eq_lowOf hn]
-    fin_cases i <;> fin_cases j <;> simp_all [lowOf, Matrix.mul_apply, Fin.sum_univ_four] <;> omega
+    fin_cases i <;> fin_cases j <;> simp_all [lowOf, Matrix.mul_apply, Fin.sum_univ_four]
 
 private theorem up_adj {b : M4 A} (h : IsUp b) : IsUp (adj b) := by
   intro i j hij
@@ -421,7 +420,7 @@ private theorem aux (p : A →+* R) (hp : ∀ x y, p x = 0 → p y = 0 → x * y
   set b : M4 A := 1 - Yu with hbd
   have hbup : IsUp b := by
     intro i j hij
-    simp [hbd, hYud, Matrix.one_apply, hij.ne', not_le.mpr hij]
+    simp [hbd, hYud, hij.ne', not_le.mpr hij]
   have hbg : IsGSp 1 b := by
     show adj b * b = (1 : A) • 1
     have ea : adj b = 1 - adj Yu := by
@@ -444,7 +443,7 @@ private theorem aux (p : A →+* R) (hp : ∀ x y, p x = 0 → p y = 0 → x * y
       simp [hYud]
     · intro i j hij
       rw [e1]
-      simp [hYud, Matrix.one_apply, hij.ne, hij.le]
+      simp [hYud, hij.ne, hij.le]
   have hm := low_mul hm0 hlow
   have hmeq : m0 * (adj m0 * n' * b) = n' * b := by
     rw [← mul_assoc, ← mul_assoc, hm0r, one_mul]

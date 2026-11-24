@@ -231,7 +231,7 @@ theorem _root_.GlobalTheory.T.addChar_neg_unfoldingPhase_mul_uniformizerPowLatti
     (ψ : AddChar k Circle), HasConductor ψ 1 → ∀ (ϖ : kˣ), IsUnif ϖ → ∀ (n : ℕ) (x : ColArgs G) (v l l' : Vars G),
     l ∈ varLat G ϖ n → l' ∈ varLat G ϖ n →
     (ψ (-phase x (v + l + l')) : ℂ) * (ψ (-phase x v) : ℂ) = (ψ (-phase x (v + l)) : ℂ) * (ψ (-phase x (v + l')) : ℂ) := by
-  first | exact @GlobalTheory.UnfoldLoss.PhaseQuad.psi_phase_mul | exact GlobalTheory.UnfoldLoss.PhaseQuad.psi_phase_mul | (intros; apply GlobalTheory.UnfoldLoss.PhaseQuad.psi_phase_mul <;> assumption)
+  first | exact @GlobalTheory.UnfoldLoss.PhaseQuad.psi_phase_mul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AddCharNegUnfoldingPhaseMulUniformizerPowLatticeStatement =====
@@ -298,7 +298,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 
 theorem _root_.GlobalTheory.T.coeffPlace_valuation_residueFieldCard_eq_zero_of_not_mem : ∀ {D : D7} (P : Pl D.host.E) (w : PlL D), ((Formalism.EigenvalueLevelCeiling.plc P : ℕ) : 𝓞 D.what₂.LL) ∉ w.asIdeal →
     vw w ((resCard (Kw P) : ℕ) : D.what₂.LL) = 0 := by
-  first | exact @GlobalTheory.UnfoldLoss.ResCardAway.vw_resCard_eq_zero | exact GlobalTheory.UnfoldLoss.ResCardAway.vw_resCard_eq_zero | (intros; apply GlobalTheory.UnfoldLoss.ResCardAway.vw_resCard_eq_zero <;> assumption)
+  first | exact @GlobalTheory.UnfoldLoss.ResCardAway.vw_resCard_eq_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffPlaceValuationResidueFieldCardEqZeroOfNotMeStatement =====
@@ -373,7 +373,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 theorem _root_.GlobalTheory.T.coeffValuationLoss_finsetSum_and_invPow : ∀ {D : D7} (w : PlL D),
     (∀ {ι : Type} (s : Finset ι) (z : ι → ℂ) (a : ℝ), (∀ i ∈ s, LossLe w (z i) a) → LossLe w (∑ i ∈ s, z i) a) ∧
     ∀ q M : ℕ, 0 < q → LossLe w ((((q : ℝ)⁻¹ ^ M : ℝ)) : ℂ) ((M : ℝ) * (vw w ((q : ℕ) : D.what₂.LL) : ℝ)) := by
-  first | exact @GlobalTheory.LossSum.lossLe_sum_and_pow | exact GlobalTheory.LossSum.lossLe_sum_and_pow | (intros; apply GlobalTheory.LossSum.lossLe_sum_and_pow <;> assumption)
+  first | exact @GlobalTheory.LossSum.lossLe_sum_and_pow
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffValuationLossFinsetSumAndInvPowStatement =====
@@ -497,7 +497,7 @@ theorem _root_.GlobalTheory.T.coeffValuationLossLe_addChar_neg_unfoldingPhase : 
     (ch.S.term t Φ β P).datum X Y ≠ 0 →
     moved (locGrid ch.G t P) (keepAt ch.G P) ((repsAt ch.G t P).elt (β P)) (Tflip ch.W ch.S.B t Φ P) (fill one_le_sLen X Y e) ≠ 0 →
     ∀ w : PlL D, LossLe w ((psiAt ch.W P.1 (-phase X e) : Circle) : ℂ) 0 := by
-  first | exact @GlobalTheory.UnfoldLoss.lossLe_psi_neg_phase | exact GlobalTheory.UnfoldLoss.lossLe_psi_neg_phase | (intros; apply GlobalTheory.UnfoldLoss.lossLe_psi_neg_phase <;> assumption)
+  first | exact @GlobalTheory.UnfoldLoss.lossLe_psi_neg_phase
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoeffValuationLossLeAddCharNegUnfoldingPhaseStatement =====
@@ -625,7 +625,7 @@ theorem _root_.GlobalTheory.T.integral_eq_volume_sum_characterTwistedCosets : �
     [MeasurableAdd X] (μ : Measure X) [μ.IsAddLeftInvariant] (U : AddSubgroup X), IsOpen (U : Set X) → μ (U : Set X) ≠ ⊤ →
     ∀ g : X → ℂ, HasCompactSupport g → (∀ y, ∀ u ∈ U, ∀ u' ∈ U, g (y + u + u') * g y = g (y + u) * g (y + u')) →
     ∃ s : Finset X, ∫ y, g y ∂μ = (∑ γ ∈ s, g γ) * ((μ.real (U : Set X) : ℝ) : ℂ) := by
-  first | exact @GlobalTheory.TwistedCosetSum.integral_eq_sum_twisted | exact GlobalTheory.TwistedCosetSum.integral_eq_sum_twisted | (intros; apply GlobalTheory.TwistedCosetSum.integral_eq_sum_twisted <;> assumption)
+  first | exact @GlobalTheory.TwistedCosetSum.integral_eq_sum_twisted
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralEqVolumeSumCharacterTwistedCosetsStatement =====
@@ -762,7 +762,7 @@ theorem _root_.GlobalTheory.T.movedStaircaseTensor_periodic_uniformizerPow : ∀
     (x : ColArgs G) (y : RowArgs G) (v l : Vars G), l ∈ varLat G ϖ (G.m * e) →
     moved G keep ((Reps.through hs J (stair G ϖ e)).elt fun i => DoubleCoset.mk _ _ (stair G ϖ e (i + 1))) T (fill hs x y (v + l)) =
       moved G keep ((Reps.through hs J (stair G ϖ e)).elt fun i => DoubleCoset.mk _ _ (stair G ϖ e (i + 1))) T (fill hs x y v) := by
-  first | exact @GlobalTheory.UnfoldLoss.moved_stair_periodic | exact GlobalTheory.UnfoldLoss.moved_stair_periodic | (intros; apply GlobalTheory.UnfoldLoss.moved_stair_periodic <;> assumption)
+  first | exact @GlobalTheory.UnfoldLoss.moved_stair_periodic
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MovedStaircaseTensorPeriodicUniformizerPowStatement =====
@@ -992,7 +992,7 @@ theorem _root_.GlobalTheory.T.movedTensorChosenPlace_coeffValuationLoss_le : ∀
     (P : Pl D.host.E) ∈ ch.G.pl.W0 → ∀ (w : PlL D) (c : ℝ), 0 ≤ c → (∀ z, LossLe w (Tflip ch.W ch.S.B t Φ P z) c) →
     ∀ z, LossLe w (moved (locGrid ch.G t P) (keepAt ch.G P) ((repsAt ch.G t P).elt (β P)) (Tflip ch.W ch.S.B t Φ P) z)
       (c + (D.R.m : ℝ) ^ 2 * (bigN D : ℝ) ^ 2 * (cosExp ch.G P : ℝ) * (vw w ((resCard (Kw (P : Pl D.host.E)) : ℕ) : D.what₂.LL) : ℝ)) := by
-  first | exact @GlobalTheory.UnfoldLoss.MovedChosen.moved_loss | exact GlobalTheory.UnfoldLoss.MovedChosen.moved_loss | (intros; apply GlobalTheory.UnfoldLoss.MovedChosen.moved_loss <;> assumption)
+  first | exact @GlobalTheory.UnfoldLoss.MovedChosen.moved_loss
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MovedTensorChosenPlaceCoeffValuationLossLeStatement =====
@@ -1333,7 +1333,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 
 theorem _root_.GlobalTheory.T.stepVariablesCount_gridLocalFlipGrid_le : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc) (t : T) (w : Pl D.host.E),
     varCount (locGrid G t w) ≤ D.R.m * bigN D ^ 2 := by
-  first | exact @GlobalTheory.UnfoldLoss.varCount_locGrid_le | exact GlobalTheory.UnfoldLoss.varCount_locGrid_le | (intros; apply GlobalTheory.UnfoldLoss.varCount_locGrid_le <;> assumption)
+  first | exact @GlobalTheory.UnfoldLoss.varCount_locGrid_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StepVariablesCountGridLocalFlipGridLeStatement =====
@@ -1422,7 +1422,7 @@ theorem _root_.GlobalTheory.T.variablesUniformizerPowerLattice_basis_open_volume
     (∀ s ∈ nhds (0 : Vars G), ∃ n : ℕ, (varLat G ϖ n : Set (Vars G)) ⊆ s) ∧
     ∀ n : ℕ, IsOpen (varLat G ϖ n : Set (Vars G)) ∧ varsVol G ν (varLat G ϖ n : Set (Vars G)) ≠ ⊤ ∧
       (varsVol G ν).real (varLat G ϖ n : Set (Vars G)) = ((resCard k : ℝ)⁻¹) ^ (n * varCount G) := by
-  first | exact @GlobalTheory.UnfoldLoss.LatVol.varLat_basis_open_vol | exact GlobalTheory.UnfoldLoss.LatVol.varLat_basis_open_vol | (intros; apply GlobalTheory.UnfoldLoss.LatVol.varLat_basis_open_vol <;> assumption)
+  first | exact @GlobalTheory.UnfoldLoss.LatVol.varLat_basis_open_vol
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.VariablesUniformizerPowerLatticeBasisOpenVolumeStatement =====
@@ -1630,7 +1630,7 @@ theorem _root_.GlobalTheory.T.movedTensor_unfolding_integral_valuation_loss_boun
         ∀ c : ℝ, 0 ≤ c → (∀ z, LossLe w (Tflip ch.W ch.S.B t Φ P z) c) →
         ∀ X Y, LossLe w ((ch.S.term t Φ β P).datum X Y) (c + c₂ * (D.R.m : ℝ) ^ 2 * (bigN D : ℝ) ^ 2 * (cosExp ch.G P : ℝ) *
           (vw w ((resCard (Kw (P : Pl D.host.E)) : ℕ) : D.what₂.LL) : ℝ)) := by
-  first | exact @GlobalTheory.UnfoldLoss.unfold_loss | exact GlobalTheory.UnfoldLoss.unfold_loss | (intros; apply GlobalTheory.UnfoldLoss.unfold_loss <;> assumption)
+  first | exact @GlobalTheory.UnfoldLoss.unfold_loss
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MovedTensorUnfoldingIntegralValuationLossBoundStatement =====

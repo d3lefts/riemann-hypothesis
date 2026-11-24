@@ -134,7 +134,6 @@ theorem sigF_alg (b : Fin (D + 1)) (u : Kˣ) (g : KTp K D N) :
       algebraMap (KTp K D N) (KTf K D N) (sigP b u g) := by
   first
   | exact IsFractionRing.ringEquivOfRingEquiv_algebraMap _ _
-  | simp [sigF, IsFractionRing.ringEquivOfRingEquiv_algebraMap]
 
 theorem one_block (b : Fin (D + 1)) (z : KTf K D N)
     (hz : ∀ u : Kˣ, sigF (K := K) (D := D) (N := N) b u z = z)
@@ -384,7 +383,6 @@ private theorem exists_fraction_free_of_block_zero {D N : ℕ} (z : KTf K D N)
     rw [← hz]
     first
     | exact (div_mul_cancel₀ _ hq').symm
-    | field_simp
   obtain ⟨a, ha⟩ : ∃ a : Fin (N + 1) → K, S a q0 ≠ 0 := by
     by_contra hall
     push_neg at hall
@@ -560,15 +558,15 @@ theorem de_pres (hd : d.AxH 𝒜) (h : d.S1) : ∃ a b : KTp K d.D d.N, d.IsPres
       rcases Fin.eq_self_or_eq_succAbove (d.jc c) j with rfl | ⟨k, rfl⟩
       · by_cases h0 : b' = 0
         · subst h0
-          simp [hsa, hβ, MvPolynomial.algebraMap_apply]
-        · simp [hsa, hβ, hβC, h0, Finset.mul_sum, mul_assoc, MvPolynomial.algebraMap_apply]
-      · simp [hsb, hβ, MvPolynomial.algebraMap_apply]
+          simp [hβ, MvPolynomial.algebraMap_apply]
+        · simp [hβ, hβC, h0, Finset.mul_sum, mul_assoc, MvPolynomial.algebraMap_apply]
+      · simp [hβ, MvPolynomial.algebraMap_apply]
     · rcases Fin.eq_self_or_eq_succAbove (d.jc c) j with rfl | ⟨k, rfl⟩
       · by_cases h0 : b' = 0
         · subst h0
-          simp [hsa, hβ, hbb, Ne.symm hbb]
-        · simp [hsa, hβ, hβC, h0, hbb]
-      · simp [hsb, hβ, hbb]
+          simp [hβ, hbb, Ne.symm hbb]
+        · simp [hβ, hβC, h0, hbb]
+      · simp [hβ, hbb]
   have ht : ∀ t : Fin (d.N + 1) → K, ∃ T : KTp K d.D d.N →ₐ[K] KTp K d.D d.N,
       (∀ v, T (MvPolynomial.X v) =
         if v.1 = 0 then MvPolynomial.X v + MvPolynomial.C (t v.2) else MvPolynomial.X v) ∧
@@ -597,11 +595,11 @@ theorem de_pres (hd : d.AxH 𝒜) (h : d.S1) : ∃ a b : KTp K d.D d.N, d.IsPres
       by_cases h0 : b' = 0
       · subst h0
         rcases Fin.eq_self_or_eq_succAbove (d.jc c) j with rfl | ⟨k, rfl⟩
-        · simp [hsa, hβ]
-        · simp [hsb, hβ]
+        · simp [hβ]
+        · simp [hβ]
       · rcases Fin.eq_self_or_eq_succAbove (d.jc c) j with rfl | ⟨k, rfl⟩
-        · simp [hsa, hβ, hβC, h0]
-        · simp [hsb, hβ, h0]
+        · simp [hβ, hβC, h0]
+        · simp [hβ, h0]
     refine ⟨eα.toAlgHom, fun v => ?_, fun p q hpq => ?_⟩
     · show eα (MvPolynomial.X v) = _
       rw [heα]

@@ -83,7 +83,7 @@ theorem UpperTheory.ConvolutionTheory.L1.jointNe :
   obtain ⟨hcl, hinv, hirr⟩ := UpperTheory.ConvolutionTheory.L1.cutIrr Γ G H π V m ι E A U h
   have hmemVE : ∀ w, w ∈ eigIn V E 1 ↔ w ∈ V ∧ E w = w := by
     intro w
-    simp [eigIn, Module.End.mem_eigenspace_iff, Submodule.mem_inf]
+    simp [eigIn, Submodule.mem_inf]
   have hmemZ : ∀ (k : Fin (m + 1)) w, w ∈ eigIn (eigIn V E 1) (A k) y ↔
       w ∈ eigIn V E 1 ∧ A k w = (y : ℂ) • w := by
     intro k w
@@ -250,7 +250,7 @@ variable {Γ G H : Type} [Group Γ] [TopologicalSpace Γ] [Group G] [NormedAddCo
 
 private lemma mem_eigIn {W : Submodule ℂ H} {T : H →L[ℂ] H} {c : ℝ} {v : H} :
     v ∈ eigIn W T c ↔ v ∈ W ∧ T v = (c : ℂ) • v := by
-  simp [eigIn, Submodule.mem_inf, Module.End.mem_eigenspace_iff]
+  simp [eigIn, Submodule.mem_inf]
 
 private lemma closed_eigIn {W : Submodule ℂ H} (hW : IsClosed (W : Set H)) (T : H →L[ℂ] H) (c : ℝ) :
     IsClosed (eigIn W T c : Set H) := by
@@ -524,7 +524,6 @@ theorem UpperTheory.ConvolutionTheory.L1.jointEx :
       rw [inner_smul_right, ← inner_self_eq_norm_sq (𝕜 := ℂ) (w : H)]
       first
         | exact RCLike.re_ofReal_mul _ _
-        | simp
     rw [hw1] at h3
     have h6 : 0 ≤ r * ‖(w : H)‖ ^ 2 := h5 ▸ h3
     by_contra hneg

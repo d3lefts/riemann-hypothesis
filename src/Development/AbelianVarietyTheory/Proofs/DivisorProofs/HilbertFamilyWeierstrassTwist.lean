@@ -261,7 +261,7 @@ open scoped Classical MatrixGroups nonZeroDivisors in
 private lemma length_word_eq_sum {I : Type} [Fintype I] (κ : I → ℕ) :
     (_root_.GlobalTheory.HilbFam.word κ).length = ∑ i, κ i := by
   unfold _root_.GlobalTheory.HilbFam.word
-  simp [List.length_flatMap, Finset.sum_toList]
+  simp [List.length_flatMap]
 
 open NumberField UpperHalfPlane in
 open scoped Classical MatrixGroups nonZeroDivisors in
@@ -360,7 +360,6 @@ theorem isFam_hfun_twist : EisExp → ∀ (F : Type) [Field F] [NumberField F] [
   have h := _root_.GlobalTheory.HilbFam.hfun_slash hE F hF s N (twist N L (α i)) hs hN (_root_.GlobalTheory.HilbFam.hasLevel_twist_of_hasLevel F N L (α i) hL) κ γ (Ch i)
     (Ch (act i γ)) τ ⟨_, _root_.GlobalTheory.HilbFam.hasLevel_twist_of_hasLevel F N L (α (act i γ)) hL, htw⟩ (hC i γ τ)
   rw [zpow_natCast]
-  beta_reduce
   rw [h, htw]
 
 end GlobalTheory.HilbFam

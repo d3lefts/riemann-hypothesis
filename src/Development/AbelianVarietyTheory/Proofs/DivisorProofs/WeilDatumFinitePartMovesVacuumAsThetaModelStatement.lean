@@ -212,7 +212,7 @@ theorem phase_eq : ∀ D : D7, ∃ w : 𝓞 D.host.E, w + GlobalTheory.FinWeil.s
     have hR : GlobalTheory.LatVac.hRat S T X X = n := by
       rw [GlobalTheory.LatVac.hRat, hset.gS, hset.gT, inv_one]
       simp only [Matrix.one_apply, ite_mul, one_mul, zero_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
-        Finset.sum_ite_eq', Finset.mem_univ, if_true]
+        Finset.mem_univ, if_true]
       have e : ∀ x, (∑ x_1, ∑ x_2, if x = x_1 then star (X x_2 x_1) * X x_2 x else 0) =
           ∑ x_2, star (X x_2 x) * X x_2 x := fun x => by
         rw [Finset.sum_comm]
@@ -316,7 +316,7 @@ theorem _root_.GlobalTheory.T.finitePartQuadraticPhase_eq_cmTheta_exp : ∀ D : 
   Setup ψ θ S T cc δ r → ∀ z : Matrix (Fin T.rank) (Fin S.rank) D.host.E,
   ψ (-symplOH S T (GlobalTheory.FinWeilO.intA D w • finPt (S := S) (T := T) rfl rfl r z) (finPt (S := S) (T := T) rfl rfl r z)) =
     Formalism.MainNotions.StandardLatticesGL3.wdPh D (tor0 D cc δ) (pt D (tor0 D cc δ) δ z) := by
-  first | exact @GlobalTheory.SplitPhase.phase_eq | exact GlobalTheory.SplitPhase.phase_eq | (intros; apply GlobalTheory.SplitPhase.phase_eq <;> assumption)
+  first | exact @GlobalTheory.SplitPhase.phase_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinitePartQuadraticPhaseEqCmThetaExpStatement =====
@@ -707,7 +707,7 @@ theorem _root_.GlobalTheory.T.weilDatum_splitSupported_eq_intertwiner_mul_halfDe
   ∀ (g : GA D S) (h : GA D T), SuppAt ε S g → SuppAt ε T h → ∀ x y : (AE D)ˣ, IsDetAt ε S g x → IsDetAt ε T h y →
   ∀ f : GlobalTheory.FinWeilO.thetaSub ψ S T,
     om (g, h) f = ((splitFacO χS χT x y : Circle) : ℂ) • (Om (g, h) f : WO S T → ℂ) := by
-  first | exact @GlobalTheory.SplitWeilDict.splitWeil_eq | exact GlobalTheory.SplitWeilDict.splitWeil_eq | (intros; apply GlobalTheory.SplitWeilDict.splitWeil_eq <;> assumption)
+  first | exact @GlobalTheory.SplitWeilDict.splitWeil_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilDatumSplitSupportedEqIntertwinerMulHalfDetChStatement =====
@@ -1528,7 +1528,7 @@ theorem _root_.GlobalTheory.T.inertIntegralPoints_fix_adelic_classical_vacuum : 
   Formalism.MainNotions.StandardLatticesGL3.SuppInert D (x : GL (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) → Formalism.MainNotions.StandardLatticesGL3.SuppInert D (y : GL (Fin d) (Formalism.MainNotions.StandardLatticesGL3.AE D)) →
   Formalism.MainNotions.StandardLatticesGL3.IntG D (x : GL (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) → Formalism.MainNotions.StandardLatticesGL3.IntG D (y : GL (Fin d) (Formalism.MainNotions.StandardLatticesGL3.AE D)) →
   Reads ψ θ hS hT cc δ r (W.Om x y e0) (om (g, h) f₀) := by
-  first | exact @GlobalTheory.VacInertMove.inert_vacuum_reads | exact GlobalTheory.VacInertMove.inert_vacuum_reads | (intros; apply GlobalTheory.VacInertMove.inert_vacuum_reads <;> assumption)
+  first | exact @GlobalTheory.VacInertMove.inert_vacuum_reads
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.InertIntegralPointsFixAdelicClassicalVacuumStatement =====
@@ -1620,7 +1620,7 @@ theorem _root_.GlobalTheory.T.weil_datum_finite_part_moves_vacuum_as_theta_model
   HasFinPart χS W.chV W.ep → HasFinPart χT W.chV' (-W.ep') →
   ∀ (x : Formalism.MainNotions.StandardLatticesGL3.GA D a) (y : Formalism.MainNotions.StandardLatticesGL3.GA D d) (g : GA D S) (h : GA D T), IsFinPt S g x → IsFinPt T h y →
   ∀ f₀ : WO S T → ℂ, Reads ψ θ hS hT cc δ r e0 f₀ → Reads ψ θ hS hT cc δ r (W.Om x y e0) (om (g, h) f₀) := by
-  first | exact @GlobalTheory.VacMoveFin.vacuum_move_reads | exact GlobalTheory.VacMoveFin.vacuum_move_reads | (intros; apply GlobalTheory.VacMoveFin.vacuum_move_reads <;> assumption)
+  first | exact @GlobalTheory.VacMoveFin.vacuum_move_reads
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilDatumFinitePartMovesVacuumAsThetaModelStatement =====

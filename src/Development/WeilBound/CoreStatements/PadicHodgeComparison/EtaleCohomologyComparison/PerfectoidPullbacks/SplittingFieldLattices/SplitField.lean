@@ -294,7 +294,7 @@ theorem core_expand {K B : Type} [Field K] [CommRing B] [Algebra K B] {I : Ideal
   have h1 : (fun i => ∑ t, n i t ⊗ₜ[K] e i (b t)) =
       ∑ t, ∑ i, (Pi.single i (n i t ⊗ₜ[K] e i (b t)) : ∀ i, S.N i ⊗[K] M i) := by
     funext i
-    simp only [Finset.sum_apply, Pi.single_apply]
+    simp only [Finset.sum_apply]
     simp
 
   rw [h1, map_sum]
@@ -1103,7 +1103,7 @@ theorem exists_section (M' : Submodule O M) (c : O) (hc : c ≠ 0)
     simp
   refine ⟨M'.liftQ (LinearMap.id - M'.subtype ∘ₗ ρ) ?_, fun n => ?_⟩
   · intro x hx
-    simp [LinearMap.mem_ker, hker x hx, sub_eq_zero]
+    simp [LinearMap.mem_ker, hker x hx]
   · obtain ⟨x, rfl⟩ := M'.mkQ_surjective n
     have h4 : M'.mkQ ((ρ x : M') : M) = 0 := (Submodule.Quotient.mk_eq_zero _).2 (ρ x).2
     simp only [Submodule.mkQ_apply, Submodule.liftQ_apply, LinearMap.sub_apply, LinearMap.id_apply,
@@ -1449,7 +1449,6 @@ theorem comm_top (𝒱 : Set X.Opens) (r r' : ℤ) (j : ℕ) (i : Fin m) (n : S.
   obtain ⟨z, rfl⟩ := Ideal.Quotient.mk_surjective y
   first
     | rfl
-    | (simp only [NatTrans.id_app, CategoryTheory.Functor.map_id]; rfl)
 
 theorem used_TF {R : Type} [CommRing R] {J : Ideal R} {δ : DividedPowers J} {κ : O →+* R ⧸ J} (l s : ℕ) :
     Used (TF l s : ObjectProperty (Thick (nlFun δ 0 X q κ))) :=

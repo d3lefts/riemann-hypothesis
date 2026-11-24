@@ -390,7 +390,7 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions F
 attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_polynomialModel_value_rational_step : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (Y : DivX (I.rec7 l Z)) (O : ∀ u a, GL3Theta.LiftObj (I.rec7 l Z) ((I.rec7 l Z).chTw u a)) (Pl : Examples₂.EntPl (I.rec7 l Z)) (Bs : PlaceMatrixFamily (I.rec7 l Z)), I.QpIs Y.Qp → I.StdO l Z Y.Qp O → BasOk Pl O Bs → (∀ u a w, LevFree Y u a w → ∀ i, i ≤ B.R.m → ∀ c τ j k, ∃ x : (I.rec7 l Z).what₂.LL, Bs u a w i c τ j k = Pl.iL w x) → ∀ (u : B.Word) (μ : I.ι) (w : (I.rec7 l Z).what₂.places.Pl), LevFree Y u μ w → ∀ (i : ℕ) (hi : i < B.R.m) (eY : (I.chain l u μ).Y i ≃ Formalism.L2.Forms.Fr (I.rec7 l Z) i hi.le), I.IdY l Z u μ i hi.le eY → ∀ (c : (I.stp u μ i).Cl) (f : (I.chain l u μ).Y i → ℂ), (∃ P ∈ Formalism.L2.Forms.RatSpan (I.rec7 l Z) ((I.fm l u μ).lam i), ∀ z, f z = fnOf (gramC (gramN (I.rec7 l Z) i hi.le) (embT (I.rec7 l Z))) (shiftOf (lamTG (I.fm l u μ) i)) 1 P (eY z)) → ∃ v : ValQ O u μ i, evC O u μ i v = f := by
-  first | exact @GlobalTheory.CmpEx.exists_valQ | exact GlobalTheory.CmpEx.exists_valQ | (intros; apply GlobalTheory.CmpEx.exists_valQ <;> assumption)
+  first | exact @GlobalTheory.CmpEx.exists_valQ
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsPolynomialModelValueRationalStepStatement =====
@@ -601,7 +601,6 @@ theorem rowGen_fullMinor (R : Type) [CommRing R] {m : ℕ} (a b : Fin m) (hab : 
     by_cases hp : p = b
     · subst hp
       simp [hMdef, Matrix.updateRow_apply, rowGen, Fin.castLE_refl]
-      try ring
     · simp [hMdef, Matrix.updateRow_apply, rowGen, Fin.castLE_refl, hp]
   rw [hM, Matrix.det_updateRow_add_smul_self _ (Ne.symm hab)]
 
@@ -1099,7 +1098,7 @@ theorem polFun_smul_ten {K ι : Type} [CommRing K] [Fintype ι] {n : ℕ} (r : K
     polFun (r • map (Int.castRingHom K) (Formalism.L2.Forms.ten f)) =
       fun y => r * ∏ τ, eval (fun k : Fin n × Fin n => y τ k.1 k.2) (map (Int.castRingHom K) (f τ)) := by
   funext y
-  simp [polFun, Formalism.L2.Forms.ten, smul_eq_C_mul, map_prod, eval_prod, eval_rename, Function.comp_def, map_rename]
+  simp [polFun, Formalism.L2.Forms.ten, smul_eq_C_mul, map_prod, eval_rename, Function.comp_def, map_rename]
 
 end GlobalTheory.IntSpanCmp
 
@@ -1197,7 +1196,7 @@ theorem _root_.GlobalTheory.T.integralSpan_iff_padic_weylDualLattice : ∀ (D : 
     MvPolynomial.map D.what₂.embLL R ∈ Formalism.L2.Forms.RatSpan D lam →
     (MvPolynomial.map D.what₂.embLL R ∈ Formalism.L2.Forms.IntSpan D w lam ↔
       polFun (MvPolynomial.map (Pl.iL w) R) ∈ WeylLatticeDuality.DelW (D.what₂.places.resChar w) D.what₂.Tau n (fun τ => (lam τ).natW)) := by
-  first | exact @GlobalTheory.IntSpanCmp.intSpan_iff_delW | exact GlobalTheory.IntSpanCmp.intSpan_iff_delW | (intros; apply GlobalTheory.IntSpanCmp.intSpan_iff_delW <;> assumption)
+  first | exact @GlobalTheory.IntSpanCmp.intSpan_iff_delW
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IntegralSpanIffPadicWeylDualLatticeStatement =====
@@ -1333,7 +1332,7 @@ theorem _root_.GlobalTheory.T.localBasis_change_integral_unit_det : ∀ (D : D7)
     GL3Columns.BasR D lam τ L Bs → Formalism.L2.Forms.IsLocBasis p (L : Set (Fin N → D.host.E)) Bm →
     ∃ g : Matrix (Fin N) (Fin N) ℂ_[p], (∀ a b, ‖g a b‖ ≤ 1) ∧ ‖g.det‖ = 1 ∧
       Bs = (Bm : Matrix (Fin N) (Fin N) D.host.E).map (TaylorLogMetric.tauEmb D lam τ) * g := by
-  first | exact @GlobalTheory.LocBasisChange.basis_change | exact GlobalTheory.LocBasisChange.basis_change | (intros; apply GlobalTheory.LocBasisChange.basis_change <;> assumption)
+  first | exact @GlobalTheory.LocBasisChange.basis_change
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LocalBasisChangeIntegralUnitDetStatement =====
@@ -1418,7 +1417,7 @@ open GlobalTheory.IntegralityCompare
 theorem _root_.GlobalTheory.T.twistedEmbeddingMatrixSubstitution_mem_ratSpan : ∀ (D : D7) {n : ℕ} (lam : D.what₂.Tau → DomWeight n) (M : GL (Fin n) D.host.E) (s : D.what₂.Tau → ℤ)
     (P0 : MvPolynomial (D.what₂.Tau × Fin n × Fin n) ℂ),
     P0 ∈ Formalism.L2.Forms.RatSpan D lam → twSub (embT D) M s P0 ∈ Formalism.L2.Forms.RatSpan D lam := by
-  first | exact @GlobalTheory.IntegralityCompare.twSub_mem_ratSpan | exact GlobalTheory.IntegralityCompare.twSub_mem_ratSpan | (intros; apply GlobalTheory.IntegralityCompare.twSub_mem_ratSpan <;> assumption)
+  first | exact @GlobalTheory.IntegralityCompare.twSub_mem_ratSpan
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TwistedEmbeddingMatrixSubstitutionMemRatSpanStatement =====
@@ -1528,7 +1527,7 @@ theorem srcFun_secC_read : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok 
     have hez : (eY z).1 = y := (hId z).trans hz
     simp only [evP, LinearMap.coe_mk, AddHom.coe_mk, fnOf, GL3Theta.evFr, hfr, hde, hez, Matrix.one_mul, Pi.one_apply] at h1
     rw [← hR0] at h1
-    simp only [map_mul, map_prod, map_pow, eval_mul, eval_prod, eval_pow, eval_detP (D := I.rec7 l Z)]
+    simp only [map_mul, map_prod, map_pow, eval_detP (D := I.rec7 l Z)]
     have e1 : ∀ τ, (y τ).det ^ (((I.rec7 l Z).chTw u μ).sSharp i τ - twB (I.rec7 l Z) u μ i τ).toNat =
         (y τ).det ^ (-twB (I.rec7 l Z) u μ i τ) * (y τ).det ^ (((I.rec7 l Z).chTw u μ).sSharp i τ) := by
       intro τ
@@ -1568,8 +1567,7 @@ theorem srcFun_secC_read : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok 
     fun τ => ((Matrix.isUnits_det_units Bm).map _).ne_zero
   simp only [hBs, hA]
   rw [map_twSubK_field, polFun_apply, eval_twSubK _ _ _ _ (fun τ => g τ * y τ)]
-  simp only [map_mul, map_prod, map_pow, eval_mul, eval_prod, eval_pow, eval_detP (D := I.rec7 l Z),
-    Matrix.mul_assoc, Matrix.det_mul, hdetA]
+  simp only [map_mul, map_prod, map_pow, Matrix.mul_assoc, Matrix.det_mul, hdetA]
   have hev : ∀ τ, eval (fun k : GL3Theta.FrV (I.rec7 l Z) ((I.rec7 l Z).R.N i) =>
       ((Bm : Matrix (Fin ((I.rec7 l Z).R.N i)) (Fin ((I.rec7 l Z).R.N i)) (I.rec7 l Z).host.E).map
         ((Pl.iL w).comp (Formalism.L2.G.Cmp.tEL (I.rec7 l Z) k.1)) * (g k.1 * y k.1)) k.2.1 k.2.2)
@@ -1639,7 +1637,7 @@ theorem _root_.GlobalTheory.T.twistedSourceValue_read_in_changed_bases : ∀ {B 
       (∏ τ, (g τ).det ^ (-((I.rec7 l Z).chTw u μ).sSharp i τ)) * ((∏ τ, (g τ * y τ).det ^ k τ) *
         polFun (MvPolynomial.map (Pl.iL w) (twSubK (Formalism.L2.G.Cmp.tEL (I.rec7 l Z)) Bm (shiftOf (lamTG (I.fm l u μ) i)) R0))
           (fun τ => g τ * y τ)) := by
-  first | exact @GlobalTheory.Mem.SrcFunRead.srcFun_secC_read | exact GlobalTheory.Mem.SrcFunRead.srcFun_secC_read | (intros; apply GlobalTheory.Mem.SrcFunRead.srcFun_secC_read <;> assumption)
+  first | exact @GlobalTheory.Mem.SrcFunRead.srcFun_secC_read
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TwistedSourceValueReadInChangedBasesStatement =====
@@ -1940,7 +1938,7 @@ open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions F
 attribute [local instance] GlobalTheory.Mem.Col2.starE Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.lattice_iff_integralWeyl_coordinates : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC.Pins B X → ∀ (l : I.Laws) (Z : TC.Later B (I.cols l)), ∀ (Y : DivX (I.rec7 l Z)) (O : ∀ u a, GL3Theta.LiftObj (I.rec7 l Z) ((I.rec7 l Z).chTw u a)) (Pl : Examples₂.EntPl (I.rec7 l Z)) (Bs : PlaceMatrixFamily (I.rec7 l Z)), I.QpIs Y.Qp → I.StdO l Z Y.Qp O → BasOk Pl O Bs → (∀ u a w, LevFree Y u a w → ∀ i, i ≤ B.R.m → ∀ c τ j k, ∃ x : (I.rec7 l Z).what₂.LL, Bs u a w i c τ j k = Pl.iL w x) → ∀ (u : B.Word) (μ : I.ι) (w : (I.rec7 l Z).what₂.places.Pl), LevFree Y u μ w → ∀ (i : ℕ) (hi : i < B.R.m) (eY : (I.chain l u μ).Y i ≃ Formalism.L2.Forms.Fr (I.rec7 l Z) i hi.le), I.IdY l Z u μ i hi.le eY → ∀ (c : (I.stp u μ i).Cl) (f : (I.chain l u μ).Y i → ℂ), (∃ P ∈ Formalism.L2.Forms.RatSpan (I.rec7 l Z) ((I.fm l u μ).lam i), ∀ z, f z = fnOf (gramC (gramN (I.rec7 l Z) i hi.le) (embT (I.rec7 l Z))) (shiftOf (lamTG (I.fm l u μ) i)) 1 P (eY z)) → ∀ Bm : GL (Fin ((I.rec7 l Z).R.N i)) (I.rec7 l Z).host.E, Formalism.L2.Forms.IsLocBasis ((I.rec7 l Z).what₂.places.resChar w) (((I.stp u μ i).rep c).1.1.deco.1.N : Set (Sp B.fields.E (B.R.N i))) Bm →  ∀ v : ValQ O u μ i, evC O u μ i v = f → ((∃ P ∈ Formalism.L2.Forms.IntSpan (I.rec7 l Z) w ((I.fm l u μ).lam i), ∀ z, f z = fnOf (gramC (gramN (I.rec7 l Z) i hi.le) (embT (I.rec7 l Z))) (shiftOf (lamTG (I.fm l u μ) i)) (atInf (embT (I.rec7 l Z)) ((Bm⁻¹ : GL (Fin ((I.rec7 l Z).R.N i)) (I.rec7 l Z).host.E) : Matrix (Fin ((I.rec7 l Z).R.N i)) (Fin ((I.rec7 l Z).R.N i)) (I.rec7 l Z).host.E)) P (eY z)) ↔ srcFun Pl Bs u μ w i c (secC O u μ i v) ∈ WeylLatticeDuality.DelW ((I.rec7 l Z).what₂.places.resChar w) (I.rec7 l Z).what₂.Tau ((I.rec7 l Z).R.N i) (nuT (I.rec7 l Z) u i)) := by
-  first | exact @GlobalTheory.IntegralityCompare.lattice_iff_weyl | exact GlobalTheory.IntegralityCompare.lattice_iff_weyl | (intros; apply GlobalTheory.IntegralityCompare.lattice_iff_weyl <;> assumption)
+  first | exact @GlobalTheory.IntegralityCompare.lattice_iff_weyl
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LatticeIffIntegralWeylCoordinatesStatement =====

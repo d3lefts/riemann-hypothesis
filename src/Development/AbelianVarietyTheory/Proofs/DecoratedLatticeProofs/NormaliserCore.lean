@@ -484,7 +484,7 @@ section -- clump:auto
 open Matrix Formalism.UG Formalism.L2.DIV GlobalTheory.LevNorm
 
 theorem _root_.GlobalTheory.T.exists_normOne_with_residues_at_splitPlaces : ∀ {A : Type} [CommRing A] {S : Subring A} {P : Type} {k : P → Type} [∀ Q, Field (k Q)] {r : ∀ Q, S →+* k Q} (Z : PlaceSys A S P k r) (σ : A →+* A), (∀ a, σ (σ a) = a) → (∀ a ∈ S, σ a ∈ S) → ∀ (T : Finset P), (∀ Q ∈ T, ∀ Q' ∈ T, σ (Z.e Q) ≠ Z.e Q') → ∀ c : ∀ Q, (k Q)ˣ, ∃ z : S, (z : A) * σ z = 1 ∧ (∀ Q ∈ T, r Q z = c Q) ∧ ∀ b : A, (∀ Q ∈ T, Z.p Q b ∈ Z.O Q ∧ Z.p Q (σ b) ∈ Z.O Q) → (1 - (z : A)) * b ∈ S := by
-  first | exact @GlobalTheory.LevNorm.exists_normOne_residues | exact GlobalTheory.LevNorm.exists_normOne_residues | (intros; apply GlobalTheory.LevNorm.exists_normOne_residues <;> assumption)
+  first | exact @GlobalTheory.LevNorm.exists_normOne_residues
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsNormOneWithResiduesAtSplitPlacesStatement =====
@@ -661,7 +661,7 @@ namespace GlobalTheory.ScalConj
 theorem single_conj_apply {K : Type} [Field K] {n : ℕ} (A B : Matrix (Fin n) (Fin n) K) (a b i j : Fin n) :
     (A * (Matrix.single a b (1 : K) : Matrix (Fin n) (Fin n) K) * B) i j = A i a * B b j := by
   rw [Matrix.mul_apply]
-  simp [Matrix.mul_apply, Matrix.single_apply, Finset.sum_ite_eq, Finset.sum_ite_eq', ite_and]
+  simp [Matrix.mul_apply, Matrix.single_apply, Finset.sum_ite_eq, ite_and]
 
 def conjInt {K : Type} [Field K] (O : ValuationSubring K) {n : ℕ} (m : GL (Fin n) K) :
     Subalgebra O (Matrix (Fin n) (Fin n) O) where
@@ -1121,7 +1121,7 @@ theorem isScal_of_normalises (K : Type) [Field K] (O : ValuationSubring K) (k : 
         · have hij : i ≠ j := fun e => by unfold symEdge at he; rw [e] at he; omega
           show a i j * r ((x' : Matrix (Fin n) (Fin n) O) i j) = _
           rw [hx'e, Matrix.one_apply_ne hij]
-          simp only [map_add (f := _), map_mul, map_zero, zero_add]
+          simp only [map_mul, zero_add]
           ring
         · rw [mul_zero]
       rw [← hev, hψx, hxr, edgeVal_one, AddChar.map_zero_eq_one]

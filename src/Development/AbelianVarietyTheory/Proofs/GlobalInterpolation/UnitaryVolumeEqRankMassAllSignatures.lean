@@ -94,7 +94,7 @@ open NumberField MeasureTheory Formalism.BasicNotions Formalism.MainNotions.Stan
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_hermitianSpace_with_signature : ∀ (D : D7) (P Q : ℕ), ∃ U : HSpace D.host.E, U.SigOK ∧ ∀ τ, U.sig τ = (P, Q) := by
-  first | exact @GlobalTheory.exists_hSpace_sigOK_sig | exact GlobalTheory.exists_hSpace_sigOK_sig | (intros; apply GlobalTheory.exists_hSpace_sigOK_sig <;> assumption)
+  first | exact @GlobalTheory.exists_hSpace_sigOK_sig
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsHermitianSpaceSelfDualLatticeSignatureStatement =====
@@ -151,7 +151,7 @@ open NumberField MeasureTheory Formalism.BasicNotions Formalism.MainNotions.Stan
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.volume_ratio_up_positive_line : ∀ D : D7, VolTie D → Conclusion2 D → ∀ (W : HSpace D.host.E) (P Q : ℕ), W.SigOK → (∀ τ, W.sig τ = (P, Q)) → 2 ≤ P + Q → ∀ U : HSpace D.host.E, U.SigOK → (∀ τ, U.sig τ = (P + 1, Q)) → D.vol U / D.vol W = Formalism.HermitianLatticesTheory.massRatioRightSide D.host.E (P + Q + 1) := by
-  first | exact @GlobalTheory.VolRatioUp.volRatio_up | exact GlobalTheory.VolRatioUp.volRatio_up | (intros; apply GlobalTheory.VolRatioUp.volRatio_up <;> assumption)
+  first | exact @GlobalTheory.VolRatioUp.volRatio_up
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.VolumeRatioUpPositiveLineStatement =====
@@ -214,7 +214,7 @@ open NumberField MeasureTheory Formalism.BasicNotions Formalism.MainNotions.Stan
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.vol_eq_mass_selfDual_rank_ge_two : ∀ D : D7, VolTie D → Conclusion2 D → DefiniteVolumeEqMass D → ∀ (W : HSpace D.host.E) (P Q : ℕ), W.SigOK → (∀ τ, W.sig τ = (P, Q)) → 2 ≤ P + Q → D.vol W = massI D (P + Q) := by
-  first | exact @GlobalTheory.Glob.vol_eq_massI_of_two_le_rank | exact GlobalTheory.Glob.vol_eq_massI_of_two_le_rank | (intros; apply GlobalTheory.Glob.vol_eq_massI_of_two_le_rank <;> assumption)
+  first | exact @GlobalTheory.Glob.vol_eq_massI_of_two_le_rank
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.VolEqMassSelfDualRankGeTwoStatement =====
@@ -320,7 +320,7 @@ open NumberField MeasureTheory Formalism.BasicNotions Formalism.MainNotions.Stan
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.negDefinite_selfDualStabilizer_volume_one : ∀ (D : D7) (W : HSpace D.host.E) (n : ℕ), W.SigOK → (∀ τ, W.sig τ = (0, n)) → ∀ μ : Measure (HA (AF D.host.F) D.sp.cm.sig W.gram), IsVolMeas D W 0 n μ → μ (StabFin.SFin D.sp.cm.sig W.gram (L0c D W) : Set (HA (AF D.host.F) D.sp.cm.sig W.gram)) = 1 := by
-  first | exact @GlobalTheory.NegDefStab.measure_SFin_negDef | exact GlobalTheory.NegDefStab.measure_SFin_negDef | (intros; apply GlobalTheory.NegDefStab.measure_SFin_negDef <;> assumption)
+  first | exact @GlobalTheory.NegDefStab.measure_SFin_negDef
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.NegDefiniteSelfDualStabilizerVolumeOneStatement =====
@@ -385,7 +385,7 @@ open NumberField MeasureTheory Formalism.BasicNotions Formalism.MainNotions.Stan
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.unitaryGroup_neg_form_compatible : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (M : ℕ) (J J' : Matrix (Fin M) (Fin M) E), J' = -J → ∃ φ : HA (AF F) σ J ≃ₜ* HA (AF F) σ J', (∀ h, HA.mat (AF F) σ J' (φ h) = HA.mat (AF F) σ J h) ∧ (∀ h, h ∈ HFinIn (AF F) σ J ↔ φ h ∈ HFinIn (AF F) σ J') ∧ ∀ (L : Set (Fin M → E)) h, h ∈ StabFin.SFin σ J L ↔ φ h ∈ StabFin.SFin σ J' L := by
-  first | exact @GlobalTheory.unitary_neg_same | exact GlobalTheory.unitary_neg_same | (intros; apply GlobalTheory.unitary_neg_same <;> assumption)
+  first | exact @GlobalTheory.unitary_neg_same
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.UnitaryGroupNegFormCompatibleStatement =====
@@ -507,7 +507,7 @@ open NumberField MeasureTheory Formalism.BasicNotions Formalism.MainNotions.Stan
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.volume_negativeDefinite_eq_opposite : ∀ D : D7, VolTie D → ∀ (W : HSpace D.host.E) (n : ℕ), W.SigOK → (∀ τ, W.sig τ = (0, n)) → D.vol W = D.vol (GlobalTheory.NegSpace.neg W) := by
-  first | exact @GlobalTheory.NegVol.vol_neg_eq | exact GlobalTheory.NegVol.vol_neg_eq | (intros; apply GlobalTheory.NegVol.vol_neg_eq <;> assumption)
+  first | exact @GlobalTheory.NegVol.vol_neg_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.VolumeNegativeDefiniteEqOppositeStatement =====

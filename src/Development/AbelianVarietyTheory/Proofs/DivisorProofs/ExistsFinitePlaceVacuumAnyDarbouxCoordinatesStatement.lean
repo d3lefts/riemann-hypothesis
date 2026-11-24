@@ -84,7 +84,7 @@ theorem _root_.GlobalTheory.T.addChar_halfTrace_tensorLattice_heisenbergCocycle 
             (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F X.J) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F Y.J) γ' γ') *
           B.ψ (-(⅟(2 : AF F) * GlobalTheory.WeilM.symp (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ) (-1)
             (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F X.J) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F Y.J) γ γ')) := by
-  first | exact @GlobalTheory.VacCocycle.psi_half_symp_add | exact GlobalTheory.VacCocycle.psi_half_symp_add | (intros; apply GlobalTheory.VacCocycle.psi_half_symp_add <;> assumption)
+  first | exact @GlobalTheory.VacCocycle.psi_half_symp_add
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AddCharHalfTraceTensorLatticeHeisenbergCocycleStatement =====
@@ -113,7 +113,7 @@ theorem _root_.GlobalTheory.T.adelicSchrodinger_tensor_eq_local_of_supportedAt :
     GlobalTheory.WeilM.schr ψ w (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (GlobalTheory.AdelicU.evFin F v) φ r) =
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (GlobalTheory.AdelicU.evFin F v)
         (GlobalTheory.WeilM.schr (GlobalTheory.VacAny.psiV ψ v) (fun i => GlobalTheory.AdelicU.evFin F v (w.1 i), fun i => GlobalTheory.AdelicU.evFin F v (w.2 i)) φ) r := by
-  first | exact @GlobalTheory.SchrLoc.schr_tens_of_at | exact GlobalTheory.SchrLoc.schr_tens_of_at | (intros; apply GlobalTheory.SchrLoc.schr_tens_of_at <;> assumption)
+  first | exact @GlobalTheory.SchrLoc.schr_tens_of_at
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicSchrodingerTensorEqLocalOfSupportedAtStatement =====
@@ -209,7 +209,7 @@ theorem _root_.GlobalTheory.T.continuous_addChar_symplecticSelfPairing_placeCoor
         (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F JB)
         (∑ m, GlobalTheory.EmbChart.atPlace v (a m : Fv F v) • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F (g m))
         (∑ m, GlobalTheory.EmbChart.atPlace v (a m : Fv F v) • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F (g m)))) := by
-  first | exact @GlobalTheory.ContSymp.continuous_psi_symp_atPlace | exact GlobalTheory.ContSymp.continuous_psi_symp_atPlace | (intros; apply GlobalTheory.ContSymp.continuous_psi_symp_atPlace <;> assumption)
+  first | exact @GlobalTheory.ContSymp.continuous_psi_symp_atPlace
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousAddCharSymplecticSelfPairingPlaceCoordStatement =====
@@ -233,7 +233,7 @@ open scoped GlobalTheory.VacAny
 
 theorem _root_.GlobalTheory.T.eq_adeleSupportedAtFinitePlace_of_supportedAt : ∀ {F : Type} [Field F] [NumberField F] (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) (a : AF F),
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.AdelicU.evFin F v) a → a = GlobalTheory.EmbChart.atPlace v (GlobalTheory.AdelicU.evFin F v a) := by
-  first | exact @GlobalTheory.VacAny.eq_atPlace_of_at | exact GlobalTheory.VacAny.eq_atPlace_of_at | (intros; apply GlobalTheory.VacAny.eq_atPlace_of_at <;> assumption)
+  first | exact @GlobalTheory.VacAny.eq_atPlace_of_at
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqAdeleSupportedAtFinitePlaceOfSupportedAtStatement =====
@@ -264,7 +264,7 @@ theorem _root_.GlobalTheory.T.exists_schroedinger_eigenvector_compact_cocycle : 
           (∑ m, (b m : Fv F v) • u m).1 ⬝ᵥ (∑ m, (a m : Fv F v) • u m).2)))) →
       ∃ φ ∈ GlobalTheory.WeilM.SB (κ → Fv F v), φ ≠ 0 ∧
         ∀ a : M → v.adicCompletionIntegers F, GlobalTheory.WeilM.schr ψ (∑ m, (a m : Fv F v) • u m) φ = χ a • φ := by
-  first | exact @GlobalTheory.VacLoc.exists_schr_eigen | exact GlobalTheory.VacLoc.exists_schr_eigen | (intros; apply GlobalTheory.VacLoc.exists_schr_eigen <;> assumption)
+  first | exact @GlobalTheory.VacLoc.exists_schr_eigen
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSchroedingerEigenvectorCompactCocycleStatement =====
@@ -288,7 +288,7 @@ open scoped GlobalTheory.VacAny
 
 theorem _root_.GlobalTheory.T.standardTraceAdelicAddChar_localComponent_ne_one : ∀ {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsStd ψ →
     ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F), GlobalTheory.VacAny.psiV ψ v ≠ 1 := by
-  first | exact @GlobalTheory.PsiNontriv.psiV_ne_one | exact GlobalTheory.PsiNontriv.psiV_ne_one | (intros; apply GlobalTheory.PsiNontriv.psiV_ne_one <;> assumption)
+  first | exact @GlobalTheory.PsiNontriv.psiV_ne_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardTraceAdelicAddCharLocalComponentNeOneStatement =====
@@ -315,7 +315,7 @@ theorem _root_.GlobalTheory.T.tensorLatticeAtFinitePlace_eq_integral_span_genera
     ∃ (M : Type) (_ : Fintype M) (g : M → Matrix (Fin n) (Fin d) E), ∀ γ,
       γ ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.latAtV X Y v ↔ ∃ a : M → v.adicCompletionIntegers F,
         γ = ∑ m, GlobalTheory.EmbChart.atPlace v (a m : Fv F v) • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F (g m) := by
-  first | exact @GlobalTheory.LatParam.latAtV_param | exact GlobalTheory.LatParam.latAtV_param | (intros; apply GlobalTheory.LatParam.latAtV_param <;> assumption)
+  first | exact @GlobalTheory.LatParam.latAtV_param
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorLatticeAtFinitePlaceEqIntegralSpanGeneratoStatement =====
@@ -511,7 +511,7 @@ theorem _root_.GlobalTheory.T.exists_finitePlace_vacuum_any_darboux_coordinates 
     (B : Base F E), B.IsGood σ → ∀ {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (r s r' s' : ℕ),
     X.IsHerm σ B r s → Y.IsSkew σ B r' s' → ∀ (co : GlobalTheory.WeilM.Darboux (GlobalTheory.WeilM.symp (R := AF F) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ) (-1) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F X.J) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F Y.J)) (Fin n × Fin d)) (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)),
     ∃ φ, Model.IsVac (Model.mk (σ := σ) (X := X) (W := Y) co (fun _ => 0) 0 ∅) B.ψ v φ := by
-  first | exact @GlobalTheory.VacAny.exists_isVac_any_darboux | exact GlobalTheory.VacAny.exists_isVac_any_darboux | (intros; apply GlobalTheory.VacAny.exists_isVac_any_darboux <;> assumption)
+  first | exact @GlobalTheory.VacAny.exists_isVac_any_darboux
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFinitePlaceVacuumAnyDarbouxCoordinatesStatement =====

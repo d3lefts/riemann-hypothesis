@@ -92,7 +92,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.baseChangeBis : ∀ (S : Scheme.{0}) (A S' S'' : Over S) [GrpObj A] (g : ℕ) (_ : S'' ⟶ S'), HasRep A g S' → HasRep A g S'' := by
-  first | exact @GlobalTheory.DualCon.HasRep.baseChange | exact GlobalTheory.DualCon.HasRep.baseChange | (intros; apply GlobalTheory.DualCon.HasRep.baseChange <;> assumption)
+  first | exact @GlobalTheory.DualCon.HasRep.baseChange
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BaseChangeBisStatement =====

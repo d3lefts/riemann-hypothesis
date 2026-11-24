@@ -90,7 +90,7 @@ open NumberField IsDedekindDomain MvPolynomial Formalism.BasicNotions Formalism.
 open scoped Matrix ComplexOrder
 
 theorem _root_.GlobalTheory.T.lattice_has_basis_at_every_finite_place : BasisAtEx := by
-  first | exact @GlobalTheory.LatBasisAt.basisAtEx | exact GlobalTheory.LatBasisAt.basisAtEx | (intros; apply GlobalTheory.LatBasisAt.basisAtEx <;> assumption)
+  first | exact @GlobalTheory.LatBasisAt.basisAtEx
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FoundationProofs.LatticeHasBasisAtEveryFinitePlaceStatement =====
@@ -113,11 +113,7 @@ variable {K : Type} [Field K] [NumberField K] {V : Type} [AddCommGroup V] [Modul
 theorem exists_smul_mem_of_mem_span (T : Submodule (𝓞 K) V) {x : V} (hx : x ∈ Submodule.span K (T : Set V)) :
     ∃ s : 𝓞 K, s ≠ 0 ∧ s • x ∈ T := by
   first
-  | exact @_root_.GlobalTheory.SpanScalarMembership.exists_smul_mem_of_mem_span
-  | exact _root_.GlobalTheory.SpanScalarMembership.exists_smul_mem_of_mem_span
   | (apply _root_.GlobalTheory.SpanScalarMembership.exists_smul_mem_of_mem_span <;> assumption)
-  | (intros; apply _root_.GlobalTheory.SpanScalarMembership.exists_smul_mem_of_mem_span <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.SpanScalarMembership.exists_smul_mem_of_mem_span <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.SpanScalarMembership.exists_smul_mem_of_mem_span ..)
 
 theorem exists_smul_mem_of_fg (T A : Submodule (𝓞 K) V) (hA : A.FG)

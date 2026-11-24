@@ -114,7 +114,6 @@ theorem coefWf_iff {p : ℕ} [Fact p.Prime] (f : PowerSeries ℂ_[p]) :
     have hn : n = Finsupp.single () (n ()) := by
       first
         | exact Finsupp.unique_single n
-        | (ext; simp)
     rw [hn]
     exact h (n ())
 
@@ -316,8 +315,6 @@ private lemma inv_series_sub : PI.InvSerSub := by
   have hHS : PowerSeries.HasSubst ex := by
     first
     | exact PowerSeries.HasSubst.of_constantCoeff_zero hex0
-    | exact PowerSeries.HasSubst.of_constantCoeff_zero' hex0
-    | exact PowerSeries.HasSubst.of_constantCoeff_nilpotent (by rw [hex0]; exact IsNilpotent.zero)
   have key : ∀ m, PowerSeries.coeff m (PowerSeries.X : PowerSeries K) =
       ∑ d ∈ Finset.range (m + 1), PowerSeries.coeff d l * PowerSeries.coeff m (ex ^ d) := by
     intro m

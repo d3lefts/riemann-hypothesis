@@ -96,11 +96,7 @@ variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {l : ℕ} [Fact l.Prime]
 
 theorem norm_le_one_of_int (x : Qbar l) (hx : IsIntegral ℤ_[l] x) : ‖x‖ ≤ 1 := by
   first
-  | exact @_root_.GlobalTheory.PadicIntegralNorm.norm_le_one_of_isIntegral_padicInt
-  | exact _root_.GlobalTheory.PadicIntegralNorm.norm_le_one_of_isIntegral_padicInt
   | (apply _root_.GlobalTheory.PadicIntegralNorm.norm_le_one_of_isIntegral_padicInt <;> assumption)
-  | (intros; apply _root_.GlobalTheory.PadicIntegralNorm.norm_le_one_of_isIntegral_padicInt <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.PadicIntegralNorm.norm_le_one_of_isIntegral_padicInt <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.PadicIntegralNorm.norm_le_one_of_isIntegral_padicInt ..)
 
 theorem norm_le_one (c : Coef l) {x : Qbar l} (hx : x ∈ c.O) : ‖x‖ ≤ 1 := by
@@ -864,11 +860,7 @@ theorem mul_mem_ballSub {r : ℝ} {hr : 0 ≤ r} {k x : PadicAlgCl l} (hk : ‖k
 
 theorem norm_le_one_of_int (x : PadicAlgCl l) (hx : IsIntegral ℤ_[l] x) : ‖x‖ ≤ 1 := by
   first
-  | exact @_root_.GlobalTheory.IntegralNormLeOne.norm_le_one_of_isIntegral
-  | exact _root_.GlobalTheory.IntegralNormLeOne.norm_le_one_of_isIntegral
   | (apply _root_.GlobalTheory.IntegralNormLeOne.norm_le_one_of_isIntegral <;> assumption)
-  | (intros; apply _root_.GlobalTheory.IntegralNormLeOne.norm_le_one_of_isIntegral <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.IntegralNormLeOne.norm_le_one_of_isIntegral <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.IntegralNormLeOne.norm_le_one_of_isIntegral ..)
 
 theorem norm_le_one_of_mem (c : Coef l) {x : Qbar l} (hx : x ∈ c.O) : ‖x‖ ≤ 1 :=
@@ -1239,7 +1231,7 @@ theorem GlobalTheory.Ord2.LocW.local_height_at_frobenius : ∀ (l : ℕ) [Fact l
     generalize mat W τ - 1 = M at hMO ⊢
     intro i j
     rw [Matrix.adjugate_fin_two]
-    fin_cases i <;> fin_cases j <;> simp <;> first | exact hMO _ _ | exact neg_mem (hMO _ _)
+    fin_cases i <;> fin_cases j <;> simp <;> first | exact hMO _ _
   have hbO : ∀ i, b i ∈ c.O := fun i => by rw [hb]; exact mulVec_mem c _ _ hadjO (hzO τ) i
   have hbn : ∀ i, ‖b i‖ ≤ 1 := fun i => norm_le_one_of_mem c (hbO i)
   have hden : ‖de‖ ≤ 1 := norm_le_one_of_mem c hdeO

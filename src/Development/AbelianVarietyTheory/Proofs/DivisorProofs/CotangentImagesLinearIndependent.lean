@@ -57,6 +57,7 @@ import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsLogCanon
 import Formalism.LocalToGlobal.ProjectiveLattices.ErealAddIInf
 import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
 import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.EllipsoidStA
+import Mathlib.Algebra.Azumaya.Basic
 
 @[expose] public section
 
@@ -259,7 +260,7 @@ theorem exists_adapted_frame : ∀ {X : Scheme.{0}} {p : X ⟶ Sp ℂ} {n : ℕ}
         by_cases hil : l = i
         · subst hil
           simp
-        · simp [Pi.single_apply, hil]
+        · simp [hil]
     rw [RingHom.map_det]
     exact (congrArg Matrix.det hm).trans_ne hdet
   have hunit : IsUnit ((X.presheaf.germ U y hyU).hom c.det) :=

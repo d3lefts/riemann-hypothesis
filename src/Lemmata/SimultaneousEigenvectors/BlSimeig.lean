@@ -125,7 +125,6 @@ theorem goal1 :
                         Eq.{u_1 + 1} (DFunLike.coe.{u_1 + 1, u_1 + 1, u_1 + 1} (A c c) w)
                           (HSMul.hSMul.{0, u_1, u_1} (μ c) w))) := by
   intro n X _ _ A hA s T hfd hinv hT
-  obtain ⟨w, hw, hw0, μ, hμ⟩ := exists_simultaneous_eigenvector hA s T hfd hinv hT
-  exact ⟨w, hw, hw0, μ, hμ⟩
+  exact exists_simultaneous_eigenvector hA s T hfd hinv hT
 
 end Bl.SimultaneousEigenvectors

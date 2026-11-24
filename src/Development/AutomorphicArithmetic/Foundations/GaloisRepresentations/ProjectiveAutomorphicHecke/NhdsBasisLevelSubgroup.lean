@@ -125,7 +125,7 @@ private theorem exists_open_avoid (w : Plc E) (x : GLw n w) (hx : x ≠ 1) :
     (isOpen_compl_singleton.mem_nhds (by simpa using (sub_ne_zero.2 hij).symm))
   have hW : IsClopen (f ⁻¹' (A : Set (w.adicCompletion E))) := A.isClopen.preimage hf
   have h1 : (1 : ↥(GlobalTheory.LFun.KGL w (n := n))) ∈ f ⁻¹' (A : Set (w.adicCompletion E)) := by
-    simp [f, A.zero_mem]
+    simp [f]
   obtain ⟨H, hH⟩ := IsTopologicalGroup.exist_openSubgroup_sub_clopen_nhds_of_one hW h1
   refine ⟨(H : Subgroup _).map (GlobalTheory.LFun.KGL w (n := n)).subtype, ?_, Subgroup.map_subtype_le _, ?_⟩
   · exact hKo.isOpenEmbedding_subtypeVal.isOpenMap _ H.isOpen
@@ -1142,7 +1142,7 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pKapOf_of :
     have e : ((χ.ker.map (Kw w₀).subtype : Subgroup (GLw n w₀)) : Set (GLw n w₀)) =
         Subtype.val '' {k : Kw w₀ | χ k = 1} := by
       ext a
-      simp [Subgroup.mem_map, MonoidHom.mem_ker]
+      simp [MonoidHom.mem_ker]
     rw [e]
     exact (hS.opn w₀ hS.mem).isOpenMap_subtype_val _ hχ
   have hK' := hLO E n S (Function.update Kw w₀ (χ.ker.map (Kw w₀).subtype)) (by
@@ -1772,7 +1772,7 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pXiScalar_of :
     rw [hinv]
     change ((((Formalism.L2.Col.brpSc E t⁻¹ : GL (Fin n) E)) : Matrix (Fin n) (Fin n) E).map u.embedding) i k = _
     rw [Formalism.L2.Col.brpSc_coe, Formalism.L2.Col.brpSc_coe]
-    by_cases h : i = k <;> simp [Matrix.one_apply, h]
+    by_cases h : i = k <;> simp [h]
   have hr := Formalism.L2.Col.tensorWeights_scalar_action (K := ℂ) W (fun u => Units.map (u.embedding : E →* ℂ) t⁻¹)
   rw [← hemb] at hr
   simp only [xi, MonoidHom.coe_mk, OneHom.coe_mk, Representation.dual_apply]

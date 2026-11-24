@@ -75,7 +75,6 @@ theorem isOpen_fix_of {ψ : UA E n → ℂ} (U : Set (finU (E := E) (n := n))) (
       mul_mem' := fun {a b} ha hb => by
         change RU E n ((a : UA E n) * b) ψ = ψ
         rw [← RU_RU]
-        change RU E n a (RU E n b ψ) = ψ
         rw [hb]; exact ha
       one_mem' := by
         change RU E n ((1 : finU (E := E) (n := n)) : UA E n) ψ = ψ
@@ -135,7 +134,7 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 open GlobalTheory.GalCut GlobalTheory.UnitaryBC GlobalTheory.Cong GlobalTheory.DefU GlobalTheory.CuspRep GlobalTheory.PRep
 
 theorem _root_.GlobalTheory.T.exists_algebraicModularForm_mul_archInvariant : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : ℕ) (W : Wt E n) (f : algForms W) (e : UA E n → ℂ), IsAutFormU e → (∀ g, ∀ x ∈ infU E n, e (g * x) = e g) → ∃ f' : algForms W, ∀ v g, f'.1 v g = e g * f.1 v g := by
-  first | (exact @GlobalTheory.AlgMul.exists_mul_algForms) | (exact GlobalTheory.AlgMul.exists_mul_algForms) | (intros; apply GlobalTheory.AlgMul.exists_mul_algForms  <;> assumption)
+  first | (exact @GlobalTheory.AlgMul.exists_mul_algForms)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsAlgebraicModularFormMulArchInvariantStatement =====

@@ -78,7 +78,7 @@ theorem _root_.GlobalTheory.T.weilTransport_archimedeanSlice_sobolev_bounds : �
                        GlobalTheory.WeilSchrodinger.IsTransport ψ co ω om →
   ∀ Φ ∈ GlobalTheory.WeilM.schA D.host.F κ, ∀ (y : κ → FiniteAdeleRing (𝓞 D.host.F) D.host.F) p0 (i j : ℕ), ∃ B : ℝ,
       ∀ᶠ p in nhds p0, ∫ x, (‖x‖ ^ i * ‖iteratedFDeriv ℝ j (fun x => om p Φ (GlobalTheory.WeilCont.adeleJoin D.host.F x y)) x‖) ^ 2 ≤ B := by
-  first | exact @GlobalTheory.WeilL2Words.weilTransport_archimedeanSlice_sobolev_bounds_alt | exact GlobalTheory.WeilL2Words.weilTransport_archimedeanSlice_sobolev_bounds_alt | (intros; apply GlobalTheory.WeilL2Words.weilTransport_archimedeanSlice_sobolev_bounds_alt <;> assumption)
+  first | exact @GlobalTheory.WeilL2Words.weilTransport_archimedeanSlice_sobolev_bounds_alt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilTransportArchimedeanSliceSobolevBoundsStatement =====
@@ -168,7 +168,7 @@ theorem _root_.GlobalTheory.T.weilOperator_archimedeanSlice_schwartzSeminorm_bou
   ∀ Φ ∈ GlobalTheory.WeilM.schA D.host.F κ, ∀ (y : κ → FiniteAdeleRing (𝓞 D.host.F) D.host.F) p0 (k n : ℕ), ∃ C : ℝ,
       ∀ᶠ p in nhds p0, ∀ x : κ → mixedEmbedding.mixedSpace D.host.F,
         ‖x‖ ^ k * ‖iteratedFDeriv ℝ n (fun x => om p Φ (GlobalTheory.WeilCont.adeleJoin D.host.F x y)) x‖ ≤ C := by
-  first | exact @GlobalTheory.WeilCont.slice_bounds | exact GlobalTheory.WeilCont.slice_bounds | (intros; apply GlobalTheory.WeilCont.slice_bounds <;> assumption)
+  first | exact @GlobalTheory.WeilCont.slice_bounds
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilOperatorArchimedeanSliceSchwartzSeminormBounStatement =====

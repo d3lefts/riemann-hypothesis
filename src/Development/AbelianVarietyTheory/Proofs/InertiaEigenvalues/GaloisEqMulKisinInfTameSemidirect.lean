@@ -152,8 +152,6 @@ theorem GlobalTheory.BKGal.covers_action : ∀ (l : ℕ) [Fact l.Prime] (a e : �
       GlobalTheory.MemLoc.IsTiltOf.untilt_eq hz]
     first
     | exact (map_pow (algebraMap (Om l) ℂ_[l]) ω j).symm
-    | norm_cast
-    | exact (UniformSpace.Completion.coe_pow ..).symm
   refine ⟨fun x hx => ?_, ?_⟩
   · rcases eq_or_ne x 0 with rfl | hx0
     · rw [map_zero, zero_pow (pow_ne_zero _ (Fact.out : l.Prime).ne_zero)]
@@ -697,7 +695,7 @@ open Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.Weakl
 open scoped Formalism.Per
 
 theorem _root_.GlobalTheory.T.mem_kummerTowerUnramified_of_covers_one : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (ϖ : PiSys l e) (LL : FinExt l) [HasUnr a LL] [TameDescentExponentData ↥LL.1 l e a] (k : GQ l), Covers ↥LL.1 (thetaW a LL) ϖ k (1 : TameGal ↥LL.1 l e a) → k ∈ ϖ.GfieldInf a := by
-  first | exact @GlobalTheory.CoverOne.main | exact GlobalTheory.CoverOne.main | (intros; apply GlobalTheory.CoverOne.main <;> assumption)
+  first | exact @GlobalTheory.CoverOne.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MemKummerTowerUnramifiedOfCoversOneStatement =====

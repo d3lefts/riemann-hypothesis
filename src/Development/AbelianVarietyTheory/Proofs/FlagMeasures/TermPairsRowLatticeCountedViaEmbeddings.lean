@@ -349,53 +349,35 @@ theorem sum_pairs_weight_mul_class_le_mul_sum (α β : Type) (S : Finset (α × 
     (hinj : ∀ p ∈ S, ∀ q ∈ S, p.1 = q.1 → cls p.2 = cls q.2 → p = q)
     (hsum : ∀ b, ∑ a ∈ (S.image Prod.fst).filter (fun a => cls a = b), w a ≤ 1) :
     ∑ p ∈ S, w p.1 * (om (cls p.1) * om (cls p.2)) ≤ (∑ b ∈ T₁, om b) * ∑ b ∈ T₂, om b := by
-
   have key : ∀ b ∈ T₁ ×ˢ T₂,
       ∑ p ∈ S.filter (fun p => (cls p.1, cls p.2) = b), w p.1 * (om (cls p.1) * om (cls p.2))
         ≤ om b.1 * om b.2 := by
     intro b _
-    set F := S.filter (fun p => (cls p.1, cls p.2) = b) with hF
-    have h1 : ∑ p ∈ F, w p.1 * (om (cls p.1) * om (cls p.2))
-        = (∑ p ∈ F, w p.1) * (om b.1 * om b.2) := by
-      rw [Finset.sum_mul]
-      refine Finset.sum_congr rfl ?_
-      intro p hp
-      have e := (Finset.mem_filter.1 hp).2
-      rw [← e]
-    have h2 : ∑ p ∈ F, w p.1 = ∑ a ∈ F.image Prod.fst, w a := by
-      rw [Finset.sum_image]
-      intro p hp q hq hpq
-      have ep := (Finset.mem_filter.1 hp).2
-      have eq := (Finset.mem_filter.1 hq).2
-      have hc : cls p.2 = cls q.2 := by
-        have := congrArg Prod.snd (ep.trans eq.symm)
-        simpa using this
-      exact hinj p (Finset.mem_filter.1 hp).1 q (Finset.mem_filter.1 hq).1 hpq hc
-    have h3 : F.image Prod.fst ⊆ (S.image Prod.fst).filter (fun a => cls a = b.1) := by
+    set F := S.filter (fun p => (cls p.1, cls p.2) = b)
+    have hsub : F.image Prod.fst ⊆ (S.image Prod.fst).filter (fun a => cls a = b.1) := by
       intro a ha
       obtain ⟨p, hp, rfl⟩ := Finset.mem_image.1 ha
-      have hp' := Finset.mem_filter.1 hp
-      refine Finset.mem_filter.2 ⟨Finset.mem_image_of_mem _ hp'.1, ?_⟩
-      have := congrArg Prod.fst hp'.2
-      simpa using this
-    have h4 : ∑ p ∈ F, w p.1 ≤ 1 := by
-      rw [h2]
-      exact (Finset.sum_le_sum_of_subset_of_nonneg h3 (fun a _ _ => hw a)).trans (hsum b.1)
-    rw [h1]
-    have hnn : 0 ≤ om b.1 * om b.2 := mul_nonneg (hom _) (hom _)
-    calc (∑ p ∈ F, w p.1) * (om b.1 * om b.2) ≤ 1 * (om b.1 * om b.2) :=
-          mul_le_mul_of_nonneg_right h4 hnn
-      _ = om b.1 * om b.2 := one_mul _
+      exact Finset.mem_filter.2 ⟨Finset.mem_image_of_mem _ (Finset.mem_filter.1 hp).1,
+        by simpa using congrArg Prod.fst (Finset.mem_filter.1 hp).2⟩
+    have hwt : ∑ p ∈ F, w p.1 ≤ 1 := by
+      rw [← Finset.sum_image (f := w) (s := F) (g := Prod.fst) (fun p hp q hq hpq =>
+        hinj p (Finset.mem_filter.1 hp).1 q (Finset.mem_filter.1 hq).1 hpq (by
+          simpa using (congrArg Prod.snd (Finset.mem_filter.1 hp).2).trans
+            (congrArg Prod.snd (Finset.mem_filter.1 hq).2).symm))]
+      exact (Finset.sum_le_sum_of_subset_of_nonneg hsub (fun a _ _ => hw a)).trans (hsum b.1)
+    have hfac : ∑ p ∈ F, w p.1 * (om (cls p.1) * om (cls p.2))
+        = (∑ p ∈ F, w p.1) * (om b.1 * om b.2) := by
+      rw [Finset.sum_mul]
+      exact Finset.sum_congr rfl fun p hp => by rw [← (Finset.mem_filter.1 hp).2]
+    rw [hfac]
+    exact mul_le_of_le_one_left (mul_nonneg (hom _) (hom _)) hwt
   calc ∑ p ∈ S, w p.1 * (om (cls p.1) * om (cls p.2))
       = ∑ b ∈ T₁ ×ˢ T₂, ∑ p ∈ S.filter (fun p => (cls p.1, cls p.2) = b),
-          w p.1 * (om (cls p.1) * om (cls p.2)) := by
-        symm
-        exact Finset.sum_fiberwise_of_maps_to (fun p hp => Finset.mem_product.2 (hT p hp)) _
+          w p.1 * (om (cls p.1) * om (cls p.2)) :=
+        (Finset.sum_fiberwise_of_maps_to (fun p hp => Finset.mem_product.2 (hT p hp)) _).symm
     _ ≤ ∑ b ∈ T₁ ×ˢ T₂, om b.1 * om b.2 := Finset.sum_le_sum key
     _ = (∑ b ∈ T₁, om b) * ∑ b ∈ T₂, om b := by
-      rw [Finset.sum_product, Finset.sum_mul]
-      refine Finset.sum_congr rfl (fun x _ => ?_)
-      rw [Finset.mul_sum]
+        rw [Finset.sum_product, Finset.sum_mul_sum]
 
 end GlobalTheory
 end -- clump:auto
@@ -787,7 +769,7 @@ open MeasureTheory Matrix NumberField Formalism.BasicNotions Formalism.MainNotio
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.sum_pairs_definiteIsometry_le_frameClasses : ∀ (D : D7) (large₂ : SizeData₂ D) (X : HidaSetting D) (Y : Full X) (u : D.what₂.Word), Std D large₂ → ∀ (W : Submodule D.host.E (VS D).V) (HW : Formalism.HermitianLatticeCounting.S6.HermSpace D.host.E W), GlobalTheory.DegAsm.IsEmb (F0 X u) HW W.subtype → ∀ (Λ : Submodule (𝓞 D.host.E) (VS D).V) (h : GTu Y u → (W ≃ₗ[D.host.E] W)), (∀ t ∈ relSet Y u, GlobalTheory.DegAsm.IsH (F0 X u) (Ft t) W.subtype t.lin (h t)) → ∀ (Sf : Finset (GTu Y u × GTu Y u)), (∀ p ∈ Sf, p ∈ (Y.tO u u).allPairs (relSet Y u) ∧ p.1.lam = Λ) → (∀ p ∈ Sf, ∀ q ∈ Sf, h p.1 * (h p.2)⁻¹ = h q.1 * (h q.2)⁻¹) → ∑ p ∈ Sf, wRow D (X.Fu u) p.1.lam' * (omT p.1 * omT p.2) ≤ (∑ b ∈ Sf.image (fun p => frCls Λ p.1), clsOm Y u Λ b) * ∑ b ∈ Sf.image (fun p => frCls Λ p.2), clsOm Y u Λ b := by
-  first | exact @GlobalTheory.TypeAsm.PerRow.sum_pairs_le_classes_pf | exact GlobalTheory.TypeAsm.PerRow.sum_pairs_le_classes_pf | (intros; apply GlobalTheory.TypeAsm.PerRow.sum_pairs_le_classes_pf <;> assumption)
+  first | exact @GlobalTheory.TypeAsm.PerRow.sum_pairs_le_classes_pf
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.SumPairsDefiniteIsometryLeFrameClassesStatement =====

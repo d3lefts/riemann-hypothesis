@@ -533,7 +533,7 @@ theorem _root_.GlobalTheory.T.exists_darboux_basis_of_symplectic_pair : _root_.G
     (χX χW : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Chr D.host.F D.host.E) (om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep D.sp.cm.sig Xs Ws)
     (τ : ∀ w : InfinitePlace D.host.F, GlobalTheory.AdelicU.EmbOver D.host.E w),
     GlobalTheory.RealDict.PublishedHyps D Xs Ws Mo ψ' χX χW om τ ∧ GlobalTheory.RealDict.IsPairReading ψ ε A B ω Xs Ws Mo ψ' om τ := by
-  first | exact @_root_.GlobalTheory.PairDarboux.exists_darboux_pair | exact _root_.GlobalTheory.PairDarboux.exists_darboux_pair | (intros; apply _root_.GlobalTheory.PairDarboux.exists_darboux_pair <;> assumption)
+  first | exact @_root_.GlobalTheory.PairDarboux.exists_darboux_pair
 end
 end -- clump:auto
 end -- clump:auto
@@ -617,7 +617,7 @@ theorem _root_.GlobalTheory.T.exists_fock_model_intertwiner : _root_.GlobalTheor
     GlobalTheory.RealDict.PublishedHyps D Xs Ws Mo ψ' χX χW om τ → GlobalTheory.RealDict.IsPairReading ψ ε A B ω Xs Ws Mo ψ' om τ →
     ∃ Φ : PolF D X.rank M.rank →ₗ[ℂ] GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf D.host.F (Fin M.rank × Fin X.rank),
       Function.Injective Φ ∧ LinearMap.range Φ = Mo.Pol ψ' τ ∧ GlobalTheory.RealDict.IsFockMap ψ θ ε A B Mo Φ := by
-  first | exact @_root_.GlobalTheory.RealDict.FockMap.exists_fock_model_map | exact _root_.GlobalTheory.RealDict.FockMap.exists_fock_model_map | (intros; apply _root_.GlobalTheory.RealDict.FockMap.exists_fock_model_map <;> assumption)
+  first | exact @_root_.GlobalTheory.RealDict.FockMap.exists_fock_model_map
 end
 end -- clump:auto
 end -- clump:auto
@@ -739,7 +739,7 @@ open scoped GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
 
 theorem _root_.GlobalTheory.T.complementaryAdelicSchwartz_archimedean_replace : ∀ {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] (f f₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F κ) (r : (κ → AF F) → ℂ),
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rest (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) f r → f ≠ 0 → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rest (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) f₁ r := by
-  first | exact @GlobalTheory.TwistRest.restTr | exact GlobalTheory.TwistRest.restTr | (intros; apply GlobalTheory.TwistRest.restTr <;> assumption)
+  first | exact @GlobalTheory.TwistRest.restTr
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ComplementaryAdelicSchwartzArchimedeanReplaceStatement =====
@@ -813,7 +813,7 @@ theorem _root_.GlobalTheory.T.theta_lineDeriv_vanishes_on_coinvariants : _root_.
     (∀ t : ℝ, GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU M (GlobalTheory.RealDict.sgE (D := D) ε) hJ (g t) = γ (Multiplicative.ofAdd t)) ∧
     ∀ P : PolF D X.rank M.rank, ∃ Q ∈ GlobalTheory.RealQuot.coinv ε A B eT, ∀ z,
       HasDerivAt (fun t : ℝ => ω (g t, 1) (ptF (V := sgn ε M) ψ θ (frSgn ε A) B f₀ P) z) (ptF ψ θ (frSgn ε A) B f₀ Q z) 0 := by
-  first | exact @_root_.GlobalTheory.OmegaDer.line_deriv_theta_mem_coinvariants | exact _root_.GlobalTheory.OmegaDer.line_deriv_theta_mem_coinvariants | (intros; apply _root_.GlobalTheory.OmegaDer.line_deriv_theta_mem_coinvariants <;> assumption)
+  first | exact @_root_.GlobalTheory.OmegaDer.line_deriv_theta_mem_coinvariants
 end
 end -- clump:auto
 end -- clump:auto
@@ -971,7 +971,7 @@ theorem _root_.GlobalTheory.T.real_lie_derivative_mem_coinvariants : _root_.Glob
       ∀ γ ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Lines D.sp.cm.sig Xs, ∀ f ∈ Mo.Pol ψ' τ, ∀ f₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf D.host.F (Fin M.rank × Fin X.rank),
           GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ActsD (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F) (fun t => om (γ (Multiplicative.ofAdd t), 1)) f f₁ →
           f₁ ∈ (GlobalTheory.RealQuot.coinv ε A B eT).map Φ := by
-  first | exact @_root_.GlobalTheory.RealDict.lie_derivative_mem_coinvariants | exact _root_.GlobalTheory.RealDict.lie_derivative_mem_coinvariants | (intros; apply _root_.GlobalTheory.RealDict.lie_derivative_mem_coinvariants <;> assumption)
+  first | exact @_root_.GlobalTheory.RealDict.lie_derivative_mem_coinvariants
 end
 end -- clump:auto
 end -- clump:auto
@@ -1417,7 +1417,7 @@ theorem _root_.GlobalTheory.T.theta_subspace_stable_maximal_compact : _root_.Glo
         GlobalTheory.RealQuot.IsStab (fun i : GlobalTheory.RealQuot.LieIx X => GlobalTheory.RealQuot.actT ε A B eS i.1.1 i.1.2) N →
         ∀ k ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.KInf D.sp.cm.sig Ws τ, ∀ f ∈ N.map Φ, ∀ f₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf D.host.F (Fin M.rank × Fin X.rank),
           GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F) (om (1, k)) f f₁ → f₁ ∈ N.map Φ := by
-  first | exact @_root_.GlobalTheory.CompactStable.maximal_compact_stable_theta_subspace | exact _root_.GlobalTheory.CompactStable.maximal_compact_stable_theta_subspace | (intros; apply _root_.GlobalTheory.CompactStable.maximal_compact_stable_theta_subspace <;> assumption)
+  first | exact @_root_.GlobalTheory.CompactStable.maximal_compact_stable_theta_subspace
 end
 end -- clump:auto
 end -- clump:auto
@@ -1529,7 +1529,7 @@ theorem _root_.GlobalTheory.T.twist_real_place_correspondence : _root_.GlobalThe
           f₁ ∈ (GlobalTheory.RealQuot.coinv ε A B eT).map Φ) ∧
       (∀ k ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.KInf D.sp.cm.sig Xs τ, ∀ f ∈ Mo.Pol ψ' τ, ∀ f₁ : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf D.host.F (Fin M.rank × Fin X.rank),
           GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F) (om (k, 1)) f f₁ → f₁ - f ∈ (GlobalTheory.RealQuot.coinv ε A B eT).map Φ) := by
-  first | exact @_root_.GlobalTheory.RealDict.real_place_correspondence | exact _root_.GlobalTheory.RealDict.real_place_correspondence | (intros; apply _root_.GlobalTheory.RealDict.real_place_correspondence <;> assumption)
+  first | exact @_root_.GlobalTheory.RealDict.real_place_correspondence
 end
 end -- clump:auto
 end -- clump:auto
@@ -1603,7 +1603,7 @@ theorem _root_.GlobalTheory.T.howe_condition_of_fock_coinvariants : GlobalTheory
   ∀ (ε : Bool) (M X : HSp D) (A : Fr M) (B : Fr X) (χS χT : (AE D)ˣ →* Circle) (ω : WRep M X) (eS eT : D.what₂.Tau → ℚ),
   IsWeil ψ ε M X χS χT ω → (∀ τ, HasInfExp D χS τ (eS τ) ∧ HasInfExp D χT τ (eT τ)) →
   GlobalTheory.RealQuot.HoweCond (fun i : GlobalTheory.RealQuot.LieIx X => GlobalTheory.RealQuot.actT ε A B eS i.1.1 i.1.2) (GlobalTheory.RealQuot.coinv ε A B eT) := by
-  first | exact @_root_.GlobalTheory.HoweFockReal.howe_condition_action_coinvariants_fock | exact _root_.GlobalTheory.HoweFockReal.howe_condition_action_coinvariants_fock | (intros; apply _root_.GlobalTheory.HoweFockReal.howe_condition_action_coinvariants_fock <;> assumption)
+  first | exact @_root_.GlobalTheory.HoweFockReal.howe_condition_action_coinvariants_fock
 end
 end -- clump:auto
 end -- clump:auto

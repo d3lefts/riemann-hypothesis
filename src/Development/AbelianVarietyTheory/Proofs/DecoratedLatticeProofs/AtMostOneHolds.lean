@@ -122,7 +122,7 @@ section -- clump:auto
 open MeasureTheory ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.StepData GlobalTheory.SymChain
 
 theorem _root_.GlobalTheory.T.symData_oneIndex_of_oneClass_of_supportOne : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (ν : Measure k), IsUnitVol ν → ∀ (s κ : ℕ) (S : SymData k s κ) (t : Type) [Fintype t] [DecidableEq t], S.OneClass t ν → S.SupportOne t → S.OneIndex t ν := by
-  first | exact @GlobalTheory.SymChain.oneIndex_of_oneClass_of_supportOne | exact GlobalTheory.SymChain.oneIndex_of_oneClass_of_supportOne | (intros; apply GlobalTheory.SymChain.oneIndex_of_oneClass_of_supportOne <;> assumption)
+  first | exact @GlobalTheory.SymChain.oneIndex_of_oneClass_of_supportOne
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.OneIndexOfOneClassOfSupportOneStatement =====
@@ -443,7 +443,7 @@ theorem flagMat_mulVec (y : Fin c → (n ⊕ Fin c → k)) (v : n ⊕ Fin c → 
   congr 1
   · rcases r with r | l
     · simp [Matrix.one_apply]
-    · simp [one_apply]
+    · simp
   · exact Finset.sum_congr rfl fun i _ => mul_comm _ _
 
 theorem flagMat_uni {y : Fin c → (n ⊕ Fin c → k)} (hY : ∀ i, y i ∈ Yle k n c (i.val + 1))
@@ -800,7 +800,7 @@ theorem oneClass (hc : 1 ≤ c) {ϖ : 𝒪[k]} (hϖ : Irreducible ϖ) {ψ : AddC
     rw [Matrix.mulVec_smul, Pi.smul_apply, Pi.smul_apply, mulVec_auxiliaryBasisVectorSumFin_apply]
     rcases r with r | r
     · simp [pt_eq, basePt, colMat, aux]
-    · simp only [pt_eq, basePt, colMat, aux, Pi.single_apply, Fin.ext_iff]
+    · simp only [pt_eq, basePt, colMat, aux, Pi.single_apply]
       by_cases hr : r.val = 0 <;> simp [hr, Fin.ext_iff]
   obtain ⟨u, hu, huΛ⟩ := GlobalTheory.RootEx.UnfoldFlag.exists_unipotent k n c hc ϖ h0 Λ h1 h2
   refine ⟨h1, h2, ⟨u, hu, huΛ⟩, ?_⟩

@@ -260,7 +260,7 @@ open GlobalTheory.NormRatio
 theorem _root_.GlobalTheory.T.card_transversal_congruence_mul_norm_eq_localNorm : ∀ (D : D7) (𝔪 : Ideal (𝓞 D.host.E)), 𝔪 ≠ ⊥ → 𝔪 ⊔ D.host.conj • 𝔪 = ⊤ → ∀ (a a' : ℕ) (R : Finset (Formalism.MainNotions.StandardLatticesGL3.GA D a)),
   (∀ r ∈ R, r ∈ intG D a) → (∀ k ∈ intG D a, ∃! r, r ∈ R ∧ CongOne D 𝔪 (r⁻¹ * k)) →
     (R.card : ℝ) * ((Ideal.absNorm 𝔪 : ℝ) ^ (a * (a + a')))⁻¹ = locNorm D 𝔪 a a' := by
-  first | exact @GlobalTheory.NormRatio.card_transversal_mul | exact GlobalTheory.NormRatio.card_transversal_mul | (intros; apply GlobalTheory.NormRatio.card_transversal_mul <;> assumption)
+  first | exact @GlobalTheory.NormRatio.card_transversal_mul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CardTransversalCongruenceMulNormEqLocalNormStatement =====
@@ -846,7 +846,7 @@ theorem _root_.GlobalTheory.T.exists_selfDualLattice_vacuumReading : ∀ {D : D7
       finPt hS hT r z ∈ latO S T (stdLat S) LT fun _ => True) ∧
     ∀ e0 ∈ Formalism.MainNotions.TaylorLogMetric.Th D (Formalism.MainNotions.TaylorLogMetric.tor0 D ⊤ δ) (Formalism.MainNotions.StandardLatticesGL3.stdL D a) (Formalism.MainNotions.StandardLatticesGL3.stdL D d), ∀ f₀,
       Reads ψ θ hS hT ⊤ δ r e0 f₀ → IsSphOff ψ S T (stdLat S) LT ∅ f₀ := by
-  first | exact @GlobalTheory.NormRatio.vacLat_of_reads | exact GlobalTheory.NormRatio.vacLat_of_reads | (intros; apply GlobalTheory.NormRatio.vacLat_of_reads <;> assumption)
+  first | exact @GlobalTheory.NormRatio.vacLat_of_reads
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSelfDualLatticeVacuumReadingStatement =====
@@ -1097,7 +1097,7 @@ theorem _root_.GlobalTheory.T.thetaCosetIndicatorReading_normSq_eq_absNorm_inv_m
     Reads X.ψ X.θ X.rkA X.rkB ⊤ δ r (cosetVec P 𝔪 o) φ →
   ∀ (ν : Measure (WO X.A X.B)) (𝓕 : Set (WO X.A X.B)), IsCovolOne (ratL X.B X.A) ν 𝓕 →
     ip X.A X.B ν 𝓕 φ φ = ((Ideal.absNorm 𝔪 : ℂ) ^ (P.a * P.d))⁻¹ * ip X.A X.B ν 𝓕 f₀ f₀ := by
-  first | exact @GlobalTheory.NormRatio.CosetNorm.ip_cosetVec | exact GlobalTheory.NormRatio.CosetNorm.ip_cosetVec | (intros; apply GlobalTheory.NormRatio.CosetNorm.ip_cosetVec <;> assumption)
+  first | exact @GlobalTheory.NormRatio.CosetNorm.ip_cosetVec
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaCosetIndicatorReadingNormSqEqVacuumStatement =====
@@ -1131,7 +1131,7 @@ theorem _root_.GlobalTheory.T.thetaCosetIndicatorReading_spherical_off_modulus :
   ∀ f₀ φ, Reads X.ψ X.θ X.rkA X.rkB ⊤ δ r P.e0 f₀ → IsSphOff X.ψ X.A X.B (stdLat X.A) LB ∅ f₀ →
     Reads X.ψ X.θ X.rkA X.rkB ⊤ δ r (cosetVec P 𝔪 o) φ →
     IsSphOff X.ψ X.A X.B (stdLat X.A) LB Sf φ := by
-  first | exact @GlobalTheory.NormRatio.SphCoset.sph | exact GlobalTheory.NormRatio.SphCoset.sph | (intros; apply GlobalTheory.NormRatio.SphCoset.sph <;> assumption)
+  first | exact @GlobalTheory.NormRatio.SphCoset.sph
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaCosetIndicatorReadingSphericalOffModulusStatement =====
@@ -1214,7 +1214,7 @@ theorem integral_eq_mean {G V : Type} [AddCommGroup G] [TopologicalSpace G] [IsT
     rw [hmA _ (measurable_const_add _ hA), hmA _ hA, ← measure_preimage_add ν p (Y ⁻¹' A ∩ _)]
     congr 1
     ext x
-    simp only [Set.mem_inter_iff, Set.mem_preimage, map_add (f := _), SetLike.mem_coe, Pi.add_apply, id]
+    simp only [Set.mem_inter_iff, Set.mem_preimage, map_add (f := _), SetLike.mem_coe]
     exact and_congr_right fun _ => (P.add_mem_cancel_left hp).symm
   haveI : m.IsAddLeftInvariant := (forall_measure_preimage_add_iff m).1 hinv
   have hm1 : m F0 = 1 := by rw [hmA _ hF0m, ← hone]; exact hfd.measure_eq h𝓕
@@ -1474,7 +1474,7 @@ theorem _root_.GlobalTheory.T.thetaLineReading_adelicNorm_eq_torusMeanSquare : �
     Reads ψ θ hS hT ⊤ δ r e0 f₀ → IsSphOff ψ S T (stdLat S) LT ∅ f₀ →
   ∀ (ν : Measure (WO S T)) (𝓕 : Set (WO S T)), IsCovolOne (ratL T S) ν 𝓕 →
     ip S T ν 𝓕 f₀ f₀ = (Formalism.MainNotions.TaylorLogMetric.normSq D (Formalism.MainNotions.TaylorLogMetric.tor0 D ⊤ δ) (Formalism.MainNotions.StandardLatticesGL3.La0 D (Formalism.MainNotions.TaylorLogMetric.tor0 D ⊤ δ) a d) e0 : ℝ) := by
-  first | exact @GlobalTheory.VacNormMean.ip_eq_normSq | exact GlobalTheory.VacNormMean.ip_eq_normSq | (intros; apply GlobalTheory.VacNormMean.ip_eq_normSq <;> assumption)
+  first | exact @GlobalTheory.VacNormMean.ip_eq_normSq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaLineReadingAdelicNormEqTorusMeanSquareStatement =====
@@ -1557,7 +1557,7 @@ theorem _root_.GlobalTheory.T.weilRep_keeps_spherical_of_lattice_stabilizer : �
   IsWeilDatumO ψ A B χA χB om → ∀ (LA : Lat A) (LB : Lat B), IsSelfDualC A LA → IsSelfDualC B LB →
   ∀ (Sf : Finset (FinPl D)) (g : GA D A), g ∈ openOff A LA Sf → ∀ f, IsThetaFunO ψ A B f → IsSphOff ψ A B LA LB Sf f →
     IsSphOff ψ A B LA LB Sf (om (g, 1) f) := by
-  first | exact @GlobalTheory.SphMove.isSphOff_om | exact GlobalTheory.SphMove.isSphOff_om | (intros; apply GlobalTheory.SphMove.isSphOff_om <;> assumption)
+  first | exact @GlobalTheory.SphMove.isSphOff_om
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilRepKeepsSphericalOfLatticeStabilizerStatement =====

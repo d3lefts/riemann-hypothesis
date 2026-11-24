@@ -16,7 +16,6 @@ public import Mathlib.Analysis.Complex.CauchyIntegral
 public import Mathlib.Analysis.Complex.Liouville
 public import Mathlib.NumberTheory.Real.Irrational
 public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-public import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicStoneVonNeumannLagrangianUniqueness
 public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzVanishingDecomposition
 import Mathlib.Algebra.Order.Floor.Extended
@@ -202,7 +201,7 @@ theorem hasTemperateGrowth_quot (a : ℝ) : (fun t : ℝ => quot a t).HasTempera
       refine (neg_le_abs _).trans ?_
       rw [abs_mul]
       gcongr
-    nlinarith [norm_nonneg (quot a z)]
+    linarith [mul_le_mul_of_nonneg_right h.le (norm_nonneg (quot a z))]
 
 theorem quot_neg (a t : ℝ) : quot (-a) t = (starRingEnd ℂ) (quot a t) := by
   by_cases ht : t = 0
@@ -228,7 +227,7 @@ theorem norm_exp_sub_one_ge (x : ℝ) :
   have hp := Real.pi_pos
   have e : 2 * Real.pi * d / 2 = Real.pi * d := by ring
   have h3 : |Real.pi * d| ≤ Real.pi / 2 := by
-    rw [abs_mul, abs_of_pos hp]; nlinarith
+    rw [abs_mul, abs_of_pos hp]; linarith [mul_le_mul_of_nonneg_left h2 hp.le]
   have h4 := Real.mul_abs_le_abs_sin h3
   rw [abs_mul, abs_of_pos hp] at h4
   have e2 : 2 / Real.pi * (Real.pi * |d|) = 2 * |d| := by field_simp
@@ -244,12 +243,12 @@ theorem dioph (t : ℝ) (hp : round t ≠ 0) :
   have h2 : |√2 * t - q| ≤ 1 / 2 := abs_sub_round _
   have hs : √2 * √2 = 2 := Real.mul_self_sqrt (by norm_num)
   have hs0 : 0 < √2 := by positivity
-  have hs2 : √2 ≤ 3 / 2 := by nlinarith
+  have hs2 : √2 ≤ 3 / 2 := Real.sqrt_le_iff.2 ⟨by norm_num, by norm_num⟩
   have hne : (2 * p ^ 2 - q ^ 2 : ℤ) ≠ 0 := by
     intro h
     have hr : (2 : ℝ) * p ^ 2 - q ^ 2 = 0 := by exact_mod_cast h
     have hp' : (p : ℝ) ≠ 0 := by exact_mod_cast hp
-    have : (√2 * p - q) * (√2 * p + q) = 0 := by nlinarith
+    have : (√2 * p - q) * (√2 * p + q) = 0 := by linear_combination hr + (p : ℝ) ^ 2 * hs
     have hirr := irrational_sqrt_two
     rcases mul_eq_zero.1 this with h' | h'
     · exact hirr ⟨(q : ℚ) / p, by push_cast; field_simp; linarith⟩
@@ -257,14 +256,16 @@ theorem dioph (t : ℝ) (hp : round t ≠ 0) :
   have h3 : (1 : ℝ) ≤ |(2 : ℝ) * p ^ 2 - q ^ 2| := by
     have := Int.one_le_abs hne
     exact_mod_cast this
-  have h4 : (2 : ℝ) * p ^ 2 - q ^ 2 = (√2 * p - q) * (√2 * p + q) := by nlinarith
+  have h4 : (2 : ℝ) * p ^ 2 - q ^ 2 = (√2 * p - q) * (√2 * p + q) := by
+    linear_combination (-(p : ℝ) ^ 2) * hs
   rw [h4, abs_mul] at h3
   have h5 : |√2 * p - q| ≤ 2 * (|t - p| + |√2 * t - q|) := by
     have : √2 * p - q = (√2 * t - q) - √2 * (t - p) := by ring
     rw [this]
     refine (abs_sub _ _).trans ?_
     rw [abs_mul, abs_of_pos hs0]
-    nlinarith [abs_nonneg (t - p), abs_nonneg (√2 * t - q)]
+    linarith [mul_le_mul_of_nonneg_right hs2 (abs_nonneg (t - p)), abs_nonneg (t - p),
+      abs_nonneg (√2 * t - q)]
   have h6 : |√2 * p + q| ≤ 3 * (1 + |t|) := by
     have : √2 * p + q = 2 * √2 * t - (√2 * t - q) - √2 * (t - p) := by ring
     rw [this]
@@ -272,7 +273,8 @@ theorem dioph (t : ℝ) (hp : round t ≠ 0) :
     have := abs_sub (2 * √2 * t) (√2 * t - q)
     rw [abs_mul, abs_mul, abs_of_pos hs0, abs_two] at this
     rw [abs_mul, abs_of_pos hs0]
-    nlinarith [abs_nonneg (t - p), abs_nonneg t]
+    linarith [mul_le_mul_of_nonneg_right hs2 (abs_nonneg t),
+      mul_le_mul hs2 h1 (abs_nonneg _) (by norm_num : (0 : ℝ) ≤ 3 / 2), abs_nonneg t]
   calc (1 : ℝ) ≤ _ := h3
     _ ≤ (2 * (|t - p| + |√2 * t - q|)) * (3 * (1 + |t|)) := by gcongr
     _ = _ := by ring
@@ -300,17 +302,17 @@ theorem lower (t : ℝ) :
         simp only [Int.cast_zero, sub_zero] at e1
         have : 0 < |t| := abs_pos.2 ht
         by_contra hh
-        nlinarith
-    have h2 : 1 ≤ (1 + |t|) ^ 2 := by nlinarith
-    nlinarith
+        linarith [mul_lt_mul_of_pos_left (not_le.1 hh) this]
+    have h2 : 1 ≤ (1 + |t|) ^ 2 := one_le_pow₀ (by linarith)
+    linarith [mul_le_mul h2 h1 zero_le_one (by positivity), mul_nonneg (by positivity : (0 : ℝ) ≤ (1 + |t|) ^ 2) n2]
   · have h := dioph t hp
     set s := ‖quot (2 * Real.pi) t‖ + ‖quot (2 * Real.pi * √2) t‖ with hs
     have hs0 : 0 ≤ s := by positivity
     have h1 : 4 * (|t - round t| + |√2 * t - round (√2 * t)|) ≤ (1 + |t|) * s := by
-      rw [hs]; nlinarith
+      rw [hs]; linarith
     have h2 := mul_le_mul_of_nonneg_left h1 (show 0 ≤ 1 + |t| by positivity)
     have h3 : 0 ≤ (1 + |t|) ^ 2 * s := by positivity
-    nlinarith
+    linarith
 
 theorem exists_division : ∃ (n : ℕ) (a : Fin n → ℝ) (A : Fin n → ℝ → ℂ),
     (∀ j, Function.HasTemperateGrowth (A j)) ∧
@@ -334,7 +336,7 @@ theorem exists_division : ∃ (n : ℕ) (a : Fin n → ℝ) (A : Fin n → ℝ �
     rw [hn, Real.norm_eq_abs]
     have h2 := one_le_pow₀ (n := 2) h
     have h3 : (‖quot a t‖ + ‖quot b t‖) ^ 2 ≤ 2 * (‖quot a t‖ ^ 2 + ‖quot b t‖ ^ 2) := by
-      nlinarith [sq_nonneg (‖quot a t‖ - ‖quot b t‖)]
+      linarith [sq_nonneg (‖quot a t‖ - ‖quot b t‖)]
     calc (1 : ℝ) ≤ _ := h2
       _ = 4 * (1 + |t|) ^ 4 * (‖quot a t‖ + ‖quot b t‖) ^ 2 := by ring
       _ ≤ 4 * (1 + |t|) ^ 4 * (2 * (‖quot a t‖ ^ 2 + ‖quot b t‖ ^ 2)) := by gcongr
@@ -435,7 +437,7 @@ end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TranslationInvariantFunctionalLinearZero =====
 
 -- ===== clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchrodingerInvariantFunctionalsLagrangian =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchrodingerInvariantFunctionalsLagrangian", "h": "module\n\npublic import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicStoneVonNeumannLagrangianUniqueness\npublic import Mathlib.Analysis.Distribution.SchwartzSpace.Basic\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzVanishingDecomposition\npublic import Mathlib.Analysis.CStarAlgebra.Classes\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TranslationInvariantFunctionalLinearZero\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharacterInvariantAdelicFormEqMulEvalZero\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactOpenSeparating\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEqMulApplyZero\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.RealisedOne\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSymplecticBlockGeneratorsLagrangianNormalF\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.TraceFormMapSurjective\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilRepresentationPreservesSchwartz\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.PiTensorProduct\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\n\n"}
+-- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchrodingerInvariantFunctionalsLagrangian", "h": "module\n\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicStoneVonNeumannLagrangianUniqueness\npublic import Mathlib.Analysis.Distribution.SchwartzSpace.Basic\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzVanishingDecomposition\npublic import Mathlib.Analysis.CStarAlgebra.Classes\npublic import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TranslationInvariantFunctionalLinearZero\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharacterInvariantAdelicFormEqMulEvalZero\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactOpenSeparating\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEqMulApplyZero\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.RealisedOne\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSymplecticBlockGeneratorsLagrangianNormalF\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.TraceFormMapSurjective\nimport Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilRepresentationPreservesSchwartz\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.PiTensorProduct\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.Linter.Style\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\n\n"}
 section -- clump:auto
 @[expose] public section
 
@@ -562,66 +564,6 @@ theorem eval_mem_adm {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype �
     BoundedContinuousFunction.evalCLM_apply, SchwartzMap.toBoundedContinuousFunctionCLM_apply,
     SchwartzMap.toBoundedContinuousFunction_apply, smul_eq_mul]
   ring
-
-end GlobalTheory.SvNLinear
-
-namespace GlobalTheory.SvNLinear
-
-open GlobalTheory.AdelicSvN
-
-theorem main : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ → ∀ (κ : Type) [Fintype κ]
-    (L : Submodule F ((κ → F) × (κ → F))), (∀ a ∈ L, ∀ b ∈ L, a.1 ⬝ᵥ b.2 = b.1 ⬝ᵥ a.2) →
-    Module.finrank F L = Fintype.card κ → ∀ (l₁ l₂ : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ),
-    (∀ (t : AF F), ∀ w ∈ L, ∀ φ ∈ schA F κ,
-      l₁ (schr ψ (t • ((fun i => algebraMap F (AF F) (w.1 i)), (fun i => algebraMap F (AF F) (w.2 i)))) φ) = l₁ φ) →
-    (∀ (t : AF F), ∀ w ∈ L, ∀ φ ∈ schA F κ,
-      l₂ (schr ψ (t • ((fun i => algebraMap F (AF F) (w.1 i)), (fun i => algebraMap F (AF F) (w.2 i)))) φ) = l₂ φ) →
-    (∃ φ ∈ schA F κ, l₂ φ ≠ 0) → ∃ c : ℂ, ∀ φ ∈ schA F κ, l₁ φ = c * l₂ φ := by
-  intro _ F _ _ ψ hψ κ _ L hL hdim l₁ l₂ hi₁ hi₂ ⟨φ₀, hφ₀, hne⟩
-  classical
-  obtain ⟨g, hg, hgL⟩ := _root_.GlobalTheory.AdelicSvN.LagrangianNormalForm.exists_mem_closure F κ L hL hdim
-  obtain ⟨S, hS, hSs, hSa, hSi⟩ := realised_of_mem_closure ψ hψ hg
-
-  have hlin : ∀ (a b : ℂ), ∀ φ ∈ schA F κ, ∀ φ' ∈ schA F κ, S (a • φ + b • φ') = a • S φ + b • S φ' := by
-    intro a b φ hφ φ' hφ'
-    funext x
-    obtain ⟨l', _, e⟩ := hSa _ (eval_mem_adm x)
-    have hm : a • φ + b • φ' ∈ schA F κ := add_mem (Submodule.smul_mem _ a hφ) (Submodule.smul_mem _ b hφ')
-    have e1 := e _ hm
-    have e2 := e φ hφ
-    have e3 := e φ' hφ'
-    simp only [LinearMap.proj_apply] at e1 e2 e3
-    rw [← e1, map_add (f := _), map_smul, map_smul, e2, e3]
-    rfl
-  have key : ∀ l : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ, (∀ (t : AF F), ∀ w ∈ L, ∀ φ ∈ schA F κ,
-      l (schr ψ (t • ((fun i => algebraMap F (AF F) (w.1 i)), (fun i => algebraMap F (AF F) (w.2 i)))) φ) = l φ) →
-      ∃ c : ℂ, ∀ φ ∈ schA F κ, l (S φ) = c * φ 0 := by
-    intro l hi
-    let f : schA F κ →ₗ[ℂ] ℂ :=
-      { toFun := fun φ => l (S φ.1)
-        map_add' := fun φ φ' => by
-          have := hlin 1 1 φ.1 φ.2 φ'.1 φ'.2
-          simp only [one_smul] at this
-          simp only [Submodule.coe_add, this, map_add (f := _)]
-        map_smul' := fun s φ => by
-          have := hlin s 0 φ.1 φ.2 0 (Submodule.zero_mem _)
-          simp only [zero_smul, add_zero] at this
-          simp only [Submodule.coe_smul, this, map_smul, RingHom.id_apply, smul_eq_mul] }
-    obtain ⟨l', hl'⟩ := LinearMap.exists_extend f
-    have e : ∀ φ (hφ : φ ∈ schA F κ), l' φ = l (S φ) := fun φ hφ => LinearMap.congr_fun hl' ⟨φ, hφ⟩
-    obtain ⟨c, hc⟩ := charInv F ψ hψ κ l' (fun y φ hφ => by
-      have hm : (fun x => ψ (x ⬝ᵥ y) * φ x) = schr ψ (0, y) φ := by funext x; simp [schr]
-      rw [hm, e _ (GlobalTheory.HeisSchA.schr_mem_schA ψ hψ _ φ hφ), e φ hφ, hSi _ φ hφ, act_zero_eq_sum]
-      exact inv_sum ψ hψ L hL l hi Finset.univ y _ (fun j => hgL _) _ (hS φ hφ))
-    exact ⟨c, fun φ hφ => (e φ hφ).symm.trans (hc φ hφ)⟩
-  obtain ⟨c₁, h₁⟩ := key l₁ hi₁
-  obtain ⟨c₂, h₂⟩ := key l₂ hi₂
-  obtain ⟨ψ₀, hψ₀, rfl⟩ := hSs φ₀ hφ₀
-  have hc₂ : c₂ ≠ 0 := fun h => hne (by rw [h₂ ψ₀ hψ₀, h, zero_mul])
-  refine ⟨c₁ / c₂, fun φ hφ => ?_⟩
-  obtain ⟨φ', hφ', rfl⟩ := hSs φ hφ
-  rw [h₁ φ' hφ', h₂ φ' hφ']
-  field_simp
 
 end GlobalTheory.SvNLinear
 end -- clump:auto

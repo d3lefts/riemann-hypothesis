@@ -111,8 +111,8 @@ theorem locFrGen_of {L : Type} [CommRing L] (x : Sp L ⟶ Xo.X) {t' : SAB H (Sp 
           rw [← Over.w (CartesianMonoidalCategory.fst (Over.mk x) Xo.univ.t.G), ← Category.assoc,
             ← Category.assoc, e1]) := by
       apply CartesianMonoidalCategory.hom_ext
-      · first | exact Over.OverMorphism.ext e1 | exact Over.Hom.ext e1 | (ext; exact e1)
-      · first | exact Over.OverMorphism.ext e2 | exact Over.Hom.ext e2 | (ext; exact e2)
+      · first | exact Over.OverMorphism.ext e1
+      · first | exact Over.OverMorphism.ext e2
     exact congrArg Over.Hom.left e3
   have hhk : h ≫ k = 𝟙 _ := gext _ _ (by rw [Category.assoc, hk1, hS, Category.id_comp])
     (by rw [Category.assoc, hk2, hF, Category.id_comp])
@@ -147,7 +147,7 @@ theorem locFrGen_of {L : Type} [CommRing L] (x : Sp L ⟶ Xo.X) {t' : SAB H (Sp 
       chart_le_pullback_open Xo.univ.t.PP.L h hF (fun _ => j) hy
     obtain ⟨i, hi⟩ : ∃ i, h y ∈ t'.PP.L.U i := TopologicalSpace.Opens.mem_iSup.mp (by
       rw [hL'.cover]
-      first | trivial | exact Set.mem_univ _ | simp)
+      first | trivial)
     have e1 := gs_appLE k _ _ (hle j) h y (hpre _ _ hyh) (s''.f (fun _ => j))
     rw [hhk] at e1
     have e2 := hσ'' _ h y j i (hpre _ _ hyh) hi
@@ -164,7 +164,7 @@ theorem locFrGen_of {L : Type} [CommRing L] (x : Sp L ⟶ Xo.X) {t' : SAB H (Sp 
     intro y' hy'
     obtain ⟨j, hj⟩ : ∃ j, m1.cm.F y' ∈ Xo.univ.t.PP.L.U j := TopologicalSpace.Opens.mem_iSup.mp (by
       rw [hL.cover]
-      first | trivial | exact Set.mem_univ _ | simp)
+      first | trivial)
     have hkm : k y' ∈ (PPx x).U (fun _ => j) := hle j hj
     have hmem : y' ∈ (Xo.univ.t.PP.L.pull m1.cm.F).U (fun _ => j) := Set.mem_iInter.mpr fun _ => hj
     have f1 := hσ'' _ (𝟙 _) y' j i hj hy'
@@ -277,10 +277,6 @@ theorem gsvVec_tmap (hx : IsUnivChart _ n xc) (a : 𝓞 E) (cc : Fin n → L) :
   all_goals first
     | rfl
     | (simp; done)
-    | (simp [Over.pullback]; done)
-    | (simp [Over.pullback, pullback.map]; done)
-    | (erw [pullback.lift_fst]; done)
-    | (erw [pullback.lift_fst]; rfl)
 
 theorem gsv_bc [IsLocalRing L] {L' : Type} [CommRing L'] [Algebra L L'] (hx : IsUnivChart _ n xc) :
     ∃ (xc' : ∀ m : ℕ, ReciprocityTheory.ChartRestriction.G.Chart.sp (R₀ := L') (JetR L' (Fin n) m) ⟶

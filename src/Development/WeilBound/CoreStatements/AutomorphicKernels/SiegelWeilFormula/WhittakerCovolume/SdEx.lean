@@ -275,7 +275,7 @@ theorem ofX_toX (h2 : (2 : F) ≠ 0) (hb0 : b 0 = 1) (hσ : σ (b 1) = - b 1)
   conv_rhs => rw [← mk_rc R b (S i j)]
   simp only [ofX, toX]
   rcases lt_trichotomy i j with h | h | h
-  · simp [h, h.le, not_lt.2 h.le, not_le.2 h, (herm_rc hb0 hσ hS i j).2]
+  · simp [h, h.le, not_le.2 h, (herm_rc hb0 hσ hS i j).2]
   · subst h
     simp [herm_diag h2 hb0 hσ hS i]
   · simp [h, h.le, not_lt.2 h.le, not_le.2 h, (herm_rc hb0 hσ hS i j).1]
@@ -504,7 +504,7 @@ open HeckeCharacterZeroLocus.SiegelWeilU NumberField MeasureTheory
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.exists_selfdual_measure_hermitian_tuples : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ → ∀ (M : ℕ) (J : Matrix (Fin M) (Fin M) E), IsHermND σ J → ∀ ψ : AddChar (AF F) ℂ, IsCharAF F ψ → ∀ n : ℕ, ∃ μ : Measure (Fin n → Fin M → AF F ⊗[F] E), SdW F E σ M J (AF F) ψ n μ := by
-  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.SdExistN.exists_sdW_tuples | exact GlobalTheory.CompanionTheory.Hypotheses₂.SdExistN.exists_sdW_tuples | (intros; apply GlobalTheory.CompanionTheory.Hypotheses₂.SdExistN.exists_sdW_tuples <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Hypotheses₂.SdExistN.exists_sdW_tuples
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsSelfdualMeasureHermitianTuplesStatement =====

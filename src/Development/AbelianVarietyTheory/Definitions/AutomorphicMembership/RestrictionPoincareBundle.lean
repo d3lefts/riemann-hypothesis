@@ -1,7 +1,6 @@
 module
 
 public import Development.AbelianVarietyTheory.Definitions.Divisors.ToNatLengthEqRangeAddRange
-public import Mathlib
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PullbackAndTensorModule
 public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsGrpPullbackAbVarModel
 public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsRigidifiedIso
@@ -43,6 +42,7 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 -- This file was produced by scripts/clump.py from the modules listed below.
 -- Members: Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FormalTwistingNeTrivial, Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RestrictionPoincareBundle
@@ -316,7 +316,7 @@ end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FormalTwistingNeTrivial =====
 
 -- ===== clump member: Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RestrictionPoincareBundle =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RestrictionPoincareBundle", "h": "module\n\npublic import Mathlib\npublic import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PullbackAndTensorModule\npublic import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FormalTwistingNeTrivial\npublic import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsGrpPullbackAbVarModel\npublic import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsRigidifiedIso\npublic import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.UniformBaseChange.PullGt\n\n"}
+-- clump-header: {"m": "Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RestrictionPoincareBundle", "h": "module\n\nimport Mathlib.CategoryTheory.Monoidal.Opposite.Mon\npublic import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PullbackAndTensorModule\npublic import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FormalTwistingNeTrivial\npublic import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsGrpPullbackAbVarModel\npublic import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsRigidifiedIso\npublic import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.UniformBaseChange.PullGt\n\n"}
 section -- clump:auto
 @[expose] public section
 

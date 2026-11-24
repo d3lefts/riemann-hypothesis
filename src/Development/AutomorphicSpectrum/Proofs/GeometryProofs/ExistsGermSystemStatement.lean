@@ -409,7 +409,7 @@ theorem comb_bc {n : ℕ} {v : Fin n → (Sp (DualNumber S) ⟶ t.G.left)} {a : 
     rw [hu, ← Category.assoc, ← Category.assoc, spMap_cp, spMap_cp]
     congr 2
     refine RingHom.ext fun s => ?_
-    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, GlobalTheory.CompanionTheory.Ar.epsMul, mul_comm]
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, mul_comm]
   · have := comp_listProd (epsBC f x) (List.ofFn u)
     rw [List.map_ofFn] at this
     exact (congrArg (fun q => q.left) this).symm
@@ -1154,7 +1154,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.exists_germ_system : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (X : Scheme.{0}) (t : SAB H X) (Ω : Type) [Field Ω] [CharZero Ω] (ξ : Sp Ω ⟶ X) [IsLocallyNoetherian X], PowFns t → IsCptGen ξ → ∃ (d : ℕ) (M : LieModel t.G ξ (Fin d → Ω)), Nonempty (GermSys t ξ M) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.germSys_exists | exact GlobalTheory.CompanionTheory.Ar.Flat.germSys_exists | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.germSys_exists <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.germSys_exists
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsGermSystemStatement =====

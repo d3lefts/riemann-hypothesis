@@ -1126,7 +1126,6 @@ theorem out_discriminant_bound : OutD := by
 theorem second_discriminant_bound : SecondD := by
   intro Ps cand cl Sig θ m T a R hm hT ha hSig hW hcl
   have h1 := second_term_le Ps cand cl Sig θ m T a hm hT ha hcl
-  have hc : 0 ≤ 2 * a * m * T := by positivity
   have h2 : ∑ p ∈ cand, (if θ < Sig p then 4 * (m * T * a) * Real.log p / p else 0) ≤
       2 * a * m * T * lhsW cand θ Sig := by
     unfold lhsW
@@ -1134,14 +1133,13 @@ theorem second_discriminant_bound : SecondD := by
     refine Finset.sum_le_sum (fun p hp => ?_)
     have hl := logdiv_nonneg p
     have hs := hSig p hp
-    have h0 : 0 ≤ 2 * a * m * T * (Real.log p / p * (4 * Sig p)) := by positivity
     split_ifs
     · have e : 2 * a * m * T * (Real.log p / p * (2 + 4 * Sig p)) =
           4 * (m * T * a) * Real.log p / p + 2 * a * m * T * (Real.log p / p * (4 * Sig p)) := by ring
-      rw [e]; linarith
-    · rw [zero_add]; exact h0
-  have h3 := mul_le_mul_of_nonneg_left hW hc
-  linarith
+      rw [e]
+      linarith [show (0 : ℝ) ≤ 2 * a * m * T * (Real.log p / p * (4 * Sig p)) by positivity]
+    · simpa using (show (0 : ℝ) ≤ 2 * a * m * T * (Real.log p / p * (4 * Sig p)) by positivity)
+  exact (h1.trans h2).trans (mul_le_mul_of_nonneg_left hW (by positivity))
 
 theorem io_discriminant_bound : IoD := by
   intro cand Sig io θ m T a R hm hT ha hW hio
@@ -1165,9 +1163,8 @@ lemma sizeOut_core {P : Par} {e K m T : ℝ} (hW : Windows P e K) (hL : LargeX P
     (hT : 1 ≤ T) : tOutD P m T ≤ sg P K * unitU P m T := by
   obtain ⟨z, u, E, X, S, sb, v, w8, F⟩ := facts hW hL
   unfold tOutD unitU
-  have h9 := F.xpos
   have hpow : P.x ^ (-2 + P.ε) = P.x⁻¹ ^ 2 * z := by
-    rw [Real.rpow_add h9, Real.rpow_neg h9.le, ← F.hz, Real.rpow_ofNat, F.r2]
+    rw [Real.rpow_add F.xpos, Real.rpow_neg F.xpos.le, ← F.hz, Real.rpow_ofNat, F.r2]
   have key : 4 * P.a * P.x ^ (-2 + P.ε) ≤ sg P K * P.b := by
     rw [F.ha, hpow]
     calc 4 * (P.x * P.b) * (P.x⁻¹ ^ 2 * z)
@@ -1181,10 +1178,9 @@ lemma sizeOut_core {P : Par} {e K m T : ℝ} (hW : Windows P e K) (hL : LargeX P
 lemma size_ninth_power_bound {P : Par} {e K : ℝ} (hW : Windows P e K) (hL : LargeX P.x P.ε e K) :
     2 * P.a * (P.x ^ 9)⁻¹ ≤ sg P K * P.b := by
   obtain ⟨z, u, E, X, S, sb, v, w8, F⟩ := facts hW hL
-  have hr0 := F.rpos
-  have hr1 : P.x⁻¹ ≤ 1 := inv_le_one_of_one_le₀ F.x1
-  have h7 : P.x⁻¹ ^ 7 ≤ 1 := pow_le_one₀ hr0.le hr1
-  have h70 : 0 ≤ P.x⁻¹ ^ 7 := pow_nonneg hr0.le 7
+  have h7 : P.x⁻¹ ^ 7 ≤ 1 :=
+    pow_le_one₀ F.rpos.le (inv_le_one_of_one_le₀ F.x1)
+  have h70 : 0 ≤ P.x⁻¹ ^ 7 := pow_nonneg F.rpos.le 7
   rw [F.ha, ← inv_pow]
   calc 2 * (P.x * P.b) * P.x⁻¹ ^ 9
       = P.b * (2 / 100 * (P.x * P.x⁻¹) * P.x⁻¹ ^ 7) * (100 * z ^ 0 * P.x⁻¹) := by ring
@@ -1203,8 +1199,7 @@ lemma sizeIo_core {P : Par} {e K m T : ℝ} (hW : Windows P e K) (hL : LargeX P.
   obtain ⟨z, u, E, X, S, sb, v, w8, F⟩ := facts hW hL
   have h0 : 0 ≤ P.a * (P.x ^ 9)⁻¹ := mul_nonneg F.apos.le (inv_nonneg.2 (pow_nonneg F.xpos.le 9))
   have key : P.a * (P.x ^ 9)⁻¹ ≤ sg P K * P.b := by
-    have := size_ninth_power_bound hW hL
-    linarith
+    linarith [size_ninth_power_bound hW hL]
   unfold tIoD unitU
   have := scale2 hm hT key
   linarith
@@ -1283,12 +1278,9 @@ theorem joint_discriminant_bound : LossBoundsUnderSizeWindows := by
 
 theorem joint_discriminant_eventually : LossBoundsEventually := by
   obtain ⟨Cord, h0, h⟩ := joint_discriminant_bound
-  refine ⟨Cord, h0, ?_⟩
-  intro ε e K hε hε4
+  refine ⟨Cord, h0, fun ε e K hε hε4 => ?_⟩
   obtain ⟨x₀, hx₀⟩ := large_x_eventually ε e K hε hε4
-  refine ⟨x₀, ?_⟩
-  intro P hPε hPC hx hW
-  exact h P e K hPC hW (by rw [hPε]; exact hx₀ _ hx)
+  exact ⟨x₀, fun P hPε hPC hx hW => h P e K hPC hW (by rw [hPε]; exact hx₀ _ hx)⟩
 
 end Formalism.LFunctionChainParameters.SmallOrderPrimeLosses
 end -- clump:auto

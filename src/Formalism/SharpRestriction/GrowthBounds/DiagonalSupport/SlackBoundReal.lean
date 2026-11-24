@@ -59,16 +59,14 @@ variable {n' r : ℕ} [NeZero n'] (Fr : Frames n' r)
 
 theorem llPos_mem (j : ℤ) (l : ℕ) (hl : l < (Fr.LLset j).card) : llPos Fr j l ∈ Fr.LLset j := by
   unfold llPos
-  have hlen : l < ((Fr.LLset j).sort (· ≤ ·)).length := by rw [Finset.length_sort]; exact hl
-  rw [List.getD_eq_getElem _ _ hlen]
-  exact (Finset.mem_sort _).mp (List.getElem_mem hlen)
+  rw [List.getD_eq_getElem _ _ (by rw [Finset.length_sort]; exact hl)]
+  exact (Finset.mem_sort _).mp (List.getElem_mem (by rw [Finset.length_sort]; exact hl))
 
 theorem llPos_inj (j : ℤ) (l l' : ℕ) (hl : l < (Fr.LLset j).card) (hl' : l' < (Fr.LLset j).card)
     (h : llPos Fr j l = llPos Fr j l') : l = l' := by
   unfold llPos at h
-  have h1 : l < ((Fr.LLset j).sort (· ≤ ·)).length := by rw [Finset.length_sort]; exact hl
-  have h2 : l' < ((Fr.LLset j).sort (· ≤ ·)).length := by rw [Finset.length_sort]; exact hl'
-  rw [List.getD_eq_getElem _ _ h1, List.getD_eq_getElem _ _ h2] at h
+  rw [List.getD_eq_getElem _ _ (by rw [Finset.length_sort]; exact hl),
+      List.getD_eq_getElem _ _ (by rw [Finset.length_sort]; exact hl')] at h
   exact (List.Nodup.getElem_inj_iff (Finset.sort_nodup _ _)).mp h
 
 theorem mem_LLset (j x : ℤ) : x ∈ Fr.LLset j ↔
@@ -265,9 +263,7 @@ theorem lg_nonneg (p r n : ℕ) (hp : 2 ≤ p) (hr : 1 ≤ r) : 0 ≤ lg p r n :
   unfold lg
   have hp1 : (1 : ℝ) < p := by exact_mod_cast hp
   have hx : (1 : ℝ) ≤ (n : ℝ) + r := by
-    have : (1 : ℝ) ≤ r := by exact_mod_cast hr
-    have : (0 : ℝ) ≤ n := Nat.cast_nonneg n
-    linarith
+    exact_mod_cast (show 1 ≤ n + r by omega)
   have := Real.logb_nonneg hp1 hx
   linarith
 
@@ -280,7 +276,6 @@ theorem geom_inj_le {ι : Type} [Fintype ι] (t : ι → ℕ) (ht : Function.Inj
   rw [← tsum_geometric_of_lt_one h0 h1]
   first
     | exact hs.sum_le_tsum _ (fun i _ => pow_nonneg h0 i)
-    | exact sum_le_tsum _ (fun i _ => pow_nonneg h0 i) hs
 
 end Reals
 

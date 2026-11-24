@@ -818,12 +818,12 @@ theorem UpperTheory.ConvolutionTheory.R2.G.rowMul :
     refine inv_eq_of_mul_eq_one_right ?_
     refine Subtype.ext ?_
     show (nU b).1 * (nU (-b)).1 = 1
-    simp [nU, Matrix.one_fin_two, Matrix.mul_fin_two]
+    simp [nU, Matrix.one_fin_two]
   have hwinv : (wW F)⁻¹ = wW F * wW F * wW F := by
     refine inv_eq_of_mul_eq_one_right ?_
     refine Subtype.ext ?_
     show (wW F).1 * ((wW F).1 * (wW F).1 * (wW F).1) = 1
-    simp [wW, Matrix.one_fin_two, Matrix.mul_fin_two]
+    simp [wW, Matrix.one_fin_two]
   let T : Subgroup (G1 F) :=
     { carrier := {g | P g ∧ P g⁻¹}
       mul_mem' := fun {a b} ha hb => ⟨hmul a b ha.1 hb.1, by
@@ -1058,7 +1058,7 @@ private theorem real_dec {ι : Type} (X : GL (Fin 2) (ι → ℝ)) :
     fin_cases i <;> fin_cases j <;> simp [K, Matrix.mul_apply, Fin.sum_univ_two, hee]
   have hKs : star K = K := by
     ext i j : 1
-    fin_cases i <;> fin_cases j <;> simp [K, Matrix.star_eq_conjTranspose, hstar]
+    fin_cases i <;> fin_cases j <;> simp [K]
   have hKmem : K ∈ Matrix.unitaryGroup (Fin 2) (ι → ℝ) := by
     rw [Matrix.mem_unitaryGroup_iff, hKs]
     exact hKK
@@ -1071,7 +1071,7 @@ private theorem real_dec {ι : Type} (X : GL (Fin 2) (ι → ℝ)) :
       (Matrix.GeneralLinearGroup.det (Matrix.GeneralLinearGroup.scalar (Fin 2) t) : ι → ℝ) = t * t := by
     intro t
     change (Matrix.GeneralLinearGroup.scalar (Fin 2) t).val.det = _
-    simp [Matrix.det_fin_two, sq]
+    simp [sq]
   refine ⟨s, Matrix.GeneralLinearGroup.scalar (Fin 2) s⁻¹ * X * Unitary.toUnits k, k, ?_, ?_⟩
   · refine Units.ext ?_
     rw [map_mul, map_mul]
@@ -1108,10 +1108,10 @@ theorem UpperTheory.ConvolutionTheory.R2.Pp.infDec :
     refine TR.ga_ext ?_ ?_
     · rw [TR.pInf_infGL]
       ext i j
-      by_cases e : i = j <;> simp [Matrix.diagonal_apply, e, hi]
+      by_cases e : i = j <;> simp [e, hi]
     · rw [TR.pFin_infGL]
       ext i j
-      by_cases e : i = j <;> simp [Matrix.diagonal_apply, e, hf]
+      by_cases e : i = j <;> simp [e, hf]
   refine ⟨G, TR.infId F s, k, GeneralLinearGroup.map (pFin F) x, ?_, ?_⟩
   · intro i j
     have h := congrArg (fun h : GL (Fin 2) (Af F) => h.val i j) (TR.pFin_infGL (E := F) g)
@@ -1119,7 +1119,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Pp.infDec :
       by_cases e : i = j
       · simp only [Matrix.one_apply, e, if_true, Units.val_one]
         rfl
-      · simp [Matrix.one_apply, e]
+      · simp [e]
     rw [h1]
     exact h
   · rw [hsc, hG]

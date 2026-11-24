@@ -253,7 +253,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem _root_.GlobalTheory.T.definiteBottomTriple_thetaKernel_left_rational_invariant : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGrid.Consts} {G : GridData L sc} {W : G.Weil} {i j : Fin D.R.m}
     {A A' WW : HSp D} {X : Tri T A A' WW}, IsBottomTri W i j X → ∀ (t : T) (P : PolF D WW.rank A.rank) (h : Formalism.L2.Theta.GA D WW),
     ∀ γ ∈ GQ A, ∀ g, X.ker W.ψ W.θ t P h (γ * g) = X.ker W.ψ W.θ t P h g := by
-  first | exact @GlobalTheory.ClassSumLeft.ker_left_rat | exact GlobalTheory.ClassSumLeft.ker_left_rat | (intros; apply GlobalTheory.ClassSumLeft.ker_left_rat <;> assumption)
+  first | exact @GlobalTheory.ClassSumLeft.ker_left_rat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DefiniteBottomTripleThetaKernelLeftRationalInvarStatement =====
@@ -393,7 +393,7 @@ theorem _root_.GlobalTheory.T.integral_fundamentalDomain_eq_vol_mul_classSum : �
         ∀ h, Φ (h * k) = Φ h) →
       ∫ g in fd, Φ g ∂m = v * ∑ᶠ x : GlobalTheory.NormSum.Cls D n (GlobalTheory.NormSum.intG D n),
         ((GlobalTheory.NormSum.gam D (GlobalTheory.NormSum.intG D n) x.out : ℂ))⁻¹ * Φ (pt x.out) := by
-  first | exact @GlobalTheory.BotClassMeas.integral_eq_vol_mul_classSum | exact GlobalTheory.BotClassMeas.integral_eq_vol_mul_classSum | (intros; apply GlobalTheory.BotClassMeas.integral_eq_vol_mul_classSum <;> assumption)
+  first | exact @GlobalTheory.BotClassMeas.integral_eq_vol_mul_classSum
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralFundamentalDomainEqVolMulClassSumStatement =====
@@ -614,7 +614,7 @@ theorem _root_.GlobalTheory.T.bottom_large_level_kernel : _root_.GlobalTheory.Fu
       (X : Tri T A A' WW), IsBottomTri W i j X → ∀ (t : T) (Pf : PolF D WW.rank A.rank) (g : Formalism.L2.Theta.GA D WW) (n : ℕ) (x : Formalism.MainNotions.StandardLatticesGL3.GA D n)
         (k : Formalism.L2.Theta.GA D A), x ∈ GlobalTheory.NormSum.intG D n → GlobalTheory.BotFormula.IsFinPt A k x →
         ∀ y, X.ker W.ψ W.θ t Pf g (y * k) = X.ker W.ψ W.θ t Pf g y := by
-  first | exact @_root_.GlobalTheory.BotBigLevel.bottom_kernel_mul_large_level | exact _root_.GlobalTheory.BotBigLevel.bottom_kernel_mul_large_level | (intros; apply _root_.GlobalTheory.BotBigLevel.bottom_kernel_mul_large_level <;> assumption)
+  first | exact @_root_.GlobalTheory.BotBigLevel.bottom_kernel_mul_large_level
 end
 end -- clump:auto
 end -- clump:auto
@@ -865,7 +865,7 @@ theorem _root_.GlobalTheory.T.bottom_thetaIntegral_classSum_formula : _root_.Glo
             X.I W.ψ W.θ s (GlobalTheory.BotFormula.minorF ea ed T) g =
               v * ∑ᶠ x : GlobalTheory.NormSum.Cls D P.a (GlobalTheory.NormSum.intG D P.a),
                 ((GlobalTheory.NormSum.gam D (GlobalTheory.NormSum.intG D P.a) x.out : ℂ))⁻¹ * X.ker W.ψ W.θ s (GlobalTheory.BotFormula.minorF ea ed T) g (pt x.out) := by
-  first | exact @_root_.GlobalTheory.BotFormula.bottom_thetaIntegral_eq_classSum | exact _root_.GlobalTheory.BotFormula.bottom_thetaIntegral_eq_classSum | (intros; apply _root_.GlobalTheory.BotFormula.bottom_thetaIntegral_eq_classSum <;> assumption)
+  first | exact @_root_.GlobalTheory.BotFormula.bottom_thetaIntegral_eq_classSum
 end
 end -- clump:auto
 end -- clump:auto
@@ -929,7 +929,7 @@ theorem _root_.GlobalTheory.T.bottomTriple_thetaKernel_minors_eq_const_conjJet :
         X.ker W.ψ W.θ s (GlobalTheory.BotFormula.minorF ea ed Tu) g y =
           Ω * starRingEnd ℂ (Formalism.MainNotions.GL3Theta.applyAt0 D (GlobalTheory.NormSum.minorPol D Tu)
             (GlobalTheory.AdForm.xiN W.θ A WW ea.symm ed.symm r rc fun w => starRingEnd ℂ (X.ω s (y, g) (X.f s) w))) := by
-  first | exact @GlobalTheory.BotFormula.ConjJet.ker_minorF_eq_conj_jet | exact GlobalTheory.BotFormula.ConjJet.ker_minorF_eq_conj_jet | (intros; apply GlobalTheory.BotFormula.ConjJet.ker_minorF_eq_conj_jet <;> assumption)
+  first | exact @GlobalTheory.BotFormula.ConjJet.ker_minorF_eq_conj_jet
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BottomTripleThetaKernelMinorsEqConstConjJetStatement =====
@@ -1025,7 +1025,7 @@ theorem isFinPt_one (V : HSp D) {n : ℕ} (e : V.rank = n) :
   rw [map_one]
   by_cases h : i = j
   · subst h; simp
-  · simp [Matrix.one_apply, h]
+  · simp [h]
 
 theorem reads_of_fock {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D} {a d : ℕ}
     (hS : S.rank = a) (hT : T.rank = d) {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} {r : D.host.E} (hset : Setup ψ θ S T cc δ r)
@@ -1199,7 +1199,7 @@ theorem _root_.GlobalTheory.T.exists_bottom_stratum_intertwiner : _root_.GlobalT
             GlobalTheory.BotFormula.IsFinPt WW g h → GlobalTheory.BotFormula.IsFinPt A y x →
             GlobalTheory.AdForm.xiN W.θ A WW ea.symm ed.symm r rc (fun w => starRingEnd ℂ (X.ω s (y, g) (X.f s) w)) =
               P.W.Om x h (GlobalTheory.AdForm.xiN W.θ A WW ea.symm ed.symm r rc (fun w => starRingEnd ℂ (X.f s w))) := by
-  first | exact @_root_.GlobalTheory.BotIntertw.bottom_stratum_intertwining | exact _root_.GlobalTheory.BotIntertw.bottom_stratum_intertwining | (intros; apply _root_.GlobalTheory.BotIntertw.bottom_stratum_intertwining <;> assumption)
+  first | exact @_root_.GlobalTheory.BotIntertw.bottom_stratum_intertwining
 end
 end -- clump:auto
 end -- clump:auto
@@ -1267,7 +1267,7 @@ theorem _root_.GlobalTheory.T.theta_parameters_match : _root_.GlobalTheory.FunPr
             GlobalTheory.BotFormula.IsFinPt WW g h → GlobalTheory.BotFormula.IsFinPt A y x →
             GlobalTheory.AdForm.xiN W.θ A WW ea.symm ed.symm r rc (fun w => starRingEnd ℂ (X.ω s (y, g) (X.f s) w)) =
               (κ * starRingEnd ℂ u) • P.W.Om x h P.F := by
-  first | exact @_root_.GlobalTheory.ReadMatch.bottom_layer_parameters_match | exact _root_.GlobalTheory.ReadMatch.bottom_layer_parameters_match | (intros; apply _root_.GlobalTheory.ReadMatch.bottom_layer_parameters_match <;> assumption)
+  first | exact @_root_.GlobalTheory.ReadMatch.bottom_layer_parameters_match
 end
 end -- clump:auto
 end -- clump:auto
@@ -1335,7 +1335,7 @@ theorem _root_.GlobalTheory.T.bottomTheta_kernel_finiteDimensional : _root_.Glob
           ∀ (ea : P.a = A.rank) (ed : P.d = WW.rank) (h : GA D P.d) (g : GA D WW) (x : GA D P.a) (y : GA D A),
             GlobalTheory.BotFormula.IsFinPt WW g h → GlobalTheory.BotFormula.IsFinPt A y x →
             ∀ T, X.ker W.ψ W.θ s (GlobalTheory.BotFormula.minorF ea ed T) g y = Ω₀ * u * starRingEnd ℂ (P.term x h T) := by
-  first | exact @_root_.GlobalTheory.KerFin.bottomTheta_kernel_finite | exact _root_.GlobalTheory.KerFin.bottomTheta_kernel_finite | (intros; apply _root_.GlobalTheory.KerFin.bottomTheta_kernel_finite <;> assumption)
+  first | exact @_root_.GlobalTheory.KerFin.bottomTheta_kernel_finite
 end
 end -- clump:auto
 end -- clump:auto
@@ -1425,7 +1425,7 @@ theorem _root_.GlobalTheory.T.theta_bottom_formula_large : _root_.GlobalTheory.F
         ∃ u : ℂ, u ≠ 0 ∧ u ∈ Qbar ∧ (∀ (p : ℕ) [Fact p.Prime], ¬ p ∣ GlobalTheory.SqTop.Qn G s → ∀ lam : Qbar →+* ℂ_[p], ‖lamC lam u‖ = 1) ∧
           ∀ (ea : P.a = A.rank) (ed : P.d = WW.rank) (h : GA D P.d) (g : GA D WW), GlobalTheory.BotFormula.IsFinPt WW g h →
             ∀ T, starRingEnd ℂ (P.coord h T) = Ω * u * X.I W.ψ W.θ s (GlobalTheory.BotFormula.minorF ea ed T) g := by
-  first | exact @_root_.GlobalTheory.BotFormula.rallis_bottom_formula_large_rank | exact _root_.GlobalTheory.BotFormula.rallis_bottom_formula_large_rank | (intros; apply _root_.GlobalTheory.BotFormula.rallis_bottom_formula_large_rank <;> assumption)
+  first | exact @_root_.GlobalTheory.BotFormula.rallis_bottom_formula_large_rank
 end
 end -- clump:auto
 end -- clump:auto

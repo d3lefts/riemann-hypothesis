@@ -346,11 +346,7 @@ open Matrix
 theorem isIntegral_matrix_trace {R F : Type} [CommRing R] [Field F] [Algebra R F] {n : Type}
     [Fintype n] [DecidableEq n] (M : Matrix n n F) (hM : IsIntegral R M) : IsIntegral R M.trace := by
   first
-  | exact @_root_.GlobalTheory.TargetStatementAlt.target
-  | exact _root_.GlobalTheory.TargetStatementAlt.target
   | (apply _root_.GlobalTheory.TargetStatementAlt.target <;> assumption)
-  | (intros; apply _root_.GlobalTheory.TargetStatementAlt.target <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.TargetStatementAlt.target <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.TargetStatementAlt.target ..)
 
 variable {K : UQ} (B : InvAlg K)
@@ -449,9 +445,6 @@ theorem finite_between (O A : Type) [CommRing O] [IsDomain O] [IsDiscreteValuati
     inf_eq_right.2 N.2.1, inf_eq_right.2 N'.2.1] at h3
   exact Subtype.ext h3
 
-theorem isIntegral_sigma (K : UQ) (B : InvAlg K) (y : B.A) (hy : IsIntegral K.O y) : IsIntegral K.O (B.σ y) := by
-  apply GlobalTheory.UnitLemma.UnitBase.isIntegral_σ <;> assumption
-
 theorem finite_rhoSet (K : UQ) (B : InvAlg K) (hsep : B.P.Separable) (a : K.O) (ha : K.Small a) (k : ℕ) :
     Finite {c : B.T ⧸ (intUnits K.O B.A).subgroupOf B.T //
       IsIntegral K.O ((((Quotient.out c : B.T) : B.Aˣ)⁻¹ : B.Aˣ) * algebraMap K.O B.A a ^ k : B.A)} := by
@@ -497,7 +490,7 @@ theorem finite_rhoSet (K : UQ) (B : InvAlg K) (hsep : B.P.Separable) (a : K.O) (
       intro x hx
       set t : B.T := Quotient.out c.1
       have h2 : IsIntegral K.O (((t : B.Aˣ) : B.A) * algebraMap K.O B.A a ^ k) := by
-        have := isIntegral_sigma K B _ c.2
+        have := isIntegral_sigma B c.2
         rwa [map_mul, map_pow, hσα, hσinv] at this
       refine (hmem _ _).2 ⟨((t : B.Aˣ) : B.A) * algebraMap K.O B.A a ^ k * x, h2.mul hx, ?_⟩
       rw [Algebra.smul_def, map_pow, pow_mul]

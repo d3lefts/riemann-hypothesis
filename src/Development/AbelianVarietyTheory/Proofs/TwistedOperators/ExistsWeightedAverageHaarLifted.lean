@@ -496,7 +496,7 @@ theorem _root_.GlobalTheory.T.definiteBottom_finiteVector_eq_finite_heisenbergCo
     {A A' WW : HSp D} {X : Tri T A A' WW}, IsBottomTri W i j X → ∀ t : T,
     ∃ (n : ℕ) (c : Fin n → ℂ) (x : Fin n → WO A' WW), (∀ k, (x k).map (infPart D) = 0) ∧
       X.f' t = ∑ k, c k • heisO W.ψ A' WW (x k) X.vac' := by
-  first | exact @GlobalTheory.BottomFinComb.finVec_isFinComb | exact GlobalTheory.BottomFinComb.finVec_isFinComb | (intros; apply GlobalTheory.BottomFinComb.finVec_isFinComb <;> assumption)
+  first | exact @GlobalTheory.BottomFinComb.finVec_isFinComb
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DefiniteBottomFiniteVectorEqFiniteHeisenbergCombStatement =====
@@ -595,7 +595,7 @@ theorem _root_.GlobalTheory.T.exists_open_fixing_vacuum_translate_source : ∀ (
     ∀ u : WO S T, u.map (infPart D) = 0 →
     ∃ U : Subgroup (GA D S), IsOpen (U : Set (GA D S)) ∧ ∀ κ ∈ U, κ ∈ GfC S →
       heisO ψ S T (actO S T κ 1 u) f₀ = heisO ψ S T u f₀ := by
-  first | exact @GlobalTheory.VacTranslateLeft.exists_open_fix_translate_source | exact GlobalTheory.VacTranslateLeft.exists_open_fix_translate_source | (intros; apply GlobalTheory.VacTranslateLeft.exists_open_fix_translate_source <;> assumption)
+  first | exact @GlobalTheory.VacTranslateLeft.exists_open_fix_translate_source
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsOpenFixingVacuumTranslateSourceStatement =====
@@ -615,7 +615,7 @@ open GlobalTheory.RowEx MeasureTheory
 theorem _root_.GlobalTheory.T.exists_open_subgroup_fixes_vacuum_definiteBottom : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {i j : Fin D.R.m}
     {A A' WW : HSp D} {X : Tri T A A' WW}, IsBottomTri W i j X → ∀ t : T,
     ∃ U : Subgroup (GA D A'), IsOpen (U : Set (GA D A')) ∧ ∀ κ ∈ U, κ ∈ GfC A' → X.ω' t (κ, 1) X.vac' = X.vac' := by
-  first | exact @GlobalTheory.VacFixSource.exists_open_fix_vac_source | exact GlobalTheory.VacFixSource.exists_open_fix_vac_source | (intros; apply GlobalTheory.VacFixSource.exists_open_fix_vac_source <;> assumption)
+  first | exact @GlobalTheory.VacFixSource.exists_open_fix_vac_source
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsOpenSubgroupFixesVacuumDefiniteBottomStatement =====
@@ -655,7 +655,7 @@ theorem exists_open_fix (hX : IsBottomTri W i j X) (t : T) :
   choose U hU hfix using fun k => fixTranslate hX t (x k) (hx k)
   refine ⟨⨅ k, U k, ?_, fun κ hκ hf => ?_⟩
   · have e2 : (((⨅ k, U k) : Subgroup (GA D A')) : Set (GA D A')) = ⋂ k, (U k : Set (GA D A')) := by
-      ext y; simp [Subgroup.mem_iInf]
+      ext y; simp
     rw [e2]
     exact isOpen_iInter_of_finite hU
 
@@ -688,7 +688,7 @@ theorem eq_of_finE_eq (V : HSp D) {a b : GA D V} (ha : a ∈ GfC V) (hb : b ∈ 
       apply Units.ext
       ext p q
       have := congrArg (fun z : GL (Fin V.rank) (Lev.EAf D) => z.1 p q) hxy
-      simp only [Formalism.UG.bc, Units.coe_map, MonoidHom.coe_coe, RingHom.mapMatrix_apply, Matrix.map_apply] at this
+      simp only [Formalism.UG.bc, Units.coe_map] at this
       exact (Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E).injective this
     exact inj h
   have h2 : a⁻¹ * b ∈ GinfC V ⊓ GfC V := by
@@ -755,7 +755,7 @@ theorem _root_.GlobalTheory.T.exists_openCompactLevel_thetaKernel_bottomTriple :
     ∃ K : Subgroup (GL (Fin A'.rank) (Lev.EAf D)), GlobalTheory.IndefiniteRowSideFullHecke.ClassFunctionSumIntegral.IsOpenCompactLevel A' K ∧
       ∀ (P : PolF D WW.rank A'.rank) (h : GA D WW), ∀ k ∈ Lev.levA A' K, ∀ g,
         X.ker' W.ψ W.θ t P h (g * k) = X.ker' W.ψ W.θ t P h g := by
-  first | exact @GlobalTheory.BotKerLevel.exists_level | exact GlobalTheory.BotKerLevel.exists_level | (intros; apply GlobalTheory.BotKerLevel.exists_level <;> assumption)
+  first | exact @GlobalTheory.BotKerLevel.exists_level
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsOpenCompactLevelThetaKernelBottomTripleStatement =====
@@ -819,13 +819,13 @@ theorem level_all [Finite T] (t₀ : T) (hX : IsBottomTri W i j X) :
   refine ⟨⨅ t, K t, ⟨?_, ?_⟩, fun t P h k hk g => hinv t P h k ?_ g⟩
   · have e : (((⨅ t, K t).comap (Lev.finE A') : Subgroup (GA D A')) : Set (GA D A')) =
         ⋂ t, (((K t).comap (Lev.finE A') : Subgroup (GA D A')) : Set (GA D A')) := by
-      ext x; simp [Subgroup.mem_iInf]
+      ext x; simp
     rw [e]
     exact isOpen_iInter_of_finite fun t => (hK t).1
   · have hcl : IsClosed ((((⨅ t, K t).comap (Lev.finE A') : Subgroup (GA D A')) : Set (GA D A'))) := by
       have e : (((⨅ t, K t).comap (Lev.finE A') : Subgroup (GA D A')) : Set (GA D A')) =
           ⋂ t, (((K t).comap (Lev.finE A') : Subgroup (GA D A')) : Set (GA D A')) := by
-        ext x; simp [Subgroup.mem_iInf]
+        ext x; simp
       rw [e]
       exact isClosed_iInter fun t => Subgroup.isClosed_of_isOpen _ (hK t).1
     have e2 : ((Lev.levA A' (⨅ t, K t) : Subgroup (GA D A')) : Set (GA D A')) =

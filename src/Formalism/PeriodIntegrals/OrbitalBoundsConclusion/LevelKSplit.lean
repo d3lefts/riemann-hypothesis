@@ -98,11 +98,6 @@ theorem fix_span {Φ : (n → A) →ₗ[A] (n → A)} (he : ∀ a, Φ (D.e a) = 
     (hx : x ∈ Submodule.span A (Set.range D.e)) : Φ x = x := by
   first
   | exact LinearMap.eqOn_span' (f := Φ) (g := LinearMap.id) (by rintro _ ⟨a, rfl⟩; exact he a) hx
-  | (induction hx using Submodule.span_induction with
-      | mem y hy => obtain ⟨a, rfl⟩ := hy; exact he a
-      | zero => exact map_zero Φ
-      | add y z _ _ hy hz => rw [map_add (f := _), hy, hz]
-      | smul c y _ hy => rw [map_smul, hy])
 
 def sMat (D : Dat A n r) (half : A) (y : Fin r → n → A) : Matrix n n A :=
   LinearMap.toMatrix' (sL D half y)
@@ -173,7 +168,7 @@ theorem nd_datR (hJ : IsHermND σ J) : ND (datR R σ J P T) := by
       · rw [Pi.single_eq_of_ne hk, map_zero]
     change ∑ k, ∑ j, sigR R σ ((Pi.single i (1 : R ⊗[F] E) : Fin M → R ⊗[F] E) k) * JR R J k j *
       x j = 0 at h1
-    simp only [Pi.single_apply, zero_mul] at h1
+    simp only [Pi.single_apply] at h1
     simpa [Matrix.mulVec, dotProduct] using h1
   rw [← Matrix.one_mulVec x, ← hJi (R := R) hJ, ← Matrix.mulVec_mulVec, hJx, Matrix.mulVec_zero]
 
@@ -212,8 +207,6 @@ theorem sU_mem {y : Fin r → Fin M → R ⊗[F] E} (hy : ∀ a, IsWp (datR R σ
     sU hJ H hh hy ∈ HR R σ J := by
   first
   | exact sMat_uj hJ H hh hy
-  | (simp only [HR]; exact sMat_uj hJ H hh hy)
-  | (simp [HR, sU]; exact sMat_uj hJ H hh hy)
 
 def sHG {y : Fin r → Fin M → R ⊗[F] E} (hy : ∀ a, IsWp (datR R σ J P T) (y a)) : HA R σ J :=
   ⟨sU hJ H hh hy, sU_mem hJ H hh hy⟩
@@ -224,7 +217,6 @@ theorem lin_sHG {y : Fin r → Fin M → R ⊗[F] E} (hy : ∀ a, IsWp (datR R �
   simp [sHG, sU, HA.mat, sMat]
   first
   | exact Matrix.toLin'_toMatrix' _
-  | exact LinearMap.ext fun x => LinearMap.toMatrix'_mulVec _ x
 
 theorem sHG_mem {y : Fin r → Fin M → R ⊗[F] E} (hy : ∀ a, IsWp (datR R σ J P T) (y a)) :
     sHG hJ H hh hy ∈ PI.LevelKSplit.W.NC.LevelUnipotentSubgroup R σ J P := by
@@ -449,7 +441,7 @@ theorem continuous_sL_apply (half : R ⊗[F] E) {X : Type} [TopologicalSpace X]
       Continuous fun x => (PI.VolSemiDirect.W.datR R σ J P T).h (u x) (w x) :=
     fun hu hw => PI.VolSemiDirect.W.Md.continuous_hR _ σ J (hu := hu) (hv := hw)
   simp only [sL, uv, cf, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.id_apply,
-    LinearMap.sum_apply, Finset.sum_apply, LinearMap.smulRight_apply, PI.VolSemiDirect.W.PG.Dat.hL,
+    LinearMap.sum_apply, LinearMap.smulRight_apply, PI.VolSemiDirect.W.PG.Dat.hL,
     LinearMap.coe_mk, AddHom.coe_mk]
   refine (continuous_const.add (continuous_finsetSum _ fun a _ => ?_)).sub
     (continuous_finsetSum _ fun b _ => ?_)
@@ -922,7 +914,7 @@ theorem glift_mem (g : HA R2 σ J) : glift R1 R2 (HA.mat R2 σ J g) ∈ HR (R1 �
   apply mext
   · rw [Matrix.map_mul, Matrix.map_mul, map_fst_conj_transpose, map_fst_form, matrix_lift_fst]
     ext i j
-    simp [Formalism.UG.cT, Matrix.one_apply]
+    simp [Formalism.UG.cT]
   · rw [Matrix.map_mul, Matrix.map_mul, map_snd_conj_transpose, map_snd_form, matrix_lift_snd]
     exact hg
 
@@ -988,17 +980,12 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] [FiniteDimensional F E]
 theorem continuous_crd (R : Type) [CommRing R] [Algebra F R] [TopologicalSpace R]
     [IsTopologicalRing R] : Continuous (crd (F := F) (E := E) R) := by
   first
-  | exact continuous_induced_dom
   | exact IsModuleTopology.continuous_of_linearMap (crd (F := F) (E := E) R).toLinearMap
-  | fun_prop
-  | (delta crd; exact LinearMap.continuous_of_finiteDimensional _)
 
 theorem continuous_crd_symm (R : Type) [CommRing R] [Algebra F R] [TopologicalSpace R]
     [IsTopologicalRing R] : Continuous (crd (F := F) (E := E) R).symm := by
   first
-  | exact continuous_induced_rng.2 (by simpa [Function.comp_def] using continuous_id)
   | exact IsModuleTopology.continuous_of_linearMap (crd (F := F) (E := E) R).symm.toLinearMap
-  | fun_prop
 
 variable (R1 R2 : Type) [CommRing R1] [Algebra F R1] [CommRing R2] [Algebra F R2]
   [TopologicalSpace R1] [IsTopologicalRing R1] [TopologicalSpace R2] [IsTopologicalRing R2]
@@ -1073,8 +1060,6 @@ theorem continuous_lin (R : Type) [CommRing R] [Algebra F R] [TopologicalSpace R
     Continuous (lin R σ J g) := by
   first
   | exact IsModuleTopology.continuous_of_linearMap ((lin R σ J g).restrictScalars R)
-  | exact Continuous.matrix_mulVec continuous_const continuous_id
-  | (delta lin; fun_prop)
 
 end Top
 

@@ -213,7 +213,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.row_good_weight_dictionary_of_conditions : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts} {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ} (p : PtAt ex Csz), p.PointConditions' → RecTied D L → ∀ i : Fin D.R.m, GoodW (p.T.U ((i : ℕ) + 1)) (xiR D) (p.T.V ((i : ℕ) + 1)) (p.T.dict ((i : ℕ) + 1)) (Gk p i) := by
-  first | exact @_root_.GlobalTheory.CovTop.goodW_at_alt | exact _root_.GlobalTheory.CovTop.goodW_at_alt | (intros; apply _root_.GlobalTheory.CovTop.goodW_at_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.goodW_at_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -301,7 +301,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.row_norm_has_gram_of_conditions : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts} {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ} (p : PtAt ex Csz), p.PointConditions' → RecTied D L → ∀ i : Fin D.R.m, HasGram (nrmR p.R.toRealDat i) := by
-  first | exact @_root_.GlobalTheory.CovTop.GramPt.hasGram_at_alt | exact _root_.GlobalTheory.CovTop.GramPt.hasGram_at_alt | (intros; apply _root_.GlobalTheory.CovTop.GramPt.hasGram_at_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.GramPt.hasGram_at_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -411,7 +411,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.row_lattice_fg_of_conditions : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts} {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ} (p : PtAt ex Csz), p.PointConditions' → RecTied D L → ∀ i : Fin D.R.m, (latAll p.R.toRealDat i).FG := by
-  first | exact @_root_.GlobalTheory.CovTop.latAll_fg_at_alt | exact _root_.GlobalTheory.CovTop.latAll_fg_at_alt | (intros; apply _root_.GlobalTheory.CovTop.latAll_fg_at_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.latAll_fg_at_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -490,7 +490,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestric
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.row_good_lattice_ne_bot_of_conditions : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts} {Y0 : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y0 cX} {Csz : ℝ} (p : PtAt ex Csz), p.PointConditions' → RecTied D L → ∀ i : Fin D.R.m, latGood p.R.toRealDat p.F.lv2 i ≠ ⊥ := by
-  first | exact @_root_.GlobalTheory.CovTop.good_lattice_ne_bot_at_point | exact _root_.GlobalTheory.CovTop.good_lattice_ne_bot_at_point | (intros; apply _root_.GlobalTheory.CovTop.good_lattice_ne_bot_at_point <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.good_lattice_ne_bot_at_point
 end
 end -- clump:auto
 end -- clump:auto
@@ -519,7 +519,7 @@ section
 open GlobalTheory.CovTop GlobalTheory.BigTop
 
 theorem _root_.GlobalTheory.T.covering_gram_of_prints : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → _root_.GlobalTheory.CovTop.GramCondition := by
-  first | exact @_root_.GlobalTheory.CovTop.covering_gram_matrix_of_local_traces_alt | exact _root_.GlobalTheory.CovTop.covering_gram_matrix_of_local_traces_alt | (intros; apply _root_.GlobalTheory.CovTop.covering_gram_matrix_of_local_traces_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.covering_gram_matrix_of_local_traces_alt
 end
 end
 end -- clump:auto

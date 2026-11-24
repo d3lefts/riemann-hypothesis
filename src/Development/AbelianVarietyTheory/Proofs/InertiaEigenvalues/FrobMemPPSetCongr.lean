@@ -882,10 +882,10 @@ theorem frob_keeps_decay (l : ℕ) [hl : Fact l.Prime] (a e : ℕ) [NeZero a] [N
       exact (mul_eq_zero.1 m1).resolve_left hl0
     constructor
     · rw [e1]
-      simp only [Pi.add_apply, Pi.smul_apply, z1, zero_add, nsmul_eq_mul, Nat.cast_pow]
+      simp only [Pi.add_apply, z1, zero_add, nsmul_eq_mul, Nat.cast_pow]
       exact Dvd.dvd.mul_right (pow_dvd_pow _ (Nat.le_succ r)) _
     · rw [e2]
-      simp only [Pi.add_apply, Pi.smul_apply, z2, zero_add, nsmul_eq_mul, Nat.cast_pow]
+      simp only [Pi.add_apply, z2, zero_add, nsmul_eq_mul, Nat.cast_pow]
       exact Dvd.intro _ rfl
   exact ⟨fun r => (key r).mono fun _ h => h.1, fun r => (key r).mono fun _ h => h.2⟩
 
@@ -1102,7 +1102,7 @@ theorem Q_natCast (m : ℕ) : (m : ZMod a → K⟦X⟧⟦X⟧) ∈ QSet t K e :=
   refine ⟨Pi.single (0, 0) (m : Wq l a), funext fun τ => ?_⟩
   ext i n
   rw [coeff_ofW, Pi.natCast_apply, ← mul_one ((m : K⟦X⟧⟦X⟧)), coeff_natCast_mul_double]
-  rcases i with _ | i <;> rcases n with _ | n <;> simp [dpDen, Pi.single_apply, coeff_one]
+  rcases i with _ | i <;> rcases n with _ | n <;> simp [dpDen, coeff_one]
 
 theorem Q_mul {x y : ZMod a → K⟦X⟧⟦X⟧} (hx : x ∈ QSet t K e) (hy : y ∈ QSet t K e) : x * y ∈ QSet t K e :=
   _root_.GlobalTheory.CrysPrism.mul_mem_QSet_of_mem l a e O K t x hx y hy
@@ -1155,7 +1155,7 @@ theorem good_fin (hφC : ∀ f : K⟦X⟧, φ₂ (C f) = C (frob K l f)) (hφX :
     (w : ℕ × ℕ → Wq l a) (s : Finset (ℕ × ℕ)) :
     ofW t K e (fun p => if p ∈ s then w p else 0) ∈ GoodSet t e φ₂ := by
   have h : (fun p => if p ∈ s then w p else 0) = ∑ p ∈ s, Pi.single p (w p) := by
-    funext q; rw [Finset.sum_apply]; simp [Pi.single_apply, Finset.sum_ite_eq']
+    funext q; rw [Finset.sum_apply]; simp [Pi.single_apply]
   have h2 : ofW t K e (fun p => if p ∈ s then w p else 0) = ∑ p ∈ s, ofW t K e (Pi.single p (w p)) := by
     set_option synthInstance.maxHeartbeats 100000 in
       rw [h]; exact map_sum (ofWHom (K := K) (e := e) t) _ s

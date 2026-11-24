@@ -102,8 +102,7 @@ theorem J_conj_neg_mul_inv {g X : Matrix (Fin n) (Fin n) ℂ} (hX : inG ε X) :
 
 theorem hasDerivAt_exp_curve_entry (g X : Matrix (Fin n) (Fin n) ℂ) (c d : Fin n) :
     HasDerivAt (fun t : ℝ => (g * NormedSpace.exp ((t : ℂ) • X)) c d) ((g * X) c d) 0 := by
-  have h := Formalism.REAL.hasDerivAt_mul_exp_smul_zero g X
-  exact hasDerivAt_pi.1 (hasDerivAt_pi.1 h c) d
+  exact hasDerivAt_pi.1 (hasDerivAt_pi.1 (Formalism.REAL.hasDerivAt_mul_exp_smul_zero g X) c) d
 
 theorem hasDerivAt_inv_exp_curve_entry {g X : Matrix (Fin n) (Fin n) ℂ} (hg : inUJ ε g) (hX : inG ε X) (d c : Fin n) :
     HasDerivAt (fun t : ℝ => (g * NormedSpace.exp ((t : ℂ) • X))⁻¹ d c) (-(X * g⁻¹) d c) 0 := by
@@ -114,8 +113,7 @@ theorem hasDerivAt_inv_exp_curve_entry {g X : Matrix (Fin n) (Fin n) ℂ} (hg : 
     funext t
     rw [unitary_group_inv_eq_conj (hcur t), J_conj_entry, Matrix.conjTranspose_apply]
   have e : (-(X * g⁻¹)) d c = (if ε d then 1 else -1) * star ((g * X) c d) * (if ε c then 1 else -1) := by
-    have e1 := J_conj_neg_mul_inv (g := g) hX
-    rw [unitary_group_inv_eq_conj hg, ← e1, J_conj_entry, Matrix.conjTranspose_apply]
+    rw [unitary_group_inv_eq_conj hg, ← J_conj_neg_mul_inv (g := g) hX, J_conj_entry, Matrix.conjTranspose_apply]
   rw [hfun]
   exact ((((hasDerivAt_exp_curve_entry g X c d).star).const_mul _).mul_const _).congr_deriv e.symm
 
@@ -199,7 +197,7 @@ theorem tensor_dphi_complex_comb (dual : Bool) (g : Matrix (Fin n) (Fin n) ℂ) 
     rw [h4]
     by_cases h : d = b
     · subst h; simp [Matrix.mul_apply, Matrix.single_apply]
-    · simp [Matrix.mul_apply, Matrix.single_apply, h, Ne.symm h]
+    · simp [Matrix.mul_apply, h, Ne.symm h]
   · have h3 : X1 * g⁻¹ + Complex.I • (X2 * g⁻¹) = Matrix.single a b 1 * g⁻¹ := by
       rw [hZ, Matrix.add_mul, Matrix.smul_mul]
     have h4 := congrFun (congrFun h3 d) c
@@ -253,7 +251,7 @@ theorem tensor_coef_Eab_action (dual : Bool) (hσ : IsURepOn (UJset ε) σ) (hD 
       intro d
       simp only [tensF, cond_true, tensVd_coord]
       by_cases h : d = b
-      · subst h; simp [mul_sub, inner_sub_right]
+      · subst h; simp [mul_sub]
       · simp [h]
     have hL : ∀ d, cond true (-(if d = a then (g⁻¹) b c else 0)) (if d = b then g c a else 0) *
         inner ℂ (η c) (σ g (f d : H)) = -(if d = a then (g⁻¹) b c * inner ℂ (η c) (σ g (f a : H)) else 0) := by

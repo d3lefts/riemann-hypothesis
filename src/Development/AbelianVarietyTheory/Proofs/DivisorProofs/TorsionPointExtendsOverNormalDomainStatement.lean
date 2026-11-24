@@ -96,7 +96,7 @@ theorem torsion_extend : Laws → ∀ (R : Type) [CommRing R] [IsDomain R], IsNo
     have w := Over.w (toUnit (TF (R := R) (FractionRing R)))
     have w' : (toUnit (TF (R := R) (FractionRing R))).left = jK R := by
       rw [← hTF, ← w]
-      first | rfl | simp | (erw [Category.comp_id])
+      first | rfl
     rw [w', hl2]
 
 end GlobalTheory.Poinc.Tors
@@ -118,7 +118,7 @@ open GlobalTheory.UT GlobalTheory.ZH
 open GlobalTheory.Poinc.Tors
 
 theorem _root_.GlobalTheory.T.torsionPoint_extends_over_normal_domain : Laws → ∀ (R : Type) [CommRing R] [IsDomain R], IsNoetherianRing R → IsIntegrallyClosed R → ∀ (P : PolAV (Spec (CommRingCat.of R))) (N : ℕ), 1 ≤ N → ∀ x : TF (R := R) (FractionRing R) ⟶ P.A, x ^ N = 1 → ∃ b : 𝟙_ (Over (Spec (CommRingCat.of R))) ⟶ P.A, b ^ N = 1 ∧ x = toUnit _ ≫ b := by
-  first | exact @GlobalTheory.Poinc.Tors.torsion_extend | exact GlobalTheory.Poinc.Tors.torsion_extend | (intros; apply GlobalTheory.Poinc.Tors.torsion_extend <;> assumption)
+  first | exact @GlobalTheory.Poinc.Tors.torsion_extend
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TorsionPointExtendsOverNormalDomainStatement =====

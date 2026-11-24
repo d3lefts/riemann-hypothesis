@@ -409,9 +409,8 @@ theorem conductor_prod_fst (R S' S : Type) [CommRing R] [CommRing S'] [CommRing 
         apply e.injective
         rw [map_mul, RingEquiv.apply_symm_apply, map_zero]
         ext <;> simp [hz]
-      have := (mul_right_mem_nonZeroDivisors_eq_zero_iff y.2).mp h0
-      have := congrArg (fun w => (e w).1) this
-      simpa using this
+      simpa using
+        congrArg (fun w => (e w).1) ((mul_right_mem_nonZeroDivisors_eq_zero_iff y.2).mp h0)
     have h2 : (e y).2 ∈ nonZeroDivisors S' := by
       rw [mem_nonZeroDivisors_iff_right]
       intro z hz
@@ -419,9 +418,8 @@ theorem conductor_prod_fst (R S' S : Type) [CommRing R] [CommRing S'] [CommRing 
         apply e.injective
         rw [map_mul, RingEquiv.apply_symm_apply, map_zero]
         ext <;> simp [hz]
-      have := (mul_right_mem_nonZeroDivisors_eq_zero_iff y.2).mp h0
-      have := congrArg (fun w => (e w).2) this
-      simpa using this
+      simpa using
+        congrArg (fun w => (e w).2) ((mul_right_mem_nonZeroDivisors_eq_zero_iff y.2).mp h0)
     exact ⟨IsLocalization.map_units (FractionRing R) (⟨_, h1⟩ : nonZeroDivisors R),
       IsLocalization.map_units (FractionRing S') (⟨_, h2⟩ : nonZeroDivisors S')⟩
   let Θ : FractionRing S →+* FractionRing R × FractionRing S' := IsLocalization.lift hg
@@ -433,12 +431,11 @@ theorem conductor_prod_fst (R S' S : Type) [CommRing R] [CommRing S'] [CommRing 
     constructor
     · intro h; rw [(IsFractionRing.injective S (FractionRing S)) h]
     · intro h
-      have h' : e x = e y := by
-        rw [hgx, hgx] at h
-        ext
-        · exact IsFractionRing.injective R (FractionRing R) (congrArg Prod.fst h)
-        · exact IsFractionRing.injective S' (FractionRing S') (congrArg Prod.snd h)
-      rw [e.injective h']
+      rw [hgx, hgx] at h
+      rw [(IsFractionRing.injective S (FractionRing S)).eq_iff, ← e.injective.eq_iff,
+        Prod.ext_iff]
+      exact ⟨IsFractionRing.injective R (FractionRing R) (congrArg Prod.fst h),
+        IsFractionRing.injective S' (FractionRing S') (congrArg Prod.snd h)⟩
 
   obtain ⟨⟨a, b⟩, rfl⟩ := IsLocalization.mk'_surjective (nonZeroDivisors R) c
   have hb' : e.symm ((b : R), (1 : S')) ∈ nonZeroDivisors S := by
@@ -464,12 +461,10 @@ theorem conductor_prod_fst (R S' S : Type) [CommRing R] [CommRing S'] [CommRing 
     have hcs := IsLocalization.mk'_spec (FractionRing R) a b
     rw [← hu.mul_left_inj, hs2]
     rw [hgx, hgx]
-    simp only [b', RingEquiv.apply_symm_apply, Prod.mk_mul_mk, map_zero, map_one, mul_one,
-      zero_mul]
+    simp only [b', RingEquiv.apply_symm_apply, Prod.mk_mul_mk, map_zero, map_one, mul_one]
     rw [hcs]
-  have hf : Function.Surjective ((RingHom.fst R S').comp e.toRingHom) := by
-    intro r
-    exact ⟨e.symm (r, 0), by simp⟩
+  have hf : Function.Surjective ((RingHom.fst R S').comp e.toRingHom) :=
+    fun r => ⟨e.symm (r, 0), by simp⟩
   have hc' : IsIntegral S c' := by
     obtain ⟨p, hpm, hp⟩ := hc
     obtain ⟨q, hqmap, -, hqm⟩ := lifts_and_natDegree_eq_and_monic
@@ -484,19 +479,14 @@ theorem conductor_prod_fst (R S' S : Type) [CommRing R] [CommRing S'] [CommRing 
       ext x
       simp [hΘ, hgx]
     have h1 : (eval₂ (Θ.comp (algebraMap S (FractionRing S))) (c, 0) q).1 = 0 := by
-      have := Polynomial.hom_eval₂ q (Θ.comp (algebraMap S (FractionRing S)))
+      have h := Polynomial.hom_eval₂ q (Θ.comp (algebraMap S (FractionRing S)))
         (RingHom.fst (FractionRing R) (FractionRing S')) (c, 0)
-      simp only [RingHom.coe_fst] at this
-      rw [this, hfst, ← eval₂_map, hqmap]
-      exact hp
-    ext
-    · simp [h1]
-    · simp
+      simp only [RingHom.coe_fst] at h
+      rwa [h, hfst, ← eval₂_map, hqmap]
+    ext <;> simp [h1]
   obtain ⟨s, hs⟩ := hd c' hc'
   refine ⟨(e s).1, ?_⟩
-  have h := congrArg (fun z => (Θ z).1) hs
-  simp only [map_mul, hΘ, hΘc, hgx, Prod.fst_mul] at h
-  exact h
+  simpa only [map_mul, hΘ, hΘc, hgx, Prod.fst_mul] using congrArg (fun z => (Θ z).1) hs
 
 end GlobalTheory
 end -- clump:auto
@@ -765,7 +755,7 @@ theorem exists_primitive_of_aeval_eq_zero {S : Type*} [CommRing S] [IsDomain S] 
   let g₀ : MvPolynomial (Fin n) ℤ := ∑ v ∈ g.support, monomial v (b v)
   have hc : ∀ v, v ∈ g.support → g₀.coeff v = b v := by
     intro v hv
-    simp [g₀, MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial, hv]
+    simp [g₀, MvPolynomial.coeff_monomial, hv]
   have hc' : ∀ v, v ∉ g.support → g₀.coeff v = 0 := by
     intro v hv
     simp only [g₀, MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial]

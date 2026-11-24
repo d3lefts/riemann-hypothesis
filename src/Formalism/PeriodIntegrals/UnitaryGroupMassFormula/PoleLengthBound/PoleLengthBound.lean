@@ -299,7 +299,7 @@ theorem length_quot_add {R M : Type*} [Ring R] [AddCommGroup M] [Module R M]
       obtain ⟨p, rfl⟩ := Submodule.mkQ_surjective _ x
       rw [Submodule.mkQ_apply, Submodule.mapQ_apply, Submodule.Quotient.eq] at hx
       have h3 := h1 hx
-      simp only [Submodule.mem_comap, Submodule.subtype_apply, Submodule.coe_sub,
+      simp only [Submodule.subtype_apply, Submodule.coe_sub,
         Submodule.coe_inclusion] at h3
       have h4 := P.sub_mem p.2 h3
       simpa using h4
@@ -307,11 +307,10 @@ theorem length_quot_add {R M : Type*} [Ring R] [AddCommGroup M] [Module R M]
 theorem length_zero_of_le {R M : Type*} [Ring R] [AddCommGroup M] [Module R M]
     {N P : Submodule R M} (h : P ≤ N) : Module.length R (↥P ⧸ N.comap P.subtype) = 0 := by
   rw [Module.length_eq_zero_iff]
-  refine ⟨fun a b => ?_⟩
-  obtain ⟨a, rfl⟩ := Submodule.mkQ_surjective _ a
-  obtain ⟨b, rfl⟩ := Submodule.mkQ_surjective _ b
-  rw [Submodule.mkQ_apply, Submodule.mkQ_apply, Submodule.Quotient.eq]
-  exact h (a - b).2
+  exact Submodule.Quotient.subsingleton_iff.mpr (by
+    rw [eq_top_iff]
+    intro x _
+    exact h x.2)
 
 
 
@@ -438,7 +437,7 @@ theorem length_ball_quotient_eq_sum_mul_fdeg (K : Type*) [Field K] [Algebra K A]
   | zero =>
     intro c m hm
     have hm0 : ∀ ζ, m ζ = 0 := fun ζ => (Finset.sum_eq_zero_iff.mp hm) ζ (Finset.mem_univ _)
-    simp only [hm0, Nat.cast_zero, add_zero, zero_mul, Finset.sum_const_zero]
+    simp only [hm0, Nat.cast_zero, zero_mul, Finset.sum_const_zero]
     exact length_zero_of_le (ballO_mono h he (fun ζ => by simp [hm0 ζ]))
   | succ n ih =>
     intro c m hm

@@ -320,8 +320,8 @@ theorem nfLeibOps_sum_key {E : Type*} [AddCommGroup E] [Module ℂ E] {α : Type
           f q • ((l.filter fun t' => key t' = (q : ℕ)).map a).sum := by
       intro q
       by_cases h : key t = (q : ℕ)
-      · simp [List.filter_cons, h, smul_add]
-      · simp [List.filter_cons, h]
+      · simp [h, smul_add]
+      · simp [h]
     rw [Finset.sum_congr rfl (fun q _ => hsplit q), Finset.sum_add_distrib]
     congr 1
     rw [Finset.sum_eq_single ⟨key t, hq⟩]
@@ -430,7 +430,7 @@ theorem nfVLin_comp_sum {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpac
     a.comp ((∑ i ∈ s, c i • f i).comp b) = ∑ i ∈ s, c i • a.comp ((f i).comp b) := by
   ext x
 
-  simp [ContinuousLinearMap.sum_apply, map_sum, map_smul]
+  simp [map_sum, map_smul]
 
 theorem vector_linearity_holds : NFVLin := by
   obtain ⟨c₃, hc₃⟩ := Formalism.FourierDecayAlt.P.PBE.orbJ_dom

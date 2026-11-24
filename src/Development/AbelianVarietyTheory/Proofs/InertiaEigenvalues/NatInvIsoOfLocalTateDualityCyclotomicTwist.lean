@@ -238,7 +238,7 @@ theorem map_cocycleEquiv (i : G ≃ₜ* Γ) (rho : Representation R Γ M) :
     have e := congrFun hcf (i.symm p.1, i.symm p.2)
     change _ = f.1 (i.symm p.1, i.symm p.2)
     rw [← e]
-    simp [d1, symm_apply']
+    simp [d1]
     exact congrArg (fun g => rho g (c (i.symm p.2))) (apply_symm' i p.1).symm
 
 theorem natCard_H2_comp (i : G ≃ₜ* Γ) (rho : Representation R Γ M) :
@@ -259,7 +259,7 @@ section -- clump:auto
 open ReciprocityTheory.Gal Formalism.RepresentationBoundsCohomology.LOC ReciprocityTheory.ChartRestriction.T2 GlobalTheory.FunctorialityH2
 
 theorem _root_.GlobalTheory.T.natCard_H2_comp_equiv : ∀ {R : Type} [CommRing R] {G Γ : Type} [Group G] [TopologicalSpace G] [Group Γ] [TopologicalSpace Γ] {M : Type} [AddCommGroup M] [Module R M] [TopologicalSpace M] [IsTopologicalAddGroup M] [ContinuousConstSMul R M] (i : G ≃ₜ* Γ) (rho : Representation R Γ M), Nat.card (H2 (rho.comp i.toMulEquiv.toMonoidHom)) = Nat.card (H2 rho) := by
-  first | exact @GlobalTheory.TransportH2.natCard_H2_comp | exact GlobalTheory.TransportH2.natCard_H2_comp | (intros; apply GlobalTheory.TransportH2.natCard_H2_comp <;> assumption)
+  first | exact @GlobalTheory.TransportH2.natCard_H2_comp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NatCardH2CompEquivStatement =====

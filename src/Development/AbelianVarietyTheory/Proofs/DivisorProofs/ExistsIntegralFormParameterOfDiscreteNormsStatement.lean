@@ -102,7 +102,6 @@ theorem exists_form_of_discrete_norms : ∀ (C : Type) [NormedField C] [IsAlgClo
     rw [hB, QuadraticMap.polar_self, hq, nsmul_eq_mul]
     push_cast
     field_simp
-    try ring
   have hsymm : ∀ x y, Bf x y = Bf y x := by
     intro x y; simp only [hBf, add_comm x y]; ring
   have hpos : ∀ y, y ≠ 0 → 0 < q y := by
@@ -148,7 +147,7 @@ theorem exists_form_of_discrete_norms : ∀ (C : Type) [NormedField C] [IsAlgClo
         simp only [LinearMap.smul_apply, hBm, hdiag, smul_eq_mul]
         have := hQpos y hy
         positivity
-      dvd := fun y z => ⟨Bf y z, by simp [LinearMap.smul_apply, hBm, smul_eq_mul]⟩ }
+      dvd := fun y z => ⟨Bf y z, by simp [LinearMap.smul_apply, hBm]⟩ }
   have hβ : ∀ α, β.be α α / (2 * m ^ 2) = 2 * Q α := by
     intro α
     show ((2 * (m : ℤ) ^ 2) • Bm) α α / (2 * m ^ 2) = 2 * Q α
@@ -208,7 +207,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.exists_integralForm_parameter_of_discreteNorms : ∀ (C : Type) [NormedField C] [IsAlgClosed C] (N : NumD C) (q : QuadraticMap ℤ N.X ℝ) (t : C), N.Int q → t ≠ 0 → ‖t‖ < 1 → (∀ χ, ∃ n : ℤ, ‖(N.ψ χ : C)‖ = ‖t‖ ^ n) → ∀ m : ℕ, 1 ≤ m → ∃ (β : N.Form (m ^ 2)) (π : C), π ≠ 0 ∧ ‖π‖ < 1 ∧ (∀ n : ℕ, {α | (β.be α α / (2 * m ^ 2)).toNat = n}.Finite) ∧ ∀ α, Real.exp (-(q α / (m : ℝ) ^ 2)) = ‖π‖ ^ (β.be α α / (2 * m ^ 2)).toNat := by
-  first | exact @GlobalTheory.MBLow.exists_form_of_discrete_norms | exact GlobalTheory.MBLow.exists_form_of_discrete_norms | (intros; apply GlobalTheory.MBLow.exists_form_of_discrete_norms <;> assumption)
+  first | exact @GlobalTheory.MBLow.exists_form_of_discrete_norms
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIntegralFormParameterOfDiscreteNormsStatement =====

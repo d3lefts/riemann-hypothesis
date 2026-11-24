@@ -95,7 +95,7 @@ theorem compactMatrix_conjTranspose {ε : Fin n → Bool} (w : KCo ε) : (kMat w
   by_cases hab : a = b
   · subst hab
     simp only [kMat, if_true]
-    simp [Complex.ext_iff]
+    simp
   · have hba : b ≠ a := Ne.symm hab
     by_cases h1 : b < a ∧ ε a = ε b
     · have h2 : ¬ (a < b ∧ ε b = ε a) := fun h => lt_asymm h.1 h1.1
@@ -725,7 +725,7 @@ lemma kd_skMat_injective : Function.Injective (skMat (N := N)) := by
   have hd : ∀ a b, skMat x a b = skMat y a b := fun a b => by rw [h]
   refine Prod.ext (funext fun a => ?_) (funext fun ab => ?_)
   · have := hd a a
-    simp only [skMat, if_pos rfl] at this
+    simp only [skMat] at this
     exact_mod_cast mul_left_cancel₀ Complex.I_ne_zero this
   · obtain ⟨⟨a, b⟩, hab⟩ := ab
     have hab' : b < a := hab

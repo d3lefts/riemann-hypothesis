@@ -179,7 +179,7 @@ theorem exists_frobenius_fixed_or_killed :
           LinearMap.range (LinearMap.mulLeft k f) := by
         refine lt_of_le_of_ne ?_ ?_
         · rintro _ ⟨a, rfl⟩
-          exact ⟨q * a, by simp [hq, mul_assoc]⟩
+          exact ⟨q * a, by simp [hq]⟩
         · intro heq
           have hmem : f ∈ LinearMap.range (LinearMap.mulLeft k g) := by
             rw [heq]
@@ -303,7 +303,7 @@ theorem mem_eigenspace_of_mem_ker (D : Derivation k R R) {z : R} (hz : D z = z)
   rw [Module.End.mem_eigenspace_iff]
   change D ((a : R) * z ^ n) = _
   rw [D.leibniz, derivation_pow_of_eq D hz, ha, Nat.cast_smul_eq_nsmul, nsmul_eq_mul]
-  simp only [smul_eq_mul, smul_zero, add_zero]
+  simp only [smul_eq_mul]
   ring
 
 theorem powerSum_injective (p : ℕ) [CharP k p] (D : Derivation k R R) {z w : R}
@@ -551,7 +551,7 @@ noncomputable def coeffMap (p : ℕ) (D : Derivation k R R) (z : R) :
     (Fin p → LinearMap.ker (D : R →ₗ[k] R)) →ₗ[k] R where
   toFun a := ∑ i, (a i : R) * z ^ (i : ℕ)
   map_add' a b := by simp [add_mul, Finset.sum_add_distrib]
-  map_smul' r a := by simp [Finset.smul_sum, smul_mul_assoc]
+  map_smul' r a := by simp [Finset.smul_sum]
 
 theorem coeffMap_bijective (p : ℕ) [Fact p.Prime] [CharP k p] (D : Derivation k R R) {z : R}
     (hz : D z = 1) (hnil : ∀ a : R, (⇑D)^[p] a = 0) :

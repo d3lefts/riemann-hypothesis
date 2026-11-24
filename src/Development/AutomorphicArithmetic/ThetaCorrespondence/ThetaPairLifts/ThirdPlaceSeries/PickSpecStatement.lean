@@ -137,7 +137,7 @@ theorem exists_conj_integral {O : Type} [CommRing O] [IsDomain O] [IsPrincipalId
     have : S t *ᵥ w = ∑ k, u k • gen (⟨t, ht⟩, k) := by
       ext a
       simp only [gen, Matrix.mulVec_single_one]
-      simp only [Finset.sum_apply, Pi.smul_apply, Matrix.transpose_apply, Matrix.col_apply, Algebra.smul_def,
+      simp only [Finset.sum_apply, Algebra.smul_def,
         Matrix.mulVec, dotProduct, ← hu]
       exact Finset.sum_congr rfl fun k _ => mul_comm _ _
     rw [this]
@@ -575,7 +575,7 @@ theorem core (hA : GlobalTheory.Published.GlobalArtinReciprocity) (D : D7) (cf :
   obtain ⟨ρG, hρG⟩ := twistEx hA D cf jE A hG l ι₀ π₀ hc₀ hr₀
   obtain ⟨L, P, hP⟩ := conjIntegral l (G D.host.E D.nd.Om) D.R.r ρG hρG.1
   let ρ : G D.host.E D.nd.Om →* GL (Fin D.R.r) (PadicAlgCl l) := (MulAut.conj P⁻¹).toMonoidHom.comp ρG
-  have hρ : ∀ g, ρ g = P⁻¹ * ρG g * P := fun g => by simp [ρ, MulAut.conj_apply]
+  have hρ : ∀ g, ρ g = P⁻¹ * ρG g * P := fun g => by simp [ρ]
   have hρ0 : IsRepOf D l ι₀ (D.naut.tw π₀ D.naut.etaTinv) ((1 - (D.R.nV : ℝ)) / 2) ρ :=
     isRepOf_conj D l ι₀ _ _ ρG ρ P hρ hρG
   refine ⟨L, ρ, hρ0.1, fun g i k => by rw [hρ]; exact hP g i k, fun π hc hr hl ι hι => ?_⟩
@@ -730,7 +730,7 @@ section
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.ConjugateSelfDual ReciprocityTheory.Gal ReciprocityTheory.Aut Formalism.AUTREP Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX GlobalTheory.HeightCounting NumberField IsDedekindDomain Polynomial
 
 theorem _root_.GlobalTheory.T.exists_galois_rep_of_cuspidal_alt : GlobalTheory.Published.GlobalArtinReciprocity → ∀ (D : D7) (cf : CharFrame D) (jE : D.host.E →+* Qb) (A : _root_.GlobalTheory.HeightCounting.CharFrameHostEmbedding D cf jE), GalEx D → ∀ (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (π : D.naut.CG D.R.r), D.naut.csd π → D.naut.ralg π → ∃ ρ : Formalism.ConjugateSelfDual.G D.host.E D.nd.Om →* GL (Fin D.R.r) (Qbar l), IsRepOf D l ι (D.naut.tw π D.naut.etaTinv) ((1 - (D.R.nV : ℝ)) / 2) ρ := by
-  first | exact @_root_.GlobalTheory.HeightCounting.TwistAny.exists_isRepOf_tw_alt | exact _root_.GlobalTheory.HeightCounting.TwistAny.exists_isRepOf_tw_alt | (intros; apply _root_.GlobalTheory.HeightCounting.TwistAny.exists_isRepOf_tw_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.TwistAny.exists_isRepOf_tw_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -774,7 +774,7 @@ theorem core_data_of_point (hA : GlobalTheory.Published.GlobalArtinReciprocity) 
   obtain ⟨ρG, hρG⟩ := _root_.GlobalTheory.HeightCounting.RowRhoInt.twistEx_alt hA D cf jE A hG l ι₀ π₀ hc₀ hr₀
   obtain ⟨L, P, hP⟩ := conjIntegral l (Formalism.ConjugateSelfDual.G D.host.E D.nd.Om) D.R.r ρG hρG.1
   let ρ : Formalism.ConjugateSelfDual.G D.host.E D.nd.Om →* GL (Fin D.R.r) (PadicAlgCl l) := (MulAut.conj P⁻¹).toMonoidHom.comp ρG
-  have hρ : ∀ g, ρ g = P⁻¹ * ρG g * P := fun g => by simp [ρ, MulAut.conj_apply]
+  have hρ : ∀ g, ρ g = P⁻¹ * ρG g * P := fun g => by simp [ρ]
   have hρ0 : IsRepOf D l ι₀ (D.naut.tw π₀ D.naut.etaTinv) ((1 - (D.R.nV : ℝ)) / 2) ρ :=
     isRepOf_conj D l ι₀ _ _ ρG ρ P hρ hρG
   refine ⟨L, ρ, hρ0.1, fun g i k => by rw [hρ]; exact hP g i k, fun π hc hr hl ι hι => ?_⟩
@@ -946,7 +946,7 @@ theorem _root_.GlobalTheory.T.exists_galois_rep_family_bounded_alt : GlobalTheor
           (∀ x : ↥D.LL0, ι (φ ((if b then T.emb0 i else T.emb0b i) x)) = embLL0 D x) →
           IsRepOf D (T.l i) ι (D.naut.tw π D.naut.etaTinv) ((1 - (D.R.nV : ℝ)) / 2)
             (mapRep (φ.comp (algebraMap (T.O0 i) (FractionRing (T.O0 i)))) (rho i σ b)) := by
-  first | exact @_root_.GlobalTheory.HeightCounting.RowRhoInt.rho_rows_alt | exact _root_.GlobalTheory.HeightCounting.RowRhoInt.rho_rows_alt | (intros; apply _root_.GlobalTheory.HeightCounting.RowRhoInt.rho_rows_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.RowRhoInt.rho_rows_alt
 end
 end -- clump:auto
 end -- clump:auto

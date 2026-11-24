@@ -141,7 +141,7 @@ theorem _root_.GlobalTheory.T.classSumTerms_invariant_principalLevel : ∀ {D : 
         series B.F ω ((GlobalTheory.FlatVecSum.princ B).vecFlat ψ) (((GlobalTheory.ClassRegroup.finEquiv S).symm (y * k) : GfC S) : GA D S)
           (F (y * k)) g =
         series B.F ω ((GlobalTheory.FlatVecSum.princ B).vecFlat ψ) (((GlobalTheory.ClassRegroup.finEquiv S).symm y : GfC S) : GA D S) (F y) g := by
-  first | exact @GlobalTheory.PrincClassSum.terms_inv | exact GlobalTheory.PrincClassSum.terms_inv | (intros; apply GlobalTheory.PrincClassSum.terms_inv <;> assumption)
+  first | exact @GlobalTheory.PrincClassSum.terms_inv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ClassSumTermsInvariantPrincipalLevelStatement =====

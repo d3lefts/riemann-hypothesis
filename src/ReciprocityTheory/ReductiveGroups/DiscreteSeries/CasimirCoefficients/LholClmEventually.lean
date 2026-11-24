@@ -502,10 +502,9 @@ theorem psiM_continuousOn (T : KType ε (lowK ε lam)) (μ : Fin n → ℤ) (hμ
     ContinuousOn (PsiM T μ) {g | inUJ ε g} := by
   intro g₀ hg₀
   obtain ⟨U, F, hU, hg₀U, hF, hEq⟩ := psiM_smooth T μ hμ g₀ hg₀
-  have hFc : ContinuousAt F g₀ := hF.continuousOn.continuousAt (hU.mem_nhds hg₀U)
-  refine (hFc.continuousWithinAt (s := {g | inUJ ε g})).congr_of_eventuallyEq ?_ (hEq g₀ hg₀U hg₀)
-  filter_upwards [nhdsWithin_le_nhds (hU.mem_nhds hg₀U), self_mem_nhdsWithin] with g hgU hgJ
-  exact hEq g hgU hgJ
+  refine ((hF.continuousOn.continuousAt (hU.mem_nhds hg₀U)).continuousWithinAt
+    (s := {g | inUJ ε g})).congr_of_eventuallyEq ?_ (hEq g₀ hg₀U hg₀)
+  filter_upwards [nhdsWithin_le_nhds (hU.mem_nhds hg₀U), self_mem_nhdsWithin] with g hgU hgJ using hEq g hgU hgJ
 
 theorem psiM_casimir (T : KType ε (lowK ε lam)) (μ : Fin n → ℤ) (hμ : IsMu lam μ) {g : Matrix (Fin n) (Fin n) ℂ}
     (hg : inUJ ε g) : casimirV ε (PsiM T μ) g = ((casVal lam : ℝ) : ℂ) • PsiM T μ g := by
@@ -514,15 +513,14 @@ theorem psiM_casimir (T : KType ε (lowK ε lam)) (μ : Fin n → ℤ) (hμ : Is
   set Lk := ContinuousLinearMap.mul ℂ (T.V →L[ℂ] T.V) (T.op k₀) with hLk
   have hf : ∀ g' ∈ W, inUJ ε g' → PsiM T μ g' = (Lk ∘ psM T μ) (g'⁻¹ * toMK k₀) :=
     fun g' hg' hgu' => by rw [hloc g' hg' hgu']; rfl
-  have hd0 : DifferentiableOn ℂ (Lk ∘ psM T μ) U := Lk.differentiable.comp_differentiableOn hd
   have hinner : ∀ a b : Fin n, ∀ g' ∈ W, inUJ ε g' →
       EabV ε b a (PsiM T μ) g' =
         (fun z => -(Lk (Lhol (Matrix.single b a 1) (psM T μ) z))) (g'⁻¹ * toMK k₀) := by
     intro a b g' hg' hgu'
-    rw [eabV_of_local ε hUo hd0 hWo hWU hf b a hg' hgu']
-    have hz := (hWU g' hg').2
+    rw [eabV_of_local ε hUo (Lk.differentiable.comp_differentiableOn hd) hWo hWU hf b a hg' hgu']
     rw [show (⇑Lk ∘ psM T μ) = fun w => Lk (psM T μ w) from rfl,
-      CasG.lhol_clm Lk (Matrix.single b a 1) (G := psM T μ) (hd.differentiableAt (hUo.mem_nhds hz))]
+      CasG.lhol_clm Lk (Matrix.single b a 1) (G := psM T μ)
+        (hd.differentiableAt (hUo.mem_nhds (hWU g' hg').2))]
   have hdi : ∀ a b : Fin n,
       DifferentiableOn ℂ (fun z => -(Lk (Lhol (Matrix.single b a 1) (psM T μ) z))) U :=
     fun a b => (Lk.differentiable.comp_differentiableOn (hdL _)).neg

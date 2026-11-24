@@ -125,7 +125,7 @@ theorem exists_coeff_le_of_linearIndependent : ∀ (k : Type) [CommRing k] (X : 
     rw [hsum, ratVal_fnOf (hy (x s)), ev_eq (hy (x s)), hyx] at e
     have hv : v s = x s (∑ l, cc l • g l) := by
 
-      simp [v, M, Matrix.mulVec, dotProduct, map_sum, map_zsmul, mul_comm]
+      simp [v, M, Matrix.mulVec, dotProduct, map_sum, mul_comm]
     have hb := hR.2 (σ (x s)) (y (x s))
     rw [e] at hb
     rw [hv]
@@ -294,7 +294,7 @@ theorem fg_addSubgroup_field_finite_or_basis {K : Type} [Field K] (H : AddSubgro
       intro x
       refine ⟨⟨(ringChar K : ℤ), mem_nonZeroDivisors_of_ne_zero (by exact_mod_cast hq.ne_zero)⟩, ?_⟩
       ext
-      simp [ringChar.Nat.cast_ringChar]
+      simp
     have : Finite H := Module.finite_of_fg_torsion H htor
     exact Set.toFinite _
   · right

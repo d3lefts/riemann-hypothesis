@@ -231,7 +231,6 @@ theorem PDPoly.derLin_e_mul_e (Q : PDPoly B) (m n : ℕ) :
     show a + 1 + (b + 1) = (a + b + 1) + 1 by omega, Q.derLin_e_succ, show a + 1 + b = a + b + 1 by omega,
     show b + 1 + a = a + b + 1 by omega, Nat.choose_succ_succ' (a + b + 1) a,
     Nat.choose_symm_of_eq_add (show a + b + 1 = (b + 1) + a by omega)]
-  push_cast
   rw [nsmul_eq_mul]
   push_cast
   ring
@@ -875,7 +874,7 @@ theorem GlobalTheory.PDForm.rq_truncPoly : ∀ (R B : Type) [CommRing R] [CommRi
         obtain ⟨y, hy, rfl⟩ := hx
         simpa [hb] using hy
       · intro k a _
-        simp [hb]
+        simp
       · intro k
         cases k with
         | zero => change ε0 (Q.e 0) = _; rw [Q.e_zero, map_one, δ.dpow_zero J.zero_mem]
@@ -1466,7 +1465,7 @@ theorem exists_cop : ∀ (D : Data) (Λ : Lift D) (n : ℕ) (U : AffOp D.X) (T :
     have e : g'.φ.comp ψ = b.φ.comp ((Λ.e U).toAlgHom.comp pres) := by
       apply MvPolynomial.algHom_ext
       intro i
-      simp only [AlgHom.comp_apply, hψX, map_add (f := _), AlgEquiv.coe_toAlgHom, AlgHom.coe_coe]
+      simp only [AlgHom.comp_apply, hψX, map_add (f := _), AlgEquiv.coe_toAlgHom]
       rw [hg'τ i, ← Thick.comp_φ, hg'u]
       simp only [c]
       abel

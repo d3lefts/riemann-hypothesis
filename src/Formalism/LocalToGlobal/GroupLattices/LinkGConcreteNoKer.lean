@@ -1025,11 +1025,10 @@ theorem restChain_of (hVA : ValAeval) (hVF : ValFilt) (hNN : ValNN) (hPM : PhMon
   have hH : levP Fr p hk Dt.nL (zPl p O hk Fr A l ga) = monomial b 1 * Dt.ph Pi := by
     rw [hTr1, hPi, map_prod]
   rw [hH, hCP p O r J Dt dPl b 1 Pi]
-  have hJF : J = Fr.J := hT.1
   have hsuppA : ∀ j' : ZMod J, MvPolynomial.map (algebraMap O (KK O)) (A (segZ j')) ∈
       supported (KK O) {v : ℤ × Fin r | v.1 ∈ Fr.letters (segZ j')} := by
     intro j'
-    have hlt : j'.val < Fr.J := by rw [← hJF]; exact ZMod.val_lt j'
+    have hlt : j'.val < Fr.J := by rw [← hT.1]; exact ZMod.val_lt j'
     have h1 : A (segZ j') ∈ supported O {v : ℤ × Fin r | v.1 ∈ Fr.letters (segZ j')} := hA j'.val hlt
     rw [mem_supported] at h1 ⊢
     intro v hv
@@ -1063,9 +1062,8 @@ theorem restChain_of (hVA : ValAeval) (hVF : ValFilt) (hNN : ValNN) (hPM : PhMon
     calc ((⌈t j i.val⌉ : ℤ) : WithTop ℤ) = ((⌈t j i.val⌉ : ℤ) : WithTop ℤ) + 0 := (add_zero _).symm
       _ ≤ _ := add_le_add h1 h2
   refine geZ_of_ceil_le (chain_core Dt hNN hPM hFP hFS ?_ j i (chain_mem Dt hT j i) rho' b
-    (fun l a h => hTr2 j l a h) _ ?_ _ (le_trans hPival (hVF _ _ _ _ _ _ _)))
+    (hTr2 j) _ ?_ _ (le_trans hPival (hVF _ _ _ _ _ _ _)))
   · intro j' m'
-    show 0 < p ^ Dt.gP j' m'
     exact pow_pos (Fact.out : p.Prime).pos _
   · exact mem_supported_of _ _ fun mo hmo v hv => of_mem_supported hPisupp (support_filtQ _ _ hmo) hv
 
@@ -1440,8 +1438,7 @@ theorem hypIAt_ev {eps : ℝ} (Fm : FamP eps) (hLa : 0 < Fm.GK.La) (hCN : Corner
     Ev Fm fun x i => Joints.HypIAt (Fm.D x i) (Fm.L x i) (Fm.Gx x i) Fm.GK := by
   obtain ⟨i0⟩ := Fm.Ix_zero
   have heps : 0 < eps := by
-    have := (Fm.L 0 i0).sc.eps_pos
-    rwa [Fm.L_eps] at this
+    simpa [Fm.L_eps] using (Fm.L 0 i0).sc.eps_pos
   obtain ⟨C31, _, h1⟩ := TopChoiceBounds.family_uniform_constant_holds Fm
   have h1' : Ev Fm fun x i => AuxBlock8.adm1 (Fm.D x i) (Fm.L x i) (Fm.Gx x i) C31 := h1
   have h4 : Ev Fm fun x i => AuxBlock8.ArchimedeanSignatureMatching (Fm.D x i) (Fm.L x i) Fm.GK := TopChoiceBounds.family_band_ratio_statement Fm hCN
@@ -1643,14 +1640,12 @@ def ValRatF {eps : ℝ} (Fm : FamP eps) : Prop :=
 
 theorem npDescF_of_valRatF {eps : ℝ} (Fm : FamP eps) (h : ValRatF Fm) : NPDescF Fm := by
   obtain ⟨x0, hx0⟩ := h
-  refine ⟨x0, fun x hx i hx1 => ?_⟩
-  refine npDesc_of_valRat _ (Fm.gatT x i) (Fm.Gx x i) (Fm.Gy x i) Fm.GK ?_ (hx0 x hx i hx1)
-  exact (Fm.ex x hx1 i).lat.vram
+  exact ⟨x0, fun x hx i hx1 => npDesc_of_valRat _ (Fm.gatT x i) (Fm.Gx x i) (Fm.Gy x i) Fm.GK
+    (Fm.ex x hx1 i).lat.vram (hx0 x hx i hx1)⟩
 
 theorem CmpTied.valRat {D : D7} {X : Formalism.L2.Herm.Herm0 D} {T : ∀ u : D.what₂.Word, Forms0 D u} {Gt : GatTies D}
     {c : LatCmp D} (K : CmpTied D X T Gt c) : ValRat c := by
-  intro u w hg x i L hL
-  exact ⟨_, ((K.tie u w hg).val_cmp x i L hL).symm⟩
+  exact fun u w hg x i L hL => ⟨_, ((K.tie u w hg).val_cmp x i L hL).symm⟩
 
 end Formalism.L2.G.Cmp
 end -- clump:auto

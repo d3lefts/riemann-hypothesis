@@ -222,11 +222,11 @@ def permU (s : n ≃ n) : GL n R where
   val_inv := by
     rw [PEquiv.mul_toMatrix_toPEquiv, PEquiv.toMatrix_toPEquiv_eq]
     ext i j
-    simp [Matrix.one_apply, Equiv.Perm.permMatrix, PEquiv.toMatrix_apply]
+    simp [Matrix.one_apply]
   inv_val := by
     rw [PEquiv.mul_toMatrix_toPEquiv, PEquiv.toMatrix_toPEquiv_eq]
     ext i j
-    simp [Matrix.one_apply, Equiv.Perm.permMatrix, PEquiv.toMatrix_apply]
+    simp [Matrix.one_apply]
 
 theorem permU_conj (s : n ≃ n) (M : GL n R) :
     permU s.symm * M * (permU s.symm)⁻¹ = reindexGL s M := by
@@ -1582,8 +1582,7 @@ theorem card_blk_fiber {α : Type} {N : ℕ} {m : α → Type} [DecidableEq α] 
       (Finset.univ : Finset (m i)).map
         ⟨fun y => e ⟨i, y⟩, fun a b hab => by simpa using e.injective hab⟩ := by
     ext x
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_map,
-      Function.Embedding.coeFn_mk]
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_map]
     constructor
     · rintro rfl
       exact ⟨(e.symm x).2, e.apply_symm_apply x⟩

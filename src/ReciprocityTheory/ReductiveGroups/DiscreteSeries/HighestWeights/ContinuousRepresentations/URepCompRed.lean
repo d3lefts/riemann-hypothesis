@@ -93,11 +93,9 @@ theorem finrank_eq_sum_of_orth {V : Type} [NormedAddCommGroup V] [InnerProductSp
   have hind : iSupIndep A := by
     first
       | exact hOF.independent
-      | exact hOF.iSupIndep
   have hint : DirectSum.IsInternal A := by
     first
       | exact (DirectSum.isInternal_submodule_iff_iSupIndep_and_iSup_eq_top A).mpr ⟨hind, htop⟩
-      | exact (DirectSum.isInternal_submodule_iff_independent_and_iSup_eq_top A).mpr ⟨hind, htop⟩
   rw [Module.finrank_eq_card_basis (hint.collectedBasis fun i => Module.finBasis ℂ (A i)),
     Fintype.card_sigma]
   simp
@@ -646,7 +644,7 @@ lemma KRep.actM_units {ε : Fin n → Bool} (R : KRep ε) (X : Matrix (Fin n) (F
     intro a b; rw [Matrix.smul_single, smul_eq_mul, mul_one]
 
   simp only [h, map_sum, map_smul]
-  simp [LinearMap.sum_apply, ContinuousLinearMap.sum_apply]
+  simp [LinearMap.sum_apply]
 
 def compactRepOfUnitaryDifferential (ε : Fin n → Bool) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     [FiniteDimensional ℂ H] (τ : KG ε →* unitary (H →L[ℂ] H)) (hτ : Continuous τ)

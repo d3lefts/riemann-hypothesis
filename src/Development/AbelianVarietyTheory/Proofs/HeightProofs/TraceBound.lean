@@ -110,10 +110,10 @@ theorem norm_one {a b : Fin n} (hab : a < b) : ∀ X ∈ f (a, b), B X X = 1 := 
   simp only [f, List.mem_cons, List.not_mem_nil, or_false] at hX
   rcases hX with rfl | rfl
   · simp only [B, smul_mul_smul_comm, Matrix.trace_smul, mul_add, add_mul, Matrix.trace_add, tr_unit,
-      h1, h2, and_self, and_false, false_and, if_true, if_false, sq_inv, smul_eq_mul]
+      h1, h2, and_self, if_true, if_false, sq_inv, smul_eq_mul]
     norm_num
   · simp only [B, smul_mul_smul_comm, Matrix.trace_smul, mul_sub, sub_mul, Matrix.trace_sub, tr_unit,
-      h1, h2, and_self, and_false, false_and, if_true, if_false, smul_eq_mul]
+      h1, h2, and_self, if_true, if_false, smul_eq_mul]
     have : invSqrtTwo * Complex.I * (invSqrtTwo * Complex.I) = -(1 / 2 : ℂ) := by
       rw [show invSqrtTwo * Complex.I * (invSqrtTwo * Complex.I) = invSqrtTwo * invSqrtTwo * (Complex.I * Complex.I) by ring,
         sq_inv, Complex.I_mul_I]; ring
@@ -125,7 +125,7 @@ theorem within {a b : Fin n} (hab : a < b) : (f (a, b)).Pairwise fun X Y => B X 
   simp only [f, List.pairwise_cons, List.mem_cons, List.not_mem_nil, or_false, forall_eq,
     List.Pairwise.nil, and_true, IsEmpty.forall_iff, implies_true]
   simp only [B, smul_mul_smul_comm, Matrix.trace_smul, mul_sub, add_mul, Matrix.trace_sub, Matrix.trace_add, tr_unit,
-    h1, h2, and_self, and_false, false_and, if_true, if_false, smul_eq_mul]
+    h1, h2, and_self, if_true, if_false, smul_eq_mul]
   simp
 
 theorem across {a b c d : Fin n} (hab : a < b) (hcd : c < d) (hne : (a, b) ≠ (c, d)) :
@@ -351,17 +351,17 @@ theorem decomp (U : Mx n) :
   ext r t
   simp only [Matrix.add_apply, Matrix.sum_apply, apply_ite (fun M : Mx n => M r t), pairTerm, Matrix.smul_apply,
     single_apply, smul_eq_mul, Matrix.zero_apply]
-  simp [ite_and, Finset.sum_ite_eq, Finset.sum_ite_eq']
+  simp [ite_and, Finset.sum_ite_eq']
   rcases lt_trichotomy r t with h | rfl | h
   · rw [Finset.sum_eq_single r (fun x _ hx => Finset.sum_eq_zero fun y _ => by split_ifs <;> grind) (by simp),
       Finset.sum_eq_single t (fun y _ hy => by split_ifs <;> grind) (by simp)]
-    simp [h, h.ne, not_lt.mpr h.le]
-  · simp only [lt_self_iff_false, if_true]
+    simp [h, h.ne]
+  · simp only [if_true]
     rw [Finset.sum_eq_zero fun x _ => Finset.sum_eq_zero fun y _ => by split_ifs <;> grind]
     simp
   · rw [Finset.sum_eq_single t (fun x _ hx => Finset.sum_eq_zero fun y _ => by split_ifs <;> grind) (by simp),
       Finset.sum_eq_single r (fun y _ hy => by split_ifs <;> grind) (by simp)]
-    simp [h, h.ne, h.ne', not_lt.mpr h.le]
+    simp [h, h.ne, h.ne']
 
 theorem pairs_split (U : Mx n) :
     ((pairs ε true).map (pairTerm U)).sum + ((pairs ε false).map (pairTerm U)).sum =
@@ -456,21 +456,21 @@ theorem trace_casimirAntisymPair_mul_self {a b : Fin n} (h : a < b) :
     trace ((invSqrtTwo • (unitE a b - unitE b a)) * (invSqrtTwo • (unitE a b - unitE b a))) = -1 := by
   simp only [Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul, Matrix.mul_sub, Matrix.sub_mul,
     Matrix.trace_sub, trE]
-  simp only [h.ne, h.ne', and_self, and_false, false_and, if_true, if_false, smul_eq_mul]
+  simp only [h.ne, h.ne', and_self, if_true, if_false, smul_eq_mul]
   linear_combination (-2 : ℂ) * s2
 
 theorem trace_casimirSymPairI_mul_self {a b : Fin n} (h : a < b) :
     trace (((invSqrtTwo * Complex.I) • (unitE a b + unitE b a)) * ((invSqrtTwo * Complex.I) • (unitE a b + unitE b a))) = -1 := by
   simp only [Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul, Matrix.mul_add, Matrix.add_mul,
     Matrix.trace_add, trE]
-  simp only [h.ne, h.ne', and_self, and_false, false_and, if_true, if_false, smul_eq_mul]
+  simp only [h.ne, h.ne', and_self, if_true, if_false, smul_eq_mul]
   linear_combination (2 * invSqrtTwo * invSqrtTwo) * Complex.I_mul_I - (2 : ℂ) * s2
 
 theorem p12 {a b : Fin n} (h : a < b) :
     trace ((invSqrtTwo • (unitE a b - unitE b a)) * ((invSqrtTwo * Complex.I) • (unitE a b + unitE b a))) = 0 := by
   simp only [Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul, Matrix.mul_add, Matrix.sub_mul,
     Matrix.trace_add, Matrix.trace_sub, trE]
-  simp only [h.ne, h.ne', and_self, and_false, false_and, if_true, if_false, smul_eq_mul]
+  simp only [h.ne, h.ne', and_self, if_true, if_false, smul_eq_mul]
   ring
 
 theorem dp1 (a : Fin n) {b c : Fin n} (h : b < c) :
@@ -529,7 +529,7 @@ theorem kList_pairwise (ε : Fin n → Bool) : (kList ε).Pairwise (fun X Y => t
   rw [kList, List.pairwise_append, List.pairwise_map, List.pairwise_flatMap]
   refine ⟨(List.nodup_finRange n).imp fun h => d_ne h, ⟨fun p hp => ?_, ?_⟩, ?_⟩
   · simp only [List.pairwise_cons, List.mem_cons, List.not_mem_nil, or_false, forall_eq,
-      List.Pairwise.nil, and_true, List.forall_mem_nil]
+      List.Pairwise.nil, and_true]
     exact ⟨p12 (mem_pairs_lt hp), fun _ h => h.elim⟩
   · exact (nodup_pairs ε true).imp_of_mem fun hp hq hpq => pq_zero (mem_pairs_lt hp) (mem_pairs_lt hq) hpq
   · intro X hX Y hY
@@ -1064,7 +1064,7 @@ variable {n : ℕ}
 theorem mem_pairs {ε : Fin n → Bool} {s : Bool} {p : Fin n × Fin n} :
     p ∈ pairs ε s ↔ p.1 < p.2 ∧ (ε p.1 == ε p.2) = s := by
   obtain ⟨a, b⟩ := p
-  simp [pairs, List.mem_product]
+  simp [pairs]
 
 theorem mem_lie_iff {ε : Fin n → Bool} {X : Mx n} : X ∈ lieSet ε ↔
     ∀ a b, star (X b a) * (if ε b then 1 else -1) + (if ε a then 1 else -1) * X a b = 0 := by
@@ -1083,19 +1083,19 @@ theorem basis_mem (ε : Fin n → Bool) : ∀ Z ∈ kList ε ++ pList ε, Z ∈ 
     · obtain ⟨rfl, rfl⟩ := h
       cases hc : ε c <;> simp
     · have h' : ¬ (c = b ∧ c = a) := fun k => h k.symm
-      simp [Matrix.single_apply, h, h']
+      simp [h, h']
   all_goals
     have h3 : c ≠ d := h1.ne
     simp only [beq_iff_eq, beq_eq_false_iff_ne] at h2
     by_cases e1 : c = a ∧ d = b
     · obtain ⟨rfl, rfl⟩ := e1
-      cases hc : ε c <;> cases hd : ε d <;> simp_all [Matrix.single_apply, h3, h3.symm]
+      cases hc : ε c <;> cases hd : ε d <;> simp_all [h3.symm]
     · by_cases e2 : d = a ∧ c = b
       · obtain ⟨rfl, rfl⟩ := e2
-        cases hc : ε c <;> cases hd : ε d <;> simp_all [Matrix.single_apply, h3, h3.symm]
+        cases hc : ε c <;> cases hd : ε d <;> simp_all [h3.symm]
       · have e3 : ¬ (d = b ∧ c = a) := fun h => e1 h.symm
         have e4 : ¬ (c = b ∧ d = a) := fun h => e2 h.symm
-        simp [Matrix.single_apply, e1, e2, e3, e4]
+        simp [e1, e2, e3, e4]
 
 theorem mem_span_basis (ε : Fin n → Bool) {X : Mx n} (hX : X ∈ lieSet ε) :
     X ∈ Submodule.span ℝ {Z | Z ∈ kList ε ++ pList ε} := by
@@ -1258,35 +1258,35 @@ lemma inG_iff_entry (ε : Fin n → Bool) (X : Matrix (Fin n) (Fin n) ℂ) :
 lemma i_smul_diag_casimir_unit_mem_indefinite_lie (ε : Fin n → Bool) (a : Fin n) : inG ε (Complex.I • unitE a a) := by
   rw [inG_iff_entry]
   intro i j
-  simp only [unitE, invSqrtTwo, Matrix.single_apply, Matrix.smul_apply, Matrix.sub_apply, Matrix.add_apply, smul_eq_mul]
+  simp only [unitE, Matrix.single_apply, Matrix.smul_apply, smul_eq_mul]
   split_ifs <;> simp_all <;> grind
 
 lemma same_sign_casimir_skew_sum_mem_indefinite_lie (ε : Fin n → Bool) (a b : Fin n) (hab : a ≠ b) (he : ε a = ε b) :
     inG ε (invSqrtTwo • (unitE a b - unitE b a)) := by
   rw [inG_iff_entry]
   intro i j
-  simp only [unitE, invSqrtTwo, Matrix.single_apply, Matrix.smul_apply, Matrix.sub_apply, Matrix.add_apply, smul_eq_mul]
+  simp only [unitE, invSqrtTwo, Matrix.single_apply, Matrix.smul_apply, Matrix.sub_apply, smul_eq_mul]
   split_ifs <;> simp_all
 
 lemma same_sign_casimir_i_sym_sum_mem_indefinite_lie (ε : Fin n → Bool) (a b : Fin n) (hab : a ≠ b) (he : ε a = ε b) :
     inG ε ((invSqrtTwo * Complex.I) • (unitE a b + unitE b a)) := by
   rw [inG_iff_entry]
   intro i j
-  simp only [unitE, invSqrtTwo, Matrix.single_apply, Matrix.smul_apply, Matrix.sub_apply, Matrix.add_apply, smul_eq_mul]
+  simp only [unitE, invSqrtTwo, Matrix.single_apply, Matrix.smul_apply, Matrix.add_apply, smul_eq_mul]
   split_ifs <;> simp_all
 
 lemma opp_sign_casimir_sym_sum_mem_indefinite_lie (ε : Fin n → Bool) (a b : Fin n) (hab : a ≠ b) (he : ε a ≠ ε b) :
     inG ε (invSqrtTwo • (unitE a b + unitE b a)) := by
   rw [inG_iff_entry]
   intro i j
-  simp only [unitE, invSqrtTwo, Matrix.single_apply, Matrix.smul_apply, Matrix.sub_apply, Matrix.add_apply, smul_eq_mul]
+  simp only [unitE, invSqrtTwo, Matrix.single_apply, Matrix.smul_apply, Matrix.add_apply, smul_eq_mul]
   split_ifs <;> simp_all
 
 lemma opp_sign_casimir_i_skew_sum_mem_indefinite_lie (ε : Fin n → Bool) (a b : Fin n) (hab : a ≠ b) (he : ε a ≠ ε b) :
     inG ε ((invSqrtTwo * Complex.I) • (unitE a b - unitE b a)) := by
   rw [inG_iff_entry]
   intro i j
-  simp only [unitE, invSqrtTwo, Matrix.single_apply, Matrix.smul_apply, Matrix.sub_apply, Matrix.add_apply, smul_eq_mul]
+  simp only [unitE, invSqrtTwo, Matrix.single_apply, Matrix.smul_apply, Matrix.sub_apply, smul_eq_mul]
   split_ifs <;> simp_all
 
 lemma i_smul_diag_casimir_unit_skewHermitian (a : Fin n) : (Complex.I • unitE a a)ᴴ = -(Complex.I • unitE a a) := by
@@ -1335,7 +1335,7 @@ lemma pair_hs (a b : Fin n) (hab : a ≠ b) (c : ℂ) (hc : ‖c‖ ^ 2 = 1 / 2)
         (if b = i then (if a = j then 1 / 2 else 0) else 0) := by
     intro i j
     simp only [unitE, Matrix.smul_apply, Matrix.add_apply, Matrix.single_apply, smul_eq_mul]
-    split_ifs <;> simp_all [norm_mul, mul_pow]
+    split_ifs <;> simp_all
   simp only [this]
   simp [Finset.sum_add_distrib]
   norm_num

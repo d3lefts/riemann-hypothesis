@@ -116,7 +116,7 @@ theorem cplx_str_core (H P Q J : Matrix m m ℂ) (hPQ : P * Q = 1) (hQP : Q * P 
     rw [mul_neg, Complex.I_mul_I, neg_neg, one_smul]
   · rw [hH']
     simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_smul, hJh, hsI, Matrix.mul_smul, Matrix.smul_mul,
-      smul_smul, Matrix.mul_assoc, hQP', hJ2', hPQh']
+      Matrix.mul_assoc, hJ2', hPQh']
   · rw [Matrix.trace_mul_comm, ← Matrix.mul_assoc, hQP, Matrix.one_mul, Matrix.trace_smul, smul_eq_mul]
 
 theorem exists_cplx_str {n : Type} [Fintype n] [DecidableEq n] (H : Matrix n n ℂ) (p q : ℕ)
@@ -208,14 +208,14 @@ theorem trace_restrict_complex {M : Type} [AddCommGroup M] [Module ℂ M] [Modul
   let c := Module.Free.chooseBasis ℂ M
   rw [LinearMap.trace_eq_matrix_trace ℝ (Complex.basisOneI.smulTower c), LinearMap.trace_eq_matrix_trace ℂ c]
   simp only [Matrix.trace, Matrix.diag, LinearMap.toMatrix_apply, Module.Basis.smulTower_apply, Module.Basis.smulTower_repr,
-    Fintype.sum_prod_type, LinearMap.restrictScalars_apply, LinearMap.map_smul, map_smul, Finsupp.smul_apply,
+    Fintype.sum_prod_type, LinearMap.restrictScalars_apply, map_smul, Finsupp.smul_apply,
     smul_eq_mul, Complex.coe_basisOneI_repr, Complex.coe_basisOneI, Fin.sum_univ_two]
   simp [Complex.re_sum, Finset.mul_sum, Finset.sum_add_distrib, two_mul]
 
 theorem trace_blkC [DecidableEq ι] [DecidableEq n] (N : ι → Matrix n n ℂ) :
     LinearMap.trace ℂ _ (blkC N) = ∑ τ, (N τ).trace := by
   rw [LinearMap.trace_eq_matrix_trace ℂ (Pi.basis fun _ : ι => Pi.basisFun ℂ n)]
-  simp [Matrix.trace, LinearMap.toMatrix_apply, Fintype.sum_sigma, blkC, Matrix.mulVec_single_one]
+  simp [Matrix.trace, LinearMap.toMatrix_apply, Fintype.sum_sigma, blkC]
 
 theorem trace_blk [DecidableEq ι] [DecidableEq n] (N : ι → Matrix n n ℂ) :
     LinearMap.trace ℝ _ (blk N) = ∑ τ, 2 * (N τ).trace.re := by
@@ -356,7 +356,6 @@ theorem efR_formula (ε : ℤ) (hI : DatInt D j) (x y : ℝ ⊗[ℤ] latW D j) :
     rw [map_add (f := _), LinearMap.add_apply, h1, h2, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl (fun τ _ => ?_)
     simp only [map_add (f := _), Pi.add_apply, star_add, add_dotProduct, mul_add, Complex.add_re]
-    try ring
   | tmul a v =>
     induction y using TensorProduct.induction_on with
     | zero => simp
@@ -364,7 +363,6 @@ theorem efR_formula (ε : ℤ) (hI : DatInt D j) (x y : ℝ ⊗[ℤ] latW D j) :
       rw [map_add (f := _), h1, h2, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl (fun τ _ => ?_)
       simp only [map_add (f := _), Pi.add_apply, mulVec_add, dotProduct_add, mul_add, Complex.add_re]
-      try ring
     | tmul a' w =>
       rw [LinearMap.BilinForm.baseChange_tmul, thW_tmul, thW_tmul]
       simp only [dot_smul_real, ← hT_emb]

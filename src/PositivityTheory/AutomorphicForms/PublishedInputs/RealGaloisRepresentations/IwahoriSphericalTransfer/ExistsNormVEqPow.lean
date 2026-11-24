@@ -58,7 +58,7 @@ open GlobalTheory.CuspRep GlobalTheory.WeilDeligne GlobalTheory.Pst GlobalTheory
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.isomorphism_of_frobenius_traces : IsoOfFrob := by
-  first | exact @GlobalTheory.IsoOfFrobFree.main | exact GlobalTheory.IsoOfFrobFree.main | (intros; apply GlobalTheory.IsoOfFrobFree.main <;> assumption)
+  first | exact @GlobalTheory.IsoOfFrobFree.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: PositivityTheory.AutomorphicForms.PublishedInputs.RealGaloisRepresentations.IwahoriSphericalTransfer.IsomorphismOfFrobeniusTraces =====

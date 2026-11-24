@@ -277,37 +277,26 @@ theorem letters_eq_image (F : Frames n' r) (j : ℤ) : F.letters j = Finset.univ
 theorem dist_cast {F : Frames n' r} {j x : ℤ} (hx : x ∈ F.letters j) : (F.dist j x : ℤ) = F.fr j (r - 1) - x := by
   have hx' := (Finset.mem_filter.mp hx).1
   rw [Finset.mem_Icc] at hx'
-  show (((F.fr j (r - 1) - x).toNat : ℕ) : ℤ) = F.fr j (r - 1) - x
   exact Int.toNat_of_nonneg (by omega)
 
 theorem dist_lt {F : Frames n' r} {j : ℤ} {i i' : Fin (segN F j)} (h : i < i') :
     F.dist j (segE F j i') + 1 ≤ F.dist j (segE F j i) := by
-  have hm : segE F j i < segE F j i' := by
-    unfold segE
-    exact_mod_cast ((F.letters j).orderIsoOfFin rfl).strictMono h
-  have hmem : ∀ k : Fin (segN F j), segE F j k ∈ F.letters j := fun k => by
-    unfold segE
-    exact ((F.letters j).orderIsoOfFin rfl k).2
-  have h1 := dist_cast (hmem i)
-  have h2 := dist_cast (hmem i')
+  have h1 := dist_cast (segE_mem F j i)
+  have h2 := dist_cast (segE_mem F j i')
+  have hm := segE_strictMono F j h
   omega
 
 theorem dist_add_two_le_of_same_vec {F : Frames n' r} {j : ℤ} {i i' : Fin (segN F j)} (h : i < i')
     (hv : (segLL F j).vec i = (segLL F j).vec i') : F.dist j (segE F j i') + 2 ≤ F.dist j (segE F j i) := by
-  have hm : segE F j i < segE F j i' := by
-    unfold segE
-    exact_mod_cast ((F.letters j).orderIsoOfFin rfl).strictMono h
-  have hmem : ∀ k : Fin (segN F j), segE F j k ∈ F.letters j := fun k => by
-    unfold segE
-    exact ((F.letters j).orderIsoOfFin rfl k).2
-  have h1 := dist_cast (hmem i)
-  have h2 := dist_cast (hmem i')
+  have h1 := dist_cast (segE_mem F j i)
+  have h2 := dist_cast (segE_mem F j i')
   have hv' : decide (Even (segE F j i)) = decide (Even (segE F j i')) := hv
   rw [decide_eq_decide] at hv'
   have h3 : segE F j i + 1 ≠ segE F j i' := by
     intro he
     rw [← he, Int.even_add_one] at hv'
     tauto
+  have hd := dist_lt h
   omega
 
 theorem beS_eq (hV : X.F.Valid X.L₁ X.N₁) (j : ℤ) (b' : ℤ → ℕ) :
@@ -317,9 +306,7 @@ theorem beS_eq (hV : X.F.Valid X.L₁ X.N₁) (j : ℤ) (b' : ℤ → ℕ) :
   · apply Finset.sum_congr _ (fun _ _ => rfl)
     ext i
     simp [dict_early hV]
-  · intro a _ b _ hab
-    unfold segE at hab
-    exact ((X.F.letters j).orderIsoOfFin rfl).injective (Subtype.ext hab)
+  · exact fun a _ b _ hab => (segE_strictMono X.F j).injective hab
 
 omit [NeZero n'] [NeZero r] [NeZero K] in
 theorem prod_fin_lt (N r : ℕ) (hr : r ≤ N) (h : ℕ → ℝ) :
@@ -343,8 +330,7 @@ theorem final_num (hX : X.Hyp p K) (hLa : 1088 ≤ X.CLa) (hk : 1088 ≤ X.Ck) (
     nlinarith [mul_le_mul_of_nonneg_left hNs hapos.le, mul_le_mul_of_nonneg_left hab hapos.le,
       mul_le_mul ha ha (by norm_num) hapos.le]
   have hpos1 : 0 < 1 + 2 * X.a * (N : ℝ) := by
-    have := mul_nonneg hapos.le hN0
-    linarith
+    nlinarith [mul_nonneg hapos.le hN0]
   have hl0 : ell0 N X.a ≤ 2 * Real.log X.a := by
     unfold ell0
     have e : Real.log (X.a ^ 2) = 2 * Real.log X.a := by
@@ -354,9 +340,7 @@ theorem final_num (hX : X.Hyp p K) (hLa : 1088 ≤ X.CLa) (hk : 1088 ≤ X.Ck) (
     exact Real.log_le_log hpos1 h1
   have hl0nn : 0 ≤ ell0 N X.a := by
     unfold ell0
-    apply Real.log_nonneg
-    have := mul_nonneg hapos.le hN0
-    linarith
+    exact Real.log_nonneg (by nlinarith [mul_nonneg hapos.le hN0])
   have hS : 0 ≤ (X.Ns : ℝ) ^ 2 * Real.log X.a := mul_nonneg (sq_nonneg _) (by linarith)
   have hmin : 1088 * ((X.Ns : ℝ) ^ 2 * Real.log X.a) ≤ min X.La ((r + K : ℕ) : ℝ) := by
     apply le_min

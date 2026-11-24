@@ -107,11 +107,9 @@ theorem cp_quot {k A : Type} [Field k] [Ring A] [Algebra k A] {V : Type} [AddCom
     [Module k V] [Module A V] [IsScalarTower k A V] [FiniteDimensional k V]
     (N : Submodule A V) (a : A) :
     cp k V a = cp k N a * cp k (V ⧸ N) a := by
-  have he : N.restrictScalars k ≤ (N.restrictScalars k).comap (Algebra.lsmul k k V a) :=
-    fun x hx => N.smul_mem a hx
   unfold cp
-  rw [charpoly_eq_restrict_mul_mapQ (N.restrictScalars k) _ he]
-  rfl
+  exact charpoly_eq_restrict_mul_mapQ (N.restrictScalars k) (Algebra.lsmul k k V a)
+    (fun x hx => N.smul_mem a hx)
 
 theorem charpoly_mem_closure_simple {k A : Type} [Field k] [Ring A] [Algebra k A] :
     ∀ (n : ℕ) (V : Type) [AddCommGroup V] [Module k V] [Module A V] [IsScalarTower k A V]
@@ -330,7 +328,7 @@ theorem exists_lsmul_eq {K A : Type} [Field K] [IsAlgClosed K] [Ring A] [Algebra
     (S0 : Type) [AddCommGroup S0] [Module K S0] [Module A S0] [IsScalarTower K A S0]
     [FiniteDimensional K S0] [IsSimpleModule A S0] (φ : S0 →ₗ[K] S0) :
     ∃ u : A, ∀ v : S0, u • v = φ v := by
-  first | exact Bl.ScalarIdentities.goal1 .. | (apply Bl.ScalarIdentities.goal1 <;> assumption) | (intros; apply Bl.ScalarIdentities.goal1 <;> assumption)
+  first | exact Bl.ScalarIdentities.goal1 ..
 
 theorem lin_indep {K A : Type} [Field K] [IsAlgClosed K] [Ring A] [Algebra K A]
     (t : Finset (A → K[X])) (ht : ↑t ⊆ simpleCps K A) (c : (A → K[X]) → K)

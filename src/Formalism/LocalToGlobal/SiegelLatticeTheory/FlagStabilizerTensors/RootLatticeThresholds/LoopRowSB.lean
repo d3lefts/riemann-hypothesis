@@ -101,9 +101,6 @@ def Gbd (b C β : ℝ) (Z : GramM D) : ℝ := (2 * β ^ 2 * (b ^ (C * (D.R.m : �
 theorem embS_star (τ : D.what₂.Tau) (x : D.host.E) : embS D τ (star x) = starRingEnd ℂ (embS D τ x) := by
   unfold embS
   first
-  | exact NumberField.IsCMField.complexEmbedding_complexConj _ _
-  | exact NumberField.IsCMField.embedding_complexConj _ _
-  | exact NumberField.IsCMField.map_complexConj _ _
   | exact (NumberField.IsCMField.complexEmbedding_complexConj (K := D.host.E) (D.host.emb _) x : _)
 
 theorem frameExp_succ : frameExp D.R.rS (D.R.rS + 1) = frameExp D.R.rS D.R.rS := by
@@ -637,8 +634,8 @@ theorem det_sub_lastDiag (M : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (c : E) :
       by_cases hb : b = Fin.last r
       · subst hb
         simp [lastDiag]
-      · simp [lastDiag, hb, Pi.single_apply]
-    · simp [lastDiag, Matrix.updateRow_ne ha, ha]
+      · simp [lastDiag, hb]
+    · simp [lastDiag, ha]
   rw [h1, sub_eq_add_neg (M (Fin.last r)), ← neg_smul, Matrix.det_updateRow_add, Matrix.updateRow_eq_self,
     Matrix.det_updateRow_smul, neg_mul, ← sub_eq_add_neg]
   congr 2
@@ -646,9 +643,9 @@ theorem det_sub_lastDiag (M : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (c : E) :
   · simp [Matrix.updateRow_self, Fin.succAbove_last]
     congr 1
     ext a b
-    simp [Matrix.updateRow_ne (Fin.castSucc_lt_last a).ne]
+    simp
   · intro j _ hj
-    simp [Matrix.updateRow_self, Pi.single_apply, hj]
+    simp [Matrix.updateRow_self, hj]
   · simp
 
 theorem leadMinor_full (B : Matrix (Fin (r + 1)) (Fin (r + 1)) E) : leadMinorE B (r + 1) = B.det := by
@@ -947,7 +944,6 @@ theorem detUUC_of (hGI : GenIdxPseudo) : DetUUC := by
     Finset.card_univ, D.what₂.card_Tau, hW]
   congr 1
   rw [inv_pow, inv_pow]
-  congr 1
   simp only [← pow_mul]
   ring_nf
 
@@ -977,7 +973,7 @@ theorem map_compLeft_pi {ι : Type} {G G' : Type*} [AddGroup G] [AddGroup G'] (�
     (AddSubgroup.pi Set.univ A).map (φ.compLeft ι) =
       AddSubgroup.pi Set.univ (fun i => (A i).map φ) := by
   ext y
-  simp only [AddSubgroup.mem_map, AddSubgroup.mem_pi, Set.mem_univ, true_implies, forall_const]
+  simp only [AddSubgroup.mem_map, AddSubgroup.mem_pi, Set.mem_univ, forall_const]
   constructor
   · rintro ⟨x, hx, rfl⟩ i
     exact ⟨x i, hx i, rfl⟩
@@ -1242,7 +1238,7 @@ theorem hT_iota (u : Fin e → S.V) (v : S.V) (c : Fin e → E) :
   simp [j_iota, Fintype.linearCombination_apply, map_sum, map_smul]
 
 theorem hT_smul_left (x : E) (v w : S.V) : S.hT (x • v) w = star x * S.hT v w := by
-  simp [LinearMap.map_smulₛₗ₂]
+  simp
   left
   rfl
 

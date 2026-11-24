@@ -90,7 +90,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.smul_mem_hermitianLatticeAdelicCompletion_of_smul_le : ∀ (D : D7) {k : ℕ} (L L' : Lt D.host.E k) (c : D.host.E), (∀ x ∈ L, c • x ∈ L') → ∀ u ∈ hatV L, ((1 : Af D.host.F) ⊗ₜ[D.host.F] c) • u ∈ hatV L' := by
-  first | exact @GlobalTheory.LevkSmul.smul_mem_hatV | exact GlobalTheory.LevkSmul.smul_mem_hatV | (intros; apply GlobalTheory.LevkSmul.smul_mem_hatV <;> assumption)
+  first | exact @GlobalTheory.LevkSmul.smul_mem_hatV
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SmulMemHermitianLatticeAdelicCompletionOfSmulLeStatement =====

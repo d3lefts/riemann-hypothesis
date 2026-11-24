@@ -197,7 +197,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.diagInt_pf :
   have hb := fun b => (hH E n ι s m (p.w b) (p.mem b) (p.x b) (p.zero b)).1
   have hsum := MeasureTheory.integrable_finsetSum (Finset.univ : Finset p.B) fun b _ => hb b
   refine hsum.congr (Filter.Eventually.of_forall fun x => ?_)
-  simp only [Finset.sum_apply]
+  simp only
   exact (hp m x x).symm
 end -- clump:auto
 end -- clump:auto
@@ -449,7 +449,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.finFac_pf :
   have hL : ∀ f, L f = inner ℂ (s.k₁ x i) f -
       ∑ b, (ws b).1.1 x.1 * inner ℂ (s.k₁ (ac E n (ldet x) * (xs b).1) i) f := by
     intro f
-    simp [L, ContinuousLinearMap.sum_apply]
+    simp [L]
   have hle : Submodule.span ℂ {f | IsPiVec s.D s.π f} ≤ LinearMap.ker (L : Hs (ι := ι) s.D →ₗ[ℂ] ℂ) :=
     Submodule.span_le.2 fun f hf => by
       have := key f hf x i
@@ -544,7 +544,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.finGen_pf :
     (le_iSup (fun p : ι × ι => W p.1 p.2) (i, j)) (hψ' j), fun x hx => ?_⟩
   rw [s.vecs.rep₁]
   have hsum : (∑ j, ψ' j).1 x.1 = ∑ j, (ψ' j).1 x.1 := by
-    simp [Submodule.coe_sum]
+    simp
   rw [hsum]
   refine Finset.sum_congr rfl fun j _ => ?_
   have hae : ∫ y, kerH (s.Φ₁ i j) x y * (v j : H E n 0 → ℂ) y ∂s.D.ν =
@@ -1909,7 +1909,7 @@ theorem gBound : GBound := gBound_pf basic_pf
 theorem gFac : GFac := gFac_pf (finFac_pf basic_pf evalBasis_pf (finGen_pf basic_pf))
   (dropP_pf zero kInv_pf basic_pf weak_pf pointRep pComm_pf)
 theorem rep : Rep := rep_pf basic_pf (thetaInt_pf basic_pf) kInv_pf pDiag_pf ker
-theorem sizes : Sizes := by first | exact sizes_of_basic basic_pf | exact sizes_of_basic
+theorem sizes : Sizes := by first | exact sizes_of_basic basic_pf
 theorem domInt : DomInt := domInt_pf basic_pf sizes
 theorem halfTerm : HalfTerm := halfTerm_pf basic_pf gBound supp rep flip_pf domInt
 theorem uncutHalf : DiscreteGroups.T1.G.UncutHalf := uncutOf_pf basic_pf gFac halfTerm (rangeW_pf rep) trFin_pf

@@ -1,16 +1,11 @@
 #!/usr/bin/env python3
-"""Offline regression tests for restore paths, tar completion, and helper preflight."""
-import hashlib
+"""Offline regression tests for restore paths and helper preflight."""
 import importlib.util
-import io
-import json
 import os
 from pathlib import Path
-import shutil
 import signal
 import subprocess
 import sys
-import tarfile
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -54,15 +49,6 @@ def supervised(kind, *args):
     return process.returncode, stdout, stderr
 
 
-def raw_tar(name, contents, padding=0):
-    stream = io.BytesIO()
-    with tarfile.open(fileobj=stream, mode="w") as archive:
-        member = tarfile.TarInfo(name)
-        member.size = len(contents)
-        archive.addfile(member, io.BytesIO(contents))
-    return stream.getvalue() + b"\0" * padding
-
-
 def worker(kind, *args):
     if kind == "fifo":
         helper = load("runner_fixture", SCRIPTS / "ci-runner.py")
@@ -72,26 +58,12 @@ def worker(kind, *args):
             print("rejected")
             return
         raise AssertionError("FIFO credential was accepted")
-    helper = load("fetch_fixture", SCRIPTS / "fetch-published-cache.py")
-    archive, project = map(Path, args[:2])
-    expected = {".lake/build/lib/lean/A.olean": hashlib.sha256(b"ok").hexdigest()}
-    if kind == "bad-exit":
-        original = subprocess.Popen
-
-        def failing_producer(*unused, **kwargs):
-            return original([sys.executable, "-c",
-                             "import sys; sys.stdout.buffer.write(open(sys.argv[1], 'rb').read()); sys.exit(7)",
-                             args[2]], **kwargs)
-
-        with patch.object(helper.subprocess, "Popen", failing_producer):
-            helper.extract_verified(archive, expected, project)
-        raise AssertionError("nonzero decompressor exit was accepted")
-    print(json.dumps(helper.extract_verified(archive, expected, project)))
+    raise AssertionError(f"unknown worker: {kind}")
 
 
 class RestorePathTests(unittest.TestCase):
     def setUp(self):
-        self.helper = load("restore_fixture", SCRIPTS / "restore-cache.py")
+        self.helper = load("restore_fixture", SCRIPTS / "ci-cache-get.py")
 
     def test_valid_paths_preserve_results_and_ancestor_closed_memo(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -130,50 +102,6 @@ class RestorePathTests(unittest.TestCase):
                 for function in (reference_local_path, self.helper.local_path):
                     with self.assertRaises(ValueError):
                         function(root, relative, set())
-
-
-@unittest.skipUnless(shutil.which("zstd"), "zstd is required for the extraction fixture")
-class TarCompletionTests(unittest.TestCase):
-    def fixture(self, root, name=".lake/build/lib/lean/A.olean", contents=b"ok", padding=0):
-        raw = raw_tar(name, contents, padding)
-        archive, plain = root / "fixture.tar.zst", root / "fixture.tar"
-        plain.write_bytes(raw)
-        with archive.open("wb") as output:
-            subprocess.run(["zstd", "-q", "-c"], input=raw, stdout=output, check=True)
-        project = root / "project"
-        project.mkdir()
-        return archive, plain, project
-
-    def test_padded_valid_tar_finishes(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            archive, _, project = self.fixture(Path(temporary), padding=2 * 1024 * 1024)
-            code, stdout, stderr = supervised("extract", archive, project)
-            self.assertEqual(code, 0, stderr)
-            self.assertEqual(json.loads(stdout)["files"], 1)
-            self.assertEqual((project / ".lake/build/lib/lean/A.olean").read_bytes(), b"ok")
-
-    def test_nonzero_producer_exit_still_rejects(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            archive, plain, project = self.fixture(Path(temporary))
-            code, _, stderr = supervised("bad-exit", archive, project, plain)
-            self.assertNotEqual(code, 0)
-            self.assertIn("zstd decompression failed", stderr)
-
-    def test_hash_mismatch_does_not_install(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            archive, _, project = self.fixture(Path(temporary), contents=b"bad")
-            code, _, stderr = supervised("extract", archive, project)
-            self.assertNotEqual(code, 0)
-            self.assertIn("File SHA256 mismatch", stderr)
-            self.assertFalse((project / ".lake/build/lib/lean/A.olean").exists())
-
-    def test_unsafe_archive_path_rejects(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            archive, _, project = self.fixture(Path(temporary), name="../A.olean")
-            code, _, stderr = supervised("extract", archive, project)
-            self.assertNotEqual(code, 0)
-            self.assertIn("Unsafe archive path", stderr)
-            self.assertFalse((project.parent / "A.olean").exists())
 
 
 class HelperPreflightTests(unittest.TestCase):

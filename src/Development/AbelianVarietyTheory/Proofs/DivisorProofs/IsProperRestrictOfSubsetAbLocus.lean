@@ -55,6 +55,7 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.AbProj
 import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.OneArc
 import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsToricRankOne
+import Mathlib.CategoryTheory.Monoidal.Opposite.Mon
 
 @[expose] public section
 
@@ -137,6 +138,6 @@ theorem isProper_restrict_of_subset_abLocus : ∀ (R : Type) [CommRing R] [IsDom
     have hr : r ≠ 0 := fun h0 => hzr (by rw [h0]; exact zero_mem _)
     let i : I := ⟨r, hr, hrW⟩
     obtain ⟨y, hy⟩ : z ∈ Set.range (t i) := by rw [hrange i]; exact hzr
-    exact ⟨i, ⟨y, trivial⟩, by first | exact hy | (erw [Scheme.Hom.comp_apply]; exact hy) | simpa using hy⟩
+    exact ⟨i, ⟨y, trivial⟩, by first | exact hy | simpa using hy⟩
 
 end GlobalTheory.AbLocusProperNormal

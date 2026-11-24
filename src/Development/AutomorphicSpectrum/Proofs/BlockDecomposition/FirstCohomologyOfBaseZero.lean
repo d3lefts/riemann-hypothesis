@@ -111,7 +111,7 @@ theorem _root_.GlobalTheory.T.abelian_scheme_base_change_exists : ∀ (R R' : Ty
     IsAbelianScheme A → SmoothOfRelativeDimension g A.hom →
     ∃ (A' : Over (Sp R')) (_ : GrpObj A') (φ : A'.left ⟶ A.left), IsAbelianScheme A' ∧
       SmoothOfRelativeDimension g A'.hom ∧ IsPullback φ A'.hom A.hom (spMap (algebraMap R R')) := by
-  first | exact @GlobalTheory.CompanionTheory.Axis.exists_abelianScheme_baseChange_ringHom | exact GlobalTheory.CompanionTheory.Axis.exists_abelianScheme_baseChange_ringHom | (intros; apply GlobalTheory.CompanionTheory.Axis.exists_abelianScheme_baseChange_ringHom <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Axis.exists_abelianScheme_baseChange_ringHom
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AbelianSchemeBaseChangeExistsStatement =====
@@ -165,7 +165,7 @@ theorem _root_.GlobalTheory.T.class_zero_cocycle_tensor_coboundary : ∀ (R : Ty
     (N : Type) [AddCommGroup N] [Module R N] (t : Z1 F ⊗[R] N), (H1.mk F).rTensor N t = 0 →
     ∃ g : ∀ T : C, F.obj T ⊗[R] N, ∀ (T T' : C) (φ : T ⟶ T'),
       (evZ F φ).rTensor N t = g T' - (mp F φ).toLinearMap.rTensor N (g T) := by
-  first | exact @GlobalTheory.CompanionTheory.Axis.rTensor_cocycle_eq_coboundary_of_class_eq_zero | exact GlobalTheory.CompanionTheory.Axis.rTensor_cocycle_eq_coboundary_of_class_eq_zero | (intros; apply GlobalTheory.CompanionTheory.Axis.rTensor_cocycle_eq_coboundary_of_class_eq_zero <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Axis.rTensor_cocycle_eq_coboundary_of_class_eq_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ClassZeroCocycleTensorCoboundaryStatement =====
@@ -276,7 +276,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 theorem _root_.GlobalTheory.T.cocycle_on_product_from_second_factor : ∀ (R : Type) [CommRing R] (C : Type) [Category.{0} C] (F : C ⥤ CommAlgCat.{0} R), USt F →
     ∀ f : Z1 (box F), (∀ (a a' b : C) (φ : a ⟶ a'), f.1 (a, b) (a', b) (φ, 𝟙 b) = 0) →
       ∃ y : Z1 F, (boxR F).pullbackOneCocycle y = f := by
-  first | exact @GlobalTheory.CompanionTheory.Axis.exists_pull_of_vanish_fst | exact GlobalTheory.CompanionTheory.Axis.exists_pull_of_vanish_fst | (intros; apply GlobalTheory.CompanionTheory.Axis.exists_pull_of_vanish_fst <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Axis.exists_pull_of_vanish_fst
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CocycleOnProductFromSecondFactorStatement =====
@@ -381,7 +381,7 @@ theorem _root_.GlobalTheory.T.cocycle_tensor_coboundary_class_zero : ∀ (R : Ty
     (N : Type) [AddCommGroup N] [Module R N] [Module.Flat R N] (t : Z1 F ⊗[R] N) (g : ∀ T : C, F.obj T ⊗[R] N),
     (∀ (T T' : C) (φ : T ⟶ T'), (evZ F φ).rTensor N t = g T' - (mp F φ).toLinearMap.rTensor N (g T)) →
     (H1.mk F).rTensor N t = 0 := by
-  first | exact @GlobalTheory.CompanionTheory.Axis.KFlat.class_eq_zero_of_coboundary | exact GlobalTheory.CompanionTheory.Axis.KFlat.class_eq_zero_of_coboundary | (intros; apply GlobalTheory.CompanionTheory.Axis.KFlat.class_eq_zero_of_coboundary <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Axis.KFlat.class_eq_zero_of_coboundary
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CocycleTensorCoboundaryClassZeroStatement =====
@@ -436,7 +436,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.exists_finite_semilattice_system : ∀ (R : Type) [CommRing R] (X : Scheme.{0}) (s : X ⟶ Sp R), IsSeparated s → QuasiCompact s →
     ∃ (P : Type) (_ : SemilatticeInf P) (_ : Finite P), Nonempty (Sys X P) := by
-  first | exact @GlobalTheory.CompanionTheory.Axis.exists_finite_sys_of_separated_quasiCompact | exact GlobalTheory.CompanionTheory.Axis.exists_finite_sys_of_separated_quasiCompact | (intros; apply GlobalTheory.CompanionTheory.Axis.exists_finite_sys_of_separated_quasiCompact <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Axis.exists_finite_sys_of_separated_quasiCompact
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsFiniteSemilatticeSystemStatement =====
@@ -552,7 +552,7 @@ theorem _root_.GlobalTheory.T.exists_unique_constant_of_compatible_family : ∀ 
     Stein F' → ∀ z : ∀ T : C, M ⊗[R] F.obj T,
       (∀ (T T' : C) (φ : T ⟶ T'), z T' = (mp F φ).toLinearMap.lTensor M (z T)) →
       ∃! m : M, ∀ T, z T = m ⊗ₜ[R] (1 : F.obj T) := by
-  first | exact @GlobalTheory.CompanionTheory.Axis.existsUnique_const_of_trivSqZeroExt | exact GlobalTheory.CompanionTheory.Axis.existsUnique_const_of_trivSqZeroExt | (intros; apply GlobalTheory.CompanionTheory.Axis.existsUnique_const_of_trivSqZeroExt <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Axis.existsUnique_const_of_trivSqZeroExt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsUniqueConstantOfCompatibleFamilyStatement =====
@@ -679,7 +679,7 @@ theorem _root_.GlobalTheory.T.flat_cocycle_tensor_representation : ∀ (R : Type
     (∀ (T T' T'' : C) (φ : T ⟶ T') (ψ : T' ⟶ T''),
       f T T'' (φ ≫ ψ) = (mp F ψ).toLinearMap.rTensor N (f T T' φ) + f T' T'' ψ) →
     ∃ t : Z1 F ⊗[R] N, ∀ (T T' : C) (φ : T ⟶ T'), (evZ F φ).rTensor N t = f T T' φ := by
-  first | exact @GlobalTheory.CompanionTheory.Axis.cocycle_of_flat | exact GlobalTheory.CompanionTheory.Axis.cocycle_of_flat | (intros; apply GlobalTheory.CompanionTheory.Axis.cocycle_of_flat <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Axis.cocycle_of_flat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FlatCocycleTensorRepresentationStatement =====
@@ -696,7 +696,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 theorem _root_.GlobalTheory.T.isPullO_comp_block_decomposition : ∀ (R : Type) [CommRing R] (X Y Z : Over (Sp R)) (f : X ⟶ Y) (g : Y ⟶ Z)
     (a : HO1 Z.hom) (b : HO1 Y.hom) (c : HO1 X.hom), IsPullO (wOver g) a b → IsPullO (wOver f) b c →
     IsPullO (wOver (f ≫ g)) a c := by
-  first | exact @GlobalTheory.CompanionTheory.Axis.PullO.isPullO_wOver_comp | exact GlobalTheory.CompanionTheory.Axis.PullO.isPullO_wOver_comp | (intros; apply GlobalTheory.CompanionTheory.Axis.PullO.isPullO_wOver_comp <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Axis.PullO.isPullO_wOver_comp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsPullOWOverCompStatement =====
@@ -1039,7 +1039,7 @@ theorem _root_.GlobalTheory.T.product_first_cohomology_comparison : ∀ (R : Typ
         (resSys _ S').pull1 c = m.pull1 ((boxL _).pull1 ((resSys _ S).pull1 x))) ∧
       (∀ x c, IsPullO (wOver (snd A A)) x c →
         (resSys _ S').pull1 c = m.pull1 ((boxR _).pull1 ((resSys _ S).pull1 x))) := by
-  first | exact @GlobalTheory.CompanionTheory.Axis.exists_boxSys | exact GlobalTheory.CompanionTheory.Axis.exists_boxSys | (intros; apply GlobalTheory.CompanionTheory.Axis.exists_boxSys <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Axis.exists_boxSys
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProductFirstCohomologyComparisonStatement =====
@@ -1083,7 +1083,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.smooth_sections_affine_flat : ∀ (R : Type) [CommRing R] (X : Scheme.{0}) (s : X ⟶ Sp R), Smooth s →
     ∀ U : X.affineOpens, Module.Flat R (Sec s U.1) := by
-  first | exact @GlobalTheory.CompanionTheory.Axis.flat_sec_of_smooth | exact GlobalTheory.CompanionTheory.Axis.flat_sec_of_smooth | (intros; apply GlobalTheory.CompanionTheory.Axis.flat_sec_of_smooth <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Axis.flat_sec_of_smooth
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SmoothSectionsAffineFlatStatement =====
@@ -1136,7 +1136,6 @@ theorem box_square (f : Z1 (box F)) {a a' b b' : C} (φ : a ⟶ a') (ψ : b ⟶ 
   rw [mp_box_right] at e1
   rw [mp_box_left] at e2
   rw [← e1, ← e2]
-  congr 1
   simp
 
 end Kunneth
@@ -1155,7 +1154,6 @@ theorem kunneth (R : Type) [CommRing R] (C : Type) [Category.{0} C] [Finite C] [
     have e := Z1.comp f (show ((T, b) : C × C) ⟶ (T', b) from (φ, 𝟙 b)) (show ((T', b) : C × C) ⟶ (T'', b) from (ψ, 𝟙 b))
     rw [mp_box_left] at e
     rw [← e]
-    congr 1
     simp
     rfl
   choose t ht using hz

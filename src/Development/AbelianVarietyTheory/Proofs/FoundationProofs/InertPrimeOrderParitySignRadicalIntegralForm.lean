@@ -427,11 +427,7 @@ theorem sum_comp_surj {G Q : Type} [AddCommGroup G] [AddCommGroup Q] [Fintype G]
     (π : G →+ Q) (hπ : Function.Surjective π) (g : Q → ℂ) :
     ∃ n : ℕ, 0 < n ∧ ∑ y, g (π y) = n * ∑ q, g q := by
   first
-  | exact @_root_.GlobalTheory.SumCompSurjective.sum_comp_surjective
-  | exact _root_.GlobalTheory.SumCompSurjective.sum_comp_surjective
   | (apply _root_.GlobalTheory.SumCompSurjective.sum_comp_surjective <;> assumption)
-  | (intros; apply _root_.GlobalTheory.SumCompSurjective.sum_comp_surjective <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.SumCompSurjective.sum_comp_surjective <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.SumCompSurjective.sum_comp_surjective ..)
 
 end
@@ -913,7 +909,6 @@ theorem gauss_sign (D : D7) (hG : GaussSign D) {V : Type} [AddCommGroup V] [Modu
   · intro x
     refine ⟨fun c => ex (s * (H x (T c x)).re - (H (C x) (T c x)).im), fun b c => ?_, fun b => ?_⟩
     · rw [← ex_add]
-      congr 1
       simp only [hTa, map_add (f := _), Complex.add_im, Complex.add_re]
       ring_nf
     · simp only [ψ, hsm, hcomm, hTH]

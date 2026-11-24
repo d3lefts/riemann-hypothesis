@@ -444,14 +444,14 @@ private theorem one_add_rpow_le_one_add_mul {s p : ℝ} (hs : 0 ≤ s) (hp0 : 0 
   have t := Real.geom_mean_le_arith_mean2_weighted hp0 (sub_nonneg.2 hp1)
     (by linarith : (0:ℝ) ≤ 1 + s) zero_le_one (by ring : p + (1 - p) = 1)
   rw [Real.one_rpow, mul_one] at t
-  nlinarith [t]
+  linarith [t]
 
 private theorem le_one_add_mul_log_one_add {h : ℝ} (hh : 0 ≤ h) : h ≤ (1 + h) * Real.log (1 + h) := by
   have h1 : (0:ℝ) < 1 + h := by linarith
   have t := Real.log_le_sub_one_of_pos (inv_pos.2 h1)
   rw [Real.log_inv] at t
   have e : (1 + h) * (1 + h)⁻¹ = 1 := mul_inv_cancel₀ h1.ne'
-  nlinarith [mul_le_mul_of_nonneg_left t h1.le]
+  linarith [mul_le_mul_of_nonneg_left t h1.le]
 
 lemma abs_zero_term_second_difference_le {y h β : ℝ} (hy : 1 ≤ y) (hh : 0 < h) (_hh1 : h ≤ 1) (hβ1 : 1 / 2 ≤ β)
     (hβ2 : β < 1) :
@@ -479,9 +479,9 @@ lemma abs_zero_term_second_difference_le {y h β : ℝ} (hy : 1 ≤ y) (hh : 0 <
   set A := (1 + h) ^ β with hA
   set B := y ^ β with hB
   have hD1 : (1 + β * h - A) * (1 + (1 - β) * h) ≤ β * (1 - β) * h ^ 2 := by
-    nlinarith [mul_le_mul_of_nonneg_left hBern hA0]
+    linarith [mul_le_mul_of_nonneg_left hBern hA0]
   have hD2 : 1 + β * h - A ≤ β * (1 - β) * h ^ 2 := by
-    nlinarith [mul_nonneg (sub_nonneg.2 hD0) (mul_nonneg hq.le hh.le)]
+    linarith [mul_nonneg (sub_nonneg.2 hD0) (mul_nonneg hq.le hh.le)]
   have key : (y * (1 + h)) * (B / (β * (β - 1))) - y * ((y * (1 + h)) ^ β / (β * (β - 1)))
       + y * h * (B / β) = -(y * B * ((1 + β * h - A) / (β * (1 - β)))) := by
     rw [hmul]
@@ -492,13 +492,13 @@ lemma abs_zero_term_second_difference_le {y h β : ℝ} (hy : 1 ≤ y) (hh : 0 <
   have hE0 : 0 ≤ (1 + β * h - A) / (β * (1 - β)) := div_nonneg (by linarith) hpos.le
   have hE : (1 + β * h - A) / (β * (1 - β)) ≤ h ^ 2 := by
     rw [div_le_iff₀ hpos]
-    nlinarith
+    linarith
   rw [abs_of_nonneg (mul_nonneg (mul_nonneg hy0 hB0) hE0)]
   have s1 : y * B * ((1 + β * h - A) / (β * (1 - β))) ≤ y * B * h ^ 2 :=
     mul_le_mul_of_nonneg_left hE (mul_nonneg hy0 hB0)
   have s2 : y * B * h ^ 2 ≤ y * y * h ^ 2 :=
     mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hBy hy0) (sq_nonneg h)
-  nlinarith [mul_nonneg (sq_nonneg y) (sq_nonneg h)]
+  linarith [mul_nonneg (sq_nonneg y) (sq_nonneg h)]
 
 lemma abs_main_term_second_difference_le {y h γ : ℝ} (hy : 0 < y) (hh : 0 < h) :
     |y * ((y * (1 + h)) * Real.log (y * (1 + h)) - (1 + γ) * (y * (1 + h)))
@@ -517,15 +517,15 @@ lemma abs_main_term_second_difference_le {y h γ : ℝ} (hy : 0 < y) (hh : 0 < h
   have hL2 := le_one_add_mul_log_one_add hh.le
   rw [abs_of_nonneg (mul_nonneg (sq_nonneg y) (by linarith))]
   have t : (1 + h) * Real.log (1 + h) - h ≤ h ^ 2 := by
-    nlinarith [mul_le_mul_of_nonneg_left hL1 h1.le]
-  nlinarith [mul_le_mul_of_nonneg_left t (sq_nonneg y)]
+    linarith [mul_le_mul_of_nonneg_left hL1 h1.le]
+  exact mul_le_mul_of_nonneg_left t (sq_nonneg y)
 
 lemma exp_neg_sqrt_log_le_sq {cs c₀ y z : ℝ} (hc0 : 0 ≤ c₀) (hcs : c₀ ≤ cs) (hy : 1 ≤ y) (hyz : y ≤ z) :
     Real.exp (-cs * Real.sqrt (Real.log z)) ≤ Real.exp (-(c₀ / 2) * Real.sqrt (Real.log y)) ^ 2 := by
   have hlyz : Real.log y ≤ Real.log z := Real.log_le_log (by linarith) hyz
   have hs : Real.sqrt (Real.log y) ≤ Real.sqrt (Real.log z) := Real.sqrt_le_sqrt hlyz
   rw [sq, ← Real.exp_add, Real.exp_le_exp]
-  nlinarith [mul_le_mul hcs hs (Real.sqrt_nonneg _) (le_trans hc0 hcs)]
+  linarith [mul_le_mul hcs hs (Real.sqrt_nonneg _) (le_trans hc0 hcs)]
 
 end Formalism.ZeroFreeDirichlet
 end -- clump:auto
@@ -562,7 +562,7 @@ lemma le_of_second_difference_bound {y c₀ C N eY ey h : ℝ} (hy : 2 ≤ y) (h
   set s := Real.sqrt L with hsdef
   have hs0 : 0 ≤ s := Real.sqrt_nonneg _
   have hss : s ^ 2 = L := Real.sq_sqrt hL0.le
-  have hs_half : 1 / 2 ≤ s := by nlinarith
+  have hs_half : 1 / 2 ≤ s := (Real.le_sqrt (by norm_num) hL0.le).2 (by linarith)
   set g := Real.exp (-(c₀ / 4) * s) with hgdef
   have hg0 : 0 < g := Real.exp_pos _
   have hg1 : g ≤ 1 := by
@@ -578,7 +578,7 @@ lemma le_of_second_difference_bound {y c₀ C N eY ey h : ℝ} (hy : 2 ≤ y) (h
     have hyL : y = Real.exp L := (Real.exp_log hy0).symm
     rw [hgdef, hyL, ← Real.exp_add]
     apply Real.exp_le_exp.mpr
-    nlinarith [mul_le_mul_of_nonneg_right hc01 hs0, mul_nonneg hs0 (sub_nonneg.mpr hs_half)]
+    linarith [mul_le_mul_of_nonneg_right hc01 hs0, mul_nonneg hs0 (sub_nonneg.mpr hs_half)]
   have hq := Real.quadratic_le_exp_of_nonneg (by positivity : (0 : ℝ) ≤ s ^ 2 / 2)
   have hB : L + 1 ≤ 2 * (y * g) := by
     have : 0 ≤ (s ^ 2 / 2) ^ 2 / 2 := by positivity
@@ -675,8 +675,8 @@ lemma mul_le_of_log_bounds {y c₀ K lq : ℝ} (hy : 2 ≤ y) (hc0 : 0 < c₀) (
   set s := Real.sqrt L with hsdef
   have hs0 : 0 ≤ s := Real.sqrt_nonneg _
   have hss : s ^ 2 = L := Real.sq_sqrt hL0.le
-  have hs_half : 1 / 2 ≤ s := by nlinarith
-  have hKL : K ≤ 2 * L := by nlinarith
+  have hs_half : 1 / 2 ≤ s := (Real.le_sqrt (by norm_num) hL0.le).2 (by linarith)
+  have hKL : K ≤ 2 * L := by linarith [mul_nonneg hK0 (by linarith : (0 : ℝ) ≤ Real.log 2 - 1 / 2)]
   have hlq' : lq ≤ s / 4 := by
     have : c₀ / 4 * s ≤ 1 / 4 * s := mul_le_mul_of_nonneg_right (by linarith) hs0
     linarith
@@ -684,10 +684,10 @@ lemma mul_le_of_log_bounds {y c₀ K lq : ℝ} (hy : 2 ≤ y) (hc0 : 0 < c₀) (
   have hexp : Real.exp (s ^ 2 / 2) ≤ y * Real.exp (-(c₀ / 4) * s) := by
     rw [hyL, ← Real.exp_add]
     apply Real.exp_le_exp.mpr
-    nlinarith [mul_le_mul_of_nonneg_right hc01 hs0, mul_nonneg hs0 (sub_nonneg.mpr hs_half)]
+    linarith [mul_le_mul_of_nonneg_right hc01 hs0, mul_nonneg hs0 (sub_nonneg.mpr hs_half)]
   have hq := Real.quadratic_le_exp_of_nonneg (by positivity : (0 : ℝ) ≤ s ^ 2 / 2)
   have hpoly : (2 * L) * (s / 4) ≤ 16 * (1 + s ^ 2 / 2 + (s ^ 2 / 2) ^ 2 / 2) := by
-    rw [← hss]; nlinarith [sq_nonneg (s ^ 2 - s), sq_nonneg s]
+    rw [← hss]; linarith [sq_nonneg (s ^ 2 - s), sq_nonneg s, sq_nonneg (s ^ 2)]
   have e : 16 * y * Real.exp (-(c₀ / 4) * s) = 16 * (y * Real.exp (-(c₀ / 4) * s)) := by ring
   rw [e]
   linarith
@@ -732,8 +732,7 @@ lemma exp_neg_sqrt_log_mem_unit_interval {c₀ y : ℝ} (hc0 : 0 < c₀) :
     0 < Real.exp (-(c₀ / 2) * Real.sqrt (Real.log y)) ∧
       Real.exp (-(c₀ / 2) * Real.sqrt (Real.log y)) ≤ 1 := by
   refine ⟨Real.exp_pos _, Real.exp_le_one_iff.2 ?_⟩
-  have := mul_nonneg hc0.le (Real.sqrt_nonneg (Real.log y))
-  linarith
+  nlinarith [mul_nonneg hc0.le (Real.sqrt_nonneg (Real.log y))]
 
 lemma chebyshev_character_nonprincipal_bound {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) {c₁ : ℝ}
     (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 20) (B : Finset ℝ) (hB : ExcZeros c₁ χ B)
@@ -1017,7 +1016,6 @@ lemma zero_free_region_mono {c c' : ℝ} (h : c ≤ c') {q : ℕ} [NeZero q] {s 
   have h2 : c / Real.log (↑q * (|s.im| + 2)) ≤ c' / Real.log (↑q * (|s.im| + 2)) := by
     first
       | exact div_le_div_of_nonneg_right h hL.le
-      | exact (div_le_div_iff_of_pos_right hL).mpr h
   linarith
 
 lemma half_le_of_real_in_region {c₁ : ℝ} (h : c₁ ≤ 1 / 20) {q : ℕ} [NeZero q] {β : ℝ} (hs : InRegion c₁ q (β : ℂ)) :

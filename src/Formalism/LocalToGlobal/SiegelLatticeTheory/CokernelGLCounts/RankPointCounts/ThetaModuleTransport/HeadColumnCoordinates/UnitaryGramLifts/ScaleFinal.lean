@@ -335,7 +335,7 @@ theorem zz_scale (Zh : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (T T' : F)
     rw [map_sub, map_mul, map_add (f := _), map_mul, hZab]
     simp only [map_sub, AlgEquiv.apply_symm_apply, he1, he2, hcc, hα, map_mul]
     ext <;> simp <;> field_simp <;> ring
-  · simp only [ha, hb, and_false, if_false, if_true, and_true] at hZab ⊢
+  · simp only [ha, hb, and_false, if_false, if_true] at hZab ⊢
     push_cast
     simp only [sub_zero, add_zero] at hZab ⊢
     rw [map_mul, map_mul, hZab]
@@ -347,7 +347,7 @@ theorem zz_scale (Zh : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (T T' : F)
     rw [map_mul, hZab]
     simp only [AlgEquiv.apply_symm_apply, he1, hα, map_mul]
     ext <;> simp <;> field_simp
-  · simp only [ha, hb, false_and, and_false, if_false] at hZab ⊢
+  · simp only [ha, hb, and_false, if_false] at hZab ⊢
     push_cast
     simp only [sub_zero, add_zero, one_mul, mul_one] at hZab ⊢
     rw [hZab]
@@ -615,7 +615,7 @@ theorem scC_apply_inl_inl (α β : E) (a b : Fin (r + 1)) : scC r α β (Sum.inl
   simp [scC, Matrix.one_apply]
 theorem scC_apply_inl_inr (α β : E) (a b : Fin (r + 1)) :
     scC r α β (Sum.inl a) (Sum.inr b) = if a = Fin.last r ∧ b = Fin.last r then β else 0 := by
-  simp [scC, liftE, smul_ite]
+  simp [scC, liftE]
 theorem scC_apply_inr_inl (α β : E) (a b : Fin (r + 1)) : scC r α β (Sum.inr a) (Sum.inl b) = 0 := by
   simp [scC]
 theorem scC_apply_inr_inr (α β : E) (a b : Fin (r + 1)) :
@@ -635,7 +635,7 @@ theorem scC_left_inr (α β : E) (G : Matrix (Ix r) (Ix r) E) (a : Fin (r + 1)) 
   by_cases ha : a = Fin.last r
   · subst ha
     simp [ite_mul, Finset.sum_ite_eq', add_comm]
-  · simp [ha, ite_mul, Finset.sum_ite_eq]
+  · simp [ha, ite_mul]
 
 theorem scC_right_inl (α β : E) (X : Matrix (Ix r) (Ix r) E) (i : Ix r) (b : Fin (r + 1)) :
     (X * (scC r α β).map cj) i (Sum.inl b) = X i (Sum.inl b) := by
@@ -663,14 +663,13 @@ theorem gramG_scale (hcj : ∀ x, cj (cj x) = x) (α T T' : E) (hα : α * cj α
     simp [gramG]
   · rw [scC_right_inr, scC_left_inl, scC_left_inl]
     by_cases ha : a = Fin.last r <;> by_cases hb : b = Fin.last r <;>
-      simp [gramG, cor, dlast, Matrix.mul_diagonal, ha, hb, map_mul, map_sub, map_add (f := _), hqi, hT] <;> ring
+      simp [gramG, cor, dlast, Matrix.mul_diagonal, ha, hb, map_mul, map_sub, hqi] <;> ring
   · rw [scC_right_inl, scC_left_inr]
     by_cases ha : a = Fin.last r <;> by_cases hb : b = Fin.last r <;>
       simp [gramG, cor, dlast, Matrix.mul_diagonal, ha, hb] <;> ring
   · rw [scC_right_inr, scC_left_inr, scC_left_inr]
     by_cases ha : a = Fin.last r <;> by_cases hb : b = Fin.last r <;>
-      simp [gramG, cor, dlast, Matrix.mul_diagonal, ha, hb, map_mul, map_sub, map_add (f := _), map_neg, hqi, hT, hT',
-        hcj] <;> first | ring1 | linear_combination (qi ^ 2 * T') * hα | linear_combination (qi * qi * T') * hα | linear_combination (-(qi ^ 2 * T')) * hα
+      simp [gramG, cor, dlast, Matrix.mul_diagonal, ha, hb, map_mul, map_sub, hqi] <;> first | ring1 | linear_combination (qi ^ 2 * T') * hα
 
 end ScaleA
 
@@ -716,10 +715,10 @@ theorem scC_mul_inv (α β α' β' : E) (h1 : α * α' = 1) (h2 : β' = -(β * �
     funext i
     split_ifs <;> simp [h1]
   simp only [Matrix.smul_mul, hL, hD, h2, smul_smul, Matrix.mul_zero, Matrix.zero_mul, Matrix.one_mul,
-    Matrix.mul_one, add_zero, zero_add, smul_zero]
+    Matrix.mul_one, add_zero, zero_add]
   rw [← Matrix.fromBlocks_one, ← add_smul]
   congr 1
-  simp [mul_comm]
+  simp
 
 theorem scC_det (α β : E) : (scC r α β).det = α := by
   rw [scC, Matrix.det_fromBlocks_zero₂₁, Matrix.det_one, one_mul, dlast, Matrix.det_diagonal]
@@ -829,9 +828,9 @@ theorem vecMul_scC_inr (α β : E) (Y : Ix r → E) (b : Fin (r + 1)) :
     scC_apply_inr_inr]
   by_cases hb : b = Fin.last r
   · subst hb
-    simp [apply_ite cj, mul_ite, Finset.sum_ite_eq', Finset.sum_ite_eq]
+    simp [apply_ite cj, mul_ite, Finset.sum_ite_eq']
     ring
-  · simp [hb, apply_ite cj, mul_ite, Finset.sum_ite_eq', Finset.sum_ite_eq]
+  · simp [hb, apply_ite cj, mul_ite, Finset.sum_ite_eq']
 
 end ScaleA4
 

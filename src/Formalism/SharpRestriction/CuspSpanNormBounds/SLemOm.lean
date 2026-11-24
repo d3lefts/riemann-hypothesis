@@ -88,10 +88,10 @@ theorem hpk_col (m q : Fin (2 * r + k + 1)) :
   by_cases hq : q.val < r ∨ r + k < q.val
   · rw [if_pos hq] at ht
     simp only [Fin.ext_iff, ht]
-    split_ifs <;> first | rfl | (exfalso; omega) | norm_num
+    split_ifs <;> first | rfl | (exfalso; omega)
   · rw [if_neg hq] at ht
     simp only [Fin.ext_iff, ht]
-    split_ifs <;> first | rfl | (exfalso; omega) | norm_num
+    split_ifs <;> first | rfl | (exfalso; omega)
 
 private theorem tau_tau_lemma (i : Fin (2 * r + k + 1)) : tau k r (tau k r i) = i := by
   have h1 := tau_val (k := k) (r := r) i
@@ -369,10 +369,7 @@ theorem hb_sq : Hb k * Hb k = 1 := by
 
 theorem vec_zero {μ L : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ} (h : μ * L = 1)
     (v : Fin (k + 1) → ℂ) (hv : ∀ t, ∑ s, v s * μ s t = 0) : v = 0 := by
-  have h1 : Matrix.vecMul v μ = 0 := by
-    funext t
-    rw [Pi.zero_apply, ← hv t]
-    rfl
+  have h1 : Matrix.vecMul v μ = 0 := funext hv
   calc v = Matrix.vecMul v (μ * L) := by rw [h, Matrix.vecMul_one]
     _ = Matrix.vecMul (Matrix.vecMul v μ) L := by rw [Matrix.vecMul_vecMul]
     _ = 0 := by rw [h1, Matrix.zero_vecMul]

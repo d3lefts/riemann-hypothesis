@@ -166,7 +166,7 @@ theorem isSplit_injective_and_exists (O k S : Type) [CommRing O] [Field k] [Fint
       | add u v hu hv' => simp [map_add (f := _), hu, hv']
     have h1 := key y
     rw [hy] at h1
-    simp [Pi.single_apply, Ne.symm hne] at h1
+    simp [Ne.symm hne] at h1
   · intro ψ
     let Ψ : TensorProduct ℤ k O →ₐ[k] k :=
       Algebra.TensorProduct.lift (AlgHom.id k k) ψ.toIntAlgHom (fun _ _ => Commute.all _ _)
@@ -192,7 +192,7 @@ theorem isSplit_injective_and_exists (O k S : Type) [CommRing O] [Field k] [Fint
       by_cases hts : t = s
       · subst hts
         simp
-      · simp [Pi.single_apply, hts]
+      · simp [hts]
     ext o
     have h1 := congrArg Ψ (hmul ((1 : k) ⊗ₜ[ℤ] o))
     have h2 : Ψ ((1 : k) ⊗ₜ[ℤ] o) = ψ o := by
@@ -641,7 +641,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.curve_family_formal_germ : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (X0 : Scheme.{0}) (t : SAB H X0), PowFns t → ∀ (K : Type) [Field K] (p : ℕ) [Fact p.Prime] [CharP K p] (C : ACurve K) (z : Sp K ⟶ X0) (Y : CurveIn C z), (∀ i, FibPF t (GlobalTheory.CompanionTheory.Ar.centre (Y.x i))) → ∃ (d : ℕ) (F : Family C p d (𝓞 E)) (g : GermAt t z d), g.B = F.B ∧ ∀ i, ∃ gi : GermAt t (Y.x i) d, ∀ l, IsCombAtG t z g.tg (fun j => lin (F.φ i) 1 j l) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.v i).valuationSubring.subtype) ≫ gi.tg l) := by
-  first | exact @PositivityTheory.HtPt.Cf.family_ex | exact PositivityTheory.HtPt.Cf.family_ex
+  first | exact @PositivityTheory.HtPt.Cf.family_ex
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.CurveFamilyFormalGerm =====
@@ -657,7 +657,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.curve_family_formal_germ : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (X0 : Scheme.{0}) (t : SAB H X0), PowFns t → ∀ (K : Type) [Field K] (p : ℕ) [Fact p.Prime] [CharP K p] (C : ACurve K) (z : Sp K ⟶ X0) (Y : CurveIn C z), (∀ i, FibPF t (GlobalTheory.CompanionTheory.Ar.centre (Y.x i))) → ∃ (d : ℕ) (F : Family C p d (𝓞 E)) (g : GermAt t z d), g.B = F.B ∧ ∀ i, ∃ gi : GermAt t (Y.x i) d, ∀ l, IsCombAtG t z g.tg (fun j => lin (F.φ i) 1 j l) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.v i).valuationSubring.subtype) ≫ gi.tg l) := by
-  first | exact @GlobalTheory.CompanionTheory.Relay.curve_family_formal_germ | exact GlobalTheory.CompanionTheory.Relay.curve_family_formal_germ | (intros; apply GlobalTheory.CompanionTheory.Relay.curve_family_formal_germ <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Relay.curve_family_formal_germ
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.CurveFamilyFormalGermStatement =====
@@ -859,7 +859,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.curve_lie_eigen_degree : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (X0 : Scheme.{0}) (t : SAB H X0), PowFns t → ∀ (K : Type) [Field K] (p : ℕ) [Fact p.Prime] [CharP K p] (C : ACurve K) (z : Sp K ⟶ X0) (Y : CurveIn C z), Nonempty C.I → (∀ i, FibPF t (GlobalTheory.CompanionTheory.Ar.centre (Y.x i))) → ∀ (V : Type) [AddCommGroup V] [Module K V] (M : GlobalTheory.CompanionTheory.Ar.LieModel t.G z V) (r : 𝓞 E →+* Module.End K V), M.IsActOf t.act.act r → ∃ (d : ℕ) (D : ConjData C p (𝓞 E) d) (e : V ≃ₗ[K] (Fin d → K)), (∀ i v, v ∈ Y.lieLat M i ↔ e v ∈ D.lie i) ∧ ∀ a v, e (r a v) = (D.ρ a).mulVec (e v) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Conj.TopH2.lieLat_conjData | exact GlobalTheory.CompanionTheory.Ar.Conj.TopH2.lieLat_conjData | (intros; apply GlobalTheory.CompanionTheory.Ar.Conj.TopH2.lieLat_conjData <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Conj.TopH2.lieLat_conjData
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.CurveLieEigenDegreeStatement =====
@@ -1064,7 +1064,7 @@ theorem deg_neg_one {G G' : Lat ξ Ω} {T : Set (Cpt ξ)} {a : K → ℤ} {e : �
   rw [ht.2, zpow_neg_one] at h1
   have h2 := span_inv (regAt ξ q) hs.1 h1
   have e1 : (∏ k, y ⟨k, c k⟩ ^ (-a) k) • e⁻¹ = ((∏ k, y ⟨k, c k⟩ ^ a k) • e)⁻¹ := by
-    simp [Pi.neg_apply, zpow_neg, Finset.prod_inv_distrib, mul_inv, mul_comm]
+    simp [Pi.neg_apply, zpow_neg, Finset.prod_inv_distrib, mul_comm]
   rw [h q hq, hs.2, e1]
   exact h2
 

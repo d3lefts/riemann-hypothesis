@@ -290,7 +290,7 @@ set_option backward.isDefEq.respectTransparency false
 open CategoryTheory AlgebraicGeometry TensorProduct DirectSum GlobalTheory.LogCris CrystallineSemistableComparison CrystallineSemistableComparison.Onto CrystallineSemistableComparison.Pb CrystallineSemistableComparison.HT GlobalTheory.CompanionTheory.KunGlue
 
 theorem _root_.GlobalTheory.T.kuenneth_swap : ∀ {K : Type} [Field K] {P Q T : ℕ → Cx.{1} K} (pr : ∀ {a a' c : ℕ}, a + a' = c → CxPairing (P a) (Q a') (T c)), KunE pr → KunE (P := Q) (Q := P) (T := T) (fun {a a' c} ha => swapPr pr ha) := by
-  first | exact @GlobalTheory.CompanionTheory.KunGlue.kunE_swap | exact GlobalTheory.CompanionTheory.KunGlue.kunE_swap | (intros; apply GlobalTheory.CompanionTheory.KunGlue.kunE_swap <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.KunGlue.kunE_swap
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KuennethSwapStatement =====
@@ -709,7 +709,7 @@ theorem kun_right : SiteLaws → MVBij → CovDesc → ZarAbs → AffOm → KunA
     rw [← inf_iSup_eq, ← U.cover]
     congr 1
     ext x
-    simp [TopologicalSpace.Opens.mem_iSup]
+    simp
   refine (_root_.GlobalTheory.CompanionTheory.KunGlue.kun_res E h₁ h₂ (g₁ ∅) (g₂ ∅) (le_refl _) k₂ k₃ ?_ ?_ ?_).2 hglue
   · exact fun a n => res_self_bij _ _ _ n
   · intro a n

@@ -343,7 +343,7 @@ theorem single_mul_mul_single_eq_zero {R : Type} [CommRing R] {r : ℕ} {B : Mat
   ext a b
   simp only [Matrix.mul_apply, Matrix.single_apply, Matrix.zero_apply]
   rcases eq_or_ne m a with rfl | ha <;> rcases eq_or_ne i b with rfl | hb <;>
-    simp [*, Finset.sum_ite_eq, Finset.sum_ite_eq']
+    simp [*, Finset.sum_ite_eq]
 
 theorem map_single_one_eq {E : Type} [Field E] {r : ℕ} (f : E →+* ℂ) (i : Fin r) :
     (single i i (1 : E) : Matrix (Fin r) (Fin r) E).map f = single i i (1 : ℂ) := by
@@ -380,7 +380,7 @@ theorem minPar_frame_block_eq_zero : ∀ (F E : Type) [Field F] [NumberField F] 
     ext i j
     by_cases hij : i = j
     · subst hij; simp [Formalism.UG.cT]
-    · simp [Formalism.UG.cT, Matrix.one_apply, hij, Ne.symm hij]
+    · simp [Formalism.UG.cT, hij, Ne.symm hij]
   have hyx : cT (σ : E →+* E) Y * (J * X) = 1 := by
     have h := congrArg (cT (σ : E →+* E)) hW.xy
     rw [cT_mul, cT_mul, cT_cT, cT_J, cT_one] at h
@@ -419,7 +419,7 @@ theorem minPar_frame_block_eq_zero : ∀ (F E : Type) [Field F] [NumberField F] 
       · have h0 : frameIdem (σ : E →+* E) J X Y none * X = 0 := by
           change (1 - X * (cT (σ : E →+* E) Y * J) - Y * (cT (σ : E →+* E) X * J)) * X = 0
           simp only [Matrix.sub_mul, Matrix.one_mul, Matrix.mul_assoc, hyx, hxx,
-            Matrix.mul_one, Matrix.mul_zero, sub_self, sub_zero]
+            Matrix.mul_one, Matrix.mul_zero, sub_self]
         rw [h0]
         simp
       · have hj : ¬ j ≤ s := by
@@ -486,7 +486,7 @@ theorem exists_embOver (F E : Type) [Field F] [NumberField F] [Field E] [NumberF
       rw [← h2]
       change ψ = ComplexEmbedding.conjugate (InfinitePlace.mk ψ).embedding
       rw [e]
-      exact RingHom.ext fun x => by simp [ComplexEmbedding.conjugate_coe_eq]
+      exact RingHom.ext fun x => by simp
   exact ⟨w, ⟨φ, e⟩, rfl⟩
 
 theorem archMat_ratEmb {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
@@ -517,7 +517,7 @@ theorem exists_denom : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
   obtain ⟨d, hd, h⟩ := _root_.GlobalTheory.CompanionTheory.AdeleDenom.exists_nat_mul_isIntegral_of_isCompact F E (⋃ q, f q '' Cf) (isCompact_iUnion fun q => hCf.image (hf q))
   refine ⟨d, hd, fun p hp a ha m hm γ hγ α β u v => h _ (Set.mem_iUnion.2 ⟨(α, β, u, v), projFin σ J (ratEmb σ J γ), ⟨(p, m), ⟨hp, hm⟩, ?_⟩, ?_⟩)⟩
   · have ha' : projFin σ J a = 1 := mem_infPts.1 ha
-    simp only [hγ, map_mul, map_inv, ha', mul_one, one_mul, inv_one]
+    simp only [hγ, map_mul, map_inv, ha', mul_one, inv_one]
   · have e : (matHom (Af F) σ J (projFin σ J (ratEmb σ J γ))).1 = γ.1.1.map (inclR (F := F) (Af F)) :=
       congrArg Units.val (GlobalTheory.CompanionTheory.ClassFin.projFin_ratEmb_val σ J γ)
     simp only [f, e]

@@ -78,11 +78,7 @@ theorem exists_nat_smul_mem_of_span {E : Type} [Field E] [NumberField E] {n : �
     (L : Submodule (𝓞 E) (Fin n → E)) (hL : Submodule.span E (L : Set (Fin n → E)) = ⊤)
     (y : Fin n → E) : ∃ d : ℕ, 0 < d ∧ (d : E) • y ∈ L := by
   first
-  | exact @_root_.GlobalTheory.NatMulIntegral.exists_nat_smul_mem
-  | exact _root_.GlobalTheory.NatMulIntegral.exists_nat_smul_mem
   | (apply _root_.GlobalTheory.NatMulIntegral.exists_nat_smul_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.NatMulIntegral.exists_nat_smul_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.NatMulIntegral.exists_nat_smul_mem <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.NatMulIntegral.exists_nat_smul_mem ..)
 
 theorem exists_nat_smul_map_mem {E : Type} [Field E] [NumberField E] {n : ℕ}
@@ -174,11 +170,7 @@ theorem exists_nat_mulVec_mem [NumberField E] (L : Submodule (𝓞 E) (Fin n →
     (hL : Submodule.span E (L : Set (Fin n → E)) = ⊤) (M : Matrix (Fin n) (Fin n) E) :
     ∃ d : ℕ, 0 < d ∧ ∀ v ∈ L, d • (M *ᵥ v) ∈ L := by
   first
-  | exact @_root_.GlobalTheory.IntegralMultipleOfVectors.exists_nsmul_mulVec_mem
-  | exact _root_.GlobalTheory.IntegralMultipleOfVectors.exists_nsmul_mulVec_mem
   | (apply _root_.GlobalTheory.IntegralMultipleOfVectors.exists_nsmul_mulVec_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.IntegralMultipleOfVectors.exists_nsmul_mulVec_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.IntegralMultipleOfVectors.exists_nsmul_mulVec_mem <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.IntegralMultipleOfVectors.exists_nsmul_mulVec_mem ..)
 
 theorem congAt_mul {L : Submodule (𝓞 E) (Fin n → E)} {N D : ℕ} {A B : Matrix (Fin n) (Fin n) E}
@@ -247,7 +239,6 @@ theorem exists_unitary_correction : ∀ (F E : Type) [Field F] [NumberField F] [
     obtain ⟨γ₁, hγ₁, hc₁, s₁, hs₁, hL₁⟩ := ih ((R u hu0)⁻¹ * γ₀) (D * d * e)
       (Nat.mul_pos (Nat.mul_pos hD hd) he) (fun p hp => hl p (List.mem_cons_of_mem _ hp)) (by
         rw [Units.val_mul, hprod, List.map_cons, List.prod_cons, ← mul_assoc]
-        change _ = _
         have : ((R u hu0)⁻¹).1 * refl c G x u = 1 := (R u hu0).inv_mul
         rw [this, one_mul])
     obtain ⟨u', hu', hc', s', hs', hL'⟩ := _root_.GlobalTheory.UnRep.exists_refl_correction F E c n G hG L hfg hL x u N D hx hu hN hD

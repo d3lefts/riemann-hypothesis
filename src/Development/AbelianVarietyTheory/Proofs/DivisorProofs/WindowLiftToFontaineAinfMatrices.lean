@@ -260,11 +260,7 @@ namespace GlobalTheory.FLam
 theorem exists_fixed {B : Type} [CommRing B] (q : B) [h : IsAdicComplete (Ideal.span {q}) B]
     (σ : B →+* B) (hσ : σ q = q) (w : B) : ∃ c : B, c = -w + q * σ c := by
   first
-  | exact @_root_.GlobalTheory.FixedPointApproximation.exists_fixed
-  | exact _root_.GlobalTheory.FixedPointApproximation.exists_fixed
   | (apply _root_.GlobalTheory.FixedPointApproximation.exists_fixed <;> assumption)
-  | (intros; apply _root_.GlobalTheory.FixedPointApproximation.exists_fixed <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.FixedPointApproximation.exists_fixed <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.FixedPointApproximation.exists_fixed ..)
 
 theorem one_add_pow_of_sq {B : Type} [CommRing B] (x : B) (hx : x * x = 0) (n : ℕ) :
@@ -587,7 +583,7 @@ theorem isNil_V_blk_frob_xi :
   simp only [blk, Matrix.mul_diagonal, Matrix.map_apply]
   rcases j with j | j
   · simp only [Sum.elim_inl, map_mul, map_natCast, hU, F.θ_a, theta_frob_xi hv hε]
-  · simp only [Sum.elim_inr, map_mul, map_one, mul_one, hU]
+  · simp only [Sum.elim_inr, mul_one, hU]
 
 end GlobalTheory.WinLift
 end -- clump:auto

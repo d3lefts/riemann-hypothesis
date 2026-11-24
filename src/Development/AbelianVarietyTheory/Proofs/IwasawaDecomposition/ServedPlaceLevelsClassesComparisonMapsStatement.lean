@@ -115,7 +115,7 @@ theorem _root_.GlobalTheory.T.exists_chainChart_localUnitCharacter_compatible_le
         ∃ ψ : Formalism.L2.G.awayG (w.D Z).sp.cm.sig ((w.D Z).sp.X (j + 1)).gram
             (tt.ch.lev u ((w.D Z).what₂.muAt v) (j + 1) (Formalism.MainNotions.G.CmpJ.AgreeLv.one_le j) hj β).Uloc ((w.D Z).what₂.places.resChar v) →* ((w.D Z).gat u v hg).Oˣ,
           Formalism.MainNotions.G.CmpJ.UnitCharacterChartCompatibility hj (tt.forms.ch u ((w.D Z).what₂.muAt v) hμ (j + 1) (Formalism.MainNotions.G.CmpJ.AgreeLv.one_le j) hj β).lev (t.cmp.embW u v hg) ψ := by
-  first | exact @GlobalTheory.Mem.Top.KerTwPsi.psi_tied | exact GlobalTheory.Mem.Top.KerTwPsi.psi_tied | (intros; apply GlobalTheory.Mem.Top.KerTwPsi.psi_tied <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.KerTwPsi.psi_tied
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsChainChartLocalUnitCharacterCompatibleLeveStatement =====
@@ -353,7 +353,7 @@ theorem stepBasis_std : ∀ {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} 
           exact this ▸ hz
       rw [hmap, ← e1]
       refine (e2 _).trans ?_
-      simp only [TC.baseL, Set.mem_setOf_eq, reV, LinearEquiv.funCongrLeft_apply, LinearMap.funLeft_apply]
+      simp only [TC.baseL, reV, LinearEquiv.funCongrLeft_apply]
       constructor
       · intro H a
         obtain ⟨r, hr1, hr2⟩ := H (finCongr hr a)
@@ -422,7 +422,7 @@ theorem _root_.GlobalTheory.T.exists_orthonormal_step_basis_base_lattice_charts 
             GL (Fin ((w.D Z).sp.X (j + 1)).rank) (w'.adicCompletion (w.D Z).host.F)) :
               Matrix (Fin ((w.D Z).sp.X (j + 1)).rank) (Fin ((w.D Z).sp.X (j + 1)).rank) (w'.adicCompletion (w.D Z).host.F)).mulVec x a ∈
             w'.adicCompletionIntegers (w.D Z).host.F := by
-  first | exact @GlobalTheory.Mem.Top.KerTwLv.stepBasis_std | exact GlobalTheory.Mem.Top.KerTwLv.stepBasis_std | (intros; apply GlobalTheory.Mem.Top.KerTwLv.stepBasis_std <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.KerTwLv.stepBasis_std
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsOrthonormalStepBasisBaseLatticeChartsStatement =====
@@ -473,7 +473,7 @@ theorem places_prime : ∀ {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} (
     have hmem : ((((w.D Z).what₂.places.resChar v : ℕ)) : 𝓞 B.host.E) ∈ (w.I.sel w').asIdeal := by
       rw [← hund] at hpw
       have := hpw
-      simp only [HeightOneSpectrum.under, Ideal.under, Ideal.mem_comap, map_natCast] at this
+      simp only [HeightOneSpectrum.under, Ideal.under] at this
       exact this
     have hQp := (hQ ((w.D Z).what₂.muAt v) ((w.D Z).what₂.places.resChar v)).2 ⟨hp, w.I.sel w', hPQ, hmem⟩
     exact Y.Qp_muAt v hQp
@@ -510,7 +510,7 @@ theorem _root_.GlobalTheory.T.served_place_no_chain_place_or_type_prime_over : �
       Formalism.L2.Forms.okQ (w.D Z) (tt.ch.Q ((w.D Z).what₂.muAt v)) v ∧
         (∀ w' ∈ Formalism.L2.Forms.badQ (w.D Z) (tt.ch.Q ((w.D Z).what₂.muAt v)), (((w.D Z).what₂.places.resChar v : ℕ) : 𝓞 (w.D Z).host.F) ∉ w'.asIdeal) ∧
         ¬ (w.D Z).what₂.places.resChar v ∣ ((w.D Z).mem u).A.T := by
-  first | exact @GlobalTheory.ServedPlace.places_prime | exact GlobalTheory.ServedPlace.places_prime | (intros; apply GlobalTheory.ServedPlace.places_prime <;> assumption)
+  first | exact @GlobalTheory.ServedPlace.places_prime
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ServedPlaceNoChainPlaceOrTypePrimeOverStatement =====
@@ -588,7 +588,7 @@ theorem _root_.GlobalTheory.T.twisted_chain_charts_hyperspecial_stabilise_lattic
       ∀ (Cd : GlobalTheory.Mem.Top.KerTwLv.ChData tt.ch t.g.herm u ((w.D Z).what₂.muAt v) v hg) j (hj : j + 1 ≤ (w.D Z).R.m) (β : tt.ch.Ch u ((w.D Z).what₂.muAt v) (j + 1)),
         Formalism.MainNotions.G.CmpJ.HypTJ ((Cd.Lc t.Gt (Fl u v hg) (hfl u v hg).1 j hj).t β) ∧
         Formalism.MainNotions.G.CmpJ.PStabEq.HypTJC ((Cd.Lc t.Gt (Fl u v hg) (hfl u v hg).1 j hj).t β) := by
-  first | exact @GlobalTheory.Mem.Top.KerTwLv.hyp_charts_tw | exact GlobalTheory.Mem.Top.KerTwLv.hyp_charts_tw | (intros; apply GlobalTheory.Mem.Top.KerTwLv.hyp_charts_tw <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.KerTwLv.hyp_charts_tw
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TwistedChainChartsHyperspecialStabiliseLatticeStatement =====
@@ -664,7 +664,7 @@ theorem _root_.GlobalTheory.T.twisted_chart_levels_determinant_maps_values : ∀
       ∀ j (hj : j + 1 ≤ (w.D Z).R.m) β cl, ∃ r : (w.D Z).what₂.LL, (w.D Z).what₂.embLL r =
         (((Formalism.MainNotions.G.CmpJ.AgreeLv.formsInTw tt.forms u ((w.D Z).what₂.muAt v) hμ j hj (dt j hj)).tw β).ch
           (((Formalism.MainNotions.G.CmpJ.AgreeLv.formsInTw tt.forms u ((w.D Z).what₂.muAt v) hμ j hj (dt j hj)).K β).y cl) : ℂ) := by
-  first | exact @GlobalTheory.Mem.Top.KerTwDet.detTie_vals | exact GlobalTheory.Mem.Top.KerTwDet.detTie_vals | (intros; apply GlobalTheory.Mem.Top.KerTwDet.detTie_vals <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.KerTwDet.detTie_vals
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TwistedChartLevelsDeterminantMapsValuesStatement =====
@@ -813,7 +813,7 @@ theorem _root_.GlobalTheory.T.comparison_data_steps_non_reference_tuple : ∀ {K
         (∀ j hj, (I.at' j hj).C = (w.D Z).chTw u ((w.D Z).what₂.muAt v)) ∧
         (∀ j hj, Formalism.MainNotions.G.KAat.ChX (I.at' j hj).st) ∧
         (∀ j, (w.D Z).R.m ≤ j → IsEmpty (Lv.compS j)) := by
-  first | exact @GlobalTheory.Mem.Top.KerTwLv.cmpJ_data_ne | exact GlobalTheory.Mem.Top.KerTwLv.cmpJ_data_ne | (intros; apply GlobalTheory.Mem.Top.KerTwLv.cmpJ_data_ne <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.KerTwLv.cmpJ_data_ne
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ComparisonDataStepsNonReferenceTupleStatement =====
@@ -950,7 +950,7 @@ theorem _root_.GlobalTheory.T.memberFormsLayer_midStep_charts_conditions : ∀ {
       ∀ (i : ℕ) (hi : i + 1 ≤ (w.D Z).R.m), i + 1 + 1 ≤ (w.D Z).R.m →
       ∃ (Fo : FormsIn ((w.D Z).fm u) (i + 1) hi) (_ : Finite Fo.Ch) (S : StepD t.g.herm u v hg Fo),
         StepTiesD t.g.herm u v hg hi Fo S t.cmp := by
-  first | exact @GlobalTheory.Mem.Top.KerOne.CertEq.stepTiesD_mid | exact GlobalTheory.Mem.Top.KerOne.CertEq.stepTiesD_mid | (intros; apply GlobalTheory.Mem.Top.KerOne.CertEq.stepTiesD_mid <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.KerOne.CertEq.stepTiesD_mid
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MemberFormsLayerMidStepChartsConditionsStatement =====
@@ -1084,7 +1084,7 @@ theorem _root_.GlobalTheory.T.memberFormsLayer_topStep_chart_conditions : ∀ {K
       ∀ (i : ℕ) (hi : i + 1 ≤ (w.D Z).R.m), i + 1 = (w.D Z).R.m →
       ∃ (Fo : FormsIn ((w.D Z).fm u) (i + 1) hi) (_ : Finite Fo.Ch) (S : StepD t.g.herm u v hg Fo),
         StepTiesD t.g.herm u v hg hi Fo S t.cmp := by
-  first | exact @GlobalTheory.Mem.Top.KerOne.CertEq.TopStep.stepTies_top | exact GlobalTheory.Mem.Top.KerOne.CertEq.TopStep.stepTies_top | (intros; apply GlobalTheory.Mem.Top.KerOne.CertEq.TopStep.stepTies_top <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.KerOne.CertEq.TopStep.stepTies_top
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MemberFormsLayerTopStepChartConditionsStatement =====
@@ -1215,7 +1215,7 @@ theorem _root_.GlobalTheory.T.exists_comparisonData_steps_upTo_rank : ∀ {K : C
         (∀ j hj, (I.at' j hj).C = (w.D Z).chTw u ((w.D Z).what₂.muAt v)) ∧
         (∀ j hj, Formalism.MainNotions.G.KAat.ChX (I.at' j hj).st) ∧
         (∀ j, (w.D Z).R.m ≤ j → IsEmpty (Lv.compS j)) := by
-  first | exact @GlobalTheory.Mem.Top.KerOne.CertEq.exists_comparisonData_steps_at_baseCharacter | exact GlobalTheory.Mem.Top.KerOne.CertEq.exists_comparisonData_steps_at_baseCharacter | (intros; apply GlobalTheory.Mem.Top.KerOne.CertEq.exists_comparisonData_steps_at_baseCharacter <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.KerOne.CertEq.exists_comparisonData_steps_at_baseCharacter
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsComparisonDataStepsUpToRankStatement =====
@@ -1316,7 +1316,7 @@ theorem _root_.GlobalTheory.T.served_place_levels_classes_comparison_maps : ∀ 
         (∀ j, j + 1 ≤ (w.D Z).R.m → Submodule.span ((w.D Z).gat u v hg).O
           (up.cmpS j '' ((((w.tw Z).fm u ((w.D Z).what₂.muAt v)).lat (j + 1)).L :
             Set (((w.tw Z).fm u ((w.D Z).what₂.muAt v)).lat (j + 1)).V)) = Lv.Int (j + 1)) := by
-  first | exact @GlobalTheory.Mem.Top.KerOne.levels_cls_cmp_at_served | exact GlobalTheory.Mem.Top.KerOne.levels_cls_cmp_at_served | (intros; apply GlobalTheory.Mem.Top.KerOne.levels_cls_cmp_at_served <;> assumption)
+  first | exact @GlobalTheory.Mem.Top.KerOne.levels_cls_cmp_at_served
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ServedPlaceLevelsClassesComparisonMapsStatement =====

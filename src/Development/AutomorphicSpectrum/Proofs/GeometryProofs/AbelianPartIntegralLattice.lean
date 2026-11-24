@@ -488,7 +488,7 @@ section -- clump:auto
 open GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Cusp
 
 theorem _root_.GlobalTheory.T.eigen_component_map_compat : ∀ (k k' V V' O : Type) [Field k] [Field k'] [AddCommGroup V] [Module k V] [AddCommGroup V'] [Module k' V'] [CommRing O] (κ : k →+* k') (j : V →+ V'), (∀ (c : k) x, j (c • x) = κ c • j x) → ∀ (ρ : O →+* Module.End k V) (ρ' : O →+* Module.End k' V'), (∀ a x, ρ' a (j x) = j (ρ a x)) → ∀ (σ : O →+* k) (x : V), eigComp ρ σ x ≠ 0 → eigComp ρ' (κ.comp σ) (j x) = j (eigComp ρ σ x) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Cusp.EigMap.eigComp_map | exact GlobalTheory.CompanionTheory.Ar.Cusp.EigMap.eigComp_map | (intros; apply GlobalTheory.CompanionTheory.Ar.Cusp.EigMap.eigComp_map <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Cusp.EigMap.eigComp_map
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.EigenComponentMapCompatStatement =====
@@ -564,7 +564,7 @@ private theorem exists_tanAt_comp_of_sabMap {E : Type} [Field E] [NumberField E]
     have h2 : (1 : Over.mk (z ≫ f) ⟶ t.G).left = (Over.mk (z ≫ f)).hom ≫ (1 : Over.mk (𝟙 X) ⟶ t.G).left :=
       isGrpPullback_one_left _
     rw [h2, ← Category.assoc, hv', h1, Category.assoc, one_left_comp_eq_comp_one_of_isGrpPullback t'.G t.G f m.φ m.cart]
-    simp [epsAt]
+    simp
 
 
 open LieMove in
@@ -838,7 +838,7 @@ theorem dualMap_cast {L L' : Type} [Field L] [Field L'] (e : L →+* L') (n : �
 theorem base_comm {L L' : Type} [Field L] [Field L'] (e : L →+* L') :
     spMap (dualMap e) ≫ Spec.map (CommRingCat.ofHom (algebraMap L (DualNumber L))) ≫ 𝟙 (Sp L) =
       (Spec.map (CommRingCat.ofHom (algebraMap L' (DualNumber L'))) ≫ 𝟙 (Sp L')) ≫ spMap e := by
-  simp only [Category.comp_id, Category.id_comp]
+  simp only [Category.comp_id]
   rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp]
   congr 2
   ext r <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
@@ -944,7 +944,6 @@ theorem geo_height_arch : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
   have hover : ∀ x : A.Λ, (MV'.pt (j x) ≫ P'.τ.q ≫ P'.e.hom).left ≫ mB.φ ≫ m'.φ =
       spMap (dualMap (e.comp (algebraMap (𝓞 L) L))) ≫ (MB.pt (A.f x)).left := fun x => by
     have e1 := hlift x
-    unfold LieModel.Lifts at e1
     rw [dualMap_comp]
     have e3 : spMap ((dualMap e).comp (dualMap (algebraMap (𝓞 L) L))) =
         spMap (dualMap e) ≫ spMap (dualMap (algebraMap (𝓞 L) L)) := by

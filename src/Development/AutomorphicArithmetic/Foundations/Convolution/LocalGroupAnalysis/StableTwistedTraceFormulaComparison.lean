@@ -1029,7 +1029,7 @@ private theorem inv_map_sub {G P : Type} [Group G] [Group P] [MeasurableSpace G]
     Measure.restrict_apply (hf hE)]
   have h : f ⁻¹' E⁻¹ ∩ (U : Set G) = (f ⁻¹' E ∩ (U : Set G))⁻¹ := by
     ext x
-    simp [Set.mem_inv, map_inv, Subgroup.inv_mem_iff]
+    simp [Set.mem_inv, map_inv]
   rw [h, Measure.measure_inv]
 
 private theorem inv_all {P : Type} [Group P] [MeasurableSpace P] [MeasurableInv P] (ν : Measure P)
@@ -1172,7 +1172,6 @@ theorem UpperTheory.orbitalSideBaseField_of_absoluteConvergence :
     simp only [Subgroup.subtype_apply, MonoidHom.id_apply]
     first
       | rw [mul_assoc, ← h, inv_mul_cancel_left]
-      | rw [mul_assoc, h, inv_mul_cancel_left]
   have hcpt : ∀ D : Set (GL (Fin n) (InfiniteAdeleRing F)), IsCompact D → ∃ C : Set (GL (Fin n) (InfiniteAdeleRing F)),
       IsCompact C ∧ ∀ x, x⁻¹ * pI F n (AdelicGLn.diagonal F n γ) * (MonoidHom.id _) x ∈ D →
         ∃ t : TI γ, ∃ y ∈ C, x = (TI γ).subtype t * y := by
@@ -1180,7 +1179,7 @@ theorem UpperTheory.orbitalSideBaseField_of_absoluteConvergence :
     obtain ⟨C, hC, h⟩ := (hInf F n hn (pI F n (AdelicGLn.diagonal F n γ))).2 (hSep F n γ hγ).1 D hD
     refine ⟨C, hC, fun x hx => ?_⟩
     obtain ⟨t, ht, y, hy, rfl⟩ := h x hx
-    exact ⟨⟨t, Subgroup.mem_centralizer_singleton_iff.2 (by first | exact ht | exact ht.symm)⟩, y, hy, rfl⟩
+    exact ⟨⟨t, Subgroup.mem_centralizer_singleton_iff.2 (by first | exact ht)⟩, y, hy, rfl⟩
   have hbd : ∀ D : Set (GL (Fin n) (InfiniteAdeleRing F)), IsCompact D → ∃ B : Set ℝ, IsCompact B ∧
       ∀ s x, pI F n (zA F n s) * (x⁻¹ * pI F n (AdelicGLn.diagonal F n γ) * (MonoidHom.id _) x) ∈ D → s ∈ B :=
     (hInf F n hn (pI F n (AdelicGLn.diagonal F n γ))).1
@@ -1191,7 +1190,7 @@ theorem UpperTheory.orbitalSideBaseField_of_absoluteConvergence :
     refine ⟨(hloc v hv).1, fun x => ?_⟩
     refine ((hloc v hv).2 x).trans ⟨?_, ?_⟩
     · rintro ⟨t, ht, y, hy, rfl⟩
-      exact ⟨⟨t, Subgroup.mem_centralizer_singleton_iff.2 (by first | exact ht | exact ht.symm)⟩, y, hy, rfl⟩
+      exact ⟨⟨t, Subgroup.mem_centralizer_singleton_iff.2 (by first | exact ht)⟩, y, hy, rfl⟩
     · rintro ⟨t, y, hy, rfl⟩
       have h := Subgroup.mem_centralizer_singleton_iff.1 t.2
       exact ⟨t, by first | exact h | exact h.symm, y, hy, rfl⟩

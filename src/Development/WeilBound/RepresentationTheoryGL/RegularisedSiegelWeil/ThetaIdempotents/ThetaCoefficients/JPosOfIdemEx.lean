@@ -163,7 +163,7 @@ lemma scM_val (w : Lˣ) : (scM (n := n) w).1 = (w : L) • (1 : Matrix (Fin n) (
 lemma tau_nU (w : Lˣ) (y : Matrix (Fin n) (Fin n) L) :
     tauM w * nU y = nU ((w⁻¹ : Lˣ).1 • y) * tauM w := by
   apply Units.ext
-  simp [tauM, pM, nU, fromBlocks_multiply, scM_val, Matrix.smul_mul, smul_smul]
+  simp [tauM, pM, nU, fromBlocks_multiply, scM_val, smul_smul]
 
 lemma h_key (hIw : JpIw) (hHgt : JpHgt) [Fintype (IsLocalRing.ResidueField O)] {ϖ : O} (hϖ : Irreducible ϖ)
     {w : Lˣ} (hw : (w : L) = algebraMap O L ϖ) {nv : Lˣ →* ℝ≥0} (hnv : NvOK (O := O) nv w)
@@ -509,7 +509,7 @@ lemma exists_transv {T : Finset ι} {i j : ι} (hi : i ∈ T) (hij : i ≠ j) (c
     by_cases h : l = j
     · subst h
       simp [Matrix.vecMul, dotProduct, Matrix.single_apply]
-    · simp [Matrix.vecMul, dotProduct, Matrix.single_apply, h, Ne.symm h]
+    · simp [Matrix.vecMul, dotProduct, h, Ne.symm h]
   exact ⟨_, ⟨⟨κ, rfl⟩, fun v hv => by rw [key, hv i hi]; simp⟩, key⟩
 
 lemma exists_mul_or [IsDomain O] [ValuationRing O] [IsFractionRing O L] (a b : L) :
@@ -534,17 +534,17 @@ lemma exists_clear [IsDomain O] [ValuationRing O] [IsFractionRing O L] {T : Fins
     obtain ⟨k₂, a₂, h₂⟩ := exists_transv (O := O) (L := L) hp hjp.symm (-1)
     refine ⟨k₁ * k₂, a₁.mul a₂, ?_, fun l hl hl' => ?_⟩
     · rw [Units.val_mul, ← Matrix.vecMul_vecMul, h₂, h₁]
-      simp [Pi.single_apply, hjp, hjp.symm, hc]
+      simp [hjp, hc]
       ring
     · rw [Units.val_mul, ← Matrix.vecMul_vecMul, h₂, h₁]
-      simp [Pi.single_apply, hl, hl']
+      simp [hl, hl']
   · obtain ⟨k, a, h⟩ := exists_transv (O := O) (L := L) hp hjp.symm (-c)
     refine ⟨k, a, ?_, fun l hl _ => ?_⟩
     · rw [h]
       simp [hc]
       ring
     · rw [h]
-      simp [Pi.single_apply, hl]
+      simp [hl]
 
 lemma exists_clear_set [IsDomain O] [ValuationRing O] [IsFractionRing O L] {T : Finset ι} {p : ι}
     (hp : p ∈ T) (z : ι → L) (s : Finset ι) (hs : s ⊆ T) (hps : p ∉ s) :
@@ -1233,8 +1233,8 @@ theorem chi_one {χ : (AE D)ˣ →* Circle} {τ : D.host.E →ₐ[D.host.F] Fv D
   have hk' : proj D.sp.cm.sig (Jst D n) v k ∈ GlobalTheory.LocIntw.KUpFin D.sp.cm.sig (Jst D n) v :=
     (GlobalTheory.LocIntw.mem_KUpAd.1 hk.1).1 v
   have h := congrArg (fun y => ‖dV τ y‖) e
-  simp only [map_mul, dV_mul, dV_nb τ hnb, norm_mul, norm_one, norm_dV_of_mem τ hk₀, norm_dV_of_mem τ hk₁,
-    norm_dV_of_mem τ hk', mul_one, one_mul] at h
+  simp only [map_mul, dV_mul, dV_nb τ hnb, norm_mul, norm_dV_of_mem τ hk₀, norm_dV_of_mem τ hk₁,
+    norm_dV_of_mem τ hk', mul_one] at h
   exact h.symm
 
 end GlobalTheory.CompanionTheory.Jp.B3

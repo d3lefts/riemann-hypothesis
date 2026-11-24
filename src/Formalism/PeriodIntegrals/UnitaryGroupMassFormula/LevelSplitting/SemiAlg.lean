@@ -610,15 +610,13 @@ theorem stabilizer_fixes_tail_coords {g : HA R σ J} (hg : g ∈ Ssub R σ J P) 
 
 theorem H_fix_e {h : HA R σ J} (hh : h ∈ Hsub R σ J P) (a : Fin r) :
     lin R σ J h (ratV (F := F) R (P.e a)) = ratV (F := F) R (P.e a) := by
-  have h1 := (mem_stabT (R := R) (σ := σ) (J := J) (tupH P) h).1 hh (Fin.castAdd r (Fin.castSucc a))
-  simp only [tupH, Fin.append_left, F0_castSucc] at h1
-  exact h1
+  simpa [tupH, Fin.append_left, F0_castSucc] using
+    (mem_stabT (R := R) (σ := σ) (J := J) (tupH P) h).1 hh (Fin.castAdd r (Fin.castSucc a))
 
 theorem H_fix_f {h : HA R σ J} (hh : h ∈ Hsub R σ J P) (a : Fin r) :
     lin R σ J h (ratV (F := F) R (P.f a)) = ratV (F := F) R (P.f a) := by
-  have h1 := (mem_stabT (R := R) (σ := σ) (J := J) (tupH P) h).1 hh (Fin.natAdd (r + 1) a)
-  simp only [tupH, Fin.append_right] at h1
-  exact h1
+  simpa [tupH, Fin.append_right] using
+    (mem_stabT (R := R) (σ := σ) (J := J) (tupH P) h).1 hh (Fin.natAdd (r + 1) a)
 
 theorem mapX_S {g : HA R σ J} (hg : g ∈ Ssub R σ J P) : (datR R σ J P T).MapX (lin R σ J g) := by
   intro a
@@ -626,9 +624,7 @@ theorem mapX_S {g : HA R σ J} (hg : g ∈ Ssub R σ J P) : (datR R σ J P T).Ma
   have h1 := spanR_le (σ := σ) (J := J) (T := T) _ (S_e hg a)
   have h2 : ratV (F := F) R (P.e a) ∈ Submodule.span (R ⊗[F] E) (Set.range (datR R σ J P T).e) :=
     Submodule.subset_span ⟨a, rfl⟩
-  have h3 := Submodule.add_mem _ h1 h2
-  rw [sub_add_cancel] at h3
-  exact h3
+  simpa using Submodule.add_mem _ h1 h2
 
 theorem uni_lin (g : HA R σ J) : (datR R σ J P T).Uni (lin R σ J g) := by
   open Matrix in (

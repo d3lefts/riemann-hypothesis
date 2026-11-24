@@ -155,7 +155,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.algebraic_over_torus_of_integral : ∀ {K R : Type} [Field K] [CommRing R] [IsDomain R] [Algebra K R] {d : ℕ} (t : Fin d → Rˣ), (∀ r : R, IsIntegral (torusS K t Finset.univ) r) → Algebra.IsAlgebraic (Algebra.adjoin K (Set.range fun k => (t k : R))) R := by
-  first | exact @GlobalTheory.CompanionTheory.GeoTorus.isAlgebraic_of_integral_torusS | exact GlobalTheory.CompanionTheory.GeoTorus.isAlgebraic_of_integral_torusS | (intros; apply GlobalTheory.CompanionTheory.GeoTorus.isAlgebraic_of_integral_torusS <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.GeoTorus.isAlgebraic_of_integral_torusS
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AlgebraicOverTorusOfIntegralStatement =====
@@ -487,7 +487,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.algebraically_independent_coords : ∀ {K : Type} [Field K] {X : Scheme.{0}} {N d e : ℕ} (i : X ⟶ PSpace K N) (y : Fin (d + 1) → MvPolynomial (Fin (N + 1)) K) (hy : ∀ k, (y k).IsHomogeneous e) {V : X.Opens} (hV : V ≤ ⨅ k, i ⁻¹ᵁ Proj.basicOpen (grK K N) (y k)), IsIntegral X → 0 < e → ∀ (q : X ⟶ Spec (CommRingCat.of K)), i ≫ PSpace.str K N = q → (AlgebraicIndependent K fun k => Ideal.Quotient.mk (homIdeal i) (y k)) → (V : Set X).Nonempty → letI := (strV q V).toAlgebra; AlgebraicIndependent K (tV i y hy V hV) := by
-  first | exact @GlobalTheory.CompanionTheory.GeoAlgInd.algebraicIndependent_tV | exact GlobalTheory.CompanionTheory.GeoAlgInd.algebraicIndependent_tV | (intros; apply GlobalTheory.CompanionTheory.GeoAlgInd.algebraicIndependent_tV <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.GeoAlgInd.algebraicIndependent_tV
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AlgebraicallyIndependentCoordsStatement =====
@@ -755,7 +755,7 @@ theorem mk_prod_pow {m e : ℕ} {g : MvPolynomial (Fin (N + 1)) K} (hg : g ∈ g
       ∏ k ∈ s, Localization.mk (y k) (⟨g ^ 1, ⟨_, rfl⟩⟩ : Submonoid.powers g) ^ β k := by
     intro s
     induction s using Finset.induction_on with
-    | empty => simp [Localization.mk_one]
+    | empty => simp
     | insert a s ha ih =>
       rw [Finset.prod_insert ha, Finset.prod_insert ha, ← ih, Localization.mk_pow, Localization.mk_mul]
       congr 1
@@ -854,7 +854,7 @@ theorem evV_monomial {d e : ℕ} (i : X ⟶ PSpace K N) (y : Fin (d + 1) → MvP
     simpa using (MvPolynomial.mem_homogeneousSubmodule e (y k)).2 (hy k)
   have one : HomogeneousLocalization.Away.mk (grK K N) h0 1 (y 0) (hy1 0) = 1 := by
     apply HomogeneousLocalization.val_injective
-    simp [Localization.mk_self]
+    simp
   have A2 : ∀ (γ : Fin (d + 1) → ℕ) (hγ : ∑ k, γ k = j * S.card)
       (h' : ∏ k, y k ^ γ k ∈ grK K N ((j * S.card) • e)),
       evV i (y 0) V hV0 (HomogeneousLocalization.Away.mk (grK K N) h0 (j * S.card) (∏ k, y k ^ γ k) h') =
@@ -1092,7 +1092,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.noether_normalization_finite : ∀ {K : Type} [Field K] {X : Scheme.{0}} {N d e : ℕ} (i : X ⟶ PSpace K N) (y : Fin (d + 1) → MvPolynomial (Fin (N + 1)) K) (hy : ∀ k, (y k).IsHomogeneous e) {V : X.Opens} (hV : V ≤ ⨅ k, i ⁻¹ᵁ Proj.basicOpen (grK K N) (y k)), 0 < e → ∀ (q : X ⟶ Spec (CommRingCat.of K)), i ≫ PSpace.str K N = q → Module.Finite (Algebra.adjoin K (Set.range fun k => Ideal.Quotient.mk (homIdeal i) (y k))) (MvPolynomial (Fin (N + 1)) K ⧸ homIdeal i) → ∀ (S : Finset (Fin (d + 1))) (hS : V ≤ i ⁻¹ᵁ Proj.basicOpen (grK K N) (yS y S)) (ht : ∀ k, IsUnit (tV i y hy V hV k)), letI := (strV q V).toAlgebra; ∀ a, IsIntegral (torusS K (fun k => (ht k).unit) S) (evV i (yS y S) V hS a) := by
-  first | exact @GlobalTheory.CompanionTheory.GeoInteg.isIntegral_torusS | exact GlobalTheory.CompanionTheory.GeoInteg.isIntegral_torusS | (intros; apply GlobalTheory.CompanionTheory.GeoInteg.isIntegral_torusS <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.GeoInteg.isIntegral_torusS
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.NoetherNormalizationFiniteStatement =====
@@ -1107,7 +1107,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.torus_coordinate_isUnit : ∀ {K : Type} [Field K] {X : Scheme.{0}} {N d e : ℕ} (i : X ⟶ PSpace K N) (y : Fin (d + 1) → MvPolynomial (Fin (N + 1)) K) (hy : ∀ k, (y k).IsHomogeneous e) {V : X.Opens} (hV : V ≤ ⨅ k, i ⁻¹ᵁ Proj.basicOpen (grK K N) (y k)), ∀ k : Fin d, IsUnit (tV i y hy V hV k) := by
-  first | exact @GlobalTheory.CompanionTheory.GeoUnit.tV_isUnit | exact GlobalTheory.CompanionTheory.GeoUnit.tV_isUnit | (intros; apply GlobalTheory.CompanionTheory.GeoUnit.tV_isUnit <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.GeoUnit.tV_isUnit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TorusCoordinateIsUnitStatement =====
@@ -1314,7 +1314,7 @@ open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Geo.T
 attribute [local instance] MvPolynomial.gradedAlgebra
 
 theorem _root_.GlobalTheory.T.torus_monomial_mem_range : ∀ {K : Type} [Field K] {X : Scheme.{0}} {N d e : ℕ} (i : X ⟶ PSpace K N) (y : Fin (d + 1) → MvPolynomial (Fin (N + 1)) K) (hy : ∀ k, (y k).IsHomogeneous e) {V : X.Opens} (hV : V ≤ ⨅ k, i ⁻¹ᵁ Proj.basicOpen (grK K N) (y k)), 0 < e → ∀ (S : Finset (Fin (d + 1))) (hS : V ≤ i ⁻¹ᵁ Proj.basicOpen (grK K N) (yS y S)) (ht : ∀ k, IsUnit (tV i y hy V hV k)), ∀ m ∈ expS S, tpow (fun k => (ht k).unit) m ∈ Set.range (evV i (yS y S) V hS) := by
-  first | exact @GlobalTheory.CompanionTheory.GeoTpow.tpow_mem_range | exact GlobalTheory.CompanionTheory.GeoTpow.tpow_mem_range | (intros; apply GlobalTheory.CompanionTheory.GeoTpow.tpow_mem_range <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.GeoTpow.tpow_mem_range
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TorusMonomialMemRangeStatement =====
@@ -1342,13 +1342,11 @@ variable {K : Type} [Field K] {X : Scheme.{0}} {N d e : ℕ} (i : X ⟶ PSpace K
 theorem tV_isUnit (k : Fin d) : IsUnit (tV i y hy V hV k) := by
   first
     | exact GlobalTheory.T.torus_coordinate_isUnit ..
-    | (intros; apply GlobalTheory.T.torus_coordinate_isUnit <;> assumption)
 
 theorem tpow_mem_range (he : 0 < e) (S : Finset (Fin (d + 1)))
     (hS : V ≤ i ⁻¹ᵁ Proj.basicOpen (grK K N) (yS y S)) (ht : ∀ k, IsUnit (tV i y hy V hV k)) :
     ∀ m ∈ expS S, tpow (fun k => (ht k).unit) m ∈ Set.range (evV i (yS y S) V hS) := by
   first
-    | exact GlobalTheory.T.torus_monomial_mem_range ..
     | (intros; apply GlobalTheory.T.torus_monomial_mem_range <;> assumption)
 
 theorem isIntegral_torusS (he : 0 < e) (q : X ⟶ Spec (CommRingCat.of K)) (hiq : i ≫ PSpace.str K N = q)
@@ -1359,7 +1357,6 @@ theorem isIntegral_torusS (he : 0 < e) (q : X ⟶ Spec (CommRingCat.of K)) (hiq 
     letI := (strV q V).toAlgebra
     ∀ a, IsIntegral (torusS K (fun k => (ht k).unit) S) (evV i (yS y S) V hS a) := by
   first
-    | exact GlobalTheory.T.noether_normalization_finite ..
     | (intros; apply GlobalTheory.T.noether_normalization_finite <;> assumption)
 
 theorem algebraicIndependent_tV [IsIntegral X] (he : 0 < e) (q : X ⟶ Spec (CommRingCat.of K))
@@ -1368,14 +1365,12 @@ theorem algebraicIndependent_tV [IsIntegral X] (he : 0 < e) (q : X ⟶ Spec (Com
     letI := (strV q V).toAlgebra
     AlgebraicIndependent K (tV i y hy V hV) := by
   first
-    | exact GlobalTheory.T.algebraically_independent_coords ..
     | (intros; apply GlobalTheory.T.algebraically_independent_coords <;> assumption)
 
 theorem isAlgebraic_of_integral_torusS {R : Type} [CommRing R] [IsDomain R] [Algebra K R] {d : ℕ} (t : Fin d → Rˣ)
     (h : ∀ r : R, IsIntegral (torusS K t Finset.univ) r) :
     Algebra.IsAlgebraic (Algebra.adjoin K (Set.range fun k => (t k : R))) R := by
   first
-    | exact GlobalTheory.T.algebraic_over_torus_of_integral ..
     | (intros; apply GlobalTheory.T.algebraic_over_torus_of_integral <;> assumption)
 
 end CrystallineSemistableComparison.Pb

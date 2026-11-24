@@ -259,7 +259,7 @@ theorem vGe_of (Y : Pend X) {j : ℕ} {F : X.Fm j} {g : ℝ} (hE : Eqv X j F)
       simp only [Pi.smul_apply]
       rw [← hy', smul_smul, inv_mul_cancel₀ hc, one_smul]
       exact hy
-    · simp [smul_smul, inv_mul_cancel₀ hc, mul_inv_cancel₀ hc]
+    · simp [smul_smul, inv_mul_cancel₀ hc]
 
 variable (X)
 
@@ -362,7 +362,7 @@ variable {X}
 theorem map_smulK (Y : Pend X) {σ : Type*} (a : X.G.Kf) (x : MvPolynomial σ X.G.Kf) :
     MvPolynomial.map (algebraMap X.G.Kf Y.Kc) (a • x) = a • MvPolynomial.map (algebraMap X.G.Kf Y.Kc) x := by
   ext m
-  simp [MvPolynomial.coeff_map, MvPolynomial.coeff_smul, Algebra.smul_def, map_mul]
+  simp [MvPolynomial.coeff_map, Algebra.smul_def, map_mul]
 
 def KSum (Y : Pend X) (j : ℕ) (cK : Y.Kc) (Cl Yb : Type) [Fintype Cl] [Fintype Yb] (wt : Cl → ℕ)
     (La : Cl → Yb → X.Lt j) : Prop :=
@@ -443,8 +443,7 @@ theorem Eqv_TtL (hR : RestTmEquiv X) (J : ℕ) (i0 : X.Pl → ℕ) (F : X.Fm J) 
 
 theorem formB_of (D : Formalism.BasicNotions.D7) (Y : Pend X) (hA : admitted D X Y) (hR : RestTmEquiv X) : FormB X Y := by
   intro j hj i0 vs g hnd hi0 hoff hE G hG
-  have h3b : adm3b D X := hA.2.2.2.2.2.1
-  have hFQ := h3b j hj G (Submodule.subset_span hG)
+  have hFQ := (hA.2.2.2.2.2.1 : adm3b D X) j hj G (Submodule.subset_span hG)
   apply vGe_of Y (Eqv_TtL hR (j + 1) i0 _ (Eqv_of_FQ X hFQ) vs)
   intro c' L' hL'
   have hfun : (fun v => if v ∈ vs then i0 v else 0) = i0 := by

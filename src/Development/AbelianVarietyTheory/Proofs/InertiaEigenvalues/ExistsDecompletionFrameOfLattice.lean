@@ -153,7 +153,7 @@ theorem grp_GKs_H : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf 
     have h1 : (P.χQ (g : GQ l) : ℚ_[l]) = 1 := by
       by_contra hne
       have hpos : 0 < ‖(P.χQ (g : GQ l) : ℚ_[l]) - 1‖ := norm_pos_iff.2 (sub_ne_zero.2 hne)
-      obtain ⟨m, hm⟩ := exists_zpow_neg_lt (l := l) hpos
+      obtain ⟨m, hm⟩ := PadicInt.exists_pow_neg_lt (p := l) hpos
       exact absurd (hall m) (not_le.2 hm)
     have h2 : (algebraMap ↥(OL LL) ↥LL.1) ↑(W.χΓ (W.resΓ g)) = 1 := by
       rw [W.χΓ_res g, hχ, h1, map_one]

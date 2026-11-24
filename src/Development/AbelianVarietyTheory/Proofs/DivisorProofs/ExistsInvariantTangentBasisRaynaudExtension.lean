@@ -94,7 +94,7 @@ open GlobalTheory.Toroidal GlobalTheory.LogKS GlobalTheory.LogKSChart GlobalTheo
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.exists_finite_basis_tangentModule_smooth_commGroupScheme : ∀ (R : Type) [CommRing R] [IsLocalRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G], Smooth G.hom → ∃ n : ℕ, Nonempty (Module.Basis (Fin n) R (TanM (𝟙 (Sp R)) G)) := by
-  first | exact @GlobalTheory.TanBasis.exists_basis_tanM | exact GlobalTheory.TanBasis.exists_basis_tanM | (intros; apply GlobalTheory.TanBasis.exists_basis_tanM <;> assumption)
+  first | exact @GlobalTheory.TanBasis.exists_basis_tanM
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteBasisTangentModuleSmoothCommGroupSchStatement =====
@@ -115,7 +115,7 @@ open GlobalTheory.Toroidal GlobalTheory.LogKS GlobalTheory.LogKSChart GlobalTheo
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.exists_invariantVectorField_of_tangentVector_origin : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (v : TanM (𝟙 (Sp R)) G), ∃ dd : Fld G.left, IsInv G v dd := by
-  first | exact @GlobalTheory.InvFieldBase.exists_isInv | exact GlobalTheory.InvFieldBase.exists_isInv | (intros; apply GlobalTheory.InvFieldBase.exists_isInv <;> assumption)
+  first | exact @GlobalTheory.InvFieldBase.exists_isInv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsInvariantVectorFieldOfTangentVectorOriginStatement =====

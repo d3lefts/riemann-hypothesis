@@ -101,8 +101,7 @@ theorem locAdj_split (G : Finset ℕ) (loc : ∀ p, Formalism.MainNotions.S.Loc.
       Formalism.MainNotions.S.Loc.SplitAt (loc p).Fp (loc p).Ep (loc p).cj (Formalism.MainNotions.S.Loc.resChar p))
     (p : HeightOneSpectrum (𝓞 F)) :
     (locAdj sig G loc spl p).split.isSome ↔ Formalism.MainNotions.S.Loc.resChar p ∈ G := by
-  unfold locAdj
-  by_cases h : Formalism.MainNotions.S.Loc.resChar p ∈ G <;> simp [h]
+  by_cases h : Formalism.MainNotions.S.Loc.resChar p ∈ G <;> simp [locAdj, h] <;> rfl
 
 variable {Word Tau : Type} [Subsingleton Word] (hc : Word → Tau → HCParam R)
 
@@ -229,22 +228,20 @@ theorem toySignLevel_M (p : ℕ) : (toySignLevel p).M = ⊥ := by
   funext L
   have h := hF
   simp only [Level.M, Level.funMod, Submodule.mem_inf, Submodule.mem_iInf, LinearMap.mem_ker] at h
-  have h1 := h.2 (show (toySignLevel p).Γ from (-1 : ℤˣ)) L
-  have hs : (toySignLevel p).smul (show (toySignLevel p).Γ from (-1 : ℤˣ)) L = L := Subsingleton.elim _ _
+  have h1 := h.2 (-1 : ℤˣ) L
+  have hs : (toySignLevel p).smul (-1 : ℤˣ) L = L := Subsingleton.elim _ _
   simp only [LinearMap.sub_apply, LinearMap.proj_apply, LinearMap.comp_apply, LinearMap.smul_apply,
     hs] at h1
-  have hc : ((toySignLevel p).χ (show (toySignLevel p).Γ from (-1 : ℤˣ)) : ℤ_[3]) = -1 := by
+  have hc : ((toySignLevel p).χ (-1 : ℤˣ) : ℤ_[3]) = -1 := by
     show ((Units.map (Int.castRingHom ℤ_[3]).toMonoidHom (-1 : ℤˣ) : ℤ_[3]ˣ) : ℤ_[3]) = -1
     simp
   rw [hc] at h1
-  have e : (((toySignLevel p).actX (show (toySignLevel p).Γ from (-1 : ℤˣ))).restrictScalars
-      ℤ_[3]) (F L) = F L := by
+  have e : (((toySignLevel p).actX (-1 : ℤˣ)).restrictScalars ℤ_[3]) (F L) = F L := by
     show (emptyPlaces p).natAct _ (F L) = F L
     rw [emptyPlaces_natAct]
     rfl
   rw [e, neg_one_smul, sub_neg_eq_add] at h1
-  have h2 : (2 : ℚ_[3]) • F L = 0 := by rw [two_smul]; exact h1
-  simpa using (smul_eq_zero.mp h2).resolve_left two_ne_zero
+  simpa using (smul_eq_zero.mp (by simpa [two_smul] using h1)).resolve_left two_ne_zero
 
 theorem gAtPExample_M (p : ℕ) : (gAtPExample p).M = ⊥ := by
   rw [eq_bot_iff]
@@ -257,8 +254,7 @@ theorem gAtPExample_M (p : ℕ) : (gAtPExample p).M = ⊥ := by
 
 theorem gAtPExample_d (p : ℕ) : (gAtPExample p).d = 0 := by
   unfold GAtP.d
-  rw [gAtPExample_M]
-  exact finrank_bot _ _
+  rw [gAtPExample_M, finrank_bot]
 
 end G
 
@@ -288,16 +284,14 @@ theorem rat_val (σ : G E Ω) (y : Ωˣ) : ((rat σ y : Ωˣ) : Ω) = σ y / y :
 
 theorem rat_mul (σ τ : G E Ω) (y : Ωˣ) : rat (σ * τ) y = rat σ (rat τ y) * rat τ y * rat σ y := by
   ext
-  have := y.ne_zero
-  have h2 : σ (y : Ω) ≠ 0 := (map_ne_zero σ).mpr this
-  have h3 : τ (y : Ω) ≠ 0 := (map_ne_zero τ).mpr this
+  have h2 : σ (y : Ω) ≠ 0 := (map_ne_zero σ).mpr y.ne_zero
+  have h3 : τ (y : Ω) ≠ 0 := (map_ne_zero τ).mpr y.ne_zero
   simp only [Units.val_mul, rat_val, map_div₀, AlgEquiv.mul_apply]
   field_simp
 
 theorem rat_princ {σ : G E Ω} (hσ : σ ∈ Ine (F := E) A) (u : Ωˣ) (hu : A.valuation u = 1) :
     rat σ u ∈ A.principalUnitGroup := by
-  rw [ValuationSubring.mem_principalUnitGroup_iff, rat_val, div_sub_one u.ne_zero, map_div₀, hu, div_one]
-  exact hσ.2 _ hu.le
+  simpa [ValuationSubring.mem_principalUnitGroup_iff, rat_val, div_sub_one u.ne_zero, map_div₀, hu] using hσ.2 _ hu.le
 
 theorem rat_not_lt {σ : G E Ω} (hσ : σ ∈ Dec (F := E) A) (y : Ω) (hy : y ≠ 0) (N : ℕ) (hN : 0 < N)
     (hfix : (σ ^ N) y = y) : ¬ A.valuation (σ y) < A.valuation y := by
@@ -316,22 +310,16 @@ theorem rat_not_lt {σ : G E Ω} (hσ : σ ∈ Dec (F := E) A) (y : Ω) (hy : y 
       rw [pow_succ σ (j + 1), AlgEquiv.mul_apply]
       exact step (j + 1)
   obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hN.ne'
-  have := all j
-  rw [hfix] at this
-  exact lt_irrefl _ this
+  exact lt_irrefl (A.valuation y) (by simpa [hfix] using all j)
 
 theorem val_eq {σ : G E Ω} (hσ : σ ∈ Dec (F := E) A) (y : Ω) (hy : y ≠ 0) (N : ℕ) (hN : 0 < N)
     (hfix : ∀ z : ℤ, ∀ x, x = (σ ^ z) y → (σ ^ N) x = x) : A.valuation (σ y) = A.valuation y := by
   have h1 := rat_not_lt A hσ y hy N hN (hfix 0 y (by simp))
   have h2 := rat_not_lt A (inv_mem hσ) (σ y) ((map_ne_zero σ).mpr hy) N hN (by
-    have := hfix 1 (σ y) (by simp)
-    rw [inv_pow]
-    conv_lhs => rw [← this]
+    conv_lhs => rw [inv_pow, ← hfix 1 (σ y) (by simp)]
     show ((σ ^ N)⁻¹ * σ ^ N) (σ y) = σ y
     rw [inv_mul_cancel]; rfl)
-  have h3 : (σ⁻¹ : G E Ω) (σ y) = y := by
-    show (σ⁻¹ * σ) y = y
-    rw [inv_mul_cancel]; rfl
+  have h3 : (σ⁻¹ : G E Ω) (σ y) = y := by simp
   rw [h3] at h2
   exact le_antisymm (not_lt.mp h2) (not_lt.mp h1)
 
@@ -339,9 +327,9 @@ theorem exists_unif (L : Type) [Field L] [NumberField L] (i : L →+* Ω) (p : �
     (hp : A.valuation (p : Ω) < 1) :
     ∃ π : L, π ≠ 0 ∧ ∀ y : L, y ≠ 0 → ∃ n : ℤ, A.valuation (i (y / π ^ n)) = 1 := by
   have hint : ∀ x : 𝓞 L, i (x : L) ∈ A := fun x => by
-    have h1 : IsIntegral ℤ (i (x : L)) := (RingOfIntegers.isIntegral_coe x).map i.toIntAlgHom
-    have h2 : IsIntegral A (i (x : L)) := h1.tower_top
-    obtain ⟨y, hy⟩ := (IsIntegrallyClosed.isIntegral_iff (R := A) (K := Ω)).mp h2
+    have h1 : IsIntegral A (i (x : L)) :=
+      ((RingOfIntegers.isIntegral_coe x).map i.toIntAlgHom).tower_top
+    obtain ⟨y, hy⟩ := (IsIntegrallyClosed.isIntegral_iff (R := A) (K := Ω)).mp h1
     rw [← hy]; exact y.2
   let j : 𝓞 L →+* A := (i.comp (algebraMap (𝓞 L) L)).codRestrict A.toSubring hint
   let P : Ideal (𝓞 L) := (IsLocalRing.maximalIdeal A).comap j
@@ -374,8 +362,7 @@ theorem exists_unif (L : Type) [Field L] [NumberField L] (i : L →+* Ω) (p : �
     exact lt_irrefl _ h2
   have := congrArg (fun t => A.valuation (i t)) hab
   simp only [map_mul] at this
-  have hb' : A.valuation (i (algebraMap (𝓞 L) L b)) = 1 := hb
-  rw [hb', mul_one] at this
+  rw [hb, mul_one] at this
   exact this.trans (hunit a ha)
 
 variable [IsAlgClosure E Ω]
@@ -501,10 +488,9 @@ theorem closed_of_sat (t : Test E Ω) (X : Set (G E Ω))
     refine continuous_of_continuousAt_one t.φ ?_
     rw [ContinuousAt, map_one, nhds_discrete t.A', Filter.tendsto_pure]
     exact t.ho.mem_nhds (one_mem t.φ.ker)
-  have : X = t.φ ⁻¹' (t.φ '' X) :=
-    Set.Subset.antisymm (Set.subset_preimage_image _ _) fun σ' ⟨σ, hσ, e⟩ => h σ σ' e hσ
-  rw [this]
-  exact (isClosed_discrete _).preimage hc
+  rw [show X = t.φ ⁻¹' (t.φ '' X) from
+    Set.Subset.antisymm (Set.subset_preimage_image _ _) fun σ' ⟨σ, hσ, e⟩ => h σ σ' e hσ]
+  exact (isClosed_discrete (t.φ '' X)).preimage hc
 
 theorem exists_test (y : Ω) : ∃ t : Test E Ω, ∀ κ ∈ t.φ.ker, κ y = y := by
   have : IsGalois E Ω := IsAlgClosure.isGalois E Ω

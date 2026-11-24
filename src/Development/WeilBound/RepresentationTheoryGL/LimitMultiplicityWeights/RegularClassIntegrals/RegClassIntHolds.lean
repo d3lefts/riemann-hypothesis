@@ -211,7 +211,7 @@ open GlobalTheory.SiegelSet GlobalTheory.CompanionTheory.RegInt
 
 theorem _root_.GlobalTheory.T.cone_integral_finite_large_exponent : ∀ (F : Type) [Field F] [NumberField F] (n r : ℕ) (c : ℝ), 0 < c → ∃ m₀ : ℕ, ∀ m : ℕ, m₀ ≤ m →
     ∫⁻ t in cone r c, ENNReal.ofReal (∏ i, (t i)⁻¹ ^ m) * ENNReal.ofReal ((modulus F n t * ∏ i, t i)⁻¹) < ⊤ := by
-  first | exact @GlobalTheory.CompanionTheory.ConeInt.lintegral_cone_lt_top | exact GlobalTheory.CompanionTheory.ConeInt.lintegral_cone_lt_top | (intros; apply GlobalTheory.CompanionTheory.ConeInt.lintegral_cone_lt_top <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ConeInt.lintegral_cone_lt_top
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConeIntegralFiniteLargeExponentStatement =====
@@ -677,7 +677,7 @@ open GlobalTheory.SiegelSet GlobalTheory.CompanionTheory.RegInt
 theorem _root_.GlobalTheory.T.regular_semisimple_conjugate_unipotent_translate : ∀ (D : D7) (V : HSp D) (r : ℕ) (C : Matrix (Fin V.rank) (Fin r) D.host.E) (hC : IsIsoFrame V C)
     (δ : GF V), IsRegSS δ.1.1 → δ ∈ (frameFlag hC).parRat D.sp.cm → ∀ ν ∈ (frameFlag hC).unipRat D.sp.cm,
       ∃ g : GF V, g * δ * g⁻¹ = δ * ν := by
-  first | exact @GlobalTheory.CompanionTheory.ParabConj.conj_translate | exact GlobalTheory.CompanionTheory.ParabConj.conj_translate | (intros; apply GlobalTheory.CompanionTheory.ParabConj.conj_translate <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ParabConj.conj_translate
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RegularSemisimpleConjugateUnipotentTranslateStatement =====

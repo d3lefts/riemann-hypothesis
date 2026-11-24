@@ -269,11 +269,7 @@ theorem exists_basis_primeTo {K V : Type} [Field K] [NumberField K] [AddCommGrou
     ∃ (r : ℕ) (b : Fin r → V), LinearIndependent K b ∧ (∀ i, b i ∈ L) ∧
       ∀ w ∈ L, ∃ k : ℕ, Nat.Coprime k m ∧ k • w ∈ Submodule.span (𝓞 K) (Set.range b) := by
   first
-  | exact @_root_.GlobalTheory.CoprimeBasisExistence.exists_basis_coprime
-  | exact _root_.GlobalTheory.CoprimeBasisExistence.exists_basis_coprime
   | (apply _root_.GlobalTheory.CoprimeBasisExistence.exists_basis_coprime <;> assumption)
-  | (intros; apply _root_.GlobalTheory.CoprimeBasisExistence.exists_basis_coprime <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.CoprimeBasisExistence.exists_basis_coprime <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.CoprimeBasisExistence.exists_basis_coprime ..)
 
 
@@ -782,7 +778,7 @@ theorem coc_nat (n : ℕ) (x y : HomE X.E a b) : coc A ((n : X.E) • x) ((n : X
   have h : ∀ z : HomE X.E a b, emb A ((n : X.E) • z) = (n : ℂ) • emb A z := fun z => by
     rw [Nat.cast_smul_eq_nsmul, Nat.cast_smul_eq_nsmul]; exact map_nsmul _ _ _
   have h2 : HV A.sc ((n : ℂ) • emb A x) ((n : ℂ) • emb A y) = (((n : ℝ) ^ 2 : ℝ) : ℂ) * HV A.sc (emb A x) (emb A y) := by
-    simp only [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply, map_natCast]
+    simp only [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, map_natCast]
     push_cast; ring
   simp only [coc, imH, altE, h, h2, Complex.re_ofReal_mul, Complex.im_ofReal_mul]
   ring

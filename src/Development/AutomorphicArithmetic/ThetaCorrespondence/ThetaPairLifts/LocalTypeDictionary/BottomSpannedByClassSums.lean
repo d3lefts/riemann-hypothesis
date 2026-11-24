@@ -168,7 +168,7 @@ theorem _root_.GlobalTheory.T.bottomClassSum_finite_support : ∀ {D : D7} {T : 
     IsBottomTri W i j X →
     ∃ K : Finset (FVar D WW.rank A.rank →₀ ℕ), ∀ t, ∀ h ∈ GfC WW, ∀ k ∉ K,
       X.I W.ψ W.θ t (MvPolynomial.monomial k 1) h = 0 := by
-  first | exact @_root_.GlobalTheory.BottomDeg.bottomClassSum_eq_zero_off_finite | exact _root_.GlobalTheory.BottomDeg.bottomClassSum_eq_zero_off_finite | (intros; apply _root_.GlobalTheory.BottomDeg.bottomClassSum_eq_zero_off_finite <;> assumption)
+  first | exact @_root_.GlobalTheory.BottomDeg.bottomClassSum_eq_zero_off_finite
 end
 end -- clump:auto
 end -- clump:auto
@@ -195,7 +195,7 @@ open GlobalTheory.RowEx MeasureTheory
 theorem _root_.GlobalTheory.T.exists_open_fixing_seesaw_vacuum_definite_bottom : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil}
     {i j : Fin D.R.m} {A A' WW : HSp D} {X : Tri T A A' WW}, IsBottomTri W i j X → ∀ t : T,
     ∃ U : Subgroup (GA D WW), IsOpen (U : Set (GA D WW)) ∧ ∀ κ ∈ U, κ ∈ GfC WW → X.ω t (1, κ) X.vac = X.vac := by
-  first | exact @GlobalTheory.VacFixTarget.exists_open_fix_vac_target | exact GlobalTheory.VacFixTarget.exists_open_fix_vac_target | (intros; apply GlobalTheory.VacFixTarget.exists_open_fix_vac_target <;> assumption)
+  first | exact @GlobalTheory.VacFixTarget.exists_open_fix_vac_target
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsOpenFixingSeesawVacuumDefiniteBottomStatement =====
@@ -278,7 +278,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.RowEx MeasureTheory
 
 theorem _root_.GlobalTheory.T.exists_level_unitaryHeckeCharacter_trivial_congruence : ∀ (D : D7) (ν : (AE D)ˣ →* Circle), IsHeckeChar D ν → ∃ N₀ : ℕ, 0 < N₀ ∧ ∀ N : ℕ, N₀ ∣ N → ∀ u : (AE D)ˣ, infPart D (u : AE D) = 1 → (∃ w ∈ Formalism.L2.Herm.intAf D.host.F D.host.E, toEAf D (u : AE D) = 1 + (N : Lev.EAf D) * w) → (∃ w ∈ Formalism.L2.Herm.intAf D.host.F D.host.E, toEAf D ((u⁻¹ : (AE D)ˣ) : AE D) = 1 + (N : Lev.EAf D) * w) → ν u = 1 := by
-  first | exact @GlobalTheory.HeckeLevel.exists_level | exact GlobalTheory.HeckeLevel.exists_level | (intros; apply GlobalTheory.HeckeLevel.exists_level <;> assumption)
+  first | exact @GlobalTheory.HeckeLevel.exists_level
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsLevelUnitaryHeckeCharacterTrivialCongruencStatement =====
@@ -472,7 +472,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.RowEx MeasureTheory
 
 theorem _root_.GlobalTheory.T.exists_open_frame_congruence_unitaryAdelic : ∀ (D : D7) (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (N : ℕ), 0 < N → ∃ U : Subgroup (GA D V), IsOpen (U : Set (GA D V)) ∧ ∀ κ ∈ U, ∃ z : GL (Fin V.rank) (Formalism.L2.Herm.intAf D.host.F D.host.E), Formalism.L2.DIV.frGL β z = Lev.finE V κ ∧ ∀ a b, ∃ w ∈ Formalism.L2.Herm.intAf D.host.F D.host.E, ((z.1 a b : Formalism.L2.Herm.intAf D.host.F D.host.E) : Lev.EAf D) - (1 : Matrix (Fin V.rank) (Fin V.rank) (Lev.EAf D)) a b = (N : Lev.EAf D) * w := by
-  first | exact @GlobalTheory.FrameCongOpen.exists_open_cong | exact GlobalTheory.FrameCongOpen.exists_open_cong | (intros; apply GlobalTheory.FrameCongOpen.exists_open_cong <;> assumption)
+  first | exact @GlobalTheory.FrameCongOpen.exists_open_cong
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsOpenFrameCongruenceUnitaryAdelicStatement =====
@@ -961,7 +961,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.RowEx MeasureTheory
 
 theorem _root_.GlobalTheory.T.standardPairFirst_invariant_congruenceOne : ∀ (D : D7) (A WW : HSp D) (ν : (AE D)ˣ →* Circle) (e : AE D) (Sf : Finset (Formalism.L2.DIV.Pl D.host.E)), IsIdemSum e Sf → ∀ (I : Ideal (𝓞 D.host.E)) (βA : GL (Fin A.rank) (Lev.EAf D)) (βW : GL (Fin WW.rank) (Lev.EAf D)) (N : ℕ), 0 < N → ((N : ℕ) : 𝓞 D.host.E) ∈ I → (∀ w ∈ Sf, ((N : ℕ) : 𝓞 D.host.E) ∈ w.asIdeal) → (∀ u : (AE D)ˣ, infPart D (u : AE D) = 1 → (∃ w ∈ Formalism.L2.Herm.intAf D.host.F D.host.E, toEAf D (u : AE D) = 1 + (N : Lev.EAf D) * w) → (∃ w ∈ Formalism.L2.Herm.intAf D.host.F D.host.E, toEAf D ((u⁻¹ : (AE D)ˣ) : AE D) = 1 + (N : Lev.EAf D) * w) → ν u = 1) → ∀ (κ : GA D WW) (z : GL (Fin WW.rank) (Formalism.L2.Herm.intAf D.host.F D.host.E)), Formalism.L2.DIV.frGL βW z = Lev.finE WW κ → (∀ a b, ∃ w ∈ Formalism.L2.Herm.intAf D.host.F D.host.E, ((z.1 a b : Formalism.L2.Herm.intAf D.host.F D.host.E) : Lev.EAf D) - (1 : Matrix (Fin WW.rank) (Fin WW.rank) (Lev.EAf D)) a b = (N : Lev.EAf D) * w) → ∀ x, GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.stdFst ν e I A WW βA βW (actO (GlobalTheory.Grid.neg A) WW 1 κ x) = GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.stdFst ν e I A WW βA βW x := by
-  first | exact @GlobalTheory.StdFstInv.stdFst_actO | exact GlobalTheory.StdFstInv.stdFst_actO | (intros; apply GlobalTheory.StdFstInv.stdFst_actO <;> assumption)
+  first | exact @GlobalTheory.StdFstInv.stdFst_actO
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.StandardPairFirstInvariantCongruenceOneStatement =====
@@ -1064,7 +1064,7 @@ theorem _root_.GlobalTheory.T.definiteBottom_exists_open_fixes_finiteVector : �
     {i j : Fin D.R.m} {A A' WW : HSp D} {X : Tri T A A' WW}, IsBottomTri W i j X → ∀ t : T,
     ∃ U : Subgroup (GA D WW), IsOpen (U : Set (GA D WW)) ∧ ∀ κ ∈ U, κ ∈ GfC WW → X.ω t (1, κ) X.vac = X.vac →
       X.ω t (1, κ) (X.f t) = X.f t := by
-  first | exact @GlobalTheory.RowTest.IsBottomTri.exists_open_fix_f | exact GlobalTheory.RowTest.IsBottomTri.exists_open_fix_f | (intros; apply GlobalTheory.RowTest.IsBottomTri.exists_open_fix_f <;> assumption)
+  first | exact @GlobalTheory.RowTest.IsBottomTri.exists_open_fix_f
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.OpenSubgroupFixingVacuumFixesVectorStatement =====
@@ -1172,7 +1172,7 @@ theorem _root_.GlobalTheory.T.bottomForm_rightTranslate_level : ∀ {D : D7} {T 
     IsBottomTri W i j X →
     ∃ (J : Subgroup (GA D WW)) (M₂ : IntermediateField ℚ ℂ), IsOpen (J : Set (GA D WW)) ∧ FiniteDimensional ℚ M₂ ∧
       ∀ t, ∀ κ ∈ J, κ ∈ GfC WW → ∃ ℓ ∈ M₂, ∀ P x, X.I W.ψ W.θ t P (x * κ) = ℓ * X.I W.ψ W.θ t P x := by
-  first | exact @_root_.GlobalTheory.BottomLevel.rightTranslate_preserves_level | exact _root_.GlobalTheory.BottomLevel.rightTranslate_preserves_level | (intros; apply _root_.GlobalTheory.BottomLevel.rightTranslate_preserves_level <;> assumption)
+  first | exact @_root_.GlobalTheory.BottomLevel.rightTranslate_preserves_level
 end
 end -- clump:auto
 end -- clump:auto
@@ -1242,7 +1242,7 @@ theorem _root_.GlobalTheory.T.bottomIntegral_leftInvariant_rationalPoints : ∀ 
     {i j : Fin D.R.m} {A A' WW : HSp D} {X : Tri T A A' WW}, _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → L.Is μ₀ →
     IsBottomTri W i j X →
     ∀ t P, ∀ γ ∈ GQ WW, ∀ x, X.I W.ψ W.θ t P (γ * x) = X.I W.ψ W.θ t P x := by
-  first | exact @_root_.GlobalTheory.RowTest.BottomRat.bottomIntegral_rational_left | exact _root_.GlobalTheory.RowTest.BottomRat.bottomIntegral_rational_left | (intros; apply _root_.GlobalTheory.RowTest.BottomRat.bottomIntegral_rational_left <;> assumption)
+  first | exact @_root_.GlobalTheory.RowTest.BottomRat.bottomIntegral_rational_left
 end
 end -- clump:auto
 end -- clump:auto
@@ -1742,7 +1742,7 @@ theorem _root_.GlobalTheory.T.realTranslate_preserves_rationalAction : ∀ {D : 
     ∃ M₁ : IntermediateField ℚ ℂ, FiniteDimensional ℚ M₁ ∧ ∀ t, ∀ γ ∈ GQ WW, ∀ r ∈ GinfC WW, γ * r ∈ GfC WW → ∀ x k,
       ∃ c : (FVar D WW.rank A.rank →₀ ℕ) →₀ ℂ, (∀ k', c k' ∈ M₁) ∧
         X.I W.ψ W.θ t (MvPolynomial.monomial k 1) (x * r) = ∑ k' ∈ c.support, c k' * X.I W.ψ W.θ t (MvPolynomial.monomial k' 1) x := by
-  first | exact @_root_.GlobalTheory.RealRatAct.rationalAction_real_translate | exact _root_.GlobalTheory.RealRatAct.rationalAction_real_translate | (intros; apply _root_.GlobalTheory.RealRatAct.rationalAction_real_translate <;> assumption)
+  first | exact @_root_.GlobalTheory.RealRatAct.rationalAction_real_translate
 end
 end -- clump:auto
 end -- clump:auto
@@ -1830,7 +1830,7 @@ theorem _root_.GlobalTheory.T.bottom_spanned_by_classSums : ∀ {D : D7} {T : Ty
       (∀ h ∈ H, h ∈ GfC WW) ∧ ∀ t, ∀ h ∈ GfC WW, ∀ k, ∃ c : GA D WW → (FVar D WW.rank A.rank →₀ ℕ) → ℂ, (∀ a b, c a b ∈ M₀) ∧
         X.I W.ψ W.θ t (MvPolynomial.monomial k 1) h =
           ∑ h' ∈ H, ∑ k' ∈ K, c h' k' * X.I W.ψ W.θ t (MvPolynomial.monomial k' 1) h' := by
-  first | exact @_root_.GlobalTheory.BotSpan.classSums_span_bottom | exact _root_.GlobalTheory.BotSpan.classSums_span_bottom | (intros; apply _root_.GlobalTheory.BotSpan.classSums_span_bottom <;> assumption)
+  first | exact @_root_.GlobalTheory.BotSpan.classSums_span_bottom
 end
 end -- clump:auto
 end -- clump:auto

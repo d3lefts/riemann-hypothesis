@@ -156,7 +156,7 @@ theorem _root_.GlobalTheory.T.cA_smul_mem_latV_ideal_smul_of_conj_place : ∀ (D
   (p : GlobalTheory.FinPl.SplitPt D k) (w : HeightOneSpectrum (𝓞 D.host.E)), Formalism.L2.NTheta.IsIdemAt p.e w →
   ∀ (S : HSp D) (L : GlobalTheory.FinPl.Lat S) (𝔪 : Ideal (𝓞 D.host.E)), (∃ m ∈ 𝔪, m ∉ (Formalism.DivisionValues.conjPl w).asIdeal) →
   ∀ z : Fin S.rank → AE D, z ∈ latV S L (· = p.v) → (fun i => cA D p.e * z i) ∈ latV S (𝔪 • L) (· = p.v) := by
-  first | exact @GlobalTheory.ConjPlaceLat.cA_mul_mem_latV_smul | exact GlobalTheory.ConjPlaceLat.cA_mul_mem_latV_smul | (intros; apply GlobalTheory.ConjPlaceLat.cA_mul_mem_latV_smul <;> assumption)
+  first | exact @GlobalTheory.ConjPlaceLat.cA_mul_mem_latV_smul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ConjPlaceIdealMulLatticeCompletionEqStatement =====
@@ -294,7 +294,7 @@ theorem _root_.GlobalTheory.T.frameCongruent_sub_one_mulVec_mem_idealLatticeComp
   ∀ k₀ : GL n 𝒪[k], (∀ i j, (k₀.1 - 1) i j ∈ IsLocalRing.maximalIdeal 𝒪[k] ^ d) →
   ∀ y : Fin S.rank → AE D, y ∈ latV S L (· = p.v) →
   (fun i => p.e * ((mt S (β.gl (Matrix.GeneralLinearGroup.map (algebraMap 𝒪[k] k) k₀)) - 1) *ᵥ y) i) ∈ latV S (𝔪 • L) (· = p.v) := by
-  first | exact @GlobalTheory.FinPl.FrameCong.sub_one_mulVec_mem | exact GlobalTheory.FinPl.FrameCong.sub_one_mulVec_mem | (intros; apply GlobalTheory.FinPl.FrameCong.sub_one_mulVec_mem <;> assumption)
+  first | exact @GlobalTheory.FinPl.FrameCong.sub_one_mulVec_mem
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FrameCongruentSubOneMulVecMemIdealLatticeCompletStatement =====
@@ -374,7 +374,7 @@ open ValuativeRel
 
 theorem _root_.GlobalTheory.T.gridModulus_exact_order_witness : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc), ∀ v ∈ G.pl.S0,
   (∃ m ∈ G.modul, m ∉ (G.pl.w v).asIdeal ^ (G.pl.depth sc v + 1)) ∧ ∃ m ∈ G.modul, m ∉ (Formalism.DivisionValues.conjPl (G.pl.w v)).asIdeal := by
-  first | exact @GlobalTheory.ChiGrid.GridData.modul_witness | exact GlobalTheory.ChiGrid.GridData.modul_witness | (intros; apply GlobalTheory.ChiGrid.GridData.modul_witness <;> assumption)
+  first | exact @GlobalTheory.ChiGrid.GridData.modul_witness
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.GridModulusExactOrderWitnessStatement =====
@@ -508,7 +508,7 @@ open ValuativeRel
 theorem _root_.GlobalTheory.T.integer_outside_prime_pow_dvd_maximal_ideal_pow : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
   (p : GlobalTheory.FinPl.SplitPt D k) (w : HeightOneSpectrum (𝓞 D.host.E)), Formalism.L2.NTheta.IsIdemAt p.e w → ∀ (d : ℕ) (m : 𝓞 D.host.E),
   m ∉ w.asIdeal ^ (d + 1) → ∀ z ∈ IsLocalRing.maximalIdeal 𝒪[k] ^ d, ∃ c ∈ 𝒪[k], (z : k) = c * p.pr (incA D ((m : 𝓞 D.host.E) : D.host.E)) := by
-  first | exact @GlobalTheory.SplitPtLev.dvd_of_mem_maxIdeal_pow | exact GlobalTheory.SplitPtLev.dvd_of_mem_maxIdeal_pow | (intros; apply GlobalTheory.SplitPtLev.dvd_of_mem_maxIdeal_pow <;> assumption)
+  first | exact @GlobalTheory.SplitPtLev.dvd_of_mem_maxIdeal_pow
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IntegerOutsidePrimePowDvdMaximalIdealPowStatement =====
@@ -627,7 +627,7 @@ open ValuativeRel
 theorem _root_.GlobalTheory.T.sub_mem_lattice_completion_of_supported_places : ∀ (D : D7) (S : HSp D) (P : GlobalTheory.FinPl.Pl D → Prop) (L L' : GlobalTheory.FinPl.Lat S) (g : GA D S), g ∈ grpAt S P →
   (∀ y : Fin S.rank → AE D, y ∈ latV S L P → (mt S g - 1) *ᵥ y ∈ latV S L' P) →
   ∀ x ∈ Formalism.L2.Herm.hatL (F := D.host.F) L, (Lev.finE S g).1 *ᵥ x - x ∈ Formalism.L2.Herm.hatL (F := D.host.F) L' := by
-  first | exact @GlobalTheory.LatBridge.sub_mem_hatL | exact GlobalTheory.LatBridge.sub_mem_hatL | (intros; apply GlobalTheory.LatBridge.sub_mem_hatL <;> assumption)
+  first | exact @GlobalTheory.LatBridge.sub_mem_hatL
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SubMemLatticeCompletionOfSupportedPlacesStatement =====
@@ -743,7 +743,7 @@ theorem _root_.GlobalTheory.T.framedCongruenceElement_mem_principalCongruence : 
   β.IsLat (G.Λ X) (Submodule.pi Set.univ fun _ : n => (1 : Submodule 𝒪[k] k)) → ∀ k₀ : GL n 𝒪[k],
   (∀ i j, (k₀.1 - 1) i j ∈ IsLocalRing.maximalIdeal 𝒪[k] ^ G.pl.depth sc v) →
   β.gl (Matrix.GeneralLinearGroup.map (algebraMap 𝒪[k] k) k₀) ∈ lev G X := by
-  first | exact @GlobalTheory.LevFrame.gl_mem_lev | exact GlobalTheory.LevFrame.gl_mem_lev | (intros; apply GlobalTheory.LevFrame.gl_mem_lev <;> assumption)
+  first | exact @GlobalTheory.LevFrame.gl_mem_lev
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FramedCongruenceElementMemPrincipalCongruenceStatement =====

@@ -290,7 +290,6 @@ theorem lintegral_flat {g : (Ix ι r → ℂ) → ENNReal} (hg : Measurable g) :
   rw [lintegral_lu]
   first
   | rw [← lintegral_indicator measurableSet_sS]
-  | rw [← lintegral_indicator _ measurableSet_sS]
   rw [← hmp.symm.lintegral_comp_emb (eS ι r).symm.measurableEmbedding, Measure.volume_eq_prod]
   refine (lintegral_prod _ ?_).trans ?_
   · exact (hFm.comp (eS ι r).symm.measurable).aemeasurable
@@ -301,7 +300,6 @@ theorem lintegral_flat {g : (Ix ι r → ℂ) → ENNReal} (hg : Measurable g) :
   · rw [if_neg h]
     first
     | exact Set.indicator_of_notMem (fun hm => h ((mem_sS_eS x y).1 hm)) _
-    | exact Set.indicator_of_not_mem (fun hm => h ((mem_sS_eS x y).1 hm)) _
 end -- clump:auto
 end ReciprocityTheory.ChartRestriction.G.AR.Up.MI -- clump:auto
 end -- clump:auto
@@ -351,7 +349,7 @@ theorem det_LA (A : ι → Matrix (Fin r) (Fin r) ℂ) :
       rw [if_pos rfl, Finset.sum_eq_single c]
       · simp
       · intro k _ hk
-        simp [Pi.single_apply, hk]
+        simp [hk]
       · simp
     · rw [if_neg h]
       refine Finset.sum_eq_zero fun k _ => ?_
@@ -360,7 +358,7 @@ theorem det_LA (A : ι → Matrix (Fin r) (Fin r) ℂ) :
         apply h
         simp only [Prod.mk.injEq] at he ⊢
         exact ⟨he.1, he.2.2⟩
-      simp [Pi.single_apply, this]
+      simp [this]
   rw [hM, Matrix.det_blockDiagonal, Fintype.prod_prod_type]
   simp [Finset.prod_const]
 
@@ -552,7 +550,6 @@ lemma Nmat_low (x : LoI X.Ψ r → ℂ) (τ : X.Ψ) : (Nmat x τ).BlockTriangula
   have h2 : a ≠ b := hab'.ne
   first
   | simp [Nmat, h1, h2]
-  | (unfold Nmat; rw [Matrix.of_apply, dite_eq_right h1]; simp [h2, Ne.symm h2])
 
 lemma det_Nmat (x : LoI X.Ψ r → ℂ) (τ : X.Ψ) : (Nmat x τ).det = 1 := by
   rw [Matrix.det_of_lowerTriangular _ (Nmat_low X x τ)]

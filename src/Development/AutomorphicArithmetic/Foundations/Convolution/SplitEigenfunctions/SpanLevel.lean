@@ -405,7 +405,7 @@ theorem eq_zero_of_vecCoeff_eq_zero {f : (ι → 𝔸[K]) → ℂ} (hc : Continu
     rw [Measure.restrict_apply' measurableSet_vecDomain] at h2
     convert h2 using 2
     ext x
-    simp [hU, Complex.normSq_eq_zero]
+    simp [hU]
   have hinv : ∀ g : vecLattice K ι, g +ᵥ U = U := by
     intro g
     ext x
@@ -465,7 +465,7 @@ private theorem n_add (x y : A E) : gl (nU (x + y)) = gl (nU x) * gl (nU y) := b
 private theorem n_zero : gl (nU (0 : A E)) = 1 := by
   refine Units.ext ?_
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [vn]
+  fin_cases i <;> fin_cases j <;> simp
 
 private theorem cont_n : Continuous fun q : A E => gl (nU q) := by
   refine Units.continuous_iff.2 ⟨?_, ?_⟩

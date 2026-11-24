@@ -186,7 +186,7 @@ theorem _root_.GlobalTheory.T.dual_pure_tensor_product_rule : _root_.GlobalTheor
     (∀ i, Ψ i ∈ algD Γ.M' Bs.ψ Bs.emb ∧
         ∀ x, HasDerivAt (fun t : ℝ => om' (1, kapX X e hJ (oneP θ X (l.get i).1 (l.get i).2 t)) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) x) (Ψ i x) 0) →
     ∀ x, HasDerivAt (fun t : ℝ => om' (1, kapX X e hJ ((l.map fun q => oneP θ X q.1 q.2 t).prod)) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) x) (∑ i, Ψ i x) 0 := by
-  first | exact @_root_.GlobalTheory.PureProdRuleDual.lift_splits_locally | exact _root_.GlobalTheory.PureProdRuleDual.lift_splits_locally | (intros; apply _root_.GlobalTheory.PureProdRuleDual.lift_splits_locally <;> assumption)
+  first | exact @_root_.GlobalTheory.PureProdRuleDual.lift_splits_locally
 end
 end -- clump:auto
 end -- clump:auto
@@ -369,7 +369,7 @@ theorem _root_.GlobalTheory.T.lineSum_derivation_formula : _root_.GlobalTheory.F
       (∀ i, Ψ i ∈ algD Γ.M' Bs.ψ Bs.emb ∧
         ∀ x, HasDerivAt (fun t : ℝ => om' (1, kapX X e hJ (oneP θ X (l.get i).1 (l.get i).2 t)) ΦD x) (Ψ i x) 0) ∧
       Φ₁D = ∑ i, Ψ i := by
-  first | exact @_root_.GlobalTheory.LineSumV'.lineSum_derivative_sum | exact _root_.GlobalTheory.LineSumV'.lineSum_derivative_sum | (intros; apply _root_.GlobalTheory.LineSumV'.lineSum_derivative_sum <;> assumption)
+  first | exact @_root_.GlobalTheory.LineSumV'.lineSum_derivative_sum
 end
 end -- clump:auto
 end -- clump:auto
@@ -516,7 +516,7 @@ theorem _root_.GlobalTheory.T.squareAgree_lineDerivation_isDerivation : _root_.G
     ∀ τ, ∀ Y ∈ lieAt X τ, ∀ ΦD ∈ algD Γ.M' Bs.ψ Bs.emb, ∀ Ψ ∈ algD Γ.M' Bs.ψ Bs.emb,
     (∀ x, HasDerivAt (fun t : ℝ => om' (1, kapX X e hO.JX (oneP θ X τ Y t)) ΦD x) (Ψ x) 0) → ∀ Φ Φ',
     IsDatum Γ.M' ψ cB ΦD Φ → IsDatum Γ.M' ψ cB Ψ Φ' → IsDer θ X (fun h => ωB (1, h)) τ Y Φ Φ' := by
-  first | exact @_root_.GlobalTheory.SquareAgree.LineDerFunB.lineDerivation_isDerivation_of_datum | exact _root_.GlobalTheory.SquareAgree.LineDerFunB.lineDerivation_isDerivation_of_datum | (intros; apply _root_.GlobalTheory.SquareAgree.LineDerFunB.lineDerivation_isDerivation_of_datum <;> assumption)
+  first | exact @_root_.GlobalTheory.SquareAgree.LineDerFunB.lineDerivation_isDerivation_of_datum
 end
 end -- clump:auto
 end -- clump:auto
@@ -598,7 +598,7 @@ theorem _root_.GlobalTheory.T.ker_polarizationProjection_stable_under_stabilizer
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsTriple Bs Γ Xc om om' →
     ∀ Pi rf rl p p', IsMatch ψ θ A A₁ B α β ωA ωB Pi rf rl p p' →
     ∀ γ ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Lines D.sp.cm.sig Γ.W, ∀ Φ ∈ kerPD ψ θ A₁ B Bs Γ cB p', ∀ Φ₁ ∈ algD Γ.M' Bs.ψ Bs.emb, (∀ x, HasDerivAt (fun t : ℝ => om' (1, γ (Multiplicative.ofAdd t)) Φ x) (Φ₁ x) 0) → Φ₁ ∈ kerPD ψ θ A₁ B Bs Γ cB p' := by
-  first | exact @_root_.GlobalTheory.SquareAgree.ker_polarizationProjection_stabilizer_lie | exact _root_.GlobalTheory.SquareAgree.ker_polarizationProjection_stabilizer_lie | (intros; apply _root_.GlobalTheory.SquareAgree.ker_polarizationProjection_stabilizer_lie <;> assumption)
+  first | exact @_root_.GlobalTheory.SquareAgree.ker_polarizationProjection_stabilizer_lie
 end
 end -- clump:auto
 end -- clump:auto

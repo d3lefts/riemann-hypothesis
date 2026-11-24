@@ -113,7 +113,6 @@ namespace Formalism.DivisionValues
 theorem young_diagram_step_shift : RowsStepEShift := by
   intro J Pl _ _ TT _ n aT w wr ν ap fa a rd La k N S Sc t η m b' cs C1 C0
     hLa h1 hk hkN hb' hcs hS hC2 hCcs hSc hC0 hle hsh hwA hBlA hBl0 haA hfa hoff htop
-  have hn0 : (0 : ℝ) ≤ (n : ℝ) := Nat.cast_nonneg n
   have hk0 : 0 ≤ k := by linarith
   have hN0 : 0 ≤ N := by linarith
   have hcast : ∀ j ρ, (wr j ρ : ℝ) ≤ (w j ρ : ℝ) := fun j ρ => by exact_mod_cast hle j ρ
@@ -126,7 +125,6 @@ theorem young_diagram_step_shift : RowsStepEShift := by
     simp only
     linarith
   · intro j ρ
-    have hw0 : (0 : ℝ) ≤ (wr j ρ : ℝ) := Nat.cast_nonneg _
     have hX : (wr j ρ : ℝ) + S + N ^ 2 + m * (t + 1) * η ≤ (w j ρ : ℝ) + S + N ^ 2 + m * (t + 1) * η := by
       linarith [hcast j ρ]
     have hX0 : 0 ≤ (wr j ρ : ℝ) + S + N ^ 2 + m * (t + 1) * η := by positivity
@@ -199,11 +197,10 @@ theorem off_core {n wr T : ℕ} {Sc Bl sh : ℝ} (νr : Fin (n + 2) → ℕ) (ar
     rw [this, abs_of_nonneg (Nat.cast_nonneg _)]
     exact hT
   · congr 1
-    apply Multiset.map_congr rfl
-    intro i _
-    have := lo i
-    simp only
-    omega
+    exact Multiset.map_congr rfl fun i _ => by
+      have := lo i
+      simp only
+      omega
 
 theorem univ_split {n : ℕ} (g : Fin (n + 2) → ℕ) :
     (Finset.univ : Finset (Fin (n + 2))).val.map g =
@@ -261,11 +258,10 @@ theorem top_core {n wr T aT : ℕ} {Sc Bl sh : ℝ} (νr : Fin (n + 2) → ℕ) 
     exact hT
   · rw [univ_split νr, H0, Multiset.cons_add, Multiset.cons_add]
     congr 3
-    apply Multiset.map_congr rfl
-    intro i _
-    have := lo i
-    simp only
-    omega
+    exact Multiset.map_congr rfl fun i _ => by
+      have := lo i
+      simp only
+      omega
 
 theorem origin_rewrite {n j t w s wr : ℕ} {m : ℝ} {u : Fin (n + 2) → ℝ} {v : Fin (n + 1) → ℝ}
     {νr : Fin (n + 2) → ℕ} {ar : Fin (n + 1) → ℕ}
@@ -298,8 +294,7 @@ theorem origin_interlace {n wr T : ℕ} {u : Fin (n + 2) → ℝ} {v : Fin (n + 
     have h2 : (νr i.castSucc : ℝ) + (T : ℝ) + 1 ≤ (ar i : ℝ) := by exact_mod_cast h1
     have h3 := eν i.castSucc
     rw [Fin.val_castSucc] at h3
-    have := ea i; have := (hint i).1
-    linarith
+    linarith [ea i, (hint i).1]
   · intro i
     by_contra hc
     have h1 : ar i + 1 ≤ νr i.succ + T := by omega
@@ -307,8 +302,7 @@ theorem origin_interlace {n wr T : ℕ} {u : Fin (n + 2) → ℝ} {v : Fin (n + 
     have h3 := eν i.succ
     rw [Fin.val_succ] at h3
     push_cast at h3
-    have := ea i; have := (hint i).2
-    linarith
+    linarith [ea i, (hint i).2]
 
 end RowsOrigin
 
@@ -364,7 +358,6 @@ theorem young_diagram_step_origin : RowsStepEOrigin := by
   have hkN : k ≤ N := by
     have : 0 ≤ m * ((t : ℝ) + 1) := mul_nonneg hm (by linarith)
     linarith
-  have hj1' : ∀ j, (1 : ℝ) ≤ (jj j : ℝ) := fun j => by exact_mod_cast hj1 j
   have hsN : ∀ j, (s j : ℝ) ≤ 1 * N := fun j => by
     have e1 : (jj j : ℝ) * ((t : ℝ) + 1) ≤ m * ((t : ℝ) + 1) :=
       mul_le_mul_of_nonneg_right (hjm j) (by linarith)

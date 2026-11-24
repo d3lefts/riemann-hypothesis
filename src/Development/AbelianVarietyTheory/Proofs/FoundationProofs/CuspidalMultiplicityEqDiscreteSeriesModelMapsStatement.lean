@@ -137,7 +137,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open Formalism.MainNotions.S
 
 theorem _root_.GlobalTheory.T.cuspidal_of_continuous_representative : ∀ (D : D7) (V : HSp D) (μ : Measure (GA D V)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant], ∀ F ∈ GlobalTheory.Cusp.L2cusp V μ, ∀ ψ : GA D V → ℂ, Continuous ψ → LeftInv (GQ V) ψ → lift (GQ V) F =ᵐ[μ] ψ → IsCuspFun V ψ := by
-  first | exact @GlobalTheory.CuspRep.isCuspFun_of_mem_L2cusp | exact GlobalTheory.CuspRep.isCuspFun_of_mem_L2cusp | (intros; apply GlobalTheory.CuspRep.isCuspFun_of_mem_L2cusp <;> assumption)
+  first | exact @GlobalTheory.CuspRep.isCuspFun_of_mem_L2cusp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.CuspidalOfContinuousRepresentativeStatement =====
@@ -187,7 +187,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open Formalism.MainNotions.S
 
 theorem _root_.GlobalTheory.T.exists_L2AdelicQuotient_model_equivalence : ∀ (D : D7) (V : HSp D) (μ : Measure (GA D V)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant], ∃ (𝓕 : Set (GA D V)) (ρ : GA D V →* (Lp ℂ 2 (GlobalTheory.HolDict.nuQ V μ 𝓕) →L[ℂ] Lp ℂ 2 (GlobalTheory.HolDict.nuQ V μ 𝓕))) (e : DividedPowerChartLift V μ ≃ₗᵢ[ℂ] Lp ℂ 2 (GlobalTheory.HolDict.nuQ V μ 𝓕)), GlobalTheory.HolDict.FinPair V μ 𝓕 ∧ GlobalTheory.HolDict.IsReg V μ 𝓕 ρ ∧ (∀ g F, e (RG V μ g F) = ρ g (e F)) ∧ ∀ F ψ, GlobalTheory.HolDict.Repr V μ 𝓕 (e F) ψ ↔ lift (GQ V) F =ᵐ[μ] ψ := by
-  first | exact @GlobalTheory.TrModel.exists_model | exact GlobalTheory.TrModel.exists_model | (intros; apply GlobalTheory.TrModel.exists_model <;> assumption)
+  first | exact @GlobalTheory.TrModel.exists_model
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsL2AdelicQuotientModelEquivalenceStatement =====
@@ -604,18 +604,18 @@ theorem exists_of_mem (hP : GlobalTheory.Published.CuspRapidDecay) {θ : D.what�
   | mem T hT => exact exists_of_isMultMap hP hθ μ hT
   | zero =>
     refine ⟨0, zero_mem _, fun v => ?_⟩
-    simp only [ContinuousMultilinearMap.zero_apply, MultilinearMap.zero_apply]
+    simp only [ContinuousMultilinearMap.zero_apply]
     exact ae_quotMeasure_iff.1 (Lp.coeFn_zero ℂ 2 _)
   | add T T' _ _ ih ih' =>
     obtain ⟨Φ, h1, h2⟩ := ih
     obtain ⟨Φ', h1', h2'⟩ := ih'
     refine ⟨Φ + Φ', add_mem h1 h1', fun v => ?_⟩
-    simp only [ContinuousMultilinearMap.add_apply, MultilinearMap.add_apply]
+    simp only [ContinuousMultilinearMap.add_apply]
     exact Filter.EventuallyEq.trans (ae_quotMeasure_iff.1 (Lp.coeFn_add _ _)) ((h2 v).add (h2' v))
   | smul a T _ ih =>
     obtain ⟨Φ, h1, h2⟩ := ih
     refine ⟨a • Φ, Submodule.smul_mem _ a h1, fun v => ?_⟩
-    simp only [ContinuousMultilinearMap.smul_apply, MultilinearMap.smul_apply]
+    simp only [ContinuousMultilinearMap.smul_apply]
     exact Filter.EventuallyEq.trans (ae_quotMeasure_iff.1 (Lp.coeFn_smul a _)) ((h2 v).const_smul a)
 
 theorem existsUnique_intertwiner : GlobalTheory.Published.CuspRapidDecay → ∀ (D : D7) (θ : D.what₂.Tau → (TensorProduct D.host.F (Ainf D.host.F) D.host.E →+* ℂ)), IsInfFam θ → ∀ (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (μ : Measure (GA D V)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant], ∀ T ∈ GlobalTheory.CuspMult.allMaps θ M, ∃! Φ : ContinuousMultilinearMap ℂ M.H (DividedPowerChartLift V μ), Φ ∈ homDS M (RG V μ) (GlobalTheory.Cusp.L2cusp V μ) ∧ ∀ v : M.Vec, lift (GQ V) (Φ fun τ => (v τ : M.H τ)) =ᵐ[μ] T v := by
@@ -672,17 +672,17 @@ theorem eq_of_represents_cont {Φ : ContinuousMultilinearMap ℂ M.H (DividedPow
   MultilinearMap.ext fun v => (hT v).ae_eq_iff_eq μ (hT' v) |>.1 ((h v).symm.trans (h' v))
 
 theorem represents_zero : Represents μ (0 : ContinuousMultilinearMap ℂ M.H (DividedPowerChartLift V μ)) 0 := fun _ => by
-  simp only [ContinuousMultilinearMap.zero_apply, MultilinearMap.zero_apply]
+  simp only [ContinuousMultilinearMap.zero_apply]
   exact ae_quotMeasure_iff.1 (Lp.coeFn_zero ℂ 2 _)
 
 theorem Represents.add {Φ Φ' : ContinuousMultilinearMap ℂ M.H (DividedPowerChartLift V μ)} {T T' : MMap M} (h : Represents μ Φ T)
     (h' : Represents μ Φ' T') : Represents μ (Φ + Φ') (T + T') := fun v => by
-  simp only [ContinuousMultilinearMap.add_apply, MultilinearMap.add_apply]
+  simp only [ContinuousMultilinearMap.add_apply]
   exact lift_add_ae (h v) (h' v)
 
 theorem Represents.smul (c : ℂ) {Φ : ContinuousMultilinearMap ℂ M.H (DividedPowerChartLift V μ)} {T : MMap M} (h : Represents μ Φ T) :
     Represents μ (c • Φ) (c • T) := fun v => by
-  simp only [ContinuousMultilinearMap.smul_apply, MultilinearMap.smul_apply]
+  simp only [ContinuousMultilinearMap.smul_apply]
   exact lift_smul_ae c (h v)
 
 theorem Represents.translate (g : GfC V) {Φ : ContinuousMultilinearMap ℂ M.H (DividedPowerChartLift V μ)} {T : MMap M}
@@ -834,7 +834,7 @@ open GlobalTheory.TrMult
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.cuspidalMultiplicity_eq_discreteSeriesModel_maps : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.HarishChandraFinite → GlobalTheory.Published.DixmierMalliavinFactorisation → ∀ (D : D7) (θ : D.what₂.Tau → (TensorProduct D.host.F (Ainf D.host.F) D.host.E →+* ℂ)), IsInfFam θ → ∀ (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (μ : Measure (GA D V)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (W : Type) [AddCommGroup W] [Module ℂ W] (σ : Representation ℂ (GfC V) W), GlobalTheory.PRep.IsSmooth σ → GlobalTheory.CuspMult.cuspMult θ M σ = mCuspDS μ σ M := by
-  first | exact @GlobalTheory.AutMult.cuspMult_eq_mCuspDS | exact GlobalTheory.AutMult.cuspMult_eq_mCuspDS | (intros; apply GlobalTheory.AutMult.cuspMult_eq_mCuspDS <;> assumption)
+  first | exact @GlobalTheory.AutMult.cuspMult_eq_mCuspDS
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FoundationProofs.CuspidalMultiplicityEqDiscreteSeriesModelMapsStatement =====

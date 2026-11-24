@@ -899,7 +899,7 @@ namespace GlobalTheory.AlgCharFromGal
 
 theorem charpoly_fin_one {K : Type*} [CommRing K] (M : Matrix (Fin 1) (Fin 1) K) :
     M.charpoly = X - C (M 0 0) := by
-  simp [Matrix.charpoly, Matrix.det_fin_one, Matrix.charmatrix_apply]
+  simp [Matrix.charpoly]
 
 end GlobalTheory.AlgCharFromGal
 
@@ -1021,7 +1021,7 @@ section
 open NumberField IsDedekindDomain Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations Formalism.ConjugateSelfDual ReciprocityTheory.Gal
 
 theorem _root_.GlobalTheory.T.algebraicCharacter_of_adm2 : ∀ D : D7, _root_.Formalism.MainNotions.SumRepresentations.adm2_alt D → GlobalTheory.JumpDictionaryFoundation.AlgebraicCharacter_at D := by
-  first | exact @_root_.GlobalTheory.AlgCharFromGal.main_alt_alt_alt | exact _root_.GlobalTheory.AlgCharFromGal.main_alt_alt_alt | (intros; apply _root_.GlobalTheory.AlgCharFromGal.main_alt_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.AlgCharFromGal.main_alt_alt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1085,7 +1085,7 @@ section
 open NumberField IsDedekindDomain Formalism Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.IndefiniteRowSideFullHecke.JumpDictionary
 
 theorem _root_.GlobalTheory.T.admDict_of_weight_blockChar : GlobalTheory.TwSys.Cheb → ∀ D : D7, _root_.Formalism.MainNotions.SumRepresentations.adm2_alt D → WeightParam D → BlockCharParam D → AdmissibleParameterJ.AdmDict D := by
-  first | exact @_root_.GlobalTheory.BridgeAdmDict.main_alt_alt | exact _root_.GlobalTheory.BridgeAdmDict.main_alt_alt | (intros; apply _root_.GlobalTheory.BridgeAdmDict.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BridgeAdmDict.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto

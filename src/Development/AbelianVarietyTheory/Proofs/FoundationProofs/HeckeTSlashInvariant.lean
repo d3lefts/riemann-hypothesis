@@ -237,7 +237,7 @@ theorem tqFam_cosets_distinct : ∀ (q : ℕ) (σ g : SL(2, ℤ)) (i i' : Fin (q
   by_cases h1 : (i : ℕ) < q <;> by_cases h2 : (i' : ℕ) < q <;>
     simp only [h1, h2, if_true, if_false, dg, Matrix.mul_apply, Fin.sum_univ_two,
       Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
-      Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons, Matrix.head_fin_const] at e00 e01 e10 e11
+      Matrix.empty_val', Matrix.cons_val_fin_one] at e00 e01 e10 e11
   ·
     apply Fin.ext
     have hg00 : (mat g) 0 0 = 1 := by linarith
@@ -363,7 +363,7 @@ theorem tinv_fin_fin : ∀ (N l q j : ℕ) (γ : SL(2, ℤ)), q.Prime → ¬ q �
     ext i k; fin_cases i <;> fin_cases k <;> rfl
   rw [hmat] at hA ⊢
   simp only [Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.head_cons, Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_fin_const] at hA
+    Matrix.empty_val', Matrix.cons_val_fin_one] at hA
   set A : ℤ := a + j * c with hAdef
   set B : ℤ := b + j * d with hBdef
   have hAq : ((A : ℤ) : ZMod q) ≠ 0 := by

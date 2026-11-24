@@ -79,7 +79,7 @@ theorem _root_.GlobalTheory.T.isSchwartzBruhatHalf_split_datum_completed_lattice
     ∀ Ψ ∈ SB (Matrix n n' k),
       IsSBHalf p.e (latO S T (LS : Set (Fin S.rank → D.host.E)) (LT : Set (Fin T.rank → D.host.E)) (· = p.v))
         (extFun α β Ψ) := by
-  first | exact @GlobalTheory.FinPl.SBHalfAt.isSBHalf_extFun_latO | exact GlobalTheory.FinPl.SBHalfAt.isSBHalf_extFun_latO | (intros; apply GlobalTheory.FinPl.SBHalfAt.isSBHalf_extFun_latO <;> assumption)
+  first | exact @GlobalTheory.FinPl.SBHalfAt.isSBHalf_extFun_latO
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsSchwartzBruhatHalfSplitDatumCompletedLatticeStatement =====
@@ -100,7 +100,7 @@ theorem _root_.GlobalTheory.T.isThetaFun_splitPlaceSchroedingerModel : ∀ (D : 
       (latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun _ => True) 1 f₀ Tm →
     ∀ Φ : WO S T → ℂ, IsSBHalf e (latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E))
       fun _ => True) Φ → IsThetaFunO ψ S T (Tm Φ) := by
-  first | exact @GlobalTheory.LocMod.LinTheta.isThetaFunO_placeModel | exact GlobalTheory.LocMod.LinTheta.isThetaFunO_placeModel | (intros; apply GlobalTheory.LocMod.LinTheta.isThetaFunO_placeModel <;> assumption)
+  first | exact @GlobalTheory.LocMod.LinTheta.isThetaFunO_placeModel
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsThetaFunSplitPlaceSchroedingerModelStatement =====
@@ -241,7 +241,7 @@ theorem _root_.GlobalTheory.T.splitPlace_linearLaw_halfVacuum : ∀ (D : D7) (ψ
     ∀ Φ : WO S T → ℂ, IsSBHalf e (latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E))
       fun _ => True) Φ →
       om (g, h) (Tm Φ) = GlobalTheory.SplitLinear.fac S T χS χT x y • Tm fun t => Φ (actO S T g⁻¹ h⁻¹ t) := by
-  first | exact @GlobalTheory.SplitLinearHalf.law_half | exact GlobalTheory.SplitLinearHalf.law_half | (intros; apply GlobalTheory.SplitLinearHalf.law_half <;> assumption)
+  first | exact @GlobalTheory.SplitLinearHalf.law_half
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SplitPlaceLinearLawHalfVacuumStatement =====
@@ -346,7 +346,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.splitPlaceLocalCharacter_isUnramified_of_heckeUnramified : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (p : SplitPt D k) (χ : (AE D)ˣ →* Circle) (r : ℝ), GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter.CharUnramAt D χ p.v → IsUnram (GlobalTheory.SplitLinAt.lam p χ r) := by
-  first | exact @GlobalTheory.SplitLinUnram.lam_unram | exact GlobalTheory.SplitLinUnram.lam_unram | (intros; apply GlobalTheory.SplitLinUnram.lam_unram <;> assumption)
+  first | exact @GlobalTheory.SplitLinUnram.lam_unram
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SplitPlaceLocalCharacterIsUnramifiedOfHeckeUnramStatement =====
@@ -463,7 +463,7 @@ theorem _root_.GlobalTheory.T.weilHomAction_fix_of_trivialAtSplitPlace : ∀ (D 
     g ∈ grpOff S (· = p.v) → h ∈ grpOff T (· = p.v) → ∀ u : WO S T,
     (u ∈ latO S T (LS : Set (Fin S.rank → D.host.E)) (LT : Set (Fin T.rank → D.host.E)) (· = p.v) ∨ IsHalf p.e u ∨
       IsHalf (cA D p.e) u) → actO S T g h u = u := by
-  first | exact @GlobalTheory.FinPl.OffFix.actO_eq_of_grpOff | exact GlobalTheory.FinPl.OffFix.actO_eq_of_grpOff | (intros; apply GlobalTheory.FinPl.OffFix.actO_eq_of_grpOff <;> assumption)
+  first | exact @GlobalTheory.FinPl.OffFix.actO_eq_of_grpOff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.WeilHomActionFixOfTrivialAtSplitPlaceStatement =====

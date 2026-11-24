@@ -874,7 +874,7 @@ theorem exists_goodProj_coord (K : Type) [Fintype K] (ι : K → Type) [∀ k, F
       simp only [RingHom.coe_coe, evC_segC, GroundTheory.Heights₂.Heights.SegreCoordGoodProj.segre_scaleBlock,
         hzi, mul_zero, Polynomial.eval₂_at_zero, map_zero, RingHom.comp_apply] at this
       rw [← this]
-      simp only [AlgHom.coe_toRingHom, RingHom.coe_coe, evC_aeval]
+      simp only [evC_aeval]
       refine congrArg (fun v => aeval v c0) (funext fun j => ?_)
       rw [evC_forms]
       simp only [GroundTheory.Heights₂.Heights.SegreCoordGoodProj.segre_scaleBlock, hudef, hVdef, Finset.mul_sum]
@@ -1046,7 +1046,7 @@ theorem linForm_last : linForm (Pi.single (Fin.last n) (1 : ℂ)) =
   unfold linForm
   rw [Finset.sum_eq_single (Fin.last n)]
   · simp
-  · intro b _ hb; simp [Pi.single_apply, hb]
+  · intro b _ hb; simp [hb]
   · simp
 
 theorem linForm_last_not_mem {J : Ideal (MvPolynomial (Fin n) ℂ)} {f : MvPolynomial (Fin n) ℂ}
@@ -1114,7 +1114,7 @@ theorem slab_bound (d : ℕ) {J : Ideal (MvPolynomial (Fin n) ℂ)} (f : MvPolyn
     · show ‖∑ j, (Pi.single (Fin.last n) (1 : ℂ) : Fin (n + 1) → ℂ) j * _‖ ≤ ε
       rw [Finset.sum_eq_single (Fin.last n)]
       · simpa [addLast] using hzf'
-      · intro b _ hb; simp [Pi.single_apply, hb]
+      · intro b _ hb; simp [hb]
       · simp
   refine (measure_mono hsub).trans ?_
   have := lipschitz_dropLast.hausdorffMeasure_image_le (d := ((2 * d : ℕ) : ℝ)) (by positivity)

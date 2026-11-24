@@ -59,9 +59,8 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 
 theorem casScalar_of (h1 : CalculusOnSmoothVectors) (h2 : CasimirProperties) (h3 : SchurSymmetricDense) : CasScalarStatement := by
   intro n ε H _ _ _ σ hσ hirr w hw
-  have hC : Calc ε σ (Vsub ε hσ w) := h1 n ε H σ hσ w
   have hstb : ∀ (g : UJ ε), ∀ v ∈ Vsub ε hσ w, σ (umat g) v ∈ Vsub ε hσ w := fun g v hv => Vsub_stable hσ w g hv
-  obtain ⟨hadd, hsm, hsym, hinv⟩ := h2 n ε H σ _ hC hstb
+  obtain ⟨hadd, hsm, hsym, hinv⟩ := h2 n ε H σ _ (h1 n ε H σ hσ w) hstb
   exact h3 n ε H σ hσ hirr _ (Vsub_dense hσ hirr hw) hstb (Cas ε σ) hadd hsm hsym hinv
 
 theorem hcMultDS_of (h0 : SmoothVectorsDense) (h1 : CalculusOnSmoothVectors) (hc : CasScalarStatement) (h4 : CasimirScalarBounded)

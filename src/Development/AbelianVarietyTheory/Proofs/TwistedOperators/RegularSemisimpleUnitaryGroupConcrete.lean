@@ -886,7 +886,7 @@ theorem eq_zero_of_form_eq_zero (σ : A →+* A) {J : Matrix n n A} (hJ : IsUnit
     have hs : (fun k => σ ((Pi.single i (1 : A) : n → A) k)) = Pi.single i 1 := by
       funext k; by_cases hk : k = i
       · subst hk; simp
-      · simp [Pi.single_apply, hk]
+      · simp [hk]
     rw [form, hform_eq, hs] at this
     simpa [dotProduct, Pi.single_apply] using this
   calc a = (J⁻¹ * J) *ᵥ a := by rw [Matrix.nonsing_inv_mul _ hJ, Matrix.one_mulVec]
@@ -1198,8 +1198,7 @@ theorem pointsCentraliser_of_commutant_of_adjoint :
       (γ : Matrix n n E).map (inclE (F := F) R) := rfl
   simp only [centPts, Subgroup.mem_inf, Subgroup.mem_centralizer_singleton_iff]
   unfold UPts UJ
-  simp only [Subgroup.mem_mk, Submonoid.mem_mk, Subsemigroup.mem_mk, Set.mem_ofPred_eq,
-    Units.ext_iff, Units.val_mul, hb]
+  simp only [Subgroup.mem_mk, Submonoid.mem_mk, Subsemigroup.mem_mk, Set.mem_ofPred_eq]
   rw [cT_mul_mul_eq_iff_mul_adj_eq_one _ hJ]
   constructor
   · rintro ⟨hunit, hc⟩

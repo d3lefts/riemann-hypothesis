@@ -727,7 +727,7 @@ theorem norm_adjugate_le_one {F : Type} [NormedField F] [IsUltrametricDist F] {m
     rw [Matrix.updateRow_self]
     by_cases hb : b = i
     · subst hb; simp
-    · simp [Pi.single_apply, hb]
+    · simp [hb]
   · rw [Matrix.updateRow_ne h]; exact hA a b
 
 theorem norm_inv_le_one_of_det {F : Type} [NormedField F] [IsUltrametricDist F] {m : Type} [Fintype m]
@@ -1172,7 +1172,7 @@ theorem GlobalTheory.PMonE.rowS_winPt_pow_eq_gsum_coefB (F : Type) [NormedField 
       gsum (p ^ h) (L + U) (coefB p ϖ lam π L U) z r := by
   intro hL z r
   have hr : (r : ℕ) ≤ h := r.isLt.le
-  simp only [rowS, winPt, gsum, Finset.sum_apply, Matrix.mulVec, dotProduct, coefB, Matrix.of_apply]
+  simp only [rowS, gsum, Finset.sum_apply, Matrix.mulVec, dotProduct, coefB, Matrix.of_apply]
   rw [Finset.sum_comm (s := Finset.range (L + U + 1)), Finset.sum_div, sum_pow_char_pow]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [Finset.sum_div, sum_pow_char_pow]

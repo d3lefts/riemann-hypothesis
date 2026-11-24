@@ -426,7 +426,7 @@ namespace GlobalTheory.OldSpace
 
 theorem quad_apply (u : Module.End ℂ (ℍ → ℂ)) (μ c : ℂ) (G : ℍ → ℂ) :
     aeval u (X ^ 2 - C μ * X + C c) G = u (u G) - μ • u G + c • G := by
-  simp [pow_two, Algebra.algebraMap_eq_smul_one, Module.End.mul_apply]
+  simp [pow_two, Algebra.algebraMap_eq_smul_one]
 
 theorem ul_oldSpace : ∀ (N l k : ℕ), 5 ≤ N → l.Prime → ¬ l ∣ N → 3 ≤ k → ∀ (χ : DirichletCharacter ℂ N) (α : ℂ), α ^ 2 ≠ χ l * (l : ℂ) ^ (k - 1) →
   ∀ f₁ f₂ : CuspForm (CongruenceSubgroup.Gamma1 N) (k : ℤ),
@@ -1145,7 +1145,7 @@ theorem toGL_det (g : Matrix (Fin 2) (Fin 2) ℤ) (hg : g.det ≠ 0) :
   unfold toGL
   rw [dite_eq_right hg]
   simp only [Matrix.GeneralLinearGroup.mkOfDetNeZero, Matrix.det_fin_two]
-  simp [Matrix.det_fin_two]
+  simp
 
 theorem slash_smul_pos (k : ℤ) (g : Matrix (Fin 2) (Fin 2) ℤ) (hg : 0 < g.det) (c : ℂ) (f : ℍ → ℂ) :
     (c • f) ∣[k] toGL g = c • (f ∣[k] toGL g) := by

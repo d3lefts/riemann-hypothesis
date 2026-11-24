@@ -169,7 +169,7 @@ theorem mom2 {b : ℂ} (hb : b.re < 0) (R : MvPolynomial (Fin 2) ℂ) :
     have h1 := J_eq hb (v 1) μ
     simp only [J] at h0 h1 ⊢
     rw [h0, h1]
-    simp only [eval_mul, eval_C, eval_toMv, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+    simp only [eval_mul, eval_C, eval_toMv, Matrix.cons_val_zero, Matrix.cons_val_one]
     ring
 
 end PositivityTheory.SiegelWeilFormula.KLI
@@ -663,7 +663,7 @@ theorem jG_eq : jG n = nG 1 * nbH (-1) * nG 1 := by
 theorem alg1 (x : ℂ) (hx : x ≠ 0) (hx1 : x + 1 ≠ 0) : (-x)⁻¹ = -(-(-(-(x + 1)⁻¹ + 1)⁻¹)⁻¹)⁻¹ + 1 := by
   have hy : -(x + 1)⁻¹ + 1 = x / (x + 1) := by field_simp; ring
   rw [hy]
-  simp only [inv_neg, inv_inv, neg_neg, inv_div]
+  simp only [inv_neg, neg_neg, inv_div]
   field_simp
   ring
 
@@ -731,7 +731,7 @@ theorem jG_conj {U : Matrix (Fin n) (Fin n) ℂ} (hU : Uᴴ * U = 1) (hU' : U * 
   have e1 : (Uᴴ)⁻¹ = U := Matrix.inv_eq_left_inv hU'
   have e2 : (Uᴴᴴ)⁻¹ = Uᴴ := by rw [Matrix.conjTranspose_conjTranspose]; exact Matrix.inv_eq_left_inv hU
   simp only [mLc, JJ, e1, e2, Matrix.fromBlocks_multiply]
-  simp [hU', hU]
+  simp [hU']
 
 theorem mob_JJ_conj {Z U : Matrix (Fin n) (Fin n) ℂ} {z : Fin n → ℂ} (hU : Uᴴ * U = 1) (hU' : U * Uᴴ = 1)
     (hZ : Uᴴ * Z * U = Matrix.diagonal z) (hz0 : ∀ j, z j ≠ 0) :
@@ -962,7 +962,7 @@ theorem nb_eq {c : Matrix (Fin n) (Fin n) ℂ} (hc : cᴴ = c) (hu : IsUnit c.de
   unfold nbM mLc nU JJ
   rw [h3]
   simp only [Matrix.fromBlocks_multiply]
-  simp [h1, h2, Matrix.neg_mul, Matrix.mul_neg]
+  simp [h1, h2]
 
 def dT (i0 : Fin n) (t : ℝ) : Matrix (Fin n) (Fin n) ℂ := Matrix.diagonal fun i => if i = i0 then (t : ℂ) else 1
 

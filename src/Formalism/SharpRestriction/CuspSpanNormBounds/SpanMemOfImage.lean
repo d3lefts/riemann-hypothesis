@@ -349,11 +349,7 @@ def expL (S : Set (Mx k r)) : lieE S → Mt k r :=
   fun x i j => NormedSpace.exp (unrealify (x : EuclideanSpace ℝ (IxE k r))) i j
 
 theorem continuous_expL (S : Set (Mx k r)) : Continuous (expL S) := by
-  have h1 : Continuous (fun x : EuclideanSpace ℝ (IxE k r) => unrealify x) :=
-    (unrealL' k r).continuous_of_finiteDimensional
-  have h3 : Continuous (fun x : lieE S => (unrealify (x : EuclideanSpace ℝ (IxE k r)) : Mx k r)) :=
-    h1.comp continuous_subtype_val
-  exact continuous_expM'.comp h3
+  exact continuous_expM'.comp ((unrealL' k r).continuous_of_finiteDimensional.comp continuous_subtype_val)
 
 theorem cjT_expL (hκ : 0 < κ) (hτ : 0 < τ) (x : lieE (Nset k r)) :
     cjT k r κ τ (expL (Nset k r) x) = expL (Nset k r) ((scE k r κ τ).restrict (scE_mem hκ hτ) x) := by

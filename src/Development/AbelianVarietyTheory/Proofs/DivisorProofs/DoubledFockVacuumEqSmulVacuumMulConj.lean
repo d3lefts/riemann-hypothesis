@@ -72,7 +72,7 @@ theorem mul_transpose_doubledSpaceFrame_toCols1 {α β : Type} [Fintype β] {R S
   simp only [Matrix.toCols₁, Matrix.of_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.submatrix_apply, id,
     dblM, Fintype.sum_sum_type, Fin.sum_univ_add, dblCol, finSumFinEquiv_symm_apply_castAdd,
     finSumFinEquiv_symm_apply_natAdd, Sum.elim_inl, Sum.elim_inr, Pi.zero_apply, mul_zero, Finset.sum_const_zero,
-    add_zero, zero_add]
+    add_zero]
 
 theorem mul_transpose_doubledSpaceFrame_toCols2 {α β : Type} [Fintype β] {R S : ℕ} (M : Matrix α (Ix (R + S) (S + R)) ℂ) (C : Matrix β (Ix R S) ℂ) :
     (M * (dblM C)ᵀ).toCols₂ =
@@ -81,7 +81,7 @@ theorem mul_transpose_doubledSpaceFrame_toCols2 {α β : Type} [Fintype β] {R S
   simp only [Matrix.toCols₂, Matrix.of_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.submatrix_apply, id,
     dblM, Fintype.sum_sum_type, Fin.sum_univ_add, dblCol, finSumFinEquiv_symm_apply_castAdd,
     finSumFinEquiv_symm_apply_natAdd, Sum.elim_inl, Sum.elim_inr, Pi.zero_apply, mul_zero, Finset.sum_const_zero,
-    add_zero, zero_add]
+    zero_add]
   ring
 
 theorem mul_submatrix_right {α γ δ ε : Type} [Fintype γ] (A : Matrix α γ ℂ) (c : Matrix γ δ ℂ) (e : ε → δ) :
@@ -167,7 +167,7 @@ theorem term_eq {P Q R S : ℕ} (c : Matrix (Ix P Q) (Ix R S) ℂ) (t : ℝ) (l 
   obtain ⟨a, b⟩ := l
   rw [Matrix.smul_apply, jm_conj_apply]
   rcases a with a | a <;> rcases b with b | b <;>
-    simp [raiB, lowB, linePos, lineSign, Complex.conj_ofReal, smul_smul] <;> ring_nf
+    simp [raiB, lowB, linePos, lineSign, Complex.conj_ofReal, smul_smul]
 
 theorem heisOp_rot_one (P Q R S : ℕ) (c : Matrix (Ix P Q) (Ix R S) ℂ) (t : ℝ) :
     heisOp (((t : ℂ) * Complex.I) • (Jm P Q * c * Jm R S)) 1 = ((t : ℂ) * Complex.I) • heisOp c 1 := by
@@ -231,7 +231,7 @@ theorem heisenbergDeriv_tensor_conj (F : Type) [Field F] [NumberField F] (κ : T
   have e1 : ((fun i => evI F (Sum.elim a₁ a₂ i)) ∘ Sum.inl) = fun i => evI F (a₁ i) := rfl
   have e2 : ((fun i => evI F (Sum.elim a₁ a₂ i)) ∘ Sum.inr) = fun i => evI F (a₂ i) := rfl
   rw [e1, e2]
-  simp only [star_sub, star_mul', Complex.star_def, map_mul, Complex.conj_ofReal, Complex.conj_I, map_ofNat]
+  simp only [star_sub, star_mul', Complex.star_def, Complex.conj_ofReal, Complex.conj_I, map_ofNat]
   push_cast
   ring
 
@@ -378,7 +378,7 @@ theorem vac_box : DerEx → VacLine → ∀ (F E : Type) [Field F] [NumberField 
     rw [map_smul] at h1' h2'
     ext x
     rw [SchwartzMap.smul_apply, hbox u' hu' x, hbox u hu x, h1', h2', h1, h2]
-    simp only [SchwartzMap.smul_apply, smul_eq_mul, star_mul', Complex.star_def, map_mul, Complex.conj_ofReal,
+    simp only [SchwartzMap.smul_apply, smul_eq_mul, star_mul', Complex.star_def, Complex.conj_ofReal,
       Complex.conj_I]
     push_cast
     ring

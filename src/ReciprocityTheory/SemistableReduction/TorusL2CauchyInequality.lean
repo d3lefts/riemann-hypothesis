@@ -404,8 +404,7 @@ theorem blockPoly_claim (hSJ : SJStatement) (n : ℕ) : ∀ (k : ℕ) (a : Fin k
     have hHm : Measurable H := hcont.measurable.comp e2.symm.measurable
     have hsymm : ∀ z' w, e2.symm (z', w) = Fin.cons w z' := by
       intro z' w
-      simp [e2, e, MeasurableEquiv.prodComm, MeasurableEquiv.piFinSuccAbove_symm_apply,
-        Fin.insertNth_zero']
+      simp [e2, e, MeasurableEquiv.prodComm, MeasurableEquiv.piFinSuccAbove_symm_apply]
     have hH : ∀ z' w, H (z', w) = F (Fin.cons (spherePoint w) (fun b => spherePoint (z' b))) := by
       intro z' w
       simp only [H, onSpheres, hsymm]
@@ -836,7 +835,7 @@ theorem sj_holds (hLin : SphereLinLogStatement) : SJStatement := by
     have hI : ∫ θ in Set.Ioc 0 (2 * π), (M - L (rotS hu θ z)) =
         2 * π * M - ∫ θ in Set.Ioc 0 (2 * π), L (rotS hu θ z) := by
       rw [integral_sub (integrable_const M) hint, integral_const]
-      simp [Measure.real, Real.volume_Ioc, ENNReal.toReal_ofReal hT.le, smul_eq_mul, Real.pi_pos.le]
+      simp [Measure.real, Real.volume_Ioc, smul_eq_mul, Real.pi_pos.le]
     have hnn : 0 ≤ ∫ θ in Set.Ioc 0 (2 * π), (M - L (rotS hu θ z)) :=
       setIntegral_nonneg measurableSet_Ioc (fun θ _ => sub_nonneg.2 (hLM _))
     have hhz : 2 * π * h z = 2 * π * M - 2 * π * (Real.log ‖MvPolynomial.eval (WithLp.ofLp u) f‖ +
@@ -877,9 +876,6 @@ theorem sj_holds (hLin : SphereLinLogStatement) : SJStatement := by
       have h1 : ENNReal.ofReal (2 * π) ≠ ⊤ := ENNReal.ofReal_ne_top
       first
         | exact (ENNReal.mul_le_mul_iff_right h0 h1).1 hmain
-        | exact (ENNReal.mul_le_mul_iff_left h0 h1).1 hmain
-        | exact (ENNReal.mul_le_mul_left h0 h1).1 hmain
-        | exact ENNReal.le_of_mul_le_mul_left hmain h0 h1
   have hhint : Integrable h (sphereProb n) := by
     rw [hh]; exact ((integrable_const _).sub (integrable_const _)).sub (hGint'.const_mul _)
   have hfin : ∫⁻ z, g z ∂(sphereProb n) ≠ ⊤ := (hglint.trans_lt hhint.lintegral_lt_top).ne
@@ -956,7 +952,7 @@ theorem eval_update_eq_eval_aeval {ι : Type*} [DecidableEq ι] (w : ι → ℂ)
   by_cases h : j = i
   · subst h
     simp
-  · simp [h, Function.update_of_ne h]
+  · simp [h]
 
 theorem eval_bind₁_scale {ι : Type*} (r w : ι → ℂ) (f : MvPolynomial ι ℂ) :
     MvPolynomial.eval w
@@ -979,8 +975,6 @@ private theorem bind1_C_mul_X_ne_zero_of_ne_zero {ι : Type} (r : ι → ℂ) (h
     funext j
     first
       | exact mul_div_cancel₀ (v j) (hr j)
-      | field_simp [hr j]
-      | (rw [mul_comm]; exact div_mul_cancel₀ (v j) (hr j))
   rw [e] at hv
   rw [← hv, map_zero]
 
@@ -1047,7 +1041,7 @@ theorem scaledTorusMean_le_torusMean {ι : Type} [Fintype ι] [DecidableEq ι]
         by_cases hj : j = a
         · subst hj
           simp
-        · simp [Finset.mem_insert, hj, Function.update_of_ne hj]
+        · simp [Finset.mem_insert, hj]
       rw [e] at hle
       exact hle
   have hu := key Finset.univ

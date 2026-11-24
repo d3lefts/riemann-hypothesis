@@ -235,8 +235,7 @@ theorem mul_alConj (h : (N : ℤ) * a * d - l * b * c = 1) (hNl : (N : ℤ) * l 
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp only [alQ, alConj, Matrix.mul_apply, Fin.sum_univ_two, hz', Matrix.of_apply, Matrix.cons_val',
-      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons,
-      Matrix.head_fin_const, Fin.zero_eta, Fin.mk_one, Fin.isValue] <;> (try rw [hz])
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, Fin.zero_eta, Fin.mk_one, Fin.isValue] <;> (try rw [hz])
   · linear_combination ((N : ℤ) * a * M 0 0 + N * l * c * M 0 1) * h
   · linear_combination (b * M 0 0 + N * d * M 0 1) * h
   · linear_combination ((N : ℤ) * l * z * (N * a) + M 1 1 * (N * l * c)) * h
@@ -250,8 +249,7 @@ theorem alConjInv_mul (h : (N : ℤ) * a * d - l * b * c = 1) (hNl : (N : ℤ) *
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp only [alQ, alConjInv, Matrix.mul_apply, Fin.sum_univ_two, hz', Matrix.of_apply, Matrix.cons_val',
-      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons,
-      Matrix.head_fin_const, Fin.zero_eta, Fin.mk_one, Fin.isValue] <;> (try rw [hz])
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, Fin.zero_eta, Fin.mk_one, Fin.isValue] <;> (try rw [hz])
   · linear_combination ((N : ℤ) * a * M 0 0 + b * (N * l * z)) * h
   · linear_combination ((N : ℤ) * a * M 0 1 + b * M 1 1) * h
   · linear_combination ((N : ℤ) * l * c * M 0 0 + N * d * (N * l * z)) * h
@@ -280,13 +278,13 @@ theorem alQ_cancel_right (h : (N : ℤ) * a * d - l * b * c = 1) (hN : 0 < N) {A
 
 theorem alConj_mem (M : M2) : ((N * l : ℕ) : ℤ) ∣ alConj N l a b c d M 1 0 := by
   simp only [alConj, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val',
-    Matrix.cons_val_fin_one, Matrix.head_cons, Matrix.head_fin_const]
+    Matrix.cons_val_fin_one]
   push_cast
   exact Dvd.intro _ rfl
 
 theorem alConjInv_mem (M : M2) : ((N * l : ℕ) : ℤ) ∣ alConjInv N l a b c d M 1 0 := by
   simp only [alConjInv, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val',
-    Matrix.cons_val_fin_one, Matrix.head_cons, Matrix.head_fin_const]
+    Matrix.cons_val_fin_one]
   push_cast
   exact Dvd.intro _ rfl
 
@@ -344,22 +342,22 @@ theorem alConjInv_mul' (h : (N : ℤ) * a * d - l * b * c = 1) (hN : 0 < N) (hl 
 
 theorem alConj_00_N (h : (N : ℤ) * a * d - l * b * c = 1) (hN : 0 < N) (hl : 0 < l) (M : M2) :
     (N : ℤ) ∣ alConj N l a b c d M 0 0 - M 1 1 := by
-  simp only [alConj, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val',
-    Matrix.cons_val_fin_one, Matrix.head_cons, Matrix.head_fin_const]
+  simp only [alConj, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.empty_val',
+    Matrix.cons_val_fin_one]
   exact ⟨a * d * M 0 0 - l * a * b * (M 1 0 / ((N : ℤ) * l)) + l * c * d * M 0 1 - a * d * M 1 1,
     by linear_combination (M 1 1) * h⟩
 
 theorem alConj_00_l (h : (N : ℤ) * a * d - l * b * c = 1) (M : M2) :
     (l : ℤ) ∣ alConj N l a b c d M 0 0 - M 0 0 := by
-  simp only [alConj, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val',
-    Matrix.cons_val_fin_one, Matrix.head_cons, Matrix.head_fin_const]
+  simp only [alConj, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.empty_val',
+    Matrix.cons_val_fin_one]
   exact ⟨b * c * M 0 0 - N * a * b * (M 1 0 / ((N : ℤ) * l)) + N * c * d * M 0 1 - b * c * M 1 1,
     by linear_combination (M 0 0) * h⟩
 
 theorem alConjInv_00_l (h : (N : ℤ) * a * d - l * b * c = 1) (M : M2) :
     (l : ℤ) ∣ alConjInv N l a b c d M 0 0 - M 0 0 := by
-  simp only [alConjInv, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val',
-    Matrix.cons_val_fin_one, Matrix.head_cons, Matrix.head_fin_const]
+  simp only [alConjInv, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.empty_val',
+    Matrix.cons_val_fin_one]
   exact ⟨b * c * M 0 0 + N * b * d * (M 1 0 / ((N : ℤ) * l)) - N * a * c * M 0 1 - b * c * M 1 1,
     by linear_combination (M 0 0) * h⟩
 
@@ -562,7 +560,7 @@ theorem atkinLehner_conj_int (N l : ℕ) (a b c d : ℤ) (h : (N : ℤ) * a * d 
       Matrix.cons_val_fin_one]
     push_cast
     exact Dvd.intro _ rfl
-  · simp only [Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val',
+  · simp only [Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_one, Matrix.empty_val',
       Matrix.cons_val_fin_one]
     exact ⟨-(b * d * l * r) + l * a * c * q + a * d * s - a * d * p, by linear_combination p * h⟩
 
@@ -775,8 +773,8 @@ theorem exists_gamma (L N : ℕ) (hL : 0 < L) (hNL : N ∣ L) (u : (ZMod N)ˣ) :
   refine ⟨⟨!![x, -y; (L : ℤ), (((v : ZMod L).val : ℕ) : ℤ)], ?_⟩, ?_, ?_⟩
   · rw [Matrix.det_fin_two_of]; linear_combination hxy
   · simp
-  · simp only [SpecialLinearGroup.coe_mk, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_one,
-      Matrix.cons_val_zero, Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+  · simp only [Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_one,
+      Matrix.empty_val', Matrix.cons_val_fin_one]
     rw [← hv, ZMod.unitsMap_val, ZMod.cast_eq_val, Int.cast_natCast]
 
 theorem forms_of_characters_independent : ∀ (k L N : ℕ) (a : DirichletCharacter ℂ N → ℕ → ℂ), 0 < L → N ∣ L →

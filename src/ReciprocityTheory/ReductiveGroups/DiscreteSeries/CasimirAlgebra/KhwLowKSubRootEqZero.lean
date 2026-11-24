@@ -175,13 +175,9 @@ theorem signedOrder_irrefl (ε : Fin n → Bool) (a : Fin n) : ¬ wdP ε a a := 
 
 theorem signedOrder_iff_not_swap_of_ne (ε : Fin n → Bool) (a b : Fin n) (h : a ≠ b) : wdP ε a b ↔ ¬ wdP ε b a := by
   unfold wdP
-  rcases lt_or_gt_of_ne h with h | h
-  · by_cases he : ε a = ε b
-    · simp [h, lt_asymm h, he]
-    · simp [h, lt_asymm h, he, Ne.symm he]
-  · by_cases he : ε a = ε b
-    · simp [h, lt_asymm h, he]
-    · simp [h, lt_asymm h, he, Ne.symm he]
+  by_cases he : ε a = ε b
+  · rcases lt_or_gt_of_ne h with h | h <;> simp [h, lt_asymm h, he]
+  · rcases lt_or_gt_of_ne h with h | h <;> simp [h, lt_asymm h, he, Ne.symm he]
 
 theorem wd_ind (ε : Fin n → Bool) (a b : Fin n) :
     ((if wdP ε a b then (1:ℝ) else 0) - (if wdP ε b a then (1:ℝ) else 0)) =
@@ -258,8 +254,7 @@ theorem wd_term (ε : Fin n → Bool) {E : Fin n → Fin n → Module.End ℂ M}
     {μ : Fin n → ℝ} {v : M} (hv : IsKHWVec ε E μ v) {a b : Fin n} (hab : wdP ε a b) :
     inner ℂ v (E b a (E a b v)) = ((-(if b < a ∧ ε b ≠ ε a then ‖E a b v‖ ^ 2 else 0) : ℝ) : ℂ) := by
   rcases hab with ⟨h, he⟩ | ⟨h, he⟩
-  · rw [hv.2 a b h he, map_zero, inner_zero_right]
-    simp [lt_asymm h]
+  · simp [hv.2 a b h he, lt_asymm h]
   · have h1 := hU a b v (E a b v)
     rw [adjSign, if_neg he, wd_inner_self] at h1
     rw [if_pos ⟨h, Ne.symm he⟩]
@@ -335,12 +330,10 @@ theorem khw_lowK_sub_root_eq_zero (ε : Fin n → Bool) {E : Fin n → Fin n →
   have hle := casimir_khw_le ε hE hU hv hv0 hc
   have hμ : lowK ε lam - root a b + rhoC ε - rhoN ε = lam - root a b := by
     ext i; simp only [lowK, Pi.add_apply, Pi.sub_apply]; ring
-  rw [hμ] at hle
-  have e1 := nsq_sub' lam (root a b)
-  have e2 : nsq (root a b) = 2 := nsq_root (ne_of_lt hab)
+  rw [hμ, nsq_sub' lam (root a b), nsq_root (ne_of_lt hab),
+    nsq_sub' (rhoC ε) (rhoN ε)] at hle
   have e3 : casVal lam = nsq lam - (nsq (rhoC ε) + 2 * dot (rhoC ε) (rhoN ε) + nsq (rhoN ε)) := by
     rw [casVal, rho_eq_rhoC_add_rhoN ε, nsq_add']
-  have e4 := nsq_sub' (rhoC ε) (rhoN ε)
   linarith
 
 end Unitary

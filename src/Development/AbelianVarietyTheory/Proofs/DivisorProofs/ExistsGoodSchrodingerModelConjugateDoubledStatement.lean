@@ -68,7 +68,7 @@ theorem _root_.GlobalTheory.T.conjugateUnitaryAdelicIso_map_haar_and_fundamental
     IsFundamentalDomain (GQ V) fd ν →
     (ν.map (conjU V c h)).IsHaarMeasure ∧
       IsFundamentalDomain (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ratU D.sp.cm.sig J) (conjU V c h '' fd) (ν.map (conjU V c h)) := by
-  first | exact @GlobalTheory.ConjUTransport.map_isHaar_isFundamentalDomain | exact GlobalTheory.ConjUTransport.map_isHaar_isFundamentalDomain | (intros; apply GlobalTheory.ConjUTransport.map_isHaar_isFundamentalDomain <;> assumption)
+  first | exact @GlobalTheory.ConjUTransport.map_isHaar_isFundamentalDomain
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjugateUnitaryAdelicIsoMapHaarAndFundamentalDoStatement =====
@@ -94,7 +94,7 @@ theorem _root_.GlobalTheory.T.eventually_selfDualLattice_indicator_is_vacuum : �
     X.IsHerm σ B r s → Y.IsSkew σ B r' s' → ∀ (co : GlobalTheory.WeilM.Darboux (GlobalTheory.WeilM.symp (R := AF F) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ) (-1) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F X.J) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F Y.J)) (Fin n × Fin d)), (∀ x : Matrix (Fin n) (Fin d) E, ∃ y z : Fin n × Fin d → F, co.e (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F x) = (fun k => algebraMap F (AF F) (y k), fun k => algebraMap F (AF F) (z k))) →
     ∀ᶠ v in Filter.cofinite, Model.IsVac (Model.mk (σ := σ) (X := X) (W := Y) co (fun _ => 0) 0 ∅) B.ψ v
       (Set.indicator {x | ∀ k, x k ∈ v.adicCompletionIntegers F} 1) := by
-  first | exact @GlobalTheory.VacIndic.eventually_isVac_indicator | exact GlobalTheory.VacIndic.eventually_isVac_indicator | (intros; apply GlobalTheory.VacIndic.eventually_isVac_indicator <;> assumption)
+  first | exact @GlobalTheory.VacIndic.eventually_isVac_indicator
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallySelfDualLatticeIndicatorIsVacuumStatement =====
@@ -118,7 +118,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 theorem _root_.GlobalTheory.T.exists_rational_darboux_coordinates_tensor_hermitian : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
     (B : Base F E), B.IsGood σ → ∀ {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (r s r' s' : ℕ),
     X.IsHerm σ B r s → Y.IsSkew σ B r' s' → ∃ co : GlobalTheory.WeilM.Darboux (GlobalTheory.WeilM.symp (R := AF F) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ) (-1) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F X.J) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F Y.J)) (Fin n × Fin d), ∀ x : Matrix (Fin n) (Fin d) E, ∃ y z : Fin n × Fin d → F, co.e (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F x) = (fun k => algebraMap F (AF F) (y k), fun k => algebraMap F (AF F) (z k)) := by
-  first | exact @GlobalTheory.RatDarboux.exists_rational_darboux_of_isGood | exact GlobalTheory.RatDarboux.exists_rational_darboux_of_isGood | (intros; apply GlobalTheory.RatDarboux.exists_rational_darboux_of_isGood <;> assumption)
+  first | exact @GlobalTheory.RatDarboux.exists_rational_darboux_of_isGood
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRationalDarbouxCoordinatesTensorHermitianStatement =====
@@ -193,7 +193,7 @@ theorem _root_.GlobalTheory.T.exists_goodSchrodingerModel_conjugateDoubled : ∀
       (hJ : X.J = (1 : D.host.E) • (spW G i j).gram) (r s r' s' : ℕ),
       X.IsHerm D.sp.cm.sig B r s → Y.IsSkew D.sp.cm.sig B r' s' →
       ∃ co vac dom, Model.IsGood (Model.mk (σ := D.sp.cm.sig) (X := X) (W := Y) co vac ((M.ν (.grid ((i : ℕ) + 1) ((j : ℕ) + 1))).map (conjU _ 1 hJ)) dom) B.ψ := by
-  first | exact @GlobalTheory.SquareModel.exists_isGood_model_conj | exact GlobalTheory.SquareModel.exists_isGood_model_conj | (intros; apply GlobalTheory.SquareModel.exists_isGood_model_conj <;> assumption)
+  first | exact @GlobalTheory.SquareModel.exists_isGood_model_conj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsGoodSchrodingerModelConjugateDoubledStatement =====

@@ -209,9 +209,8 @@ theorem scale_pos_le {O Kf X : Type*} [CommRing O] [Field Kf] [Algebra O Kf] [Ad
   intro x hx
   unfold scale at hx
   obtain ⟨y, hy, rfl⟩ := Submodule.mem_map.mp hx
-  simp only [LinearMap.restrictScalars_apply, LinearMap.lsmul_apply, zpow_natCast]
-  rw [← map_pow, algebraMap_smul]
-  exact M.smul_mem _ hy
+  simpa only [LinearMap.restrictScalars_apply, LinearMap.lsmul_apply, zpow_natCast,
+    ← map_pow, algebraMap_smul] using M.smul_mem (w ^ c) hy
 
 section Clean
 
@@ -225,8 +224,7 @@ theorem RS.p_eq : (p : R.Kf) = algebraMap R.O R.Kf R.w ^ 2 := by
 theorem RS.p_ne : (p : R.O) ≠ 0 := by
   have hs := R.std
   unfold UnramifiedQuadraticSetting at hs
-  rw [← hs.1.w_sq]
-  exact pow_ne_zero 2 hs.2.1.ne_zero
+  simpa [← hs.1.w_sq] using pow_ne_zero 2 hs.2.1.ne_zero
 
 theorem RS.p_not_unit : ¬ IsUnit (p : R.O) := by
   have hs := R.std

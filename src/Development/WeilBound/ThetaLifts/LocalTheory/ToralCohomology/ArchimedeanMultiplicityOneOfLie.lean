@@ -364,7 +364,7 @@ def embA (R S : ℕ) : Emb (R + 1) (S + 1) R S where
   ne_j := by rintro (b | b) <;> simp [Fin.succ_ne_zero]
   sb := by rintro (a | a) (b | b) <;> simp [sameBlock]
   pos := by rintro (a | a) (b | b) <;> simp [posC]
-  ext := by rintro a (b | b) (rfl | rfl) <;> simp [posC, sameBlock] <;> norm_num
+  ext := by rintro a (b | b) (rfl | rfl) <;> simp [posC, sameBlock]
 
 def embB (R S : ℕ) : Emb (R + 1) (S + 1) R S where
   e := Sum.map Fin.castSucc Fin.castSucc
@@ -380,7 +380,7 @@ def embB (R S : ℕ) : Emb (R + 1) (S + 1) R S where
   ne_j := by rintro (b | b) <;> simp [Fin.castSucc_ne_last]
   sb := by rintro (a | a) (b | b) <;> simp [sameBlock]
   pos := by rintro (a | a) (b | b) <;> simp [posC]
-  ext := by rintro a (b | b) (rfl | rfl) <;> simp [posC, sameBlock, Fin.castSucc_lt_last] <;> norm_num
+  ext := by rintro a (b | b) (rfl | rfl) <;> simp [posC, sameBlock, Fin.castSucc_lt_last]
 
 theorem sg_embA (R S : ℕ) (b) : sg ((embA R S).e b) = sg b := by cases b <;> rfl
 
@@ -434,7 +434,7 @@ theorem single_mulVec' (a b : Ix R S) (v : Ix R S → ℂ) : Matrix.single a b (
   funext c
   by_cases e : c = a
   · subst e; simp [Matrix.mulVec, dotProduct, Matrix.single_apply]
-  · simp [Matrix.mulVec, dotProduct, Matrix.single_apply, Ne.symm e, Pi.single_eq_of_ne e]
+  · simp [Matrix.mulVec, dotProduct, Ne.symm e]
 
 theorem J_single (a b : Ix R S) : Jm R S * Matrix.single a b (1 : ℂ) = sg a • Matrix.single a b 1 := by
   ext c d; rw [Jm_sg, Matrix.diagonal_mul]; simp only [Matrix.smul_apply, Matrix.single_apply]; split_ifs with h <;> simp [h]
@@ -518,7 +518,7 @@ theorem exists_frame (m : Emb R S R₁ S₁) (hs : ∀ b, sg (m.e b) = sg b) {d 
     · simp only [sml, smr, addl, addr, xx, zz, zx, zk, sN, star_neg, star_one]
       rw [Matrix.diagonal_apply_ne _ (by simp)]; ring
     · rw [herm, o1, Matrix.diagonal_apply_ne _ (m.ne_i b).symm, star_zero]
-    · simp only [sml, smr, addl, addr, xx, zz, zx, zk, sN, star_neg, star_one]
+    · simp only [sml, smr, addl, addr, xx, zz, zx, zk, sN, star_one]
       rw [Matrix.diagonal_apply_ne _ (by simp)]; ring
     · simp only [sml, smr, addl, addr, xx, zz, zx, zk, sN, Matrix.diagonal_apply_eq, sg_r, star_neg, star_one]
       linear_combination -NN
@@ -841,7 +841,7 @@ theorem core (hD : Dic) {a a' a₁ a₁' : ℕ} {G : Geo σ a a'} {G₁ : Geo σ
         (by
           simp only [upq, Set.mem_setOf_eq, Matrix.conjTranspose_smul, Matrix.conjTranspose_add,
             Matrix.conjTranspose_single, star_one, Complex.star_def, Complex.conj_I, Matrix.add_mul, Matrix.smul_mul,
-            Matrix.mul_add, Matrix.mul_smul, J_single, single_J, sg_l, sg_r, map_one]
+            Matrix.mul_add, Matrix.mul_smul, J_single, single_J, sg_l, sg_r]
           module)
         (by simp only [Matrix.add_mulVec, Matrix.smul_mulVec, single_mulVec', xi]; simp [Emb.x])
         (by simp only [Matrix.add_mulVec, Matrix.smul_mulVec, single_mulVec', xi]; simp [Emb.y, sub_eq_add_neg])
@@ -863,7 +863,7 @@ theorem core (hD : Dic) {a a' a₁ a₁' : ℕ} {G : Geo σ a a'} {G₁ : Geo σ
         (by
           simp only [upq, Set.mem_setOf_eq, Matrix.conjTranspose_smul, Matrix.conjTranspose_add, Matrix.conjTranspose_sub,
             Matrix.conjTranspose_single, star_one, Complex.star_def, Complex.conj_I, Matrix.add_mul, Matrix.smul_mul,
-            Matrix.mul_add, Matrix.mul_smul, Matrix.sub_mul, Matrix.mul_sub, J_single, single_J, sg_l, sg_r, map_one]
+            Matrix.mul_add, Matrix.mul_smul, Matrix.sub_mul, Matrix.mul_sub, J_single, single_J, sg_l, sg_r]
           module)
         (by simp only [Matrix.add_mulVec, Matrix.sub_mulVec, Matrix.smul_mulVec, single_mulVec', xi]; simp)
         (fun u => ⟨0, by simp only [Matrix.add_mulVec, Matrix.sub_mulVec, Matrix.smul_mulVec, single_mulVec', m.embeddingMatrix_mulVec]; simp⟩) v

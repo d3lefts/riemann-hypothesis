@@ -106,7 +106,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.Glob
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.thetaLift_lowerTower_vanishing : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CuspRapidDecay → ∀ D : D7, GlobalTheory.IndefiniteRowSideFullHecke.LoweredSignatureVanishing.LowVanish D := by
-  first | exact @GlobalTheory.LowVanishObj.lowVanish_obj | exact GlobalTheory.LowVanishObj.lowVanish_obj | (intros; apply GlobalTheory.LowVanishObj.lowVanish_obj <;> assumption)
+  first | exact @GlobalTheory.LowVanishObj.lowVanish_obj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ThetaLiftLowerTowerVanishingStatement =====
@@ -287,7 +287,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.Glob
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.thetaChainLifts_areCuspForms : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CuspRapidDecay → ∀ D : D7, GlobalTheory.Chain.LiftCusp D := by
-  first | exact @GlobalTheory.LiftCuspObj.liftCusp | exact GlobalTheory.LiftCuspObj.liftCusp | (intros; apply GlobalTheory.LiftCuspObj.liftCusp <;> assumption)
+  first | exact @GlobalTheory.LiftCuspObj.liftCusp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ThetaChainLiftsAreCuspFormsStatement =====
@@ -660,7 +660,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.Glob
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_thetaLift_multiplicitySpaces_of_hypotheses : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.CasselmanWallach → ∀ D : D7, GlobalTheory.Chain.IoPair D := by
-  first | exact @GlobalTheory.Chain.IoLift.ioPair_onObjects | exact GlobalTheory.Chain.IoLift.ioPair_onObjects | (intros; apply GlobalTheory.Chain.IoLift.ioPair_onObjects <;> assumption)
+  first | exact @GlobalTheory.Chain.IoLift.ioPair_onObjects
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsThetaLiftMultiplicitySpacesOfPublishedStatement =====

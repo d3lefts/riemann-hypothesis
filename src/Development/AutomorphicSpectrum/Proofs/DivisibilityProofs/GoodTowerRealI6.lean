@@ -926,7 +926,6 @@ theorem exists_flat (y : (Σ k, ι k) → Ω) (hP : IsMultiHomogIdeal (mCoordIde
       obtain ⟨d, h1, h2⟩ := hcov z hz
       obtain ⟨n1, n2⟩ := NZ_smul h1 h2 hc
       have hz' := mcPts_smul hP c hc hz
-      beta_reduce
       rw [hψ _ hz' d h1 n1, hψ _ hz d h1 h2, n2, Chg.log_h_smul F hc hz.1, hFa]
       ring) (by
       intro z hz
@@ -1394,7 +1393,7 @@ open AlgebraicGeometry CategoryTheory NumberField ReciprocityTheory.ChartRestric
 open GroundTheory.Heights₂.Heights.LowerBoundFree (ComponentData ComponentSetting degMu ArLimExists slX)
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.good_tower_real_I6 : Given → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] [IsAbelianGalois ℚ E] (H : Host E) (D : Datum H) (Xo : ∀ l : Level H, Moduli D l) (l : Level H) (c : Coeff l) (Y : Model (Xo l) c (algebraMap (𝓞 c.F) c.F)) [DecidableEq (CMType H)] (T : RootTower (CMType H) (D.p + D.q)) (o : GoodOrigin Y T) (II : IntersectionSystem), IsGlobal Xo l c Y → o.Extra → IsFullIntersectionSystem II → 1 ≤ D.p → 1 ≤ D.q → (realOf o.toTowerOrigin).RefLinked II := by
-  first | exact @RootFieldNumerics.global_model_real_tower_smooth | exact RootFieldNumerics.global_model_real_tower_smooth
+  first | exact @RootFieldNumerics.global_model_real_tower_smooth
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.GoodTowerRealI6 =====

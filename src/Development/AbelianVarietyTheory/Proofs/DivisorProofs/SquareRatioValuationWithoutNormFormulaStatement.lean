@@ -109,7 +109,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle (Tri)
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.definiteThetaPair_norm_ne_zero_of_coord_ne_zero : ∀ (D : D7), GlobalTheory.NormSum.Inp D → ∀ (δ t0 : ℂ) (Q : ℕ) (P : GlobalTheory.NormSum.Pair D ⊤ δ t0 Q), (∃ h T, P.coord h T ≠ 0) → P.norm ≠ 0 := by
-  first | exact @GlobalTheory.NormPos.norm_ne_zero_of_coord | exact GlobalTheory.NormPos.norm_ne_zero_of_coord | (intros; apply GlobalTheory.NormPos.norm_ne_zero_of_coord <;> assumption)
+  first | exact @GlobalTheory.NormPos.norm_ne_zero_of_coord
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.DefiniteThetaPairNormNeZeroOfCoordNeZeroStatement =====
@@ -808,7 +808,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle (Tri)
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.square_ratio_valuation_without_norm_formula : (∀ D, GlobalTheory.NormSum.Inp D) → LNe → TorEx → BotSmall → BotExT → NormBig → BotNe → TriEx → Tower → BotConst → Refl → RhoLow → OneSqSt := by
-  first | exact @GlobalTheory.SqTop.OneSqNoSmall.oneSqSt_of_claims' | exact GlobalTheory.SqTop.OneSqNoSmall.oneSqSt_of_claims' | (intros; apply GlobalTheory.SqTop.OneSqNoSmall.oneSqSt_of_claims' <;> assumption)
+  first | exact @GlobalTheory.SqTop.OneSqNoSmall.oneSqSt_of_claims'
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareRatioValuationWithoutNormFormulaStatement =====

@@ -65,14 +65,14 @@ private theorem summable_mul_of_nonneg_of_abs_le_one {ι : Type} {e θ : ι → 
   have h1 : Summable fun i => e i * θ i + e i := by
     refine Summable.of_nonneg_of_le (fun i => ?_) (fun i => ?_) (he.mul_left 2)
     · have := (abs_le.mp (hθ i)).1
-      nlinarith [mul_nonneg (he0 i) (by linarith : 0 ≤ θ i + 1)]
+      linarith [mul_nonneg (he0 i) (by linarith : 0 ≤ θ i + 1)]
     · have := (abs_le.mp (hθ i)).2
-      nlinarith [mul_nonneg (he0 i) (by linarith : 0 ≤ 1 - θ i)]
+      linarith [mul_nonneg (he0 i) (by linarith : 0 ≤ 1 - θ i)]
   exact (h1.sub he).congr (fun i => by ring)
 
 private theorem one_le_inv_of_pos_of_le_one {τ : ℝ} (h : 0 < τ) (h' : τ ≤ 1) : 1 ≤ τ⁻¹ := by
   have h1 := mul_inv_cancel₀ h.ne'
-  nlinarith [mul_nonneg (inv_pos.mpr h).le (sub_nonneg.mpr h')]
+  linarith [mul_nonneg (inv_pos.mpr h).le (sub_nonneg.mpr h')]
 
 theorem gauss_abstract {X Y : Type} (a a0 : X → ℝ) (q θ : Y → ℝ) (n c : ℝ)
     (hq : ∀ y, 0 ≤ q y) (ha0 : ∀ x, 0 ≤ a0 x) (hθ : ∀ y, |θ y| ≤ 1) (hc : 0 < c) (y0 : Y)
@@ -107,7 +107,7 @@ theorem gauss_abstract {X Y : Type} (a a0 : X → ℝ) (q θ : Y → ℝ) (n c :
     rw [← Real.exp_add]
     apply Real.exp_le_exp.mpr
     have h0 : 0 ≤ π * s * (1 - τ₁) := mul_nonneg (mul_nonneg hπ.le hs.le) (sub_nonneg.mpr h1')
-    nlinarith [mul_nonneg h0 (sub_nonneg.mpr (hR x))]
+    linarith [mul_nonneg h0 (sub_nonneg.mpr (hR x))]
   have hle1 : ∑' y, Real.exp (-π * q y / (s * τ₁)) * θ y ≤ ∑' y, Real.exp (-π * q y / s) := by
     refine hasSum_le (fun y => ?_)
       (summable_mul_of_nonneg_of_abs_le_one hQ1 (fun _ => (Real.exp_pos _).le) hθ).hasSum hQs.hasSum
@@ -120,8 +120,8 @@ theorem gauss_abstract {X Y : Type} (a a0 : X → ℝ) (q θ : Y → ℝ) (n c :
       have e2 : -π * q y / s = -(π * q y / s) := by ring
       have hinv := one_le_inv_of_pos_of_le_one h1 h1'
       rw [e1, e2]
-      nlinarith [mul_nonneg hw (sub_nonneg.mpr hinv)]
-    nlinarith [mul_nonneg he.le (sub_nonneg.mpr hθ1)]
+      linarith [mul_nonneg hw (sub_nonneg.mpr hinv)]
+    linarith [mul_nonneg he.le (sub_nonneg.mpr hθ1)]
   have up2 : ∑' x, Real.exp (-π * (s * τ₁) * a x) ≤
       c * s ^ (-n / 2) * (τ₁ ^ (-n / 2) * ∑' y, Real.exp (-π * q y / s)) := by
     rw [Pu _ hst1, Real.mul_rpow hs.le h1.le]
@@ -164,7 +164,7 @@ theorem gauss_abstract {X Y : Type} (a a0 : X → ℝ) (q θ : Y → ℝ) (n c :
           div_nonneg (mul_nonneg (mul_nonneg hπ.le (sub_nonneg.mpr h2')) (sub_nonneg.mpr hql)) hs.le
         linarith
       have hθ0 := (abs_le.mp (hθ y)).1
-      nlinarith [mul_nonneg he.le (by linarith : 0 ≤ θ y + 1)]
+      linarith [mul_nonneg he.le (by linarith : 0 ≤ θ y + 1)]
   have hfB : ∑' y, Real.exp (-π * q y / (s / τ₂)) ≤
       τ₂ ^ (-n / 2) * ∑' y, Real.exp (-π * q y / s) := by
     have m : ∑' x, Real.exp (-π * (s / τ₂) * a0 x) ≤ ∑' x, Real.exp (-π * s * a0 x) := by
@@ -173,8 +173,8 @@ theorem gauss_abstract {X Y : Type} (a a0 : X → ℝ) (q θ : Y → ℝ) (n c :
       have hinv := one_le_inv_of_pos_of_le_one h2 h2'
       have hsle : s ≤ s / τ₂ := by
         rw [div_eq_mul_inv]
-        nlinarith [mul_nonneg hs.le (sub_nonneg.mpr hinv)]
-      nlinarith [mul_nonneg (mul_nonneg hπ.le (ha0 x)) (sub_nonneg.mpr hsle)]
+        linarith [mul_nonneg hs.le (sub_nonneg.mpr hinv)]
+      linarith [mul_nonneg (mul_nonneg hπ.le (ha0 x)) (sub_nonneg.mpr hsle)]
     rw [P0 _ hst2, P0 s hs, Real.div_rpow hs.le h2.le] at m
     have hPT : s ^ (-n / 2) / τ₂ ^ (-n / 2) * τ₂ ^ (-n / 2) = s ^ (-n / 2) := by
       field_simp [hT.ne']
@@ -192,7 +192,7 @@ theorem gauss_abstract {X Y : Type} (a a0 : X → ℝ) (q θ : Y → ℝ) (n c :
   have hfin : (∑' y, Real.exp (-π * q y / s)) * 1 ≤
       (∑' y, Real.exp (-π * q y / s)) * (Real.exp (-π * s * (1 - τ₁) * R2) * τ₁ ^ (-n / 2) +
         2 * (Real.exp (-π * (1 - τ₂) * l2 / s) * τ₂ ^ (-n / 2))) := by
-    nlinarith [mul_le_mul_of_nonneg_left hfB (mul_pos two_pos hE2).le]
+    linarith [mul_le_mul_of_nonneg_left hfB (mul_pos two_pos hE2).le]
   exact le_of_mul_le_mul_left hfin hS0pos
 
 end PI.Tr

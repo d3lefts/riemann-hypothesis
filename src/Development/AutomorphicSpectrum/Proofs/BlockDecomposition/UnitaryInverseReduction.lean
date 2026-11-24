@@ -719,7 +719,7 @@ theorem integral_geom_on_shells {X : Type} [MeasurableSpace X] (μ : Measure X) 
       funext j
       cases j with
       | zero => simp [shellVal]
-      | succ j => simp [shellVal, norm_pow, norm_div]
+      | succ j => simp [shellVal, norm_pow]
     refine Complex.hasSum_ofReal.1 ?_
     show HasSum (fun j => ((‖shellVal q a j‖ * shellMass q j : ℝ) : ℂ)) ((s : ℝ) : ℂ)
     rw [e, hsC]
@@ -890,7 +890,7 @@ theorem ordL_monomial_entry {n : ℕ} {t : Equiv.Perm (Fin n)} {Y : GL (Fin n) L
 
 theorem isBorelU_one (σ : L →+* L) (n : ℕ) : IsBorelU (1 : GU σ n) := by
   intro i j h
-  simp [Matrix.one_apply, ne_of_gt h]
+  simp [ne_of_gt h]
 
 theorem chiDeltaU_one (σ : L →+* L) (n m q : ℕ) (α : Fin m → ℂ) : chiDeltaU q α (1 : GU σ n) = 1 := by
   unfold chiDeltaU
@@ -937,7 +937,7 @@ theorem value_rankOne : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplica
     rw [transv_val]
     by_cases h : i = a ∧ j = a'
     · obtain ⟨rfl, rfl⟩ := h
-      simp [Matrix.single_apply, haa', hb]
+      simp [haa', hb]
     · rw [hu i j h, Matrix.add_apply, Matrix.single_apply, if_neg (fun h' => h ⟨h'.1.symm, h'.2.symm⟩), add_zero]
   have hσb : σ b = -b := by
     have h := (GlobalTheory.LGrp.mem_GU_iff σ n (u : GL (Fin n) L)).1 u.2 a a'
@@ -1006,8 +1006,7 @@ theorem value_rankOne : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplica
       simpa using this
     have hdiag_a : ordL ((((Pb : GU σ n) : GL (Fin n) L) : Matrix (Fin n) (Fin n) L) a a) = -ordL b := by
       rw [hP, Equiv.swap_apply_left, hM]
-      simp only [Matrix.one_apply, if_neg haa'.symm, if_neg (fun h : a = a' ∧ a' = a => haa' h.1),
-        if_pos (⟨rfl, rfl⟩ : a' = a' ∧ a = a), if_neg (fun h : a = a' ∧ a = a => haa' h.1)]
+      simp only [Matrix.one_apply, if_neg haa'.symm, if_neg (fun h : a = a' ∧ a' = a => haa' h.1)]
       have hy0 : (((y : GL (Fin n) L)⁻¹ : GL (Fin n) L) : Matrix (Fin n) (Fin n) L) a a' ≠ 0 := by
         have := monomial_entry_ne_zero hyiw a
         rwa [inv_inv, hs, Equiv.swap_apply_left] at this
@@ -1139,7 +1138,7 @@ theorem heis_mem_GU_iff (σ : L →+* L) {n : ℕ} {i j k : Fin n} (hij : i ≠ 
     have h1 := h i j
     have h2 := h j k
     have h3 := h i k
-    simp [heisM_apply, hij, hjk, hik, hij.symm, hjk.symm, hik.symm] at h1 h2 h3
+    simp [heisM_apply, hij, hjk, hik, hij.symm, hjk.symm] at h1 h2 h3
     exact ⟨h1.symm, h2.symm, h3.symm⟩
   · rintro ⟨h1, h2, h3⟩ s t
     rw [h1, h2, h3]
@@ -1209,7 +1208,7 @@ theorem ordL_monomial_entry {n : ℕ} {t : Equiv.Perm (Fin n)} {Y : GL (Fin n) L
 
 theorem isBorelU_one (σ : L →+* L) (n : ℕ) : IsBorelU (1 : GU σ n) := by
   intro i j h
-  simp [Matrix.one_apply, ne_of_gt h]
+  simp [ne_of_gt h]
 
 theorem chiDeltaU_one (σ : L →+* L) (n m q : ℕ) (α : Fin m → ℂ) : chiDeltaU q α (1 : GU σ n) = 1 := by
   unfold chiDeltaU

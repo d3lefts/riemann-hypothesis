@@ -152,7 +152,7 @@ open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.S
 open scoped CategoryTheory.Obj
 
 theorem _root_.GlobalTheory.CompanionTheory.Relay.exists_finite_normal_model_of_residue_finite : ∀ (X : Scheme.{0}) (s : X ⟶ Sp ℤ), IsProjOver s → ∀ (Ω : Type) [Field Ω] [CharZero Ω] (ξ : Sp Ω ⟶ X), (Scheme.descResidueField (Scheme.stalkClosedPointTo ξ)).hom.Finite → ∃ (n : ℕ) (x : Fin n → Ω) (M : PModel ℤ x) (π : M.X ⟶ X), Flat.NormalCpt M.ξ ∧ IsFinite π ∧ M.ξ ≫ π = ξ := by
-  first | exact @PositivityTheory.HtPt.Mf.xr_norm | exact PositivityTheory.HtPt.Mf.xr_norm
+  first | exact @PositivityTheory.HtPt.Mf.xr_norm
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsFiniteNormalModelOfResidueFinite =====
@@ -262,7 +262,7 @@ theorem weilIs_pull_of_proper (hA : IsSemiAbelian A) (hL : L.IsLB) {T T' : Over 
     have hl := congrArg Over.Hom.left key
     simp only [Over.comp_left, overResι, Over.homMk_left] at hl
     ext
-    simp only [unitRes, Units.coe_map, MonoidHom.coe_coe]
+    simp only [unitRes, Units.coe_map]
     have hv := congrArg (fun f => f.appTop.hom (c : Γ(T.left, ⊤))) hl
     simp only [Scheme.Hom.comp_appTop, CommRingCat.hom_comp, RingHom.comp_apply] at hv
     exact hv.symm
@@ -300,7 +300,6 @@ theorem exists_section_of_finite {Z : Scheme.{0}} {k K : Type} [Field k] [IsAlgC
     have hm : z ∈ closure ({z} : Set Z) ∩ closedPoints Z := by
       rw [h1]
       first
-        | exact subset_closure (Set.mem_singleton z)
         | exact subset_closure (subset_closure (Set.mem_singleton z))
     exact hm.2
   refine ⟨pointOfClosedPoint f _ hz, pointOfClosedPoint_comp f _ hz, ?_⟩
@@ -434,7 +433,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.tate_iso_base_change : ∀ (E 
     apply Subtype.ext
     rw [← h1, ← h2]
     have hsm : ((n : ℤ) • LinearMap.id : D.La →ₗ[ℤ] D.La) c = n • c := by
-      simp [natCast_zsmul]
+      simp
     have hdec : (hex y).choose = (hex y').choose + n • c := by
       rw [← hsm, hc]
       abel
@@ -461,7 +460,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.tate_iso_base_change : ∀ (E 
                 (unitOn ((Units.map (i : k →* k') (I.ζ n)) ^ D.EF a b))
               have hm : (Units.map (i : k →* k') (I.ζ n)) ^ D.EF a b
                   = Units.map (i : k →* k') (I.ζ n ^ D.EF a b) := by
-                simp [map_zpow, map_pow]
+                simp [map_zpow]
               rw [hm]
               convert h using 1
               exact (PositivityTheory.HtPt.Mg.unitOn_map i _).symm }, ?_⟩
@@ -810,8 +809,6 @@ theorem genPt_spMap_comp {X : Scheme.{0}} {K Ω : Type} [Field K] [Field Ω] (i 
   congr 1
   first
   | exact Subsingleton.elim _ _
-  | exact IsLocalRing.comap_closedPoint i
-  | exact (IsLocalRing.PrimeSpectrum.comap_closedPoint i)
 
 theorem finite_descResidueField_spMap_comp {X : Scheme.{0}} {K Ω : Type} [Field K] [Field Ω] (i : K →+* Ω)
     (hi : i.Finite) (ξ : Sp K ⟶ X) (hξ : Function.Surjective (Scheme.stalkClosedPointTo ξ).hom) :
@@ -824,7 +821,6 @@ theorem finite_descResidueField_spMap_comp {X : Scheme.{0}} {K Ω : Type} [Field
         ξ.stalkMap (closedPoint K) ≫ (stalkClosedPointIso (CommRingCat.of K)).hom := by
       first
       | rfl
-      | simp [Scheme.stalkClosedPointTo]
     intro y
     obtain ⟨a, ha⟩ := hξ ((stalkClosedPointIso (CommRingCat.of K)).hom y)
     refine ⟨a, ?_⟩
@@ -845,8 +841,6 @@ theorem finite_descResidueField_spMap_comp {X : Scheme.{0}} {K Ω : Type} [Field
     rw [← CommRingCat.hom_comp] at h3
     first
     | exact e2 ▸ h3
-    | exact (congrArg (fun φ => (CommRingCat.Hom.hom φ).Finite) e2).mpr h3
-    | (rw [e2]; exact h3)
   refine RingHom.Finite.of_comp_finite (f := (X.residue _).hom) ?_
   rw [← CommRingCat.hom_comp, Scheme.residue_descResidueField]
   exact hC
@@ -867,7 +861,6 @@ theorem levelCover : LevelCoverSt := by
   have hi : (algebraMap K Ω).Finite := by
     first
     | exact RingHom.finite_algebraMap.mpr hfd
-    | exact hfd
   have hfin := finite_descResidueField_spMap_comp (algebraMap K Ω) hi (y0 ≫ Y.j) hsurj
   obtain ⟨n, x, M, π, hMn, hπ, hMπ⟩ :=
     _root_.GlobalTheory.CompanionTheory.Relay.exists_finite_normal_model_of_residue_finite Y.X _ hproj Ω (spMap (algebraMap K Ω) ≫ (y0 ≫ Y.j)) hfin
@@ -931,8 +924,6 @@ theorem exists_root (K : Type) [Field K] [CharZero K] (N : ℕ) (hN : N ≠ 0) :
   haveI : Module.Finite K (CyclotomicField N K) := by
     first
       | exact IsCyclotomicExtension.finiteDimensional {N} K _
-      | exact IsCyclotomicExtension.finite {N} K _
-      | exact Polynomial.IsSplittingField.finiteDimensional _ (Polynomial.cyclotomic N K)
   exact ⟨CyclotomicField N K, inferInstance, algebraMap _ _, RingHom.finite_algebraMap.2 inferInstance,
     IsCyclotomicExtension.zeta N K _, IsCyclotomicExtension.zeta_spec N K _⟩
 
@@ -973,8 +964,7 @@ theorem exists_field : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
   obtain ⟨i₂, h₂⟩ := exists_factor (M.ξ ≫ f) (genPt ξ₁) (by
     rw [← hfe]
     first
-      | rfl
-      | simp [GlobalTheory.CompanionTheory.Ar.genPt])
+      | rfl)
   have hdom : GlobalTheory.CompanionTheory.Ar.Dominates M.ξ (Y.X.fromSpecResidueField (genPt ξ₁)) f i₂ := h₂
   have hi₂ : i₂.Finite := HodgeExists.finite_of_dominates M.tie.gen f hdom
   obtain ⟨Ω₂, _, a, b, ha, hab⟩ := exists_compositum _ Ω₁ Ω' i₁ i₂ hi₂

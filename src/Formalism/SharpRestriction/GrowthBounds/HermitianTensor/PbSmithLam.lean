@@ -108,10 +108,7 @@ theorem pb_abs {O K V : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing
     Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (subset_span ⟨k, rfl⟩)
   have hvec_single : ∀ k, vec (Pi.single k 1) = b k := by
     intro k
-    simp only [vec]
-    rw [Finset.sum_eq_single k (fun l _ hl => by rw [Pi.single_eq_of_ne hl, map_zero, zero_smul])
-      (by simp)]
-    rw [Pi.single_eq_same, map_one, one_smul]
+    simp [vec]
   have hvec_zero : ∀ d : Fin n → O, vec d = 0 → d = 0 := by
     intro d h
     have := Fintype.linearIndependent_iff.1 hli (fun k => algebraMap O K (d k)) h
@@ -119,38 +116,21 @@ theorem pb_abs {O K V : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing
     exact hinj (by simp [this k])
   have hpair : ∀ d e : Fin n → O, c * B0 (vec d) (vec e) = algebraMap O K (Matrix.vecMul d Mat ⬝ᵥ e) := by
     intro d e
-    have lhs : c * B0 (vec d) (vec e) =
-        ∑ k, ∑ l, algebraMap O K (d k) * algebraMap O K (e l) * (c * B0 (b k) (b l)) := by
-      have e1 : ∀ k l, B0 (algebraMap O K (d k) • b k) (algebraMap O K (e l) • b l) =
-          algebraMap O K (d k) * algebraMap O K (e l) * B0 (b k) (b l) := by
-        intro k l
-        rw [LinearMap.map_smul, LinearMap.map_smul, LinearMap.smul_apply, smul_eq_mul, smul_eq_mul]
-        ring
-      simp only [vec]
-
-      rw [map_sum B0, LinearMap.sum_apply, Finset.mul_sum]
-      refine Finset.sum_congr rfl fun k _ => ?_
-
-      rw [map_sum (B0 (algebraMap O K (d k) • b k)), Finset.mul_sum]
-      refine Finset.sum_congr rfl fun l _ => ?_
-      rw [e1]
+    have key : ∀ k l, c * B0 (algebraMap O K (d k) • b k) (algebraMap O K (e l) • b l) =
+        algebraMap O K (d k) * algebraMap O K (e l) * algebraMap O K (Mat k l) := by
+      intro k l
+      rw [LinearMap.map_smul, LinearMap.map_smul, LinearMap.smul_apply, smul_eq_mul, smul_eq_mul,
+        hMo k l]
       ring
-    have rhs : algebraMap O K (Matrix.vecMul d Mat ⬝ᵥ e) =
-        ∑ k, ∑ l, algebraMap O K (d k) * algebraMap O K (e l) * (c * B0 (b k) (b l)) := by
-
-      simp only [dotProduct, Matrix.vecMul, map_sum, map_mul, Finset.sum_mul, Mat]
-      rw [Finset.sum_comm]
-      refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
-      rw [← hMo k l]; ring
-    rw [lhs, rhs]
+    simp only [vec, map_sum, LinearMap.sum_apply, dotProduct, Matrix.vecMul, map_mul,
+      Finset.mul_sum, key, mul_left_comm, mul_comm]
   have hzero : ∀ Q ∈ span K (Set.range b), (∀ k, B0 (b k) Q = 0) → Q = 0 := by
     intro Q hQ h
     refine hb Q hQ fun P hP => ?_
-    induction hP using Submodule.span_induction with
-    | mem x hx => obtain ⟨k, rfl⟩ := hx; exact h k
-    | zero => simp
-    | add x y _ _ hx hy => simp [hx, hy]
-    | smul a x _ hx => simp [hx]
+    have hsub : Set.range b ⊆ LinearMap.ker (B0.flip Q) := by
+      rintro _ ⟨k, rfl⟩
+      exact LinearMap.mem_ker.2 (h k)
+    exact LinearMap.mem_ker.1 (Submodule.span_le.2 hsub hP)
   have hint : ∀ Q, (∀ k, B0 (b k) Q ∈ Set.range (algebraMap O K)) →
       ∀ P ∈ span O (Set.range b), B0 P Q ∈ Set.range (algebraMap O K) := by
     intro Q h P hP
@@ -187,7 +167,6 @@ theorem pb_abs {O K V : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing
       simp only [Submodule.coe_smul] at this
       exact this.symm
     conv_lhs => rw [h2]
-
     rw [map_sum]
     refine Finset.sum_congr rfl fun i' _ => ?_
     rw [map_smul, S.snf, map_smul, Module.Basis.coord_apply, Module.Basis.repr_self, Finsupp.single_apply,
@@ -274,7 +253,6 @@ theorem pb_abs {O K V : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing
       have e1 : c / algebraMap O K (S.a (g.symm i)) =
           c / algebraMap O K (S.a (g.symm i)) * algebraMap O K (S.bM i ⬝ᵥ dc i) := by
         rw [h1, map_one, mul_one]
-
       rw [e1, dotProduct, map_sum, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_mul, map_mul, sub_eq_zero.1 (hlin k)]

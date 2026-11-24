@@ -466,11 +466,15 @@ end GlobalTheory.SupConstSize
 namespace GlobalTheory.SupConstSize
 open Real
 
-theorem supConst_size : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r d M : ℕ) (w L : ℝ), 2 ≤ r → 1 ≤ d →
-    1 ≤ M → 1 ≤ L → 1 ≤ w → Real.log (fdeg E * r) ≤ L → Real.log M ≤ 30 * L →
-    Real.log (dE E) ≤ 4 * fdeg E * L → Real.log d ≤ 4 * L → Real.log w ≤ 2 * L →
-    1 ≤ supConst E r d M w ∧ Real.log (supConst E r d M w) ≤ 250 * (fdeg E : ℝ) ^ 2 * (r : ℝ) ^ 2 * L := by
-  intro E _ _ _ r d M w L hr hd hM hL hw hfr hlM hdE hld hlw
+/-- Parametric log bound for `locConst E r w (epsLev E d M w) * mass` for any fundamental-domain
+volume bound `mass` satisfying `1 ≤ mass` and `Real.log mass ≤ 130 * fdeg E * r^2 * L`. -/
+theorem locConst_mul_size (E : Type) [Field E] [NumberField E] [IsCMField E] (r d M : ℕ) (w L mass : ℝ)
+    (hr : 2 ≤ r) (hd : 1 ≤ d) (hM : 1 ≤ M) (hL : 1 ≤ L) (hw : 1 ≤ w)
+    (hfr : Real.log (fdeg E * r) ≤ L) (hlM : Real.log M ≤ 30 * L)
+    (hdE : Real.log (dE E) ≤ 4 * fdeg E * L) (hld : Real.log d ≤ 4 * L) (hlw : Real.log w ≤ 2 * L)
+    (hM1 : 1 ≤ mass) (hMl : Real.log mass ≤ 130 * (fdeg E : ℝ) * (r : ℝ) ^ 2 * L) :
+    1 ≤ locConst E r w (epsLev E d M w) * mass ∧
+      Real.log (locConst E r w (epsLev E d M w) * mass) ≤ 250 * (fdeg E : ℝ) ^ 2 * (r : ℝ) ^ 2 * L := by
   have hn := finrank_eq_two_fdeg E
   have hf1 : 1 ≤ fdeg E := by
     have : 0 < Module.finrank ℚ E := Module.finrank_pos
@@ -504,10 +508,10 @@ theorem supConst_size : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     linarith
   obtain ⟨hm1, hml⟩ := multBd_size E r (epsLev E d M w) B hfR (by linarith) hε0 hB1 hεB
   obtain ⟨hc1, hcl⟩ := chart_factor_size E r w L hfR hr hw hL hfr' hlw
-  obtain ⟨hM1, hMl⟩ := massLev_size E r M L hr hM hL hfr hlM hdE
-  have hs : supConst E r d M w = (8 * ((dimFl E r).factorial : ℝ) / (Real.pi * chartRad E r w ^ 2) ^ dimFl E r) *
-      multBd E r (epsLev E d M w) * massLev E r M := by
-    unfold supConst locConst; ring
+  have hs : locConst E r w (epsLev E d M w) * mass =
+      (8 * ((dimFl E r).factorial : ℝ) / (Real.pi * chartRad E r w ^ 2) ^ dimFl E r) *
+        multBd E r (epsLev E d M w) * mass := by
+    unfold locConst; ring
   rw [hs]
   refine ⟨one_le_mul_of_one_le_of_one_le (one_le_mul_of_one_le_of_one_le hc1 hm1) hM1, ?_⟩
   rw [Real.log_mul (by positivity) (by positivity), Real.log_mul (by positivity) (by positivity)]
@@ -525,19 +529,26 @@ theorem supConst_size : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     have e2 : (fdeg E : ℝ) ^ 2 * (r : ℝ) ^ 2 * L = (fdeg E : ℝ) * ((fdeg E : ℝ) * ((r : ℝ) ^ 2 * L)) := by ring
     rw [e1, e2]; exact h
   have hLY : L ≤ (fdeg E : ℝ) ^ 2 * (r : ℝ) ^ 2 * L := by
-    have h1 : 1 ≤ (fdeg E : ℝ) ^ 2 * (r : ℝ) ^ 2 := by
-      have a : 1 ≤ (fdeg E : ℝ) ^ 2 := one_le_pow₀ hfR
-      have b : 1 ≤ (r : ℝ) ^ 2 := one_le_pow₀ (by linarith)
-      exact one_le_mul_of_one_le_of_one_le a b
+    have h1 : 1 ≤ (fdeg E : ℝ) ^ 2 * (r : ℝ) ^ 2 :=
+      one_le_mul_of_one_le_of_one_le (one_le_pow₀ hfR) (one_le_pow₀ (by linarith))
     have := mul_le_mul_of_nonneg_right h1 (by linarith : (0:ℝ) ≤ L)
     linarith
   have c1 : (fdeg E : ℝ) * (r : ℝ) ^ 2 / 2 * (28 * L) = 14 * ((fdeg E : ℝ) * (r : ℝ) ^ 2 * L) := by ring
   have c2 : 2 * (fdeg E : ℝ) * (r : ℝ) ^ 2 * (43 * L + 4 * fdeg E * L) =
       86 * ((fdeg E : ℝ) * (r : ℝ) ^ 2 * L) + 8 * ((fdeg E : ℝ) ^ 2 * (r : ℝ) ^ 2 * L) := by ring
-  have c3 : 80 * (fdeg E : ℝ) * (r : ℝ) ^ 2 * L = 80 * ((fdeg E : ℝ) * (r : ℝ) ^ 2 * L) := by ring
+  have c3 : 130 * (fdeg E : ℝ) * (r : ℝ) ^ 2 * L = 130 * ((fdeg E : ℝ) * (r : ℝ) ^ 2 * L) := by ring
   have c4 : 250 * (fdeg E : ℝ) ^ 2 * (r : ℝ) ^ 2 * L = 250 * ((fdeg E : ℝ) ^ 2 * (r : ℝ) ^ 2 * L) := by ring
   rw [c4]
   linarith
+
+theorem supConst_size : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r d M : ℕ) (w L : ℝ), 2 ≤ r → 1 ≤ d →
+    1 ≤ M → 1 ≤ L → 1 ≤ w → Real.log (fdeg E * r) ≤ L → Real.log M ≤ 30 * L →
+    Real.log (dE E) ≤ 4 * fdeg E * L → Real.log d ≤ 4 * L → Real.log w ≤ 2 * L →
+    1 ≤ supConst E r d M w ∧ Real.log (supConst E r d M w) ≤ 250 * (fdeg E : ℝ) ^ 2 * (r : ℝ) ^ 2 * L := by
+  intro E _ _ _ r d M w L hr hd hM hL hw hfr hlM hdE hld hlw
+  obtain ⟨hM1, hMl⟩ := massLev_size E r M L hr hM hL hfr hlM hdE
+  exact locConst_mul_size E r d M w L (massLev E r M) hr hd hM hL hw hfr hlM hdE hld hlw hM1
+    (hMl.trans (by nlinarith [show (0 : ℝ) ≤ (fdeg E : ℝ) * (r : ℝ) ^ 2 * L by positivity]))
 
 end GlobalTheory.SupConstSize
 end -- clump:auto

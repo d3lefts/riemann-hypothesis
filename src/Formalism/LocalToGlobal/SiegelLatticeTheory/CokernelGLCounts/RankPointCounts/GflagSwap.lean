@@ -69,9 +69,7 @@ theorem hT_X_X (F : FlagG S r T) {x x' : S.V} (hx : x ∈ F.X) (hx' : x' ∈ F.X
 
 private theorem hT_swap_eq_star (x y : S.V) : S.hT y x = star (S.hT x y) := by
   first
-  | exact (S.herm x y).symm
   | exact (S.herm.eq x y).symm
-  | simpa using (S.herm x y).symm
 
 theorem hT_z_X (F : FlagG S r T) {x : S.V} (hx : x ∈ F.X) : S.hT F.z x = 0 := by
   induction hx using Submodule.span_induction with
@@ -231,9 +229,7 @@ theorem line (F : FlagG S r T) (hT : T ≠ 0) (H : Submodule E S.V) (hXH : ∀ x
 
 theorem zhat_swap (F : FlagG S r T) (F' : FlagG S r T') : Zhat F' F = (Zhat F F')ᴴ := by
   ext a b
-  rw [Matrix.conjTranspose_apply]
-  simp only [Zhat]
-  exact brS_swap (F'.fvec a) (F.fvec b)
+  simpa only [Zhat, Matrix.conjTranspose_apply] using brS_swap (F'.fvec a) (F.fvec b)
 
 theorem Dl_swap (F : FlagG S r T) (F' : FlagG S r T') (l : ℕ) : Dl F' F l = star (Dl F F' l) := by
   unfold Dl leadMinorE

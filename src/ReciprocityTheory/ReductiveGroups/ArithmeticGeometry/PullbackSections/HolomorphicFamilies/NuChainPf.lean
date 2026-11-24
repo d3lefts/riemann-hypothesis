@@ -83,7 +83,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor
 
 theorem away_fractionRing {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] {ϖ : V}
     (hϖ : Irreducible ϖ) : IsLocalization.Away ϖ (FractionRing V) := by
-  first | exact Bl.SecondBlockLemmaO.goal1 .. | (apply Bl.SecondBlockLemmaO.goal1 <;> assumption) | (intros; apply Bl.SecondBlockLemmaO.goal1 <;> assumption)
+  first | (apply Bl.SecondBlockLemmaO.goal1 <;> assumption)
 
 theorem gs_zero' {X Y : Scheme.{0}} (f : Y ⟶ X) (y : Y) (U : X.Opens) : gs f y U 0 = 0 := by
   unfold gs; split_ifs <;> simp
@@ -343,7 +343,7 @@ theorem isUnit_gs_pow {X Y : Scheme.{0}} (f : Y ⟶ X) (y : Y) (U : X.Opens) (h 
 theorem dvd_of_eq_sum {P : Scheme.{0}} {x : P} {W : P.Opens} (hmem : x ∈ W) {κ : Type} {S : Finset κ}
     {a b : κ → Γ(P, W)} {L : Γ(P, W)} (c : P.presheaf.stalk x) (heq : L = ∑ i ∈ S, a i * b i)
     (h : ∀ i ∈ S, c ∣ gs (𝟙 P) x W (a i)) : c ∣ gs (𝟙 P) x W L := by
-  have hx : (𝟙 P) x ∈ W := by first | exact hmem | simpa using hmem
+  have hx : (𝟙 P) x ∈ W := by first | exact hmem
   subst heq
   rw [gs_fsum (𝟙 P) x W hx]
   refine Finset.dvd_sum fun i hi => ?_
@@ -645,7 +645,7 @@ theorem regUnif_of (hN : NuDataSt) (hT : ThetaNuSt) (hM : MulNuSt) (hF : FinNuSt
     hα₀ hnorm hαc htw
   have hk : 0 < M ^ 2 := pow_pos hM1 2
   have n2 := hF E H V t P hTor ϖ hϖ Q hQ vK hvK tK m w hrig ((M : ℤ) ^ 2) (M ^ 2) (natCast_sq M) hk s₁ F t' U n1
-    (by first | exact hok1 | exact hok2) hsym hact
+    (by first | exact hok2) hsym hact
   exact nuReg E H V t P hTor ϖ hϖ Q hQ vK hvK tK m w hrig (M ^ 2) hk (zCast tK.G (natCast_sq M) F) n2
 
 theorem nuData : NuDataSt := by

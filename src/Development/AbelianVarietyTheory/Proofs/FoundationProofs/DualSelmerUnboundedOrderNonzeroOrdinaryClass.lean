@@ -241,7 +241,7 @@ theorem representatives : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [A
         have hc : (mat W s *ᵥ t - t) i = cob W t s i := rfl
         rw [hc]
         simp only [AddSubgroup.coe_add, AddSubgroup.coe_neg, AddSubgroup.coe_nsmul, Pi.add_apply, Pi.neg_apply,
-          Pi.smul_apply, nsmul_eq_mul, Pi.mul_apply, Pi.natCast_apply, hu]
+          nsmul_eq_mul, Pi.mul_apply, Pi.natCast_apply, hu]
         linear_combination (cob W t s i) * hl
       rw [e]; exact c.O.neg_mem h3
   choose f hf using step
@@ -487,11 +487,7 @@ variable {l : ℕ} [Fact l.Prime]
 
 theorem norm_le_one_of_mem (c : Coef l) {x : Qbar l} (hx : x ∈ c.O) : ‖x‖ ≤ 1 := by
   first
-  | exact @_root_.GlobalTheory.IntegralElementNorm.norm_le_one_of_mem
-  | exact _root_.GlobalTheory.IntegralElementNorm.norm_le_one_of_mem
   | (apply _root_.GlobalTheory.IntegralElementNorm.norm_le_one_of_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.IntegralElementNorm.norm_le_one_of_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.IntegralElementNorm.norm_le_one_of_mem <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.IntegralElementNorm.norm_le_one_of_mem ..)
 
 theorem mulVec_mem (c : Coef l) {M : Matrix (Fin 2) (Fin 2) (Qbar l)} {x : Fin 2 → Qbar l}

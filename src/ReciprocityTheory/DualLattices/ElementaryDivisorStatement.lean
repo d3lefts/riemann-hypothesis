@@ -93,7 +93,7 @@ theorem dot_single {ι : Type} [Fintype ι] [DecidableEq ι] (f : (ι → R) →
     ext i
     by_cases hi : i = k
     · subst hi; simp
-    · simp [Pi.single_apply, hi]
+    · simp [hi]
   rw [hk, map_smul, smul_eq_mul, mul_comm]
 
 theorem eq_of_dot {ι : Type} [Fintype ι] [DecidableEq ι] {w w' : ι → R}
@@ -326,7 +326,7 @@ theorem block (hv : v.Integers R) {ι κ' : Type} [Fintype ι] [DecidableEq ι] 
       rw [Matrix.range_mulVecLin]; rfl
     rw [e3]
     apply le_antisymm
-    · rintro _ ⟨z, rfl⟩; exact ⟨Q' *ᵥ z, by simp [mulVec_mulVec]⟩
+    · rintro _ ⟨z, rfl⟩; exact ⟨Q' *ᵥ z, by simp⟩
     · rintro _ ⟨z, rfl⟩
       refine ⟨Q'⁻¹ *ᵥ z, ?_⟩
       show (Mᵀ * Q') *ᵥ (Q'⁻¹ *ᵥ z) = Mᵀ *ᵥ z
@@ -587,7 +587,7 @@ theorem elementary_divisor_statement : EigenElementaryDivisorStatement := by
     have hE0 : cp • ((H.E.map (algebraMap ℤ_[p] R)) *ᵥ x) = 0 := by
       have hsv : (cp • (H.E.map (algebraMap ℤ_[p] R))) *ᵥ x = cp • ((H.E.map (algebraMap ℤ_[p] R)) *ᵥ x) := by
         funext k
-        simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, Matrix.smul_apply, smul_eq_mul, Pi.smul_apply, Finset.mul_sum]
+        simp only [Matrix.mulVec, dotProduct, Matrix.smul_apply, smul_eq_mul, Pi.smul_apply, Finset.mul_sum]
         exact Finset.sum_congr rfl (fun j _ => by ring)
       rw [← hsv, ← hform, Matrix.sub_mulVec, ← Matrix.mulVec_mulVec,
         ← Matrix.mulVec_mulVec, hHt, hBt]
@@ -610,13 +610,13 @@ theorem elementary_divisor_statement : EigenElementaryDivisorStatement := by
       simp [Matrix.vecMul, dotProduct, Fintype.sum_sum_type, sub_eq_add_neg, Finset.sum_neg_distrib]
     have hsm : (w ᵥ* (H.E.map (algebraMap ℤ_[p] R))⁻¹) ᵥ* (cp • (H.E.map (algebraMap ℤ_[p] R))) = cp • ((w ᵥ* (H.E.map (algebraMap ℤ_[p] R))⁻¹) ᵥ* (H.E.map (algebraMap ℤ_[p] R))) := by
       funext k
-      simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, Matrix.smul_apply, smul_eq_mul, Pi.smul_apply, Finset.mul_sum]
+      simp only [Matrix.vecMul, dotProduct, Matrix.smul_apply, smul_eq_mul, Pi.smul_apply, Finset.mul_sum]
       exact Finset.sum_congr rfl (fun j _ => by ring)
     calc cp • w = cp • (w ᵥ* U.εT i) := by rw [hw]
       _ = ((w ᵥ* (H.E.map (algebraMap ℤ_[p] R))⁻¹) ᵥ* (cp • (H.E.map (algebraMap ℤ_[p] R)))) ᵥ* U.εT i := by
           rw [hsm, hz]
           funext k
-          simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, Matrix.smul_apply, smul_eq_mul, Pi.smul_apply, Finset.mul_sum]
+          simp only [Matrix.vecMul, dotProduct, smul_eq_mul, Pi.smul_apply, Finset.mul_sum]
           exact Finset.sum_congr rfl (fun j _ => by ring)
       _ = (Sum.elim (bt2 H U *ᵥ (w ᵥ* (H.E.map (algebraMap ℤ_[p] R))⁻¹)) (-(H.Ht *ᵥ (w ᵥ* (H.E.map (algebraMap ℤ_[p] R))⁻¹))) ᵥ* (Matrix.fromRows H.Ht (bt2 H U))) ᵥ* U.εT i := by
           rw [hu, hform]
@@ -780,7 +780,7 @@ theorem elementary_divisor_statement : EigenElementaryDivisorStatement := by
     rw [hspan i]
     congr 1
     ext w
-    simp only [Set.mem_range, Set.mem_image, Set.mem_setOf_eq, Matrix.of_apply]
+    simp only [Set.mem_range, Set.mem_image, Set.mem_setOf_eq]
     constructor
     · rintro ⟨l, rfl⟩
       exact ⟨e.symm ⟨i, l⟩, by simp, hal ⟨i, l⟩⟩

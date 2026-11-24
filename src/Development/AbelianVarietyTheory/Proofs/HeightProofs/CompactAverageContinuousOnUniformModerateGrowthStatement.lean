@@ -291,7 +291,7 @@ theorem _root_.GlobalTheory.T.avg_derFam_growth_alt : ∀ (n : ℕ) (ε : Fin n 
                  (y * Formalism.REAL.toMK k) ∂(Formalism.REAL.muK ε)) ∧
     GlobalTheory.TypeSum.FamGrowth ε N (fun l y => ∫ k, e k * F (l.map fun X => (Formalism.REAL.toMK k)⁻¹ * X * Formalism.REAL.toMK k)
                  (y * Formalism.REAL.toMK k) ∂(Formalism.REAL.muK ε)) := by
-  first | exact @GlobalTheory.KAvgDeriv.avg_derFam_growth | exact GlobalTheory.KAvgDeriv.avg_derFam_growth | (intros; apply GlobalTheory.KAvgDeriv.avg_derFam_growth <;> assumption)
+  first | exact @GlobalTheory.KAvgDeriv.avg_derFam_growth
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.AvgDerFamGrowthStatement =====
@@ -375,7 +375,7 @@ open MeasureTheory Filter Topology
 theorem _root_.GlobalTheory.T.continuousOn_integral_mul_right_translate_toMK : ∀ (n : ℕ) (ε : Fin n → Bool) (f : GlobalTheory.TypeSum.Mx n → ℂ), ContinuousOn f (UJset ε) →
     ∀ e : ↥(Formalism.REAL.KG ε) → ℂ, Continuous e →
     ContinuousOn (fun y => ∫ k, e k * f (y * Formalism.REAL.toMK k) ∂(Formalism.REAL.muK ε)) (UJset ε) := by
-  first | exact @GlobalTheory.AvgCont.continuousOn_avg_right_translates | exact GlobalTheory.AvgCont.continuousOn_avg_right_translates | (intros; apply GlobalTheory.AvgCont.continuousOn_avg_right_translates <;> assumption)
+  first | exact @GlobalTheory.AvgCont.continuousOn_avg_right_translates
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.ContinuousOnAvgRightTranslatesStatement =====
@@ -462,7 +462,7 @@ theorem _root_.GlobalTheory.T.derFam_ofFn_eq_sum_prod_coeff_of_expand : ∀ (n :
       F (Z :: l) g = ∑ i, (c i Z : ℂ) * F (b i :: l) g) →
     ∀ (m : ℕ) (Y : Fin m → GlobalTheory.TypeSum.Mx n), (∀ j, Y j ∈ lieSet ε) → ∀ g ∈ UJset ε,
       F (List.ofFn Y) g = ∑ J : Fin m → Fin d, (∏ j, (c (J j) (Y j) : ℂ)) * F (List.ofFn fun j => b (J j)) g := by
-  first | exact @GlobalTheory.TypeSum.derFam_expand_words | exact GlobalTheory.TypeSum.derFam_expand_words | (intros; apply GlobalTheory.TypeSum.derFam_expand_words <;> assumption)
+  first | exact @GlobalTheory.TypeSum.derFam_expand_words
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.DerFamExpandWordsStatement =====
@@ -509,18 +509,14 @@ variable {n : ℕ}
 theorem ofFn_prod_single {M : Type*} [Monoid M] : ∀ {d : ℕ} (g : Fin d → M) (j : Fin d),
     (∀ i, i ≠ j → g i = 1) → (List.ofFn g).prod = g j := by
   first
-  | exact @_root_.GlobalTheory.ProductOfFnSingle.prod_ofFn_eq_single
   | exact _root_.GlobalTheory.ProductOfFnSingle.prod_ofFn_eq_single
-  | (apply _root_.GlobalTheory.ProductOfFnSingle.prod_ofFn_eq_single <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ProductOfFnSingle.prod_ofFn_eq_single <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ProductOfFnSingle.prod_ofFn_eq_single <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.ProductOfFnSingle.prod_ofFn_eq_single ..)
 
 def lc {d : ℕ} (b : Fin d → Matrix (Fin n) (Fin n) ℂ) : (Fin d → ℝ) →L[ℝ] Matrix (Fin n) (Fin n) ℂ :=
   ∑ i, (ContinuousLinearMap.proj i : (Fin d → ℝ) →L[ℝ] ℝ).smulRight (b i)
 
 theorem lc_apply {d : ℕ} (b : Fin d → Matrix (Fin n) (Fin n) ℂ) (v : Fin d → ℝ) : lc b v = ∑ i, v i • b i := by
-  simp [lc, ContinuousLinearMap.sum_apply]
+  simp [lc]
 
 theorem expProd_line {d : ℕ} (b : Fin d → Matrix (Fin n) (Fin n) ℂ) (j : Fin d) (r : ℝ) :
     (List.ofFn fun i => NormedSpace.exp ((r • Pi.single j (1 : ℝ) : Fin d → ℝ) i • b i)).prod =
@@ -528,7 +524,7 @@ theorem expProd_line {d : ℕ} (b : Fin d → Matrix (Fin n) (Fin n) ℂ) (j : F
   rw [ofFn_prod_single _ j]
   · simp
   · intro i hi
-    simp [Pi.single_apply, hi]
+    simp [hi]
 
 theorem hasStrictFDerivAt_expProd {d : ℕ} (b : Fin d → Matrix (Fin n) (Fin n) ℂ) :
     HasStrictFDerivAt (fun s : Fin d → ℝ => (List.ofFn fun i => NormedSpace.exp (s i • b i)).prod) (lc b) 0 := by
@@ -560,7 +556,7 @@ theorem hasStrictFDerivAt_expProd {d : ℕ} (b : Fin d → Matrix (Fin n) (Fin n
   congr 1
   rw [Finset.sum_eq_single j]
   · simp
-  · intro i _ hi; simp [Pi.single_apply, hi]
+  · intro i _ hi; simp [hi]
   · simp
 
 end Norm
@@ -676,7 +672,7 @@ theorem _root_.GlobalTheory.T.exp_second_kind_coordinates : ∀ (n : ℕ) (ε : 
     ∀ c : Fin d → ℝ, ∃ τ : ℝ → (Fin d → ℝ), τ 0 = 0 ∧ HasDerivAt τ c 0 ∧
       ∀ᶠ t in nhds (0 : ℝ), NormedSpace.exp (t • ∑ i, c i • b i) =
         (List.ofFn fun i => NormedSpace.exp (τ t i • b i)).prod := by
-  first | exact @GlobalTheory.SecondKindChart.exp_eq_expProd_near_zero | exact GlobalTheory.SecondKindChart.exp_eq_expProd_near_zero | (intros; apply GlobalTheory.SecondKindChart.exp_eq_expProd_near_zero <;> assumption)
+  first | exact @GlobalTheory.SecondKindChart.exp_eq_expProd_near_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.ExpSecondKindCoordinatesStatement =====
@@ -755,7 +751,7 @@ theorem IsDerFam.norm_taylor_exp_le {F : List (Mx n) → Mx n → ℂ} (hF : IsD
     have := (hF.hasDerivAt_exp hw hX hz s).fun_sub ((hasDerivAt_id s).smul_const (F (X :: w) z))
     simpa only [id, one_smul] using this
   have h := norm_sub_le_of_deriv_Icc hd (abs_nonneg t) h1 (t := t) ⟨neg_abs_le t, le_abs_self t⟩
-  simp only [exp_zero_smul_mx, Matrix.mul_one, zero_smul, sub_zero, NormedSpace.exp_zero] at h
+  simp only [Matrix.mul_one, zero_smul, sub_zero, NormedSpace.exp_zero] at h
   have e : F w (z * NormedSpace.exp (t • X)) - F w z - t • F (X :: w) z =
       F w (z * NormedSpace.exp (t • X)) - t • F (X :: w) z - F w z := by abel
   rw [e]
@@ -844,7 +840,7 @@ theorem hasFDerivAt_derFam_prodExp : ∀ (n : ℕ) (ε : Fin n → Bool) (N : �
   obtain ⟨C, -, hC⟩ := hF.taylor_prod hG hl d b hb {g} isCompact_singleton (Set.singleton_subset_iff.2 hg)
   rw [hasFDerivAt_iff_isLittleO_nhds_zero]
   have e0 : (List.ofFn fun i => NormedSpace.exp ((0 : Fin d → ℝ) i • b i)).prod = 1 := by
-    simp [List.prod_ofFn]
+    simp
   refine Asymptotics.IsBigO.trans_isLittleO ?_ (Asymptotics.isLittleO_norm_pow_id (n := 2) one_lt_two)
   refine Asymptotics.IsBigO.of_bound C ?_
   filter_upwards [Metric.closedBall_mem_nhds (0 : Fin d → ℝ) one_pos] with h hh
@@ -876,7 +872,7 @@ theorem _root_.GlobalTheory.T.hasFDerivAt_derFam_mul_prod_exp_smul_zero : ∀ (n
     ∀ l : List (GlobalTheory.TypeSum.Mx n), (∀ Y ∈ l, Y ∈ lieSet ε) → ∀ (d : ℕ) (b : Fin d → GlobalTheory.TypeSum.Mx n), (∀ i, b i ∈ lieSet ε) →
     ∀ g ∈ UJset ε, HasFDerivAt (fun t : Fin d → ℝ => F l (g * (List.ofFn fun i => NormedSpace.exp (t i • b i)).prod))
       (∑ i, (ContinuousLinearMap.proj i : (Fin d → ℝ) →L[ℝ] ℝ).smulRight (F (b i :: l) g)) 0 := by
-  first | exact @GlobalTheory.TypeSum.hasFDerivAt_derFam_prodExp | exact GlobalTheory.TypeSum.hasFDerivAt_derFam_prodExp | (intros; apply GlobalTheory.TypeSum.hasFDerivAt_derFam_prodExp <;> assumption)
+  first | exact @GlobalTheory.TypeSum.hasFDerivAt_derFam_prodExp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.HasFDerivAtDerFamProdExpStatement =====
@@ -954,7 +950,7 @@ theorem _root_.GlobalTheory.T.measurable_derFam_comp_continuous_of_mem_UJset : �
     ContinuousOn (F []) (UJset ε) → ∀ l : List (GlobalTheory.TypeSum.Mx n), (∀ Y ∈ l, Y ∈ lieSet ε) →
     ∀ (T : Type) [TopologicalSpace T] [MeasurableSpace T] [OpensMeasurableSpace T] (φ : T → GlobalTheory.TypeSum.Mx n),
       Continuous φ → (∀ t, φ t ∈ UJset ε) → Measurable (fun t => F l (φ t)) := by
-  first | exact @GlobalTheory.TypeSum.measurable_derFam_comp | exact GlobalTheory.TypeSum.measurable_derFam_comp | (intros; apply GlobalTheory.TypeSum.measurable_derFam_comp <;> assumption)
+  first | exact @GlobalTheory.TypeSum.measurable_derFam_comp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.MeasurableDerFamCompStatement =====
@@ -1115,7 +1111,7 @@ theorem _root_.GlobalTheory.T.compactAverage_continuousOn_uniformModerateGrowth 
     ∀ e : ↥(Formalism.REAL.KG ε) → ℂ, Continuous e →
     ContinuousOn (fun y => ∫ k, e k * f (y * Formalism.REAL.toMK k) ∂(Formalism.REAL.muK ε)) (UJset ε) ∧
     GlobalTheory.TypeSum.UMG ε (fun y => ∫ k, e k * f (y * Formalism.REAL.toMK k) ∂(Formalism.REAL.muK ε)) := by
-  first | exact @GlobalTheory.KAvgGrowth.continuousOn_and_umg_kAvg | exact GlobalTheory.KAvgGrowth.continuousOn_and_umg_kAvg | (intros; apply GlobalTheory.KAvgGrowth.continuousOn_and_umg_kAvg <;> assumption)
+  first | exact @GlobalTheory.KAvgGrowth.continuousOn_and_umg_kAvg
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.CompactAverageContinuousOnUniformModerateGrowthStatement =====

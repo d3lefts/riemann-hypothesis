@@ -150,7 +150,7 @@ variable {T : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (f : Fin D.R.rS → (VS D).
 
 theorem M_nat_smul (M : Submodule (𝓞 D.host.E) (WbQ D F0)) (hsp : Submodule.span D.host.E (M : Set (WbQ D F0)) = ⊤)
     (m : WbQ D F0) : ∃ k : ℕ, k ≠ 0 ∧ (k : 𝓞 D.host.E) • m ∈ M := by
-  first | exact UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul .. | (apply UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul <;> assumption) | (intros; apply UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul <;> assumption) | (apply @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul <;> assumption) | (intros; apply @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul <;> assumption) | (apply @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul <;> first | assumption | infer_instance) | exact @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul D T F0 M hsp m | exact @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul D T F0 M hsp | exact @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul D T F0 M | exact @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul D T F0 | exact @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul D T | exact @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul D
+  first | (apply UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul <;> assumption) | exact @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul D T F0 M hsp m | exact @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul D T F0 M hsp | exact @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul D T F0 M | exact @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul D T F0 | exact @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul D T | exact @UpperTheory.Reformulated.B.IntegralHeckeForms.M_nat_smul D
 
 theorem vPr_perp (hf : PartnerOK D F0 f) (v : (VS D).V) : vPr D F0 f v ∈ perpS (VS D) F0.X := by
   intro x hx
@@ -452,7 +452,6 @@ theorem rs_smul_e_mem (hf : PartnerOK D F0 f) {a : Fin D.R.rS} {x : D.host.E} (h
     exact zero_mem _
   · have hs : starRingEnd D.host.E ((VS D).hT (F0.e a) (f b)) = (VS D).hT (f b) (F0.e a) := by
       first
-        | exact (VS D).herm (F0.e a) (f b)
         | exact (VS D).herm.eq (F0.e a) (f b)
     rw [map_smul, ← hs, hf.1 a b, smul_eq_mul]
     split_ifs with hab
@@ -531,7 +530,6 @@ theorem rs_hT_f_lift (hf : PartnerOK D F0 f) (w : perpS (VS D) F0.X) (b : Fin D.
     intro a
     have hs : starRingEnd D.host.E ((VS D).hT (F0.e a) (f b)) = (VS D).hT (f b) (F0.e a) := by
       first
-        | exact (VS D).herm (F0.e a) (f b)
         | exact (VS D).herm.eq (F0.e a) (f b)
     rw [← hs, hf.1 a b]
     split_ifs <;> simp
@@ -592,28 +590,22 @@ variable {D : D7} {T : D.host.E} {F0 : FlagG (VS D) D.R.rS T} {f : Fin D.R.rS �
 theorem rs_mem_one_iff (x : D.host.E) :
     x ∈ (1 : Submodule (𝓞 D.host.E) D.host.E) ↔ ∃ o : 𝓞 D.host.E, (o : D.host.E) = x := by
   rw [Submodule.mem_one]
-  all_goals first
-    | rfl
-    | exact ⟨fun ⟨y, hy⟩ => ⟨y, hy⟩, fun ⟨y, hy⟩ => ⟨y, hy⟩⟩
 
 theorem rs_fone_iff (x : D.host.E) :
     x ∈ (1 : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) ↔ ∃ o : 𝓞 D.host.E, (o : D.host.E) = x := by
   rw [FractionalIdeal.mem_one_iff]
-  all_goals first
-    | rfl
-    | exact ⟨fun ⟨y, hy⟩ => ⟨y, hy⟩, fun ⟨y, hy⟩ => ⟨y, hy⟩⟩
 
 theorem rs_mem_dual {h : (VS D).V →ₗ⋆[D.host.E] (VS D).V →ₗ[D.host.E] D.host.E}
     {L : Submodule (𝓞 D.host.E) (VS D).V} {v : (VS D).V} :
     v ∈ Formalism.HermitianLatticesTheory.dual h L ↔ ∀ y ∈ L, h y v ∈ (1 : Submodule (𝓞 D.host.E) D.host.E) := by
   simp only [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,
-    LinearMap.restrictScalars_apply, LinearMap.coe_restrictScalars]
+    LinearMap.restrictScalars_apply]
 
 theorem rs_mem_dualW {h : WbQ D F0 →ₗ⋆[D.host.E] WbQ D F0 →ₗ[D.host.E] D.host.E}
     {L : Submodule (𝓞 D.host.E) (WbQ D F0)} {v : WbQ D F0} :
     v ∈ Formalism.HermitianLatticesTheory.dual h L ↔ ∀ y ∈ L, h y v ∈ (1 : Submodule (𝓞 D.host.E) D.host.E) := by
   simp only [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,
-    LinearMap.restrictScalars_apply, LinearMap.coe_restrictScalars]
+    LinearMap.restrictScalars_apply]
 
 theorem rs_inv_mul {a : Fin D.R.rS} {s x : D.host.E} (hs : s ∈ (aaI D a)⁻¹) (hx : x ∈ aaI D a) :
     ∃ o : 𝓞 D.host.E, (o : D.host.E) = s * x := by
@@ -638,7 +630,6 @@ private theorem hs_lemma_2 (x z : (VS D).V) : star ((VS D).hT x z) = (VS D).hT z
   have h := (VS D).herm.eq x z
   first
     | exact h
-    | rwa [starRingEnd_apply] at h
 
 private theorem hT_eq_hT_vPr_right_add_sum (x z : (VS D).V) : (VS D).hT x z =
     (VS D).hT x (vPr D F0 f z) + ∑ b, (VS D).hT (F0.e b) z * (VS D).hT x (f b) := by
@@ -647,7 +638,7 @@ private theorem hT_eq_hT_vPr_right_add_sum (x z : (VS D).V) : (VS D).hT x z =
 
 private theorem hT_eq_hT_vPr_left_add_sum (x z : (VS D).V) : (VS D).hT x z =
     (VS D).hT (vPr D F0 f x) z + ∑ a, star ((VS D).hT (F0.e a) x) * (VS D).hT (f a) z := by
-  simp [vPr, LinearMap.map_sub₂, LinearMap.map_sum₂, LinearMap.map_smulₛₗ₂, starRingEnd_apply]
+  simp [vPr, starRingEnd_apply]
 
 private theorem mem_perpS_X_of_hT_e_eq_zero (z : (VS D).V) (hz : ∀ b, (VS D).hT (F0.e b) z = 0) :
     z ∈ perpS (VS D) F0.X := by
@@ -716,10 +707,6 @@ theorem rs_dual_le_lam (hf : PartnerOK D F0 f) (hM : IsGlueLat (hWb D F0) (zbar 
       rw [ddS, Ne, FractionalIdeal.coeIdeal_eq_zero]
       first
         | exact Ideal.map_ne_bot_of_ne_bot differentIdeal_ne_bot
-        | exact Ideal.map_ne_bot_of_ne_bot (differentIdeal_ne_bot (A := ℤ))
-        | (intro h
-           rw [Ideal.map_eq_bot_iff_of_injective (FaithfulSMul.algebraMap_injective _ _)] at h
-           exact differentIdeal_ne_bot h)
     rw [aaI]
     exact zpow_ne_zero _ hd
   have heX : ∀ a, F0.e a ∈ F0.X := by
@@ -778,7 +765,7 @@ theorem rs_dual_le_lam (hf : PartnerOK D F0 f) (hM : IsGlueLat (hWb D F0) (zbar 
       rw [hT_eq_hT_vPr_right_add_sum (F0 := F0) (f := f) t v]
       simp only [htf, mul_zero, Finset.sum_const_zero, add_zero]
       rw [ht]
-      simp [LinearMap.map_sub₂, LinearMap.map_sum₂, LinearMap.map_smulₛₗ₂, hT_e_vPr_eq_zero_of_partnerOK hf]
+      simp [hT_e_vPr_eq_zero_of_partnerOK hf]
     rw [← e1]
     exact hv' t htL
   have hWM : (Submodule.Quotient.mk ⟨vPr D F0 f v, hPerp⟩ : WbQ D F0) ∈
@@ -845,7 +832,6 @@ theorem hT_sub_sum_left {r : ℕ} (x w : S.V) (c : Fin r → E) (y : Fin r → S
   first
   | simp [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply,
       LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply]
-  | simp [map_sub, map_sum, LinearMap.sub_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply]
 
 theorem hT_sub_sum_right {r : ℕ} (x w : S.V) (c : Fin r → E) (y : Fin r → S.V) :
     S.hT w (x - ∑ d, c d • y d) = S.hT w x - ∑ d, c d * S.hT w (y d) := by
@@ -877,7 +863,6 @@ theorem coord_surj {r : ℕ} {T : E} (F0 : FlagG S r T) :
     intro x
     first
     | simpa [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, smul_eq_mul, starRingEnd_apply, star_star] using key x
-    | simpa [map_sum, LinearMap.map_smulₛₗ, smul_eq_mul, starRingEnd_apply, star_star] using key x
   have hc : ∀ a, ψ (Pi.single a 1) = 0 := by
     intro a
     have h0 := (Fintype.linearIndependent_iff.mp F0.e_indep) _ hv a
@@ -887,7 +872,7 @@ theorem coord_surj {r : ℕ} {T : E} (F0 : FlagG S r T) :
   intro i x
   have hs : (Pi.single i x : Fin r → E) = x • (Pi.single i 1 : Fin r → E) := by
     ext j
-    by_cases h : j = i <;> simp [Pi.single_apply, h]
+    by_cases h : j = i <;> simp [h]
   rw [hs, map_smul, hc i]
   simp
 
@@ -895,7 +880,6 @@ private theorem star_hT_eq_hT_swap (x y : S.V) : star (S.hT x y) = S.hT y x := b
   have h : starRingEnd E (S.hT x y) = S.hT y x := by
     first
     | exact S.herm.eq x y
-    | exact S.herm x y
   simpa [starRingEnd_apply] using h
 
 theorem partner_exists {r : ℕ} {T : E} (F0 : FlagG S r T) (hT0 : T ≠ 0) :
@@ -937,14 +921,12 @@ theorem partner_exists {r : ℕ} {T : E} (F0 : FlagG S r T) (hT0 : T ≠ 0) :
     rw [hT_sub_sum_left]
     simp only [hf1]
     rw [hT_sub_sum_right]
-    simp only [hgeE, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    simp only [hgeE, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     have hs : star (c a b) = S.hT (g a) (g b) / 2 := by
       simp only [c]
       rw [← star_hT_eq_hT_swap (S := S) (g a) (g b)]
       first
       | simp [star_div₀]
-      | simp [star_div']
-      | simp
     rw [hs]
     simp only [c]
     ring
@@ -1000,7 +982,7 @@ variable {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V]
 variable {S : Subring K} {h : V →ₗ⋆[K] V →ₗ[K] K} {M : AddSubgroup V}
 
 theorem star_h (hs : h.IsSymm) (u v : V) : star (h u v) = h v u := by
-  first | exact hs u v | exact hs.eq u v
+  first | exact hs.eq u v
 
 theorem exists_pair (hS : IsHermSemilocal S) (hM : IsSelfDualMod S h M) {ι : Type} [Fintype ι]
     (x : ι → V) (hxo : ∀ i j, i ≠ j → h (x i) (x j) = 0) (hxu : ∀ i, IsUnitIn S (h (x i) (x i)))
@@ -1041,7 +1023,7 @@ theorem exists_pair (hS : IsHermSemilocal S) (hM : IsSelfDualMod S h M) {ι : Ty
     exact S.mul_mem (hM.int _ (hxM i) _ hm₀) (hxu i).2.2
   · set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply,
-        map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul, RingHom.id_apply, hrx, mul_zero,
+        map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply, hrx, mul_zero,
         Finset.sum_const_zero, sub_zero]
     rw [hα, inv_mul_cancel₀ hα0]
   · intro j
@@ -1055,7 +1037,7 @@ theorem isSymm_smul (hs : h.IsSymm) {u : K} (hus : star u = u) : (u⁻¹ • h).
   have H : ∀ a b : V, star ((u⁻¹ • h) a b) = (u⁻¹ • h) b a := by
     intro a b
     simp only [LinearMap.smul_apply, smul_eq_mul, star_mul', star_inv₀, hus, star_h hs]
-  first | exact H | exact ⟨H⟩
+  first | exact ⟨H⟩
 
 theorem exists_of_ref (hS : IsHermSemilocal S) (hs : h.IsSymm) (hM : IsSelfDualMod S h M) {ι : Type}
     [Fintype ι] (x : ι → V) (hxo : ∀ i j, i ≠ j → h (x i) (x j) = 0) (hxu : ∀ i, IsUnitIn S (h (x i) (x i)))
@@ -1066,7 +1048,7 @@ theorem exists_of_ref (hS : IsHermSemilocal S) (hs : h.IsSymm) (hM : IsSelfDualM
   obtain ⟨α, hα0, hαM, w, hwM, hw1, hwx⟩ :=
     exists_pair hS hM x hxo hxu hxM ⟨r, by rw [hrr]; exact hu0⟩ hrx
   have hyy : h (α⁻¹ • r) (α⁻¹ • r) = star α⁻¹ * α⁻¹ * u := by
-    simp only [map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul, starRingEnd_apply, hrr, RingHom.id_apply]
+    simp only [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, hrr, RingHom.id_apply]
     ring
   have hsa : star α⁻¹ * α⁻¹ ∈ S := by
     have h1 := S.mul_mem (hM.int _ hαM _ hαM) hu.2.2
@@ -1086,7 +1068,7 @@ theorem exists_of_ref (hS : IsHermSemilocal S) (hs : h.IsSymm) (hM : IsSelfDualM
     rw [LinearMap.smul_apply, LinearMap.smul_apply, smul_eq_mul, map_smul, smul_eq_mul, hyw0, mul_one,
       inv_mul_cancel₀ hu0]
   have hww : (u⁻¹ • h) (u • w) (u • w) = u * h w w := by
-    simp only [LinearMap.smul_apply, map_smulₛₗ, map_smul, smul_eq_mul, starRingEnd_apply, hus, RingHom.id_apply]
+    simp only [LinearMap.smul_apply, map_smulₛₗ, smul_eq_mul, starRingEnd_apply, hus, RingHom.id_apply]
     field_simp
   obtain ⟨c, hc, d, hd, hcd⟩ := Formalism.HermitianLattices.Ext.L3.WA.exists_norm_one_of_pair hS hs'
     (y := α⁻¹ • r) (w := u • w) (a := α⁻¹ * b) hab (mul_ne_zero (inv_ne_zero hα0) hb0) hy' hyw'
@@ -1124,7 +1106,7 @@ theorem exists_quasi (hs : h.IsSymm) (w : V) {a : K} (ha : a + star a = a * star
   intro x y
   change h (x - (a * h w x) • w) (y - (a * h w y) • w) = h x y
   have hsx : star (h w x) = h x w := star_h hs w x
-  simp only [map_sub, map_smulₛₗ, LinearMap.sub_apply, LinearMap.smul_apply, map_smul, smul_eq_mul,
+  simp only [map_sub, map_smulₛₗ, LinearMap.sub_apply, LinearMap.smul_apply, smul_eq_mul,
     starRingEnd_apply, RingHom.id_apply, star_mul', hsx]
   linear_combination (-(h w y * h x w)) * ha
 
@@ -1495,8 +1477,8 @@ theorem pair_unit_local : PairUnitLoc := by
   have hv : h ((1 : K) • w + algebraMap (𝓞 K) K l • y) ((1 : K) • w + algebraMap (𝓞 K) K l • y) =
       h w w + algebraMap (𝓞 K) K (l + conjO K l) + algebraMap (𝓞 K) K (conjO K l * l) * h y y := by
     simp only [one_smul, map_add (f := _), map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply,
-      smul_eq_mul, starRingEnd_apply, RingHom.id_apply, map_smul, hyw, hwy, map_mul,
-      algebraMap_conjO, star_one]
+      smul_eq_mul, starRingEnd_apply, RingHom.id_apply, hyw, hwy, map_mul,
+      algebraMap_conjO]
     ring
   rw [hv]
   by_contra hnu

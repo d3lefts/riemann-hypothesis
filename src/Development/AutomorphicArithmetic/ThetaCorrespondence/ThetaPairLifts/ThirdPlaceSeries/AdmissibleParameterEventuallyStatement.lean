@@ -1456,7 +1456,7 @@ section
 open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink GlobalTheory.Pass GlobalTheory.Cut
 
 theorem _root_.GlobalTheory.T.admG1_continuous_admSS_of_rank_r_summand : ∀ (D : D7) (L : SizeData₂ D) (nch : NChoice D) (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))) (π : D.nd.X i) (ρ : GE D.nd →* GL (Fin D.R.r) (D.nd.O i)), _root_.GlobalTheory.NFacts.NormChoiceFacts D nch → LevelStarExponents.lStar L < (D.nd.l i : ℝ) → (∀ k, D.nd.l i ≠ D.host.g k) → HG D.nd D.naut i → GoodR D.nd i r → π ∈ D.nd.Z i → GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.IsRankRPart D i (r π) ρ → TruncatedSeriesCountingIdentities.admG1 i r ∧ TruncatedSeriesCountingIdentities.FamilyContinuous i r ∧ TruncatedSeriesCountingIdentities.admSS i r := by
-  first | exact @_root_.GlobalTheory.AdmissibleSetting.main_alt_alt | exact _root_.GlobalTheory.AdmissibleSetting.main_alt_alt | (intros; apply _root_.GlobalTheory.AdmissibleSetting.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.AdmissibleSetting.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1516,7 +1516,7 @@ section
 open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink GlobalTheory.Pass GlobalTheory.Cut
 
 theorem _root_.GlobalTheory.T.quadAt_unit_zeta_sub_one_or_polyAt : ∀ (D : D7) (L : SizeData₂ D) (nch : NChoice D) (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))) (π : D.nd.X i) (ρ : GE D.nd →* GL (Fin D.R.r) (D.nd.O i)), _root_.GlobalTheory.NFacts.NormChoiceFacts D nch → LevelStarExponents.lStar L < (D.nd.l i : ℝ) → (∀ k, D.nd.l i ≠ D.host.g k) → HG D.nd D.naut i → GoodR D.nd i r → π ∈ D.nd.Z i → GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.IsRankRPart D i (r π) ρ → ∀ v ∈ D.nd.S i, (QuadAt i r Set.univ v ∧ IsUnit (D.nd.zeta i v - 1)) ∨ PolyAt i r Set.univ π v := by
-  first | exact @_root_.GlobalTheory.TheoremFiveAtS.main_alt_alt | exact _root_.GlobalTheory.TheoremFiveAtS.main_alt_alt | (intros; apply _root_.GlobalTheory.TheoremFiveAtS.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.TheoremFiveAtS.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1603,7 +1603,7 @@ section
 open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink GlobalTheory.Pass GlobalTheory.Cut
 
 theorem _root_.GlobalTheory.T.noChiOff_and_unrOut_of_large_good_place : ∀ (D : D7) (L : SizeData₂ D) (nch : NChoice D) (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))) (π : D.nd.X i) (ρ : GE D.nd →* GL (Fin D.R.r) (D.nd.O i)), _root_.GlobalTheory.NFacts.NormChoiceFacts D nch → LevelStarExponents.lStar L < (D.nd.l i : ℝ) → (∀ k, D.nd.l i ≠ D.host.g k) → HG D.nd D.naut i → GoodR D.nd i r → π ∈ D.nd.Z i → GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.IsRankRPart D i (r π) ρ → NoChiOff i r Set.univ ∧ UnrOut i r Set.univ := by
-  first | exact @_root_.GlobalTheory.UnrNoChi.main_alt_alt | exact _root_.GlobalTheory.UnrNoChi.main_alt_alt | (intros; apply _root_.GlobalTheory.UnrNoChi.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.UnrNoChi.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1645,7 +1645,7 @@ section
 open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink GlobalTheory.Pass GlobalTheory.Cut
 
 theorem _root_.GlobalTheory.T.admG2_of_isRankR_of_lStar_lt : GlobalTheory.Published.FontaineBcris → ∀ (D : D7) (L : SizeData₂ D) (nch : NChoice D) (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))) (π : D.nd.X i) (ρ : GE D.nd →* GL (Fin D.R.r) (D.nd.O i)), _root_.GlobalTheory.NFacts.NormChoiceFacts D nch → AdmissibleParameterJ.AdmPar L → LevelStarExponents.lStar L < (D.nd.l i : ℝ) → (∀ k, D.nd.l i ≠ D.host.g k) → HG D.nd D.naut i → GoodR D.nd i r → π ∈ D.nd.Z i → GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.IsRankRPart D i (r π) ρ → TruncatedSeriesCountingIdentities.admG2 i r (fun _ => ρ) π := by
-  first | exact @_root_.GlobalTheory.AdmGTwoLarge.main_alt_alt | exact _root_.GlobalTheory.AdmGTwoLarge.main_alt_alt | (intros; apply _root_.GlobalTheory.AdmGTwoLarge.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.AdmGTwoLarge.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1682,7 +1682,7 @@ section
 open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink GlobalTheory.Pass GlobalTheory.Cut
 
 theorem _root_.GlobalTheory.T.quadAt_and_zeta_ne_one_of_large_place : ∀ (D : D7) (L : SizeData₂ D) (nch : NChoice D) (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))) (π : D.nd.X i) (ρ : GE D.nd →* GL (Fin D.R.r) (D.nd.O i)), _root_.GlobalTheory.NFacts.NormChoiceFacts D nch → LevelStarExponents.lStar L < (D.nd.l i : ℝ) → (∀ k, D.nd.l i ≠ D.host.g k) → HG D.nd D.naut i → GoodR D.nd i r → π ∈ D.nd.Z i → GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.IsRankRPart D i (r π) ρ → ∀ v ∈ D.nd.Q i, QuadAt i r Set.univ v ∧ D.nd.zeta i v ≠ 1 := by
-  first | exact @_root_.GlobalTheory.QuadAtQ.main_alt_alt | exact _root_.GlobalTheory.QuadAtQ.main_alt_alt | (intros; apply _root_.GlobalTheory.QuadAtQ.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.QuadAtQ.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1743,7 +1743,7 @@ section
 open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink GlobalTheory.Pass GlobalTheory.Cut
 
 theorem _root_.GlobalTheory.T.admG3_of_isRankR_of_lStar_lt : ∀ (D : D7) (L : SizeData₂ D) (nch : NChoice D) (i : D.nd.Loc) (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))) (π : D.nd.X i) (ρ : GE D.nd →* GL (Fin D.R.r) (D.nd.O i)), _root_.GlobalTheory.NFacts.NormChoiceFacts D nch → LevelStarExponents.lStar L < (D.nd.l i : ℝ) → (∀ k, D.nd.l i ≠ D.host.g k) → HG D.nd D.naut i → GoodR D.nd i r → π ∈ D.nd.Z i → GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.IsRankRPart D i (r π) ρ → TruncatedSeriesCountingIdentities.admG3 i r (fun _ => ρ) π := by
-  first | exact @_root_.GlobalTheory.AdmGThreeRest.main_alt_alt | exact _root_.GlobalTheory.AdmGThreeRest.main_alt_alt | (intros; apply _root_.GlobalTheory.AdmGThreeRest.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.AdmGThreeRest.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1792,7 +1792,7 @@ section
 open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink GlobalTheory.Pass GlobalTheory.Cut
 
 theorem _root_.GlobalTheory.T.eventually_prvJ_of_facts : ∀ {eps : ℝ} (Fm : FamP eps), ∃ x0 : ℝ, ∀ x ≥ x0, ∀ (hx : Fm.x1 < x) (a : Fm.Ix x), _root_.GlobalTheory.NFacts.NormChoiceFacts (Fm.D x a) (Fm.ex x hx a).nch → AdmissibleParameterJ.JumpConditions (Fm.L x a) := by
-  first | exact @_root_.GlobalTheory.LargeJumps.jump_bound_of_facts_large_family_alt | exact _root_.GlobalTheory.LargeJumps.jump_bound_of_facts_large_family_alt | (intros; apply _root_.GlobalTheory.LargeJumps.jump_bound_of_facts_large_family_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.LargeJumps.jump_bound_of_facts_large_family_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1865,7 +1865,7 @@ section
 open NumberField IsDedekindDomain Formalism Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.MainNotions Formalism.MainNotions.N Formalism.WeaklyAdmissibleFiltrations GlobalTheory.NLink
 
 theorem _root_.GlobalTheory.T.eventually_congBound_of_facts : Hypotheses₂ → ∀ {eps : ℝ} (Fm : FamP eps), ∃ x0 : ℝ, ∀ x ≥ x0, ∀ (hx : Fm.x1 < x) (i : Fm.Ix x), _root_.GlobalTheory.NFacts.NormChoiceFacts (Fm.D x i) (Fm.ex x hx i).nch → GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.CongBound_at (Fm.D x i) (Fm.L x i) := by
-  first | exact @_root_.GlobalTheory.NLinkE.main_alt_alt | exact _root_.GlobalTheory.NLinkE.main_alt_alt | (intros; apply _root_.GlobalTheory.NLinkE.main_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.NLinkE.main_alt_alt
 end
 end -- clump:auto
 end -- clump:auto

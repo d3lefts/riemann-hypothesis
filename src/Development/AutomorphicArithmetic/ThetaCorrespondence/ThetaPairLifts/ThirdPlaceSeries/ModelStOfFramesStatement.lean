@@ -180,7 +180,7 @@ section -- clump:auto
 open GlobalTheory.ExpFrame
 
 theorem _root_.GlobalTheory.T.frameCoeffRing_prime_not_isUnit : ∀ (l : ℕ) [Fact l.Prime] (ι : Type) (N : ℕ) (F : Frame l ι N), F.Ok → ¬ IsUnit ((l : ℕ) : F.O) := by
-  first | exact @GlobalTheory.ExpFrame.Frame.prime_not_isUnit | exact GlobalTheory.ExpFrame.Frame.prime_not_isUnit | (intros; apply GlobalTheory.ExpFrame.Frame.prime_not_isUnit <;> assumption)
+  first | exact @GlobalTheory.ExpFrame.Frame.prime_not_isUnit
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrameCoeffRingPrimeNotIsUnitStatement =====
@@ -606,7 +606,6 @@ theorem maximal_ideal_eq_joint_eigen : ∀ (l : ℕ) [Fact l.Prime] (O : Type) [
             rw [← MvPolynomial.algebraMap_eq]
             first
               | exact Ideal.Quotient.mk_algebraMap _ _ _
-              | rfl
         _ = Ideal.Quotient.mkₐ O m (Polynomial.aeval q P) := e
         _ = 0 := by rw [Ideal.Quotient.mkₐ_eq_mk]; exact hP
     have hu0 : IsUnit (P.coeff 0) := by
@@ -864,7 +863,7 @@ theorem _root_.GlobalTheory.ExpCover.values_mem_of_local {l : ℕ} [Fact l.Prime
           _ = b ((((∑ k, ρ (X i) k j • B k : Z) : M) : G → V) g) := by rw [e1]
           _ = ∑ k, emb (ρ (X i) k j) • f k g := by
 
-              simp [f, map_sum, map_smulₛₗ, Submodule.coe_sum, Finset.sum_apply]
+              simp [f, map_sum, map_smulₛₗ, Finset.sum_apply]
       calc emb (cst i) • ∑ s ∈ tr i, v (g * s)
           = ∑ j, c j • (emb (cst i) • ∑ s ∈ tr i, f j (g * s)) := by
             simp only [hv_apply, Finset.smul_sum]
@@ -1191,7 +1190,7 @@ section
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.DIV Formalism.L2.Pj GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.ExpTie GlobalTheory.ExpFrame Formalism.CohomologicalDescent.DepthNonnegative Formalism.CohomologicalDescent.LogSmallConstantBounds Formalism.CohomologicalDescent.ShortWeightBounds Formalism.CohomologicalDescent.LD Formalism.RankGapBounds.FormsTensorLocalization
 
 theorem _root_.GlobalTheory.T.model_statement_of_crystalline_chebotarev_frame_gal : GlobalTheory.Published.BhattScholzeCrystallineLattices → GlobalTheory.Published.ChebotarevDegreeOne → _root_.GlobalTheory.ExpTie.SmallnessCondition → _root_.GlobalTheory.ExpTie.FrameStatement' → _root_.GlobalTheory.ExpTie.GaloisStatement → _root_.GlobalTheory.ExpTie.ModelStatement := by
-  first | exact @_root_.GlobalTheory.ExpModel.modelSt_of_small_frame_gal | exact _root_.GlobalTheory.ExpModel.modelSt_of_small_frame_gal | (intros; apply _root_.GlobalTheory.ExpModel.modelSt_of_small_frame_gal <;> assumption)
+  first | exact @_root_.GlobalTheory.ExpModel.modelSt_of_small_frame_gal
 end
 end -- clump:auto
 end -- clump:auto

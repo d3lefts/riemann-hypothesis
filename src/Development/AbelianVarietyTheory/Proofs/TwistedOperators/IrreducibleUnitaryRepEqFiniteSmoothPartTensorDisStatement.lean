@@ -225,7 +225,7 @@ theorem pureMap_mem_stage [∀ i, Nontrivial (Hs i)] (v : K) : pureMap v ∈ sta
     ← Finset.mul_prod_erase _ _ (Finset.mem_univ j), Function.update_self, inner_self_eq_norm_sq_to_K,
     norm_unitVec]
   congr 2
-  simp only [RCLike.ofReal_one, Complex.ofReal_one, one_pow, one_mul]
+  simp only [RCLike.ofReal_one, one_pow, one_mul]
   exact Finset.prod_congr rfl fun i hi => by rw [Function.update_of_ne (Finset.ne_of_mem_erase hi)]
 
 theorem pureMap_unit [∀ i, Nontrivial (Hs i)] (v : K) : pureMap (Hs := Hs) v (fun i => unitVec (Hs i)) = v := by
@@ -475,7 +475,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open scoped InnerProductSpace
 
 theorem _root_.GlobalTheory.T.exists_ne_zero_discreteSeriesInfiniteHom : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] (π : GA D V →* (H →L[ℂ] H)), IsIrrUnitary π → HasDSComp M π → ∃ Φ ∈ homDS M π ⊤, Φ ≠ 0 := by
-  first | exact @GlobalTheory.TensorHom.exists_ne_zero_homDS | exact GlobalTheory.TensorHom.exists_ne_zero_homDS | (intros; apply GlobalTheory.TensorHom.exists_ne_zero_homDS <;> assumption)
+  first | exact @GlobalTheory.TensorHom.exists_ne_zero_homDS
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsNeZeroDiscreteSeriesInfiniteHomStatement =====
@@ -629,7 +629,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open scoped InnerProductSpace
 
 theorem _root_.GlobalTheory.T.exists_smoothVector_ne_zero_of_discreteSeriesHom : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] (π : GA D V →* (H →L[ℂ] H)), IsUnitaryRep π → ∀ (hU : IsSubrep π ⊤) (Φ : homDS M π ⊤), Φ ≠ 0 → ∃ Ψ ∈ GlobalTheory.PRep.smoothPart (finPartDS M hU), Ψ ≠ 0 := by
-  first | exact @GlobalTheory.SmoothAvg.exists_smooth_ne_zero | exact GlobalTheory.SmoothAvg.exists_smooth_ne_zero | (intros; apply GlobalTheory.SmoothAvg.exists_smooth_ne_zero <;> assumption)
+  first | exact @GlobalTheory.SmoothAvg.exists_smooth_ne_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsSmoothVectorNeZeroOfDiscreteSeriesHomStatement =====
@@ -698,7 +698,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open scoped InnerProductSpace
 
 theorem _root_.GlobalTheory.T.irreducibleUnitaryRep_eq_finiteSmoothPart_tensor_discreteSeries : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] (π : GA D V →* (H →L[ℂ] H)), IsIrrUnitary π → HasDSComp M π → ∀ hU : IsSubrep π ⊤, IsCopyFinDS (finPartDSSm M hU) M π ⊤ := by
-  first | exact @GlobalTheory.TrCopy.isCopyFinDS_finPartDSSm | exact GlobalTheory.TrCopy.isCopyFinDS_finPartDSSm | (intros; apply GlobalTheory.TrCopy.isCopyFinDS_finPartDSSm <;> assumption)
+  first | exact @GlobalTheory.TrCopy.isCopyFinDS_finPartDSSm
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IrreducibleUnitaryRepEqFiniteSmoothPartTensorDisStatement =====

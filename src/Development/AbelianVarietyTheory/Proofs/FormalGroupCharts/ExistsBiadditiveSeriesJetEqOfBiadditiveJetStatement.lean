@@ -371,7 +371,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.ChartCmp
 
 theorem _root_.GlobalTheory.T.jetEq_bilinearSeries_of_biadditive : ∀ (k : Type) [CommRing k] [Algebra ℚ k] (d m : ℕ) (g : PS k 2 d), JEq m (ev (n := 3) ![pt k (n := 3) d 0 + pt k (n := 3) d 1, pt k (n := 3) d 2] g) (ev (n := 3) ![pt k (n := 3) d 0, pt k (n := 3) d 2] g + ev (n := 3) ![pt k (n := 3) d 1, pt k (n := 3) d 2] g) → JEq m (ev (n := 3) ![pt k (n := 3) d 0, pt k (n := 3) d 1 + pt k (n := 3) d 2] g) (ev (n := 3) ![pt k (n := 3) d 0, pt k (n := 3) d 1] g + ev (n := 3) ![pt k (n := 3) d 0, pt k (n := 3) d 2] g) → JEq m g (bilSer (fun i j => MvPowerSeries.coeff (Finsupp.single ((0 : Fin 2), i) 1 + Finsupp.single ((1 : Fin 2), j) 1) g) (pt k (n := 2) d 0) (pt k (n := 2) d 1)) := by
-  first | exact @GlobalTheory.ChartCmp.BilAdd.jeq_bilSer_of_biadditive | exact GlobalTheory.ChartCmp.BilAdd.jeq_bilSer_of_biadditive | (intros; apply GlobalTheory.ChartCmp.BilAdd.jeq_bilSer_of_biadditive <;> assumption)
+  first | exact @GlobalTheory.ChartCmp.BilAdd.jeq_bilSer_of_biadditive
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.JetEqBilinearSeriesOfBiadditiveStatement =====
@@ -525,10 +525,10 @@ theorem coeff_bilSer (β : Matrix (Fin d) (Fin d) k) (i j : Fin d) :
     refine ⟨fun h => ⟨?_, ?_⟩, by rintro ⟨rfl, rfl⟩; rfl⟩
     · have := DFunLike.congr_fun h (0, i)
       by_contra hne
-      simp [Finsupp.single_apply, Ne.symm hne] at this
+      simp [Ne.symm hne] at this
     · have := DFunLike.congr_fun h (1, j)
       by_contra hne
-      simp [Finsupp.single_apply, Ne.symm hne] at this
+      simp [Ne.symm hne] at this
 
   simp only [bilSer, pt, map_sum, coeff_C_mul, X_def, monomial_mul_monomial, coeff_monomial, key]
   rw [Finset.sum_eq_single i, Finset.sum_eq_single j]
@@ -689,7 +689,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.ChartCmp
 
 theorem _root_.GlobalTheory.T.exists_biadditive_series_jetEq_of_biadditiveJet : ∀ (R : Type) [CommRing R] (d : ℕ) (O : Type) [CommRing O] [StarRing O] (B : FB R d O) (k : Type) [CommRing k] [Algebra ℚ k] [Algebra R k] (m : ℕ), 2 ≤ m → ∀ g : PS k 2 d, Biadd m B k g → ∃ g' : PS k 2 d, (∀ m', Biadd m' B k g') ∧ JEq m g g' := by
-  first | exact @GlobalTheory.ChartBilin.exists_biadd_jEq | exact GlobalTheory.ChartBilin.exists_biadd_jEq | (intros; apply GlobalTheory.ChartBilin.exists_biadd_jEq <;> assumption)
+  first | exact @GlobalTheory.ChartBilin.exists_biadd_jEq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.ExistsBiadditiveSeriesJetEqOfBiadditiveJetStatement =====

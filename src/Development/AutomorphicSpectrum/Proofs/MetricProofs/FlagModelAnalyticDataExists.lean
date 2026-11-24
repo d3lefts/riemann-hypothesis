@@ -133,7 +133,7 @@ theorem pullDeg_zero {K K' : Type} (κ : K → K') : pullDeg κ (0 : K → ℤ) 
   funext k
   by_cases h : ∃ a, κ a = k
   · simp [pullDeg, Function.extend_def, h]
-  · simp [pullDeg, Function.extend_def, h]
+  · simp [pullDeg, h]
 
 theorem isSmoothHerm_pullHerm {K K' : Type} [Fintype K] [Fintype K'] {ι : K → Type} {ι' : K' → Type}
     [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)] {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')}
@@ -941,9 +941,6 @@ theorem gram_cmp {k : ℕ} (hk : k ≤ N) {G : Matrix (Fin N) (Fin N) ℂ} (V : 
   have : (k : ℝ) ≤ N := by exact_mod_cast hk
   exact mul_le_mul_of_nonneg_right this (Real.log_nonneg hm)
 
-theorem card_le (S : Finset (Fin N)) : S.card ≤ N := by
-  simpa using S.card_le_univ
-
 theorem blockPot_sub_le (j : ℕ) (i : Fin N) {G h : Matrix (Fin N) (Fin N) ℂ} (hG : G.PosDef) (hd : h.det ≠ 0)
     {m : ℝ} (hm : 1 ≤ m) (h1 : ((m : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ) - G).PosSemidef)
     (h2 : ((m : ℂ) • G - 1).PosSemidef) :
@@ -952,9 +949,11 @@ theorem blockPot_sub_le (j : ℕ) (i : Fin N) {G h : Matrix (Fin N) (Fin N) ℂ}
   obtain ⟨-, -, hP1⟩ := GramPot.blockPot_eq_gram N j i 1 h
   have e1 := hP hG
   have e2 := hP1 Matrix.PosDef.one
-  have tW := abs_le.1 (gram_cmp (card_le (wIdx N j)) (selM (wIdx N j)) hm hG h1 h2 (hS _))
-  have tO := abs_le.1 (gram_cmp (card_le (omIdx N j)) (selM (omIdx N j)) hm hG h1 h2 (hS _))
-  have tH := abs_le.1 (gram_cmp (card_le (stepCols N j i)) (h * selM (stepCols N j i)) hm hG h1 h2 (hHS hd _))
+  have tW := abs_le.1 (gram_cmp (card_finset_fin_le (wIdx N j)) (selM (wIdx N j)) hm hG h1 h2
+      (hS _))
+  have tO := abs_le.1 (gram_cmp (card_finset_fin_le (omIdx N j)) (selM (omIdx N j)) hm hG h1 h2
+      (hS _))
+  have tH := abs_le.1 (gram_cmp (card_finset_fin_le (stepCols N j i)) (h * selM (stepCols N j i)) hm hG h1 h2 (hHS hd _))
   have hl : 0 ≤ (N : ℝ) * Real.log m := mul_nonneg (Nat.cast_nonneg _) (Real.log_nonneg hm)
   rw [e1, e2, abs_le]
   split_ifs <;> constructor <;> linarith [tW.1, tW.2, tO.1, tO.2, tH.1, tH.2]

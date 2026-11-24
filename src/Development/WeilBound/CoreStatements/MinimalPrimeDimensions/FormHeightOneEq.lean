@@ -996,7 +996,7 @@ theorem exists_unitary {N m : ℕ} (Q : Matrix (Fin N) (Fin m) ℂ)
       simp only [v]
       rw [dif_pos hj]
       change Q j a = ∑ i, Q i a * (EuclideanSpace.basisFun (Fin N) ℂ j) i
-      simp [EuclideanSpace.basisFun_apply, Pi.single_apply]
+      simp [EuclideanSpace.basisFun_apply]
     · intro k hk
       have hne : (j : ℕ) ≠ (k : ℕ) := fun he => hk (Fin.ext he.symm)
       simp [hne]
@@ -1278,7 +1278,7 @@ private theorem aeval_linSubst {K L : Type} [Field K] [CommRing L] [Algebra K L]
   erw [MvPolynomial.aeval_bind₁]
   refine congrArg (fun g => MvPolynomial.aeval g f) ?_
   funext p
-  simp [MvPolynomial.aeval_X, MvPolynomial.aeval_C]
+  simp [MvPolynomial.aeval_X]
 
 private theorem isChowForm_of_isChowFormInt {k : Type} [Field k] {N : ℕ} {I : Ideal (MvPolynomial (Fin N) k)} {e dl : ℕ}
     {f : MvPolynomial (Fin (e + 1) × Fin N) k} (hf : IsChowFormInt I e dl f) :

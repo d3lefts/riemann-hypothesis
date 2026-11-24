@@ -820,9 +820,6 @@ theorem isSubquotient_sub_or_quot :
       intro g b
       first
       | rfl
-      | (unfold GlobalTheory.SmGL.subQuot
-         rw [Representation.quotient_apply]
-         rfl)
     have hSinv : ∀ (g : G) ⦃x : B.toSubmodule ⧸ A'⦄, x ∈ S.toSubmodule.map A'.mkQ →
         GlobalTheory.SmGL.subQuot B A g x ∈ S.toSubmodule.map A'.mkQ := by
       intro g x hx
@@ -896,7 +893,6 @@ theorem isSubquotient_sub_or_quot :
     have ha : (⟨((s : B.toSubmodule) : V), hs'⟩ : A.toSubmodule) ∈ S.toSubmodule.comap (Submodule.inclusion hAB') := by
       first
       | exact s.2
-      | simpa using s.2
     exact ⟨⟨⟨((s : B.toSubmodule) : V), hs'⟩, ha⟩, rfl⟩
 
 end GlobalTheory.CompanionTheory.SubquotExt
@@ -959,8 +955,6 @@ theorem equiv_of_isSubquotient (G : Type) [Group G] (V Y W : Type) [AddCommGroup
     rw [hX]
     first
       | rfl
-      | exact Submodule.top_coe
-      | simp
   have h : isotypicComponent (MonoidAlgebra ℂ G) R.asModule ρ.asModule = ⊤ := by
     rw [← GlobalTheory.CuspFactor.spanRep_asSubmodule R ρ hρ]
     exact htop
@@ -970,12 +964,10 @@ theorem equiv_of_isSubquotient (G : Type) [Group G] (V Y W : Type) [AddCommGroup
   have hj : Function.Injective j := by
     first
       | exact Subtype.val_injective
-      | (intro x y hxy; exact Subtype.val_injective hxy)
   let f' := Representation.IntertwiningMap.equivLinearMapAsModule _ _ f
   have hf' : Function.Surjective f' := by
     first
       | exact hf
-      | (intro y; obtain ⟨x, hx⟩ := hf y; exact ⟨x, hx⟩)
   exact (GlobalTheory.CuspFactor.nonempty_equiv_iff σ ρ).2
     (GlobalTheory.CompanionTheory.IsoSub.nonempty_equiv_of_isotypic h j hj f' hf' hσs)
 
@@ -1079,7 +1071,7 @@ theorem deltaHalf_firstEmb (n j : ℕ) (g : GL (Fin n) k) :
   have h0 : modExp (fun a => Fin (![n, j + 1] a)) (0 : Fin 2) = (j : ℤ) + 1 := by
     have e1 : (Finset.univ.filter fun b : Fin 2 => (0 : Fin 2) < b) = {1} := by decide
     have e2 : (Finset.univ.filter fun b : Fin 2 => b < (0 : Fin 2)) = ∅ := by decide
-    simp [modExp, e1, e2]
+    simp [modExp, e1]
   have f0 : firstEmb ![n, j + 1] g (0 : Fin 2) = g :=
     Pi.mulSingle_eq_same (M := fun a => GL (Fin (![n, j + 1] a)) k) (0 : Fin 2) g
   have f1 : firstEmb ![n, j + 1] g (1 : Fin 2) = 1 :=
@@ -1199,7 +1191,7 @@ theorem isSubquotient_twist {G V W : Type} [Group G] [AddCommGroup V] [Module �
   have e : T'.toRepresentation g v = ((χ g : ℂˣ) : ℂ) • T.toRepresentation g v :=
     Subtype.ext (by simp [twist_apply]; rfl)
   have h2 := f.isIntertwining _ _ g v
-  simp only [LinearMap.comp_apply, twist_apply, LinearMap.smul_apply]
+  simp only [LinearMap.comp_apply, twist_apply]
   erw [e]
   rw [map_smul]
   erw [h2]

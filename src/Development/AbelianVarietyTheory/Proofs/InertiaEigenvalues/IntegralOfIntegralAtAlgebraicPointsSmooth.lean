@@ -399,9 +399,8 @@ theorem _root_.GlobalTheory.isIntegral_mul_of_bounded_at_points :
   haveI : Algebra.FiniteType A B :=
     ⟨(Subalgebra.fg_top B).2 (by simpa using Subalgebra.fg_adjoin_finset (R := A) {g})⟩
   haveI : Algebra.FiniteType O B := Algebra.FiniteType.trans (S := A) inferInstance inferInstance
-  have hOB : Function.Injective (algebraMap O B) := by
-    intro x y hxy
-    exact hOA (hinj (congrArg Subtype.val hxy))
+  have hOB : Function.Injective (algebraMap O B) :=
+    fun x y hxy => hOA (hinj (congrArg Subtype.val hxy))
   let gB : B := ⟨g, Algebra.self_mem_adjoin_singleton A g⟩
   let I : Ideal B := Ideal.span ({gB, algebraMap O B π} : Set B)
   have hI : I = ⊤ := by
@@ -457,8 +456,7 @@ theorem _root_.GlobalTheory.isIntegral_mul_of_bounded_at_points :
   · rw [hcoeff, sub_sub_cancel_left]
     exact (Ideal.neg_mem_iff _).2 (Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ hπm))
   · by_cases h0 : H.coeff 0 = 0
-    · rw [h0, map_zero, zero_mul]
-      exact isIntegral_zero
+    · simp [h0, isIntegral_zero]
     · have hlead : (reverse H).leadingCoeff = H.coeff 0 := by
         rw [reverse_leadingCoeff, trailingCoeff, natTrailingDegree_eq_zero.2 (Or.inr h0)]
       rw [← hlead, ← Algebra.smul_def]

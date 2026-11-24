@@ -196,7 +196,7 @@ namespace GlobalTheory.BadOnRec
 
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
-local instance runAlgBad {D : D7} {J : CoreJ D} [inst : Algebra J.Q.c.F D.what₂.LL] (r : RunData J) :
+local instance runAlgBad {D : D7} {J : CoreJ D} [inst : Algebra J.Q.c.F D.what₂.LL] (r : RealIndexBound.RunData J) :
     Algebra r.full.J.Q.c.F D.what₂.LL := inst
 
 section General
@@ -378,9 +378,9 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.
   {J : CoreJ D} [inst : Algebra J.Q.c.F D.what₂.LL] {R : RealDat D A J.Q.c.F} {F : Face D A}
   {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
 
-local instance runAlg (r : RunData J) : Algebra r.full.J.Q.c.F D.what₂.LL := inst
+local instance runAlg (r : RealIndexBound.RunData J) : Algebra r.full.J.Q.c.F D.what₂.LL := inst
 
-variable {fw : FWTie J R κ v₀} {hc : LawsCore J.toCore} {run : HeightOneSpectrum (𝓞 D.what₂.LL) → RunData J}
+variable {fw : FWTie J R κ v₀} {hc : LawsCore J.toCore} {run : HeightOneSpectrum (𝓞 D.what₂.LL) → RealIndexBound.RunData J}
   {h : ∀ v, LawsP (run v).full.toTop} {hinj : Function.Injective D.what₂.OtoLL} {EX : ErrX D}
   {p : HeightOneSpectrum (𝓞 D.what₂.LL) → ℕ}
   {wL wF : HeightOneSpectrum (𝓞 D.what₂.LL) → ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)} {nT : ℕ}
@@ -507,7 +507,7 @@ section Tied
 variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m}
   {J : CoreJ D} [inst : Algebra J.Q.c.F D.what₂.LL] {R : RealDat D A J.Q.c.F} {F : Face D A}
   {κ : ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)} {v₀ : ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (R.MW i σ).Vec}
-variable {fw : FWTie J R κ v₀} {hc : LawsCore J.toCore} {run : HeightOneSpectrum (𝓞 D.what₂.LL) → RunData J}
+variable {fw : FWTie J R κ v₀} {hc : LawsCore J.toCore} {run : HeightOneSpectrum (𝓞 D.what₂.LL) → RealIndexBound.RunData J}
   {h : ∀ v, LawsP (run v).full.toTop} {hinj : Function.Injective D.what₂.OtoLL} {EX : ErrX D}
   {p : HeightOneSpectrum (𝓞 D.what₂.LL) → ℕ}
   {wL wF : HeightOneSpectrum (𝓞 D.what₂.LL) → ∀ i : Fin D.R.m, WeightFamilies.Wt D ((i : ℕ) + 1)} {nT : ℕ}
@@ -1076,9 +1076,7 @@ theorem ontoX_and_lamLow_of_unitaryGroupHypotheses' :
       P.heckeLAdicCharacter P.chebotarevDegreeOne
       P.galoisRepOfPolarizedCuspidal P.baseChangeDefiniteUnitary
       P.bhattScholzeCrystallineLattices P.heckeLAdicCharacterAbove P.cuspRapidDecay
-      (_root_.UpperTheory.One.M.New.llOf_alt P.litN.loc.llc P.litN.loc.conv
-      P.litN.loc.dzi P.litN.loc.brauer P.litN.loc.chev P.globalArtinReciprocity P.litN.loc.exh
-      P.litN.loc.multi P.litN.loc.cos P.litN.loc.zel P.litN.loc.geo P.litN.loc.bz)
+      P.litN.loc.llc
       P.discreteSeriesCover P.casselmanWallach,
     _root_.GlobalTheory.BigTop.lamLow_of_hypotheses_alt_alt P.cuspRapidDecay P.weilSiegelFormulaUnitary
       P.siegelWeilUnitaryConvergent P.doublingMethod P.unramifiedDoublingGL

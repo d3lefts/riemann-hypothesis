@@ -275,11 +275,7 @@ variable {Γ : Type} [Group Γ]
 theorem absIrr_id {K : Type} [Field K] [IsAlgClosed K] {n : ℕ} (hn : 1 ≤ n) (ρ : Γ →* GL (Fin n) K)
     (h : ∀ W : Submodule K (Fin n → K), IsInv ρ W → W = ⊥ ∨ W = ⊤) : AbsIrrSub ρ ⊤ := by
   first
-  | exact @_root_.GlobalTheory.AbsolutelyIrreduciblePullback.absIrrSub_top
-  | exact _root_.GlobalTheory.AbsolutelyIrreduciblePullback.absIrrSub_top
   | (apply _root_.GlobalTheory.AbsolutelyIrreduciblePullback.absIrrSub_top <;> assumption)
-  | (intros; apply _root_.GlobalTheory.AbsolutelyIrreduciblePullback.absIrrSub_top <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.AbsolutelyIrreduciblePullback.absIrrSub_top <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.AbsolutelyIrreduciblePullback.absIrrSub_top ..)
 
 theorem twGL_val {K : Type} [Field K] {a : ℕ} (ρ : Γ →* GL (Fin a) K) (χ : Γ →* Kˣ) (g : Γ) :
@@ -317,11 +313,7 @@ theorem charpoly_scal {K : Type} [Field K] (c : K) :
 
 theorem sub_fin_one {K : Type} [Field K] (W : Submodule K (Fin 1 → K)) : W = ⊥ ∨ W = ⊤ := by
   first
-  | exact @_root_.GlobalTheory.SatakeMainTheorem.main
-  | exact _root_.GlobalTheory.SatakeMainTheorem.main
   | (apply _root_.GlobalTheory.SatakeMainTheorem.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.SatakeMainTheorem.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.SatakeMainTheorem.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.SatakeMainTheorem.main ..)
 
 theorem scaleRoots_list_prod {K : Type} [Field K] (l : List K[X]) (s : K) :
@@ -589,7 +581,7 @@ section
 open Formalism.BasicNotions Formalism.ConjugateSelfDual Formalism.MainNotions Formalism.MainNotions.N Polynomial NumberField IsDedekindDomain ReciprocityTheory.Gal GlobalTheory.StringRepresentationDecomposition
 
 theorem _root_.GlobalTheory.T.resCount_of_valRing_ssList_ssRank : ValRingModel → SSList → SSRankUnique → _root_.GlobalTheory.StringRepresentationDecomposition.ResidueCount := by
-  first | exact @_root_.GlobalTheory.ResidualRankCount.residual_count_alt_alt | exact _root_.GlobalTheory.ResidualRankCount.residual_count_alt_alt | (intros; apply _root_.GlobalTheory.ResidualRankCount.residual_count_alt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.ResidualRankCount.residual_count_alt_alt
 end
 end -- clump:auto
 end -- clump:auto

@@ -239,7 +239,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.mem_besselGroup_of_localMatrix_gridNode : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T} (S : GridChoice W U) {t : T}, t ∈ U → ∀ {w : Pl D.host.E}, w ∈ locPl G t → ∀ (ew : AE D), Formalism.L2.NTheta.IsIdemAt ew w → ∀ {j σ : ℕ} (hj : j ≤ D.R.m) (hj' : j < D.R.m) (h' : j + 2 * σ + 2 = D.R.m) (h : GA D (G.V (.grid D.R.m j))), SuppAt ew _ h → GlobalTheory.RowRep.locAt S.B t w j hj h ∈ rowR (G := locGrid G t w) one_le_sLen (j := j) hj' → h ∈ besGrp (besDecAt G j σ h') (GlobalTheory.OrthSumExists.orthDecHsum D _ _) := by
-  first | exact @GlobalTheory.RowRepBes.mem_besGrp_of_locAt | exact GlobalTheory.RowRepBes.mem_besGrp_of_locAt | (intros; apply GlobalTheory.RowRepBes.mem_besGrp_of_locAt <;> assumption)
+  first | exact @GlobalTheory.RowRepBes.mem_besGrp_of_locAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.MemBesselGroupOfLocalMatrixGridNodeStatement =====
@@ -380,7 +380,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.mem_subgroup_of_localComponents_splitPlaces : ∀ {D : D7} (V : HSp D) (P : Finset (Pl D.host.E)) (e : AE D), IsIdemSum e P → ∀ (H : Subgroup (GA D V)) (r : GA D V), SuppAt e V r → (∀ w ∈ P, ∀ ew : AE D, Formalism.L2.NTheta.IsIdemAt ew w → ∃ h ∈ H, SuppAt ew V h ∧ GlobalTheory.StdFrames.loc w (Lev.finE V h) = GlobalTheory.StdFrames.loc w (Lev.finE V r)) → r ∈ H := by
-  first | exact @GlobalTheory.RowAssemble.mem_of_loc | exact GlobalTheory.RowAssemble.mem_of_loc | (intros; apply GlobalTheory.RowAssemble.mem_of_loc <;> assumption)
+  first | exact @GlobalTheory.RowAssemble.mem_of_loc
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.MemSubgroupOfLocalComponentsSplitPlacesStatement =====
@@ -446,7 +446,7 @@ theorem _root_.GlobalTheory.T.mem_besselGroup_of_local_lattice_matrices : Big fu
     (r : GA D (ch.G.V (.grid D.R.m j))) (g : ∀ w : locPl ch.G t, GL (Fin ((locGrid ch.G t w.1).rank (D.R.m, j))) (Kw w.1)),
     HasLoc t ch.S.B hj r g → (∀ w, g w ∈ rowR (G := locGrid ch.G t w.1) one_le_sLen (j := j) hj') →
     r ∈ besGrp (besDecAt ch.G j σ h') (GlobalTheory.OrthSumExists.orthDecHsum D _ _) := by
-  first | exact @GlobalTheory.RowLiftBes.mem_besGrp_of_hasLoc | exact GlobalTheory.RowLiftBes.mem_besGrp_of_hasLoc | (intros; apply GlobalTheory.RowLiftBes.mem_besGrp_of_hasLoc <;> assumption)
+  first | exact @GlobalTheory.RowLiftBes.mem_besGrp_of_hasLoc
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -565,7 +565,7 @@ open GlobalTheory.RootEx GlobalTheory.RowRep
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.exists_prod_single_place_pieces_of_suppAt : ∀ {D : D7} (V : HSp D) (P : Finset (Pl D.host.E)) (es : Pl D.host.E → AE D), (∀ w ∈ P, Formalism.L2.NTheta.IsIdemAt (es w) w) → (∑ w ∈ P, es w) * cA D (∑ w ∈ P, es w) = 0 → ∀ r : GA D V, SuppAt (∑ w ∈ P, es w) V r → ∃ h : P → GA D V, (∀ w, SuppAt (es w.1) V (h w)) ∧ (∀ w, (mt V (h w)).map (GlobalTheory.RowRep.piAt w.1) = (mt V r).map (GlobalTheory.RowRep.piAt w.1)) ∧ r = (Finset.univ.toList.map h).prod := by
-  first | exact @GlobalTheory.PlaceCut.exists_prod_pieces | exact GlobalTheory.PlaceCut.exists_prod_pieces | (intros; apply GlobalTheory.PlaceCut.exists_prod_pieces <;> assumption)
+  first | exact @GlobalTheory.PlaceCut.exists_prod_pieces
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -807,7 +807,7 @@ theorem _root_.GlobalTheory.T.mem_fourierJacobiGroup_of_local_lattice_matrices :
     1 ≤ σ → ∀ (r : GA D (ch.G.V (.grid D.R.m j))) (g : ∀ w : locPl ch.G t, GL (Fin ((locGrid ch.G t w.1).rank (D.R.m, j))) (Kw w.1)),
     HasLoc t ch.S.B hj r g → (∀ w, g w ∈ rowR (G := locGrid ch.G t w.1) one_le_sLen (j := j) hj') →
     r ∈ jacGrp (rowJac ch.G j hj' σ hσ) := by
-  first | exact @GlobalTheory.RowLift.mem_jacGrp_of_hasLoc | exact GlobalTheory.RowLift.mem_jacGrp_of_hasLoc | (intros; apply GlobalTheory.RowLift.mem_jacGrp_of_hasLoc <;> assumption)
+  first | exact @GlobalTheory.RowLift.mem_jacGrp_of_hasLoc
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -921,7 +921,7 @@ theorem _root_.GlobalTheory.T.exists_periodGroup_point_lifting_rowGroup_localEle
       (∀ w, l w ∈ rowR (G := locGrid ch.G t w.1) one_le_sLen (j := j) hj') →
       ∃ y, HasLoc t ch.S.B hj y (fun w => sgnAt ch.G t s w.1 j * l w * (sgnAt ch.G t s w.1 j)⁻¹) ∧
         δ * y * δ⁻¹ ∈ rowGrp ch.G j := by
-  first | exact @GlobalTheory.RowLift.lift_rowR | exact GlobalTheory.RowLift.lift_rowR | (intros; apply GlobalTheory.RowLift.lift_rowR <;> assumption)
+  first | exact @GlobalTheory.RowLift.lift_rowR
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -975,7 +975,7 @@ noncomputable section
 theorem _root_.GlobalTheory.T.hasLocalLatticeMatrices_inv : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (t : T) (B : Frames G) {j : ℕ}
     (hj : j ≤ D.R.m) (x : GA D (G.V (.grid D.R.m j)))
     (g : ∀ w : locPl G t, GL (Fin ((locGrid G t w.1).rank (D.R.m, j))) (Kw w.1)), HasLoc t B hj x g → HasLoc t B hj x⁻¹ (fun w => (g w)⁻¹) := by
-  first | exact @GlobalTheory.RowVal.hasLoc_inv | exact GlobalTheory.RowVal.hasLoc_inv | (intros; apply GlobalTheory.RowVal.hasLoc_inv <;> assumption)
+  first | exact @GlobalTheory.RowVal.hasLoc_inv
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -1040,7 +1040,7 @@ noncomputable section
 theorem _root_.GlobalTheory.T.hasLocalLatticeMatrices_mul : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (t : T) (B : Frames G) {j : ℕ}
     (hj : j ≤ D.R.m) (x y : GA D (G.V (.grid D.R.m j)))
     (g g' : ∀ w : locPl G t, GL (Fin ((locGrid G t w.1).rank (D.R.m, j))) (Kw w.1)), HasLoc t B hj x g → HasLoc t B hj y g' → HasLoc t B hj (x * y) (fun w => g w * g' w) := by
-  first | exact @GlobalTheory.RowVal.hasLoc_mul | exact GlobalTheory.RowVal.hasLoc_mul | (intros; apply GlobalTheory.RowVal.hasLoc_mul <;> assumption)
+  first | exact @GlobalTheory.RowVal.hasLoc_mul
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -1059,7 +1059,7 @@ noncomputable section
 
 theorem _root_.GlobalTheory.T.isRowFlagTilt_unique : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc) {j : ℕ} (hj : j < D.R.m)
     (δ δ' : GA D (G.V (.grid D.R.m j))), IsTilt G j δ → IsTilt G j δ' → δ = δ' := by
-  first | exact @GlobalTheory.TiltUnique.tilt_unique | exact GlobalTheory.TiltUnique.tilt_unique | (intros; apply GlobalTheory.TiltUnique.tilt_unique <;> assumption)
+  first | exact @GlobalTheory.TiltUnique.tilt_unique
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -1079,7 +1079,7 @@ noncomputable section
 theorem _root_.GlobalTheory.T.mem_finitePoints_of_hasLocalLatticeMatrices : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (t : T) (B : Frames G) {j : ℕ}
     (hj : j ≤ D.R.m) (x : GA D (G.V (.grid D.R.m j)))
     (g : ∀ w : locPl G t, GL (Fin ((locGrid G t w.1).rank (D.R.m, j))) (Kw w.1)), HasLoc t B hj x g → x ∈ GfC _ := by
-  first | exact @GlobalTheory.RowCover.mem_GfC_of_hasLoc | exact GlobalTheory.RowCover.mem_GfC_of_hasLoc | (intros; apply GlobalTheory.RowCover.mem_GfC_of_hasLoc <;> assumption)
+  first | exact @GlobalTheory.RowCover.mem_GfC_of_hasLoc
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -1099,7 +1099,7 @@ noncomputable section
 theorem _root_.GlobalTheory.T.rowTest_mem_latticeStabilizer_of_localMatrices : Big fun {D} _ _ _ _ _ _ _ _ _ _ _ ch => ∀ t, ∀ j, 1 ≤ j → ∀ (hj : j ≤ D.R.m) (x : GA D (ch.G.V (.grid D.R.m j)))
     (g : ∀ w : locPl ch.G t, GL (Fin ((locGrid ch.G t w.1).rank (D.R.m, j))) (Kw w.1)),
     HasLoc t ch.S.B hj x g → (∀ w, g w ∈ givenLevel ch.G t w.1 (D.R.m, j)) → x ∈ latGrp ch.G j := by
-  first | exact @GlobalTheory.LatOfHasLoc.mem_latGrp_of_hasLoc | exact GlobalTheory.LatOfHasLoc.mem_latGrp_of_hasLoc | (intros; apply GlobalTheory.LatOfHasLoc.mem_latGrp_of_hasLoc <;> assumption)
+  first | exact @GlobalTheory.LatOfHasLoc.mem_latGrp_of_hasLoc
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -1202,7 +1202,7 @@ open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Ro
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.tiltedPoints_covered_by_representativeCells : Big fun ch => ∀ s, CoverAt ch s := by
-  first | exact @GlobalTheory.RowVal.cover_at | exact GlobalTheory.RowVal.cover_at | (intros; apply GlobalTheory.RowVal.cover_at <;> assumption)
+  first | exact @GlobalTheory.RowVal.cover_at
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.TiltedPointsCoveredByRepresentativeCellsStatement =====
@@ -1355,7 +1355,7 @@ open GlobalTheory.MixModel GlobalTheory.MixPer GlobalTheory.Grow GlobalTheory.Ro
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.integrand_supported_on_cells_largeDepth : Big fun ch => ∀ s, FlatAt ch s → OffAt ch → InvAt ch → TensAt ch → BasicAt ch → SuppOn ch s := by
-  first | exact @GlobalTheory.RowVal.big_suppOn_of_flat | exact GlobalTheory.RowVal.big_suppOn_of_flat | (intros; apply GlobalTheory.RowVal.big_suppOn_of_flat <;> assumption)
+  first | exact @GlobalTheory.RowVal.big_suppOn_of_flat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IntegrandSupportedOnCellsLargeDepthStatement =====

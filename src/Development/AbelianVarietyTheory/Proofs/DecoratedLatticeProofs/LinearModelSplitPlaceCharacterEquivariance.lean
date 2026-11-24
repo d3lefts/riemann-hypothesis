@@ -202,7 +202,7 @@ theorem absAt : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalS
   have h1 := _root_.GlobalTheory.adicCompletion_valuation_map_uniformiser D.host.F p.v k φ hφ q.1 q.2
   have h2 := _root_.GlobalTheory.LocalResidue.card_residue_of_ringEquiv D.host.F p.v k φ hφ
   have h3 : (((Multiplicative.ofAdd (-1 : ℤ) : Multiplicative ℤ) : WithZero (Multiplicative ℤ))).log = -1 := by
-    first | rfl | simp [WithZero.log] | exact WithZero.log_coe _
+    first | rfl
   rw [GlobalTheory.IndefiniteRowSideFullHecke.SplitLinearModelNorm.absV, hn, GlobalTheory.LatPair.Unif.unit, Units.val_mk0, h1, resCard, h2, h3, zpow_neg_one]
 
 open GlobalTheory.SplitLinAt GlobalTheory.SplitLinear

@@ -618,7 +618,7 @@ theorem finrank_range_idem_le_of_embReg : ∀ (K Γ V : Type) [Field K] [CharZer
       rw [this, Representation.asAlgebraHom_of, hjρ h v i]
       rfl
     | add b c hb hc => intro v i; simp [map_add (f := _), LinearMap.add_apply, hb, hc, add_mul]
-    | smul r b hb => intro v i; simp [map_smul, LinearMap.smul_apply, hb, smul_mul_assoc]
+    | smul r b hb => intro v i; simp [map_smul, LinearMap.smul_apply, hb]
   refine ⟨finrank K (LinearMap.range (LinearMap.mulLeft K a')), ?_, ?_⟩
   · rw [_root_.GlobalTheory.BadCount.finrank_range_mulLeft_idem K H a' hidem', hc1]
   · let R := LinearMap.range (LinearMap.mulLeft K a')
@@ -694,7 +694,7 @@ theorem finrank_eig_inf_ker_le : ∀ (Γ V : Type) [Group Γ] [Fintype Γ] [AddC
       rw [map_sub, map_one, LinearMap.sub_apply, hek, sub_zero]; rfl
     have : x = 0 := by
       rw [hx1, he, map_sub, map_add (f := _), map_mul]
-      simp [LinearMap.sub_apply, LinearMap.add_apply, Module.End.mul_apply, hb0, hb1]
+      simp [LinearMap.sub_apply, LinearMap.add_apply, hb0, hb1]
     exact Subtype.ext this
   have hdim := LinearMap.finrank_le_finrank_of_injective hinj
   rw [Module.finrank_prod] at hdim
@@ -1102,7 +1102,7 @@ section -- clump:auto
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.ArithmeticCylinders GlobalTheory.BadCount Module
 
 theorem _root_.GlobalTheory.T.one_sub_goodIdempotent_eq_badTupleSums : ∀ (D : D7), ∃ S : ∀ k : Fin 2, Finset (Tup D k), (∀ k, ∀ t ∈ S k, ¬ goodAt D k t) ∧ 1 - D.ntypes.e0 = badElt D 0 (S 0) + badElt D 1 (S 1) - badElt D 0 (S 0) * badElt D 1 (S 1) := by
-  first | exact @GlobalTheory.BadCount.one_sub_goodTypeIdempotent_eq_badTupleSums | exact GlobalTheory.BadCount.one_sub_goodTypeIdempotent_eq_badTupleSums | (intros; apply GlobalTheory.BadCount.one_sub_goodTypeIdempotent_eq_badTupleSums <;> assumption)
+  first | exact @GlobalTheory.BadCount.one_sub_goodTypeIdempotent_eq_badTupleSums
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.OneSubGoodIdempotentEqBadTupleSumsStatement =====

@@ -581,7 +581,7 @@ theorem exists_not_dvd_le {X : Type} [AddCommGroup X] (β : LinearMap.BilinForm 
       have hv : v ≠ 0 := by rintro rfl; simp at hx
       have hvv := hβ v hv
       have e : β (m • v) (m • v) = (m : ℤ) * ((m : ℤ) * β v v) := by
-        simp [map_nsmul, LinearMap.smul_apply, nsmul_eq_mul]
+        simp [map_nsmul, LinearMap.smul_apply]
       have hm' : (2 : ℤ) ≤ m := by exact_mod_cast hm
       have h2 : 2 * β v v ≤ (m : ℤ) * β v v := mul_le_mul_of_nonneg_right hm' hvv.le
       have h3 : 2 * ((m : ℤ) * β v v) ≤ (m : ℤ) * ((m : ℤ) * β v v) :=
@@ -1210,7 +1210,7 @@ theorem main_of_core (hcore : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
         · rw [norm_zero]; exact (Real.exp_pos _).le
     · by_cases hns : NS y μ
       · refine ⟨Sum.inr ⟨y, μ⟩, ?_⟩
-        simp only [t, Sum.elim_inr, dif_pos rfl, g, if_pos hns, if_pos rfl]
+        simp only [t, Sum.elim_inr, g, if_pos hns]
         exact hel y μ
       · have hstrict : ∀ μ' : Fin 1 → Φ.X y, (∀ u, CongMod N (μ' u) (μ u)) → μ' ≠ μ →
             qW !![(1 : ℤ)] (Φ.β y) μ < qW !![(1 : ℤ)] (Φ.β y) μ' := by
@@ -1227,7 +1227,7 @@ theorem main_of_core (hcore : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
           have := cm_map (k y).symm.toLinearMap.toAddMonoidHom (hcc u)
           simpa using this
         refine ⟨Sum.inl κ, ?_⟩
-        simp only [t, Sum.elim_inl, hsel', if_pos rfl]
+        simp only [t, Sum.elim_inl, hsel']
         rw [if_pos trivial, hF, norm_pow, hnorm, ← Real.exp_nat_mul]; congr 1; push_cast; ring
   · rintro cc cc' (κ | s) h
     · simp only [f, Sum.elim_inl, hcls cc cc' κ h]
@@ -1258,7 +1258,7 @@ theorem main_of_core (hcore : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
         refine ⟨{μ, wit y μ}, fun S hS hS₀ => ?_⟩
         have hS' : ∀ ν ∈ S, Cg y ν (fun u => k y (cc u)) := fun ν hν u => by simpa using hS ν hν u
         have hsum : ∑ ν ∈ S, t y ν (Sum.inr ⟨y, μ⟩) = 0 := by
-          simp only [t, Sum.elim_inr, dif_pos rfl, dite_true]
+          simp only [t, Sum.elim_inr, dite_true]
           by_cases hns : NS y μ
           · obtain ⟨hw1, hw2, -⟩ := hwit y μ hns
             simp only [g, if_pos hns]
@@ -1714,7 +1714,7 @@ theorem exists_idealSheaf_comap_uValThru : ∀ (E : Type) [Field E] [NumberField
     have e : Y.pt ≫ πY ≫ X₁.π = spMap (AlgHom.id X₁.o₁ X₁.Ω₁).toRingHom ≫ spMap (ratHull X₁.S.R).val.toRingHom ≫ X₁.u ≫ C.i := by
       rw [← Category.assoc, hHom, Category.assoc, X₁.comp]
     have e' := congrArg (fun h : Sp X₁.Ω₁ ⟶ C.Z => h (closedPoint X₁.Ω₁)) e
-    simp only [Scheme.Hom.comp_apply] at e'
+    simp only at e'
     have hr : X₁.π (πY (Y.pt (closedPoint X₁.Ω₁))) ∈ Set.range C.i := ⟨_, e'.symm⟩
     refine ⟨Y.pt (closedPoint X₁.Ω₁), ?_, ?_⟩
     · show (πY ≫ X₁.π) _ ∈ (W : Set C.Z)

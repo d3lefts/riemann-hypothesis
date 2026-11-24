@@ -115,7 +115,7 @@ open ReciprocityTheory.ChartRestriction.G.Out
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.exists_semiAbelianModel_of_geometricHalf : GlobalTheory.Published.SemistableReductionSt → ThmUSt → Laws → Laws2 → UTorsSt → ZHGeoSt → ZHSt := by
-  first | exact @GlobalTheory.ZH.exists_model_semiAbelian_of_geo | exact GlobalTheory.ZH.exists_model_semiAbelian_of_geo | (intros; apply GlobalTheory.ZH.exists_model_semiAbelian_of_geo <;> assumption)
+  first | exact @GlobalTheory.ZH.exists_model_semiAbelian_of_geo
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ExistsSemiAbelianModelOfGeometricHalfStatement =====

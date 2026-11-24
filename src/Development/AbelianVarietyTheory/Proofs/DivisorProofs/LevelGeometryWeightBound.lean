@@ -101,8 +101,20 @@ namespace GlobalTheory.BergComp
 
 open MeasureTheory
 
-theorem bergOn_le_supConst : GlobalTheory.Published.TamagawaSpecialUnitary → ∀ (D : D7) (j : ℕ) (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ D.R.r) (dict : ∀ σ : c.F →+* ℂ, GA D (D.sp.W j) → Σ k, ReciprocityTheory.ChartRestriction.G.FD.Frame ((U σ).X k).Ψ D.R.r), GlobalTheory.LevGeo.Laws D j Xo c U dict → ∀ σ, GoodEmb c σ → ∀ (G : WTZ D.host.E), Even G.2 → ∀ (w : ℝ), 0 < w → (∀ k, (∑ τ, ((U σ).X k).spread (AllWt.modelWt (U σ) G k) τ) ≤ w) → ∀ (Z : Comp Xo c) (y : FPt (U σ).X), (⟨y.1, y.2.1⟩ : Σ k, ReciprocityTheory.ChartRestriction.G.FD.Frame ((U σ).X k).Ψ D.R.r) ∈ AllWt.framesOn (U σ) Z → AllWt.bergOn (U σ) (D.sp.W j) (dict σ) Z G y ≤ ENNReal.ofReal (GlobalTheory.LevGeo.supConst D.host.E D.R.r D.host.d l.M w) := by
-  intro hT D j H Dw l Xo c U dict hL σ hσ G hG w hw hsp Z y hy
+/-- Parametric pointwise Bergman kernel bound on a component `Z` given any sup-to-Petersson
+constant `K` on `holSub (U σ).X (AllWt.modelWt (U σ) G)`. -/
+theorem bergOn_le_of_sup (D : D7) (j : ℕ) (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E)
+    (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l)
+    (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ D.R.r)
+    (dict : ∀ σ : c.F →+* ℂ, GA D (D.sp.W j) → Σ k, ReciprocityTheory.ChartRestriction.G.FD.Frame ((U σ).X k).Ψ D.R.r)
+    (hL : GlobalTheory.LevGeo.Laws D j Xo c U dict) (σ : c.F →+* ℂ) (hσ : GoodEmb c σ)
+    (G : WTZ D.host.E) (_hG : Even G.2) (K : ℝ)
+    (hsup : ∀ P ∈ Formalism.L2.Pj.holSub (U σ).X (AllWt.modelWt (U σ) G),
+      Formalism.L2.Pj.supE (U σ).X (AllWt.modelWt (U σ) G) P ^ 2 ≤
+        ENNReal.ofReal K * AllWt.petE (D.sp.W j) (dict σ) (muQ1 (D.sp.W j)) (AllWt.modelWt (U σ) G) P ^ 2)
+    (Z : Comp Xo c) (y : FPt (U σ).X)
+    (hy : (⟨y.1, y.2.1⟩ : Σ k, ReciprocityTheory.ChartRestriction.G.FD.Frame ((U σ).X k).Ψ D.R.r) ∈ AllWt.framesOn (U σ) Z) :
+    AllWt.bergOn (U σ) (D.sp.W j) (dict σ) Z G y ≤ ENNReal.ofReal K := by
   classical
   have hU : IsUnf (U σ) := hL.unf σ hσ
   obtain ⟨Kf, th, hr, -, -, hDU, -⟩ := hL.dictU σ hσ
@@ -113,7 +125,6 @@ theorem bergOn_le_supConst : GlobalTheory.Published.TamagawaSpecialUnitary → �
     ⟨fun h => ⟨_, h⟩, fun ⟨f, hf⟩ =>
       GlobalTheory.FramesUnion.framesOn_of_mem D.host.E H Dw l Xo c D.R.r U σ hU Z _ f _ (hdom g) hf⟩
   set la := AllWt.modelWt (U σ) G with hla
-  have hchi := GlobalTheory.AllWt.Model.chi_modelWt (U σ) (hL.chiTriv σ hσ) G hG
   set Cl := AllWt.classesOver (D.sp.W j) (dict σ) A with hCl
   have hyS : y.1 ∈ S := ⟨y.2.1, hy⟩
   unfold AllWt.bergOn AllWt.bergE
@@ -122,26 +133,23 @@ theorem bergOn_le_supConst : GlobalTheory.Published.TamagawaSpecialUnitary → �
   have hP'm : P' ∈ Formalism.L2.Pj.holSub (U σ).X la := by
     refine Formalism.L2.Pj.holCusp_mem_holSub _ _ fun k => ?_
     by_cases hk : k ∈ S
-    · simp only [hP', if_pos hk]
+    · simp only [hP', ite_eq_left hk]
       exact Formalism.L2.Pj.holSub_comp_SS _ _ _ hP k
-    · simp only [hP', if_neg hk]
+    · simp only [hP', ite_eq_right hk]
       exact (ReciprocityTheory.ChartRestriction.G.FD.siegelSpaceAlgebra_holds (E := D.host.E) D.R.r ((U σ).X k) (la k) (la k) 0).1.1
   have hpt : ∀ z : Σ k, ReciprocityTheory.ChartRestriction.G.FD.Frame ((U σ).X k).Ψ D.R.r,
       AllWt.ptN la P' z = if z.1 ∈ S then AllWt.ptN la P z else 0 := fun z => by
     by_cases hz : z.1 ∈ S
-    · simp only [AllWt.ptN, hP', if_pos hz]
-    · simp only [AllWt.ptN, hP', if_neg hz]
+    · simp only [AllWt.ptN, hP', ite_eq_left hz]
+    · simp only [AllWt.ptN, hP', ite_eq_right hz]
       exact Formalism.L2.Pj.pnorm_zero _ _ _
-
   have h1 : ENNReal.ofReal (AllWt.ptN la P ⟨y.1, y.2.1⟩) ^ 2 ≤ Formalism.L2.Pj.supE (U σ).X la P' ^ 2 := by
     have e : AllWt.ptN la P ⟨y.1, y.2.1⟩ = AllWt.ptN la P' ⟨y.1, y.2.1⟩ := by
-      rw [hpt, if_pos hyS]
+      rw [hpt, ite_eq_left hyS]
     rw [e]
     gcongr
     exact le_iSup (fun p : Formalism.L2.Pj.FPt (U σ).X => ENNReal.ofReal (((U σ).X p.1).pnorm (la p.1) (P' p.1) p.2)) y
-
-  have h2 := _root_.GlobalTheory.supPetersson_of_tamagawa hT D j H Dw l Xo c U dict hL σ hσ la w hw hsp hchi P' hP'm
-
+  have h2 := hsup P' hP'm
   have h3 : AllWt.petE (D.sp.W j) (dict σ) (muQ1 (D.sp.W j)) la P' ≤
       AllWt.petE (D.sp.W j) (dict σ) (AllWt.muOn (U σ) (D.sp.W j) (dict σ) Z) la P := by
     have hsupp : Function.support (fun q : AutQ (D.sp.W j) => AllWt.ptN la P' (dict σ q.out)) ⊆ Cl := by
@@ -150,7 +158,7 @@ theorem bergOn_le_supConst : GlobalTheory.Published.TamagawaSpecialUnitary → �
       apply hq
       have : ¬ (dict σ q.out).1 ∈ S := fun h => hn ((key _).2 h)
       show AllWt.ptN la P' (dict σ q.out) = 0
-      rw [hpt, if_neg this]
+      rw [hpt, ite_eq_right this]
     unfold AllWt.petE
     have hrestrict : eLpNorm' (fun q : AutQ (D.sp.W j) => AllWt.ptN la P' (dict σ q.out)) 2
         ((muQ1 (D.sp.W j)).restrict Cl) =
@@ -174,10 +182,16 @@ theorem bergOn_le_supConst : GlobalTheory.Published.TamagawaSpecialUnitary → �
           refine le_mul_of_one_le_left (by simp) ?_
           exact ENNReal.one_le_rpow (ENNReal.one_le_inv.2 prob_le_one) (by norm_num)
   have h4 : ENNReal.ofReal (AllWt.ptN la P ⟨y.1, y.2.1⟩) ^ 2 ≤
-      ENNReal.ofReal (GlobalTheory.LevGeo.supConst D.host.E D.R.r D.host.d l.M w) *
-        AllWt.petE (D.sp.W j) (dict σ) (AllWt.muOn (U σ) (D.sp.W j) (dict σ) Z) la P ^ 2 :=
+      ENNReal.ofReal K * AllWt.petE (D.sp.W j) (dict σ) (AllWt.muOn (U σ) (D.sp.W j) (dict σ) Z) la P ^ 2 :=
     h1.trans (h2.trans (by gcongr))
   exact ENNReal.div_le_of_le_mul h4
+
+theorem bergOn_le_supConst : GlobalTheory.Published.TamagawaSpecialUnitary → ∀ (D : D7) (j : ℕ) (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ D.R.r) (dict : ∀ σ : c.F →+* ℂ, GA D (D.sp.W j) → Σ k, ReciprocityTheory.ChartRestriction.G.FD.Frame ((U σ).X k).Ψ D.R.r), GlobalTheory.LevGeo.Laws D j Xo c U dict → ∀ σ, GoodEmb c σ → ∀ (G : WTZ D.host.E), Even G.2 → ∀ (w : ℝ), 0 < w → (∀ k, (∑ τ, ((U σ).X k).spread (AllWt.modelWt (U σ) G k) τ) ≤ w) → ∀ (Z : Comp Xo c) (y : FPt (U σ).X), (⟨y.1, y.2.1⟩ : Σ k, ReciprocityTheory.ChartRestriction.G.FD.Frame ((U σ).X k).Ψ D.R.r) ∈ AllWt.framesOn (U σ) Z → AllWt.bergOn (U σ) (D.sp.W j) (dict σ) Z G y ≤ ENNReal.ofReal (GlobalTheory.LevGeo.supConst D.host.E D.R.r D.host.d l.M w) :=
+  fun hT D j H Dw l Xo c U dict hL σ hσ G hG w hw hsp Z y hy =>
+    bergOn_le_of_sup D j H Dw l Xo c U dict hL σ hσ G hG _
+      (_root_.GlobalTheory.supPetersson_of_tamagawa hT D j H Dw l Xo c U dict hL σ hσ
+        (AllWt.modelWt (U σ) G) w hw hsp (GlobalTheory.AllWt.Model.chi_modelWt (U σ) (hL.chiTriv σ hσ) G hG))
+      Z y hy
 
 end GlobalTheory.BergComp
 end -- clump:auto

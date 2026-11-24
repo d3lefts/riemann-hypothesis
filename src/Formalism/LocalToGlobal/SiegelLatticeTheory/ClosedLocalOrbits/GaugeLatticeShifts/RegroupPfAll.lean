@@ -231,8 +231,6 @@ theorem lintegral_slab (I : Formalism.MainNotions.S.AutInst) (μf : Measure I.Gf
     rw [← hvol, ← setLIntegral_const]
     first
       | exact setLIntegral_congr_fun hs (fun x hx => by obtain ⟨k, hk, rfl⟩ := hx; exact hf y k hk)
-      | exact setLIntegral_congr_fun hs (Filter.Eventually.of_forall fun x hx => by
-          obtain ⟨k, hk, rfl⟩ := hx; exact hf y k hk)
   have hfa : Measurable fun y : I.Ginf => f (y, a) := by fun_prop
   unfold Formalism.MainNotions.S.AutInst.muA
   rw [← Measure.prod_restrict, lintegral_prod _ hfm.aemeasurable]
@@ -240,7 +238,6 @@ theorem lintegral_slab (I : Formalism.MainNotions.S.AutInst) (μf : Measure I.Gf
       ∫⁻ y in Ω, f (y, a) * μf K ∂(Measure.pi fun v => Formalism.REAL.muG (I.ε v)) := by
     first
       | exact setLIntegral_congr_fun hΩ hin
-      | exact setLIntegral_congr_fun hΩ (Filter.Eventually.of_forall hin)
   rw [hout, lintegral_mul_const _ hfa, mul_comm]
 
 section SlabAbsPf
@@ -563,7 +560,7 @@ theorem frame_congruence_holds : FrameCongC := by
       exact hξ0 c a
     · subst h
       refine ⟨0, zero_mem _, ?_⟩
-      simp only [hξd, lt_irrefl, if_false, if_pos rfl, ht1, mul_zero, add_zero, hs]
+      simp only [hξd, lt_irrefl, if_false, ht1, mul_zero, add_zero, hs]
       simp
     · refine ⟨0, zero_mem _, ?_⟩
       have hna : ¬ a < c := not_lt.2 h.le

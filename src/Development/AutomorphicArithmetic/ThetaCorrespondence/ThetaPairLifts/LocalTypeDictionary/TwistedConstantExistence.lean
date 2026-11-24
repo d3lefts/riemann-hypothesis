@@ -139,7 +139,7 @@ theorem _root_.GlobalTheory.T.exists_regulariser_local : _root_.GlobalTheory.Fun
   (P : Finset (HeightOneSpectrum (𝓞 D.host.F))), ∃ v ∉ P, ∃ w : GA D (G.V (.grid i j)) →₀ ℂ, zdeg w ≠ 0 ∧
     IntegrableOn (translates w (kerSmall W Θ' g g₁)) (M.fd _) (M.ν _) ∧
     ∀ b ∈ w.support, b ∈ Set.range (GlobalTheory.AdelicU.emb D.sp.cm.sig (G.V (.grid i j)).gram v) := by
-  first | exact @_root_.GlobalTheory.RegAt.exists_regulariser_at_place | exact _root_.GlobalTheory.RegAt.exists_regulariser_at_place | (intros; apply _root_.GlobalTheory.RegAt.exists_regulariser_at_place <;> assumption)
+  first | exact @_root_.GlobalTheory.RegAt.exists_regulariser_at_place
 end
 end -- clump:auto
 end -- clump:auto
@@ -218,7 +218,7 @@ theorem small_kernel_invariant : _root_.GlobalTheory.FunPr.ThetaLocalInputs → 
         refine ⟨b + c, ?_⟩
         change (b : D.host.E) + c = _
         rw [hb, hc]
-        simp [f, map_add, add_mul, Finset.sum_add_distrib, mul_add]
+        simp [f, add_mul, Finset.sum_add_distrib, mul_add]
       smul_mem' := by
         rintro c x ⟨b, hb⟩
         refine ⟨RingOfIntegers.mapRingHom (starRingEnd D.host.E) c * b, ?_⟩
@@ -314,7 +314,7 @@ theorem _root_.GlobalTheory.T.twist_small_kernel_invariant : _root_.GlobalTheory
   ∃ (L : GlobalTheory.FinPl.Lat (G.V (.grid i j))) (S : Finset (HeightOneSpectrum (𝓞 D.host.F))),
     L.FG ∧ Submodule.span D.host.E (L : Set (Fin (G.V (.grid i j)).rank → D.host.E)) = ⊤ ∧
     ∀ κ, GlobalTheory.FinPl.InK (G.V (.grid i j)) L (fun v => v ∉ S) κ → ∀ u, kerSmall W Θ' g g₁ (u * κ) = kerSmall W Θ' g g₁ u := by
-  first | exact @_root_.GlobalTheory.SmallKerInv.small_kernel_invariant | exact _root_.GlobalTheory.SmallKerInv.small_kernel_invariant | (intros; apply _root_.GlobalTheory.SmallKerInv.small_kernel_invariant <;> assumption)
+  first | exact @_root_.GlobalTheory.SmallKerInv.small_kernel_invariant
 end
 end -- clump:auto
 end -- clump:auto
@@ -381,7 +381,7 @@ theorem _root_.GlobalTheory.T.exists_strip_combination_trivial_outside_set : _ro
   ∃ (z' : GA D (G.V (.grid i j)) →₀ ℂ) (P : Finset (HeightOneSpectrum (𝓞 D.host.F))),
     translates z' (kerSmall W Θ' g g₁) = translates z (kerSmall W Θ' g g₁) ∧ zdeg z' = zdeg z ∧
     ∀ b ∈ z'.support, ∀ v ∉ P, GlobalTheory.AdelicU.proj D.sp.cm.sig (G.V (.grid i j)).gram v b = 1 := by
-  first | exact @_root_.GlobalTheory.StripPlaces.exists_combination_trivial_off_places | exact _root_.GlobalTheory.StripPlaces.exists_combination_trivial_off_places | (intros; apply _root_.GlobalTheory.StripPlaces.exists_combination_trivial_off_places <;> assumption)
+  first | exact @_root_.GlobalTheory.StripPlaces.exists_combination_trivial_off_places
 end
 end -- clump:auto
 end -- clump:auto
@@ -463,7 +463,7 @@ theorem _root_.GlobalTheory.T.regularized_integral_small_constant : _root_.Globa
   (ρ : RealMatch W), ρ.Over R → ∀ (t : T) (i j : Fin D.R.m) (M : Vol G), M.Is t → ∀ Θ Θ', IsMatched B t ρ i j Θ Θ' → ∀ g g₁,
   ∃ J : ℂ, ∀ z, IntegrableOn (translates z (kerSmall W Θ' g g₁)) (M.fd _) (M.ν _) →
     ∫ u in M.fd _, translates z (kerSmall W Θ' g g₁) u ∂M.ν _ = zdeg z * J := by
-  first | exact @_root_.GlobalTheory.SmallConst.regularizedIntegral_const_of_small | exact _root_.GlobalTheory.SmallConst.regularizedIntegral_const_of_small | (intros; apply _root_.GlobalTheory.SmallConst.regularizedIntegral_const_of_small <;> assumption)
+  first | exact @_root_.GlobalTheory.SmallConst.regularizedIntegral_const_of_small
 end
 end -- clump:auto
 end -- clump:auto

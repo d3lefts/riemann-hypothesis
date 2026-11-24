@@ -93,9 +93,9 @@ theorem Dof_X (F : Fin d → PS k 2 d) (u : Fin d → k) (j : Fin d) :
   unfold Dof
   simp only [MvPowerSeries.pderiv_X]
   rw [Finset.sum_eq_single j]
-  · simp [Pi.single_apply]
+  · simp
   · intro b _ hb
-    simp [Pi.single_apply, hb]
+    simp [hb]
   · simp
 
 theorem vf_fm (B : FB R d O) (h : PS k 2 d) (u φ u' : Fin d → k) :
@@ -498,7 +498,6 @@ theorem Mf_subset (P : MvPolynomial (ι × Fin n) k) (S : Finset (ι × Fin n �
   refine Finset.sum_subset hS (fun mo _ h => ?_)
   first
     | rw [MvPolynomial.notMem_support_iff.mp h, zero_mul]
-    | rw [MvPolynomial.not_mem_support_iff.mp h, zero_mul]
 
 theorem Mf_add (P Q : MvPolynomial (ι × Fin n) k) : Mf mu (P + Q) = Mf mu P + Mf mu Q := by
   classical
@@ -749,7 +748,6 @@ private theorem prod_mem_pow_of_mem_pow_of_sum_le {R A : Type} [CommRing R] [Com
   have h1 : (1 : A) ∈ J ^ c := by
     first
       | simpa using Submodule.pow_mem_pow J hJ c
-      | simpa using Submodule.pow_mem_pow hJ c
   have hm := Submodule.mul_mem_mul (hprod Finset.univ) h1
   rwa [mul_one, ← pow_add, ← hc] at hm
 

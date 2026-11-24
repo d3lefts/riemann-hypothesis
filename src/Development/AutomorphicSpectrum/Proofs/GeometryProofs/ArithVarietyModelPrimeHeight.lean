@@ -707,7 +707,7 @@ theorem UpperTheory.Reformulated.B.DualIntegralLattice.main :
 
   simp only [W, Matrix.of_apply, map_sum, map_mul, hw, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
-  simp only [map_natCast, map_mul, map_intCast]
+  simp only [map_natCast, map_intCast]
   ring
 end -- clump:auto
 end -- clump:auto
@@ -808,7 +808,7 @@ theorem gam_key {V : Type} [AddCommGroup V] [Module Ω V] {r N : ℕ} (Rs Rt : S
       have := congrArg (fun g : Module.Dual Ω V => g A) (huE j)
       simpa only [LinearMap.sub_apply, LinearMap.smul_apply, smul_eq_mul] using this
     rw [hA2] at e2
-    simp only [map_smul, LinearMap.smul_apply, Pi.smul_apply, smul_eq_mul] at e1 e2
+    simp only [map_smul, Pi.smul_apply, smul_eq_mul] at e1 e2
     have e1' : w * ∑ l, is a l * G l j = Hs j A + w * P * zs j := by
       rw [← e1, Finset.mul_sum]
       exact Finset.sum_congr rfl fun _ _ => by ring

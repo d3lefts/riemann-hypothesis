@@ -254,7 +254,7 @@ theorem sc_gram_lt {K : Type} [Field K] [NumberField K] {r k m : ℕ} (hm : 0 < 
     rw [quotGramC, Matrix.mul_assoc (gramX H σ c b), ← hYdef, hCC, hXcb]
     have hY' : Bmᴴ * (H * (Bm * Y)) = Bmᴴ * (H * Cm) := by simpa only [Matrix.mul_assoc] using hY
     simp only [hC'def, Matrix.conjTranspose_sub, Matrix.conjTranspose_mul, Matrix.sub_mul, Matrix.mul_sub,
-      Matrix.mul_assoc, hY', sub_self, sub_zero]
+      Matrix.mul_assoc, hY']
     abel
   have hC'inj : Function.Injective C'.mulVec := by
     intro x y hxy
@@ -702,7 +702,7 @@ theorem sdd_star_self_eig {n : ℕ} {D : Matrix (Fin n) (Fin n) ℂ} (hD : D.IsH
   rw [← h]
   simp only [dotProduct, Pi.star_apply, RCLike.inner_apply]
   refine Finset.sum_congr rfl fun x _ => ?_
-  simp [Complex.star_def, mul_comm]
+  simp [mul_comm]
 
 theorem sdd_quad_eig {n : ℕ} {D : Matrix (Fin n) (Fin n) ℂ} (hD : D.IsHermitian) (i : Fin n) :
     star (⇑(hD.eigenvectorBasis i)) ⬝ᵥ (D *ᵥ ⇑(hD.eigenvectorBasis i)) = (hD.eigenvalues i : ℂ) := by
@@ -1075,7 +1075,6 @@ private theorem posDef_diagonal_ofReal_of_pos {r : ℕ} (d : Fin r → ℝ) (hd 
     (diagonal fun l => (d l : ℂ)).PosDef := by
   first
   | exact Matrix.posDef_diagonal_iff.mpr fun l => Complex.zero_lt_real.mpr (hd l)
-  | exact Matrix.posDef_diagonal_iff.mpr fun l => by exact_mod_cast hd l
 
 theorem sdd_gram_step {K : Type} [Field K] [NumberField K] {r e k₀ k₁ : ℕ} (σ : K →+* ℂ)
     (d : Fin r → ℝ) (hd : ∀ l, 0 < d l) (b₀ : Fin k₀ → Fin r → K) (c b₁ : Fin k₁ → Fin r → K)
@@ -1098,7 +1097,6 @@ theorem sdd_gram_step {K : Type} [Field K] [NumberField K] {r e k₀ k₁ : ℕ}
   have hu : IsUnit ((embM σ b₀)ᴴ * D * embM σ b₀).det := by
     first
     | exact (Matrix.isUnit_iff_isUnit_det _).mp hG0.isUnit
-    | exact hG0.det_pos.ne'.isUnit
   set E : Matrix (Fin r) (Fin k₁) ℂ := embM σ c - embM σ b₀ *
     (((embM σ b₀)ᴴ * D * embM σ b₀)⁻¹ * ((embM σ b₀)ᴴ * D * embM σ c)) with hE
 

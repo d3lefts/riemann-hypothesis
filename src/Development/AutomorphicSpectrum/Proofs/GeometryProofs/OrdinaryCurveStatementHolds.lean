@@ -380,7 +380,7 @@ theorem exists_hasColen_tens (p : ℕ) [Fact p.Prime] (hv : v.Integers R) (hp : 
     by_cases h : x = j
     · subst h
       simp
-    · simp [h, Matrix.one_apply]
+    · simp [h]
   have hc₁ : HasColen R v A₁.carrier (v (Matrix.of fun x j : ZMod p => e j x).det) :=
     ⟨Matrix.of fun x j : ZMod p => e j x, rfl, rfl⟩
   have hc₂ : HasColen R v A₂.carrier 1 :=
@@ -553,7 +553,7 @@ open scoped CategoryTheory.Obj CategoryTheory.MonObj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.order_p_squared_extremal_colength : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (R : Type) [CommRing R] [Algebra R C], v.Integers R → v (p : C) < 1 → ∀ (N : Type) [AddCommGroup N] [Fintype N] [DecidableEq N], (∀ x : N, p • x = 0) → Fintype.card N = p ^ 2 → ∀ AA : HopfOrder (C := C) R N, ∀ cN, HasColen R v AA.carrier cN → cN ^ 2 = v (p : C) ^ (p ^ 2) → (∃ t : N, ∃ g ∈ AA.carrier, v (g t - g 0) = 1) → ∃ e : ZMod p × ZMod p ≃+ N, AA.carrier.map (LinearMap.funLeft R C (e : ZMod p × ZMod p → N)) = tens (Submodule.span R (Set.range fun (ψ : AddChar (ZMod p) C) (x : (ZMod p)) => ψ x)) (intFun R (ZMod p)) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.GR.OrdSplit.ord_split | exact GlobalTheory.CompanionTheory.Ar.GR.OrdSplit.ord_split | (intros; apply GlobalTheory.CompanionTheory.Ar.GR.OrdSplit.ord_split <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.GR.OrdSplit.ord_split
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.OrderPSquaredExtremalColengthStatement =====
@@ -887,7 +887,7 @@ private theorem coeff_prod_lt (S : Multiset C) (hS : ∀ r ∈ S, 1 < v r) :
     have hpos : 0 < v (h.coeff 0) := pos_iff_ne_zero.mpr h0
     have hc0 : (((r ::ₘ S).map fun r => X - Polynomial.C r).prod).coeff 0 = -r * h.coeff 0 := by
       rw [Multiset.map_cons, Multiset.prod_cons, ← hh, sub_mul]
-      simp [Polynomial.coeff_X_mul_zero]
+      simp
     have hcd : ∀ d, (((r ::ₘ S).map fun r => X - Polynomial.C r).prod).coeff (d + 1) =
         h.coeff d - r * h.coeff (d + 1) := by
       intro d
@@ -1086,7 +1086,7 @@ open scoped CategoryTheory.Obj CategoryTheory.MonObj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.polarised_abelian_variety_p_torsion : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (R : Type) [CommRing R] [Algebra R C], v.Integers R → v (p : C) < 1 → IsAdicComplete (Ideal.span {(p : R)}) R → ∃ (P : Out.PolAV (Spec (CommRingCat.of R))) (z : sp (R₀ := R) R ⟶ P.A), P.g = 1 ∧ z ^ p = 1 ∧ ∀ (k : Type) [Field k] [Algebra R k], spMap (Algebra.ofId R k) ≫ z ≠ 1 := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.GR.exists_ord_point | exact GlobalTheory.CompanionTheory.Ar.GR.exists_ord_point | (intros; apply GlobalTheory.CompanionTheory.Ar.GR.exists_ord_point <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.GR.exists_ord_point
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.PolarisedAbelianVarietyPTorsionStatement =====

@@ -89,7 +89,6 @@ theorem so_smul (c : σ → σ → k) (r : k) (P : MvPolynomial σ k) :
       pderiv_C, mul_zero, add_zero]
      refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun l' _ => ?_
      ring)
-  | simp [so_def, Finset.smul_sum, mul_smul_comm]
 
 private theorem mvPolynomial_pderiv_comm (a b : σ) (P : MvPolynomial σ k) :
     pderiv a (pderiv b P) = pderiv b (pderiv a P) := by
@@ -99,7 +98,7 @@ private theorem mvPolynomial_pderiv_comm (a b : σ) (P : MvPolynomial σ k) :
   · simp [*]
   · rename_i p m hp
     simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), hp, pderiv_X]
-    by_cases ha : a = m <;> by_cases hb : b = m <;> simp [Pi.single_apply, ha, hb] <;> ring
+    by_cases ha : a = m <;> by_cases hb : b = m <;> simp [ha, hb] <;> ring
 
 theorem pd4 (P : MvPolynomial σ k) (a b c d : σ) :
     pderiv a (pderiv b (pderiv c (pderiv d P))) = pderiv c (pderiv d (pderiv a (pderiv b P))) := by
@@ -149,7 +148,6 @@ theorem totalDegree_pderiv_le (i : σ) (Q : MvPolynomial σ k) :
 theorem pderiv_eq_zero_of_deg (i : σ) (Q : MvPolynomial σ k) (h : Q.totalDegree = 0) : pderiv i Q = 0 := by
   first
   | (rw [MvPolynomial.totalDegree_eq_zero_iff_eq_C] at h; rw [h, pderiv_C])
-  | (have h' := (MvPolynomial.totalDegree_eq_zero_iff_eq_C).1 h; rw [h', pderiv_C])
 
 theorem totalDegree_so_le (c : σ → σ → k) (Q : MvPolynomial σ k) :
     (secondOrder k c Q).totalDegree ≤ Q.totalDegree - 2 := by
@@ -205,7 +203,6 @@ theorem pderiv_colE (b : Fin n) (l : ι) (Q : MvPolynomial ι k) :
   classical
   first
   | exact pderiv_rename (f := fun l => (l, b)) (fun x y h => by simpa using h) l Q
-  | simpa using pderiv_rename (f := fun l : ι => (l, b)) (fun x y h => by simpa using h) l Q
 
 private theorem pderiv_colE_eq_zero_of_ne (a b : Fin n) (hab : a ≠ b) (l : ι) (P : MvPolynomial ι k) :
     pderiv (l, b) (colE a P) = 0 := by
@@ -214,7 +211,7 @@ private theorem pderiv_colE_eq_zero_of_ne (a b : Fin n) (hab : a ≠ b) (l : ι)
   · simp
   · simp [*]
   · rename_i p m hp
-    simp [hp, pderiv_X, Pi.single_apply, hab]
+    simp [hp, pderiv_X, hab]
 
 theorem pderiv_prod_colE (b : Fin n) (s : Finset (Fin n)) (hb : b ∉ s) (Q : Fin n → MvPolynomial ι k)
     (l : ι) : pderiv (l, b) (∏ b' ∈ s, colE b' (Q b')) = 0 := by
@@ -462,8 +459,8 @@ theorem prodQ_update (Q : Fin n → MvPolynomial ι k) (b0 : Fin n) (y : MvPolyn
   unfold prodQ
   rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ b0)]
   congr 1
-  · simp [Function.update_apply]
-  · exact Finset.prod_congr rfl fun b hb => by simp [Function.update_apply, Finset.ne_of_mem_erase hb]
+  · simp
+  · exact Finset.prod_congr rfl fun b hb => by simp [Finset.ne_of_mem_erase hb]
 
 theorem prodQ_eq (Q : Fin n → MvPolynomial ι k) (b0 : Fin n) :
     prodQ Q = colE b0 (Q b0) * ∏ b ∈ univ.erase b0, colE b (Q b) := by

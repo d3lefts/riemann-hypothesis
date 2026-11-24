@@ -68,7 +68,7 @@ theorem _root_.GlobalTheory.T.routeBigVertex_kernelProduct_eq_const_mul_thetaKer
         ∃ Φ : WO (sgn ε (G.V (.grid (i + 1) (j + 1)))) X → ℂ, IsThetaFunO W.ψ (sgn ε _) X Φ ∧
           ∃ (h : GA D X) (c : ℂ), ∀ u, W.kerA (.right i (j + 1)) d.1.2 g u * W.kerA (.down t (i + 1) j) d.2 u g₁ =
             c * thetaKO ω u h Φ := by
-  first | exact @GlobalTheory.FunObj.routeBig_kernel_product_eq_theta | exact GlobalTheory.FunObj.routeBig_kernel_product_eq_theta | (intros; apply GlobalTheory.FunObj.routeBig_kernel_product_eq_theta <;> assumption)
+  first | exact @GlobalTheory.FunObj.routeBig_kernel_product_eq_theta
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RouteBigVertexKernelProductEqConstMulThetaKernelStatement =====
@@ -110,7 +110,7 @@ theorem squareTriple_sig_rank_lt : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc :
       have e2 : (A.map star).map (starRingEnd ℂ) = A := by ext; simp
       have e3 : (Matrix.fromBlocks 1 0 0 (-1) : Matrix (Fin ((G.V (.grid (↑i + 1) (↑j + 1))).rank - Γ.p) ⊕ Fin Γ.p) (Fin ((G.V (.grid (↑i + 1) (↑j + 1))).rank - Γ.p) ⊕ Fin Γ.p) ℂ).map
           (starRingEnd ℂ) = Matrix.fromBlocks 1 0 0 (-1) := by
-        ext (k | k) (l | l) <;> simp [Matrix.fromBlocks_map, Matrix.one_apply] <;> split_ifs <;> simp
+        ext (k | k) (l | l) <;> simp [Matrix.one_apply] <;> split_ifs
       rw [e1, e2, e3] at this
       simpa only [Matrix.transpose_map] using this
     let f : Fin (G.V (.grid (↑i + 1) (↑j + 1))).rank ≃ Fin ((G.V (.grid (↑i + 1) (↑j + 1))).rank - Γ.p) ⊕ Fin Γ.p := (finSumFinEquiv.trans (finCongr hrs)).symm
@@ -154,7 +154,7 @@ theorem _root_.GlobalTheory.T.squareThetaTriple_exists_signature_rank_add_lt : �
     (W : G.Weil) (t : T) (i j : Fin D.R.m) (hT : SquareTriple W t i j) (M : Vol G) (hM : M.Is t),
     ∃ p : ℕ, (∃ τ, Formalism.UG.HasSignature (gramAt D (G.V (.grid (i + 1) (j + 1))) τ) ((G.V (.grid (i + 1) (j + 1))).rank - p) p) ∧
       (G.V (.grid i (j + 1))).rank + (G.V (.grid (i + 1) j)).rank < 2 * ((G.V (.grid (i + 1) (j + 1))).rank - p) := by
-  first | exact @GlobalTheory.FunObj.squareTriple_sig_rank_lt | exact GlobalTheory.FunObj.squareTriple_sig_rank_lt | (intros; apply GlobalTheory.FunObj.squareTriple_sig_rank_lt <;> assumption)
+  first | exact @GlobalTheory.FunObj.squareTriple_sig_rank_lt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareThetaTripleExistsSignatureRankAddLtStatement =====
@@ -221,7 +221,7 @@ theorem _root_.GlobalTheory.T.bigRoute_kernel_integrableOn_unitary_quotient : �
     (W : G.Weil) (B : Frames G) (ρ : RealMatch W) (t : T) (i j : Fin D.R.m) (hT : SquareTriple W t i j)
     (M : Vol G) (hM : M.Is t) (Θ : TotT G (routeBig t i j)) (Θ' : TotT G (routeSmall t i j)) (hΘ : IsMatched B t ρ i j Θ Θ') (g₁ : GA D (G.V (.grid (i + 1) j))),
     ∀ g : GA D (G.V (.grid i (j + 1))), IntegrableOn (kerBig W Θ g g₁) (M.fd (.grid (i + 1) (j + 1))) (M.ν (.grid (i + 1) (j + 1))) := by
-  first | exact @GlobalTheory.FunObj.routeBig_kerBig_integrableOn | exact GlobalTheory.FunObj.routeBig_kerBig_integrableOn | (intros; apply GlobalTheory.FunObj.routeBig_kerBig_integrableOn <;> assumption)
+  first | exact @GlobalTheory.FunObj.routeBig_kerBig_integrableOn
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.BigRouteKernelIntegrableOnUnitaryQuotientStatement =====

@@ -68,16 +68,14 @@ theorem goal1 :
     · have hp := Nat.minFac_prime h1
       obtain ⟨m, hm⟩ := Nat.minFac_dvd n
       have hmem' : ((n.minFac : R) * (m : R)) ∈ P := by
-        rw [← Nat.cast_mul, ← hm]
-        exact hmem
+        simpa only [← Nat.cast_mul, ← hm] using hmem
       rcases hP.mem_or_mem hmem' with h | h
       · exact ⟨_, hp, Nat.minFac_dvd n, h⟩
       · have hm0 : m ≠ 0 := by
           rintro rfl
           exact hn (by simpa using hm)
-        have hpos : 0 < m := Nat.pos_of_ne_zero hm0
-        have h2 := hp.two_le
-        have hlt : m < n := by nlinarith
+        have hlt : m < n := by
+          nlinarith [hp.two_le, Nat.pos_of_ne_zero hm0]
         obtain ⟨p, pp, pd, pm⟩ := ih m hlt hm0 h
         exact ⟨p, pp, Dvd.dvd.trans pd ⟨n.minFac, hm.trans (Nat.mul_comm _ _)⟩, pm⟩
 

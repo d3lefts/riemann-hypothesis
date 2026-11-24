@@ -1266,7 +1266,7 @@ theorem _root_.GlobalTheory.T.trace_skewHermitian_gram_integral_alt : ∀ (L : T
   (∀ i j, (JT : Matrix (Fin n') (Fin n') L) i j ∈ Formalism.UG.intL L) → (∀ i j, (y * (a : Matrix (Fin n) (Fin n) L)) i j ∈ Formalism.UG.intL L) →
   (∀ i k, (((a⁻¹ : GL (Fin n) L) : Matrix (Fin n) (Fin n) L) * M) i k * ϖ ^ e k ∈ Formalism.UG.intL L) → Γ ∈ GlobalTheory.Hk3.GramSep.gam0 σ ϖ e →
   δ * Matrix.trace (Γ * (Formalism.UG.cT σ (y * M) * (JT : Matrix (Fin n') (Fin n') L) * (y * M))) ∈ Formalism.UG.intL L := by
-  first | exact @GlobalTheory.Hk3.GramSep.trace_skewHermitian_gram_integral | exact GlobalTheory.Hk3.GramSep.trace_skewHermitian_gram_integral | (intros; apply GlobalTheory.Hk3.GramSep.trace_skewHermitian_gram_integral <;> assumption)
+  first | exact @GlobalTheory.Hk3.GramSep.trace_skewHermitian_gram_integral
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.TraceSkewHermitianGramIntegralStatement =====
@@ -1342,7 +1342,7 @@ theorem locH_sub_trace_mem : ∀ (L : Type) [Field L] [Valued L (WithZero (Multi
     rw [← hPdef, ← hTdef, this, cT_sub', cT_one']
     congr 1
     rw [hRdef, hZdef]
-    simp only [Matrix.sub_mul, Matrix.mul_sub, Matrix.one_mul, Matrix.mul_one, Matrix.mul_assoc]
+    simp only [Matrix.sub_mul, Matrix.mul_sub, Matrix.one_mul, Matrix.mul_assoc]
     rw [← Matrix.mul_assoc J P, hJP, Matrix.one_mul]
   have h2 : δ * Matrix.trace (E * P * Formalism.UG.cT σ y * T * y) = δ * Matrix.trace (E * Z) := by
     rw [hZdef]; simp only [Matrix.mul_assoc]

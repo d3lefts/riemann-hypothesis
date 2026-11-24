@@ -526,7 +526,6 @@ theorem archimedean_local_height_term (hd : d.AxH 𝒜) (h : d.S1) (x : Fin (d.N
           Real.log ‖MvPolynomial.eval (hintPt 0 z) (MvPolynomial.map sg b1)‖ := by
     filter_upwards [d.norm_at_sg_B hd h c sg, hint_ae_tail hn hb1c hαb1 hαb10 0,
       hint_ae_tail hn hb2c hαb2 hαb20 0, hint_ae_tail hn ha2c hαa2 hαa20 0] with z hz hb1z hb2z ha2z
-    beta_reduce at hz
     obtain ⟨hfin, hcard, hcl1, hcl2⟩ := hz
     set S := d.ST c sg (d.tOf z) with hS
     have hpe := congrArg (fun q => MvPolynomial.eval (hintPt 0 z) (MvPolynomial.map sg q)) hpoly
@@ -858,7 +857,6 @@ theorem height_one_eq_zero {K : Type} [Field K] [NumberField K] {B n : ℕ} (hn 
   classical
   first
     | simp [h0, gaussAbs, blockSphereMean]
-    | simp [h0, gaussAbs, blockSphereMean, MvPolynomial.support_one]
 
 theorem height_pow_multiHomogeneous {K : Type} [Field K] [NumberField K] {B n : ℕ} (hn : 0 < n)
     {g : MvPolynomial (Fin B × Fin n) K} {a : Fin B → ℕ} (hg0 : g ≠ 0)
@@ -972,7 +970,6 @@ theorem multiplicity_nonneg (hd : d.AxH 𝒜) (h : d.S1) (x : Fin (d.N + 1) → 
   refine mul_nonneg ?_ (d.ordMinMax_nonneg hd h x c hx hp hw)
   first
     | positivity
-    | exact Nat.cast_nonneg _
 
 theorem height_substituted_eq_finsum (hd : d.AxH 𝒜) (h : d.S1) (x : Fin (d.N + 1) → K)
     (hx : ∀ c, d.wx x c ≠ 0) (c : ι) (F : KTp K d.D d.N)
@@ -1041,7 +1038,6 @@ theorem fZ_and_substituted_ne_zero (hd : d.AxH 𝒜) (h : d.S1) (x : Fin (d.N + 
   rw [h0]
   first
     | simp [Data.translatedForm]
-    | exact map_zero _
 
 end Data
 
@@ -1064,14 +1060,6 @@ theorem finsum_finset_sum_comm' {α β : Type*} (s : Finset β) (f : β → α �
     ∑ᶠ a, ∑ b ∈ s, f b a = ∑ b ∈ s, ∑ᶠ a, f b a := by
   first
     | exact finsum_sum_comm s (fun a b => f b a) hf
-    | (classical
-       induction s using Finset.induction_on with
-       | empty => simp
-       | insert b s hb ih =>
-         simp only [Finset.sum_insert hb]
-         rw [finsum_add_distrib (hf b (Finset.mem_insert_self b s))
-           ((s.finite_toSet.biUnion fun b' hb' => hf b' (Finset.mem_insert_of_mem hb')).subset
-             (Function.support_finset_sum)), ih fun b' hb' => hf b' (Finset.mem_insert_of_mem hb')])
 
 variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι]
   {Ω : ι → Type} [∀ c, Field (Ω c)] [∀ c, Algebra K (Ω c)]

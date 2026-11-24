@@ -273,7 +273,7 @@ theorem _root_.GlobalTheory.T.rationalDarboux_transfers_haar_fundamentalDomain :
             @IsAddFundamentalDomain (GlobalTheory.WeilUnitaryTransport.ratPair D.host.F κ) _ _ _ (borel _) 𝓕' ν' ∧
             ∀ f : (κ → AF D.host.F) × (κ → AF D.host.F) → ℂ,
               ∫⁻ w in 𝓕, ‖f (co.e w)‖ₑ ^ 2 ∂ν = ∫⁻ w in 𝓕', ‖f w‖ₑ ^ 2 ∂ν' := by
-  first | exact @GlobalTheory.RatDarbouxTransfer.haar_fundDomain_transfer | exact GlobalTheory.RatDarbouxTransfer.haar_fundDomain_transfer | (intros; apply GlobalTheory.RatDarbouxTransfer.haar_fundDomain_transfer <;> assumption)
+  first | exact @GlobalTheory.RatDarbouxTransfer.haar_fundDomain_transfer
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RationalDarbouxTransfersHaarFundamentalDomainStatement =====
@@ -464,7 +464,7 @@ theorem _root_.GlobalTheory.T.transportedWeilDatum_isUnitary_adelicSchwartz : �
  ∀ om : GlobalTheory.WeilM.UG (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (incM D.host.F JA) ×
       GlobalTheory.WeilM.UG (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (incM D.host.F JB) →* Module.End ℂ ((κ → AF D.host.F) → ℂ),
                        GlobalTheory.WeilSchrodinger.IsTransport ψ co ω om → GlobalTheory.WeilM.IsUnitaryOn (GlobalTheory.WeilM.adeleClass D.host.F) om := by
-  first | exact @GlobalTheory.WeilUnitaryTransport.isUnitaryOn_transport | exact GlobalTheory.WeilUnitaryTransport.isUnitaryOn_transport | (intros; apply GlobalTheory.WeilUnitaryTransport.isUnitaryOn_transport <;> assumption)
+  first | exact @GlobalTheory.WeilUnitaryTransport.isUnitaryOn_transport
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TransportedWeilDatumIsUnitaryAdelicSchwartzStatement =====

@@ -229,7 +229,7 @@ theorem _root_.GlobalTheory.T.componentRepresentatives_injective_doubleCoset : �
       GlobalTheory.UCls.UEquiv (IsCMField.complexConj D.host.E) (-(V.gram)ᵀ) (GlobalTheory.Member.latC V : Set (Fin V.rank → D.host.E)) M
         ((finHom V (gA k)).1 : Matrix (Fin V.rank) (Fin V.rank) (GlobalTheory.AdLat.RA (maximalRealSubfield D.host.E) D.host.E))
         ((finHom V (gA k')).1 : Matrix (Fin V.rank) (Fin V.rank) (GlobalTheory.AdLat.RA (maximalRealSubfield D.host.E) D.host.E)) → k = k' := by
-  first | exact @GlobalTheory.RepsInj.reps_inj | exact GlobalTheory.RepsInj.reps_inj | (intros; apply GlobalTheory.RepsInj.reps_inj <;> assumption)
+  first | exact @GlobalTheory.RepsInj.reps_inj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ComponentRepresentativesInjectiveDoubleCosetStatement =====

@@ -246,7 +246,7 @@ theorem clause_iff (hker : RingHom.ker π = Ideal.span {γ}) (Y : Matrix ι ι O
         obtain ⟨zb, hzb, hub⟩ := hu b
         refine ⟨⟨zb i, hzb i⟩, ?_⟩
         have hne : i ≠ pos b := fun h => hi ⟨b, hb, h.symm⟩
-        simp [hub, Pi.single_apply, hne]
+        simp [hub, hne]
       | zero => exact ⟨0, by simp⟩
       | add x y _ _ hx hy =>
         obtain ⟨c1, h1⟩ := hx
@@ -305,7 +305,7 @@ theorem clause_iff (hker : RingHom.ker π = Ideal.span {γ}) (Y : Matrix ι ι O
       congr 1
       refine Finset.sum_congr rfl fun i _ => ?_
       by_cases h : i ∈ pos '' s
-      · simp only [h, dif_pos, hsm, hub, hpos i h, sub_zero, zero_sub, smul_add, smul_neg, smul_smul]
+      · simp only [h, dif_pos, hsm, hub, hpos i h, zero_sub, smul_add, smul_neg, smul_smul]
         rw [mul_comm]
         abel
       · simp only [h, dif_neg, not_false_eq_true, sub_zero, zero_add, smul_smul]
@@ -740,8 +740,8 @@ theorem oEp_int (hL : LatBasis X p θ (reindex₂ X p Q)) (t : TpX X p) (ht : t 
   obtain ⟨x2, hx2a, hx2b⟩ := crd_surj X p θ Q 0 (Pi.single j 1)
   have hint : IntVec (OvA X p) (Pi.single j (1 : FpX X p)) := fun i => by
     by_cases h : i = j
-    · subst h; simp [ValuationSubring.one_mem]
-    · simp [h, ValuationSubring.zero_mem]
+    · subst h; simp
+    · simp [h]
   have hz : IntVec (OvA X p) (0 : IdxD D → FpX X p) := fun _ => ValuationSubring.zero_mem _
   have l1 := imA_lat_OEp X p ht ((latCrd_of X p θ Q hL x1).2 ⟨hx1a ▸ hint, hx1b ▸ hz⟩)
   have l2 := imA_lat_OEp X p ht ((latCrd_of X p θ Q hL x2).2 ⟨hx2a ▸ hz, hx2b ▸ hint⟩)

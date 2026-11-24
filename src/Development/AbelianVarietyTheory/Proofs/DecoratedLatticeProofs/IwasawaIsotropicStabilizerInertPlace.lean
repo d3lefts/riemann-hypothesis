@@ -99,7 +99,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.Core.Rk.Exh GlobalTheory.RegSW
 
 theorem _root_.GlobalTheory.T.exists_orthonormal_basis_unimodular_hermitian_local_ring : ∀ (O : Type) [CommRing O] [IsLocalRing O] (s : O →+* O), (∀ x, s (s x) = x) → (∃ τ : O, τ + s τ = 1) → (∀ u : O, IsUnit u → s u = u → ∃ x : O, s x * x = u) → ∀ (n : ℕ) (Q : Matrix (Fin n) (Fin n) O), Formalism.UG.cT s Q = Q → IsUnit Q → ∃ a : GL (Fin n) O, Formalism.UG.cT s a.1 * Q * a.1 = 1 := by
-  first | exact @GlobalTheory.Core.Rk.Exh.exists_orthonormal_of_isLocalRing | exact GlobalTheory.Core.Rk.Exh.exists_orthonormal_of_isLocalRing | (intros; apply GlobalTheory.Core.Rk.Exh.exists_orthonormal_of_isLocalRing <;> assumption)
+  first | exact @GlobalTheory.Core.Rk.Exh.exists_orthonormal_of_isLocalRing
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsOrthonormalBasisUnimodularHermitianLocalRiStatement =====
@@ -227,7 +227,7 @@ theorem exists_completion [IsLocalRing O] {s : O →+* O} (hs : ∀ x, s (s x) =
   have hπC : π * C = 0 := by
     rw [hπ]
     simp only [Matrix.sub_mul, Matrix.one_mul, Matrix.mul_assoc, assoc3 h2, assoc3 hC, Matrix.mul_one,
-      Matrix.mul_zero, sub_zero, sub_self]
+      Matrix.mul_zero, sub_self]
   have hπZ : π * Z = 0 := by
     rw [hπ]
     simp only [Matrix.sub_mul, Matrix.one_mul, Matrix.mul_assoc, assoc3 h3, assoc3 h1, Matrix.mul_one,
@@ -239,7 +239,7 @@ theorem exists_completion [IsLocalRing O] {s : O →+* O} (hs : ∀ x, s (s x) =
   have hZπ : Formalism.UG.cT s Z * Q * π = 0 := by
     rw [hπ]
     simp only [Matrix.mul_sub, Matrix.mul_one, Matrix.mul_assoc, tail3 h2, tail3 h3, Matrix.zero_mul,
-      Matrix.one_mul, sub_zero, sub_self]
+      Matrix.one_mul, sub_self]
   have hππ : π * π = π := by
     nth_rewrite 2 [hπ]
     simp only [Matrix.mul_sub, Matrix.mul_one, tail2 hπC, tail2 hπZ, Matrix.zero_mul, sub_zero]
@@ -279,7 +279,7 @@ theorem exists_completion [IsLocalRing O] {s : O →+* O} (hs : ∀ x, s (s x) =
   have hBZ : Formalism.UG.cT s B * Q * Z = 0 := by rw [← key, hZB, cT_zero_r]
   refine ⟨m, fromCols (fromCols C Z) B, fromRows (fromRows (Formalism.UG.cT s Z * Q) (Formalism.UG.cT s C * Q)) B',
     ?_, ?_, ?_, ?_⟩
-  · simp only [fromRows_mul_fromCols, fromRows_mul, mul_fromCols, h1, h2, h3, hC, hCB, hZB, hB'C, hB'Z, hB]
+  · simp only [fromRows_mul, mul_fromCols, h1, h2, h3, hC, hCB, hZB, hB'C, hB'Z, hB]
     ext (((i|i)|i)) (((j|j)|j)) <;> simp [Matrix.one_apply]
   · rw [fromCols_mul_fromRows, fromCols_mul_fromRows, hBB, hπ]
     abel
@@ -338,7 +338,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.Core.Rk.Exh GlobalTheory.RegSW
 
 theorem _root_.GlobalTheory.T.exists_unitaryIsometry_isotropicFrame_localRing : ∀ (O : Type) [CommRing O] [IsLocalRing O] (s : O →+* O), (∀ x, s (s x) = x) → (∃ τ : O, τ + s τ = 1) → (∀ u : O, IsUnit u → s u = u → ∃ x : O, s x * x = u) → ∀ (n r : ℕ) (Q : Matrix (Fin n) (Fin n) O), Formalism.UG.cT s Q = Q → IsUnit Q → ∀ C C' : Matrix (Fin n) (Fin r) O, (∃ L : Matrix (Fin r) (Fin n) O, L * C = 1) → (∃ L : Matrix (Fin r) (Fin n) O, L * C' = 1) → Formalism.UG.cT s C * Q * C = 0 → Formalism.UG.cT s C' * Q * C' = 0 → ∃ k : GL (Fin n) O, Formalism.UG.cT s k.1 * Q * k.1 = Q ∧ k.1 * C = C' := by
-  first | exact @GlobalTheory.WittFrame.exists_isometry_frame | exact GlobalTheory.WittFrame.exists_isometry_frame | (intros; apply GlobalTheory.WittFrame.exists_isometry_frame <;> assumption)
+  first | exact @GlobalTheory.WittFrame.exists_isometry_frame
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsUnitaryIsometryIsotropicFrameLocalRingStatement =====

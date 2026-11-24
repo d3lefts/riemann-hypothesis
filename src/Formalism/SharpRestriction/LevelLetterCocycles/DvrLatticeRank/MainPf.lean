@@ -732,15 +732,12 @@ theorem padicValNat_le_of_dvd' (p : ℕ) {a b : ℕ} (hab : a ∣ b) (hb : b ≠
   by_cases hp1 : p = 1
   · subst hp1
     first
-      | simp
       | simp [padicValNat]
-      | (unfold padicValNat; simp)
   · nth_rw 2 [Nat.padicValNat_def]
     have hd : p ^ padicValNat p a ∣ b := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans hab
     have hf : FiniteMultiplicity p b := Nat.finiteMultiplicity_iff.2 ⟨hp1, Nat.pos_of_ne_zero hb⟩
     first
       | exact hf.le_multiplicity_of_pow_dvd hd
-      | exact (hf.pow_dvd_iff_le_multiplicity).mp hd
 
 theorem ePB_le_expLift_pf (l M H h : ℕ) (jumps : Finset ℤ) (hM : M ≤ h) (hH : H ≤ 2 * h) :
     Formalism.MainNotions.LiftingTheory.ePB l 1 M H jumps ≤ expLift l h (Formalism.MainNotions.LiftingTheory.JSet jumps M) := by
@@ -789,7 +786,6 @@ theorem jumpSet_bound {l : ℕ} [Fact l.Prime] (P : LocPrime l) (K LL : FinExt l
   have ha' : a ∈ Finset.Icc (-(M : ℤ)) M := by
     first
       | exact Finset.mem_of_mem_filter a ha
-      | (simp only [Finset.mem_filter] at ha; exact ha.1)
   obtain ⟨h1, h2⟩ := Finset.mem_Icc.mp ha'
   constructor <;> omega
 
@@ -1125,13 +1121,9 @@ theorem uniformiser_ring_of_hypotheses (D : D7) (HW : HWOf D.loc) (F : FonOf D.l
   have hs : ((HW l).W K 1 LL hG).s = 1 := by
     first
     | exact (HW l).W_s K 1 LL hG
-    | exact (HW l).hs K 1 LL hG
-    | exact (HW l).s_eq K 1 LL hG
-    | exact (HW l).W_s
-    | rfl
   obtain ⟨-, ⟨π', E, hr, -⟩, -⟩ := h9 hs (by rw [hpe]; exact hl)
   refine ⟨π', E, ?_⟩
-  convert hr using 2 <;> first | rfl | (simp only [eK, sK, hpe]) | (unfold eK sK; simp [hpe])
+  convert hr using 2 <;> first | rfl | (simp only [hpe])
 
 end Formalism.MainNotions.N.Ln34
 
@@ -1406,7 +1398,7 @@ theorem univLinkPf_local [StrongRankCondition O] {T₁ T₂ : LocLat G Qp LL O} 
           (Finset.sum_congr rfl fun i _ => congrArg (o i • ·) (hκbcl i).symm))
       have hB := Submodule.mem_comap.1 hZ
       simp only [Submodule.subtype_apply, Submodule.coe_sub, Submodule.coe_smul,
-        Submodule.coe_sum, Submodule.coe_mk] at hB
+        Submodule.coe_sum] at hB
       have hImF : F.post κ₁ ∈ F.ImF PD := by
         unfold LatHom.ImF; exact Submodule.mem_sup_left (Submodule.mem_map_of_mem hκ₁f)
       have hBI : ((PD.p : ℕ) : O) ^ (σ + (2 * σ + κ + y₁)) • y - F.post κ₁ -

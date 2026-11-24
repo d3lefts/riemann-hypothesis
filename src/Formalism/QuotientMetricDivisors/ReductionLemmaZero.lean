@@ -76,10 +76,8 @@ lemma ph_ge_neg_one {x : ℝ} (hx : 0 ≤ x) : -1 ≤ ph x := by
   · have h1 := Real.log_le_sub_one_of_pos (inv_pos.mpr hx')
     rw [Real.log_inv] at h1
     have h2 : x * x⁻¹ = 1 := mul_inv_cancel₀ hx'.ne'
-    have h3 := mul_le_mul_of_nonneg_left h1 hx
-    rw [mul_sub, h2, mul_one, mul_neg] at h3
     unfold ph
-    linarith
+    nlinarith [mul_le_mul_of_nonneg_left h1 hx, h2]
 
 lemma le_ph_sub {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
     (b - a) * Real.log a ≤ ph b - ph a := by
@@ -87,15 +85,14 @@ lemma le_ph_sub {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
   have h1 := Real.log_le_sub_one_of_pos (div_pos ha hb)
   rw [Real.log_div ha.ne' hb.ne'] at h1
   have h2 := mul_le_mul_of_nonneg_left h1 hb.le
-  have h3 : b * (a / b - 1) = a - b := by field_simp <;> ring
+  have h3 : b * (a / b - 1) = a - b := by field_simp
   rw [h3] at h2
   unfold ph
   linarith
 
 lemma ph_mono {a b : ℝ} (ha : 1 ≤ a) (hab : a ≤ b) : ph a ≤ ph b := by
   have h1 := le_ph_sub (by linarith : (0 : ℝ) < a) hab
-  have h2 : 0 ≤ Real.log a := Real.log_nonneg ha
-  nlinarith [mul_nonneg (sub_nonneg.mpr hab) h2]
+  nlinarith [mul_nonneg (sub_nonneg.mpr hab) (Real.log_nonneg ha)]
 
 lemma one_le_log {t : ℝ} (ht : 3 ≤ t) : 1 ≤ Real.log t := by
   calc (1 : ℝ) = Real.log (Real.exp 1) := (Real.log_exp 1).symm
@@ -127,8 +124,7 @@ def phm (x : ℝ) : ℝ := ph (max x 1)
 
 lemma phm_mono : Monotone phm := by
   intro x y hxy
-  unfold phm
-  exact ph_mono (le_max_right _ _) (max_le (le_trans hxy (le_max_left _ _)) (le_max_right _ _))
+  simpa only [phm] using ph_mono (le_max_right _ _) (max_le (le_trans hxy (le_max_left _ _)) (le_max_right _ _))
 
 lemma phm_ge {x : ℝ} : -1 ≤ phm x := ph_ge_neg_one (le_trans zero_le_one (le_max_right x 1))
 

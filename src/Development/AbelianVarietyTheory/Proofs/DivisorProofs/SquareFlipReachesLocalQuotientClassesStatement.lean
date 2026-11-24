@@ -398,12 +398,10 @@ theorem exists_right_translate (hT : IsTriple B G X om om') (dV : G.V.J.det ≠ 
     (fun l => schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo G.M.co v (uM (Matrix.of fun k j => l (Matrix.single k j 1)))))
     (fun C x hx => ⟨hsb _ x hx, funext fun Y => by
         rw [Heisenberg₂ _ (t1 C) (by rw [t3, p0]) x hx, t2, t3, p0, AddChar.map_zero_eq_one, one_mul], funext fun Y => by
-        beta_reduce
         rw [hcomm _ (t1 C) x hx, Heisenberg₂ _ (hat _ (t1 C)) (by rw [eY, t3, Matrix.zero_mul, p0]) _ (hSB x hx), eX, eY, t2, t3,
           Matrix.zero_mul, p0, AddChar.map_zero_eq_one, one_mul, Matrix.add_mul]⟩)
     (fun l x hx => ⟨hsb _ x hx, funext fun Y => by
         rw [Heisenberg₂ _ (m1 _) (by rw [m2, p1]) x hx, m2, m3, add_zero, ← linForm_eq], funext fun Y => by
-        beta_reduce
         rw [hcomm _ (m1 _) x hx, Heisenberg₂ _ (hat _ (m1 _)) (by rw [eX, m2, Matrix.zero_mul, p1]) _ (hSB x hx), eX, eY, m2, m3,
           Matrix.zero_mul, add_zero, linForm_eq l Y, pairM_eq_trace, pairM_eq_trace, transpose_mul, Matrix.mul_assoc,
           ← Matrix.mul_assoc H.valᵀ, ← transpose_mul, Units.inv_mul, transpose_one, Matrix.one_mul]⟩)
@@ -490,8 +488,8 @@ theorem smul_blk_sub_one {R S : Type} [Ring S] [SMulZeroClass R S] {p q d : ℕ}
   have c2 := fun r s => congrFun (congrFun hB r) s
   rcases r with r | r <;> rcases s with s | s
   · simpa [GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.blk, Matrix.one_apply] using c1 r s
-  · simp [GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.blk, Matrix.one_apply]
-  · simp [GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.blk, Matrix.one_apply]
+  · simp [GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.blk]
+  · simp [GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.blk]
   · simpa [GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.blk, Matrix.one_apply] using c2 r s
 
 attribute [local instance] GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.measFv GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.borelFv
@@ -622,7 +620,7 @@ theorem _root_.GlobalTheory.T.theta_triple_realization_square_class : ∀ {D : D
         ∃ g, ∃ c' : ℂ, c' ≠ 0 ∧ ∀ φ ∈ GlobalTheory.WeilM.SB _, ∃ φ₃ ∈ GlobalTheory.WeilM.SB _,
           Acts (evFin D.host.F v) (om (1, blkU _ _ e h.JWW g)) φ φ₃ ∧
           ∀ Z, ιA φ₃ Z = c' * ιA φ (Z * (c₀.1 * GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.blk e K₁.1 K₂.1 * (c₀⁻¹).1)) := by
-  first | exact @GlobalTheory.MixCompare.mixed_compare | exact GlobalTheory.MixCompare.mixed_compare | (intros; apply GlobalTheory.MixCompare.mixed_compare <;> assumption)
+  first | exact @GlobalTheory.MixCompare.mixed_compare
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaTripleRealizationSquareClassStatement =====
@@ -656,7 +654,7 @@ theorem _root_.GlobalTheory.T.zetaIntegral_block_translate_of_flip_datum : ∀ {
             (GlobalTheory.SquareFlipReach.trA t hv e (g₀.1 * Z * c₀.1 * GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.blk e K₁.1 K₂.1))) =
         smallP (haarVol (KO _ (Fin (spW₁ G i j).rank))) finSumFinEquiv (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.chrW X.ν (Bs.τ ⟨v, hP⟩))
           (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.chrW X.α (Bs.τ ⟨v, hP⟩)) Ψ := by
-  first | exact @GlobalTheory.PureMatch.pure_match | exact GlobalTheory.PureMatch.pure_match | (intros; apply GlobalTheory.PureMatch.pure_match <;> assumption)
+  first | exact @GlobalTheory.PureMatch.pure_match
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ZetaIntegralBlockTranslateOfFlipDatumStatement =====
@@ -765,7 +763,7 @@ theorem _root_.GlobalTheory.T.squareFlip_reaches_localQuotient_classes : ∀ {D 
     ∀ w ∈ locPl G t, ∀ v, w.under (𝓞 D.host.F) = v → ∀ φ₀ ∈ GlobalTheory.WeilM.SB _,
     ∃ n Φ φ₂ g φ₃, depthAt G w ≤ n ∧ IsNatDatum (unifAt w) n Φ ∧ IsLocFn W B t e Γ w v (flipAt W t i j w n Φ) φ₂ ∧
       φ₃ ∈ GlobalTheory.WeilM.SB _ ∧ Acts (evFin D.host.F v) (om (1, blkU _ _ e h.JWW g)) φ₂ φ₃ ∧ Rf.p v φ₃ = Rf.p v φ₀ := by
-  first | exact @GlobalTheory.SquareFlipReach.flip_reach | exact GlobalTheory.SquareFlipReach.flip_reach | (intros; apply GlobalTheory.SquareFlipReach.flip_reach <;> assumption)
+  first | exact @GlobalTheory.SquareFlipReach.flip_reach
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareFlipReachesLocalQuotientClassesStatement =====

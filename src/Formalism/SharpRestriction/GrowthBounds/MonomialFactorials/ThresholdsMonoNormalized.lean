@@ -289,9 +289,8 @@ theorem ratio_num (x y r : ℕ) (hx : 1 ≤ x) (hxy : x ≤ y) (h : (r : ℝ) * 
     have := Real.add_one_le_exp (((y : ℝ) - x) / x)
     have e : ((y : ℝ) - x) / x + 1 = (y : ℝ) / x := by field_simp; ring
     linarith
-  have hq0 : 0 ≤ (y : ℝ) / x := by positivity
   have h2 : ((y : ℝ) / x) ^ r ≤ Real.exp 3 := by
-    calc ((y : ℝ) / x) ^ r ≤ Real.exp (((y : ℝ) - x) / x) ^ r := pow_le_pow_left₀ hq0 hq r
+    calc ((y : ℝ) / x) ^ r ≤ Real.exp (((y : ℝ) - x) / x) ^ r := pow_le_pow_left₀ (by positivity) hq r
       _ = Real.exp ((r : ℝ) * (((y : ℝ) - x) / x)) := by rw [← Real.exp_nat_mul]
       _ ≤ Real.exp 3 := by
           apply Real.exp_le_exp.2

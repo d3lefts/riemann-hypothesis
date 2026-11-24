@@ -153,12 +153,16 @@ end Injective
 
 section LongExact
 
+-- Match Mathlib's independent universes for the site's morphisms and the coefficient groups.
+-- Identifying them here makes the kernel repeatedly unfold the Ext construction.
+universe w
+
 private lemma exact_ab_zero_apply {T : ShortComplex AddCommGrpCat.{w'}}
     (hT : T.Exact) (x : T.X₁) : T.g (T.f x) = 0 :=
   ((ShortComplex.ab_exact_iff_function_exact T).mp hT).apply_apply_eq_zero x
 
-variable [HasSheafify J AddCommGrpCat.{v}] [HasExt.{w'} (Sheaf J AddCommGrpCat.{v})]
-  {S : ShortComplex (Sheaf J AddCommGrpCat.{v})} (hS : S.ShortExact)
+variable [HasSheafify J AddCommGrpCat.{w}] [HasExt.{w'} (Sheaf J AddCommGrpCat.{w})]
+  {S : ShortComplex (Sheaf J AddCommGrpCat.{w})} (hS : S.ShortExact)
 
 noncomputable def H.δ (n₀ n₁ : ℕ) (h : n₀ + 1 = n₁) : Sheaf.H S.X₃ n₀ →+ Sheaf.H S.X₁ n₁ :=
   hS.extClass.postcomp _ h

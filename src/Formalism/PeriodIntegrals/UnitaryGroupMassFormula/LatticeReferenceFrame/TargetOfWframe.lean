@@ -98,7 +98,7 @@ theorem hG_add_right (x y z : Fin I.n → I.E) : hG I x (y + z) = hG I x y + hG 
   refine Finset.sum_congr rfl (fun i _ => ?_)
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl (fun j _ => ?_)
-  simp only [Pi.add_apply, map_add (f := _)]
+  simp only [Pi.add_apply]
   ring
 
 theorem hG_zsmul_left (q : ℤ) (x y : Fin I.n → I.E) : hG I (q • x) y = (q : I.E) * hG I x y := by
@@ -116,7 +116,7 @@ theorem hG_zsmul_right (q : ℤ) (x y : Fin I.n → I.E) : hG I x (q • y) = (q
   refine Finset.sum_congr rfl (fun i _ => ?_)
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl (fun j _ => ?_)
-  simp only [Pi.smul_apply, zsmul_eq_mul, map_mul, map_intCast]
+  simp only [Pi.smul_apply, zsmul_eq_mul]
   ring
 
 theorem hG_zero_right (x : Fin I.n → I.E) : hG I x 0 = 0 := by
@@ -239,7 +239,7 @@ theorem side_mem {r k M : ℕ} (e f : Fin r → Fin I.n → I.E) (θ : 𝓞 I.E)
     show qa • ((ga : I.E) • x) ∈ S'
     have hv : qa • ((ga : I.E) • x) = (G : I.E) • ((w : I.E) • x) := by
       ext j
-      simp only [Pi.smul_apply, Pi.mul_apply, Pi.intCast_apply, zsmul_eq_mul, smul_eq_mul]
+      simp only [Pi.smul_apply, zsmul_eq_mul, smul_eq_mul]
       linear_combination (x j) * hga
     rw [hv]
     exact hG' _ (osmul_mem I ⟨(w : 𝓞 I.E), by simp⟩ hx)
@@ -468,7 +468,7 @@ theorem incl_osmul (c : 𝓞 I.E) (x : Fin I.n → I.E) :
     incl I (c • x) = (⟨Formalism.UG.inclE (F := I.F) (Af I.F) (c : I.E), inclE_mem' I c⟩ : IntAf I.F I.E) •
       incl I x := by
   funext i
-  simp only [incl, Pi.smul_apply, Subring.smul_def, smul_eq_mul, Algebra.smul_def, map_mul]
+  simp only [incl, Pi.smul_apply, Algebra.smul_def, map_mul]
   rfl
 
 theorem mem_L_of (h3 : LocGlob) {x : Fin I.n → I.E} (hx : incl I x ∈ I.Lf) : x ∈ I.L := by
@@ -925,8 +925,6 @@ theorem memO {v : HeightOneSpectrum (𝓞 F)} {x : v.adicCompletion F} :
     x ∈ v.adicCompletionIntegers F ↔ Valued.v x ≤ 1 := by
   first
     | exact Iff.rfl
-    | exact HeightOneSpectrum.mem_adicCompletionIntegers F v
-    | simp [HeightOneSpectrum.mem_adicCompletionIntegers]
 
 def evA (v : HeightOneSpectrum (𝓞 F)) : Af F →+* v.adicCompletion F where
   toFun a := a v
@@ -1011,18 +1009,16 @@ theorem adOfLoc : AdOfLoc := by
   refine ⟨mkA c₁ h1, mkA c₂ h2, mkA_mem c₁ h1, mkA_mem c₂ h2, ?_, ?_, ?_⟩
   · apply eq_of_evA
     intro v
-    simp only [map_add (f := _), map_mul, map_sub, map_pow, map_one, map_natCast, map_neg, map_ofNat,
+    simp only [map_add (f := _), map_mul, map_sub, map_pow, map_one, map_natCast, map_ofNat,
       evA_apply, mkA_apply]
     exact e1 v
   · apply eq_of_evA
     intro v
-    simp only [map_add (f := _), map_mul, map_sub, map_pow, map_one, map_natCast, map_neg, map_ofNat,
-      evA_apply, mkA_apply]
+    simp only [map_add (f := _), map_mul, map_sub, map_pow, map_one, map_natCast, map_neg, evA_apply, mkA_apply]
     exact e2 v
   · apply eq_of_evA
     intro v
-    simp only [map_add (f := _), map_mul, map_sub, map_pow, map_one, map_natCast, map_neg, map_ofNat,
-      map_zero, evA_apply, mkA_apply]
+    simp only [map_add (f := _), map_mul, map_sub, map_pow, map_one, map_natCast, map_zero, evA_apply, mkA_apply]
     exact e3 v
 
 end PI.ScRefExists.Id
@@ -1109,10 +1105,10 @@ theorem locIdem : LocIdem := by
     simp only [map_add (f := _), map_sub, map_mul, map_pow, map_one, map_ofNat] at e
     exact e
   · have e := congrArg (v.adicCompletionIntegers F).subtype hB
-    simp only [map_add (f := _), map_sub, map_mul, map_pow, map_one, map_ofNat, map_neg] at e
+    simp only [map_add (f := _), map_sub, map_mul, map_pow, map_one, map_neg] at e
     exact e
   · have e := congrArg (v.adicCompletionIntegers F).subtype hC
-    simp only [map_add (f := _), map_sub, map_mul, map_pow, map_one, map_ofNat, map_zero] at e
+    simp only [map_add (f := _), map_sub, map_mul, map_pow, map_one, map_zero] at e
     exact e
 
 end PI.ScRefExists.Id
@@ -1413,12 +1409,10 @@ theorem GE_star (g : ℕ) {x : I.E} (h : GE I g x) : GE I g (star x) := by
   have hint : IsIntegral ℤ (starRingEnd I.E (t : I.E)) := by
     first
     | exact (RingOfIntegers.isIntegral_coe t).map (starRingEnd I.E).toIntAlgHom
-    | exact (t.2).map (starRingEnd I.E).toIntAlgHom
   refine ⟨⟨starRingEnd I.E (t : I.E), hint⟩, ?_⟩
   rw [ht]
   first
   | (rw [star_mul', star_natCast]; rfl)
-  | simp [star_mul']
 
 theorem span_part (p m r k : ℕ) (θ : 𝓞 I.E) (e f : Fin r → Fin I.n → I.E) (M T : ℕ)
     (w wd : Fin (k + 1) → Fin I.n → I.E)
@@ -1567,7 +1561,6 @@ theorem span_part (p m r k : ℕ) (θ : 𝓞 I.E) (e f : Fin r → Fin I.n → I
     have hint : IsIntegral ℤ (starRingEnd I.E (θ : I.E)) := by
       first
       | exact (RingOfIntegers.isIntegral_coe θ).map (starRingEnd I.E).toIntAlgHom
-      | exact (θ.2).map (starRingEnd I.E).toIntAlgHom
     exact ⟨⟨starRingEnd I.E (θ : I.E), hint⟩, rfl⟩
   intro y hy
   have hyN1 : (θ : I.E) • y ∈ N :=
@@ -1756,8 +1749,7 @@ theorem local_assembly_principal : PPAssemble := by
         + (T : I.E) ^ 2 * (1 - (θ : I.E) - star (θ : I.E))
         + (1 - (T : I.E) ^ 2) := by
       rw [hzdef]
-      simp only [hG_smul_left, hG_smul_right, hG_sub_left, hG_sub_right, star_natCast, star_star, star_sub,
-        star_smul]
+      simp only [hG_smul_left, hG_smul_right, hG_sub_left, hG_sub_right, star_natCast, star_star]
       rw [hl1, hl2]
       ring
     rw [hzz]
@@ -1775,7 +1767,7 @@ theorem local_assembly_principal : PPAssemble := by
       have h : (θ : I.E) * hG I z ((T : I.E) • w i.castSucc) =
           ((T : I.E) ^ 2 * hG I (w (Fin.last k)) (w i.castSucc)) * ((θ : I.E) * star (θ : I.E)) := by
         rw [hzdef]
-        simp only [hG_smul_left, hG_smul_right, hG_sub_left, star_natCast, star_star, star_sub]
+        simp only [hG_smul_left, hG_smul_right, hG_sub_left, star_natCast, star_star]
         rw [hl3]
         ring
       rw [h]
@@ -1786,7 +1778,7 @@ theorem local_assembly_principal : PPAssemble := by
       have h : star (θ : I.E) * hG I z ((T : I.E) • wd i.castSucc) =
           -((T : I.E) ^ 2 * hG I (wd (Fin.last k)) (wd i.castSucc)) * ((θ : I.E) * star (θ : I.E)) := by
         rw [hzdef]
-        simp only [hG_smul_left, hG_smul_right, hG_sub_left, star_natCast, star_star, star_sub]
+        simp only [hG_smul_left, hG_smul_right, hG_sub_left, star_natCast, star_star]
         rw [hl4]
         ring
       rw [h]
@@ -1875,7 +1867,6 @@ private lemma sk_GE_of_mem_span_natCast (g : ℕ) (z : 𝓞 I.E) (hz : z ∈ Ide
   rw [← ht]
   first
     | (push_cast; ring)
-    | simp [mul_comm]
 
 theorem theta_series_existence : PI.ScRefExists.Sk.ThetaEx := by
   intro I g hg hS
@@ -1883,11 +1874,9 @@ theorem theta_series_existence : PI.ScRefExists.Sk.ThetaEx := by
   letI : LinearOrder (HeightOneSpectrum (𝓞 I.E)) := by
     first
       | exact linearOrderOfSTO WellOrderingRel
-      | exact IsWellOrder.linearOrder WellOrderingRel
   obtain ⟨N, hN⟩ : ∃ N : ℕ, (∏ P ∈ primesG I g hg, P.asIdeal) ^ N ≤ Ideal.span {(g : 𝓞 I.E)} := by
     first
       | exact Ideal.exists_pow_le_of_le_radical_of_fg (prod_le_radical I g hg) (IsNoetherian.noetherian _)
-      | exact Ideal.exists_pow_le_of_le_radical_of_fg (IsNoetherian.noetherian _) (prod_le_radical I g hg)
   obtain ⟨θ, hθ⟩ := IsDedekindDomain.exists_forall_sub_mem_ideal (s := primesG I g hg)
     (fun P : HeightOneSpectrum (𝓞 I.E) => P.asIdeal) (fun _ => N) (fun P _ => P.prime)
     (fun P _ Q _ h e => h (HeightOneSpectrum.ext e))

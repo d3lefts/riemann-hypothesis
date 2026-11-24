@@ -68,7 +68,7 @@ theorem coeff_eq_contraction {V W : Type} [AddCommGroup V] [Module ℚ V] [AddCo
       = TensorProduct.rid ℚ V (LinearMap.lTensor V (b.coord i) t) := by
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | tmul v w => simp [TensorProduct.equivFinsuppOfBasisRight_apply_tmul_apply]
+  | tmul v w => simp
   | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 theorem eq_zero_of_contractions {V W : Type} [AddCommGroup V] [Module ℚ V] [AddCommGroup W]
@@ -99,11 +99,7 @@ theorem tensor_eq_zero_of_forall_contract {V W : Type} [AddCommGroup V] [Module 
     [Module ℚ W] (t : V ⊗[ℚ] W)
     (h : ∀ m : W →ₗ[ℚ] ℚ, TensorProduct.rid ℚ V (LinearMap.lTensor V m t) = 0) : t = 0 := by
   first
-  | exact @_root_.GlobalTheory.CoefficientContraction.eq_zero_of_contractions
-  | exact _root_.GlobalTheory.CoefficientContraction.eq_zero_of_contractions
   | (apply _root_.GlobalTheory.CoefficientContraction.eq_zero_of_contractions <;> assumption)
-  | (intros; apply _root_.GlobalTheory.CoefficientContraction.eq_zero_of_contractions <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.CoefficientContraction.eq_zero_of_contractions <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.CoefficientContraction.eq_zero_of_contractions ..)
 
 theorem aeval_sum_elim_eq_zero_of_tensor {ι : Type} [Fintype ι] [DecidableEq ι] (Γ : Set (Matrix ι ι ℂ))

@@ -419,15 +419,15 @@ theorem continuous_ofCoords : Continuous (ofCoords : (Fin 4 → R) → ℍ[R, a,
 
 theorem continuous_star' : Continuous (star : ℍ[R, a, b] → ℍ[R, a, b]) := by
   refine continuous_induced_rng.2 (continuous_pi fun i => ?_)
-  fin_cases i <;> simp [coords, Function.comp_def] <;> fun_prop
+  fin_cases i <;> simp [coords] <;> fun_prop
 
 theorem continuous_star_mul : Continuous fun p : ℍ[R, a, b] × ℍ[R, a, b] => star p.1 * p.2 := by
   refine continuous_induced_rng.2 (continuous_pi fun i => ?_)
-  fin_cases i <;> simp [coords, Function.comp_def] <;> fun_prop
+  fin_cases i <;> simp [coords] <;> fun_prop
 
 theorem continuous_const_mul' (c : ℍ[R, a, b]) : Continuous fun u : ℍ[R, a, b] => c * u := by
   refine continuous_induced_rng.2 (continuous_pi fun i => ?_)
-  fin_cases i <;> simp [coords, Function.comp_def] <;> fun_prop
+  fin_cases i <;> simp [coords] <;> fun_prop
 
 end GlobalTheory.QSA.FujisakiQ
 
@@ -612,7 +612,7 @@ theorem ci_sglI_self (w : InfinitePlace F) (c : w.Completion) : ci w (sglI w c) 
 
 theorem ci_sglI_ne {w u : InfinitePlace F} (h : u ≠ w) (c : w.Completion) : ci u (sglI w c) = 0 := by
   classical
-  rw [ci_apply]; simp [sglI, Pi.single_apply, h]
+  rw [ci_apply]; simp [sglI, h]
 
 theorem cf_sglI (w : InfinitePlace F) (c : w.Completion) (v : HeightOneSpectrum (𝓞 F)) :
     cf v (sglI w c) = 0 := by
@@ -848,7 +848,7 @@ theorem isPlacesIdem_mul_self {S₁ : Finset (InfinitePlace F)} {S₂ : Finset (
   apply GlobalTheory.StrongApproximationSL2.idem_of_isPlacesIdem <;> assumption
 
 theorem rat_mul {a b : F} (x y : ℍ[F, a, b]) : rat (x * y) = rat x * rat y := by
-  ext <;> simp [rat] <;> ring
+  ext <;> simp [rat]
 
 theorem rat_one {a b : F} : rat (1 : ℍ[F, a, b]) = 1 := by
   ext <;> simp [rat]
@@ -865,7 +865,7 @@ theorem nrm_smul {R : Type*} [CommRing R] {a b : R} (s : R) (x : ℍ[R, a, b]) :
   ring
 
 theorem star_smul' {R : Type*} [CommRing R] {a b : R} (s : R) (x : ℍ[R, a, b]) : star (s • x) = s • star x := by
-  ext <;> simp <;> ring
+  ext <;> simp
 
 end GlobalTheory.QSA.Unconj
 
@@ -1134,7 +1134,7 @@ theorem rat_one' {a b : F} : rat (1 : ℍ[F, a, b]) = 1 := by
 theorem continuous_smul_const {R : Type*} [CommRing R] [TopologicalSpace R] [IsTopologicalRing R] {a b : R}
     (x : ℍ[R, a, b]) : Continuous fun t : R => t • x := by
   refine continuous_induced_rng.2 (continuous_pi fun i => ?_)
-  fin_cases i <;> simp [coords, Function.comp_def] <;> fun_prop
+  fin_cases i <;> simp [coords] <;> fun_prop
 
 end GlobalTheory.QSA.DivAssembly
 
@@ -1370,10 +1370,6 @@ theorem quaternion_split_of_isotropic : ∀ (F : Type) [Field F] [NumberField F]
     ∃ φ : ℍ[F, a, b] ≃ₐ[F] Matrix (Fin 2) (Fin 2) F, ∀ x, (φ x).det = nrm x := by
   first
   | exact @_root_.GlobalTheory.MatrixHomBijective.split_of_isotropic
-  | exact _root_.GlobalTheory.MatrixHomBijective.split_of_isotropic
-  | (apply _root_.GlobalTheory.MatrixHomBijective.split_of_isotropic <;> assumption)
-  | (intros; apply _root_.GlobalTheory.MatrixHomBijective.split_of_isotropic <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.MatrixHomBijective.split_of_isotropic <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.MatrixHomBijective.split_of_isotropic ..)
 
 end GlobalTheory
@@ -1479,7 +1475,7 @@ theorem Ψ_one : Ψ φ 1 = 1 := by
 
 theorem Φ_rat (y : ℍ[F, a, b]) : Φ φ (rat y) = (φ y).map (algebraMap F (AF F)) := by
   conv_rhs => rw [decomp y]
-  simp only [Φ_apply, map_add (f := _), map_smul, map_one, Matrix.map_add (f := _), map_smul_F, Matrix.map_one _ (map_zero _) (map_one (algebraMap F (AF F)))]
+  simp only [Φ_apply, map_add (f := _), map_smul, map_one]
   ext i j
   simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, Matrix.one_apply, smul_eq_mul, map_add (f := _), map_mul, rat]
   split_ifs <;> simp

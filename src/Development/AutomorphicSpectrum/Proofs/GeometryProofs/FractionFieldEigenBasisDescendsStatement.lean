@@ -265,8 +265,7 @@ theorem eigSub_baseChange : ∀ (E : Type) [Field E] [NumberField E] (K C V A : 
       have hxk : ∀ k, x k = ∑ t, j (y t k) * c t := by
         intro k
         have h := congrArg (fun s : S => (s : C)) (bS.sum_repr ⟨x k, Submodule.subset_span ⟨k, rfl⟩⟩)
-        simp only [Submodule.coe_sum, Submodule.coe_smul, Submodule.coe_smul_of_tower,
-          Algebra.smul_def] at h
+        simp only [Submodule.coe_sum, Submodule.coe_smul, Algebra.smul_def] at h
         exact h.symm
       have hxsum : x = ∑ t, c t • (fun k => j (y t k)) := by
         funext k
@@ -368,7 +367,7 @@ theorem _root_.GlobalTheory.T.fraction_field_eigen_basis_descends : ∀ (E : Typ
     LinearIndependent C (fun i k => j (b i k)) ∧
       Submodule.span C (Set.range fun i k => j (b i k)) = HT.eigSp ρC (j.comp σ) ∧
       Submodule.span A (Set.range fun i k => j (b i k)) = HT.eigSub ρC (j.comp σ) (stdLat A C g) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.FlatEig.eigSub_baseChange | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.FlatEig.eigSub_baseChange | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.FlatEig.eigSub_baseChange <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.FlatEig.eigSub_baseChange
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.FractionFieldEigenBasisDescendsStatement =====

@@ -197,11 +197,7 @@ theorem isExpHomR_bc {x : ∀ m, overAt x0 (Jet S (Fin 1 × Fin d) m) ⟶ Xo.uni
     simp only [← Category.assoc, kS, k0, k1]
     simp only [Category.assoc, h2 m]
     first
-    | exact Hom.comp_mul _ _ _
     | exact MonObj.comp_mul _ _ _
-    | exact CategoryTheory.Hom.comp_mul _ _ _
-    | simp only [Hom.comp_mul]
-    | simp only [MonObj.comp_mul]
 
 theorem dual_comp : (ReciprocityTheory.ChartRestriction.G.Chart.dualMapR f).comp (algebraMap S (DualNumber S)) =
     (algebraMap T (DualNumber T)).comp f := RingHom.ext fun s => by
@@ -325,10 +321,8 @@ theorem epsMul_zero {S : Type} [CommRing S] :
   refine RingHom.ext fun x => TrivSqZeroExt.ext ?_ ?_
   · first
     | simp [epsMul, TrivSqZeroExt.algebraMap_eq_inl]
-    | (simp [epsMul]; rfl)
   · first
     | simp [epsMul, TrivSqZeroExt.algebraMap_eq_inl]
-    | (simp [epsMul]; rfl)
 
 theorem epsMul_one {S : Type} [CommRing S] : epsMul (1 : S) = RingHom.id (DualNumber S) := by
   refine RingHom.ext fun x => TrivSqZeroExt.ext ?_ ?_ <;> simp [epsMul]
@@ -341,17 +335,13 @@ theorem fst_comp_tan {S : Type} [CommRing S] (d : ℕ) (j : Fin d) :
   intro i
   first
   | (simp only [AlgHom.comp_apply, Formalism.L2.Pj.jetTan, Formalism.L2.Pj.jetAug, Formalism.L2.Pj.liftJet, Ideal.Quotient.liftₐ_apply,
-      Ideal.Quotient.mkₐ_eq_mk, AlgHom.coe_toRingHom]
+      Ideal.Quotient.mkₐ_eq_mk]
      erw [Ideal.Quotient.lift_mk, Ideal.Quotient.lift_mk]
-     by_cases h : i = (0, j) <;> simp [h])
-  | (show TrivSqZeroExt.fst ((MvPolynomial.aeval _) (MvPolynomial.X i)) = (MvPolynomial.aeval _) (MvPolynomial.X i)
      by_cases h : i = (0, j) <;> simp [h])
 
 theorem comp_one_gen {X : Scheme.{0}} {Y Z M : Over X} [GrpObj M] (f : Y ⟶ Z) : f ≫ (1 : Z ⟶ M) = 1 := by
   first
   | simp
-  | (rw [MonObj.Hom.one_def, MonObj.Hom.one_def, ← Category.assoc]; congr 1; exact toUnit_unique _ _)
-  | simp [MonObj.Hom.one_def]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
   {Xo : Moduli Dw l} {c : Coeff l} {S : Type} [CommRing S] [Algebra c.F S]

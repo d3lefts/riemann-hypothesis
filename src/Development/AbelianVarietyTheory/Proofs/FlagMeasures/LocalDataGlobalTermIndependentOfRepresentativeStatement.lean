@@ -83,13 +83,13 @@ theorem iota_of_dc {F : LFlag S r T} {F₁ F₂ : LFlag S r T'} {n m : S.V ≃�
   have hnmX := xsp_map_of_frame (n * m) hfr
   have hnX : (Xsp F₁).map (n : S.V →ₗ[E] S.V) = Xsp F₂ := by
     refine map_of_mem_iff fun x => ?_
-    have e : n x = (n * m) (m.symm x) := by simp [LinearEquiv.mul_apply]
+    have e : n x = (n * m) (m.symm x) := by simp
     rw [e, mem_iff_of_map hnmX, mem_iff_of_map (map_symm hmX)]
   have hi : n⁻¹ ∈ NLam Λ F := Formalism.L2.SG.Pf.nlamPf_inv hn
   intro x' hx' l hl
   have e : l - (n * m) x' = n (n⁻¹ l - m x') := by
     rw [map_sub]
-    simp [LinearEquiv.mul_apply]
+    simp
   rw [e, ngx_iff hn.1 (nlam_map hn) hnX g]
   have e2 : n⁻¹ l - m x' = (l - x') + ((n⁻¹ l - l) - (m x' - x')) := by abel
   rw [e2]
@@ -133,7 +133,7 @@ open scoped Classical
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.localData_globalTerm_independent_of_representative : ∀ (D : D7) (Z : LocDat D), ∀ (u u' : D.what₂.Word) (F0 : FlagG (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (Λ : Submodule (𝓞 D.host.E) (VS D).V), IsRowLat D F0 Λ → ∀ F₁ F₂ : LFlag (D.sp.Y 0) D.R.rS (((D.mem u').A.T : ℕ) : D.host.E), PD D Λ (lf D F0) u' F₁ → PD D Λ (lf D F0) u' F₂ → Gval (lf D F0) F₁ ≠ 0 → DCRel Λ (lf D F0) F₁ F₂ → ∀ (p : PlF D) (P : LocNG.FPair (locH Z p) D.R.rS), P.RelG (LocNG.theta (Z.M p)) → ∀ d, Over P d (locU Z p Λ (lf D F0) F₁ (Tu D u) (Tu D u')) ↔ Over P d (locU Z p Λ (lf D F0) F₂ (Tu D u) (Tu D u')) := by
-  first | exact @GlobalTheory.LocOver.RepIndep.rep_indep | exact GlobalTheory.LocOver.RepIndep.rep_indep | (intros; apply GlobalTheory.LocOver.RepIndep.rep_indep <;> assumption)
+  first | exact @GlobalTheory.LocOver.RepIndep.rep_indep
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.LocalDataGlobalTermIndependentOfRepresentativeStatement =====

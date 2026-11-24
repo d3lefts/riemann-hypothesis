@@ -317,8 +317,6 @@ theorem linear_coeff_subst_chain_rule {σ : Type} [Fintype σ] {A : σ → MvPow
   have hs : MvPowerSeries.HasSubst A := by
     first
       | exact MvPowerSeries.hasSubst_of_constantCoeff_zero hA
-      | exact MvPowerSeries.HasSubst.of_constantCoeff_zero hA
-      | exact MvPowerSeries.hasSubst_of_constantCoeff_nilpotent (fun s => by rw [hA s]; exact IsNilpotent.zero)
 
   have hmul : ∀ P R : MvPowerSeries τ C, MvPowerSeries.constantCoeff P = 0 →
       MvPowerSeries.constantCoeff R = 0 → MvPowerSeries.coeff (Finsupp.single j 1) (P * R) = 0 := by
@@ -327,8 +325,6 @@ theorem linear_coeff_subst_chain_rule {σ : Type} [Fintype σ] {A : σ → MvPow
     refine Finset.sum_eq_zero fun ab hab => ?_
     first
       | rw [Finset.HasAntidiagonal.mem_antidiagonal] at hab
-      | rw [Finset.mem_antidiagonal] at hab
-      | simp only [Finset.mem_antidiagonal] at hab
     by_cases ha : ab.1 = 0
     · rw [ha, MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hP, zero_mul]
     · have hb : ab.2 = 0 := by
@@ -571,9 +567,7 @@ theorem coordinateChange_comp1_intertwines_action {n : ℕ} (x : O) (a : Pt C n 
   funext i
   unfold ev
   first
-  | rfl
   | (congr 1; funext q; simp)
-  | (congr 1; funext q; skip)
 
 theorem addOf_eq' {n : ℕ} (a b : Pt C n dd) : addOf Y.B.G.F a b = addAt Y a b := by
   unfold addAt
@@ -581,7 +575,6 @@ theorem addOf_eq' {n : ℕ} (a b : Pt C n dd) : addOf Y.B.G.F a b = addAt Y a b 
   funext i
   unfold ev
   first
-  | rfl
   | (congr 1; funext q; unfold P2; rfl)
   | (congr 1; funext q; unfold P2; obtain ⟨j, k⟩ := q; fin_cases j <;> simp)
 

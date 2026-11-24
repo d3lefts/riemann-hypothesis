@@ -765,7 +765,7 @@ theorem _root_.GlobalTheory.T.eventually_bezout_separable_derivative_adicInteger
     ∀ᶠ w : HeightOneSpectrum (𝓞 E) in cofinite, ∃ u v : (w.adicCompletion E)[X],
       (∀ i, u.coeff i ∈ w.adicCompletionIntegers E) ∧ (∀ i, v.coeff i ∈ w.adicCompletionIntegers E) ∧
       u * P.map (algebraMap E (w.adicCompletion E)) + v * derivative (P.map (algebraMap E (w.adicCompletion E))) = 1 := by
-  first | exact @GlobalTheory.BCT.SepBezout.bezout_eventually | exact GlobalTheory.BCT.SepBezout.bezout_eventually | (intros; apply GlobalTheory.BCT.SepBezout.bezout_eventually <;> assumption)
+  first | exact @GlobalTheory.BCT.SepBezout.bezout_eventually
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyBezoutSeparableDerivativeAdicIntegersStatement =====
@@ -785,7 +785,7 @@ theorem _root_.GlobalTheory.T.inert_integral_twistedConjugates_twistedCentralize
       (∀ i, v.coeff i ∈ w.adicCompletionIntegers E) ∧
       u * (nrmL n w y).val.charpoly + v * derivative (nrmL n w y).val.charpoly = 1) →
     g⁻¹ * y * thL n w g ∈ GlobalTheory.LFun.KGL w (n := n) → ∃ t ∈ twCent (thL n w) y, ∃ k ∈ GlobalTheory.LFun.KGL w (n := n), g = t * k := by
-  first | exact @GlobalTheory.InertUniq.eq_twCent_mul_KGL | exact GlobalTheory.InertUniq.eq_twCent_mul_KGL | (intros; apply GlobalTheory.InertUniq.eq_twCent_mul_KGL <;> assumption)
+  first | exact @GlobalTheory.InertUniq.eq_twCent_mul_KGL
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.InertIntegralTwistedConjugatesTwistedCentralizerStatement =====
@@ -804,7 +804,7 @@ theorem _root_.GlobalTheory.T.integral_conj_etale_mem_centralizer_mul_integralGL
     (∃ u v : (w.adicCompletion E)[X], (∀ i, u.coeff i ∈ w.adicCompletionIntegers E) ∧
       (∀ i, v.coeff i ∈ w.adicCompletionIntegers E) ∧ u * N.val.charpoly + v * derivative N.val.charpoly = 1) →
     g⁻¹ * N * g ∈ GlobalTheory.LFun.KGL w (n := n) → ∃ t : GL (Fin n) (w.adicCompletion E), t * N = N * t ∧ ∃ k ∈ GlobalTheory.LFun.KGL w (n := n), g = t * k := by
-  first | exact @GlobalTheory.SplitUniq.splitUniq | exact GlobalTheory.SplitUniq.splitUniq | (intros; apply GlobalTheory.SplitUniq.splitUniq <;> assumption)
+  first | exact @GlobalTheory.SplitUniq.splitUniq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralConjEtaleMemCentralizerMulIntegralGLStatement =====
@@ -824,7 +824,7 @@ theorem _root_.GlobalTheory.T.mem_maxCompactGL_of_commute_etale_charpoly_bounded
       (∀ i, v.coeff i ∈ w.adicCompletionIntegers E) ∧ u * N.val.charpoly + v * derivative N.val.charpoly = 1) →
     t * N = N * t → IsCompact (closure (Subgroup.zpowers t : Set (GL (Fin n) (w.adicCompletion E)))) →
     t ∈ GlobalTheory.LFun.KGL w (n := n) := by
-  first | exact @GlobalTheory.StabInt.mem_KGL_of_commute | exact GlobalTheory.StabInt.mem_KGL_of_commute | (intros; apply GlobalTheory.StabInt.mem_KGL_of_commute <;> assumption)
+  first | exact @GlobalTheory.StabInt.mem_KGL_of_commute
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemMaxCompactGLOfCommuteEtaleCharpolyBoundedStatement =====

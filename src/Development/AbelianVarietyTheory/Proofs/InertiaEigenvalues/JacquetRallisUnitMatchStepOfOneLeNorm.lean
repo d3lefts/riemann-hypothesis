@@ -141,7 +141,7 @@ theorem shiftCompanionLastRowMatrix_mulVec_firstBasis {r : ℕ} {k : Type} [Comm
   | last => simp [nfMat, Matrix.mulVec, dotProduct, eL]
   | cast i =>
     rw [nfMat_mulVec_castSucc]
-    simp [eL, Pi.single_apply, Fin.castSucc_ne_last]
+    simp [eL, Fin.castSucc_ne_last]
 
 theorem glNormal_of_ne_zero : ∀ (k : Type) [Field k] (r : ℕ) (a : Inv (r + 1) k), a.2.1 0 ≠ 0 →
     ∃ (g : GL (Fin (r + 1)) k) (Z : Gl r k), act g (sec a) = GlobalTheory.JR.Step.lift Z (a.2.1 0) a.2.2 := by
@@ -188,7 +188,7 @@ theorem embHom_mul_full_mul (k : Type) [CommRing k] (r : ℕ) (g h : Matrix (Fin
   · simp
   · ext i j; simp [Matrix.mul_apply, Matrix.mulVec, dotProduct]
   · ext i j; simp [Matrix.mul_apply, Matrix.vecMul, dotProduct]
-  · ext i j; simp [Matrix.mul_apply]
+  · ext i j; simp
 
 theorem embHom_mulVec_eL (k : Type) [CommRing k] (r : ℕ) (g : Matrix (Fin r) (Fin r) k) :
     embHom r k g *ᵥ eL r k = eL r k := by
@@ -196,8 +196,8 @@ theorem embHom_mulVec_eL (k : Type) [CommRing k] (r : ℕ) (g : Matrix (Fin r) (
   simp only [embHom, MonoidHom.coe_mk, OneHom.coe_mk, eL, Matrix.reindex_apply]
   rw [Matrix.mulVec_single_one]
   refine Fin.lastCases ?_ (fun j => ?_) i
-  · simp [Matrix.transpose_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_last]
-  · simp [Matrix.transpose_apply, Matrix.submatrix_apply, finSumFinEquiv_symm_last, finSumFinEquiv_symm_apply_castSucc]
+  · simp [Matrix.submatrix_apply, finSumFinEquiv_symm_last]
+  · simp [Matrix.submatrix_apply, finSumFinEquiv_symm_last, finSumFinEquiv_symm_apply_castSucc]
 
 theorem eL_vecMul_embHom (k : Type) [CommRing k] (r : ℕ) (g : Matrix (Fin r) (Fin r) k) :
     eL r k ᵥ* embHom r k g = eL r k := by
@@ -211,7 +211,7 @@ theorem eL_vecMul_embHom (k : Type) [CommRing k] (r : ℕ) (g : Matrix (Fin r) (
 theorem act_emb_lift (k : Type) [CommRing k] (r : ℕ) (g : GL (Fin r) k) (Z : Gl r k) (μ l : k) :
     act (GlobalTheory.JR.Step.emb r k g) (GlobalTheory.JR.Step.lift Z μ l) = GlobalTheory.JR.Step.lift (act g Z) μ l := by
   have hinv : ((emb r k g)⁻¹ : GL (Fin (r + 1)) k) = emb r k g⁻¹ := (map_inv _ _).symm
-  simp only [act, lift, hinv, emb, Units.coe_map, MonoidHom.coe_coe]
+  simp only [act, lift, emb, Units.coe_map]
   refine Prod.ext ?_ (Prod.ext ?_ (Prod.ext ?_ rfl))
   · exact embHom_mul_full_mul k r _ _ Z
   · simp only [Matrix.mulVec_smul, embHom_mulVec_eL]
@@ -268,12 +268,12 @@ theorem exists_glO_pair {F : Type} [NormedField F] [IsUltrametricDist F] (r : �
     | last =>
       induction b using Fin.lastCases with
       | last => simp [row, col, hwv]
-      | cast c => simp [row, col, hwu, Matrix.one_apply, (Fin.castSucc_lt_last c).ne']
+      | cast c => simp [row, col, hwu, (Fin.castSucc_lt_last c).ne']
     | cast c =>
       induction b using Fin.lastCases with
       | last =>
         simp [row, col, ρ, sub_dotProduct, smul_dotProduct, single_dotProduct, hwv,
-          Matrix.one_apply, (Fin.castSucc_lt_last c).ne]
+          (Fin.castSucc_lt_last c).ne]
       | cast c' =>
         simp only [row, col, Fin.lastCases_castSucc, ρ, sub_dotProduct, smul_dotProduct,
           single_dotProduct, hwu, smul_eq_mul, mul_zero, sub_zero, one_mul, u, Pi.sub_apply,
@@ -292,7 +292,7 @@ theorem exists_glO_pair {F : Type} [NormedField F] [IsUltrametricDist F] (r : �
   have hsingle : ∀ i j : Fin (r + 1), ‖(Pi.single i (1 : F) : Fin (r + 1) → F) j‖ ≤ 1 := by
     intro i j; by_cases h : j = i
     · subst h; simp
-    · simp [Pi.single_apply, h]
+    · simp [h]
   have hcol : ∀ b a, ‖col b a‖ ≤ 1 := by
     intro b a
     induction b using Fin.lastCases with
@@ -374,7 +374,7 @@ theorem exists_emb_of_last {F : Type} [Field F] (r : ℕ) (m : GL (Fin (r + 1)) 
       | cast j => simp [GlobalTheory.JR.Step.embHom, ht]
   have hdet : (m : Matrix (Fin (r + 1)) (Fin (r + 1)) F).det = t.det := by
     rw [hm]
-    simp [GlobalTheory.JR.Step.embHom, Matrix.det_fromBlocks_zero₂₁]
+    simp [GlobalTheory.JR.Step.embHom]
   have hu : IsUnit t.det := by
     rw [← hdet]
     exact (Matrix.isUnit_iff_isUnit_det (m : Matrix (Fin (r + 1)) (Fin (r + 1)) F)).mp (Units.isUnit m)
@@ -861,7 +861,7 @@ theorem norm_eL_le_one {F : Type} [NormedField F] {r : ℕ} (i : Fin (r + 1)) :
   unfold GlobalTheory.JR.Step.eL
   by_cases h : i = Fin.last r
   · subst h; simp
-  · simp [Pi.single_apply, h]
+  · simp [h]
 
 theorem unitG_lift : ∀ (F : Type) [NormedField F] (r : ℕ) (Z : Gl r F) (μ l : F), ‖μ‖ ≤ 1 →
     unitG (r + 1) F (GlobalTheory.JR.Step.lift Z μ l) = (if ‖l‖ ≤ 1 then 1 else 0) * unitG r F Z := by
@@ -1031,10 +1031,10 @@ theorem full_act (g : GL (Fin r) k) (Y : Gl r k) :
   · simp
   · ext i j; simp [Matrix.mul_apply, Matrix.mulVec, dotProduct]
   · ext i j; simp [Matrix.mul_apply, Matrix.vecMul, dotProduct]
-  · ext i j; simp [Matrix.mul_apply]
+  · ext i j; simp
 
 theorem det_embHom (h : Matrix (Fin r) (Fin r) k) : (embHom r k h).det = h.det := by
-  simp [embHom, Matrix.det_reindex_self, Matrix.det_fromBlocks_zero₂₁]
+  simp [embHom]
 
 end Blocks
 
@@ -1073,7 +1073,7 @@ theorem hasInv_of_lift : ∀ (F E : Type) [NontriviallyNormedField F] [Nontrivia
     intro i
     have := congrFun h2 i
     rw [Matrix.mulVec_smul, eL, Matrix.mulVec_single_one] at this
-    simp only [Pi.smul_apply, smul_eq_mul, Matrix.transpose_apply] at this
+    simp only [Pi.smul_apply, smul_eq_mul] at this
     rw [mul_comm]
     exact this
   have hrow : eL r E ᵥ* G = (star ν)⁻¹ • eL r E := by
@@ -1320,7 +1320,7 @@ theorem det_Bm_lift (Z : Gl r k) (μ l : k) (h : (Bm Z).det = 0) :
     | zero =>
       intro m
       have h0 : x 0 = 0 := by
-        funext i; simp [x, GlobalTheory.JR.Step.eL, Pi.single_apply, Fin.castSucc_ne_last]
+        funext i; simp [x, GlobalTheory.JR.Step.eL, Fin.castSucc_ne_last]
       rw [h0, mulVec_zero, dotProduct_zero]
     | succ j ih =>
       intro m
@@ -1328,7 +1328,7 @@ theorem det_Bm_lift (Z : Gl r k) (μ l : k) (h : (Bm Z).det = 0) :
         funext i
         simp only [x, pow_succ', ← mulVec_mulVec]
         rw [full_mulVec_cs]
-        simp [mul_comm]
+        simp
       rw [hxs, mulVec_add, dotProduct_add, mulVec_mulVec, ← pow_succ, ih, mulVec_smul, dotProduct_smul, hw']
       simp
   refine (Matrix.exists_vecMul_eq_zero_iff (M := Bm (GlobalTheory.JR.Step.lift Z μ l))).mp ?_
@@ -1366,7 +1366,7 @@ theorem det_Cm_lift (Z : Gl r k) (μ l : k) (h : (Cm Z).det = 0) :
       have h0 : u 0 = 0 := by
         funext i
         simp only [u, pow_zero, vecMul_one, GlobalTheory.JR.Step.eL]
-        simp [Pi.single_apply, Fin.castSucc_ne_last]
+        simp [Fin.castSucc_ne_last]
       rw [h0, zero_dotProduct]
     | succ j ih =>
       intro m
@@ -1374,7 +1374,7 @@ theorem det_Cm_lift (Z : Gl r k) (μ l : k) (h : (Cm Z).det = 0) :
         funext i
         simp only [u, pow_succ, ← vecMul_vecMul]
         rw [vecMul_full_cs]
-        simp [mul_comm]
+        simp
       rw [hus, add_dotProduct, ← dotProduct_mulVec, mulVec_mulVec, ← pow_succ', ih, smul_dotProduct, hv']
       simp
   refine (Matrix.exists_mulVec_eq_zero_iff (M := Cm (GlobalTheory.JR.Step.lift Z μ l))).mp ?_
@@ -1530,7 +1530,7 @@ theorem dot_act {n : ℕ} {k : Type} [CommRing k] (g : GL (Fin n) k) (Y : Gl n k
 
 theorem dot_sec {r : ℕ} {k : Type} [CommRing k] (a : Inv (r + 1) k) :
     (sec a).2.2.1 ⬝ᵥ (sec a).2.1 = a.2.1 0 := by
-  simp [sec, dotProduct, Fin.sum_univ_succ]
+  simp [sec, dotProduct]
 
 theorem dot_actU {n : ℕ} {E : Type} [CommRing E] [StarRing E] (g : Matrix.unitaryGroup (Fin n) E)
     (b : Fin n → E) : star (g.1 *ᵥ b) ⬝ᵥ (g.1 *ᵥ b) = star b ⬝ᵥ b := by
@@ -1586,7 +1586,7 @@ open GlobalTheory.JR Matrix MeasureTheory Filter Topology
 namespace GlobalTheory.JR.Step
 
 theorem mom_sec_zero {k : Type} [CommRing k] {r : ℕ} (a : Inv (r + 1) k) : mom (sec a) 0 = a.2.1 0 := by
-  simp [mom, sec, dotProduct, Fin.sum_univ_succ]
+  simp [mom, sec, dotProduct]
 
 theorem unitMatchAt_of_one_le_norm : ∀ r : ℕ, UnitMatch r → ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (M : Meas (r + 1) F E) (a : Inv (r + 1) F), Delta a ≠ 0 → 1 ≤ ‖mom (sec a) 0‖ → MatchAt M (unitG (r + 1) F) (unitU (r + 1) F E) a := by
   intro r hUM F E _ _ _ _ _ M a hΔ h1

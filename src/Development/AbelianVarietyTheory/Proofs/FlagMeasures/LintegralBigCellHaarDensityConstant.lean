@@ -1188,7 +1188,7 @@ theorem volume_image_eq (A B F : Type) [NormedAddCommGroup A] [InnerProductSpace
         change ‖L (Ψ x)‖ = ‖x‖
         rw [← sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _), hL, hΨ, WithLp.prod_norm_sq_eq_of_L2,
           WithLp.prod_norm_sq_eq_of_L2, WithLp.prod_norm_sq_eq_of_L2, EuclideanSpace.norm_sq_eq]
-        simp [norm_smul, mul_pow, Finset.mul_sum, ← mul_assoc, add_assoc] }
+        simp [mul_pow, Finset.mul_sum, ← mul_assoc, add_assoc] }
   have h0 := (measurePreserving_inv_sqrt_two_smul r).comp
     (GlobalTheory.volume_preserving_ofLp_complex (Fin r))
   haveI : SFinite (((2 : ℝ≥0∞) ^ r) • (volume : Measure (Fin r → ℂ))) := inferInstance
@@ -1474,7 +1474,7 @@ theorem meas_formula (μG μN μb : Measure (Mt k r)) (hG : IsHaarOn (GG k r) μ
     have := mem_UU hρ hx hp.1.1 hp.1.2 hp.2
     simp only [hx1, true_and] at this
     classical
-    simp only [Set.indicator_apply, Set.mem_preimage, Pi.one_apply]
+    simp only [Set.indicator_apply, Pi.one_apply]
     exact if_congr this rfl rfl
   · rw [Set.indicator_of_notMem hx1]
     refine mul_eq_zero_of_right _ ?_

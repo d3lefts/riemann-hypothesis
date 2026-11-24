@@ -557,7 +557,7 @@ private theorem lapD_single (a : Fin n) (m : Wt n) (r : ℂ) :
   rw [cf_lapD]
   by_cases h : m = x
   · subst h; simp [cf]
-  · simp [cf, Finsupp.single_apply, h]
+  · simp [cf, h]
 
 private theorem lapD_ex (a : Fin n) (m : Wt n) : lapD a (ex m) = (m a : ℂ) • ex m := by
   simp [ex, lapD_single]
@@ -888,7 +888,7 @@ theorem UpperTheory.RealTr.chLap :
         s * trOn (wsp F μ ⊓ S) B := by
       refine trOn_smul' _ _ _ _ hall (hBW μ) fun x hx => ?_
       rw [← hs (B x) (hBW μ x hx).2, Cas, Fintype.sum_prod_type]
-      simp [LinearMap.sum_apply, Module.End.mul_apply]
+      simp [LinearMap.sum_apply]
     have hsum := trOn_sum' (wsp F μ ⊓ S) univ (fun q : Fin n × Fin n => F q.1 q.2 * F q.2 q.1 * B)
       (fun q _ => hs' q)
     have hdiag : ∀ a, trOn (wsp F μ ⊓ S) (F a a * F a a * B) =

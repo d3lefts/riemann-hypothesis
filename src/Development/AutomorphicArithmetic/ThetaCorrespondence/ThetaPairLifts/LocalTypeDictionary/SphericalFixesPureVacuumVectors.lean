@@ -833,7 +833,7 @@ theorem dbl_eigen (σ : E →ₐ[F] E) {n d : ℕ} (X : Spc F E n) (Y : Spc F E 
     rw [Matrix.fromCols_toCols] at h3
     rw [← hS, Darboux.rho, h3, schr_box_star ψ hstar, h1, h2]
     funext x
-    simp only [hch, boxFun, Pi.smul_apply, smul_eq_mul, star_mul', hstar, symp_dbl, mul_sub, sub_eq_add_neg, mul_add,
+    simp only [hch, boxFun, Pi.smul_apply, smul_eq_mul, star_mul', hstar, symp_dbl, sub_eq_add_neg, mul_add,
       mul_neg, AddChar.map_add_eq_mul]
     ring
   have hE1 : ∀ γ ∈ Λ, dd.rho ψ γ (tens (evFin F v) φ₁ RD) = ch γ • tens (evFin F v) φ₁ RD := by
@@ -1117,7 +1117,7 @@ theorem _root_.GlobalTheory.T.spherical_vector_fixed_at_almost_all_places : _roo
     (om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ G.V G.W) (om' : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ G.V' G.W), GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsTriple B G X om om' →
     ∃ S₀ : Finset (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)), ∀ v, v ∉ S₀ → ∀ k ∈ GlobalTheory.InertSph.KAt σ G.W v,
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.AdelicU.evFin F v) (om (1, k)) (G.M.vac v) (G.M.vac v) := by
-  first | exact @_root_.GlobalTheory.LocVacFix.vacuum_fixed_at_cofinitely_many_places | exact _root_.GlobalTheory.LocVacFix.vacuum_fixed_at_cofinitely_many_places | (intros; apply _root_.GlobalTheory.LocVacFix.vacuum_fixed_at_cofinitely_many_places <;> assumption)
+  first | exact @_root_.GlobalTheory.LocVacFix.vacuum_fixed_at_cofinitely_many_places
 end
 end -- clump:auto
 end -- clump:auto
@@ -1190,7 +1190,7 @@ theorem _root_.GlobalTheory.T.spherical_vector_fixes_vacua : _root_.GlobalTheory
     (∀ (f : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin a' × Fin (a + a'))) (φ : ∀ w : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F), (Fin a' × Fin (a + a') → Fv F w) → ℂ),
       (∀ w, φ w ∈ GlobalTheory.WeilM.SB (Fin a' × Fin (a + a') → Fv F w)) → (∀ w ∉ S, φ w = G.M'.vac w) →
       om' (1, k) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) := by
-  first | exact @_root_.GlobalTheory.SphFix.spherical_fixes_pure_vacuum_vectors | exact _root_.GlobalTheory.SphFix.spherical_fixes_pure_vacuum_vectors | (intros; apply _root_.GlobalTheory.SphFix.spherical_fixes_pure_vacuum_vectors <;> assumption)
+  first | exact @_root_.GlobalTheory.SphFix.spherical_fixes_pure_vacuum_vectors
 end
 end -- clump:auto
 end -- clump:auto

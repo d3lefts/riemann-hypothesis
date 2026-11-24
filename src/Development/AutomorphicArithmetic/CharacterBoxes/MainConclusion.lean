@@ -198,7 +198,7 @@ theorem UpperTheory.Cb.exists_finite_etale_restrict_clopen :
   haveI := het
   haveI := hfin
   refine ⟨c.resLE V W hWV, c.resLE_comp_ι hWV, ?_, inferInstance⟩
-  haveI hWι : IsClosedImmersion W.ι := .of_isPreimmersion _ (by simpa using hWc)
+  haveI hWι : IsClosedImmersion W.ι := .of_isPreimmersion _ (by rw [Scheme.Opens.range_ι]; exact hWc)
   haveI h1 : IsClosedImmersion (Y.homOfLE hWV ≫ (c ⁻¹ᵁ V).ι) := by
     rw [Scheme.homOfLE_ι]
     exact hWι
@@ -566,7 +566,8 @@ theorem UpperTheory.Cb.isProjOver_restrict_clopen :
   rintro Z s V hV ⟨N, i, hi, rfl⟩
   have hc : IsClosedImmersion V.ι := by
     apply IsClosedImmersion.of_isPreimmersion
-    simpa using hV
+    rw [Scheme.Opens.range_ι]
+    exact hV
   exact ⟨N, V.ι ≫ i, inferInstance, by simp⟩
 end -- clump:auto
 end -- clump:auto
@@ -623,6 +624,9 @@ private theorem trace_pi_eq_sum_trace_blocks {J : Type} [Fintype J] [DecidableEq
   conv_lhs => rw [hf]
 
   simp only [map_sum]
+  haveI hFr : ∀ j, Module.Free ℂ (N j) := fun j => Module.Free.of_divisionRing ℂ (N j)
+  haveI : Module.Free ℂ (∀ j, N j) := Module.Free.pi ℂ N
+  haveI : Module.Finite ℂ (∀ j, N j) := Module.Finite.pi
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_eq_single i]
   · rw [LinearMap.trace_comp_comm', LinearMap.comp_assoc, LinearMap.proj_comp_single_same,
@@ -653,7 +657,8 @@ private theorem sum_part {J T : Type} [Fintype J] (F : Finset T) (R : J → Set 
   · simp [hj]
   · intro k _ hk
     simp [show y ∉ R k from fun h' => hk (hu k h')]
-  · simp
+  · intro h
+    exact absurd (Finset.mem_univ j) h
 
 private theorem glue_trace {J : Type} [Fintype J] [DecidableEq J] {M : Type} [AddCommGroup M]
     [Module ℂ M] {N : J → Type} [∀ j, AddCommGroup (N j)] [∀ j, Module ℂ (N j)]

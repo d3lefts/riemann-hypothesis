@@ -78,7 +78,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.eigen_line_p_adic_bound : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (β : O →+* c.F) (Y : Model Xo c β) (U : Set (Xo.XF c)) (Z : CptOver Y U) (τ : E →+* ℂ) (ϖ : O) (p : ℕ), Irreducible ϖ → p.Prime → ϖ ∣ (p : O) → Function.Injective β → (∀ x : c.F, x ∈ β.range ∨ x⁻¹ ∈ β.range) → Y.SplitFibres → Y.N3 → ∃ 𝓗 : HodgeLat Z.M.lat Z.ρ H.bar (D.p + D.q), ∀ σ : E →+* Z.Ω, 𝓗.DegZero σ (Z.inc (β ϖ)) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.hodgeLat_model | exact GlobalTheory.CompanionTheory.Ar.Flat.hodgeLat_model | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.hodgeLat_model <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.hodgeLat_model
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.EigenLinePAdicBoundStatement =====
@@ -192,7 +192,7 @@ theorem exists_smul_iotaMulti {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Spec
 theorem norm_le_one_of_isIntegral (p : Nat.Primes) (R : Type) [CommRing R] (κ : R →+* ℂ_[p]) (x : R)
     (hx : IsIntegral ℤ x) : ‖κ x‖ ≤ 1 := by
   have hy : IsIntegral ℤ (κ x) := by
-    convert map_isIntegral_int κ hx using 1 <;> first | exact Subsingleton.elim _ _ | rfl
+    convert map_isIntegral_int κ hx using 1 <;> first | exact Subsingleton.elim _ _
   have h1 : IsIntegral (NormedField.valuation (K := ℂ_[p])).integer (κ x) := hy.tower_top
   have h2 := (Valuation.integer.integers (NormedField.valuation (K := ℂ_[p]))).mem_of_integral h1
   have h3 : ‖κ x‖₊ ≤ 1 := h2

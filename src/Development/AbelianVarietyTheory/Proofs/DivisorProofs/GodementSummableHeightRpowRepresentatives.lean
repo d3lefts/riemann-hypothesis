@@ -296,8 +296,6 @@ theorem packing_count : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopolog
         = ∑' γ : Λ, ∑ t ∈ T, (γ • (t • U)).indicator (1 : G → ℝ≥0∞) x := by
       first
       | exact (Summable.tsum_finsetSum fun _ _ => ENNReal.summable).symm
-      | exact (tsum_sum fun _ _ => ENNReal.summable).symm
-      | exact (ENNReal.tsum_finsetSum _ _).symm
     rw [hswap, ENNReal.tsum_eq_iSup_sum]
     refine iSup_le fun s => ?_
     have hbool : ∑ γ ∈ s, ∑ t ∈ T, (γ • (t • U)).indicator (1 : G → ℝ≥0∞) x
@@ -320,7 +318,7 @@ theorem packing_count : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopolog
       refine Finset.card_le_card_of_injOn
         (fun p : Λ × G => (p₀.2⁻¹ * (p₀.1 : G)⁻¹) * ((p.1 : G) * p.2)) ?_ ?_
       · intro p hp
-        have hp' : p ∈ P := by first | exact Finset.mem_coe.1 hp | exact hp
+        have hp' : p ∈ P := by first | exact Finset.mem_coe.1 hp
         obtain ⟨ht, hx⟩ := memP p hp'
         rw [mem_smul_smul_iff] at hx
         show _ ∈ (hfin.toFinset : Set G)
@@ -332,8 +330,8 @@ theorem packing_count : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopolog
         · exact Γ.mul_mem (Γ.mul_mem (Γ.inv_mem (hTΓ _ ht₀)) (Γ.inv_mem (hΛΓ p₀.1.2)))
             (Γ.mul_mem (hΛΓ p.1.2) (hTΓ _ ht))
       · intro p hp q hq hpq
-        have hp' : p ∈ P := by first | exact Finset.mem_coe.1 hp | exact hp
-        have hq' : q ∈ P := by first | exact Finset.mem_coe.1 hq | exact hq
+        have hp' : p ∈ P := by first | exact Finset.mem_coe.1 hp
+        have hq' : q ∈ P := by first | exact Finset.mem_coe.1 hq
         have hpT := (memP p hp').1
         have hqT := (memP q hq').1
         have h1 : (p.1 : G) * p.2 = (q.1 : G) * q.2 := mul_left_cancel hpq
@@ -628,7 +626,7 @@ theorem cover (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [
         hsi, hd] at e1 e2
       rw [hx1] at e2
       simp only [Matrix.add_apply, Matrix.mul_diagonal, Matrix.diagonal_mul, adMat, Matrix.map_apply,
-        Matrix.of_apply, sk, map_mul, map_sub, inclR_alg]
+        Matrix.of_apply, sk, map_mul, map_sub]
       rw [hc_def, inclR_alg, ← hh_def]
       linear_combination hh * e1 - hh * e2 - x i k * h2
 end GlobalTheory.SkewAdCover
@@ -795,7 +793,7 @@ theorem skew_rest (hs : ∀ x, s (s x) = x) (hk : ∀ (c : k) x, s (c • x) = c
     calc cT s c = (c + cT s c + (X + (y + p)) * (K * cT s (X + (y + p)))) - c - (X + (y + p)) * (K * cT s (X + (y + p))) := by abel
       _ = _ := by rw [hc]; abel
   simp only [cT_add, cT_sub, cT_smul s hk, cT_pair s K hs hK, hcc]
-  simp only [cT_add, cT_pair s K hs hK, Matrix.mul_add, Matrix.add_mul, smul_add, neg_add, sub_eq_add_neg]
+  simp only [cT_add, cT_pair s K hs hK, Matrix.mul_add, Matrix.add_mul, neg_add, sub_eq_add_neg]
   module
 
 theorem rel_half (hs : ∀ x, s (s x) = x) (hk : ∀ (c : k) x, s (c • x) = c • s x) (hK : cT s K = K)
@@ -1346,7 +1344,7 @@ theorem summable_height_rpow_reps : ∀ (F E : Type) [Field F] [NumberField F] [
       calc B * B' = adMat F (Formalism.UG.cT (σ : E →+* E) Y * J) * adMat F X * (B * B') := by rw [hXinv, Matrix.one_mul]
         _ = 1 := by rw [Matrix.mul_assoc, ← hX, hXinv]
     have h2 : B' * B = 1 := by
-      first | exact mul_eq_one_comm.mp h1 | exact Matrix.mul_eq_one_comm.mp h1 | exact (Matrix.mul_eq_one_comm).1 h1 | exact Matrix.nonsing_inv_mul_cancel_left _ _ h1
+      first | exact mul_eq_one_comm.mp h1
     exact ⟨⟨B, B', h1, h2⟩, hB⟩
   let φ : T → GlobalTheory.Eis.Cosets (GlobalTheory.UAut.parFlag σ J X (fun _ => 0)) (ratPts σ J) := fun t =>
     GlobalTheory.AutomorphicL2Unitary.mk _ t.1

@@ -243,8 +243,7 @@ theorem fr0Der_of (hG : GamDer) (hGm : GamMul) (hM : MtLaws) (hR : RmLaws) : Mat
   · rw [key]
     exact ((kronC _ _).hasFDerivAt_of_bilinear hFd.hasFDerivAt hGd.hasFDerivAt).differentiableAt
   · have h := congrArg (fun L => L X) ((kronC _ _).fderiv_of_bilinear hFd hGd)
-    simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.precompR_apply,
-      ContinuousLinearMap.precompL_apply, hF1, hG1] at h
+    simp only [ContinuousLinearMap.add_apply, hF1, hG1] at h
     rw [key]
     refine h.trans ?_
     rw [add_comm]
@@ -557,7 +556,7 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 variable {n : ℕ} {lam : Fin n → ℤ}
 
 theorem kron_conjTranspose' {ι₁ ι₂ : Type*} (A : Matrix ι₁ ι₁ ℂ) (B : Matrix ι₂ ι₂ ℂ) : (A ⊗ₖ B)ᴴ = Aᴴ ⊗ₖ Bᴴ := by
-  ext i j; simp [kroneckerMap_apply, conjTranspose_apply, mul_comm]
+  ext i j; simp [kroneckerMap_apply, conjTranspose_apply]
 
 theorem U_mem (hS : SwapLaws) :
     ((1 : Matrix (Finset (Md n)) (Finset (Md n)) ℂ) ⊗ₖ swapJ lam) ∈ Matrix.unitaryGroup (Ix n lam) ℂ := by
@@ -919,19 +918,19 @@ private theorem elementaryAct_map_mul (a b : Fin n) (s : ℂ) : Formalism.Graded
   congr 1
   · rw [Finset.sum_eq_single p]
     · simp
-    · intro x _ hx; simp [Matrix.one_apply, hx]
+    · intro x _ hx; simp [hx]
     · simp
   · by_cases hp : p = b
     · subst hp
       rw [Finset.sum_eq_single a]
-      · simp [Matrix.single_apply]
+      · simp
         exact mul_comm _ _
       · intro x _ hx
         have : a ≠ x := fun h => hx h.symm
-        simp [Matrix.single_apply, this]
+        simp [this]
       · simp
     · have : b ≠ p := fun h => hp h.symm
-      simp [Matrix.single_apply, this, hp]
+      simp [this, hp]
 
 theorem rowAct_eq_aeval (a b : Fin n) (s : ℂ) (f : MvPolynomial (Fin n × Fin n) ℂ) :
     Formalism.GradedWeylDivisibility.rowAct ℂ (n := n) (1 + single a b s)ᵀ f =
@@ -1102,10 +1101,10 @@ theorem updateRow_smooth (j : Fin n) (v : Fin n → ℂ) : ContDiff ℝ ∞ (fun
   refine contDiff_pi.2 fun k => ?_
   by_cases hk : k = j
   · subst hk
-    have e : (fun x : Mat n => x.updateRow k v k) = fun _ => v := by funext x; simp [Matrix.updateRow_apply]
+    have e : (fun x : Mat n => x.updateRow k v k) = fun _ => v := by funext x; simp
     rw [e]; exact contDiff_const
   · have e : (fun x : Mat n => x.updateRow j v k) = fun x : Mat n => (x : Fin n → Fin n → ℂ) k := by
-      funext x; simp [Matrix.updateRow_apply, hk]
+      funext x; simp [hk]
     rw [e]; exact contDiff_apply ℝ (fun _ => (Fin n → ℂ)) k
 
 theorem adjugate_smooth : ContDiff ℝ ∞ (fun x : Mat n => x.adjugate) := by
@@ -1122,7 +1121,7 @@ theorem inv_smooth : ContDiffOn ℝ ∞ (fun x : Mat n => x⁻¹) (GLs n) := by
   refine h.congr fun x hx => ?_
   ext i j
   rw [Matrix.inv_def, Ring.inverse_eq_inv]
-  simp [_root_.zpow_neg_one]
+  simp
 
 def cTL : Mat n →L[ℝ] Mat n :=
   LinearMap.toContinuousLinearMap
@@ -1269,7 +1268,7 @@ theorem rmAnti_of (hT : AtTraceT) (hD : AtDer) : RmAnti := by
   have hB : (Bt lam ^ m).trace = GlobalTheory.Dec.gelfVal (infOf lam false) m • (1 : Matrix (Jd n lam) (Jd n lam) ℂ) :=
     hT n lam hlam m
   rw [hB]
-  simp [Matrix.mul_smul, Matrix.smul_mul]
+  simp
 
 end PositivityTheory.RgBcC.Cxd2
 end -- clump:auto
@@ -1389,12 +1388,10 @@ theorem Et_hw (lam : Fin n → ℤ) (hlam : Antitone lam) :
     ∀ a b, a < b → Et lam a b (Formalism.GradedWeylDivisibility.hw ℂ le_rfl (dw lam).natW) = 0 := by
   refine ⟨fun a => ?_, fun a b hab => ?_⟩
   · rw [Et_eq]
-    simp only [Matrix.add_apply, Matrix.of_apply, LinearMap.add_apply, if_true, eq_self_iff_true,
-      LinearMap.smul_apply, Module.End.one_apply]
+    simp only [Matrix.add_apply, Matrix.of_apply, LinearMap.add_apply, if_true, LinearMap.smul_apply, Module.End.one_apply]
     rw [GlobalTheory.BrCompare.hw_weight (natW_anti lam) a, ← add_smul, natW_add lam hlam a]
   · rw [Et_eq]
-    simp only [Matrix.add_apply, Matrix.of_apply, if_neg hab.ne, LinearMap.add_apply, LinearMap.zero_apply,
-      add_zero]
+    simp only [Matrix.add_apply, Matrix.of_apply, if_neg hab.ne, add_zero]
     exact GlobalTheory.BrCompare.hw_raise _ a b hab
 
 theorem trace_on_model (lam : Fin n → ℤ) (hlam : Antitone lam) (k : ℕ) {f : MvPolynomial (Fin n × Fin n) ℂ}
@@ -1411,7 +1408,7 @@ theorem trace_on_model (lam : Fin n → ℤ) (hlam : Antitone lam) (k : ℕ) {f 
       simp
     have hcomm : (Et lam ^ k).trace * GlobalTheory.Mem.Gelf.rowE ℂ n n a b = GlobalTheory.Mem.Gelf.rowE ℂ n n a b * (Et lam ^ k).trace := by
       rw [hr, mul_sub, sub_mul, ← trace_comm lam k a b]
-      split_ifs <;> simp [smul_mul_assoc, mul_smul_comm]
+      split_ifs <;> simp
     have hg2 := congrArg (fun L : Module.End ℂ (MvPolynomial (Fin n × Fin n) ℂ) => L g) hcomm
     simp only [Module.End.mul_apply] at hg2
     rw [LinearMap.mem_ker, LinearMap.sub_apply, sub_eq_zero, hg2, hg]
@@ -1549,9 +1546,9 @@ theorem glRel_At (lam : Fin n → ℤ) (a b c d : Fin n) :
   rw [matB_sub, matB_mul lam _ _ (hm c d), matB_mul lam _ _ (hm a b), matB_sub] at this
   rw [At_eq, At_eq, At_eq, At_eq, this]
   congr 1
-  · split_ifs <;> simp [At_eq, matB_zero]
+  · split_ifs <;> simp [matB_zero]
   · by_cases h1 : a = d
-    · subst h1; simp [At_eq]
+    · subst h1; simp
     · have h2 : ¬ d = a := fun e => h1 e.symm
       simp [h1, h2, matB_zero]
 

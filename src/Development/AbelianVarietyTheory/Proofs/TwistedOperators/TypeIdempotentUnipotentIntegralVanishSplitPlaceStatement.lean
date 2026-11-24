@@ -359,11 +359,11 @@ theorem lowVec_single (b : Fin n → Fin m) (c : Fin n) :
     lowVec b ((b c : ℕ) + 1) (Pi.single c (1 : K)) := by
   intro i hi
   have : i ≠ c := by rintro rfl; omega
-  simp [Pi.single_apply, this]
+  simp [this]
 
 theorem mulVec_single_apply (z : Matrix (Fin n) (Fin n) K) (i c : Fin n) :
     (z *ᵥ Pi.single c (1 : K)) i = z i c := by
-  simp [Matrix.mulVec_single_one]
+  simp
 
 theorem stab_iff (b : Fin n → Fin m) (z : Matrix (Fin n) (Fin n) K) :
     (∀ j : Fin (m + 1), ∀ w, lowVec b j w → lowVec b j (z *ᵥ w)) ↔
@@ -514,7 +514,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem _root_.GlobalTheory.T.isParabolic_isotropicFlag_stabilizer_split_place : ∀ (D : D7) (V : HSp D) (v : HeightOneSpectrum (𝓞 D.host.F)) (s : SplitAt D.sp.cm.sig V.gram (frameLat V) v)
     (𝔉 : IsoFlag V), GlobalTheory.IndefiniteRowSideFullHecke.StandardMaximalParabolic.IsParabRad (parAt 𝔉 s)
       ((NLoc 𝔉 v).map (s.equiv : GLoc D.sp.cm.sig V.gram v →* GL (Fin V.rank) (Fv D.host.F v))) := by
-  first | exact @GlobalTheory.SplitFlag.isParabRad_parAt | exact GlobalTheory.SplitFlag.isParabRad_parAt | (intros; apply GlobalTheory.SplitFlag.isParabRad_parAt <;> assumption)
+  first | exact @GlobalTheory.SplitFlag.isParabRad_parAt
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -833,7 +833,7 @@ theorem _root_.GlobalTheory.T.typeIdempotent_unipotentIntegral_vanish_splitPlace
       (f = GlobalTheory.AutomorphicL2Unitary.conv μ ((T.frame v).idem μ (T.τ v)) φ ∨ f = GlobalTheory.AutomorphicL2Unitary.conv μ φ ((T.frame v).idem μ (T.τ v))) →
     ∀ (ν : Measure (NLoc 𝔉 v.1)) [ν.IsHaarMeasure] (x y : GLoc D.sp.cm.sig V.gram v.1),
       Integrable (fun n : NLoc 𝔉 v.1 => f (x * n * y)) ν ∧ ∫ n : NLoc 𝔉 v.1, f (x * n * y) ∂ν = 0 := by
-  first | exact @GlobalTheory.LocConst.unip_integral_vanish | exact GlobalTheory.LocConst.unip_integral_vanish | (intros; apply GlobalTheory.LocConst.unip_integral_vanish <;> assumption)
+  first | exact @GlobalTheory.LocConst.unip_integral_vanish
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto

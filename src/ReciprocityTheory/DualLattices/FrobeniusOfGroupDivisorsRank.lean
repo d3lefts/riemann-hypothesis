@@ -121,7 +121,7 @@ lemma coefX_int (D : Lifts H U X) (hdet : (valM D).det ≠ 0)
   have hfv : f = valM D *ᵥ (algebraMap R C ∘ r) := by
     rw [← hr]
     funext y
-    simp only [Finset.sum_apply, Pi.smul_apply, Matrix.mulVec, dotProduct, valM, Matrix.of_apply,
+    simp only [Finset.sum_apply, Matrix.mulVec, dotProduct, valM, Matrix.of_apply,
       Function.comp_apply, monX, xL, Algebra.smul_def]
     exact Finset.sum_congr rfl fun α _ => mul_comm _ _
   rw [coefX, hfv, Matrix.mulVec_mulVec, Matrix.nonsing_inv_mul _ (isUnit_iff_ne_zero.mpr hdet),
@@ -606,7 +606,7 @@ lemma lift_one (hS : HodgeTateSetting p v R O σ cp) (hp2 : p ≠ 2) {H : HodgeT
     obtain ⟨t, ht⟩ : ∃ t : TT p g, t = fun k => (((y k).val : ℕ) : ℤ_[p]) := ⟨_, rfl⟩
     have hy : red p g t = y := by
       funext k
-      simp [red, ht, map_natCast, ZMod.natCast_zmod_val]
+      simp [red, ht]
     have hT : (algebraMap ℤ_[p] R ∘ t) = fun k => ((y k).val : R) := by
       funext k
       rw [ht]
@@ -807,7 +807,7 @@ theorem unitVector_val (l j : Ix g) : ((e1 (p := p) l) j).val = if j = l then 1 
   by_cases h : j = l
   · subst h
     simp [ZMod.val_one]
-  · simp [Pi.single_apply, h]
+  · simp [h]
 
 theorem prod_pow_unitVector_val {M : Type} [CommMonoid M] (f : Ix g → M) (l : Ix g) :
     ∏ j, f j ^ ((e1 (p := p) l) j).val = f l := by
@@ -997,7 +997,7 @@ theorem formMonomial_unitVector (D : Lifts H U X) (l : Ix g) (y : Nb p g) :
   rw [Finset.prod_eq_single l]
   · simp [ZMod.val_one]
   · intro b _ hb
-    simp [Pi.single_apply, hb]
+    simp [hb]
   · intro h
     exact absurd (Finset.mem_univ l) h
 
@@ -1043,7 +1043,7 @@ theorem res_bR (hv : v.Integers R) (hp1 : v (algebraMap R C (p : R)) < 1) (D : L
     rw [if_neg]
     intro h
     have h2 := congrFun h l
-    simp [e1, Pi.single_apply, Ne.symm hb] at h2
+    simp [e1, Ne.symm hb] at h2
   · simp
 
 theorem Mk_det (D : Lifts H U X) : (Mk D).det ≠ 0 := by
@@ -1125,8 +1125,6 @@ theorem frobeniusBlock : FrobeniusBlockStatement := by
     have h0 := residue_p hv hp1
     first
       | exact (CharP.charP_iff_prime_eq_zero Fact.out).mpr h0
-      | exact CharP.of_prime_eq_zero Fact.out h0
-      | exact (charP_iff_prime_eq_zero Fact.out).mpr h0
   refine ⟨fun j l hl => ?_, fun i e => ?_⟩
   · rw [linX_xp hv hp1 D j l, bR_off hv hp1 D j l hl, map_zero, zero_mul]
   ·
@@ -1149,7 +1147,6 @@ theorem frobeniusBlock : FrobeniusBlockStatement := by
       rw [RingHom.map_det]
       first
         | rfl
-        | (congr 1; ext j l; simp [RingHom.mapMatrix_apply])
     have hres : IsLocalRing.residue R
         (Matrix.of fun j l : {j // D.κ j = i} => bR hv D j.1 (e1 (e l).1)).det =
         (Matrix.of fun j l : {j // D.κ j = i} => Mk D j.1 (e l).1).det := by
@@ -1215,7 +1212,7 @@ private lemma exists_factor {X : Type} [Fintype X] (B B' : Matrix X X C)
   refine ⟨Matrix.of fun j α => c α j, ?_⟩
   ext x α
   have h1 := congrFun (hc α) x
-  simp only [Finset.sum_apply, Pi.smul_apply, Algebra.smul_def] at h1
+  simp only [Finset.sum_apply, Algebra.smul_def] at h1
   rw [Matrix.mul_apply, ← h1]
   refine Finset.sum_congr rfl fun j _ => ?_
   simp [mul_comm]
@@ -1555,7 +1552,7 @@ private lemma frob_fix [CharP (IsLocalRing.ResidueField R) p] (z : ℤ_[p]) :
   have key : IsLocalRing.residue R (algebraMap ℤ_[p] R z) =
       ((z.appr 1 : ℕ) : IsLocalRing.ResidueField R) := by
     have e := congrArg (fun w => IsLocalRing.residue R (algebraMap ℤ_[p] R w)) hz
-    simp only [map_add (f := _), map_mul, map_pow, map_natCast, hp0, pow_one, mul_zero, add_zero] at e
+    simp only [map_add (f := _), map_mul, map_natCast, hp0, pow_one, mul_zero, add_zero] at e
     exact e
   rw [key, map_natCast]
 

@@ -94,7 +94,7 @@ theorem one_le_gap_uMinus (P : WtPar Dw) (τ : Psi H) (hp : 1 ≤ Dw.p) (hq : 1 
     omega
   rw [h1, Int.le_ediv_iff_mul_le hT, one_mul] at hg
   have hkap : gap (FlagTan.kap Dw τ) (Dw.p - 1) = 2 * ((Dw.p : ℤ) + Dw.q) - 2 := by
-    simp only [gap, dif_pos hk, FlagTan.kap, Fin.val_mk]
+    simp only [gap, dif_pos hk, FlagTan.kap]
     have := Nat.cast_sub (R := ℤ) hp
     split_ifs <;> push_cast at * <;> omega
   have hsub : gap ((P.uMinus - FlagTan.kap Dw) τ) (Dw.p - 1) =
@@ -113,8 +113,8 @@ theorem laOf_add_smul (a : (E →+* ℂ) × ℕ → ℕ) (n kc : ℕ) (c0 s : �
 theorem gap_add_smul_hodge (v : AllWt.Weight Dw) (x : ℤ) (w : Psi H → ℤ) (τ : Psi H) (hp : 1 ≤ Dw.p) (hq : 1 ≤ Dw.q) :
     gap ((v + x • hodgeWt Dw + FlatLine.parWt Dw w) τ) (Dw.p - 1) = gap (v τ) (Dw.p - 1) + x := by
   have hk := bar_lt hp hq
-  simp only [gap, dif_pos hk, Pi.add_apply, Pi.smul_apply, hodgeWt, CompHt.barWt, FlatLine.parWt, Fin.val_mk, smul_eq_mul]
-  split_ifs <;> first | omega | ring
+  simp only [gap, dif_pos hk, Pi.add_apply, Pi.smul_apply, hodgeWt, CompHt.barWt, FlatLine.parWt, smul_eq_mul]
+  split_ifs <;> first | omega
 
 theorem antitone_add_par (v : AllWt.Weight Dw) (w : Psi H → ℤ) (τ : Psi H) (h : Antitone (v τ)) :
     Antitone ((v + FlatLine.parWt Dw w) τ) :=
@@ -216,7 +216,7 @@ open GlobalTheory.BadCount
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.weight_conditions_at_index' : _root_.GlobalTheory.CovTop.LiftsCondition fun Fm x _ ι p i _ _ => (i : ℕ) + 1 < (Fm.D x ι).R.m → LawsJ p.T ∧ 1 ≤ (dat p i).p ∧ 1 ≤ (dat p i).q ∧ 2 < Module.finrank ℚ (Fm.D x ι).host.E / 2 ∧ InR (Fm.D x ι) ((i : ℕ) + 1) ∧ Even (p.κ i).n ∧ (∀ τ, Antitone (uM p i τ)) ∧ (∀ τ, 1 ≤ gap (uM p i τ) ((dat p i).p - 1)) ∧ ∀ s : ℤ, (s = -(cZero (Fm.D x ι) ((i : ℕ) + 1)) ∨ s = 0 ∨ s = cZero (Fm.D x ι) ((i : ℕ) + 1)) → (∀ τ, Antitone ((laOf (dat p i) (wtA (p.κ i)) (p.κ i).n + s • hodgeWt (dat p i)) τ)) ∧ ∀ τ, 1 ≤ gap ((laOf (dat p i) (wtA (p.κ i)) (p.κ i).n + s • hodgeWt (dat p i)) τ) ((dat p i).p - 1) := by
-  first | exact @_root_.GlobalTheory.CovTop.HodgeGapBounds.reading_alt | exact _root_.GlobalTheory.CovTop.HodgeGapBounds.reading_alt | (intros; apply _root_.GlobalTheory.CovTop.HodgeGapBounds.reading_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.HodgeGapBounds.reading_alt
 end
 end -- clump:auto
 end -- clump:auto

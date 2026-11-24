@@ -66,7 +66,7 @@ theorem _root_.GlobalTheory.T.conj_zpowers_entries_valued_bounded_of_compact_clo
     IsCompact (closure (Subgroup.zpowers t : Set (UL n w))) →
     ∃ B : WithZero (Multiplicative ℤ), ∀ (k : ℤ) (i j : Fin n),
       Valued.v ((((g⁻¹ * t ^ k * g : UL n w) : GLw n w) : Matrix (Fin n) (Fin n) (w.adicCompletion E)) i j) ≤ B := by
-  first | exact @GlobalTheory.BCT.powers_entries_bdd | exact GlobalTheory.BCT.powers_entries_bdd | (intros; apply GlobalTheory.BCT.powers_entries_bdd <;> assumption)
+  first | exact @GlobalTheory.BCT.powers_entries_bdd
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjZpowersEntriesValuedBoundedOfCompactClosureStatement =====
@@ -198,8 +198,6 @@ theorem integral_of_commute_sep : ∀ (E : Type) [Field E] [NumberField E] (w : 
           (((y⁻¹ : (w.adicCompletionIntegers E)ˣ) : w.adicCompletionIntegers E) : w.adicCompletion E) = 1 := by
         first
           | exact congrArg Subtype.val y.mul_inv
-          | exact_mod_cast congrArg Subtype.val y.mul_inv
-          | simp
       rw [← map_mul, hy1, map_one]
     have h3 := (memO _).1 (((y⁻¹ : (w.adicCompletionIntegers E)ˣ) : w.adicCompletionIntegers E)).2
     have h4 : Valued.v (((y : w.adicCompletionIntegers E) : w.adicCompletion E)) *
@@ -241,7 +239,7 @@ theorem _root_.GlobalTheory.T.mem_integral_of_commute_separable_reduction : ∀ 
     A.charpoly = P₀.map (algebraMap (w.adicCompletionIntegers E) (w.adicCompletion E)) → Commute s A →
     (∃ B : WithZero (Multiplicative ℤ), ∀ (k : ℕ) (i j : Fin n), Valued.v ((s ^ k) i j) ≤ B) →
     ∀ i j, s i j ∈ w.adicCompletionIntegers E := by
-  first | exact @GlobalTheory.IntMatSep.integral_of_commute_sep | exact GlobalTheory.IntMatSep.integral_of_commute_sep | (intros; apply GlobalTheory.IntMatSep.integral_of_commute_sep <;> assumption)
+  first | exact @GlobalTheory.IntMatSep.integral_of_commute_sep
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemIntegralOfCommuteSeparableReductionStatement =====

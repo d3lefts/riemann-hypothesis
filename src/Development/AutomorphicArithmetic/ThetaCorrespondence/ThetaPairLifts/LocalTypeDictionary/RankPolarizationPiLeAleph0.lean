@@ -81,7 +81,7 @@ theorem _root_.GlobalTheory.T.rank_algebraicData_schrodingerModel_le_aleph0 : �
     Module.rank ℂ (M.Pol ψ emb) ≤ Cardinal.aleph0 →
     (∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F), Module.rank ℂ (GlobalTheory.WeilM.SB (Fin n × Fin d → Fv F v)) ≤ Cardinal.aleph0) →
     Module.rank ℂ (GlobalTheory.SquareAgree.algD M ψ emb) ≤ Cardinal.aleph0 := by
-  first | exact @GlobalTheory.AlgCountDim.rank_algD_le_aleph0 | exact GlobalTheory.AlgCountDim.rank_algD_le_aleph0 | (intros; apply GlobalTheory.AlgCountDim.rank_algD_le_aleph0 <;> assumption)
+  first | exact @GlobalTheory.AlgCountDim.rank_algD_le_aleph0
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RankAlgebraicDataSchrodingerModelLeAleph0Statement =====
@@ -207,7 +207,7 @@ open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.WeilM
 
 theorem _root_.GlobalTheory.T.rank_schwartzBruhat_finitePlaceCompletion_le_aleph0 : ∀ {F : Type} [Field F] [NumberField F] (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)) (κ : Type) [Fintype κ],
     Module.rank ℂ (GlobalTheory.WeilM.SB (κ → Fv F v)) ≤ Cardinal.aleph0 := by
-  first | exact @GlobalTheory.SBCount.rank_sb_localField_le | exact GlobalTheory.SBCount.rank_sb_localField_le | (intros; apply GlobalTheory.SBCount.rank_sb_localField_le <;> assumption)
+  first | exact @GlobalTheory.SBCount.rank_sb_localField_le
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.RankSchwartzBruhatFinitePlaceCompletionLeAleph0Statement =====

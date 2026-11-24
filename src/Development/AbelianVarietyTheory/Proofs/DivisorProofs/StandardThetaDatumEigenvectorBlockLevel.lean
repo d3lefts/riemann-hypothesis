@@ -630,7 +630,7 @@ theorem wd_wd_norm (D : D7) (T : Tor D) {N N' : ℕ} (a b : VC D N N') :
     Complex.exp ((Real.pi : ℂ) * (Hf D T b a - Hf D T a b) / 2), ?_, fun F => ?_⟩
   · rw [norm_mul, norm_div, norm_mul, hn, hn, hn, Complex.norm_exp, hc]
     have : (((Real.pi : ℂ) * ((starRingEnd ℂ) (Hf D T a b) - Hf D T a b) / 2)).re = 0 := by
-      simp [Complex.mul_re, Complex.sub_re, Complex.conj_re, Complex.div_re]
+      simp [Complex.mul_re, Complex.sub_re, Complex.conj_re]
     rw [this]; simp
   funext z
   simp only [Wd, U, Pi.smul_apply, smul_eq_mul, VacMove.hf_add_left, VacMove.hf_add_right, add_assoc]
@@ -825,7 +825,7 @@ theorem congOne_conj {𝔪 : Ideal (𝓞 D.host.E)} {N : ℕ} {g κ : GA D N} (h
         ((g : GL (Fin N) (AE D)) : Matrix (Fin N) (Fin N) (AE D)) = 1 := by
       rw [← Units.val_mul, inv_mul_cancel, Units.val_one]
     rw [Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, h1]
-    simp [Subgroup.coe_mul, Subgroup.coe_inv, Units.val_mul]
+    simp [Subgroup.coe_mul, Units.val_mul]
   have hgi := (mem_intG g).1 hg
   rw [e, Matrix.mul_apply]
   refine sum_mem fun l _ => ?_

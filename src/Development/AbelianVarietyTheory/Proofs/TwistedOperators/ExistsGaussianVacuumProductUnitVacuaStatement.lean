@@ -84,9 +84,7 @@ theorem exists_gauss_vac : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts}
     exact mul_ne_zero hx hy this.symm
   · refine (congrFun hf u).trans ?_
     first
-    | exact (one_mul _).symm.trans (Finsupp.sum_single_index (h := fun d (c : ℂ) => c * GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.boxA e d u) (zero_mul _)).symm
     | (erw [Finsupp.sum_single_index (by exact zero_mul _), one_mul]; rfl)
-    | (simp only [Finsupp.sum_single_index, zero_mul, one_mul]; rfl)
 
 end GlobalTheory.FlipVac
 
@@ -115,7 +113,7 @@ theorem _root_.GlobalTheory.T.exists_gaussianVacuum_product_unitVacua : ∀ {D :
     (om : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep D.sp.cm.sig Γ.V Γ.W) (om' : _root_.GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep D.sp.cm.sig Γ.V' Γ.W) (h : IsTripleOf W M t i j e Bs Γ X), IsTriple Bs Γ X om om' → IsTied t i j e Bs Γ X →
     ∃ f₀, f₀ ≠ 0 ∧ Γ.M.IsGauss Bs.ψ Bs.emb f₀ ∧
       IsDatumA (t := t) W e Γ (Finsupp.single (((), ρ.vX i (j + 1)), ρ.vT (i + 1) j) 1) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f₀ Γ.M.vac) := by
-  first | exact @GlobalTheory.FlipVac.exists_gauss_vac | exact GlobalTheory.FlipVac.exists_gauss_vac | (intros; apply GlobalTheory.FlipVac.exists_gauss_vac <;> assumption)
+  first | exact @GlobalTheory.FlipVac.exists_gauss_vac
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsGaussianVacuumProductUnitVacuaStatement =====

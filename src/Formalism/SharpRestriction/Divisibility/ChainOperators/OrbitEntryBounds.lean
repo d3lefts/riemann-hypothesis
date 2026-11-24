@@ -208,7 +208,7 @@ theorem jetLogG_one {β : Type*} (v : ZMod 1 × β) :
     if m = Finsupp.single (v.1 - 2 * (e : ZMod 1), v.2) ((p ^ 2) ^ e) then ((p : ℂ_[p]) ^ e)⁻¹ else 0) = _
   simp only [h]
   refine Finset.sum_congr rfl fun e _ => ?_
-  split_ifs <;> first | rfl | (exfalso; tauto)
+  split_ifs <;> first | rfl
 
 theorem logPl_one (D : Formalism.BasicNotions.D7) (hn : Formalism.MainNotions.G.nP D p = 1) {β : Type} (v : Pl D × β) :
     logPl D p v = PowerSeries.subst (X v : MvPowerSeries (Pl D × β) ℂ_[p]) (Lp p) := by
@@ -222,7 +222,7 @@ theorem logPl_one (D : Formalism.BasicNotions.D7) (hn : Formalism.MainNotions.G.
     if m = Finsupp.single (backPl D p v.1 (2 * e), v.2) ((p ^ 2) ^ e) then ((p : ℂ_[p]) ^ e)⁻¹ else 0) = _
   simp only [h]
   refine Finset.sum_congr rfl fun e _ => ?_
-  split_ifs <;> first | rfl | (exfalso; tauto)
+  split_ifs <;> first | rfl
 
 end PI.OrbJet.AO
 
@@ -260,7 +260,6 @@ theorem hs_gSub {τ : Type*} (ep : ℂ_[p]) (v : τ) : HasSubst (gSub ep v) := b
     split_ifs <;> simp
   first
   | exact MvPowerSeries.hasSubst_of_constantCoeff_zero h0
-  | exact ⟨fun s => by rw [h0 s]; exact IsNilpotent.zero, fun d => Set.toFinite _⟩
 
 theorem cc_gSub {τ : Type*} (ep : ℂ_[p]) (v : τ) (be : MvPowerSeries (ZMod 2) ℂ_[p])
     (hbe : constantCoeff be = 0) : constantCoeff (subst (gSub ep v) be) = 0 := by
@@ -269,18 +268,6 @@ theorem cc_gSub {τ : Type*} (ep : ℂ_[p]) (v : τ) (be : MvPowerSeries (ZMod 2
     split_ifs <;> simp
   first
   | exact MvPowerSeries.constantCoeff_subst_eq_zero (hs_gSub ep v) h0 hbe
-  | exact MvPowerSeries.constantCoeff_subst_eq_zero (hs_gSub ep v) hbe h0
-  | (rw [MvPowerSeries.constantCoeff_subst (hs_gSub ep v)]
-     apply finsum_eq_zero_of_forall_eq_zero
-     intro d
-     by_cases hd : d = 0
-     · subst hd
-       simp [hbe]
-     · obtain ⟨s, hs⟩ := Finsupp.ne_iff.1 hd
-       simp only [Finsupp.coe_zero, Pi.zero_apply] at hs
-       rw [Finsupp.prod, map_prod, Finset.prod_eq_zero (i := s) (Finsupp.mem_support_iff.2 hs)]
-       · simp
-       · simp [h0 s, zero_pow hs])
 
 theorem constantCoeff_zero_of_bound_two (be : MvPowerSeries (ZMod 2) ℂ_[p]) (h : OJ.B3 p 2 be) : constantCoeff be = 0 := by
   by_contra hne
@@ -455,7 +442,7 @@ private theorem prod_monomial_one_eq_monomial_sum {ι σ : Type*} (s : Finset ι
   induction s using Finset.induction_on with
   | empty =>
     rw [Finset.prod_empty, Finset.sum_empty]
-    first | rfl | simp
+    first | rfl
   | @insert i s hi ih =>
     rw [Finset.prod_insert hi, Finset.sum_insert hi, ih, MvPowerSeries.monomial_mul_monomial, one_mul]
 
@@ -540,7 +527,7 @@ theorem degree_snd_le (μ : XZ Lt N0 N1 →₀ ℕ) :
   rw [Finsupp.degree_apply, Finsupp.degree_apply]
   calc ∑ j ∈ (Finsupp.sumFinsuppEquivProdFinsupp μ).2.support, (Finsupp.sumFinsuppEquivProdFinsupp μ).2 j
       = ∑ j ∈ (Finsupp.sumFinsuppEquivProdFinsupp μ).2.support, μ (Sum.inr j) := by
-        simp [Finsupp.snd_sumFinsuppEquivProdFinsupp]
+        simp
     _ = ∑ i ∈ (Finsupp.sumFinsuppEquivProdFinsupp μ).2.support.map Function.Embedding.inr, μ i := by
         rw [Finset.sum_map]; rfl
     _ ≤ ∑ i ∈ μ.support, μ i := by
@@ -956,8 +943,7 @@ theorem applyAt0_congr (T T' : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l]) (
 
 theorem applyAt0_zero_left (P : MvPolynomial (XZ Lt N0 N1) ℤ) :
     applyAt0 N0 N1 l (0 : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l]) P = 0 := by
-  unfold applyAt0
-  simp
+  simp [OJ.applyAt0]
 
 theorem applyAt0_add_left (T T' : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l]) (P : MvPolynomial (XZ Lt N0 N1) ℤ) :
     applyAt0 N0 N1 l (T + T') P = applyAt0 N0 N1 l T P + applyAt0 N0 N1 l T' P := by
@@ -980,11 +966,9 @@ theorem applyAt0_sum_left {ι : Type*} (S : Finset ι) (c : ι → ℂ_[l]) (T :
     (P : MvPolynomial (XZ Lt N0 N1) ℤ) :
     applyAt0 N0 N1 l (∑ i ∈ S, c i • T i) P = ∑ i ∈ S, c i • applyAt0 N0 N1 l (T i) P := by
   induction S using Finset.induction_on with
-  | empty =>
-    simp only [Finset.sum_empty]
-    exact applyAt0_zero_left P
+  | empty => simpa using applyAt0_zero_left P
   | insert a S ha ih =>
-    rw [Finset.sum_insert ha, Finset.sum_insert ha, applyAt0_add_left, applyAt0_smul_left, ih]
+    simp [Finset.sum_insert ha, applyAt0_add_left, applyAt0_smul_left, ih]
 
 end Lin
 

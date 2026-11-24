@@ -432,7 +432,7 @@ theorem _root_.GlobalTheory.T.exists_adelicForm_eq_rationalPhase_kernelSeries : 
     KerDat Rl.toRealDat j (Rl.C.delAt (Formalism.EigenvalueLevelCeiling.plc v)) χ ξR (placesOver Rl.toRealDat (Rl.mu v) (ownAt D v)) ω φ →
   ∀ h ∈ GfC (Vc D j), ∀ P ∈ nabAtr (labLL D) (lamV D j) (Bridge.hLat (Vc D j) (fin (Vc D j) h)),
     ∃ x, adForm Rl.toRealDat j x (fun τ => u τ) = ph • singleSeries Rl.toRealDat j ω φ h (c0L j P) u := by
-  first | exact @GlobalTheory.KerPhase.exists_adForm_eq_phase_smul | exact GlobalTheory.KerPhase.exists_adForm_eq_phase_smul | (intros; apply GlobalTheory.KerPhase.exists_adForm_eq_phase_smul <;> assumption)
+  first | exact @GlobalTheory.KerPhase.exists_adForm_eq_phase_smul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsAdelicFormEqRationalPhaseKernelSeriesStatement =====
@@ -888,7 +888,7 @@ theorem _root_.GlobalTheory.T.unit_modulus_rational_phase_mem_coefficient_field 
   ∀ u : ∀ τ, lowT (Rl.MW j (sg0 D A3.A)) τ, (∀ τ, (u τ : (Rl.MW j (sg0 D A3.A)).sm τ) = v₀ j (sg0 D A3.A) τ) →
   (∀ k, Rl.phs k = 1) → T.cuspA ((j : ℕ) + 1) (wtA (κ j)) (κ j).n ≠ ⊥ →
   ∀ ph : ℂ, ‖ph‖ = 1 → IsRatPhase T Rl.toRealDat j hV (κ j) u (c0L j) ph → ∃ c : D.what₂.LL, sg0 D A3.A c = ph := by
-  first | exact @GlobalTheory.PhaseOneOnto.phase_mem_coefField | exact GlobalTheory.PhaseOneOnto.phase_mem_coefField | (intros; apply GlobalTheory.PhaseOneOnto.phase_mem_coefField <;> assumption)
+  first | exact @GlobalTheory.PhaseOneOnto.phase_mem_coefField
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitModulusRationalPhaseMemCoefficientFieldStatement =====
@@ -1005,7 +1005,7 @@ theorem _root_.GlobalTheory.T.ratHyp0_of_bad_prime_mem_S0 : ∀ {eps : ℝ} (Fm 
   (∀ P : Pl (Fm.D x i).host.E, (((Fm.D x i).host.QS * (Fm.D x i).host.q * Ideal.absNorm (Fm.D x i).host.ccK * ((Fm.D x i).host.g 0 * (Fm.D x i).host.g 1 *
     (Fm.D x i).host.pde * (Fm.D x i).host.pde') : ℕ) : 𝓞 (Fm.D x i).host.E) ∈ P.asIdeal → P ∈ (Fm.D x i).ntw.S0 t) →
   ∀ j : Fin (Fm.D x i).R.m, RatHyp0 p.T p.R (F2 p) p.κ p.v₀ p.O t j := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.ratHyp0_at_point_alt | exact _root_.GlobalTheory.BigOn.Exp.ratHyp0_at_point_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.ratHyp0_at_point_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.ratHyp0_at_point_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1089,7 +1089,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp GlobalTheory.BigOn.Exp.SerBase
 
 theorem _root_.GlobalTheory.T.kernel_rationality_of_reciprocity_hypotheses_alt : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.SerStd.SeriesRatS → _root_.GlobalTheory.BigOn.Exp.SerBase.KernelRationalAt := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.SerBase.kerRatAt_alt | exact _root_.GlobalTheory.BigOn.Exp.SerBase.kerRatAt_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.SerBase.kerRatAt_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.SerBase.kerRatAt_alt
 end
 end -- clump:auto
 end -- clump:auto

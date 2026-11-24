@@ -16,6 +16,9 @@ def prepare(trusted, candidate, control, state, runner):
     rpc.require(lease['operation'] == rpc.PROOF_OPERATION, 'proof lease required')
     rpc.require(runner == lease['worker']['runner_name'], 'wrong registered runner')
     rpc.verify_source(candidate, lease['snapshot'], rpc.PROOF_OPERATION)
+    if rpc.proof_policy()['baseline'].get('fresh_project'):
+        from prepare_fresh import prepare_fresh
+        return prepare_fresh(candidate,control,state,lease)
     for name, key in [('lakefile.toml', 'lakefile_sha256'), ('lake-manifest.json', 'manifest_sha256')]:
         rpc.require(rpc.digest(trusted / name) == lease['snapshot'][key], 'trusted main configuration differs')
     spec = importlib.util.spec_from_file_location('donor_ci_prepare', trusted / 'scripts/ci-prepare.py')

@@ -82,7 +82,7 @@ theorem realCoordsFun_add (x y : (K →+* ℂ) → Fin r → ℂ) : hReF (x + y)
 
 theorem inner_hRe (x y : (K →+* ℂ) → Fin r → ℂ) :
     inner ℝ (hRe x) (hRe y) = (∑ σ, star (x σ) ⬝ᵥ y σ).re := by
-  simp only [hRe, PiLp.inner_apply, PiLp.toLp_apply, RCLike.inner_apply, conj_trivial,
+  simp only [hRe, PiLp.inner_apply, RCLike.inner_apply, conj_trivial,
     Fintype.sum_prod_type, Fin.sum_univ_two, Complex.re_sum, dotProduct, Pi.star_apply,
     Complex.mul_re, Complex.star_def, Complex.conj_re, Complex.conj_im, hReF]
   refine Finset.sum_congr rfl fun σ _ => Finset.sum_congr rfl fun l _ => ?_
@@ -163,7 +163,7 @@ theorem orthogonalProjector_mulVec_smul (σ : K →+* ℂ) (b : Fin k → Fin r 
   rw [← mulVec_smul]
   congr 1
   funext l
-  simp [map_smul]
+  simp
 
 theorem inner_projectedVector_smul (b : Fin k → Fin r → K) (a a' : K) (x y : Fin r → K) :
     inner ℝ (hpv b (a • x)) (hpv b (a' • y)) =
@@ -240,12 +240,12 @@ theorem conj_sum_projected_inner (b : Fin k → Fin r → K) (hb : LinearIndepen
   have hinv : Function.Involutive (NumberField.ComplexEmbedding.conjugate (K := K)) := by
     intro σ
     ext z
-    simp [NumberField.ComplexEmbedding.conjugate_coe_eq]
+    simp
   refine Fintype.sum_bijective _ hinv.bijective _ _ (fun σ => ?_)
   rw [orthogonalProjector_mulVec_conjugate σ hb x, orthogonalProjector_mulVec_conjugate σ hb y,
     NumberField.ComplexEmbedding.conjugate_coe_eq, NumberField.ComplexEmbedding.conjugate_coe_eq]
 
-  simp [dotProduct, map_sum, mul_comm, mul_left_comm]
+  simp [dotProduct, map_sum, mul_comm]
 
 theorem quotientGram_conjTranspose (σ : K →+* ℂ) {b : Fin k → Fin r → K} (hb : LinearIndependent K b)
     (c : Fin m → Fin r → K) : (ReciprocityTheory.MultiplicativeHeights.quotGramC 1 σ b c)ᴴ = ReciprocityTheory.MultiplicativeHeights.quotGramC 1 σ b c := by
@@ -305,7 +305,7 @@ theorem det_gram_projectedLatticeVectors (b : Fin k → Fin r → K) (hb : Linea
     rw [Matrix.map_apply, Complex.ofRealHom_eq_coe, hent]
     simp [Matrix.mul_apply, Matrix.conjTranspose_apply, Fintype.sum_prod_type,
       Matrix.kroneckerMap_apply, Matrix.blockDiagonal_apply, Matrix.one_apply, ite_mul, mul_ite,
-      Finset.sum_ite_eq, Finset.sum_ite_eq', apply_ite (starRingEnd ℂ), map_zero]
+      Finset.sum_ite_eq', apply_ite (starRingEnd ℂ), map_zero]
   have hdet : ((gram ℝ (hwv b c)).det : ℂ) =
       star ((1 : Matrix (Fin m) (Fin m) ℂ) ⊗ₖ Ω).det *
         (Matrix.blockDiagonal (fun q => ReciprocityTheory.MultiplicativeHeights.quotGramC 1 (e q) b c)).det *

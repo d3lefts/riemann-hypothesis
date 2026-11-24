@@ -418,7 +418,7 @@ theorem _root_.GlobalTheory.T.split_parallel_derivative_left_fixed : _root_.Glob
     ∀ R : (Fin a' × Fin (a + a') → AF F) → ℂ, R 0 ≠ 0 → Rest (evFin F v) (G.M'.vac v) R →
     ∀ p ∈ GlobalTheory.InertDbl.ParD σ G.V' v, omd p (GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R)) =
       GlobalTheory.InertDbl.dblFun (tens (evFin F v) (G.M'.vac v) R) := by
-  first | exact @_root_.GlobalTheory.SplitParLeft.splitParallel_derivative_fixes_left | exact _root_.GlobalTheory.SplitParLeft.splitParallel_derivative_fixes_left | (intros; apply _root_.GlobalTheory.SplitParLeft.splitParallel_derivative_fixes_left <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitParLeft.splitParallel_derivative_fixes_left
 end
 end -- clump:auto
 end -- clump:auto
@@ -512,7 +512,7 @@ theorem _root_.GlobalTheory.T.split_left_scalar_factor_eq_one : _root_.GlobalThe
     ∀ (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)), Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v → v ∉ X.T → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.PsiUnr B.ψ v → (2 : 𝓞 F) ∉ v.asIdeal →
     G.M'.vac v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1 →
     ∀ k ∈ GlobalTheory.InertSph.KAt σ G.V' v, ∀ c : ℂ, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.AdelicU.evFin F v) (om' (k, 1)) (G.M'.vac v) (c • G.M'.vac v) → c = 1 := by
-  first | exact @_root_.GlobalTheory.SplitScalarV.scalar_eq_one_of_split_left | exact _root_.GlobalTheory.SplitScalarV.scalar_eq_one_of_split_left | (intros; apply _root_.GlobalTheory.SplitScalarV.scalar_eq_one_of_split_left <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitScalarV.scalar_eq_one_of_split_left
 end
 end -- clump:auto
 end -- clump:auto
@@ -591,7 +591,7 @@ theorem _root_.GlobalTheory.T.split_vprime_stabilizer_fixes_vacuum : _root_.Glob
     ∃ S : Finset (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)), ∀ v ∉ S, Nonempty (E →ₐ[F] Fv F v) →
       ∀ k ∈ GlobalTheory.InertSph.KAt σ G.V' v,
         GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.AdelicU.evFin F v) (om' (k, 1)) (G.M'.vac v) (G.M'.vac v) := by
-  first | exact @_root_.GlobalTheory.SplitSphVPrimeStab.vacuum_fixed_by_split_spherical_left | exact _root_.GlobalTheory.SplitSphVPrimeStab.vacuum_fixed_by_split_spherical_left | (intros; apply _root_.GlobalTheory.SplitSphVPrimeStab.vacuum_fixed_by_split_spherical_left <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitSphVPrimeStab.vacuum_fixed_by_split_spherical_left
 end
 end -- clump:auto
 end -- clump:auto
@@ -1645,7 +1645,7 @@ theorem _root_.GlobalTheory.T.vDouble_eigenspace_split_of_line : _root_.GlobalTh
     ∀ g ∈ GlobalTheory.DblVac.KD σ G.V v, ∃ μ : ℂ,
       omd g (boxFun (tens (evFin F v) (G.M.vac v) r) (fun x => star (tens (evFin F v) (G.M.vac v) r x))) =
         μ • boxFun (tens (evFin F v) (G.M.vac v) r) (fun x => star (tens (evFin F v) (G.M.vac v) r x)) := by
-  first | exact @_root_.GlobalTheory.VDblEigSplit.vDouble_eigenfunction_split | exact _root_.GlobalTheory.VDblEigSplit.vDouble_eigenfunction_split | (intros; apply _root_.GlobalTheory.VDblEigSplit.vDouble_eigenfunction_split <;> assumption)
+  first | exact @_root_.GlobalTheory.VDblEigSplit.vDouble_eigenfunction_split
 end
 end -- clump:auto
 end -- clump:auto
@@ -1737,7 +1737,7 @@ theorem _root_.GlobalTheory.T.split_vacuum_hecke_eigenvalue_eq_one : _root_.Glob
     ∀ (v : Pl F), Formalism.MainNotions.SchurIrreducible.IsSplit (E := E) v → v ∉ X.T → PsiUnr B.ψ v → (2 : 𝓞 F) ∉ v.asIdeal →
     G.M.vac v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1 →
     ∀ k ∈ GlobalTheory.InertSph.KAt σ G.V v, ∀ c : ℂ, Acts (evFin F v) (om (k, 1)) (G.M.vac v) (c • G.M.vac v) → c = 1 := by
-  first | exact @_root_.GlobalTheory.SplitVacV.split_vacuum_eigenvalue_eq_one | exact _root_.GlobalTheory.SplitVacV.split_vacuum_eigenvalue_eq_one | (intros; apply _root_.GlobalTheory.SplitVacV.split_vacuum_eigenvalue_eq_one <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitVacV.split_vacuum_eigenvalue_eq_one
 end
 end -- clump:auto
 end -- clump:auto
@@ -1809,7 +1809,7 @@ theorem _root_.GlobalTheory.T.split_spherical_left_fixes_vacuum : _root_.GlobalT
     ∃ S : Finset (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := F)), ∀ v ∉ S, Nonempty (E →ₐ[F] Fv F v) →
       ∀ k ∈ GlobalTheory.InertSph.KAt σ G.V v,
         GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.AdelicU.evFin F v) (om (k, 1)) (G.M.vac v) (G.M.vac v) := by
-  first | exact @_root_.GlobalTheory.SplitSphLeft.vacuum_fixed_by_split_spherical_left | exact _root_.GlobalTheory.SplitSphLeft.vacuum_fixed_by_split_spherical_left | (intros; apply _root_.GlobalTheory.SplitSphLeft.vacuum_fixed_by_split_spherical_left <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitSphLeft.vacuum_fixed_by_split_spherical_left
 end
 end -- clump:auto
 end -- clump:auto
@@ -1871,7 +1871,7 @@ theorem _root_.GlobalTheory.T.lattice_stabilizer_fixes_vacuum_vector : _root_.Gl
         GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.AdelicU.evFin F v) (om (k, 1)) (G.M.vac v) (G.M.vac v)) ∧
       ∀ k ∈ GlobalTheory.InertSph.KAt σ G.V' v,
         GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Acts (GlobalTheory.AdelicU.evFin F v) (om' (k, 1)) (G.M'.vac v) (G.M'.vac v) := by
-  first | exact @_root_.GlobalTheory.LatStabVac.lattice_vacuum_fixed_outside_finite_set | exact _root_.GlobalTheory.LatStabVac.lattice_vacuum_fixed_outside_finite_set | (intros; apply _root_.GlobalTheory.LatStabVac.lattice_vacuum_fixed_outside_finite_set <;> assumption)
+  first | exact @_root_.GlobalTheory.LatStabVac.lattice_vacuum_fixed_outside_finite_set
 end
 end -- clump:auto
 end -- clump:auto

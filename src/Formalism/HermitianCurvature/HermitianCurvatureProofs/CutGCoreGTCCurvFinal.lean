@@ -366,8 +366,7 @@ theorem expand {A : Type} [Ring A] [Algebra ℂ A] (m : ℕ) (GG GGi K α β γ 
       u ^ (m + 3) • (GG * α + GGi * Wt1 - 1) + u ^ (m + 2) • (GG * β + GG * K * α + GGi * Wt2 - Θ) := by
     intro u
     rw [hx, hw, hml u]
-    simp only [mul_add, add_mul, smul_mul_assoc, mul_smul_comm, smul_add, mul_one, smul_smul, mul_assoc, smul_sub,
-      mul_sub, sub_mul]
+    simp only [mul_add, add_mul, smul_mul_assoc, mul_smul_comm, smul_add, mul_one, smul_smul, mul_assoc, smul_sub]
     module
   have hlow : PLT (m + 2) (fun u => u ^ (m + 1) • (GG * γ + GG * K * β) + u ^ m • (GG * K * γ) +
       (GG * X' u * ml u + GGi * W' u)) := by
@@ -406,7 +405,7 @@ theorem ml_expand (u : ℂ) : d.L.m0 u * d.L.l0 u =
         (1 / 4 : ℂ) • (d.L.ζ * d.L.GGi * (d.L.ζb * d.L.GGi))) := by
   unfold R.LevelData.m0 R.LevelData.l0
   simp only [← Algebra.smul_def]
-  simp only [neg_mul, mul_neg, sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm, smul_smul, neg_neg, mul_assoc,
+  simp only [neg_mul, mul_neg, sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm, smul_smul, mul_assoc,
     smul_sub, smul_neg, neg_sub]
   module
 
@@ -487,8 +486,8 @@ theorem C2 (hRel : d.Rel) (hTT : d.L.TT = (P.TT : ℂ)) :
     (hRel.2.1 _ d.L.GGi (Or.inl (by simp [R.LevelData.fns]))).eq
   unfold ThetaC
   rw [kappa_of_weight_function, kap_aC, mul_add, GG_nabs, GG_zGinab, hKG, mul_assoc (d.κ _) d.L.GG, GG_alpha, hTT]
-  simp only [Algebra.algebraMap_eq_smul_one, mul_add, add_mul, mul_sub, sub_mul, smul_mul_assoc, mul_smul_comm,
-    one_mul, mul_one, smul_sub, smul_add, smul_smul, hKGi, mul_assoc]
+  simp only [Algebra.algebraMap_eq_smul_one, mul_add, mul_sub, smul_mul_assoc, mul_smul_comm,
+    one_mul, mul_one, smul_sub, smul_smul, hKGi]
   module
 
 end NormalFormTwo
@@ -706,7 +705,7 @@ theorem pl_monic (s : Finset ℕ) (f : ℕ → ℂ) : (∏ i ∈ s, (X + C (f i)
 
 theorem pl_natDegree (s : Finset ℕ) (f : ℕ → ℂ) : (∏ i ∈ s, (X + C (f i))).natDegree = s.card := by
   rw [natDegree_prod_of_monic _ _ (fun i _ => monic_X_add_C (f i))]
-  simp [natDegree_X_add_C]
+  simp
 
 theorem pl_top (s : Finset ℕ) (f : ℕ → ℂ) : (∏ i ∈ s, (X + C (f i))).coeff s.card = 1 := by
   have h := (pl_monic s f).coeff_natDegree
@@ -760,7 +759,7 @@ theorem part_ex (P : M.Par) (m : ℕ) (hm : P.k = m + 2) (ρ : M.Ty P) (ex : Fin
     obtain ⟨l, hl, hlI⟩ := hex
     rw [h1] at hlI
     have hss : s ⊂ Finset.Icc 1 (m + 1) :=
-      (Finset.ssubset_iff_of_subset Finset.sdiff_subset).2 ⟨l, hlI, by simp [s, hl]⟩
+      (Finset.ssubset_iff_of_subset Finset.sdiff_subset).2 ⟨l, hlI, by simp [hl]⟩
     have := Finset.card_lt_card hss
     rwa [card_Icc_one] at this
   refine ⟨fun i => (∏ i ∈ s, (X + C (f i))).coeff i, fun u => ?_⟩

@@ -439,7 +439,7 @@ theorem UpperTheory.finite_zp_module_torsion_free_splitting :
     rw [PadicInt.unitCoeff_spec ha0', mul_smul] at h1
     exact (smul_eq_zero_iff_eq (PadicInt.unitCoeff ha0')).mp (by rwa [Units.smul_def])
   set K := a.valuation
-  have hl0 : (l : ℝ) ≠ 0 := by exact_mod_cast (Fact.out : l.Prime).ne_zero
+  have hl0 : (l : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (Fact.out : l.Prime).ne_zero
   have hopenI : IsOpen ((Ideal.span {(l : ℤ_[l]) ^ K} : Ideal ℤ_[l]) : Set ℤ_[l]) := by
     have : ((Ideal.span {(l : ℤ_[l]) ^ K} : Ideal ℤ_[l]) : Set ℤ_[l])
         = Metric.closedBall 0 ((l : ℝ) ^ (-(K : ℤ))) := by
@@ -454,18 +454,13 @@ theorem UpperTheory.finite_zp_module_torsion_free_splitting :
   have hrank : Module.finrank ℤ_[l] (N ⧸ T) = Module.finrank ℤ_[l] N := by
     have h := rank_quotient_add_rank_of_isDomain T
     rw [Module.IsTorsion.rank_eq_zero Submodule.torsion_isTorsion, add_zero] at h
-    unfold Module.finrank
-    rw [h]
+    exact congrArg Cardinal.toNat h
   let b := Module.finBasisOfFinrankEq ℤ_[l] (N ⧸ T) hrank
   obtain ⟨s, hs⟩ := Module.projective_lifting_property T.mkQ LinearMap.id T.mkQ_surjective
   have hs' : ∀ q, T.mkQ (s q) = q := fun q => LinearMap.congr_fun hs q
   let f : N →ₗ[ℤ_[l]] N := LinearMap.id - s ∘ₗ T.mkQ
-  have hsx : ∀ x, f x ∈ T := by
-    intro x
-    rw [← Submodule.Quotient.mk_eq_zero]
-    have := hs' (T.mkQ x)
-    simp only [Submodule.mkQ_apply] at this
-    simp [f, this]
+  have hsx : ∀ x, f x ∈ T := fun x =>
+    (Submodule.Quotient.mk_eq_zero T).mp (by simp [f, hs', ← Submodule.mkQ_apply])
   let t : N →ₗ[ℤ_[l]] T := LinearMap.codRestrict T f hsx
   let p : N →ₗ[ℤ_[l]] (Fin (Module.finrank ℤ_[l] N) → ℤ_[l]) := b.equivFun.toLinearMap ∘ₗ T.mkQ
   have htv : ∀ x, (t x : N) = x - s (T.mkQ x) := fun x => rfl
@@ -481,14 +476,12 @@ theorem UpperTheory.finite_zp_module_torsion_free_splitting :
     intro y
     obtain ⟨c, hc⟩ := hg (y : N)
     refine ⟨fun i => PadicInt.toZModPow K (c i), ?_⟩
-    have h1 : t (g c) = y := by
-      apply Subtype.ext
-      rw [htv, hc, hmk0, map_zero, sub_zero]
+    have h1 : t (g c) = y := Subtype.ext (by rw [htv, hc, hmk0, map_zero, sub_zero])
     rw [← h1, ← sub_eq_zero, ← map_sub, ← map_sub]
     apply hker
     intro i
     rw [← PadicInt.ker_toZModPow, RingHom.mem_ker]
-    simp [map_sub, ZMod.natCast_zmod_val]
+    simp [map_sub]
   · refine hq.isCoinducing.isOpen_preimage.mp ?_
     show IsOpen ((LinearMap.ker (t ∘ₗ g) : Submodule ℤ_[l] (Fin m → ℤ_[l])) : Set (Fin m → ℤ_[l]))
     refine Submodule.isOpen_mono (U := Submodule.pi Set.univ (fun _ => Ideal.span {(l : ℤ_[l]) ^ K})) ?_ ?_
@@ -500,22 +493,17 @@ theorem UpperTheory.finite_zp_module_torsion_free_splitting :
     rw [hmk0, map_zero]
   · exact Subtype.ext (by rw [htv, hmk0, map_zero, sub_zero])
   · intro x x' hxx
-    simp only [Prod.mk.injEq] at hxx
-    obtain ⟨h1, h2⟩ := hxx
+    obtain ⟨h1, h2⟩ := Prod.mk.injEq .. |>.mp hxx
     have hq' : T.mkQ x = T.mkQ x' := b.equivFun.injective h1
     have h3 := congrArg Subtype.val h2
     rw [htv, htv, hq'] at h3
     exact sub_left_injective h3
   · rintro ⟨v, y⟩
-    refine ⟨s (b.equivFun.symm v) + y, ?_⟩
-    have hm : T.mkQ (s (b.equivFun.symm v) + y) = b.equivFun.symm v := by
-      rw [map_add (f := _), hs', hmk0, add_zero]
-    refine Prod.ext ?_ ?_
+    refine ⟨s (b.equivFun.symm v) + y, Prod.ext ?_ (Subtype.ext ?_)⟩
     · show b.equivFun (T.mkQ _) = v
-      rw [hm, LinearEquiv.apply_symm_apply]
-    · apply Subtype.ext
-      show (t _ : N) = y
-      rw [htv, hm]
+      rw [map_add, hs', hmk0, add_zero, LinearEquiv.apply_symm_apply]
+    · show (t _ : N) = y
+      rw [htv, map_add, hs', hmk0, add_zero]
       abel
 end -- clump:auto
 end -- clump:auto

@@ -50,9 +50,9 @@ namespace Bl.general_b_fact_second_rest
 
 private lemma aux {K : Type u_1} [Field K] [NumberField K] (a : K) :
     ∃ d : ℤ, d ≠ 0 ∧ IsIntegral ℤ ((d : K) * a) := by
-  have ha : IsAlgebraic ℤ a := IsFractionRing.isAlgebraic_iff ℤ ℚ K |>.mpr (.of_finite ℚ a)
-  obtain ⟨d, hd, hint⟩ := ha.exists_integral_multiple
-  exact ⟨d, hd, by simpa [zsmul_eq_mul] using hint⟩
+
+  simpa [zsmul_eq_mul] using
+    (IsFractionRing.isAlgebraic_iff ℤ ℚ K |>.mpr (.of_finite ℚ a)).exists_integral_multiple
 
 theorem goal1 :
   ∀ {K : Type u_1} {V : Type u_2} [inst : Field.{u_1} K] [NumberField.{u_1} K] [NumberField.IsTotallyComplex.{u_1} K]
@@ -72,18 +72,15 @@ theorem goal1 :
     obtain ⟨c2, hc2, m2⟩ := h2
     refine ⟨c1 * c2, mul_ne_zero hc1 hc2, ?_⟩
     rw [smul_add]
-    refine L.add_mem ?_ ?_
-    · rw [mul_comm, mul_smul]; exact L.toAddSubgroup.zsmul_mem m1 c2
-    · rw [mul_smul]; exact L.toAddSubgroup.zsmul_mem m2 c1
+    exact L.add_mem (by rw [mul_comm, mul_smul]; exact L.toAddSubgroup.zsmul_mem m1 c2)
+      (by rw [mul_smul]; exact L.toAddSubgroup.zsmul_mem m2 c1)
   | smul a x _ h =>
     obtain ⟨c, hc, m⟩ := h
     obtain ⟨d, hd, hint⟩ := aux a
     refine ⟨d * c, mul_ne_zero hd hc, ?_⟩
-    obtain ⟨r, hr⟩ : ∃ r : NumberField.RingOfIntegers K,
-        algebraMap (NumberField.RingOfIntegers K) K r = (d : K) * a := ⟨⟨_, hint⟩, rfl⟩
+    obtain ⟨r, hr⟩ : ∃ r : NumberField.RingOfIntegers K, algebraMap (NumberField.RingOfIntegers K) K r = (d : K) * a := ⟨⟨_, hint⟩, rfl⟩
     have key : (d * c) • (a • x) = r • (c • x) := by
-      rw [← algebraMap_smul K r (c • x), hr, ← Int.cast_smul_eq_zsmul K,
-        ← Int.cast_smul_eq_zsmul K, smul_smul, smul_smul]
+      rw [← algebraMap_smul K r (c • x), hr, ← Int.cast_smul_eq_zsmul K, ← Int.cast_smul_eq_zsmul K, smul_smul, smul_smul]
       congr 1
       push_cast
       ring

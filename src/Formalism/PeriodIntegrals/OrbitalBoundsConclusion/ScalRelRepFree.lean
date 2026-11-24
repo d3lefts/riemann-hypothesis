@@ -190,8 +190,6 @@ theorem xplus_map {T₀ T₁ : E} {A : LFlag S r T₀} {B : LFlag S r T₁} (φ 
     unfold Xplus Xsp
     first
     | rfl
-    | exact le_antisymm (sInf_le ⟨le_sup_left, le_sup_right⟩)
-        (le_sInf fun x hx => sup_le hx.1 hx.2)
   rw [hXp] at hv ⊢
   obtain ⟨x, hx, w, hw, rfl⟩ := Submodule.mem_sup.mp hv
   obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.mp hw
@@ -388,8 +386,7 @@ structure DC (Λ : Submodule (𝓞 E) S.V) {T T' : E} (F : LFlag S r T) (y y' : 
   hzt : y'.zt = n (m y.zt)
 
 theorem X_le_Xplus {T₀ : E} (G : LFlag S r T₀) : Xsp G ≤ Xplus G := by
-  simp only [Xplus, FlagG.Xplus]
-  exact le_sup_left
+  simpa only [Xplus, FlagG.Xplus] using le_sup_left
 
 section Move
 
@@ -397,12 +394,10 @@ variable {Λ : Submodule (𝓞 E) S.V} {T T' : E} {F : LFlag S r T} {y y' : LFla
   {n m : S.V ≃ₗ[E] S.V}
 
 theorem e_eq (h : DC Λ F y y' n m) (a : Fin r) : y'.fl.e a = n (m (y.fl.e a)) := by
-  have := h.hfr a.castSucc
-  simpa [frame, FlagG.fvec] using this
+  simpa [frame, FlagG.fvec] using h.hfr a.castSucc
 
 theorem z_eq (h : DC Λ F y y' n m) : y'.fl.z = n (m y.fl.z) := by
-  have := h.hfr (Fin.last r)
-  simpa [frame, FlagG.fvec] using this
+  simpa [frame, FlagG.fvec] using h.hfr (Fin.last r)
 
 theorem Xflag_eq (h : DC Λ F y y' n m) (j : ℕ) :
     Xflag y' j = (Xflag y j).map ((m.trans n : S.V ≃ₗ[E] S.V) : S.V →ₗ[E] S.V) := by
@@ -435,14 +430,10 @@ theorem uue_symm (h : DC Λ F y y' n m) {v : S.V} (hv : v ∈ UUE Λ F y') : n.s
   refine uue_map (n.symm : S.V →ₗ[E] S.V) ?_ ?_ ?_ ?_ hv
   · intro w hw
     exact uue_of (uu_A (nl_symm_XLam h.hn hw))
-  · have e : (n.symm : S.V →ₗ[E] S.V) F.zt = F.zt + (n.symm F.zt - F.zt) := by simp
-    rw [e]
-    exact add_mem (uue_of uu_B) (uue_of (uu_A (nzF_symm_sub h)))
+  · simpa using add_mem (uue_of uu_B) (uue_of (uu_A (nzF_symm_sub h)))
   · intro w hw
     exact uue_of (uu_C ((mem_XLam' h).mp hw))
-  · have e : (n.symm : S.V →ₗ[E] S.V) y'.zt = y.zt + (m y.zt - y.zt) := by simp [h.hzt]
-    rw [e]
-    exact add_mem (uue_of uu_D) (uue_of (uu_C (mz_sub h)))
+  · simpa [h.hzt] using add_mem (uue_of uu_D) (uue_of (uu_C (mz_sub h)))
 
 theorem uue_fwd (h : DC Λ F y y' n m) {v : S.V} (hv : v ∈ UUE Λ F y) : n v ∈ UUE Λ F y' := by
   refine uue_map (n : S.V →ₗ[E] S.V) ?_ ?_ ?_ ?_ hv
@@ -470,17 +461,12 @@ theorem mem_Xplus' (h : DC Λ F y y' n m) {v : S.V} : v ∈ Xplus y' ↔ n.symm 
   constructor
   · intro hv
     have hz : (n.symm : S.V →ₗ[E] S.V) y'.fl.z - y.fl.z ∈ Xsp y := by
-      have e : (n.symm : S.V →ₗ[E] S.V) y'.fl.z - y.fl.z = m y.fl.z - y.fl.z := by simp [z_eq h]
-      rw [e]
-      exact nl_orth h.hm (z_orth y)
+      simpa [z_eq h] using nl_orth h.hm (z_orth y)
     exact xplus_map (n.symm : S.V →ₗ[E] S.V) (fun w hw => (mem_X' h).mp hw) hz hv
   · intro hv
     have hz : (n : S.V →ₗ[E] S.V) y.fl.z - y'.fl.z ∈ Xsp y' := by
       rw [mem_X' h]
-      have e : n.symm ((n : S.V →ₗ[E] S.V) y.fl.z - y'.fl.z) = -(m y.fl.z - y.fl.z) := by
-        simp [z_eq h]
-      rw [e]
-      exact (Xsp y).neg_mem (nl_orth h.hm (z_orth y))
+      simpa [z_eq h, neg_sub] using (Xsp y).neg_mem (nl_orth h.hm (z_orth y))
     have := xplus_map (A := y) (B := y') (n : S.V →ₗ[E] S.V)
       (fun w hw => (mem_X' h).mpr (by simpa using hw)) hz hv
     simpa using this
@@ -501,9 +487,8 @@ theorem mem_NgX' (h : DC Λ F y y' n m) (g : ℕ) {v : S.V} :
     exact map_mem_sup_three (n.symm : S.V →ₗ[E] S.V) (fun w hw => gL_map _ (fun u hu => aut_symm_mem h.hn.1 hu) g hw)
       (fun w hw => nl_symm_XLam h.hn hw) (fun w hw => (mem_XLam' h).mp hw) hv
   · intro hv
-    have := map_mem_sup_three (n : S.V →ₗ[E] S.V) (fun w hw => gL_map _ (fun u hu => aut_mem h.hn.1 hu) g hw)
+    simpa using map_mem_sup_three (n : S.V →ₗ[E] S.V) (fun w hw => gL_map _ (fun u hu => aut_mem h.hn.1 hu) g hw)
       (fun w hw => nl_XLam h.hn hw) (fun w hw => (mem_XLam' h).mpr (by simpa using hw)) hv
-    simpa using this
 
 theorem sg_move (h : DC Λ F y y' n m) (a b : S.V) (al al' : E) :
     SgRel F y (n.symm a) (n.symm b) al al' ↔ SgRel F y' a b al al' := by
@@ -523,7 +508,7 @@ theorem sg_move (h : DC Λ F y y' n m) (a b : S.V) (al al' : E) :
     · exact add_mem ((mem_X' h).mp hU') (Submodule.smul_mem _ _ (mem_XLam.mp (mz_sub h)).2)
     · have e2 : n.symm a - n.symm b = n.symm (a - b) := by simp
       rw [e2, e, h.hzt]
-      simp only [map_add (f := _), map_sub, map_smul, LinearEquiv.symm_apply_apply, smul_sub]
+      simp only [map_add (f := _), map_smul, LinearEquiv.symm_apply_apply, smul_sub]
       abel
 
 end Move

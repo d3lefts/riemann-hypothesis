@@ -237,8 +237,6 @@ theorem block (hCB : CBSorted) {Lt : Type} (l : ℕ) [Fact l.Prime] (N0 N1 : ℕ
         first
           | (rw [Finset.sum_comm]
              exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring)
-          | exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
-          | (rw [Finset.sum_comm]; ring)
     _ = _ := hCB _ _ _ _ _
     _ = _ := by
         refine Finset.sum_congr rfl fun J _ => ?_
@@ -246,11 +244,9 @@ theorem block (hCB : CBSorted) {Lt : Type} (l : ℕ) [Fact l.Prime] (N0 N1 : ℕ
         congr 1
         · rw [RingHom.map_det]
           congr 1
-          try (refine Matrix.ext fun i j => ?_; simp [Matrix.submatrix_apply, RingHom.mapMatrix_apply, Matrix.map_apply])
         · rw [RingHom.map_det]
           congr 1
-          try (refine Matrix.ext fun i k => ?_; simp [Matrix.submatrix_apply, RingHom.mapMatrix_apply, Matrix.map_apply,
-            map_sum, MvPolynomial.eval₂Hom_X'])
+          try (refine Matrix.ext fun i k => ?_; simp [Matrix.submatrix_apply, RingHom.mapMatrix_apply, Matrix.map_apply])
 
 theorem deXCB_of (hCB : CBSorted) : DeXCB := by
   unfold DeXCB
@@ -260,8 +256,6 @@ theorem deXCB_of (hCB : CBSorted) : DeXCB := by
   simp only [Finset.prod_univ_sum, Fintype.piFinset_univ]
   first
     | rfl
-    | (congr 1)
-    | exact Finset.sum_congr (Subsingleton.elim _ _) fun _ _ => rfl
 
 end PI.WwMainW
 end -- clump:auto
@@ -359,7 +353,7 @@ theorem chi_monomial {Lt : Type} (l : ℕ) [Fact l.Prime] (N0 N1 : ℕ) (z : Lt 
   set p := Finsupp.sumFinsuppEquivProdFinsupp μ with hp
   have hμ : μ = Finsupp.sumElim p.1 p.2 := sumElim_split μ
   rw [hμ, MvPolynomial.eval₂Hom_monomial, Finsupp.prod_sumElim]
-  simp only [Function.comp_def, Sum.elim_inl, Sum.elim_inr, RingHom.coe_comp, Function.comp_apply,
+  simp only [Sum.elim_inl, Sum.elim_inr, Function.comp_apply,
     MvPolynomial.monomial_eq, map_one, one_mul, map_mul, Finsupp.prod, map_prod, map_pow, eq_intCast]
   simp only [map_intCast]
   ring
@@ -441,7 +435,6 @@ theorem sum_inj_eq_sum_pairs {R : Type} [CommRing R] {p n : ℕ} (F : (Fin p →
     funext j
     first
       | simp only [Function.comp_apply, Equiv.ofBijective_apply]; exact hg j
-      | simp [hg]
 
 theorem cbSorted : CBSorted := by
   unfold CBSorted

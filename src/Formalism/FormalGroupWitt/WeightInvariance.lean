@@ -315,7 +315,7 @@ lemma bd_prod_sub {τ : Type w} {ι : Type v} {C : ℝ} (hC : 0 ≤ C) (X Y : ι
     (s : Finset ι) (hX : ∀ i ∈ s, IntegralMv (X i)) (hY : ∀ i ∈ s, IntegralMv (Y i))
     (hXY : ∀ i ∈ s, Bd C (X i - Y i)) :
     Bd C (∏ i ∈ s, X i - ∏ i ∈ s, Y i) := by
-  first | exact Bl.ProductIntegralBounds.goal1 .. | (apply Bl.ProductIntegralBounds.goal1 <;> assumption) | (intros; apply Bl.ProductIntegralBounds.goal1 <;> assumption) | (apply @Bl.ProductIntegralBounds.goal1 <;> assumption) | (intros; apply @Bl.ProductIntegralBounds.goal1 <;> assumption) | (apply @Bl.ProductIntegralBounds.goal1 <;> first | assumption | infer_instance) | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC X Y s hX hY hXY | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC X Y s hX hY | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC X Y s hX | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC X Y s | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC X Y | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC X | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› | exact @Bl.ProductIntegralBounds.goal1 K ‹_› | exact @Bl.ProductIntegralBounds.goal1 K
+  first | (apply Bl.ProductIntegralBounds.goal1 <;> assumption) | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC X Y s hX hY hXY | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC X Y s hX hY | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC X Y s hX | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC X Y s | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC X Y | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC X | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C hC | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι C | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ ι | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› τ | exact @Bl.ProductIntegralBounds.goal1 K ‹_› ‹_› | exact @Bl.ProductIntegralBounds.goal1 K ‹_› | exact @Bl.ProductIntegralBounds.goal1 K
 
 lemma bd_subst_sub {ι : Type v} {τ : Type w} (φ : MvPowerSeries ι K)
     (A B : ι → MvPowerSeries τ K) (hA : MvPowerSeries.HasSubst A) (hB : MvPowerSeries.HasSubst B)
@@ -493,10 +493,7 @@ theorem integralMv_sub {τ : Type w} {a b : MvPowerSeries τ K} (ha : IntegralMv
     (hb : IntegralMv b) : IntegralMv (a - b) := by
   unfold IntegralMv at ha hb ⊢
   intro d
-  rw [map_sub, sub_eq_add_neg]
-  refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (ha d) ?_)
-  rw [norm_neg]
-  exact hb d
+  simpa [map_sub] using Formalism.FG.KeyVAux.norm_sub_le_of (ha d) (hb d)
 
 theorem funEqV_sub {ι : Type v} [Fintype ι] {τ : Type w} {p q : ℕ} (hq : q ≠ 0) (σ : K →+* K)
     (M : ι → ι → K) {a b : ι → MvPowerSeries τ K} (ha : IsFunEqTypeV p q hq σ M a)
@@ -510,8 +507,7 @@ theorem two_le_q {p q : ℕ} {σ : K →+* K} (h : FunctionalEquationSetting K p
   unfold FunctionalEquationSetting at h
   obtain ⟨hp, ⟨k, hk, rfl⟩, -, -⟩ := h
   calc 2 ≤ p := hp.two_le
-    _ = p ^ 1 := (pow_one p).symm
-    _ ≤ p ^ k := Nat.pow_le_pow_right hp.pos hk
+    _ ≤ p ^ k := by simpa using Nat.pow_le_pow_right hp.pos hk
 
 theorem main (hSol : Formalism.FG.SolveExistsV.{u, v, w}) (hInv : Formalism.FG.InvIntegralV.{u, v, w})
     (hLow : Formalism.FG.LowCoeffV.{u, v, w}) (hKey : Formalism.FG.FunEqSubstV.{u, v, w}) :
@@ -520,8 +516,7 @@ theorem main (hSol : Formalism.FG.SolveExistsV.{u, v, w}) (hInv : Formalism.FG.I
   obtain ⟨h, h0, hsub⟩ := hSol K ι τ f g hf hg0
   refine ⟨h, h0, ?_, hsub⟩
   have hC : IsFunEqTypeV p q hq σ M (fun j => MvPowerSeries.subst h (f j)) := by
-    have e : (fun j => MvPowerSeries.subst h (f j)) = g := funext hsub
-    rw [e]
+    rw [funext hsub]
     exact hgF
   exact hInv K ι τ (IsFunEqTypeV p q hq σ M) f hf
     (fun a b ha hb => funEqV_sub hq σ M ha hb)

@@ -55,7 +55,6 @@ import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.FinitePartTypes
-public import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique
 import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.ExistsMatchOver
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsSumOfMemMultSpan
 import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RangeSndRel
@@ -135,7 +134,7 @@ theorem isTypeAt_rTr_same (hθ : IsInfFam θ) {τ : D.what₂.Tau} {S : SPar} {�
       congr 2
       calc P * k * P⁻¹ * (P * g * P⁻¹) = P * k * (P⁻¹ * P) * g * (k⁻¹ * k) * P⁻¹ := by
             rw [a2, Matrix.mul_one]; simp only [Matrix.mul_assoc]
-        _ = P * k * g * k⁻¹ * (P⁻¹ * P) * k * P⁻¹ := by rw [b2]; simp only [Matrix.mul_assoc, Matrix.mul_one, Matrix.one_mul]
+        _ = P * k * g * k⁻¹ * (P⁻¹ * P) * k * P⁻¹ := by rw [b2]; simp only [Matrix.mul_assoc, Matrix.mul_one]
         _ = _ := by simp only [Matrix.mul_assoc]) _ t0
   obtain ⟨v, h1, ℓ, h2, h3, h4⟩ := hasTypeAll_iff.1 t1
   refine ⟨v, h1, ℓ, h2, h3, fun g hg => ?_⟩
@@ -197,13 +196,6 @@ theorem exists_quotient_near (hθ : IsInfFam θ) {τ : D.what₂.Tau} {X : Matri
   rw [e, norm_mul, norm_neg, norm_inv, Complex.norm_real, Real.norm_of_nonneg hp.le, inv_mul_lt_iff₀ hp]
   refine key.trans_lt ?_
   nlinarith
-
-section Sig
-
-variable (hPr : GlobalTheory.FunPr.Hypotheses₂) (hθ : IsInfFam θ) {τ τ' : D.what₂.Tau} {S : SPar} {φ ψ : GA D V → ℂ}
-include hPr hθ
-
-end Sig
 
 variable {S : D.what₂.Tau → SPar}
 

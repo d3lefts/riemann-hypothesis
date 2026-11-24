@@ -155,7 +155,7 @@ theorem phi_skew {p q n : ℕ} (br : Bool) (e : Ix p q ≃ Fin n) (i j : Ix p q)
   obtain ⟨a, rfl⟩ := e.surjective a
   obtain ⟨b, rfl⟩ := e.surjective b
   rw [phi_apply]
-  cases br <;> simp [cjc, Eab, Matrix.single_apply] <;> split_ifs <;> simp
+  cases br <;> simp [cjc, Eab, Matrix.single_apply] <;> split_ifs
 
 theorem phi_symm {p q n : ℕ} (br : Bool) (e : Ix p q ≃ Fin n) (i j : Ix p q) :
     phi br e (((sb br : ℂ) * Complex.I) • (Eab i j + Eab j i)) =
@@ -164,7 +164,7 @@ theorem phi_symm {p q n : ℕ} (br : Bool) (e : Ix p q ≃ Fin n) (i j : Ix p q)
   obtain ⟨a, rfl⟩ := e.surjective a
   obtain ⟨b, rfl⟩ := e.surjective b
   rw [phi_apply]
-  cases br <;> simp [cjc, sb, Eab, Matrix.single_apply] <;> split_ifs <;> simp
+  cases br <;> simp [cjc, sb, Eab, Matrix.single_apply] <;> split_ifs
 
 theorem phi_torus {p q n : ℕ} (br : Bool) (e : Ix p q ≃ Fin n) (x : Fin n → ℝ) :
     phi br e (Matrix.diagonal fun j => Complex.exp (((sb br * x (e j) : ℝ) : ℂ) * Complex.I)) =
@@ -351,7 +351,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.ArchRec
 
 theorem _root_.GlobalTheory.T.fockJointHarmonic_vectors_iff_polynomials : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (W : HSp D) (S' : D.what₂.Tau → SPar) (N : DSModel W S') (τ : D.what₂.Tau) (ι σ Z : Type) (A : Mn V.rank → (Z → ℂ) → (Z → ℂ)) (B : Mn W.rank → (Z → ℂ) → (Z → ℂ)) (pt : MvPolynomial ι ℂ → (Z → ℂ)) (κ : MvPolynomial ι ℂ ≃ₗ[ℂ] MvPolynomial σ ℂ) (p q r s : ℕ) (T₁ : GrpData p q) (T₂ : GrpData r s) (R₁ : DSRep T₁) (R₂ : DSRep T₂) (a₁ : Mat p q →ₗ[ℂ] Module.End ℂ (MvPolynomial σ ℂ)) (a₂ : Mat r s →ₗ[ℂ] Module.End ℂ (MvPolynomial σ ℂ)) (l₁ : Ix p q → ℚ) (l₂ : Ix r s → ℚ) (c₁ c₂ : ℚ) (b₁ b₂ : Bool) (e₁ : Ix p q ≃ Fin V.rank) (e₂ : Ix r s ≃ Fin W.rank) (u₁ : kfin M τ → R₁.HK.V) (u₂ : kfin N τ → R₂.HK.V), KTie R₁ M τ l₁ c₁ b₁ true e₁ u₁ → KTie R₂ N τ l₂ c₂ b₂ false e₂ u₂ → Side A pt κ (phiFr (M.fr τ) b₁ e₁) c₁ a₁ → Side B pt κ (phiFr (N.fr τ) b₂ e₂) c₂ a₂ → Graded κ → ∀ Φ, IsJoint M τ A pt N B Φ ↔ CJoint a₁ a₂ (blattner l₁) (blattner l₂) (κ Φ) := by
-  first | exact @GlobalTheory.ArchRec.JointTransfer.isJoint_iff_cJoint | exact GlobalTheory.ArchRec.JointTransfer.isJoint_iff_cJoint | (intros; apply GlobalTheory.ArchRec.JointTransfer.isJoint_iff_cJoint <;> assumption)
+  first | exact @GlobalTheory.ArchRec.JointTransfer.isJoint_iff_cJoint
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FockJointHarmonicVectorsIffPolynomialsStatement =====

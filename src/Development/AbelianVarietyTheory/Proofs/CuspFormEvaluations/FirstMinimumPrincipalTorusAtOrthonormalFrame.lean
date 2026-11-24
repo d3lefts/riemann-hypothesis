@@ -769,12 +769,6 @@ theorem exists_pnorm_thFr_le (hs : IsSympl X bas) (hn : Even n) (hP : P ∈ Harm
     Finset.prod_nonneg fun τ _ => by have := c_pos X τ; positivity
   gcongr
 
-theorem isModerate_thFr (hs : IsSympl X bas) (hn : Even n) (hP : P ∈ Harm.rowHighest ℂ c c') :
-    X.IsModerate (wtOf X hr c c' n) (thFr X hr bas idx n a b P) := by
-  obtain ⟨C, hC⟩ := exists_pnorm_thFr_le idx hr a b hs hn hP
-  exact FJZero.isModerate_of_le_one_add_inv X _ _ C (g * n : ℕ) fun x hx => by
-    rw [Real.rpow_natCast]; exact hC x hx
-
 theorem isModerate_sum_thFr (hs : IsSympl X bas) (hn : Even n) {J : Type*} (s : Finset J) (t : J → ℂ)
     (a b : J → Fin n → Fin g → ℝ) {P : J → Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)}
     (hP : ∀ j ∈ s, P j ∈ Harm.rowHighest ℂ c c') :

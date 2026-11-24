@@ -71,7 +71,7 @@ theorem _root_.GlobalTheory.T.exists_common_coefficientMap_liftPresentation : �
         (pairVr (labLL X.toD7) _
           (if X.toD7.sp.Vneg ((i : ℕ) + 1) then -(X.toD7.sp.V ((i : ℕ) + 1)).gram else (X.toD7.sp.V ((i : ℕ) + 1)).gram))
         (nabAtr (labLL X.toD7) _) (delAtr (labLL X.toD7) _) := by
-  first | exact @GlobalTheory.Mem.R3.LiftPresStd.exists_oneCoef_presStd | exact GlobalTheory.Mem.R3.LiftPresStd.exists_oneCoef_presStd | (intros; apply GlobalTheory.Mem.R3.LiftPresStd.exists_oneCoef_presStd <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftPresStd.exists_oneCoef_presStd
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsCommonCoefficientMapLiftPresentationStatement =====
@@ -148,7 +148,7 @@ theorem _root_.GlobalTheory.T.exists_liftForms_adelic_decoratedLattices : ∀ (X
         (fun k => Formalism.L2.Col.InertTypeOk (Vc X.toD7 i).rank k.2)
         (fun k => IsLabElt (Vc X.toD7 i) (k.1.1 : PlI X.B px).1 (labIn (Vc X.toD7 i).rank k.2))
         fun k => IsLocElt (Vc X.toD7 i) (k.1.1 : PlI X.B px).1)) ∧ BrgStdV X I hX U Xg tr L i (cV i) (fun t φ => (s t).pres.extL φ) := by
-  first | exact @GlobalTheory.Mem.R3.LiftBrg.exists_liftSide | exact GlobalTheory.Mem.R3.LiftBrg.exists_liftSide | (intros; apply GlobalTheory.Mem.R3.LiftBrg.exists_liftSide <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftBrg.exists_liftSide
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsLiftFormsAdelicDecoratedLatticesStatement =====

@@ -142,10 +142,6 @@ namespace BranchingSupport
 
 open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.ThreeDimData
 
-def Hyps : Prop :=
-  ThreeDimData.Inputs ∧ PI.SmoothCyc ∧ PI.DSInfCharCap.DSInfCharCap ∧ DSExist ∧ Zuckerman ∧ Poulsen ∧
-    GlobalTheory.FormalDegree.HarishChandra
-
 variable {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [NormedAddCommGroup Wq]
   [InnerProductSpace ℂ Wq]
 

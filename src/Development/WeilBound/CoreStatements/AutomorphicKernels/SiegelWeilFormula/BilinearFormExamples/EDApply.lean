@@ -155,7 +155,7 @@ theorem BfE_nondeg [FiniteDimensional F E] (σ : E →ₐ[F] E) (hσ : ∀ a, σ
     have h1 := hz (Matrix.single a0 b0 ((J * z.map σ) a0 b0)⁻¹)
     have hv : ((Matrix.single a0 b0 ((J * z.map σ) a0 b0)⁻¹)ᵀ * J * z.map σ).trace = 1 := by
       rw [Matrix.mul_assoc, Matrix.transpose_single, Matrix.trace_single_mul]
-      simp [inv_mul_cancel₀ hb, mul_inv_cancel₀ hb]
+      simp [inv_mul_cancel₀ hb]
     rw [BfE_apply, hv] at h1
     exact htr1 h1
 
@@ -199,7 +199,7 @@ theorem Bf_Ek_Ek [FiniteDimensional F E] (σ : E →ₐ[F] E) (J : Matrix (Fin m
   have hE : ∀ (a : Fin m) (b : Fin n) (c : Fin 2), Ek bs (a, b, c) = incM F (Matrix.single a b (bs c)) := by
     intro a b c
     ext x y
-    by_cases hx : a = x <;> by_cases hy : b = y <;> simp [Ek, incM, Matrix.single_apply, inclR, hx, hy]
+    by_cases hx : a = x <;> by_cases hy : b = y <;> simp [Ek, incM, inclR, hx, hy]
   have hc : ∀ M : Matrix (Fin m) (Fin n) E, (incM F M).map (cA σ) = incM F (M.map σ) := by
     intro M
     ext x y

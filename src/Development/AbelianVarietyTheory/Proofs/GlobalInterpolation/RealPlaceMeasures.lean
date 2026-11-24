@@ -213,7 +213,7 @@ open MeasureTheory Matrix Filter Topology Formalism.BasicNotions Formalism.MainN
 open scoped ENNReal NNReal
 
 theorem _root_.GlobalTheory.T.quadricPointGauge_polarCoordinates_compare_tangentGauge : ∀ (P Q P' Q' : ℕ) (e : Option (Fin P' ⊕ Fin Q') ≃ (Fin P ⊕ Fin Q)) (t : ℝ), 1 < t → ∀ᶠ r in 𝓝[>] (0 : ℝ), ∀ u : ℝ × Sp P' Q', u.1 ∈ Set.Ioo (-Real.pi) Real.pi → (tanGauge u < t⁻¹ * r → ptGauge e (polarPt e u) < r) ∧ (ptGauge e (polarPt e u) < r → tanGauge u < t * r) := by
-  first | exact @GlobalTheory.PolarCompare.polar_compare | exact GlobalTheory.PolarCompare.polar_compare | (intros; apply GlobalTheory.PolarCompare.polar_compare <;> assumption)
+  first | exact @GlobalTheory.PolarCompare.polar_compare
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.QuadricPointGaugePolarCoordinatesCompareTangentGStatement =====
@@ -351,9 +351,9 @@ theorem _root_.GlobalTheory.SectionGaugeCompare.gauge_section_mul_block : ∀ (P
         (1 : Matrix (Fin P' ⊕ Fin Q') (Fin P' ⊕ Fin Q') ℂ) i b := by
       intro i b; simp [Matrix.one_apply]
     have h2 : ∀ b, (1 : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ) (e none) (e (some b)) = 0 := by
-      intro b; simp [Matrix.one_apply]
+      intro b; simp
     have h3 : ∀ b, (1 : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ) (e (some b)) (e none) = 0 := by
-      intro b; simp [Matrix.one_apply]
+      intro b; simp
     simp only [h1, h2, h3, Matrix.one_apply_eq, sub_zero, hN]
   have hL := sum_norm_sum_mul_matrix_le_mul_sum_norm_of_norm_le u D S fun c => (hrow c).le.trans (hyS c)
   have huS : ∑ b, ‖u b‖ = S := Finset.sum_congr rfl fun b _ => hrow b
@@ -569,7 +569,7 @@ open MeasureTheory Matrix Filter Topology Formalism.BasicNotions Formalism.MainN
 open scoped ENNReal NNReal
 
 theorem _root_.GlobalTheory.T.unitaryExpLieBall_comparable_entryGauge : ∀ (P Q : ℕ) (t : ℝ), 1 < t → ∀ᶠ r in 𝓝[>] (0 : ℝ), expBall P Q (t⁻¹ * r) ⊆ {g : UpqT P Q | gauge g < r} ∧ {g : UpqT P Q | gauge g < r} ⊆ expBall P Q (t * r) := by
-  first | exact @GlobalTheory.ExpBallCompare.expBall_compare | exact GlobalTheory.ExpBallCompare.expBall_compare | (intros; apply GlobalTheory.ExpBallCompare.expBall_compare <;> assumption)
+  first | exact @GlobalTheory.ExpBallCompare.expBall_compare
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.UnitaryExpLieBallComparableEntryGaugeStatement =====

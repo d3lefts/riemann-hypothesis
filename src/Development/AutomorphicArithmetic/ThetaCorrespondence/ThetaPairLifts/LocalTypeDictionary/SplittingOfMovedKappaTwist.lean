@@ -389,7 +389,7 @@ theorem offPrime_conj {D : D7} {e : Formalism.L2.Theta.AE D} {q : ℕ} (h : Glob
   h v ε hv (by rw [← hε, GlobalTheory.MovedIdem.cA_cA, add_comm])
 
 theorem defPair_inRange {T : Type} {m : ℕ} {p : Pair T} (h : DefPair m p) : p.InRange m := by
-  cases p <;> simp only [DefPair, Pair.InRange, Pair.big, Node.InRange] at h ⊢ <;> omega
+  cases p <;> simp only [DefPair, Pair.InRange, Node.InRange] at h ⊢ <;> omega
 
 end GlobalTheory.SplitCharValue
 end -- clump:auto
@@ -456,7 +456,7 @@ theorem _root_.GlobalTheory.T.twist_split_character_values : _root_.GlobalTheory
     (Mod1All ((ch.G.chrS p x₀ : Circle) : ℂ) ∧ Mod1All ((ch.G.chrT p x₀ : Circle) : ℂ)) ∧
     ∀ (q : ℕ) [Fact q.Prime], GlobalTheory.MovedKappaEx.OffPrime e q →
       GlobalTheory.MovedKappaEx.UnitAt q ((ch.G.chrS p x₀ : Circle) : ℂ) ∧ GlobalTheory.MovedKappaEx.UnitAt q ((ch.G.chrT p x₀ : Circle) : ℂ) := by
-  first | exact @_root_.GlobalTheory.SplitCharValue.splitCharValue_split_characters | exact _root_.GlobalTheory.SplitCharValue.splitCharValue_split_characters | (intros; apply _root_.GlobalTheory.SplitCharValue.splitCharValue_split_characters <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitCharValue.splitCharValue_split_characters
 end
 end -- clump:auto
 end -- clump:auto
@@ -1244,7 +1244,7 @@ theorem _root_.GlobalTheory.T.twist_jetKappa_split_move : _root_.GlobalTheory.Fu
       ∃ ζ : ℂ, (∃ n : ℕ, 0 < n ∧ ζ ^ n = 1) ∧ ∃ r : ℝ, 0 < r ∧
         GlobalTheory.MovedKappaEx.JetKap ch p (s * x) (s' * y)
           ((r : ℂ) * ζ * ((((ch.G.chrT p x₀)⁻¹ * ch.G.chrS p y₀ : Circle)) : ℂ) * κ) := by
-  first | exact @_root_.GlobalTheory.SplitMoveKappa.jetKappa_split_move | exact _root_.GlobalTheory.SplitMoveKappa.jetKappa_split_move | (intros; apply _root_.GlobalTheory.SplitMoveKappa.jetKappa_split_move <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitMoveKappa.jetKappa_split_move
 end
 end -- clump:auto
 end -- clump:auto
@@ -1380,7 +1380,6 @@ theorem normSq_real_form {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam 
     congr 2
     simp only [Complex.mul_conj']
     norm_cast
-    push_cast
     ring
   obtain ⟨U, hUo, hU⟩ := hf.level
   have hper := (GlobalTheory.ThetaSqInt.thetaO_norm_fin D ψ hψ S T μ 𝓕 hμ f hf).1
@@ -1641,7 +1640,7 @@ open GlobalTheory.MovedDict Formalism.L2.Ker GlobalTheory.SignedHC
 theorem _root_.GlobalTheory.T.twist_norm_kappa_moved_place : _root_.GlobalTheory.FunPr.ThetaLocalInputs → (∀ D, GlobalTheory.NormSum.Inp D) → ∀ {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type}
     {A : FamIn D.what₂.LL Γ Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] {R : RealDat D A Ks}
     (ch : Choice R), ch.Is → ∀ (p : Pair T), DefPair D.R.m p → ∀ (x : FinPt ch.G p.small) (y : FinPt ch.G p.big) (κ : ℂ), GlobalTheory.MovedKappaEx.JetKap ch p x y κ → ‖κ‖ = 1 := by
-  first | exact @_root_.GlobalTheory.MovedKappaNorm.norm_kappa_of_moved_place | exact _root_.GlobalTheory.MovedKappaNorm.norm_kappa_of_moved_place | (intros; apply _root_.GlobalTheory.MovedKappaNorm.norm_kappa_of_moved_place <;> assumption)
+  first | exact @_root_.GlobalTheory.MovedKappaNorm.norm_kappa_of_moved_place
 end
 end -- clump:auto
 end -- clump:auto
@@ -1721,7 +1720,7 @@ theorem _root_.GlobalTheory.T.splitting_of_moved_kappa_twist : _root_.GlobalTheo
     SuppAt e _ (s : GA D (ch.G.V p.small)) → SuppAt e _ (s' : GA D (ch.G.V p.big)) →
     ∃ c : ℂ, Mod1All c ∧ (∀ (q : ℕ) [Fact q.Prime], GlobalTheory.MovedKappaEx.OffPrime e q → GlobalTheory.MovedKappaEx.UnitAt q c) ∧
       GlobalTheory.MovedKappaEx.JetKap ch p (s * x) (s' * y) (c * κ) := by
-  first | exact @_root_.GlobalTheory.SplitMoveKappa.movedKappa_split | exact _root_.GlobalTheory.SplitMoveKappa.movedKappa_split | (intros; apply _root_.GlobalTheory.SplitMoveKappa.movedKappa_split <;> assumption)
+  first | exact @_root_.GlobalTheory.SplitMoveKappa.movedKappa_split
 end
 end -- clump:auto
 end -- clump:auto

@@ -113,7 +113,7 @@ theorem IsSiegel.neg_mul_inv_of_symplectic (l : Type) [Fintype l] [DecidableEq l
   have key : Pᴴ * Q - Qᴴ * P = -(2 * I) • (1 : Matrix l l ℂ) := by
     rw [hPe, hQe]
     simp only [conjTranspose_sub, conjTranspose_smul, hAs, hBs, hCs, hDs, Complex.star_def, conj_I,
-      sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm, smul_smul]
+      sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm]
     linear_combination (norm := (match_scalars <;> ring_nf <;> (try simp only [I_sq]) <;> ring_nf)) -h11 - h22 + I • h12 - I • h21
   have hu : IsUnit P.det := isUnit_iff_ne_zero.mpr hdet
   set τ := -(Q * P⁻¹) with hτ
@@ -134,7 +134,7 @@ theorem IsSiegel.neg_mul_inv_of_symplectic (l : Type) [Fintype l] [DecidableEq l
     have e : Pᴴ * (τ - τᴴ) * P = (2 * I) • (1 : Matrix l l ℂ) := by
       rw [Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_assoc, hτP, hQP]
       rw [Matrix.mul_neg, Matrix.neg_mul]
-      linear_combination (norm := (match_scalars <;> ring_nf <;> (try simp only [I_sq]) <;> ring_nf)) -key
+      linear_combination (norm := (match_scalars <;> ring_nf <;> (try simp only [I_sq]))) -key
     rw [hdiff, Matrix.mul_smul, Matrix.smul_mul] at e
     exact smul_right_injective _ (by simp [I_ne_zero] : (2 * I) ≠ 0) e
   have e1 : (P⁻¹)ᴴ * Pᴴ = 1 := by rw [← conjTranspose_mul, mul_nonsing_inv _ hu, conjTranspose_one]
@@ -268,7 +268,7 @@ theorem dRho_apply_basis {l : Type} [Fintype l] [DecidableEq l] (w : l ⊕ l →
   rw [dRho_apply]
   have h1 : pPart w = ∑ b, w (.inl b) • EuclideanSpace.single b (1 : ℝ) := by
     ext i
-    simp [pPart, PiLp.single_apply, Pi.single_apply]
+    simp [pPart, Pi.single_apply]
   have h2 : inner ℝ (qPart w) x = ∑ b, w (.inr b) * x b := by
     simp [qPart, PiLp.inner_apply, mul_comm]
 
@@ -289,7 +289,7 @@ theorem fderiv_eq_of_annihilated : ∀ (l : Type) [Fintype l] [DecidableEq l] (s
     have e := congrArg (fun g : Sch l => g x) (hf j)
     simp only [SchwartzMap.smul_apply, smul_eq_mul, dRho_apply_basis] at e
     simp only [mulVec, dotProduct, Pi.single_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
-      Finset.mem_univ, if_true, Sum.inl.injEq, Sum.inr.injEq, reduceCtorEq] at e
+      Finset.mem_univ, if_true] at e
     simp only [hP, hQ, sub_mul, Finset.sum_sub_distrib, mul_assoc, ← Finset.mul_sum]
     simp only [hu, hxC]
     linear_combination e
@@ -514,7 +514,7 @@ theorem GlobalTheory.Proof.schrodinger_models_agree : ∀ (l : Type) [Fintype l]
     congr 1
     · congr 1
       push_cast
-      simp only [dotProduct, RCLike.inner_apply, conj_trivial, Finset.sum_div]
+      simp only [dotProduct, RCLike.inner_apply, conj_trivial]
       push_cast
       ring_nf
       rw [Finset.sum_congr rfl fun i _ => mul_comm ((q i : ℝ) : ℂ) ((p i : ℝ) : ℂ)]
@@ -625,8 +625,8 @@ theorem siegelGauss_pair_standard (l : Type) [Fintype l] [DecidableEq l] (τ : M
     · have : σ.map Complex.im = τ.map Complex.im + 1 := by
         ext i j
         by_cases hij : i = j
-        · subst hij; simp [σ, Matrix.one_apply]
-        · simp [σ, Matrix.one_apply, hij]
+        · subst hij; simp [σ]
+        · simp [σ, hij]
       rw [this]
       exact hτ.2.add_posSemidef Matrix.PosSemidef.one
   have hint : ∀ x : l → ℝ, c * cexp (π * I * ((fun i => (x i : ℂ)) ⬝ᵥ τ *ᵥ fun i => (x i : ℂ))) * conj (cexp (-π * ((x ⬝ᵥ x : ℝ) : ℂ)))
@@ -689,7 +689,7 @@ theorem GlobalTheory.vacuum_coef_sq : ∀ (l : Type) [Fintype l] [DecidableEq l]
   rw [hJ] at h2
   have hdet2 : (1 - I • (I • (1 : Matrix l l ℂ))).det = 2 ^ Fintype.card l := by
     have : (1 - I • (I • (1 : Matrix l l ℂ))) = (2:ℂ) • (1 : Matrix l l ℂ) := by
-      rw [smul_smul, I_mul_I]; ext i j; by_cases h : i = j <;> simp [h, Matrix.one_apply]; norm_num
+      rw [smul_smul, I_mul_I]; ext i j; by_cases h : i = j <;> simp [h]; norm_num
     rw [this, det_smul, det_one, mul_one]
   rw [hdet2, one_pow] at h2
   have hprod : (1 - I • (-(Q * P⁻¹))) * P = (2:ℂ) • GlobalTheory.Published.Metaplectic.holPart s := by
@@ -806,7 +806,7 @@ theorem metaplecticRepresentation_holds : GlobalTheory.Published.MetaplecticRepr
     refine ⟨c, by rw [hP]; exact hc, ?_⟩
     ext x
     rw [hω, e.apply_symm_apply, hes, hcx, SchwartzMap.smul_apply, smul_eq_mul, hφ₀]
-    simp only [PiLp.toLp_apply]
+    simp only
     rw [hq x]
 
 end GlobalTheory

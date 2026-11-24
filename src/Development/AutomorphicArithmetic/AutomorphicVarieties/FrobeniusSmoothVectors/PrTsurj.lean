@@ -148,7 +148,7 @@ theorem UpperTheory.V.Fr.pr_tbox :
     rw [Matrix.mul_apply, TrivSqZeroExt.snd_sum, GG.mat, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [TrivSqZeroExt.snd_mul]
-    simp [Matrix.one_apply, μ, ι, TrivSqZeroExt.algebraMap_eq_inl, op_smul_eq_mul]
+    simp [Matrix.one_apply, μ, ι, TrivSqZeroExt.algebraMap_eq_inl]
     left
     split_ifs <;> simp
   case g1 => exact hx.1.comp (fun M => -M)
@@ -283,7 +283,7 @@ theorem UpperTheory.V.Fr.pr_tsurj :
       rw [hresd]
       ext
       · simp [μ]
-      · simp [μ, TrivSqZeroExt.snd_mul, MulOpposite.smul_eq_mul_unop, smul_eq_mul, mul_comm]
+      · simp [μ, TrivSqZeroExt.snd_mul, smul_eq_mul, mul_comm]
     · intro c
       rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff, TrivSqZeroExt.isUnit_iff_isUnit_fst]
       simp [μ]

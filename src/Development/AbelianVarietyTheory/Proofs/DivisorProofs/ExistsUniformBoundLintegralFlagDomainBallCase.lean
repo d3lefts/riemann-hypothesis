@@ -274,14 +274,12 @@ theorem colGram_three_unitLower : ∀ M : Matrix (Fin 3) (Fin 3) ℂ, (∀ i, M 
     exact Matrix.det_fin_two _
   have g1 : lminor (Mᴴ * M) 1 = ((1 + ‖M 1 0‖ ^ 2 + ‖M 2 0‖ ^ 2 : ℝ) : ℂ) := by
     rw [e1]
-    simp only [Matrix.mul_apply, Fin.sum_univ_three, Matrix.conjTranspose_apply, h00, h11, h22,
-      h01, h02, h12, Complex.sq_norm, Complex.normSq_apply]
+    simp only [Matrix.mul_apply, Fin.sum_univ_three, Matrix.conjTranspose_apply, h00, Complex.sq_norm, Complex.normSq_apply]
     apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring
   have g2 : lminor (Mᴴ * M) 2 =
       ((1 + ‖M 2 1‖ ^ 2 + ‖M 1 0 * M 2 1 - M 2 0‖ ^ 2 : ℝ) : ℂ) := by
     rw [e2]
-    simp only [Matrix.mul_apply, Fin.sum_univ_three, Matrix.conjTranspose_apply, h00, h11, h22,
-      h01, h02, h12, Complex.sq_norm, Complex.normSq_apply]
+    simp only [Matrix.mul_apply, Fin.sum_univ_three, Matrix.conjTranspose_apply, h00, h11, h01, Complex.sq_norm, Complex.normSq_apply]
     apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im, Complex.sub_re, Complex.sub_im]
       <;> ring
   have pos : ∀ x : ℝ, 0 ≤ x → ‖((1 + x : ℝ) : ℂ)‖ = 1 + x := by
@@ -408,7 +406,7 @@ theorem lintegral_update_sub_shear {ι : Type} [Fintype ι] [DecidableEq ι] (i 
     have hgw : g w = c (e w).1 := by
       apply hgi
       intro j hj
-      simp [hc, he, MeasurableEquiv.piEquivPiSubtypeProd, Equiv.piEquivPiSubtypeProd, hj]
+      simp [he, MeasurableEquiv.piEquivPiSubtypeProd, Equiv.piEquivPiSubtypeProd, hj]
     ext k
     by_cases hk : k = i
     · subst hk
@@ -583,11 +581,11 @@ theorem norm_one_add_conj_mul (z : ℂ) : ‖1 + (starRingEnd ℂ) z * z‖ = 1 
     Complex.norm_of_nonneg (by positivity)]
 
 theorem gB_one (w : Low 3 → ℂ) : gB 1 w = (1 + ‖w ⟨(2, 1), by decide⟩‖ ^ 2) ^ (-2 : ℤ) := by
-  simp [gB, Fin.prod_univ_two, colGram, lminor, Matrix.det_fin_one, Matrix.mul_apply, Fin.sum_univ_two, blkW, lowMat]
+  simp [gB, Fin.prod_univ_two, colGram, lminor, Matrix.mul_apply, Fin.sum_univ_two, blkW, lowMat]
   rw [norm_one_add_conj_mul]
 
 theorem gB_two (w : Low 3 → ℂ) : gB 2 w = (1 + ‖w ⟨(1, 0), by decide⟩‖ ^ 2) ^ (-2 : ℤ) := by
-  simp [gB, Fin.prod_univ_two, colGram, lminor, Matrix.det_fin_one, Matrix.mul_apply, Fin.sum_univ_two, blkW, lowMat]
+  simp [gB, Fin.prod_univ_two, colGram, lminor, Matrix.mul_apply, Fin.sum_univ_two, blkW, lowMat]
   rw [norm_one_add_conj_mul]
 
 noncomputable def dom (x : ℂ) : ℝ≥0∞ :=
@@ -1307,7 +1305,7 @@ theorem schur_bound {m k : ℕ} (Z : Matrix (Fin m) (Fin 1) ℂ) (N : Matrix (Fi
   have hreal : d.det = (δ : ℂ) := by
     apply Complex.ext
     · simp [hδ]
-    · simp [hdet, him]
+    · simp [him]
   have hne : d.det ≠ 0 := by
     rw [hreal]; exact_mod_cast hd.ne'
   haveI : Invertible d := Matrix.invertibleOfIsUnitDet d (isUnit_iff_ne_zero.2 hne)
@@ -1315,7 +1313,7 @@ theorem schur_bound {m k : ℕ} (Z : Matrix (Fin m) (Fin 1) ℂ) (N : Matrix (Fi
     rw [Matrix.invOf_eq_nonsing_inv]
     ext i j
     fin_cases i; fin_cases j
-    simp [Matrix.inv_def, Matrix.adjugate_fin_one, hreal]
+    simp
     rw [← hdet, hreal]
   rw [hprod, det_fromBlocks₁₁]
   set v : Fin k → ℂ := fun j => (Nᴴ * Z) j 0 with hv
@@ -1332,7 +1330,7 @@ theorem schur_bound {m k : ℕ} (Z : Matrix (Fin m) (Fin 1) ℂ) (N : Matrix (Fi
   have hrk : -(Nᴴ * N) - -(Nᴴ * Z) * ⅟d * -(Zᴴ * N) =
       -((Nᴴ * N) + ((δ⁻¹ : ℝ) : ℂ) • (replicateCol (Fin 1) v * replicateRow (Fin 1) (star v))) := by
     rw [hinvd, ← hcr]
-    simp only [Matrix.neg_mul, Matrix.mul_neg, neg_neg, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_one]
+    simp only [Matrix.neg_mul, Matrix.mul_neg, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_one]
     push_cast
     module
   rw [hrk, Matrix.det_neg, norm_mul, norm_mul, norm_pow, norm_neg, norm_one, one_pow, one_mul, hreal,
@@ -1383,14 +1381,14 @@ theorem mat_nFrame (X : Data E r) (hp : X.p0 = 1) (z : V (nd X)) (τ : X.Ψ) :
     · simp
   · rw [Finset.sum_eq_single a]
     · have : ¬ (1 ≤ (a : ℕ) ∧ (a : ℕ) < 1) := by omega
-      simp [this, hb]
+      simp [hb]
       intro h1 h2; omega
     · intro c _ hca
       by_cases hc : (c : ℕ) < 1
       · have h1 : c < b := Fin.lt_def.2 (by omega)
         simp [hb, nup c b h1]
       · have : ¬ (1 ≤ (a : ℕ) ∧ (c : ℕ) < 1) := by omega
-        simp [this, Ne.symm hca]
+        simp [Ne.symm hca]
         intro _ _ h3; omega
     · simp
 
@@ -1473,7 +1471,7 @@ theorem zDet_mul_colGram_le_norm_dmin : ∀ (E : Type) [Field E] [NumberField E]
     · rfl
   have hDb : D' = Matrix.fromBlocks 1 0 0 (-1) := by
     ext (i | i) (j | j) <;>
-      simp [hD', hD, Matrix.diagonal_apply, sgn, hp, Matrix.one_apply, (eR r hr).injective.eq_iff] <;>
+      simp [hD', hD, Matrix.diagonal_apply, sgn, hp, Matrix.one_apply] <;>
       split_ifs <;> simp
   have hT : Aᵀ * D' * A.map (starRingEnd ℂ) = (Aᴴ * D' * A)ᵀ := by
     have h1 : D'ᵀ = D' := by rw [hDb, Matrix.fromBlocks_transpose]; simp
@@ -1677,7 +1675,7 @@ theorem finiteRing_sq_sub_mul_sq_eq_of_card (X : Data E (p + 1)) (hp : X.p0 = p)
       split_ifs with h
       · have hi : (i : ℕ) = 0 := by omega
         have hj : (j : ℕ) = 0 := by omega
-        simp [lowMat, hi, hj, Fin.ext_iff]
+        simp [lowMat, hi, hj]
       · rfl
     rw [hB]
     rfl
@@ -1719,9 +1717,8 @@ theorem finiteRing_sq_sub_mul_sq_eq_of_card (X : Data E (p + 1)) (hp : X.p0 = p)
         Fin.castSucc (⟨a, by omega⟩ : Fin p) := fun a => Fin.ext rfl
     rw [Matrix.submatrix_apply, hc, hc, entry_tdm, Fin.sum_univ_castSucc]
     simp only [n_top X hp, n_last X hp, Fin.val_castSucc, Fin.val_last, sgn, hp, Fin.is_lt, if_true,
-      lt_irrefl, if_false, Matrix.transpose_apply, Matrix.sub_apply, Matrix.mul_apply,
-      Matrix.conjTranspose_apply, Matrix.vecMulVec_apply, Matrix.vecMul, dotProduct, Pi.star_apply, N, q, ← hw]
-    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Complex.ofReal_one, Complex.ofReal_neg,
+      lt_irrefl, if_false, Matrix.transpose_apply, Matrix.sub_apply, Matrix.vecMulVec_apply, Matrix.vecMul, dotProduct, Pi.star_apply, N, q, ← hw]
+    simp only [Complex.ofReal_one, Complex.ofReal_neg,
       mul_one, Complex.star_def]
     rw [sub_eq_add_neg]
     congr 1

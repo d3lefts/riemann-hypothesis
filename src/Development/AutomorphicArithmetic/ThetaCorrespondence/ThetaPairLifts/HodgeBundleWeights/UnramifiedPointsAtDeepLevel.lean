@@ -253,7 +253,7 @@ section
 open GlobalTheory.IndefiniteRowSideFullHecke.DifferentConjugateDefects NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.AllWt GlobalTheory.FlatLine GlobalTheory.FlatTw GlobalTheory.SlopeRec GlobalTheory.CovTop GlobalTheory.BigTop GlobalTheory.RefSum
 
 theorem _root_.GlobalTheory.T.unramified_curve_field_existence : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (n q : ℕ), 3 ≤ n → q.Prime → ¬ q ∣ 2 * n * H.d → ∃ (F' : IntermediateField ℚ ℂ) (_ : NumberField F'), ¬ (q : ℤ) ∣ discr F' ∧ GlobalTheory.CompRat.CurveOver H F' n := by
-  first | exact @_root_.GlobalTheory.RefSum.UnramCurveField.exists_unramified_curve_over_field | exact _root_.GlobalTheory.RefSum.UnramCurveField.exists_unramified_curve_over_field | (intros; apply _root_.GlobalTheory.RefSum.UnramCurveField.exists_unramified_curve_over_field <;> assumption)
+  first | exact @_root_.GlobalTheory.RefSum.UnramCurveField.exists_unramified_curve_over_field
 end
 end -- clump:auto
 end -- clump:auto
@@ -308,7 +308,7 @@ section
 open GlobalTheory.IndefiniteRowSideFullHecke.DifferentConjugateDefects NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.AllWt GlobalTheory.FlatLine GlobalTheory.FlatTw GlobalTheory.SlopeRec GlobalTheory.CovTop GlobalTheory.BigTop GlobalTheory.RefSum
 
 theorem _root_.GlobalTheory.T.cm_points_unramified : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l), 1 ≤ Dw.p + Dw.q → (Dw.p = 0 ∨ Dw.q = 0 ∨ (3 ≤ Dw.p + Dw.q ∧ (∃ D₁ : Datum H, D₁.p = 1 ∧ D₁.q = 0))) → (∀ p : ℕ, p.Prime → l.GoodAt p) → UnramPts Xo c (badPrimes H l) := by
-  first | exact @_root_.GlobalTheory.UnramCM.unramified_points_of_CMDatum | exact _root_.GlobalTheory.UnramCM.unramified_points_of_CMDatum | (intros; apply _root_.GlobalTheory.UnramCM.unramified_points_of_CMDatum <;> assumption)
+  first | exact @_root_.GlobalTheory.UnramCM.unramified_points_of_CMDatum
 end
 end -- clump:auto
 end -- clump:auto
@@ -340,7 +340,7 @@ section
 open GlobalTheory.IndefiniteRowSideFullHecke.DifferentConjugateDefects NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.AllWt GlobalTheory.FlatLine GlobalTheory.FlatTw GlobalTheory.SlopeRec GlobalTheory.CovTop GlobalTheory.BigTop GlobalTheory.RefSum
 
 theorem _root_.GlobalTheory.T.unramified_points_of_deep_cover : _root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems → ∀ (D : D7) (T : CoreJ D) (j : ℕ) (Y : Deep T.toCore j) (e : ℕ) (o : ℝ), LawsJ T → InR D j → Y.Good e o → UnramPts Y.d.Xo₂ Y.d.c₂ (badPrimes T.Q.H Y.d.l₂) := by
-  first | exact @_root_.GlobalTheory.UnramCover.unramified_points_at_deep_level | exact _root_.GlobalTheory.UnramCover.unramified_points_at_deep_level | (intros; apply _root_.GlobalTheory.UnramCover.unramified_points_at_deep_level <;> assumption)
+  first | exact @_root_.GlobalTheory.UnramCover.unramified_points_at_deep_level
 end
 end -- clump:auto
 end -- clump:auto

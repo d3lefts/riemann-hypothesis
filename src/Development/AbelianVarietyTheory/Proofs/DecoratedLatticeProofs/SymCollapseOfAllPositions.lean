@@ -220,7 +220,7 @@ theorem mem_box_of_Phi_ne_zero (hpat : S.Pattern t) (j c : ℕ) (H : j + 1 + c =
     have hnf : ¬ FreeIx S.ρ i b ∧ i ≠ b := by
       rcases i with (e' | l) | ⟨q, u⟩
       · refine ⟨?_, by simp [b]⟩
-        simp only [FreeIx, FreeTop, b, Fin.mk_lt_mk, not_lt]
+        simp only [FreeIx, FreeTop, b, not_lt]
         exact hρ
       · have hl : c + 1 ≤ l.val := by
           by_contra hl
@@ -351,7 +351,7 @@ section -- clump:auto
 open MeasureTheory ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.StepData GlobalTheory.SymChain
 
 theorem _root_.GlobalTheory.T.flatColumnSupport_of_oneIndexAt_symPosition : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (ν : Measure k), IsUnitVol ν → ∀ (s κ : ℕ) (S : SymData k s κ) (t : Type) [Fintype t] [DecidableEq t], S.OneIndexAt t ν → GlobalTheory.LocFlat.SuppCol S t ν := by
-  first | exact @GlobalTheory.LocFlat.suppCol_of_oneIndexAt | exact GlobalTheory.LocFlat.suppCol_of_oneIndexAt | (intros; apply GlobalTheory.LocFlat.suppCol_of_oneIndexAt <;> assumption)
+  first | exact @GlobalTheory.LocFlat.suppCol_of_oneIndexAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.FlatColumnSupportOfOneIndexAtSymPositionStatement =====
@@ -396,7 +396,7 @@ theorem flRow_eq_zero_of_not_mem_box : ∀ (k : Type) [Field k] [ValuativeRel k]
     exact hx fun i => h i
   unfold flRow opE
   refine (integral_congr_ae (Filter.Eventually.of_forall fun e => ?_)).trans (integral_zero _ _)
-  simp only [Pi.zero_apply]
+  simp only
   refine mul_eq_zero_of_left ?_ _
   by_contra hne
   have h1 := val_row_le_of_Phi_ne_zero S t j c H r hc _ hne y
@@ -417,7 +417,7 @@ section -- clump:auto
 open MeasureTheory ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.StepData GlobalTheory.SymChain
 
 theorem _root_.GlobalTheory.T.flatMapRow_eq_zero_unless_row_mem_dualLattice : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (ν : Measure k) (s κ : ℕ) (S : SymData k s κ) (t : Type) [Fintype t] [DecidableEq t], ∀ j c (H : j + 1 + c = s) (r : ℕ), c = 2 * r → ∀ x : Matrix (XIx (Fin κ) t (j + 1) ⊕ Unit) (XIx (Fin κ) t j) k, x (Sum.inr ()) ∉ box (XIx (Fin κ) t j) (S.ϖ ^ (r + 1)) → GlobalTheory.LocFlat.flRow S.ψ ν (r + 1) ((S.T t).Phi j (c + 1) (by omega)) x = 0 := by
-  first | exact @GlobalTheory.LocFlat.flRow_eq_zero_of_not_mem_box | exact GlobalTheory.LocFlat.flRow_eq_zero_of_not_mem_box | (intros; apply GlobalTheory.LocFlat.flRow_eq_zero_of_not_mem_box <;> assumption)
+  first | exact @GlobalTheory.LocFlat.flRow_eq_zero_of_not_mem_box
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.FlatMapRowEqZeroUnlessRowMemDualLatticeStatement =====
@@ -521,7 +521,7 @@ theorem typeFrame_conj_symm_rowE_apply : ∀ (k : Type) [Field k] (κ t : Type) 
     rw [Units.val_mul, Units.val_mul, hinv, hbas]
     change fromBlocks _ _ _ _ * fromBlocks 1 0 _ 1 * _ = _
     simp only [fromBlocks_multiply]
-    congr 1 <;> ext i y <;> simp [diagonal_apply]
+    congr 1 <;> ext i y <;> simp
     by_cases hi : (i : ℕ) = p <;> simp [hi]
   have e : ((typeFrame ϖ ord).conj.symm (rowE c (p + 1) u)).val =
       ((typeFrame ϖ ord).bas⁻¹ * rowE c (p + 1) u * (typeFrame ϖ ord).bas).val.submatrix ord ord := rfl
@@ -619,7 +619,7 @@ theorem rowE_mem_symLev_of_box : ∀ (k : Type) [Field k] [ValuativeRel k] [Topo
     change (fromBlocks 1 0 C' 1 : Matrix (XIx (Fin κ) t j ⊕ Fin (c + 1 + 1)) (XIx (Fin κ) t j ⊕ Fin (c + 1 + 1)) k) (o a) (o b) = _
     rcases hoa : o a with y | l <;> rcases hob : o b with z | z
     · simp [Matrix.one_apply]
-    · simp [one_apply]
+    · simp
     · rw [fromBlocks_apply₂₁, Matrix.one_apply, if_neg (by simp), hC']
       split_ifs with hl
       · exfalso
@@ -655,7 +655,7 @@ section -- clump:auto
 open MeasureTheory ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.StepData GlobalTheory.SymChain
 
 theorem _root_.GlobalTheory.T.rootExchangeRowUnipotent_mem_sourceLevel : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (s κ : ℕ) (S : SymData k s κ) (t : Type) [Fintype t] [DecidableEq t], S.Pattern t → ∀ j c (H : j + 1 + c = s) (r : ℕ), c = 2 * r → ∀ u : XIx (Fin κ) t j → k, u ∈ box (XIx (Fin κ) t j) (S.ϖ ^ (r + 1)) → rowE (c + 1 + 1) (r + 1) u ∈ ((S.T t).lev j (c + 1 + 1) (by omega)).J := by
-  first | exact @GlobalTheory.SymChain.rowE_mem_symLev_of_box | exact GlobalTheory.SymChain.rowE_mem_symLev_of_box | (intros; apply GlobalTheory.SymChain.rowE_mem_symLev_of_box <;> assumption)
+  first | exact @GlobalTheory.SymChain.rowE_mem_symLev_of_box
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.RootExchangeRowUnipotentMemSourceLevelStatement =====
@@ -772,7 +772,7 @@ theorem pureRow_of_exchange : ∀ (k : Type) [Field k] [ValuativeRel k] [Topolog
     have hm := GlobalTheory.T.rootExchangeRowUnipotent_mem_sourceLevel k s κ S t hP j c H r hc _ hu
     have hl := lam_rowE_symLevel k s κ S t j c H r hc _ hm
     have hdet : Matrix.GeneralLinearGroup.det (rowE (c + 1 + 1) (r + 1) (x (Sum.inr ()))) = 1 := by
-      ext; simp [rowE, lowU, Matrix.det_fromBlocks_zero₁₂]
+      ext; simp [rowE, lowU]
     have hT := (HL.1 j (c + 1) (by omega)).1 ⟨_, hm⟩
     rw [hl] at hT
     have hfun : (fun z => Φ (z * (rowE (c + 1 + 1) (r + 1) (x (Sum.inr ()))).val)) = Φ := by
@@ -878,7 +878,7 @@ theorem hat_box {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) (ν : Measure 
       intro l
       by_cases hl : l = i
       · subst hl
-        simp only [hy₀def, Pi.single_eq_same, map_neg, map_div₀]
+        simp only [hy₀def, Pi.single_eq_same]
         rw [Units.val_inv_eq_inv_val, map_inv₀]
         rw [hxdef, map_mul, Units.val_inv_eq_inv_val, map_inv₀] at hy1
         have h2 := mul_le_mul' hy1 (le_refl (valuation k (u l))⁻¹)
@@ -947,7 +947,7 @@ theorem conj_rowE (j c : ℕ) (H : j + 1 + (c + 1) = s) (r : ℕ) (v : XIx (Fin 
   congr 1
   rw [Units.val_mul, Units.val_mul, e, e2]
   change _ * fromBlocks 1 0 _ 1 * _ = _
-  simp only [fromBlocks_multiply, Matrix.one_mul, Matrix.mul_one, Matrix.zero_mul, Matrix.mul_zero, add_zero, zero_add,
+  simp only [fromBlocks_multiply, Matrix.mul_one, Matrix.zero_mul, Matrix.mul_zero, add_zero, zero_add,
     diagonal_mul_diagonal]
   congr 1
   · ext l x

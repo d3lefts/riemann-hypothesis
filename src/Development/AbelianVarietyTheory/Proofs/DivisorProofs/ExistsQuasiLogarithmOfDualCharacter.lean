@@ -215,7 +215,7 @@ theorem exists_eq_add_single {α : Fin d →₀ ℕ} (h : α ≠ 0) :
     intro j
     by_cases hj : j = i
     · subst hj; simp only [Finsupp.single_eq_same]; omega
-    · simp [Finsupp.single_apply, Ne.symm hj]
+    · simp [Ne.symm hj]
   refine ⟨i, α - Finsupp.single i 1, (tsub_add_cancel_of_le hle).symm, ?_⟩
   conv_lhs => rw [← tsub_add_cancel_of_le hle]
   rw [map_add (f := _), Finsupp.degree_single]
@@ -1077,7 +1077,6 @@ theorem hasPeriod_formalLog_char : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Fiel
     ring
   first
   | exact ⟨hex, hcong⟩
-  | exact hcong
 
 end GlobalTheory.CharPeriod
 end -- clump:auto

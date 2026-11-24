@@ -140,7 +140,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 
 theorem _root_.GlobalTheory.T.adelicCoordinates_rationalMatrices_onto_rational : ∀ (D : D7) (m n N : ℕ) (e : Matrix (Fin m) (Fin n) (AE D) ≃ₗ[AF D.host.F] VA D.host.F N), (∀ x : Matrix (Fin m) (Fin n) D.host.E, ∃ y z : Fin N → D.host.F, e (incM D.host.F x) = (GlobalTheory.SWQ.rat y, GlobalTheory.SWQ.rat z)) → ∀ y z : Fin N → D.host.F, ∃ x : Matrix (Fin m) (Fin n) D.host.E, e (incM D.host.F x) = (GlobalTheory.SWQ.rat y, GlobalTheory.SWQ.rat z) := by
-  first | exact @GlobalTheory.WeilSchrodinger.rat_onto_of_rat_maps | exact GlobalTheory.WeilSchrodinger.rat_onto_of_rat_maps | (intros; apply GlobalTheory.WeilSchrodinger.rat_onto_of_rat_maps <;> assumption)
+  first | exact @GlobalTheory.WeilSchrodinger.rat_onto_of_rat_maps
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicCoordinatesRationalMatricesOntoRationalStatement =====
@@ -283,7 +283,7 @@ theorem exists_transport {V W G : Type} [AddCommGroup V] [Module ℂ V] [AddComm
     rw [hr, map_mul, Module.End.mul_apply, Module.End.mul_apply, hr, hr])
   refine ⟨⟨⟨fun g => A.conj ((r g).prodMap LinearMap.id), ?_⟩, fun g h => ?_⟩, fun g x => ?_⟩
   · ext v
-    simp [r1, LinearEquiv.conj_apply_apply, Module.End.one_eq_id]
+    simp [r1, Module.End.one_eq_id]
   · ext v
     simp [rm, LinearEquiv.conj_apply_apply]
   · have h : A.conj ((r g).prodMap LinearMap.id) (x : V) = r g x := by

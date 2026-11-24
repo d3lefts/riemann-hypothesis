@@ -296,7 +296,6 @@ lemma contDiff_mul_of_tsupport {U : Set (E d)} (hU : IsOpen U) {g f : E d → �
     have hev : g =ᶠ[𝓝 x] 0 := by
       first
         | exact notMem_tsupport_iff_eventuallyEq.mp hx'
-        | exact not_mem_tsupport_iff_eventuallyEq.mp hx'
     refine (contDiffAt_const (c := (0 : ℂ))).congr_of_eventuallyEq ?_
     filter_upwards [hev] with y hy
     simp [hy]
@@ -310,7 +309,6 @@ lemma cut_cont {U : Set (E d)} (hU : IsOpen U) {u : E d → ℂ} (hu : Continuou
     have hev : χ =ᶠ[𝓝 x] 0 := by
       first
         | exact notMem_tsupport_iff_eventuallyEq.mp hx'
-        | exact not_mem_tsupport_iff_eventuallyEq.mp hx'
     filter_upwards [hev] with y hy
     simp [cut, hy]
   refine ⟨continuous_iff_continuousAt.mpr fun x => ?_, ?_⟩
@@ -428,7 +426,7 @@ theorem frozenDecompositionOfParts : DecomposeOf := by
     simp only [trOp]
     rw [Finset.sum_range_succ, Finset.sum_eq_zero, zero_add, Finset.sum_mul]
     · refine Finset.sum_congr rfl fun w _ => ?_
-      simp only [b2, eq_self_iff_true, if_true]
+      simp only [b2, if_true]
       rw [Dec.dw_const_mul hφ, hDw d ξ (List.ofFn w), Dec.prod_neg_eq]
       beta_reduce
       have hsq : ((-1 : ℂ) ^ m) * (-1) ^ m = 1 := by
@@ -471,7 +469,7 @@ theorem frozenDecompositionOfParts : DecomposeOf := by
       lo m w = fun x => ((ψ0 (r⁻¹ • (x - x0)) : ℝ) : ℂ) * (P.a i m w x - P.a i m w x0) := by
     intro w
     funext x
-    simp only [lo, eq_self_iff_true, if_true]
+    simp only [lo, if_true]
   rw [← hR, key, Finset.sum_range_succ]
   simp only [hlom]
   ring
@@ -1036,7 +1034,6 @@ theorem pf_parseval (g k : E d → ℂ) (hg : Integrable g) (hkc : Continuous k)
       exact hg.mul_prod hK
     refine hprod.mono ?_ (Filter.Eventually.of_forall fun p => le_of_eq ?_)
     · first
-      | exact hg.1.fst.mul (hcχ.aestronglyMeasurable.mul hK.1.snd)
       | exact hg.1.comp_fst.mul (hcχ.aestronglyMeasurable.mul hK.1.comp_snd)
     · try dsimp only
       rw [norm_mul, norm_mul, norm_mul, norm_eF_eq_one, one_mul]
@@ -1275,7 +1272,6 @@ theorem adjointPairingLocal : PairingLocal := by
     exact (dw_eventuallyEq _ hev).eq_of_nhds
   · have hg0 : g y = 0 := by
       first
-        | exact image_eq_zero_of_nmem_tsupport (fun h => hy (hg h))
         | exact image_eq_zero_of_notMem_tsupport (fun h => hy (hg h))
     rw [hg0, zero_mul, zero_mul]
 

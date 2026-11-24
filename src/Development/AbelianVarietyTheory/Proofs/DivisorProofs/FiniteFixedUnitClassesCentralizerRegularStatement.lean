@@ -100,7 +100,7 @@ open scoped TensorProduct Classical
 
 theorem _root_.GlobalTheory.T.eq_zero_of_nilpotent_commute_separable_minpoly : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (y₀ : G.C), (minpoly G.F y₀).Separable →
     (minpoly G.F y₀).natDegree = G.n → ∀ x : G.C, Commute x y₀ → ∀ k : ℕ, x ^ k = 0 → x = 0 := by
-  first | (exact @GlobalTheory.LKCx.ClsReg.eq_zero_of_commute_of_pow_eq_zero) | (exact GlobalTheory.LKCx.ClsReg.eq_zero_of_commute_of_pow_eq_zero) | (intros; apply GlobalTheory.LKCx.ClsReg.eq_zero_of_commute_of_pow_eq_zero <;> assumption)
+  first | (exact @GlobalTheory.LKCx.ClsReg.eq_zero_of_commute_of_pow_eq_zero)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqZeroOfNilpotentCommuteSeparableMinpolyStatement =====
@@ -223,7 +223,7 @@ section -- clump:auto
 open scoped TensorProduct Classical
 
 theorem _root_.GlobalTheory.T.exists_approx_unit_padic_tensor : ∀ (E : Type) [CommRing E] [Algebra ℚ E] [FiniteDimensional ℚ E] (ℓ : ℕ) [Fact ℓ.Prime] (z : (ℚ_[ℓ] ⊗[ℚ] E)ˣ), ∃ (b : E) (s : ℚ_[ℓ] ⊗[ℚ] E), IsIntegral ℤ_[ℓ] s ∧ (1 : ℚ_[ℓ]) ⊗ₜ[ℚ] b = (z : ℚ_[ℓ] ⊗[ℚ] E) * (1 + (ℓ : ℚ_[ℓ] ⊗[ℚ] E) * s) := by
-  first | (exact @GlobalTheory.PadicTensorApprox.exists_approx_unit) | (exact GlobalTheory.PadicTensorApprox.exists_approx_unit) | (intros; apply GlobalTheory.PadicTensorApprox.exists_approx_unit  <;> assumption)
+  first | (exact @GlobalTheory.PadicTensorApprox.exists_approx_unit)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsApproxUnitPadicTensorStatement =====
@@ -308,7 +308,7 @@ section -- clump:auto
 open scoped TensorProduct Classical
 
 theorem _root_.GlobalTheory.T.exists_coprime_mul_isIntegral_of_padic_integral : ∀ (E : Type) [CommRing E] [Algebra ℚ E] [FiniteDimensional ℚ E] (ℓ : ℕ) [Fact ℓ.Prime] (w : E), IsIntegral ℤ_[ℓ] ((1 : ℚ_[ℓ]) ⊗ₜ[ℚ] w) → ∃ d : ℕ, ¬ ℓ ∣ d ∧ IsIntegral ℤ ((d : E) * w) := by
-  first | (exact @GlobalTheory.IntegralDescent.exists_not_dvd_isIntegral_mul) | (exact GlobalTheory.IntegralDescent.exists_not_dvd_isIntegral_mul) | (intros; apply GlobalTheory.IntegralDescent.exists_not_dvd_isIntegral_mul  <;> assumption)
+  first | (exact @GlobalTheory.IntegralDescent.exists_not_dvd_isIntegral_mul)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCoprimeMulIsIntegralOfPadicIntegralStatement =====
@@ -360,7 +360,7 @@ section -- clump:auto
 open scoped TensorProduct Classical
 
 theorem _root_.GlobalTheory.T.exists_integral_inv_one_add_prime_mul_padic : ∀ (ℓ : ℕ) [Fact ℓ.Prime] (S : Type) [CommRing S] [Algebra ℤ_[ℓ] S] (s : S), IsIntegral ℤ_[ℓ] s → ∃ r : S, (1 + (ℓ : S) * s) * r = 1 ∧ IsIntegral ℤ_[ℓ] r := by
-  first | (exact @GlobalTheory.exists_integral_inv_one_add_prime_mul) | (exact GlobalTheory.exists_integral_inv_one_add_prime_mul) | (intros; apply GlobalTheory.exists_integral_inv_one_add_prime_mul  <;> assumption)
+  first | (exact @GlobalTheory.exists_integral_inv_one_add_prime_mul)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIntegralInvOneAddPrimeMulPadicStatement =====
@@ -503,7 +503,7 @@ theorem _root_.GlobalTheory.T.exists_global_norm_approx_of_local_padic_norm : �
       ((z : ℚ_[ℓ] ⊗[ℚ] E) * Algebra.TensorProduct.map (AlgHom.id ℚ_[ℓ] ℚ_[ℓ]) τ (z : ℚ_[ℓ] ⊗[ℚ] E)) →
     ∃ (c : ℚ) (b x y : E), c ≠ 0 ∧ IsUnit b ∧ a = x * (algebraMap ℚ E c * (b * τ b)) ∧
       algebraMap ℚ E c * (b * τ b) = y * a ∧ ∃ d : ℕ, ¬ ℓ ∣ d ∧ IsIntegral ℤ ((d : E) * x) ∧ IsIntegral ℤ ((d : E) * y) := by
-  first | (exact @GlobalTheory.LocalApprox.main) | (exact GlobalTheory.LocalApprox.main) | (intros; apply GlobalTheory.LocalApprox.main  <;> assumption)
+  first | (exact @GlobalTheory.LocalApprox.main)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsGlobalNormApproxOfLocalPadicNormStatement =====
@@ -914,7 +914,7 @@ theorem _root_.GlobalTheory.T.exists_finite_classes_modulo_involutionNorms : ∀
     (∀ ℓ : ℕ, ℓ.Prime → ℓ ∉ S → ∃ (b x y : K), b ≠ 0 ∧ a = x * (b * τ b) ∧ b * τ b = y * a ∧
       ∃ d : ℕ, ¬ ℓ ∣ d ∧ IsIntegral ℤ ((d : K) * x) ∧ IsIntegral ℤ ((d : K) * y)) →
     ∃ m ∈ M, ∃ e : K, e ≠ 0 ∧ a = e * m * τ e := by
-  first | (exact @GlobalTheory.FixNormField.fixed_classes_mod_norms) | (exact GlobalTheory.FixNormField.fixed_classes_mod_norms) | (intros; apply GlobalTheory.FixNormField.fixed_classes_mod_norms  <;> assumption)
+  first | (exact @GlobalTheory.FixNormField.fixed_classes_mod_norms)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteClassesModuloInvolutionNormsStatement =====
@@ -1129,7 +1129,7 @@ theorem _root_.GlobalTheory.T.involution_norm_class_remove_rational_factor : ∀
     (∀ ℓ : ℕ, ℓ.Prime → ℓ ∉ S → ∃ (c : ℚ) (b x y : E), c ≠ 0 ∧ IsUnit b ∧ a = x * (algebraMap ℚ E c * (b * τ b)) ∧
       algebraMap ℚ E c * (b * τ b) = y * a ∧ ∃ d : ℕ, ¬ ℓ ∣ d ∧ IsIntegral ℤ ((d : E) * x) ∧ IsIntegral ℤ ((d : E) * y)) →
     ∃ a₀ ∈ A, ∃ (r : ℚˣ) (e : Eˣ), a = algebraMap ℚ E (r : ℚ) * ((e : E) * a₀ * τ e) := by
-  first | (exact @GlobalTheory.RatRed.ratred) | (exact GlobalTheory.RatRed.ratred) | (intros; apply GlobalTheory.RatRed.ratred  <;> assumption)
+  first | (exact @GlobalTheory.RatRed.ratred)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvolutionNormClassRemoveRationalFactorStatement =====
@@ -1195,11 +1195,11 @@ theorem stable_factor (H : (∀ (K : Type) [Field K] [NumberField K] (τ : K ≃
     · have := hx.map (Ideal.Quotient.mk I).toIntAlgHom
       simp only [map_mul, map_natCast, RingHom.toIntAlgHom_apply] at this
       convert this using 1
-      all_goals first | rfl | exact Subsingleton.elim _ _ | (congr; exact Subsingleton.elim _ _)
+      all_goals first | rfl
     · have := hy.map (Ideal.Quotient.mk I).toIntAlgHom
       simp only [map_mul, map_natCast, RingHom.toIntAlgHom_apply] at this
       convert this using 1
-      all_goals first | rfl | exact Subsingleton.elim _ _ | (congr; exact Subsingleton.elim _ _))
+      all_goals first | rfl | exact Subsingleton.elim _ _)
   obtain ⟨e, rfl⟩ := Ideal.Quotient.mk_surjective e'
   refine ⟨lift m, Finset.mem_image_of_mem _ hm, e, ?_, ?_⟩
   · intro he; exact he' (Ideal.Quotient.eq_zero_iff_mem.2 he)
@@ -1321,7 +1321,7 @@ theorem _root_.GlobalTheory.T.normClassFinite_of_reduced_rat_algebra : (∀ (K :
     (∀ ℓ : ℕ, ℓ.Prime → ℓ ∉ S → ∃ (b x y : E), IsUnit b ∧ a = x * (b * τ b) ∧ b * τ b = y * a ∧
       ∃ d : ℕ, ¬ ℓ ∣ d ∧ IsIntegral ℤ ((d : E) * x) ∧ IsIntegral ℤ ((d : E) * y)) →
     ∃ a₀ ∈ A, ∃ e : Eˣ, a = (e : E) * a₀ * τ e := by
-  first | (exact @GlobalTheory.normClassFinite_of_reduced) | (exact GlobalTheory.normClassFinite_of_reduced) | (intros; apply GlobalTheory.normClassFinite_of_reduced  <;> assumption)
+  first | (exact @GlobalTheory.normClassFinite_of_reduced)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormClassFiniteOfReducedRatAlgebraStatement =====
@@ -1361,7 +1361,7 @@ theorem _root_.GlobalTheory.T.finite_classes_fixedUnits_mod_rat_norms : ∀ (E :
     (∀ ℓ : ℕ, ℓ.Prime → ℓ ∉ S → ∃ (c : ℚ) (b x y : E), c ≠ 0 ∧ IsUnit b ∧ a = x * (algebraMap ℚ E c * (b * τ b)) ∧
       algebraMap ℚ E c * (b * τ b) = y * a ∧ ∃ d : ℕ, ¬ ℓ ∣ d ∧ IsIntegral ℤ ((d : E) * x) ∧ IsIntegral ℤ ((d : E) * y)) →
     ∃ a₀ ∈ A, ∃ (r : ℚˣ) (e : Eˣ), a = algebraMap ℚ E (r : ℚ) * ((e : E) * a₀ * τ e) := by
-  first | (exact @GlobalTheory.EtaleCls.classes_mod_rat_norms) | (exact GlobalTheory.EtaleCls.classes_mod_rat_norms) | (intros; apply GlobalTheory.EtaleCls.classes_mod_rat_norms  <;> assumption)
+  first | (exact @GlobalTheory.EtaleCls.classes_mod_rat_norms)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteClassesFixedUnitsModRatNormsStatement =====
@@ -1410,7 +1410,7 @@ theorem tensor_centralizer_flat : ∀ (K : Type) [Field K] [Algebra ℚ K] (C : 
     intro w
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | tmul a b => simp [ad, TensorProduct.tmul_sub]
+    | tmul a b => simp [ad]
     | add a b ha hb => rw [map_add (f := _), ha, hb, add_mul, mul_add]; abel
   refine ⟨?_, ?_⟩
   · intro a b hab
@@ -1438,7 +1438,7 @@ theorem _root_.GlobalTheory.T.tensor_centralizer_injective_commutant_eq : ∀ (K
     Function.Injective (Algebra.TensorProduct.map (AlgHom.id K K) (Subalgebra.centralizer ℚ ({y} : Set C)).val) ∧
     ∀ w : K ⊗[ℚ] C, Commute w ((1 : K) ⊗ₜ[ℚ] y) → ∃ w' : K ⊗[ℚ] (Subalgebra.centralizer ℚ ({y} : Set C)),
       Algebra.TensorProduct.map (AlgHom.id K K) (Subalgebra.centralizer ℚ ({y} : Set C)).val w' = w := by
-  first | (exact @GlobalTheory.tensor_centralizer_flat) | (exact GlobalTheory.tensor_centralizer_flat) | (intros; apply GlobalTheory.tensor_centralizer_flat <;> assumption)
+  first | (exact @GlobalTheory.tensor_centralizer_flat)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorCentralizerInjectiveCommutantEqStatement =====
@@ -1640,7 +1640,7 @@ theorem _root_.GlobalTheory.T.finite_fixed_unit_classes_centralizer_regular : �
         (starT G.star ℚ_[ℓ] (z : ℚ_[ℓ] ⊗[ℚ] G.C)).unop * inC G ℚ_[ℓ] ((β⁻¹ : G.Cˣ) : G.C))) →
       ∃ a₀ ∈ A, ∃ (r : ℚˣ) (e : G.Cˣ), Commute (e : G.C) y₀ ∧
         a = algebraMap ℚ G.C (r : ℚ) * ((e : G.C) * a₀ * ((β : G.C) * sh G (e : G.C) * ((β⁻¹ : G.Cˣ) : G.C))) := by
-  first | (exact @GlobalTheory.LKCx.ClsReg.finite_fixed_classes_regular) | (exact GlobalTheory.LKCx.ClsReg.finite_fixed_classes_regular) | (intros; apply GlobalTheory.LKCx.ClsReg.finite_fixed_classes_regular  <;> assumption)
+  first | (exact @GlobalTheory.LKCx.ClsReg.finite_fixed_classes_regular)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteFixedUnitClassesCentralizerRegularStatement =====

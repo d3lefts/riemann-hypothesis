@@ -74,8 +74,8 @@ variable {k : Type} [Field k] {n n' : Type} [Fintype n] [DecidableEq n] [Fintype
 omit [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] in
 theorem basePt_eq_zero_of_stepVar (y : Matrix n n' k) {r : n ⊕ Fin c} {s : n' ⊕ Fin (c + 1)}
     (h : Free (c / 2 + 1) (r, s) ∨ Kept (r, s)) : basePt c y r s = 0 := by
-  rcases r with r | r <;> rcases s with s | s <;> simp only [Free, Kept, or_false, false_or] at h <;>
-    simp only [basePt, fromBlocks_apply₁₁, fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂,
+  rcases r with r | r <;> rcases s with s | s <;> simp only [Free, Kept, or_false] at h <;>
+    simp only [basePt, fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂,
       Matrix.zero_apply, of_apply]
   rw [if_neg (by omega)]
 
@@ -87,8 +87,8 @@ theorem stepVar_fixed_of_ordL_lt (y : Matrix n n' k) {r t : n ⊕ Fin c} {s : n'
   rcases r with r | r <;> rcases t with t | t <;> rcases s with s | s <;>
     simp only [Free, Kept, GlobalTheory.DiagVol.ordL, Sum.elim_inl, Sum.elim_inr, basePt, fromBlocks_apply₁₁,
       fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂, Matrix.zero_apply, of_apply, not_or,
-      Nat.even_iff, Nat.odd_iff, not_and, true_and, and_true, not_false_eq_true, not_true_eq_false] at hv hlt ⊢
-  all_goals first | omega | (refine ⟨⟨by omega, by omega⟩, ?_⟩; rw [if_neg (by omega)]) | (refine ⟨by omega, ?_⟩; rw [if_neg (by omega)]) | skip
+      Nat.even_iff, Nat.odd_iff, not_and, true_and, and_true, not_false_eq_true] at hv hlt ⊢
+  all_goals first | omega | (refine ⟨by omega, ?_⟩; rw [if_neg (by omega)])
 
 end Shape
 
@@ -169,7 +169,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.TopLevelInv GlobalTheory.StepLeft Classical
 
 theorem _root_.GlobalTheory.T.periodStep_inv_mul_point_shape : ∀ {k : Type} [Field k] {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ} (v : GL (n ⊕ Fin c) k), v ∈ symN k n c → ∀ (κ : GL n k) (x₀ : Matrix n n' k) (e : StepVar n c n' → k), ((v * embX c κ)⁻¹).val * stepPt x₀ e = stepPt ((κ⁻¹).val * x₀) (fun a => (((v * embX c κ)⁻¹).val * stepPt x₀ e : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k) a.1.1 a.1.2) := by
-  first | exact @GlobalTheory.StepLeft.inv_mul_stepPt_shape | exact GlobalTheory.StepLeft.inv_mul_stepPt_shape | (intros; apply GlobalTheory.StepLeft.inv_mul_stepPt_shape <;> assumption)
+  first | exact @GlobalTheory.StepLeft.inv_mul_stepPt_shape
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.PeriodStepInvMulPointShapeStatement =====
@@ -207,7 +207,7 @@ theorem det_colwise_fromBlocks {k : Type} [CommRing k] {n m σ : Type} [Fintype 
       fromBlocks (blockDiagonal fun _ : {s // Q s} => κ) 0 0 1 := by
     ext a b
     rcases a with (⟨r, s, hs⟩ | ⟨⟨l, s⟩, hs⟩) <;> rcases b with (⟨r', s', hs'⟩ | ⟨⟨l', s'⟩, hs'⟩) <;>
-      simp [hM, splitVar, blockDiagonal_apply, one_apply]
+      simp [hM, splitVar, blockDiagonal_apply]
     by_cases h1 : s = s' <;> by_cases h2 : l = l' <;> simp [h1, h2, Matrix.one_apply, Subtype.ext_iff]
   rw [this, det_fromBlocks_zero₂₁, det_blockDiagonal]
   simp
@@ -240,7 +240,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 open GlobalTheory.TopLevelInv GlobalTheory.StepLeft Classical
 
 theorem _root_.GlobalTheory.T.valuation_det_stageVariables_embedGL_eq_one : ∀ {k : Type} [Field k] [ValuativeRel k] {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ} (κ : GL n k), valuation k (gdet κ : k) = 1 → valuation k (stepLin n' (embX c κ).val).det = 1 := by
-  first | exact @GlobalTheory.StepLeft.valuation_det_stepLin_embX | exact GlobalTheory.StepLeft.valuation_det_stepLin_embX | (intros; apply GlobalTheory.StepLeft.valuation_det_stepLin_embX <;> assumption)
+  first | exact @GlobalTheory.StepLeft.valuation_det_stepLin_embX
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ValuationDetStageVariablesEmbedGLEqOneStatement =====
@@ -284,7 +284,7 @@ theorem affine {k : Type} [Field k] {n n' : Type} [Fintype n] [DecidableEq n] [F
   simp only [Pi.add_apply]
   rw [h1]
   simp only [stepPt, Matrix.mul_apply, Matrix.add_apply, of_apply, mul_add, Finset.sum_add_distrib, Pi.zero_apply,
-    dite_eq_ite, ite_self, mul_zero, Finset.sum_const_zero, add_zero]
+    dite_eq_ite, ite_self, add_zero]
   ring
 
 theorem det_unip {k : Type} [Field k] {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] {c : ℕ}
@@ -344,7 +344,7 @@ theorem mul_embX {k : Type} [Field k] {n n' : Type} [Fintype n] [DecidableEq n] 
   · simp only [stepLin, of_apply, hF, Matrix.mul_apply]
     split_ifs with h
     · simp
-    · simp [h]
+    · simp
   · intro s'' _ hs
     refine Finset.sum_eq_zero fun t _ => ?_
     simp [hF, Ne.symm hs]
@@ -426,7 +426,7 @@ theorem _root_.GlobalTheory.T.fourierJacobiStep_leftChange_measurePreserving : �
     ∀ v ∈ symN k n c, ∀ κ : GL n k, valuation k (gdet κ : k) = 1 → ∀ x₀ : Matrix n n' k,
       ∃ φ : (StepVar n c n' → k) ≃ᵐ (StepVar n c n' → k), MeasurePreserving φ (stepVol ν n c n') (stepVol ν n c n') ∧
         ∀ e, ((v * embX c κ)⁻¹).val * stepPt x₀ e = stepPt ((κ⁻¹).val * x₀) (φ e) := by
-  first | exact @GlobalTheory.StepLeft.left_change | exact GlobalTheory.StepLeft.left_change | (intros; apply GlobalTheory.StepLeft.left_change <;> assumption)
+  first | exact @GlobalTheory.StepLeft.left_change
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FourierJacobiStepLeftChangeMeasurePreservingStatement =====

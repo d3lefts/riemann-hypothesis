@@ -176,7 +176,7 @@ theorem _root_.GlobalTheory.T.cartanDoubleCoset_finite_disjoint_leftCosets : ∀
       shellSet ϖ n = ⋃ x ∈ t, {g : GL (Fin a) k | (x * diagGL (fun i => ϖ ^ n i))⁻¹ * g ∈ KO k (Fin a)} ∧
       (t : Set (GL (Fin a) k)).PairwiseDisjoint
         (fun x => {g : GL (Fin a) k | (x * diagGL (fun i => ϖ ^ n i))⁻¹ * g ∈ KO k (Fin a)}) := by
-  first | exact @GlobalTheory.ShellCosets.shell_cosets | exact GlobalTheory.ShellCosets.shell_cosets | (intros; apply GlobalTheory.ShellCosets.shell_cosets <;> assumption)
+  first | exact @GlobalTheory.ShellCosets.shell_cosets
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CartanDoubleCosetFiniteDisjointLeftCosetsStatement =====
@@ -203,7 +203,7 @@ theorem integrableOn_shell : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologi
   let χ : GL (Fin a) k →* ℂ :=
     { toFun := fun g => (ν (gdet g) : ℂ) * apow (gdet g) z
       map_one' := by simp
-      map_mul' := fun g h => by simp only [gdet_mul, map_mul, Units.val_mul, apow_mul]; ring }
+      map_mul' := fun g h => by simp only [map_mul, Units.val_mul, apow_mul]; ring }
   have hχ1 : ∀ g ∈ detCong (ϖ ^ e) (Fin a), χ g = 1 := by
     intro g hg
     have h1 : ν (gdet g) = 1 := hν _ hg.2
@@ -242,7 +242,7 @@ theorem _root_.GlobalTheory.T.integrableOn_cartanDoubleCoset_shellIntegrand : �
     ∀ (a : ℕ) (μ : Measure (GL (Fin a) k)) [μ.IsHaarMeasure] (φ : Matrix (Fin a) (Fin a) k → ℂ),
       φ ∈ SB (Matrix (Fin a) (Fin a) k) → ∀ (n : Fin a → ℤ) (z : ℂ),
         IntegrableOn (fun g : GL (Fin a) k => φ g.val * (ν (gdet g) : ℂ) * apow (gdet g) z) (shellSet ϖ n) μ := by
-  first | exact @GlobalTheory.ShellInt.integrableOn_shell | exact GlobalTheory.ShellInt.integrableOn_shell | (intros; apply GlobalTheory.ShellInt.integrableOn_shell <;> assumption)
+  first | exact @GlobalTheory.ShellInt.integrableOn_shell
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegrableOnCartanDoubleCosetShellIntegrandStatement =====
@@ -390,7 +390,7 @@ theorem _root_.GlobalTheory.T.setIntegral_leftCoset_shellIntegrand_eq_zero : ∀
     ∀ x ∈ KO k (Fin a), ∀ z : ℂ,
       ∫ g in {g : GL (Fin a) k | (x * diagGL (fun i => ϖ ^ n i))⁻¹ * g ∈ KO k (Fin a)},
         φ g.val * (ν (gdet g) : ℂ) * apow (gdet g) z ∂μ = 0 := by
-  first | exact @GlobalTheory.ShellPiece.setIntegral_coset_eq_zero | exact GlobalTheory.ShellPiece.setIntegral_coset_eq_zero | (intros; apply GlobalTheory.ShellPiece.setIntegral_coset_eq_zero <;> assumption)
+  first | exact @GlobalTheory.ShellPiece.setIntegral_coset_eq_zero
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.SetIntegralLeftCosetShellIntegrandEqZeroStatement =====

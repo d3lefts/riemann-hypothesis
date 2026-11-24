@@ -661,10 +661,7 @@ theorem divided_derivative : DivDeriv := by
   have hs : MvPowerSeries.HasSubst φ := MvPowerSeries.hasSubst_of_constantCoeff_zero hφ0
   have hs' : MvPowerSeries.HasSubst φ' := by
     refine MvPowerSeries.hasSubst_of_constantCoeff_zero fun i => ?_
-    by_cases h : i = x
-    · subst h
-      simp [hφ', hφ0, hY0]
-    · simp [hφ', Function.update_of_ne h, hφ0]
+    by_cases h : i = x <;> simp [hφ', h, hφ0, hY0]
   rw [map_sub, MvPowerSeries.coeff_subst hs', MvPowerSeries.coeff_subst hs,
     ← finsum_sub_distrib (MvPowerSeries.coeff_subst_finite hs' Φ n)
       (MvPowerSeries.coeff_subst_finite hs Φ n)]
@@ -674,10 +671,7 @@ theorem divided_derivative : DivDeriv := by
     (Finsupp.mul_prod_erase' d x (fun s e => ψ s ^ e) fun _ => pow_zero _).symm
   have e2 : ((d.erase x).prod fun s e => φ' s ^ e) = (d.erase x).prod fun s e => φ s ^ e := by
     refine Finsupp.prod_congr fun s hs => ?_
-    have : s ≠ x := by
-      rintro rfl
-      simp at hs
-    rw [hφ', Function.update_of_ne this]
+    rw [hφ', Function.update_of_ne (by rintro rfl; simp at hs)]
   have hR : Bd 1 ((d.erase x).prod fun s e => φ s ^ e) := by
     unfold Finsupp.prod
     refine Finset.prod_induction _ (Bd 1) (fun a b ha hb => int_mul ha hb) DworkIntegrality.bd_one
@@ -952,7 +946,7 @@ private theorem coeff_rename_map_lemma {σ τ : Type} (f : σ → τ) [Filter.Te
   · intro b hb hne
     exfalso
     apply hne
-    simp only [Set.Finite.mem_toFinset, Set.mem_preimage, Set.mem_singleton_iff, Set.mem_setOf_eq] at hb
+    simp only [Set.Finite.mem_toFinset, Set.mem_preimage, Set.mem_singleton_iff] at hb
     exact Finsupp.mapDomain_injective hf hb
 
 theorem coeff_include_three_mul (g : MvPowerSeries (Fin 2) K) (e : Fin 2 →₀ ℕ) (m j : ℕ) :
@@ -1025,7 +1019,7 @@ theorem coeff_subst_slice {f : MvPowerSeries (Fin 2) K} (hf : MvPowerSeries.cons
         if d 1 = m then MvPowerSeries.coeff e (f ^ d 0) else 0 := by
     intro d
     rw [Finsupp.prod_fintype _ _ (fun i => pow_zero _), Fin.prod_univ_two]
-    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one]
     rw [include_three_pow, coeff_include_three_mul]
   simp_rw [hterm]
   rw [finsum_eq_sum_of_support_subset _
@@ -1291,7 +1285,7 @@ theorem LemmaTwo_of (h1 : LemmaOne) (hL : LawSymm) : LemmaTwo := by
     refine ⟨N, le_rfl, ?_⟩
     have s := star ((p ^ 2) ^ N) m
     rw [LemTwo.coeff_g0F_even hp2 N, lg_pow N, lg_zero m hm, hB m] at s
-    simp only [mul_zero, zero_mul, add_zero, zero_add] at s
+    simp only [mul_zero, add_zero, zero_add] at s
     refine ultra (b := α' ((p ^ 2) ^ N) * PowerSeries.coeff m (g0F K p)) s ?_ (le_max_left _ _)
     rw [norm_mul]
     exact (mul_le_of_le_one_left (norm_nonneg _) (hα' _)).trans (le_max_right _ _)
@@ -1305,7 +1299,7 @@ theorem LemmaTwo_of (h1 : LemmaOne) (hL : LawSymm) : LemmaTwo := by
     have s2 := star ((p ^ 2) ^ N) 1
     rw [LemTwo.coeff_g0F_even hp2 N, lg_pow N, LemTwo.coeff_g0F_even hp2 l, lg_pow l, hB] at s1
     rw [LemTwo.coeff_g0F_even hp2 N, lg_pow N, g01, lg1, hB] at s2
-    simp only [mul_zero, zero_mul, add_zero, zero_add, mul_one] at s1 s2
+    simp only [mul_zero, zero_add, mul_one] at s1 s2
     have e : (β ((p ^ 2) ^ l) - β 1 * ((p : K) ^ l)⁻¹) * ((p : K) ^ N)⁻¹ =
         (β ((p ^ 2) ^ l) * ((p : K) ^ N)⁻¹ - β' ((p ^ 2) ^ N) * ((p : K) ^ l)⁻¹) -
           ((p : K) ^ l)⁻¹ * (β 1 * ((p : K) ^ N)⁻¹ - β' ((p ^ 2) ^ N)) := by ring

@@ -82,7 +82,7 @@ theorem liftL_deg_reg : ∀ (q l : ℕ) (L : List (ℕ × ℕ)), 2 ≤ q → 0 <
     · rw [hcons]
       simp only [deg, List.map_append, List.sum_append, List.map_map] at ihd ⊢
       rw [ihd]
-      simp [Function.comp_def, List.sum_replicate, hdiv, hc, Nat.mul_div_cancel_left c hl]
+      simp [Function.comp_def, List.sum_replicate, hc, Nat.mul_div_cancel_left c hl]
     · intro p' hp'
       rw [hcons, List.mem_append] at hp'
       rcases hp' with hp' | hp'
@@ -107,7 +107,7 @@ open Polynomial GlobalTheory.CuspGL GlobalTheory.BI GlobalTheory.Shin Semidirect
 open scoped Classical
 
 theorem _root_.GlobalTheory.T.deg_liftL_and_reg_pow : ∀ (q l : ℕ) (L : List (ℕ × ℕ)), 2 ≤ q → 0 < l → (∀ p ∈ L, 0 < p.1 ∧ l ∣ p.1 ∧ Reg q p.1 p.2) → deg (liftL q l L) = deg L ∧ ∀ p ∈ liftL q l L, 0 < p.1 ∧ Reg (q ^ l) p.1 p.2 := by
-  first | (exact @GlobalTheory.Shin.liftL_deg_reg) | (exact GlobalTheory.Shin.liftL_deg_reg) | (intros; apply GlobalTheory.Shin.liftL_deg_reg  <;> assumption)
+  first | (exact @GlobalTheory.Shin.liftL_deg_reg)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LiftLDegRegStatement =====

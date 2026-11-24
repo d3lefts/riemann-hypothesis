@@ -190,7 +190,7 @@ theorem _root_.GlobalTheory.T.fockAlgebraicThetaVectors_stable_lineDerivative : 
     ∀ (ε : Bool) (M X : HSp D) (A : Fr M) (B : Fr X), ∀ Φ ∈ algF ψ θ ε A B,
       ∀ L : ℝ →+ WO (sgn ε M) X, Continuous L → (∀ t, (L t).map (finPart D) = 0) →
         (fun x => deriv (fun t : ℝ => heisO ψ (sgn ε M) X (L t) Φ x) 0) ∈ algF ψ θ ε A B := by
-  first | exact @GlobalTheory.SquareComm.LineDeriv.deriv_line_mem_algF | exact GlobalTheory.SquareComm.LineDeriv.deriv_line_mem_algF | (intros; apply GlobalTheory.SquareComm.LineDeriv.deriv_line_mem_algF <;> assumption)
+  first | exact @GlobalTheory.SquareComm.LineDeriv.deriv_line_mem_algF
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FockAlgebraicThetaVectorsStableLineDerivativeStatement =====
@@ -354,7 +354,7 @@ theorem _root_.GlobalTheory.T.theta_lift_onto_fockSpace : GlobalTheory.Published
       ∀ R Rf, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsMatched Bs Γ Xc om om' R Rf →
         ∀ (g : WO W X → ℂ) (P : PolF D X.rank W.rank), IsFinF ψ θ true A B g →
           ∃ Φ ∈ GlobalTheory.TripleAssembly.darbAlg Γ.M Bs.ψ Bs.emb, GlobalTheory.TripleRead.thO Γ.M ψ (sgn true W).gram e Φ = fockF ψ θ true A B g P := by
-  first | exact @_root_.GlobalTheory.FockThetaOnto.fockFunction_eq_theta_lift | exact _root_.GlobalTheory.FockThetaOnto.fockFunction_eq_theta_lift | (intros; apply _root_.GlobalTheory.FockThetaOnto.fockFunction_eq_theta_lift <;> assumption)
+  first | exact @_root_.GlobalTheory.FockThetaOnto.fockFunction_eq_theta_lift
 end
 end -- clump:auto
 end -- clump:auto
@@ -484,7 +484,7 @@ theorem _root_.GlobalTheory.T.fockSpace_contained_darbouxAlgebra_theta_image : G
       ∀ R Rf, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.IsMatched Bs Γ Xc om om' R Rf →
         ∀ (g : WO W₁ X → ℂ) (P : PolF D X.rank W₁.rank), IsFinF ψ θ false A₁ B g →
           ∃ Φ ∈ GlobalTheory.TripleAssembly.darbAlg Γ.M' Bs.ψ Bs.emb, GlobalTheory.TripleRead.thO Γ.M' ψ (sgn false W₁).gram e Φ = fockF ψ θ false A₁ B g P := by
-  first | exact @_root_.GlobalTheory.DarbImageRevB.exists_darbouxAlgebra_theta_eq_fockFunction | exact _root_.GlobalTheory.DarbImageRevB.exists_darbouxAlgebra_theta_eq_fockFunction | (intros; apply _root_.GlobalTheory.DarbImageRevB.exists_darbouxAlgebra_theta_eq_fockFunction <;> assumption)
+  first | exact @_root_.GlobalTheory.DarbImageRevB.exists_darbouxAlgebra_theta_eq_fockFunction
 end
 end -- clump:auto
 end -- clump:auto
@@ -657,7 +657,7 @@ theorem _root_.GlobalTheory.T.gaussian_theta_lift_algebraic : GlobalTheory.Publi
           (φ : ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := D.host.F), (Fin W.rank × Fin (W.rank + W₁.rank) → Fv D.host.F v) → ℂ),
           Γ.M.IsGauss Bs.ψ Bs.emb f₀ → (∀ v, φ v ∈ GlobalTheory.WeilM.SB _) → (∀ᶠ v in Filter.cofinite, φ v = Γ.M.vac v) →
           GlobalTheory.TripleRead.thO Γ.M ψ (sgn true W).gram e (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f₀ φ) ∈ algF ψ θ true A B := by
-  first | exact @_root_.GlobalTheory.GaussThetaAlg.theta_gaussian_mem_fockAlgebraic | exact _root_.GlobalTheory.GaussThetaAlg.theta_gaussian_mem_fockAlgebraic | (intros; apply _root_.GlobalTheory.GaussThetaAlg.theta_gaussian_mem_fockAlgebraic <;> assumption)
+  first | exact @_root_.GlobalTheory.GaussThetaAlg.theta_gaussian_mem_fockAlgebraic
 end
 end -- clump:auto
 end -- clump:auto
@@ -821,7 +821,7 @@ theorem _root_.GlobalTheory.T.pure_gaussian_theta_lift_algebraic : GlobalTheory.
           (φ : ∀ v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl (F := D.host.F), (Fin W₁.rank × Fin (W.rank + W₁.rank) → Fv D.host.F v) → ℂ),
           Γ.M'.IsGauss Bs.ψ Bs.emb f₀ → (∀ v, φ v ∈ GlobalTheory.WeilM.SB _) → (∀ᶠ v in Filter.cofinite, φ v = Γ.M'.vac v) →
           GlobalTheory.TripleRead.thO Γ.M' ψ (sgn false W₁).gram e (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f₀ φ) ∈ algF ψ θ false A₁ B := by
-  first | exact @_root_.GlobalTheory.ThetaGaussAlg.theta_pure_tensor_gaussian_mem_fockAlgebraic | exact _root_.GlobalTheory.ThetaGaussAlg.theta_pure_tensor_gaussian_mem_fockAlgebraic | (intros; apply _root_.GlobalTheory.ThetaGaussAlg.theta_pure_tensor_gaussian_mem_fockAlgebraic <;> assumption)
+  first | exact @_root_.GlobalTheory.ThetaGaussAlg.theta_pure_tensor_gaussian_mem_fockAlgebraic
 end
 end -- clump:auto
 end -- clump:auto
@@ -1328,7 +1328,7 @@ theorem _root_.GlobalTheory.T.theta_pure_tensor_hasDerivAt_second : GlobalTheory
           ∃ L : ℝ →+ WO (sgn false W₁) X, Continuous L ∧ (∀ t, (L t).map (finPart D) = 0) ∧
             GlobalTheory.TripleRead.thO Γ.M' ψ (sgn false W₁).gram e (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f₁ φ) =
               fun x => deriv (fun t : ℝ => heisO ψ (sgn false W₁) X (L t) (GlobalTheory.TripleRead.thO Γ.M' ψ (sgn false W₁).gram e (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ)) x) 0 := by
-  first | exact @_root_.GlobalTheory.ThetaRealDeriv.theta_pure_tensor_second_real_deriv | exact _root_.GlobalTheory.ThetaRealDeriv.theta_pure_tensor_second_real_deriv | (intros; apply _root_.GlobalTheory.ThetaRealDeriv.theta_pure_tensor_second_real_deriv <;> assumption)
+  first | exact @_root_.GlobalTheory.ThetaRealDeriv.theta_pure_tensor_second_real_deriv
 end
 end -- clump:auto
 end -- clump:auto
@@ -1437,7 +1437,7 @@ theorem _root_.GlobalTheory.T.theta_image_eq_span_darboux : GlobalTheory.Publish
           (∀ Φ ∈ GlobalTheory.WeilM.schA D.host.F (Fin W₁.rank × Fin (W.rank + W₁.rank)),
             T Φ = GlobalTheory.TripleRead.thO Γ.M' ψ (sgn false W₁).gram e Φ) →
           (GlobalTheory.TripleAssembly.darbAlg Γ.M' Bs.ψ Bs.emb).map T = algF ψ θ false A₁ B := by
-  first | exact @_root_.GlobalTheory.DarbImage.theta_image_darboux_basis | exact _root_.GlobalTheory.DarbImage.theta_image_darboux_basis | (intros; apply _root_.GlobalTheory.DarbImage.theta_image_darboux_basis <;> assumption)
+  first | exact @_root_.GlobalTheory.DarbImage.theta_image_darboux_basis
 end
 end -- clump:auto
 end -- clump:auto

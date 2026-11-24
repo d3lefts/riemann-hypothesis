@@ -343,7 +343,7 @@ open scoped ENNReal
 
 theorem _root_.GlobalTheory.T.lintegral_abs_pow_integers_finite : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [MeasurableSpace k] [BorelSpace k] (μ : Measure k) [μ.IsAddHaarMeasure] (s : ℝ), -1 < s →
     ∫⁻ x, (𝒪[k] : Set k).indicator (fun y => ENNReal.ofReal (if h : y = 0 then 0 else nabs k (Units.mk0 y h)) ^ s) x ∂μ < ⊤ := by
-  first | exact @GlobalTheory.IntShell.lintegral_int_nabs_rpow_lt_top | exact GlobalTheory.IntShell.lintegral_int_nabs_rpow_lt_top | (intros; apply GlobalTheory.IntShell.lintegral_int_nabs_rpow_lt_top <;> assumption)
+  first | exact @GlobalTheory.IntShell.lintegral_int_nabs_rpow_lt_top
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.LintegralAbsPowIntegersFiniteStatement =====
@@ -1319,7 +1319,7 @@ theorem UpperTheory.integral_mem_addSubgroup_of_ramified_twisted_invariant :
         obtain ⟨x, hx, y, hy, rfl⟩ := mem_shellSet.1 hg
         exact mem_shellSet.2 ⟨j * x, mul_mem (hJK hj) hx, y, hy, by simp only [mul_assoc]⟩
       · intro j hj g
-        simp only [gdet_mul, apow_mul, map_mul, Units.val_mul,
+        simp only [apow_mul, map_mul, Units.val_mul,
           apow_of_valuation_eq_one (valuation_gdet_of_mem_KO (hJK hj)), one_mul]
         rw [← hinv j hj g]
         ring

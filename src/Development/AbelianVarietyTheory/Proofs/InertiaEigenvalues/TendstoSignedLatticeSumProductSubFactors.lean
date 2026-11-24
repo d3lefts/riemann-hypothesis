@@ -958,7 +958,7 @@ section -- clump:auto
 open GlobalTheory.UnitLemma Polynomial
 
 theorem _root_.GlobalTheory.T.isFullLattice_prod_of_comap_inl_map_snd : ∀ (K : UQ) (B₁ B₂ : InvAlg K) (M : Submodule K.O (B₁.A × B₂.A)), IsLat K.O K.E (M.comap (LinearMap.inl K.O B₁.A B₂.A)) → IsLat K.O K.E (M.map (LinearMap.snd K.O B₁.A B₂.A)) → IsLat K.O K.E M := by
-  first | exact @GlobalTheory.UnitLemma.isLat_of_comap_inl_of_map_snd | exact GlobalTheory.UnitLemma.isLat_of_comap_inl_of_map_snd | (intros; apply GlobalTheory.UnitLemma.isLat_of_comap_inl_of_map_snd <;> assumption)
+  first | exact @GlobalTheory.UnitLemma.isLat_of_comap_inl_of_map_snd
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsFullLatticeProdOfComapInlMapSndStatement =====
@@ -1018,11 +1018,7 @@ theorem exists_smul_mem_of_mem_span (K : UQ) {V : Type} [AddCommGroup V] [Module
     [IsScalarTower K.O K.E V] (M : Submodule K.O V) {x : V} (hx : x ∈ Submodule.span K.E (M : Set V)) :
     ∃ d : K.O, d ≠ 0 ∧ d • x ∈ M := by
   first
-  | exact @_root_.GlobalTheory.ClearDenominatorsIntegral.main
-  | exact _root_.GlobalTheory.ClearDenominatorsIntegral.main
   | (apply _root_.GlobalTheory.ClearDenominatorsIntegral.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ClearDenominatorsIntegral.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ClearDenominatorsIntegral.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.ClearDenominatorsIntegral.main ..)
 
 end GlobalTheory.UnitLemma.LinPair

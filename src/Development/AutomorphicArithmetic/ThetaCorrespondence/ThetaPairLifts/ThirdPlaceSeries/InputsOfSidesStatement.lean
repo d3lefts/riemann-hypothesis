@@ -150,7 +150,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.admT4_of_roots_in_field : ∀ (D : D7) (ρ : Setup D.ntw) (hρ : ρ.Good) (rd : Rds D.nexp ρ), FullTie hρ rd → (∀ (k : Fin 2) (z : ℂ), z ^ (D.host.g k * (D.host.g k - 1)) = 1 → z ∈ (Formalism.L2.Host.embLL0 D).fieldRange) → ∀ E : IntegralHeckeForms.XD D, IntegralHeckeForms.admT4 D.nexp E := by
-  first | exact @GlobalTheory.TwInputs.admT4_of_full_compatibility | exact GlobalTheory.TwInputs.admT4_of_full_compatibility | (intros; apply GlobalTheory.TwInputs.admT4_of_full_compatibility <;> assumption)
+  first | exact @GlobalTheory.TwInputs.admT4_of_full_compatibility
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AdmT4OfRootsInFieldStatement =====
@@ -172,7 +172,7 @@ theorem _root_.GlobalTheory.T.specialised_universal_series_eq_twisted_thetaSerie
     TwOK i k Q (χ.comp (Y.delU i Q M)) →
     ∀ (h : GA D (Vc D j)) (P : PolF D (Wc D j).rank (Vc D j).rank),
       specXi ρ Y i j b k Q M χ h P = specSer ρ Y i j b k Q M χ h P := by
-  first | exact @GlobalTheory.SpecFac.specXi_eq_specSer | exact GlobalTheory.SpecFac.specXi_eq_specSer | (intros; apply GlobalTheory.SpecFac.specXi_eq_specSer <;> assumption)
+  first | exact @GlobalTheory.SpecFac.specXi_eq_specSer
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.SpecialisedUniversalSeriesEqTwistedThetaSeriesStatement =====
@@ -234,7 +234,7 @@ theorem _root_.GlobalTheory.T.admissibleConjugatePairPlaces_eq_of_twOK : ∀ {D 
   GlobalTheory.UnivChar.IsUnivChar Y → ∀ (i : X.Tw) (k : ℕ) (Q : Finset (Pl D.host.E)) (M : ℕ)
     (χ : Multiplicative (DelQM D.host (X.l i) Q M) →* (X.Ok i k)ˣ),
     TwOK i k Q (χ.comp (Y.delU i Q M)) → admissibleConjugatePairPlaces X i Q M = Q := by
-  first | exact @GlobalTheory.AdmAll.admissibleConjugatePairPlaces_eq_of_twist_condition | exact GlobalTheory.AdmAll.admissibleConjugatePairPlaces_eq_of_twist_condition | (intros; apply GlobalTheory.AdmAll.admissibleConjugatePairPlaces_eq_of_twist_condition <;> assumption)
+  first | exact @GlobalTheory.AdmAll.admissibleConjugatePairPlaces_eq_of_twist_condition
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AdmissibleConjugatePairPlacesEqOfTwistConditionAStatement =====
@@ -251,7 +251,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.isUnit_card_residueField_off_exceptional_places : ∀ {D : D7} {N : NData D.R D.host D.what₂} (X : NTw D.R D.host D.what₂ D.LL0 N) (i : X.Tw) (k : ℕ) (PP : Pl D.host.E),
   PP ∉ X.S0 i → IsUnit ((Nat.card (kP PP) : ℕ) : X.Ok i k) := by
-  first | exact @GlobalTheory.ResidueUnit.isUnit_card_residueField_Ok | exact GlobalTheory.ResidueUnit.isUnit_card_residueField_Ok | (intros; apply GlobalTheory.ResidueUnit.isUnit_card_residueField_Ok <;> assumption)
+  first | exact @GlobalTheory.ResidueUnit.isUnit_card_residueField_Ok
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsUnitCardResidueFieldOffExceptionalPlacesStatement =====
@@ -412,7 +412,7 @@ theorem res_twist_spec : ∀ {D : D7} {N : NData D.R D.host D.what₂} {X : NTw 
     intro z
     rw [← ofAdd_toAdd z, ← ofAdd_nsmul]
     refine congrArg Multiplicative.ofAdd (funext fun v => ?_)
-    simp [nsmul_eq_mul, ZMod.natCast_self]
+    simp [nsmul_eq_mul]
   change (((ρ.tw i b k Q (χ.comp (Y.delU i Q M))).res PP.1 x : Circle) : ℂ) = _
   rw [htres, hs]
   simp only [χc, MonoidHom.comp_apply]
@@ -446,7 +446,7 @@ theorem _root_.GlobalTheory.T.residueCharacter_twist_universalChar_at_chosen_pla
       (((ρ.tw i b k Q (χ.comp (Y.delU i Q M))).resC PP.1 x : ℂˣ) : ℂ) =
         ρ.eOk i b k ((χ (Multiplicative.ofAdd (spread Y i Q M (ρ.ch i)
           (Pi.single PP (Multiplicative.toAdd ((univOf Y i (admissibleConjugatePairPlaces X i Q M) M ρ.rc).kap PP.1 x))))) : (X.Ok i k)ˣ) : X.Ok i k) := by
-  first | exact @GlobalTheory.ResTwist.res_twist_spec | exact GlobalTheory.ResTwist.res_twist_spec | (intros; apply GlobalTheory.ResTwist.res_twist_spec <;> assumption)
+  first | exact @GlobalTheory.ResTwist.res_twist_spec
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ResidueCharacterTwistUniversalCharAtChosenPlaceStatement =====
@@ -587,7 +587,7 @@ theorem hatSelfDual_of {V : HSp D} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank �
       show IsLocalization.IsInteger (𝓞 D.host.E) (pairing x ((d : 𝓞 D.host.E) • y))
       have hscale (z : Fin V.rank → D.host.E) :
           pairing z ((d : 𝓞 D.host.E) • y) = (d : 𝓞 D.host.E) • pairing z y := by
-        simp only [pairing, Pi.smul_apply, Algebra.smul_def, Finset.mul_sum, Finset.sum_mul,
+        simp only [pairing, Pi.smul_apply, Algebra.smul_def, Finset.sum_mul,
           mul_assoc, mul_left_comm, mul_comm]
       rw [hscale]
       refine Submodule.span_induction
@@ -748,7 +748,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.thetaSeries_integralSourceTranslation_right_mul : ∀ (D : D7) (S T : HSp D) (B : Base S T), B.Good → S.SigOK → ∀ ω : PairRep S T, B.IsWeil 1 ω → ∀ (Q : Finset (Pl D.host.E)), B.admitted Q → ∀ hb : ∀ PP : ↥Q, GL (Fin S.rank) (kP PP.1), ∃ hQ, SuppAt (idem Q) S hQ ∧ ∀ (φ : ∀ PP : ↥Q, Matrix (Fin T.rank) (Fin S.rank) (kP PP.1) → ℂ) (h : GA D S) (P : PolF D T.rank S.rank), series B.F ω (B.vecAt Q fun PP y => φ PP (y * (hb PP).val)) h P = series B.F ω (B.vecAt Q φ) (h * hQ) P := by
-  first | exact @GlobalTheory.SourceTrans.exists_series_vecAt_translate_eq_series_mul | exact GlobalTheory.SourceTrans.exists_series_vecAt_translate_eq_series_mul | (intros; apply GlobalTheory.SourceTrans.exists_series_vecAt_translate_eq_series_mul <;> assumption)
+  first | exact @GlobalTheory.SourceTrans.exists_series_vecAt_translate_eq_series_mul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ThetaSeriesIntegralSourceTranslationRightMulStatement =====
@@ -988,7 +988,7 @@ theorem _root_.GlobalTheory.T.twistedSeries_specialisedUniversalDatum_mem_span :
       ρ.IsDatum i j b s h P → (∀ v ∈ Q, ((normProd s : ℕ) : 𝓞 D.host.E) ∉ v.asIdeal) →
       specSer ρ Y i j b k Q M χ h P ∈
         Submodule.span (ρ.eOk i b k).range (ρ.gens i j b k Q (χ.comp (Y.delU i Q M)) h P) := by
-  first | exact @GlobalTheory.SpecSpan.specSer_mem_span | exact GlobalTheory.SpecSpan.specSer_mem_span | (intros; apply GlobalTheory.SpecSpan.specSer_mem_span <;> assumption)
+  first | exact @GlobalTheory.SpecSpan.specSer_mem_span
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TwistedSeriesSpecialisedUniversalDatumMemSpanStatement =====
@@ -1145,7 +1145,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.goodTwist_detChar_eq_one_of_supported_typePlaces : ∀ (D : D7) (S T : HSp D) (B : Base S T), B.Good → S.SigOK → ∀ (A : Type) [CommGroup A] (t : Twist D A), t.Good → B.admitted t.Q → ∀ (u : G0 B.G.Pg T.rank) (κ : GA D T), Lev.IsLevelLift T B.F.βT B.G.levT u κ → SuppAt (idem B.G.Pg) T κ → detChar T t.chi κ = 1 := by
-  first | exact @GlobalTheory.TwistTypeDet.detChar_eq_one_of_suppAt | exact GlobalTheory.TwistTypeDet.detChar_eq_one_of_suppAt | (intros; apply GlobalTheory.TwistTypeDet.detChar_eq_one_of_suppAt <;> assumption)
+  first | exact @GlobalTheory.TwistTypeDet.detChar_eq_one_of_suppAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GoodTwistDetCharEqOneOfSupportedTypePlacesStatement =====
@@ -1161,7 +1161,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.thetaSeries_type_under_supported_lifts : ∀ (D : D7) (S T : HSp D) (B : Base S T), B.Good → S.SigOK → ∀ ω : PairRep S T, B.IsWeil 1 ω → ∀ (u : G0 B.G.Pg T.rank) (hu : u ∈ B.G.P.H), ∃ κ : GA D T, Lev.IsLevelLift T B.F.βT B.G.levT u κ ∧ SuppAt (idem B.G.Pg) T κ ∧ ∀ (Q : Finset (Pl D.host.E)), B.admitted Q → ∀ (φ : ∀ PP : ↥Q, Matrix (Fin T.rank) (Fin S.rank) (kP PP.1) → ℂ) (h : GA D S) (P : PolF D T.rank S.rank) (g : GA D T), series B.F ω (B.vecAt Q φ) h P (g * κ) = ((B.G.P.chi ⟨u, hu⟩ : ℂˣ) : ℂ) * series B.F ω (B.vecAt Q φ) h P g := by
-  first | exact @GlobalTheory.TypeSupportLift.series_type_supp | exact GlobalTheory.TypeSupportLift.series_type_supp | (intros; apply GlobalTheory.TypeSupportLift.series_type_supp <;> assumption)
+  first | exact @GlobalTheory.TypeSupportLift.series_type_supp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ThetaSeriesTypeUnderSupportedLiftsStatement =====
@@ -1660,7 +1660,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_inputs_of_galHodgeN_roots : GlobalTheory.Published.ChebotarevDegreeOne → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.IndefiniteRowSideFullHecke.ClassZetaValuationBounds.ToricDenominator → ∀ (D : D7) (X : RealSide D) (E : IntegralHeckeForms.XD D) (Y : SerSide X E), ∀ G : _root_.GlobalTheory.TwInputs.GalSideAlt D, (∀ i, D.ntw.NonzeroIndexPlace i → ∀ j b, RatRow Y.YS X.geo.v₀ Y.Z.good i j b) → XiBdd Y.Z.rd → (∀ j, GlobalTheory.IndefiniteRowSideFullHecke.LatticesOverBalls.HkSupAt X.core X.R.toRealDat j) → _root_.UpperTheory.GalS.GalHodgeN D G.wd → (∀ (k : Fin 2) (z : ℂ), z ^ (D.host.g k * (D.host.g k - 1)) = 1 → z ∈ (Formalism.L2.Host.embLL0 D).fieldRange) → ∃ N0, Inputs D E N0 := by
-  first | exact @_root_.GlobalTheory.TwInputs.exists_inputs_of_hkSup_galHodge | exact _root_.GlobalTheory.TwInputs.exists_inputs_of_hkSup_galHodge | (intros; apply _root_.GlobalTheory.TwInputs.exists_inputs_of_hkSup_galHodge <;> assumption)
+  first | exact @_root_.GlobalTheory.TwInputs.exists_inputs_of_hkSup_galHodge
 end
 end -- clump:auto
 end -- clump:auto

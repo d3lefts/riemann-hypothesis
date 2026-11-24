@@ -154,7 +154,7 @@ theorem _root_.GlobalTheory.T.exists_finset_generating_operator_stable_bounded :
     (∃ L : ℕ, ∀ (m : ℕ) (N : Fin m → Submodule ℂ M), StrictMono N →
         (∀ j, Rel ≤ N j ∧ ∀ g ∈ Op, ∀ x ∈ N j, g x ∈ N j) → m ≤ L) →
     ∃ F : Finset M, ∀ N : Submodule ℂ M, Rel ≤ N → GlobalTheory.TensHead.Stab Op N → (↑F : Set M) ⊆ ↑N → N = ⊤ := by
-  first | exact @GlobalTheory.StabGen.exists_finset_generating | exact GlobalTheory.StabGen.exists_finset_generating | (intros; apply GlobalTheory.StabGen.exists_finset_generating <;> assumption)
+  first | exact @GlobalTheory.StabGen.exists_finset_generating
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsFinsetGeneratingOperatorStableBoundedStatement =====
@@ -441,7 +441,7 @@ theorem pp_of_equiv {σ ι : Type} (f : σ ≃ ι) (hσ : PP σ) : PP ι := by
       · rw [Function.update_of_ne h]
         exact (Function.update_of_ne (β := fun i => M i →ₗ[ℂ] M i) (a := f j) (a' := f s)
           (fun h' => h (f.injective h')) g (fun i => LinearMap.id)).symm
-    simp only [piOp, LinearEquiv.coe_coe]
+    simp only [piOp]
     rw [hu, PiTensorProduct.map_reindex]
 
 theorem simpleOver_sum {α β : Type} (hα : PP α) (hβ : PP β) [DecidableEq (α ⊕ β)]
@@ -738,7 +738,7 @@ theorem tensor_eq_top_or_le_ker_map : ∀ {ι : Type} [Fintype ι] [DecidableEq 
     intro x₀ hx₀ y hy
     apply hGU
     simp only [G, Finset.coe_image]
-    exact ⟨(x₀, y), by simp [hx₀, Fintype.mem_piFinset, hy], rfl⟩
+    exact ⟨(x₀, y), by simp [hx₀, hy], rfl⟩
   obtain ⟨N', hNN', hS', hN'top, hmax⟩ := _root_.GlobalTheory.TensHead.exists_maximal_stab_of_finset _ N G hgen N le_rfl hS hN
   have h0' := _root_.GlobalTheory.TensHead.tens_maxStab_contains_left_ker Op₀ (piOps Op) Rel₀ (LinearMap.ker p₀) hL₀ hloc₀ h0 hK₀ N'
     (fun x hx y => hNN' (hN₀ x hx y)) hS' hmax

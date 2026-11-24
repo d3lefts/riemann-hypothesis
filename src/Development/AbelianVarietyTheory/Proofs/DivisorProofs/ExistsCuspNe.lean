@@ -381,10 +381,10 @@ theorem det_block_ne {r p : ℕ} (hp : p ≤ r) (m : Matrix (Fin r) (Fin r) ℂ)
       m.map (starRingEnd ℂ)).submatrix (Fin.castLE hp) (Fin.castLE hp) *ᵥ v) =
       ∑ k : Fin r, ((sgn p (k : ℕ) : ℝ) : ℂ) * (starRingEnd ℂ (u k) * u k) := by
 
-    simp only [dotProduct, mulVec, Matrix.submatrix_apply, Matrix.mul_diagonal, Matrix.mul_apply,
+    simp only [dotProduct, mulVec, Matrix.submatrix_apply, Matrix.mul_apply,
     Matrix.transpose_apply, Matrix.map_apply, hu_def, map_sum, map_mul, Complex.conj_conj,
-    Finset.mul_sum, Finset.sum_mul, Pi.star_apply, Matrix.diagonal_apply, mul_ite, ite_mul, mul_zero,
-    zero_mul, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    Finset.mul_sum, Finset.sum_mul, Pi.star_apply, Matrix.diagonal_apply, mul_ite, mul_zero,
+    Finset.sum_ite_eq', Finset.mem_univ, if_true]
     conv_lhs => rw [Finset.sum_comm]
     conv_lhs => arg 2; ext b; rw [Finset.sum_comm]
     conv_lhs => rw [Finset.sum_comm]
@@ -473,7 +473,7 @@ section -- clump:auto
 open NumberField ReciprocityTheory.ChartRestriction.G.FD ReciprocityTheory.ChartRestriction.G.AR.Up ReciprocityTheory.ChartRestriction.G.AR.Inst GlobalTheory.ScalarPoin MeasureTheory
 
 theorem _root_.GlobalTheory.T.scalarPoincareDetRatioPower_differentiableOn : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (X : Data E r) (x0 : Frame X.Ψ r), IsOrth X x0 → ∀ k : ℕ, DifferentiableOn ℂ (qS X x0 k) X.dom := by
-  first | exact @GlobalTheory.ScalarPoin.Holo.qS_holomorphicOn | exact GlobalTheory.ScalarPoin.Holo.qS_holomorphicOn | (intros; apply GlobalTheory.ScalarPoin.Holo.qS_holomorphicOn <;> assumption)
+  first | exact @GlobalTheory.ScalarPoin.Holo.qS_holomorphicOn
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ScalarPoincareDetRatioPowerDifferentiableOnStatement =====

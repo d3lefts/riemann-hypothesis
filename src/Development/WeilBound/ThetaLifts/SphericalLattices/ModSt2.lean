@@ -739,7 +739,7 @@ theorem conj_val (x : Lˣ) (g : GL (Fin m ⊕ Fin m) L) :
       fromBlocks ((x : L) • (1 : Matrix (Fin m) (Fin m) L)) 0 0 (((x⁻¹ : Lˣ) : L) • 1) = _
   conv_lhs => rw [hg]
   rw [Matrix.fromBlocks_multiply, Matrix.fromBlocks_multiply]
-  simp [Units.val_inv_eq_inv_val, Matrix.smul_mul, Matrix.mul_smul, smul_smul, hx0]
+  simp [Units.val_inv_eq_inv_val, smul_smul, hx0]
 
 theorem mem_conj (h : IsUnramInv ϖ c q) {x : Lˣ} (hx : (x : L) = ϖ) {g : GL (Fin m ⊕ Fin m) L} :
     g ∈ (KPW L c m).map (MulAut.conj (zW L m x)).toMonoidHom ↔ g ∈ GW L c m ∧ g.val.toBlocks₂₁ = 0 ∧
@@ -827,7 +827,7 @@ theorem skew_of_iso (h : IsUnramInv ϖ c q) {a b d : Matrix (Fin m) (Fin m) L}
   rw [Matrix.fromBlocks_transpose, Matrix.fromBlocks_map, Matrix.fromBlocks_multiply,
     Matrix.fromBlocks_multiply] at hg'
   simp only [Matrix.transpose_zero, Matrix.map_zero, map_zero, Matrix.mul_zero, Matrix.zero_mul,
-    Matrix.mul_one, Matrix.one_mul, add_zero, zero_add] at hg'
+    Matrix.mul_one, add_zero, zero_add] at hg'
   obtain ⟨-, h12, h21, h22⟩ := Matrix.fromBlocks_inj.mp hg'
   have e1 : (a.map c)ᵀ * d = 1 := by
     have e := congrArg (fun M => M.map c) h12
@@ -1323,7 +1323,7 @@ theorem lev_mem (hc : ∀ x, c (c x) = x) (t : GL (Fin m) L) : lev L c m t ∈ P
   rw [hlev, hW]
   simp only [fromBlocks_transpose, fromBlocks_map, fromBlocks_multiply, h3, h4,
     Matrix.transpose_zero, Matrix.map_zero _ (map_zero c), Matrix.mul_zero, Matrix.zero_mul,
-    Matrix.mul_one, Matrix.one_mul, add_zero, zero_add, h1, h2]
+    Matrix.mul_one, add_zero, zero_add, h1, h2]
 
 def un (X : Matrix (Fin m) (Fin m) L) : GL (Fin m ⊕ Fin m) L :=
   ⟨fromBlocks 1 X 0 1, fromBlocks 1 (-X) 0 1, by simp [fromBlocks_multiply, fromBlocks_one],
@@ -1372,7 +1372,7 @@ theorem decomp (hc : ∀ x, c (c x) = x) {p : GL (Fin m ⊕ Fin m) L} (hp : p �
   rw [hPb, hW] at hiso
   simp only [fromBlocks_transpose, fromBlocks_map, fromBlocks_multiply,
     Matrix.transpose_zero, Matrix.map_zero _ (map_zero c), Matrix.mul_zero, Matrix.zero_mul,
-    Matrix.mul_one, Matrix.one_mul, add_zero, zero_add, Matrix.fromBlocks_inj] at hiso
+    Matrix.mul_one, add_zero, zero_add, Matrix.fromBlocks_inj] at hiso
   obtain ⟨-, h12, h21', h22⟩ := hiso
   set A := P.toBlocks₁₁ with hA
   set B := P.toBlocks₁₂ with hB
@@ -1386,8 +1386,6 @@ theorem decomp (hc : ∀ x, c (c x) = x) {p : GL (Fin m ⊕ Fin m) L} (hp : p �
   have hinv2 : A * (D.map c)ᵀ = 1 := by
     first
     | exact mul_eq_one_comm.mp hinv1
-    | exact Matrix.mul_eq_one_comm.mp hinv1
-    | exact Matrix.mul_eq_one_comm_of_equiv (Equiv.refl _) hinv1
   refine ⟨⟨A, (D.map c)ᵀ, hinv2, hinv1⟩, (D.map c)ᵀ * B, ?_, ?_⟩
   · rw [Matrix.map_mul, Matrix.transpose_map, hDD, Matrix.transpose_mul, Matrix.transpose_transpose]
     exact eq_neg_of_add_eq_zero_left h22

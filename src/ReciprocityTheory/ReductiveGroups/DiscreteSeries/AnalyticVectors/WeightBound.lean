@@ -161,7 +161,6 @@ theorem le_span_weightVecs (hE : IsGlRep E) (hU : IsInfUnitary ε E) (hVf : Fini
         have hev : Module.End.HasEigenvalue (T a) (χ a) := by
           first
             | exact Module.End.hasEigenvalue_of_hasEigenvector ⟨hy a, hy0⟩
-            | exact (Submodule.ne_bot_iff _).2 ⟨y, hy a, hy0⟩
         exact Complex.conj_eq_iff_re.1 ((hsym a).conj_eigenvalue_eq_self hev)
       refine Submodule.subset_span ⟨y.2, fun a => (χ a).re, fun a => ?_⟩
       have h := Module.End.mem_eigenspace_iff.1 (hy a)
@@ -287,7 +286,7 @@ theorem sqrt_nsq_add_ncSum_le {j : ℕ} {ω : Fin n → ℝ} (hω : IsNCSum ε j
     rw [Fintype.sum_eq_add a b hne]
     · norm_num [root, Pi.single_apply, hne, hne.symm]
     · intro c hc
-      simp [root, Pi.single_apply, hc.1, hc.2]
+      simp [root, hc.1, hc.2]
   have hr : ∀ i, √(nsq (root (γ i).1 (γ i).2)) ≤ √2 := fun i => by
     have hne : (γ i).1 ≠ (γ i).2 := fun h => hγ i (congrArg ε h)
     exact le_of_eq (by rw [hroot _ _ hne])

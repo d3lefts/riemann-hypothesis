@@ -476,11 +476,7 @@ lemma sum_refine {A B C : AddSubgroup W} {φ : W → ℂ} (h : Fine A φ B) (hC 
     (hi : C.relIndex B ≠ 0) :
     (∑ᶠ c : W ⧸ C, φ c.out) = (C.relIndex B : ℂ) * ∑ᶠ c : W ⧸ B, φ c.out := by
   first
-  | exact @_root_.GlobalTheory.SumRefinement.sum_refine
-  | exact _root_.GlobalTheory.SumRefinement.sum_refine
   | (apply _root_.GlobalTheory.SumRefinement.sum_refine <;> assumption)
-  | (intros; apply _root_.GlobalTheory.SumRefinement.sum_refine <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.SumRefinement.sum_refine <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.SumRefinement.sum_refine ..)
 
 lemma ratio_eq {A B B' : AddSubgroup W} {φ : W → ℂ} (h : Fine A φ B) (h' : Fine A φ B') :
@@ -640,7 +636,7 @@ open GlobalTheory.IdxInt
 open scoped Pointwise Classical
 
 theorem _root_.GlobalTheory.T.indexMeasureIntegral_prod_fubini : ∀ {W : Type} [AddCommGroup W] {W' : Type} [AddCommGroup W'] (A : AddSubgroup W) (A' : AddSubgroup W') (φ : W × W' → ℂ), Nice (A.prod A') φ → (∀ w, Nice A' (fun w' => φ (w, w'))) ∧ Nice A (fun w => cint A' (fun w' => φ (w, w'))) ∧ cint (A.prod A') φ = cint A (fun w => cint A' (fun w' => φ (w, w'))) := by
-  first | exact @GlobalTheory.IdxInt.Fubini.cint_prod | exact GlobalTheory.IdxInt.Fubini.cint_prod | (intros; apply GlobalTheory.IdxInt.Fubini.cint_prod <;> assumption)
+  first | exact @GlobalTheory.IdxInt.Fubini.cint_prod
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.IndexMeasureIntegralProdFubiniStatement =====
@@ -824,11 +820,7 @@ theorem exists_pow_smul (L : LocE F E) (ϖ : 𝒪[F]) (hϖ : Irreducible ϖ) {n 
     (Λ : Submodule L.O (Fin n → E)) (hΛ : IsLat L Λ) (y : Fin n → E) :
     ∃ m : ℕ, algebraMap F E ((ϖ : F) ^ m) • y ∈ Λ := by
   first
-  | exact @_root_.GlobalTheory.PowSmulMemLattice.exists_pow_smul_mem_of_isLat
-  | exact _root_.GlobalTheory.PowSmulMemLattice.exists_pow_smul_mem_of_isLat
   | (apply _root_.GlobalTheory.PowSmulMemLattice.exists_pow_smul_mem_of_isLat <;> assumption)
-  | (intros; apply _root_.GlobalTheory.PowSmulMemLattice.exists_pow_smul_mem_of_isLat <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.PowSmulMemLattice.exists_pow_smul_mem_of_isLat <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.PowSmulMemLattice.exists_pow_smul_mem_of_isLat ..)
 
 theorem exists_inv_one_add (L : LocE F E) (ϖ : 𝒪[F]) (hϖ : Irreducible ϖ) {x : E} (hx : x ∈ L.O) :
@@ -844,7 +836,7 @@ theorem exists_inv_one_add (L : LocE F E) (ϖ : 𝒪[F]) (hϖ : Irreducible ϖ) 
     (L.O.add_mem L.O.one_mem (L.O.mul_mem (hint ϖ) (GlobalTheory.UnramOrder.cj_mem L hx))), ?_⟩
   have h2 := congrArg (fun a : 𝒪[F] => algebraMap F E a) hv
   push_cast at h2
-  simp only [map_mul, map_add (f := _), map_one, ← ht, ← hs] at h2
+  simp only [← ht, ← hs] at h2
   linear_combination h2
 
 end
@@ -869,7 +861,7 @@ theorem inZ_add {Λ : Submodule L.O S.V} (hΛ : IsSD L S.Hm Λ) {N : ℕ} (hN : 
   simp only [hf_addl, hf_addr, hf_smull, hf_smulr, AlgEquiv.commutes, hc, hs]
   push_cast
   have h2 := congrArg (algebraMap F E) hpow
-  simp only [map_mul, map_add (f := _), map_pow, ← ht] at h2 ⊢
+  simp only [map_mul, map_pow, ← ht] at h2 ⊢
   linear_combination (hf L S.Hm u y + hf L S.Hm y u + algebraMap F E S.ϖ ^ N * algebraMap F E s) * h2
 
 theorem noLeak_add {Λ : Submodule L.O S.V} (hΛ : IsSD L S.Hm Λ) {N : ℕ} (hN : 1 ≤ N) {u y : S.V}

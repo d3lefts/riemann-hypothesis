@@ -196,7 +196,7 @@ section -- clump:auto
 open Matrix
 
 theorem _root_.GlobalTheory.T.commensurable_conj_range_gl_map_subtype : ∀ {B : Type} [CommRing B] (R : Subring B) (n : ℕ) (c : R), Finite (R ⧸ Ideal.span {c * c}) → ∀ g : GL (Fin n) B, (∀ i j, (c : B) * (g : Matrix (Fin n) (Fin n) B) i j ∈ R) → (∀ i j, (c : B) * ((g⁻¹ : GL (Fin n) B) : Matrix (Fin n) (Fin n) B) i j ∈ R) → Subgroup.Commensurable ((GeneralLinearGroup.map R.subtype).range.map (MulAut.conj g).toMonoidHom) (GeneralLinearGroup.map R.subtype).range := by
-  first | (exact @GlobalTheory.commensurable_conj_range_GL_subring) | (exact GlobalTheory.commensurable_conj_range_GL_subring) | (intros; apply GlobalTheory.commensurable_conj_range_GL_subring  <;> assumption)
+  first | (exact @GlobalTheory.commensurable_conj_range_GL_subring)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CommensurableConjRangeGLSubringStatement =====
@@ -277,7 +277,7 @@ section -- clump:auto
 open Matrix
 
 theorem _root_.GlobalTheory.T.commensurable_map_conj_prod_pi' : ∀ {A : Type} [Group A] {m : ℕ} {B : Fin m → Type} [∀ i, Group (B i)] (H : Subgroup A) (K : ∀ i, Subgroup (B i)) (g : A × ((i : Fin m) → B i)), Subgroup.Commensurable (H.map (MulAut.conj g.1).toMonoidHom) H → (∀ i, Subgroup.Commensurable ((K i).map (MulAut.conj (g.2 i)).toMonoidHom) (K i)) → Subgroup.Commensurable ((H.prod (Subgroup.pi Set.univ K)).map (MulAut.conj g).toMonoidHom) (H.prod (Subgroup.pi Set.univ K)) := by
-  first | (exact @GlobalTheory.commensurable_map_conj_prod_pi) | (exact GlobalTheory.commensurable_map_conj_prod_pi) | (intros; apply GlobalTheory.commensurable_map_conj_prod_pi  <;> assumption)
+  first | (exact @GlobalTheory.commensurable_map_conj_prod_pi)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CommensurableMapConjProdPiStatement =====
@@ -331,7 +331,7 @@ open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMi
 open scoped TensorProduct Classical
 
 theorem _root_.GlobalTheory.T.finite_padicIntegers_quot_primePow_of_finiteDim : ∀ (p : ℕ) [Fact p.Prime] (L : IntermediateField ℚ_[p] (PadicAlgCl p)) [FiniteDimensional ℚ_[p] L] (m : ℕ), Finite (GlobalTheory.LKLoc.intK p L ⧸ Ideal.span {(p : GlobalTheory.LKLoc.intK p L) ^ m}) := by
-  first | (exact @GlobalTheory.LKLoc.IntFin.finite_intK_quot_pow) | (exact GlobalTheory.LKLoc.IntFin.finite_intK_quot_pow) | (intros; apply GlobalTheory.LKLoc.IntFin.finite_intK_quot_pow  <;> assumption)
+  first | (exact @GlobalTheory.LKLoc.IntFin.finite_intK_quot_pow)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinitePadicIntegersQuotPrimePowOfFiniteDimStatement =====
@@ -434,7 +434,7 @@ open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMi
 open scoped TensorProduct Classical
 
 theorem _root_.GlobalTheory.T.finite_padicTensorUnramifiedIntegers_quot_primePow : ∀ (p : ℕ) [Fact p.Prime] (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (r m : ℕ), Finite (GlobalTheory.LKLoc.intK p K ⧸ Ideal.span {(p : GlobalTheory.LKLoc.intK p K) ^ m}) → Finite (GlobalTheory.LKLoc.intK p (Qr p r) ⧸ Ideal.span {(p : GlobalTheory.LKLoc.intK p (Qr p r)) ^ m}) → Finite (intKQ p K r ⧸ Ideal.span {(p : intKQ p K r) ^ m}) := by
-  first | (exact @GlobalTheory.TenFin.finite_intKQ_quot) | (exact GlobalTheory.TenFin.finite_intKQ_quot) | (intros; apply GlobalTheory.TenFin.finite_intKQ_quot  <;> assumption)
+  first | (exact @GlobalTheory.TenFin.finite_intKQ_quot)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinitePadicTensorUnramifiedIntegersQuotPrimePowStatement =====
@@ -496,7 +496,7 @@ theorem map_inclK_mem_Kres_iff (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (n
     GeneralLinearGroup.map (inclK p K r).toRingHom g ∈ Kres p K n r ↔ g ∈ GlobalTheory.LKLoc.KintK p K n := by
   unfold Kres GlobalTheory.LKLoc.KintK
   rw [mem_range_map_subtype, mem_range_map_subtype, ← map_inv]
-  simp only [GeneralLinearGroup.map, MonoidHom.coe_mk, OneHom.coe_mk, Units.coe_map, RingHom.mapMatrix_apply]
+  simp only [GeneralLinearGroup.map, Units.coe_map]
   simp [Matrix.map_apply, inclK_mem_intKQ_iff]
 
 theorem scalar_mem_Kint_iff (r : ℕ) (s : ℚ_[p]ˣ) :

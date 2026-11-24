@@ -626,7 +626,7 @@ private theorem tot_range (hV : VInv) (l : ℕ) [Fact l.Prime] {W Z : Scheme.{0}
     refine (Submodule.mem_iInf _).2 fun g => ?_
     have e := congrArg (fun u : Htot l (sch.obj W) => u n) (hx g)
     simp only [pullTot, DirectSum.lmap_apply] at e
-    simp [LinearMap.mem_ker, sub_eq_zero, e]
+    simp [LinearMap.mem_ker, e]
   rw [← DirectSum.sum_support_of x]
   refine Submodule.sum_mem _ fun n _ => ?_
   obtain ⟨z, hz⟩ := key n
@@ -898,7 +898,7 @@ theorem etale_torsion_cohomology_localization_basic : LateralTheory.EtaleFoundat
 theorem etale_bockstein_reduction_surjective : LateralTheory.KummerTheory.BockCut.RedEpi := by
   apply LateralTheory.KummerTheory.RedEpiPf.RedEpi_of <;> first | exact etale_torsion_cohomology_twist_section | exact etale_torsion_cohomology_primary_part_basic | exact etale_torsion_cohomology_primary_localization | exact etale_torsion_cohomology_mono_epi_of_exact | exact etale_torsion_cohomology_localization_basic
 theorem etale_bockstein_reduction_kernel_eq_image : LateralTheory.KummerTheory.BockCut.RedKer := by
-  apply LateralTheory.KummerTheory.RedKerPf.RedKer_of <;> first | exact etale_torsion_cohomology_twist_section | exact etale_torsion_cohomology_primary_part_basic | exact etale_torsion_cohomology_localization_basic | exact etale_torsion_cohomology_mono_epi_of_exact
+  apply LateralTheory.KummerTheory.RedKerPf.RedKer_of <;> first | exact etale_torsion_cohomology_twist_section | exact etale_torsion_cohomology_primary_part_basic | exact etale_torsion_cohomology_localization_basic
 theorem etale_sheaf_short_complex_exact_iff_locally_lifts : LateralTheory.EtaleFoundations.EtaleSheafShortComplexExactIffLocallyLifts := by
   apply LateralTheory.EtaleFoundations.etale_sheaf_short_complex_exact_iff_local_lifts_holds
 theorem etale_bockstein_twisted_short_exact_sequence : LateralTheory.KummerTheory.BockCut.TwSES := by
@@ -934,7 +934,7 @@ theorem etale_prime_power_twist_restriction_exists : LateralTheory.EtaleFoundati
 theorem etale_bockstein_reduction_postcomposition_compat : LateralTheory.KummerTheory.BockCut.RedPost := by
   apply LateralTheory.KummerTheory.RedPostPf.RedPost_of <;> first | exact etale_bockstein_connecting_map_unique_up_to_sign | exact etale_bockstein_twisted_extension | exact etale_bockstein_integer_hom_compat | exact etale_torsion_cohomology_operation_spec | exact etale_torsion_cohomology_operation_comp | exact etale_prime_power_twist_reduction_map_exists | exact etale_prime_power_twist_restriction_exists | exact etale_torsion_cohomology_primary_part_basic | exact etale_torsion_cohomology_residue_basic
 theorem etale_bockstein_sequence_adic_finiteness : LateralTheory.KummerTheory.Bock := by
-  apply LateralTheory.KummerTheory.BockCut.goal_of <;> first | exact etale_bockstein_derived_category_dictionary | exact etale_bockstein_long_exact_sequence_natural | exact etale_bockstein_integer_hom_compat | exact etale_bockstein_reduction_exact | exact etale_bockstein_twisted_extension | exact etale_bockstein_reduction_surjective | exact etale_bockstein_reduction_kernel_eq_image | exact etale_bockstein_twisted_short_exact_sequence | exact etale_bockstein_restriction_of_resolution | exact etale_bockstein_connecting_map_unique_up_to_sign | exact etale_bockstein_reduction_postcomposition_compat | exact etale_torsion_cohomology_primary_part_basic | exact etale_torsion_cohomology_primary_localization | exact etale_torsion_cohomology_twist_section | exact etale_torsion_cohomology_mono_epi_of_exact | exact etale_sheaf_short_complex_exact_iff_locally_lifts | exact etale_torsion_cohomology_localization_basic | exact etale_torsion_cohomology_residue_basic | exact etale_torsion_cohomology_extension_hom_exists | exact etale_torsion_cohomology_operation_spec | exact etale_torsion_cohomology_operation_comp | exact etale_prime_power_twist_reduction_map_exists | exact etale_prime_power_twist_restriction_exists
+  apply LateralTheory.KummerTheory.BockCut.goal_of <;> first | exact etale_bockstein_derived_category_dictionary | exact etale_bockstein_long_exact_sequence_natural | exact etale_bockstein_integer_hom_compat | exact etale_bockstein_reduction_exact | exact etale_bockstein_twisted_extension | exact etale_bockstein_reduction_surjective | exact etale_bockstein_reduction_kernel_eq_image | exact etale_bockstein_twisted_short_exact_sequence | exact etale_bockstein_restriction_of_resolution | exact etale_bockstein_connecting_map_unique_up_to_sign | exact etale_bockstein_reduction_postcomposition_compat | exact etale_torsion_cohomology_primary_part_basic
 end LateralTheory.Fin.AdicFin
 end -- clump:auto
 end -- clump:auto

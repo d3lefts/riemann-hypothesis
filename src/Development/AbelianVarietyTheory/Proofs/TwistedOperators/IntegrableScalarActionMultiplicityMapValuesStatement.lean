@@ -147,7 +147,7 @@ theorem rightConv_eq_smul_of_inner_translates : ∀ {G : Type} [Group G] [Topolo
     have : (fun x => star (φ (x * (h' : G))) * (c * φ x)) = fun x => c * (star (φ (x * (h' : G))) * φ x) := by
       funext x; ring
     rw [this, integral_const_mul]
-    simp [Φ]
+    simp
 
   have hsα : Integrable (fun h => star (α h)) m := by
     simpa using Complex.conjCLE.toContinuousLinearMap.integrable_comp hα
@@ -295,7 +295,7 @@ open scoped TensorProduct InnerProductSpace
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.integrable_scalar_action_multiplicityMap_values : GlobalTheory.Published.CuspRapidDecay → ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (V : HSp D) (S : D.what₂.Tau → SPar) (M : DSModel V S) (J : Set (GA D V)) (χ : GA D V → ℂ), ∀ t ∈ MultT θ M J χ, ∀ (w : M.Vec) (m : Measure (GinfC V)), m.IsHaarMeasure → ∀ (α : GinfC V → ℂ) (c : ℂ), Integrable α m → (∀ b : ∀ τ, M.H τ, ∫ h, α h * coefR θ M b (fun τ => w τ) h ∂m = c * ∏ τ, ⟪b τ, (w τ : M.H τ)⟫_ℂ) → ∀ x, ∫ h, α h * t (PiTensorProduct.tprod ℂ w) (x * h) ∂m = c * t (PiTensorProduct.tprod ℂ w) x := by
-  first | exact @GlobalTheory.ValAct.integral_mul_multT_eq | exact GlobalTheory.ValAct.integral_mul_multT_eq | (intros; apply GlobalTheory.ValAct.integral_mul_multT_eq <;> assumption)
+  first | exact @GlobalTheory.ValAct.integral_mul_multT_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.IntegrableScalarActionMultiplicityMapValuesStatement =====

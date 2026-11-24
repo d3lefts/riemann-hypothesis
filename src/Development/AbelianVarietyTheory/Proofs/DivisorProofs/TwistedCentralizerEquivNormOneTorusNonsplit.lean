@@ -88,7 +88,7 @@ theorem mulMatHom_algebraMap (x : K.E) :
     mulMatHom e b (algebraMap K.E B.A x) = algebraMap (w.adicCompletion E) _ (e x) := by
   simp only [mulMatHom, RingHom.comp_apply, AlgHom.toRingHom_eq_coe, AlgEquiv.coe_toRingEquiv,
     RingEquiv.toRingHom_eq_coe, AlgHom.coe_toRingHom, AlgHom.commutes, RingEquiv.coe_toRingHom,
-    AlgEquiv.coe_ringEquiv, AlgEquiv.commutes]
+    AlgEquiv.commutes]
   rw [Matrix.algebraMap_eq_diagonal, Matrix.algebraMap_eq_diagonal]
   simp [Pi.algebraMap_def]
 
@@ -158,7 +158,7 @@ open scoped Classical
 
 
 theorem _root_.GlobalTheory.T.integralUnits_of_isCompact_closure_zpowers_mul : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ (w : Pl E), ¬ IsSplitAt w → ∀ (K : GlobalTheory.UnitLemma.UQ) (e : K.E ≃+* w.adicCompletion E), (∀ x, e (K.c x) = cj w (e x)) → (∀ x, x ∈ (algebraMap K.O K.E).range ↔ Valued.v (e x) ≤ 1) → (∀ x, GlobalTheory.UnitLemma.val K.O x = ordL (e x)) → ∀ (B : GlobalTheory.UnitLemma.InvAlg K) (m : ℕ) (b : Module.Basis (Fin m) K.E B.A) (a : B.Aˣ), IsCompact (closure (Subgroup.zpowers (GlobalTheory.TwLat.mulU e b a) : Set (GLw m w))) → a ∈ GlobalTheory.UnitLemma.intUnits K.O B.A := by
-  first | exact @GlobalTheory.TwLat.mem_intUnits_of_isCompact_closure_zpowers | exact GlobalTheory.TwLat.mem_intUnits_of_isCompact_closure_zpowers | (intros; apply GlobalTheory.TwLat.mem_intUnits_of_isCompact_closure_zpowers <;> assumption)
+  first | exact @GlobalTheory.TwLat.mem_intUnits_of_isCompact_closure_zpowers
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralUnitsOfIsCompactClosureZpowersMulStatement =====

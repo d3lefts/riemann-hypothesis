@@ -554,9 +554,6 @@ lemma contDiff_lead (i : ℕ) : ContDiff ℂ 1 (fun z : Matrix (Fin n) (Fin n) �
   have he : ∀ a b : Fin n, ContDiff ℂ 1 (fun z : Matrix (Fin n) (Fin n) ℂ => z a b) := by
     intro a b
     first
-    | exact contDiff_apply_apply ℂ ℂ a b
-    | exact contDiff_apply_apply a b
-    | exact ((ContinuousLinearMap.proj b).comp (ContinuousLinearMap.proj a)).contDiff
     | fun_prop
   unfold lead
   by_cases h : i ≤ n
@@ -609,9 +606,6 @@ lemma toMK_inv_eq (k : KG ε) : toMK k⁻¹ = (toMK k)ᴴ := by
   have hv : toMK k * toMK k⁻¹ = 1 := by
     first
     | exact Units.mul_inv _
-    | (simp only [toMK, toM]; simp)
-    | (unfold toMK toM; simp)
-    | (unfold toMK; simp)
   calc toMK k⁻¹ = (star (toMK k) * toMK k) * toMK k⁻¹ := by rw [hu, Matrix.one_mul]
     _ = star (toMK k) * (toMK k * toMK k⁻¹) := by rw [Matrix.mul_assoc]
     _ = (toMK k)ᴴ := by rw [hv, Matrix.mul_one]; rfl
@@ -642,11 +636,11 @@ def DkL (T : KType ε Λ) (μ : Fin n → ℤ) (x : Matrix (Fin n) (Fin n) ℂ) 
         (toMK k⁻¹ * x * toMK k * Y - Y * (toMK k⁻¹ * x * toMK k)) • (T.op k * projW T * T.op k⁻¹) +
       PhiM μ (toMK k⁻¹ * x * toMK k) • (T.op k * (T.dτ Y * projW T - projW T * T.dτ Y) * T.op k⁻¹)
   map_add' Y Y' := by
-    simp only [Matrix.mul_add, Matrix.add_mul, map_add (f := _), map_sub, add_mul, mul_add, sub_mul, mul_sub,
+    simp only [map_add (f := _), map_sub, add_mul, mul_add, sub_mul, mul_sub,
       add_smul, sub_smul, smul_add, smul_sub]
     abel
   map_smul' c Y := by
-    simp only [Matrix.mul_smul, Matrix.smul_mul, map_smul, map_sub, smul_mul_assoc, mul_smul_comm,
+    simp only [map_smul, map_sub, smul_mul_assoc, mul_smul_comm,
       mul_sub, sub_mul, smul_sub, smul_eq_mul, RingHom.id_apply, smul_add]
     module
 
@@ -731,7 +725,7 @@ lemma integral_Ek_inK [CompactSpace (KG ε)] (T : KType ε Λ) (μ : Fin n → �
     rw [_root_.mul_inv_rev, hmk, hmk, hinv_t, hγ, hBk]
     simp only [Matrix.mul_assoc]
   · simp only [Ek, DkL_apply, hγ0, mul_one, Complex.ofReal_zero, zero_smul, neg_zero, NormedSpace.exp_zero,
-      Matrix.one_mul, Matrix.mul_one, hBk]
+      Matrix.one_mul, hBk]
 
 lemma Ek_decomp (T : KType ε Λ) (μ : Fin n → ℤ) (x : Matrix (Fin n) (Fin n) ℂ)
     (φ : Matrix (Fin n) (Fin n) ℂ →L[ℂ] ℂ) (A P Q : Matrix (Fin n) (Fin n) ℂ) (k : KG ε) :
@@ -744,7 +738,6 @@ lemma Ek_decomp (T : KType ε Λ) (μ : Fin n → ℤ) (x : Matrix (Fin n) (Fin 
   simp only [Ek, h1, map_add (f := _), map_smul, smul_eq_mul]
   first
   | module
-  | (simp only [smul_add, add_smul, smul_smul, mul_comm]; abel)
 
 lemma integral_Ek_block [CompactSpace (KG ε)] (T : KType ε Λ) (μ : Fin n → ℤ) {x : Matrix (Fin n) (Fin n) ℂ}
     (hx : x.PosDef) (φ : Matrix (Fin n) (Fin n) ℂ →L[ℂ] ℂ) (A : Matrix (Fin n) (Fin n) ℂ)
@@ -1041,15 +1034,15 @@ theorem phiM_part (μ : Fin n → ℤ) {z B : Matrix (Fin n) (Fin n) ℂ} (hz : 
   have e1 : B + lowMinusUp B = X1 := by
     ext a b
     rcases lt_trichotomy a b with h | rfl | h
-    · simp [lowMinusUp, hX1, h, lt_asymm h, ne_of_lt h] <;> ring
+    · simp [lowMinusUp, hX1, h, lt_asymm h, ne_of_lt h]
     · simp [lowMinusUp, hX1]
-    · simp [lowMinusUp, hX1, h, lt_asymm h, (ne_of_lt h).symm] <;> ring
+    · simp [lowMinusUp, hX1, h] <;> ring
   have e2 : B - lowMinusUp B = X2 := by
     ext a b
     rcases lt_trichotomy a b with h | rfl | h
-    · simp [lowMinusUp, hX2, h, lt_asymm h, ne_of_lt h] <;> ring
+    · simp [lowMinusUp, hX2, h, lt_asymm h] <;> ring
     · simp [lowMinusUp, hX2]
-    · simp [lowMinusUp, hX2, h, lt_asymm h, (ne_of_lt h).symm] <;> ring
+    · simp [lowMinusUp, hX2, h, lt_asymm h, (ne_of_lt h).symm]
   have hL : IsLowerTri X1 := fun a b hab => by simp [hX1, lt_asymm hab, ne_of_lt hab]
   have hU : IsUpperTri X2 := fun a b hab => by simp [hX2, lt_asymm hab, (ne_of_lt hab).symm]
   have hsplit : B * z + z * B = (z * lowMinusUp B - lowMinusUp B * z) + (X1 * z + z * X2) := by

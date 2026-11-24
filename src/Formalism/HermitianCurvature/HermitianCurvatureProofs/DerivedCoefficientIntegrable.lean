@@ -141,9 +141,8 @@ theorem T_eq_nodal (n : ℕ) (hn : n ≠ 0) :
   · rw [degree_C_mul h2, Lagrange.degree_nodal]; simp
   · rw [leadingCoeff_mul, leadingCoeff_C, Lagrange.nodal_monic.leadingCoeff]; simp
   · intro i hi
-    have h0 : eval (cos (th n i)) (Lagrange.nodal (Finset.range n) fun k => cos (th n k)) = 0 :=
-      Lagrange.eval_nodal_at_node (v := fun k => cos (th n k)) hi
-    rw [eval_mul, h0, mul_zero, Chebyshev.T_real_cos, cos_eq_zero_iff]
+    rw [eval_mul, Lagrange.eval_nodal_at_node (v := fun k => cos (th n k)) hi, mul_zero,
+      Chebyshev.T_real_cos, cos_eq_zero_iff]
     refine ⟨i, ?_⟩
     have : (n : ℝ) ≠ 0 := by exact_mod_cast hn
     simp only [th]
@@ -155,10 +154,9 @@ theorem th_pos (n k : ℕ) (hn : n ≠ 0) : 0 < th n k := by
   unfold th; positivity
 
 theorem th_lt_pi {n k : ℕ} (hk : k < n) : th n k < π := by
-  have hn : (0 : ℝ) < n := by exact_mod_cast (Nat.zero_le k).trans_lt hk
   have hk' : (k : ℝ) + 1 ≤ n := by exact_mod_cast hk
   unfold th
-  rw [div_lt_iff₀ (by positivity)]
+  rw [div_lt_iff₀ (by linarith [(by positivity : (0 : ℝ) ≤ k), hk'])]
   nlinarith [pi_pos]
 
 theorem abs_U_mul_sin (n k : ℕ) (hn : n ≠ 0) :
@@ -434,11 +432,10 @@ theorem interval_iter (hA : Formalism.FourierDecayAlt.E.AMarkov) (d : ℕ) (t₀
   | succ q ih =>
     intro P M hd hP t ht
     rw [Function.iterate_succ_apply]
-    have h1 := interval_one hA P d t₀ L M hL hd hP
-    have h2 := ih P.derivative ((2 * (d : ℝ) ^ 2 / L) * M)
-      ((natDegree_derivative_le P).trans ((Nat.sub_le _ _).trans hd)) h1 t ht
-    calc _ ≤ _ := h2
-      _ = _ := by ring
+    simpa [pow_succ, mul_assoc, mul_comm, mul_left_comm] using
+      ih P.derivative ((2 * (d : ℝ) ^ 2 / L) * M)
+        ((natDegree_derivative_le P).trans ((Nat.sub_le _ _).trans hd))
+        (interval_one hA P d t₀ L M hL hd hP) t ht
 
 theorem iteratedDeriv_vec {H : Type} [NormedAddCommGroup H] [NormedSpace ℝ H] {ι : Type}
     (S : Finset ι) (a : ι → H) (q : ℕ) : ∀ (P : ι → ℝ[X]),

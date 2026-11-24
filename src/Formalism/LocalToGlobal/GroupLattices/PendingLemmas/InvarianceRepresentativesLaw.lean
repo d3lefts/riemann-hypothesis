@@ -45,6 +45,7 @@ import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
 public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.CoeffOneLNe
 public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.InvarianceIffAdditiveMapsExist
+import Mathlib.RingTheory.MvPolynomial
 
 @[expose] public section
 

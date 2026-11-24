@@ -64,7 +64,7 @@ theorem _root_.GlobalTheory.T.exists_invariant_field_coefficients_of_linear_vect
     ∀ (n : ℕ) (v : Module.Basis (Fin n) R (TanM (𝟙 (Sp R)) G)) (dd : Fin n → Fld G.left), (∀ a, IsInv G (v a) (dd a)) →
     ∀ (W : G.left.Opens) (δ : Fld G.left), IsField W δ → (∀ O, O ≤ W → ∀ r, δ O (constFn G.hom O r) = 0) →
     ∃ c : Fin n → Γ(G.left, W), ∀ O, O ≤ W → ∀ f, δ O f = ∑ a, rsT (c a) O * dd a O f := by
-  first | exact @GlobalTheory.VertCoeffRing.exists_coeff | exact GlobalTheory.VertCoeffRing.exists_coeff | (intros; apply GlobalTheory.VertCoeffRing.exists_coeff <;> assumption)
+  first | exact @GlobalTheory.VertCoeffRing.exists_coeff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsInvariantFieldCoefficientsOfLinearVectorFiStatement =====
@@ -89,7 +89,7 @@ theorem _root_.GlobalTheory.T.raynaudTorusWeight_zero_invariantField_coeffs : �
     (∀ (α : Q.X) (V' : Q.P.A.left.Opens), V' ≤ V → ∀ f, IsWt Y α (Y.q.left ⁻¹ᵁ V') f → IsWt Y α (Y.q.left ⁻¹ᵁ V') (δ _ f)) →
     ∀ c : Fin n → Γ(Y.H.left, Y.q.left ⁻¹ᵁ V), (∀ O, O ≤ Y.q.left ⁻¹ᵁ V → ∀ f, δ O f = ∑ a, rsT (c a) O * dd a O f) →
     ∀ a, IsWt Y 0 _ (c a) := by
-  first | exact @GlobalTheory.Heat.CoeffWt.isWt_coeff | exact GlobalTheory.Heat.CoeffWt.isWt_coeff | (intros; apply GlobalTheory.Heat.CoeffWt.isWt_coeff <;> assumption)
+  first | exact @GlobalTheory.Heat.CoeffWt.isWt_coeff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RaynaudTorusWeightZeroInvariantFieldCoeffsStatement =====

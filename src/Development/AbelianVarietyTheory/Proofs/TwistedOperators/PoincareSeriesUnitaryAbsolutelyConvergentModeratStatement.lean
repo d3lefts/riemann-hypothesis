@@ -136,7 +136,7 @@ theorem exists_denom_stab (hc : Formalism.BasicNotions.CMData F E) (J : Matrix (
     funext l
     by_cases e : l = j
     · subst e; simp [nsmul_eq_mul]
-    · simp [Pi.single_eq_of_ne e, nsmul_eq_mul]
+    · simp [Pi.single_eq_of_ne e]
   rw [ez] at hzmem
   have hkz := (hs _).1 hzmem
   have h2 := natCast_smul_mem_hatL_std Λ c hce _ hkz
@@ -144,7 +144,7 @@ theorem exists_denom_stab (hc : Formalism.BasicNotions.CMData F E) (J : Matrix (
   have h3 := h2 i
   rw [Matrix.mulVec_smul] at h3
   convert h3 using 1
-  simp [Matrix.mulVec_single_one, mul_comm, mul_left_comm, mul_assoc]
+  simp [mul_left_comm, mul_assoc]
 
 end GlobalTheory.LevelDenom
 
@@ -208,7 +208,7 @@ open scoped TensorProduct InnerProductSpace
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_common_denominator_selfDual_level : ∀ (D : D7) (V : HSp D) (Λ : Lat V), IsSelfDualC V Λ → ∃ b : ℕ, 0 < b ∧ ∀ k ∈ congLev D.sp.cm V.gram Λ ⊤, ∀ i j, (b : Lev.EAf D) * k.1 i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by
-  first | exact @GlobalTheory.LevelDenom.exists_denom_congLev | exact GlobalTheory.LevelDenom.exists_denom_congLev | (intros; apply GlobalTheory.LevelDenom.exists_denom_congLev <;> assumption)
+  first | exact @GlobalTheory.LevelDenom.exists_denom_congLev
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsCommonDenominatorSelfDualLevelStatement =====
@@ -302,7 +302,7 @@ open scoped TensorProduct InnerProductSpace
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_finitePart_denominator_le_height_pow : ∀ (D : D7) (V : HSp D), ∃ (C : ℝ) (A : ℕ), ∀ g : GA D V, ∃ d : ℕ, 0 < d ∧ (d : ℝ) ≤ C * height V g ^ A ∧ ∀ i j, (d : Lev.EAf D) * (Lev.finE V g).1 i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by
-  first | exact @GlobalTheory.PointDenom.exists_denom_le_height_pow | exact GlobalTheory.PointDenom.exists_denom_le_height_pow | (intros; apply GlobalTheory.PointDenom.exists_denom_le_height_pow <;> assumption)
+  first | exact @GlobalTheory.PointDenom.exists_denom_le_height_pow
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsFinitePartDenominatorLeHeightPowStatement =====
@@ -539,7 +539,7 @@ theorem one_le_prod_tauE (D : D7) {y : D.host.E} (hy : y ≠ 0) (hi : IsIntegral
 theorem exists_rat (V : HSp D) (γ : GQ V) :
     ∃ δ : GL (Fin V.rank) D.host.E, Formalism.UG.bc (inclR (AF D.host.F)) δ = matHom V (γ : GA D V) := by
   have h1 := γ.2
-  simp only [GQ, HFinIn, HFin, Subgroup.mem_subgroupOf, Subgroup.mem_map] at h1
+  simp only [GQ, HFinIn, HFin] at h1
   obtain ⟨δ, -, hδ⟩ := h1
   exact ⟨δ, hδ⟩
 
@@ -798,7 +798,7 @@ open scoped TensorProduct InnerProductSpace
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.poincareSeries_unitary_absolutelyConvergent_moderateGrowth : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (V : HSp D) (Λ : Lat V), IsSelfDualC V Λ → ∀ c : GA D V, ∃ (C : ℝ) (A : ℕ), ∀ (g : GA D V) (s : Finset (GQ V)), (∀ γ ∈ s, Lev.finE V (c * (γ : GA D V) * g) ∈ congLev D.sp.cm V.gram Λ ⊤) → ∑ γ ∈ s, ∏ τ, ((1 + hsn (GlobalTheory.SepPer.cmp θ τ (c * (γ : GA D V) * g))) ^ (2 * V.rank ^ 2 + 1))⁻¹ ≤ C * height V g ^ A := by
-  first | exact @GlobalTheory.PoinCount.poincare_count | exact GlobalTheory.PoinCount.poincare_count | (intros; apply GlobalTheory.PoinCount.poincare_count <;> assumption)
+  first | exact @GlobalTheory.PoinCount.poincare_count
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.PoincareSeriesUnitaryAbsolutelyConvergentModeratStatement =====

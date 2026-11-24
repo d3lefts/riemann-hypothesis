@@ -714,10 +714,6 @@ theorem one_eq_ptOver :
     (1 : specOver R A ⟶ schemeOver W) = ptOver W ![0, 1, 0] (isUnimodularSol_zero _) :=
   (one_eq_zeroOver W).trans (zeroOver_eq_ptOver W A)
 
-theorem ptOver_inv (hP : IsUnimodularSol (W.baseChange A) P) :
-    (ptOver W P hP)⁻¹ = ptOver W ((W.baseChange A).toProjective.neg P) hP.neg := by
-  rw [Hom.inv_def, inv_eq_negOver, ptOver_negOver]
-
 theorem exists_ptOver_mul_ptOver_eq [IsLocalRing A] (hP : IsUnimodularSol (W.baseChange A) P)
     (hQ : IsUnimodularSol (W.baseChange A) Q) :
     ∃ (S : Fin 3 → A) (hS : IsUnimodularSol (W.baseChange A) S),
@@ -777,14 +773,6 @@ theorem IsSumTriple.equation {V : WeierstrassCurve A} [V.IsElliptic] (h : IsSumT
     exact h₂
   rwa [WeierstrassCurve.Projective.Equation, WeierstrassCurve.Projective.map_polynomial,
     MvPolynomial.eval_map, ← MvPolynomial.eval₂_comp] at h₀
-
-theorem ptOver_mul_self (hP : IsUnimodularSol (W.baseChange A) P)
-    (hT : IsUnimodularSol (W.baseChange A) T)
-    (h : Proportional T ((W.baseChange A).toProjective.dblXYZ P)) :
-    ptOver W P hP * ptOver W P hP = ptOver W T hT := by
-  refine ptOver_mul_ptOver W hP hP hT ⟨fun i j => ?_, (diagXYZ_self hP.equation).symm ▸ h⟩
-  rw [WeierstrassCurve.Projective.addXYZ_self]
-  fin_cases i <;> fin_cases j <;> simp
 
 end Ring
 

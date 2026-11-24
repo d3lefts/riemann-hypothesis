@@ -260,9 +260,8 @@ theorem idx_abs {G V : Type*} [Group G] [MeasurableSpace G] [MeasurableMul G]
     (hsur : ∀ u ∈ C, ∃ x ∈ N, -φ x + u ∈ B) :
     μ N * ν B = μ K * ν C := by
   classical
-  have hI : ∀ q : {q : V ⧸ B | ∃ x ∈ N, (QuotientAddGroup.mk (φ x) : V ⧸ B) = q},
-      ∃ x ∈ N, (QuotientAddGroup.mk (φ x) : V ⧸ B) = q := fun q => q.2
-  choose x hxN hxq using hI
+  choose x hxN hxq using
+    fun q : {q : V ⧸ B | ∃ x ∈ N, (QuotientAddGroup.mk (φ x) : V ⧸ B) = q} => q.2
   have hmk : ∀ a b : V, -a + b ∈ B ↔ (QuotientAddGroup.mk a : V ⧸ B) = QuotientAddGroup.mk b :=
     fun a b => QuotientAddGroup.eq.symm
   have hC : C = ⋃ q, (fun v => -φ (x q) + v) ⁻¹' (B : Set V) := by
@@ -271,13 +270,10 @@ theorem idx_abs {G V : Type*} [Group G] [MeasurableSpace G] [MeasurableMul G]
     constructor
     · intro hv
       obtain ⟨y, hy, hyB⟩ := hsur v hv
-      refine ⟨⟨QuotientAddGroup.mk (φ y), y, hy, rfl⟩, ?_⟩
-      rw [hmk] at hyB ⊢
-      rw [hxq]
-      exact hyB
+      refine ⟨⟨(QuotientAddGroup.mk v : V ⧸ B), y, hy, (hmk _ _).mp hyB⟩, ?_⟩
+      exact (hmk _ _).mpr (hxq _)
     · rintro ⟨q, hq⟩
-      have hc := hCB _ (hφ _ (hxN q)) _ hq
-      simpa using hc
+      simpa using hCB _ (hφ _ (hxN q)) _ hq
   have hN : N = ⋃ q, (fun y => (x q)⁻¹ * y) ⁻¹' (K : Set G) := by
     ext y
     simp only [Set.mem_iUnion, Set.mem_preimage, SetLike.mem_coe]
@@ -286,8 +282,7 @@ theorem idx_abs {G V : Type*} [Group G] [MeasurableSpace G] [MeasurableMul G]
       refine ⟨⟨QuotientAddGroup.mk (φ y), y, hy, rfl⟩, ?_⟩
       rw [hco _ (hxN _) _ hy, hmk, hxq]
     · rintro ⟨q, hq⟩
-      have hc := hNK _ (hxN q) _ hq
-      simpa using hc
+      simpa using hNK _ (hxN q) _ hq
   have hdC : Pairwise (Function.onFun Disjoint fun q => (fun v => -φ (x q) + v) ⁻¹' (B : Set V)) := by
     intro q q' hqq
     rw [Function.onFun, Set.disjoint_left]

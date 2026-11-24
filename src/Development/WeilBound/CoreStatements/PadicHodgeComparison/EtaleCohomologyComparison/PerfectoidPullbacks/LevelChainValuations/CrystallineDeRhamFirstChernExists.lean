@@ -288,7 +288,7 @@ theorem rho_one_eval : ∀ {Λ A B K : Type} [CommRing Λ] [CommRing A] [CommRin
     (hC.basis 0 bs (C.μ 0 P.oneV)).unique h2.symm h3
   have h5 : φ = ∑ s, φ (bs s) • bs.coord s := by
     refine bs.ext fun t => ?_
-    simp [Finset.sum_apply, Module.Basis.coord_apply, Finsupp.single_apply]
+    simp
   have h6 : φ P.oneV = ∑ s, bs.coord s P.oneV * φ (bs s) := by
     conv_lhs => rw [← bs.sum_repr P.oneV]
 
@@ -643,7 +643,7 @@ theorem semilinear_eq_sum_coord {K B : Type*} {V : Type*} [Field K] [CommRing B]
     (φ : Module.Dual K V) : f φ = ∑ s, f (bs.coord s) * o (φ (bs s)) := by
   have hφ : φ = ∑ s, φ (bs s) • bs.coord s := by
     refine bs.ext fun t => ?_
-    simp [LinearMap.sum_apply, Finsupp.single_apply]
+    simp
   conv_lhs => rw [hφ]
 
   rw [map_sum]
@@ -792,9 +792,6 @@ theorem exists_rho {Λ A B K : Type} [CommRing Λ] [CommRing A] [CommRing B] [Fi
   have hunit : IsUnit (C.ℓ : B) := by
     first
     | exact hC.unit
-    | simpa using hC.unit.map C.ι
-    | simpa using hC.unit.map C.o
-    | simpa using (hC.unit.map C.lam).map C.ι
   obtain ⟨u, hu⟩ := hunit
   let w : C.W j := ((u⁻¹ : Bˣ) : B) ^ e • C.b j z
   let bs₀ := Module.finBasis K (C.V j)
@@ -1347,9 +1344,17 @@ theorem rho_mono (M : Model l K) (m : ℕ) {s s' : ℕ} (h : s ≤ s') (hG : (ch
   rw [e] at H
   exact H
 
+private theorem rhoK_witness {M : Model l K} {a : (dat Amp).Ch M} {j m : ℕ}
+    {x : ((dat Amp).H a).N j} {f : Module.Dual K (HdR M.q j) →+ (S.L m).B}
+    (hf : rhoK S hS hC a j m x f) :
+    ∃ s₀ : ℕ, ∀ s, s₀ ≤ s → (chK S hS hC M m s).Rho (show (M.HS false j).lim from x).1 f :=
+  hf.2
+
 theorem rho_uniq_pf : ∀ {M : Model l K} (a : (dat Amp).Ch M), M.Sm → ∀ j m x f f',
     rhoK S hS hC a j m x f → rhoK S hS hC a j m x f' → f = f' := by
-  intro M a hM j m x f f' ⟨_, s₀, h⟩ ⟨_, s₀', h'⟩
+  intro M a hM j m x f f' hf hf'
+  obtain ⟨s₀, h⟩ := rhoK_witness S hS hC hf
+  obtain ⟨s₀', h'⟩ := rhoK_witness S hS hC hf'
   obtain ⟨s₁, hg⟩ := chK_good S hS hC M hM m
   exact _root_.GlobalTheory.CompanionTheory.KapUniq.rho_unique (chK S hS hC M m (max s₁ (max s₀ s₀'))) (hg _ (le_max_left _ _)) _ f f'
     (h _ (le_trans (le_max_left _ _) (le_max_right _ _))) (h' _ (le_trans (le_max_right _ _) (le_max_right _ _)))
@@ -1367,24 +1372,29 @@ theorem rho_ex_pf : ∀ {M : Model l K} (a : (dat Amp).Ch M), M.Sm → ∀ j m x
 
 theorem rho_add_pf : ∀ {M : Model l K} (a : (dat Amp).Ch M), M.Sm → ∀ j m x y f g,
     rhoK S hS hC a j m x f → rhoK S hS hC a j m y g → rhoK S hS hC a j m (x + y) (f + g) := by
-  intro M a hM j m x y f g ⟨_, s₀, h⟩ ⟨_, s₀', h'⟩
+  intro M a hM j m x y f g hf hg
+  obtain ⟨s₀, h⟩ := rhoK_witness S hS hC hf
+  obtain ⟨s₀', h'⟩ := rhoK_witness S hS hC hg
   exact ⟨hM, max s₀ s₀', fun s hs => _root_.GlobalTheory.CompanionTheory.KapRho.rho_add (chK S hS hC M m s) _ _ f g
     (h s (le_trans (le_max_left _ _) hs)) (h' s (le_trans (le_max_right _ _) hs))⟩
 
 theorem rho_smul_pf : ∀ {M : Model l K} (a : (dat Amp).Ch M), M.Sm → ∀ j m (c : (per l K).A) x f, rhoK S hS hC a j m x f →
     rhoK S hS hC a j m (c • x) ((AddMonoidHom.mulLeft ((S.L m).ι ((S.L m).lam c))).comp f) := by
-  intro M a hM j m c x f ⟨_, s₀, h⟩
+  intro M a hM j m c x f hf
+  obtain ⟨s₀, h⟩ := rhoK_witness S hS hC hf
   exact ⟨hM, s₀, fun s hs => _root_.GlobalTheory.CompanionTheory.KapChain.rho_smul (chK S hS hC M m s) c _ f (h s hs)⟩
 
 theorem rho_lin'_pf : ∀ {M : Model l K} (a : (dat Amp).Ch M), M.Sm → ∀ j m x f, rhoK S hS hC a j m x f →
     ∀ (k : K) φ, f (k • φ) = algebraMap K (S.L m).B k * f φ := by
-  intro M a hM j m x f ⟨_, s₀, h⟩ k φ
+  intro M a hM j m x f hf k φ
+  obtain ⟨s₀, h⟩ := rhoK_witness S hS hC hf
   exact (h s₀ le_rfl).1 k φ
 
 theorem rho_fil_pf : ∀ {M : Model l K} (a : (dat Amp).Ch M), M.Sm → ∀ j m x f, rhoK S hS hC a j m x f → ∀ n r : ℕ, n ≤ m →
     (dat Amp).fil a j n x → ∀ φ : Module.Dual K (HdR M.q j), (∀ h ∈ FilR M.q j (r + 1), φ h = 0) →
       f φ ∈ pdP (S.L m).γB (n - r) := by
-  intro M a hM j m x f ⟨_, s₀, h⟩ n r hnm hfil φ hφ
+  intro M a hM j m x f hf n r hnm hfil φ hφ
+  obtain ⟨s₀, h⟩ := rhoK_witness S hS hC hf
   obtain ⟨U⟩ := cov_sm_pf M hM
   have hU : ∀ α, U.d α + (m + 1) ≤ max s₀ (Finset.univ.sup U.d + (m + 1)) := fun α => by
     have := Finset.le_sup (f := U.d) (Finset.mem_univ α)
@@ -1394,7 +1404,8 @@ theorem rho_fil_pf : ∀ {M : Model l K} (a : (dat Amp).Ch M), M.Sm → ∀ j m 
 
 theorem rho_firstChern_formula : ∀ {M : Model l K} (a : (dat Amp).Ch M), M.Sm → ∀ m x f c, rhoK S hS hC a 2 m x f → (dat Amp).c1H a x →
     IsFirstChernDeRham _ (lineK a.1) c → ∀ φ, f φ = algebraMap K (S.L m).B (φ c) := by
-  intro M a hM m x f c ⟨_, s₀, h⟩ hx hc φ
+  intro M a hM m x f c hf hx hc φ
+  obtain ⟨s₀, h⟩ := rhoK_witness S hS hC hf
   obtain ⟨U⟩ := cov_sm_pf M hM
   obtain ⟨s₁, hg⟩ := chK_good S hS hC M hM m
   have hU : ∀ α, U.d α + (m + 1) ≤ max (max s₀ s₁) (Finset.univ.sup U.d + (m + 1)) := fun α => by
@@ -1516,7 +1527,8 @@ theorem lev_good (M : Model l K) (m s : ℕ) : (homLev S hS m M s (qb_le (hS.lev
 
 theorem rho_lev_pf : ∀ {M : Model l K} (a : (dat Amp).Ch M), M.Sm → ∀ j m x f,
     rhoK S hS hC a j (m + 1) x f → rhoK S hS hC a j m x ((S.dB m).toAddMonoidHom.comp f) := by
-  intro M a hM j m x f ⟨hM', s₀, hs₀⟩
+  intro M a hM j m x f hρ₁
+  obtain ⟨hM', s₀, hs₀⟩ := hρ₁
   refine ⟨hM', ?_⟩
   obtain ⟨s₁, hs₁⟩ := chK_good S hS hC M hM (m + 1)
   obtain ⟨s₂, hs₂⟩ := chK_good S hS hC M hM m
@@ -1530,7 +1542,8 @@ theorem rho_lev_pf : ∀ {M : Model l K} (a : (dat Amp).Ch M), M.Sm → ∀ j m 
 
 theorem rho_act_of (hG : ∀ (M : Model l K) m s g, (homGal (hS.lev m) g M s (qb_le (hS.lev m) M s) (rHof (dOf S hS hC m) (hcOf S hS hC m) M s)).Good) : ∀ {M : Model l K} (a : (dat Amp).Ch M), M.Sm → ∀ j m (g : K.fixingSubgroup) x f,
     rhoK S hS hC a j m x f → rhoK S hS hC a j m (((dat Amp).H a).act j g x) (((S.L m).σB g).toAddMonoidHom.comp f) := by
-  intro M a hM j m g x f ⟨hM', s₀, hs₀⟩
+  intro M a hM j m g x f hρ₁
+  obtain ⟨hM', s₀, hs₀⟩ := hρ₁
   obtain ⟨s₁, hs₁⟩ := chK_good S hS hC M hM m
   refine ⟨hM', max s₀ s₁, fun s hs => ?_⟩
   exact _root_.GlobalTheory.CompanionTheory.KapRhoHom.rho_hom (chK S hS hC M m s) (chK S hS hC M m s) (homGal (hS.lev m) g M s (qb_le (hS.lev m) M s) (rHof (dOf S hS hC m) (hcOf S hS hC m) M s))
@@ -1540,7 +1553,9 @@ theorem rho_nat_of (hP : ∀ (M N : Model l K) (u : M.X ⟶ N.X) (hu : u ≫ N.p
     (homPull (hS.lev m) u hu s (qb_le (hS.lev m) N s) (qb_le (hS.lev m) M s) (rHof (dOf S hS hC m) (hcOf S hS hC m) N s) (rHof (dOf S hS hC m) (hcOf S hS hC m) M s)).Good) : ∀ {M N : Model l K} {u : M.X ⟶ N.X} {hu : u ≫ N.p = M.p} {a : (dat Amp).Ch M} {b : (dat Amp).Ch N}
     (μ : (dat Amp).Mo u hu a b), M.Sm → N.Sm → ∀ j m x f f', rhoK S hS hC b j m x f → rhoK S hS hC a j m ((dat Amp).pullH μ j x) f' →
       ∀ φ, f' φ = f (φ ∘ₗ pullR j (Model.genMap u hu) (Model.genMap_q u hu)) := by
-  intro M N u hu a b μ hM hN j m x f f' ⟨_, s₀, h₀⟩ ⟨_, s₀', h₀'⟩ φ
+  intro M N u hu a b μ hM hN j m x f f' hρ₁ hρ₂ φ
+  obtain ⟨_, s₀, h₀⟩ := hρ₁
+  obtain ⟨_, s₀', h₀'⟩ := hρ₂
   obtain ⟨s₁, hs₁⟩ := chK_good S hS hC M hM m
   obtain ⟨s₂, hs₂⟩ := chK_good S hS hC N hN m
   obtain ⟨s, e0, e1, e2, e3⟩ : ∃ s, s₀ ≤ s ∧ s₀' ≤ s ∧ s₁ ≤ s ∧ s₂ ≤ s := ⟨s₀ + s₀' + s₁ + s₂, by omega⟩
@@ -1552,7 +1567,8 @@ theorem rho_nat_of (hP : ∀ (M N : Model l K) (u : M.X ⟶ N.X) (hu : u ≫ N.p
 
 theorem rho_one_of (hU : ∀ (M : Model l K) m s, (cupOf (hS.lev m) M s (qb_le (hS.lev m) M s) (rHof (dOf S hS hC m) (hcOf S hS hC m) M s)).Good) : ∀ {M : Model l K} (a : (dat Amp).Ch M), M.Sm → ∀ m x f, rhoK S hS hC a 0 m x f → ((dat Amp).H a).one x →
     ∀ φ, f φ = algebraMap K (S.L m).B (φ (oneK M.q)) := by
-  intro M a hM m x f ⟨_, s₀, h₀⟩ hx φ
+  intro M a hM m x f hρ₁ hx φ
+  obtain ⟨_, s₀, h₀⟩ := hρ₁
   obtain ⟨s₁, hs₁⟩ := chK_good S hS hC M hM m
   obtain ⟨s, e0, e1⟩ : ∃ s, s₀ ≤ s ∧ s₁ ≤ s := ⟨s₀ + s₁, by omega⟩
   have h := h₀ s e0

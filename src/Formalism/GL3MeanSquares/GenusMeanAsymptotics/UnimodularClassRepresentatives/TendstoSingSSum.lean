@@ -113,7 +113,7 @@ theorem aLoc_eq_roL {𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}} (h𝔭 : 
   obtain ⟨hn', hvn'⟩ := (exists_vF_eq 𝔭.2 (valF n 𝔭)).choose_spec
   rw [roL, if_neg h𝔭]
   unfold aLoc
-  rw [alphaN_eq_of_vF_eq hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi 𝔭.2 hv hn hn' (by rw [hvn', valF_apply hn])]
+  rw [alphaN_eq_of_vF_eq hK hF hs hd (by first | exact hL) hLi 𝔭.2 hv hn hn' (by rw [hvn', valF_apply hn])]
 
 include hm
 
@@ -130,7 +130,7 @@ theorem roL_zero (𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}) : roL h L S 
       omega
     rw [roL, if_neg h𝔭]
     unfold aLoc
-    rw [unitaryAbsoluteValueBounds.alphaN_unit hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi 𝔭.2 hv (by omega) hn𝔭]
+    rw [unitaryAbsoluteValueBounds.alphaN_unit hK hF hs hd (by first | exact hL) hLi 𝔭.2 hv (by omega) hn𝔭]
     have he := eFac_pos (K := K) 𝔭.2 (m := finrank K V) (by omega)
     unfold eFac at he ⊢
     exact div_self he.ne'
@@ -151,7 +151,7 @@ theorem roL_diff (𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}) (j : ℕ) :
     obtain ⟨hn0, hv0⟩ := (exists_vF_eq 𝔭.2 j).choose_spec
     rw [hro, hro]
     unfold aLoc eFac
-    have hb := alphaN_rho_diff_bound hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi hm 𝔭.2 hv hn1 hn0 (by rw [hv1, hv0])
+    have hb := alphaN_rho_diff_bound hK hF hs hd (by first | exact hL) hLi hm 𝔭.2 hv hn1 hn0 (by rw [hv1, hv0])
     refine hb.trans ?_
     rw [hv1]
 
@@ -959,7 +959,7 @@ theorem dominated (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
         ∑ n ∈ (boxSet_finite hK hF T).toFinset.filter (fun n => v ≤ valF n),
           (Ideal.absNorm (Ideal.span {n}) : ℝ) ^ (finrank K V - 1) * ∏ 𝔭 ∈ S, aLoc h L 𝔭 n| ≤
         C / nrm (fun 𝔭 => (Ideal.absNorm 𝔭.1 : ℝ)) v := by
-  obtain ⟨C1, hC1⟩ := prodS_bound hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi hm S
+  obtain ⟨C1, hC1⟩ := prodS_bound hK hF hs hd (by first | exact hL) hLi hm S
   refine ⟨2 ^ Formalism.HermitianLatticesTheory.fDeg K * C1, fun T hT v => ?_⟩
   have hT0 : 0 < T := lt_of_lt_of_le one_pos hT
   have hsum0 : 0 ≤ ∑ n ∈ (boxSet_finite hK hF T).toFinset.filter (fun n => v ≤ valF n),
@@ -1036,8 +1036,8 @@ theorem tendsto_singS_sum (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
   have main := tendsto_weighted_tprod
     (q := fun 𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal} => (Ideal.absNorm 𝔭.1 : ℝ))
     (fun 𝔭 => by exact_mod_cast two_le_absNorm 𝔭.2) summable_inv_absNorm_sq S
-    (ρ := roL h L S) (roL_zero hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi hm hS) (fun 𝔭 h𝔭 j => by simp [roL, h𝔭])
-    (roL_diff hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi hm hS) valF
+    (ρ := roL h L S) (roL_zero hK hF hs hd (by first | exact hL) hLi hm hS) (fun 𝔭 h𝔭 j => by simp [roL, h𝔭])
+    (roL_diff hK hF hs hd (by first | exact hL) hLi hm hS) valF
     (fun j : ℕ => (boxSet_finite hK hF ((j : ℝ) ^ 2)).toFinset)
     (fun n => (Ideal.absNorm (Ideal.span {n}) : ℝ) ^ (finrank K V - 1) * ∏ 𝔭 ∈ S, aLoc h L 𝔭 n)
     (fun j : ℕ => ((j : ℝ) ^ 2) ^ (-((Formalism.HermitianLatticesTheory.fDeg K * finrank K V : ℕ) : ℤ)))
@@ -1048,7 +1048,7 @@ theorem tendsto_singS_sum (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
     congr 1
     refine Finset.sum_congr rfl fun n hn => ?_
     have hb : n ∈ boxSet K F ((j : ℝ) ^ 2) := (Set.Finite.mem_toFinset _).mp hn
-    rw [singS_eq hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi hm hS (ne_zero_of_mem_boxSet hb), mul_assoc]
+    rw [singS_eq hK hF hs hd (by first | exact hL) hLi hm hS (ne_zero_of_mem_boxSet hb), mul_assoc]
   · intro v hv
     have ht := tendsto_sum_box_ideal hK hF hs hd hL hLi hm S hS (bId_ne_bot v)
       (fun 𝔭 h𝔭 => bId_sup_eq_top (Finset.disjoint_right.mp hv h𝔭))
@@ -1074,7 +1074,7 @@ theorem tendsto_singS_sum (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
     congr 1
     refine Finset.sum_congr rfl fun n hn => ?_
     have hb : n ∈ boxSet K F ((j : ℝ) ^ 2) := (Set.Finite.mem_toFinset _).mp hn
-    rw [mul_assoc, ← prod_aLoc hK hF hs hd (by first | exact hL | exact hL.toIsLattice) hLi hS hS' (ne_zero_of_mem_boxSet hb)]
+    rw [mul_assoc, ← prod_aLoc hK hF hs hd (by first | exact hL) hLi hS hS' (ne_zero_of_mem_boxSet hb)]
     rfl
 
 end Formalism.HermitianLattices.Ext.L3

@@ -346,7 +346,7 @@ private theorem transfer {G : Type} [Group G] (S U2 : Subgroup G) (hS : S.Normal
     UpperTheory.V.AlgebraTools.FinOrb U U a ∧ (∀ y : S, y ∈ DC U a ↔ x⁻¹ * y * x ∈ DC U2 (a : G)) ∧
       (UF U2 (a : G) b → UF U a b) := by
   let e : G →* G := (MulAut.conj x⁻¹).toMonoidHom
-  have he : ∀ y, e y = x⁻¹ * y * x := fun y => by simp [e, MulAut.conj_apply]
+  have he : ∀ y, e y = x⁻¹ * y * x := fun y => by simp [e]
   have hbij : Function.Bijective e := (MulAut.conj x⁻¹).bijective
   have hfix : ∀ y : G, Commute x y → e y = y := fun y h => by
     rw [he, mul_assoc, ← h.eq, inv_mul_cancel_left]
@@ -606,22 +606,17 @@ theorem UpperTheory.Reformulated.B.Qh30.artin :
       have h1 := h (q * p)
       have h2 := h p
       rw [Finset.sum_insert hψ] at h1 h2
-      have h3 : ∑ χ ∈ T, c χ * (χ q - ψ q) * χ p
-          = ∑ χ ∈ T, c χ * χ (q * p) - ψ q * ∑ χ ∈ T, c χ * χ p := by
-        rw [Finset.mul_sum, ← Finset.sum_sub_distrib]
-        refine Finset.sum_congr rfl fun χ hχ => ?_
-        rw [(hT' χ hχ).2]
-        ring
       rw [hψm.2] at h1
-      rw [h3]
+      have hsplit : ∀ χ ∈ T, c χ * (χ q - ψ q) * χ p = c χ * χ (q * p) - ψ q * (c χ * χ p) :=
+        fun χ hχ => by rw [(hT' χ hχ).2]; ring
+      rw [Finset.sum_congr rfl hsplit, Finset.sum_sub_distrib, ← Finset.mul_sum]
       linear_combination h1 - ψ q * h2
     have hc : ∀ χ ∈ T, c χ = 0 := by
       intro χ hχ
       by_contra hne
-      have : χ = ψ := by
-        funext q
-        exact sub_eq_zero.mp ((mul_eq_zero.mp (key q χ hχ)).resolve_left hne)
-      exact hψ (this ▸ hχ)
+      have hχψ : χ = ψ :=
+        funext fun q => sub_eq_zero.mp ((mul_eq_zero.mp (key q χ hχ)).resolve_left hne)
+      exact hψ (hχψ ▸ hχ)
     have hcψ : c ψ = 0 := by
       by_contra hne
       apply hψm.1

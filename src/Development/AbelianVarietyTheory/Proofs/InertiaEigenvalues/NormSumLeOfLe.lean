@@ -884,11 +884,7 @@ theorem exists_intMul_mem_MK {LL Ks WL G : Type} [Field LL] [NumberField LL] [Fi
     (hspan : Submodule.span Ks (Φ.MK : Set WL) = Φ.WK) (x : WL) (hx : x ∈ Φ.WK) :
     ∃ a : 𝓞 Ks, a ≠ 0 ∧ a • x ∈ Φ.MK := by
   first
-  | exact @_root_.GlobalTheory.ScalarMultipleMembership.main
-  | exact _root_.GlobalTheory.ScalarMultipleMembership.main
   | (apply _root_.GlobalTheory.ScalarMultipleMembership.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.ScalarMultipleMembership.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.ScalarMultipleMembership.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.ScalarMultipleMembership.main ..)
 
 theorem exists_smul_mem_locBall : ∀ (D : D7) (Γ : Type) [Group Γ] [Fintype Γ] (Pl0 I0 T1 : Type) (A3 : FamIn3 D.what₂.LL Γ Pl0 I0 (List ℕ) T1 D.R.m) (T0 : CoreJ D) [Algebra T0.Q.c.F D.what₂.LL] (Rl : RealDat3 D A3 T0.Q.c.F) (cG : Formalism.L2.DIV.G0 Rl.Pg D.R.r ≃* G0g D.nd) (S : NX.RatDat D.ntw) (YS : NX.NExpRealS Rl cG S) (κ : ∀ j : Fin D.R.m, WeightFamilies.Wt D ((j : ℕ) + 1)) (v₀ : ∀ (j : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (Rl.MW j σ).Vec) (fw : FWTie T0 Rl.toRealDat κ v₀) (i : D.ntw.Tw) (iC : FractionRing (D.ntw.O i) →+* ℂ_[D.ntw.l i]), (∀ x, ‖iC x‖ ≤ 1 ↔ x ∈ (algebraMap (D.ntw.O i) (FractionRing (D.ntw.O i))).range) → ∀ (b : Bool) (j : Fin D.R.m), (∀ f : NX.FmK S ((j : ℕ) + 1), (show ↥(S.A ((j : ℕ) + 1)).WK from f).1 ∈ (S.A ((j : ℕ) + 1)).MK → f ∈ locBall YS fw iC b j) → (∀ f : NX.FmK S ((j : ℕ) + 1), ∃ c : S.Ks, c ≠ 0 ∧ c • f ∈ locBall YS fw iC b j) := by
@@ -936,11 +932,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem norm_sum_le_of_le {p : ℕ} [Fact p.Prime] {ι : Type} (s : Finset ι) (g : ι → ℂ_[p]) {r : ℝ} (hr : 0 ≤ r)
     (h : ∀ k ∈ s, ‖g k‖ ≤ r) : ‖∑ k ∈ s, g k‖ ≤ r := by
   first
-  | exact @_root_.GlobalTheory.SingleStatement.main
-  | exact _root_.GlobalTheory.SingleStatement.main
   | (apply _root_.GlobalTheory.SingleStatement.main <;> assumption)
-  | (intros; apply _root_.GlobalTheory.SingleStatement.main <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.SingleStatement.main <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.SingleStatement.main ..)
 
 section Core

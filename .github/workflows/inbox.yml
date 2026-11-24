@@ -1,0 +1,57 @@
+name: inbox
+
+# Keeps the `inbox` label on the pull requests that are waiting for a first review. A pull request
+# goes into the inbox when it is opened, reopened or marked ready for review. It comes out when it
+# is turned back into a draft, queued for a batch, labelled `awaiting-author`, reviewed by someone
+# with triage access, or closed. Batches never go in. `scripts/inbox-sync.py` has the exact rules.
+#
+# Reviews on pull requests from forks only get a read-only token, so this workflow cannot act on
+# a review when it is submitted. A sweep every fifteen minutes picks reviews up instead. It also
+# labels any pull request whose event was missed, and it does not overrule a maintainer who takes
+# the label off by hand.
+#
+# pull_request_target lets the token label pull requests from forks. Nothing from a pull request
+# is checked out or run: the script comes from this workflow's own commit, and everything it uses
+# is read from GitHub's API. The label must already exist.
+
+on:
+  pull_request_target:
+    types: [opened, reopened, ready_for_review, converted_to_draft, closed]
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  inbox:
+    # Forks with Actions turned on would otherwise run the sweep against themselves.
+    if: github.repository == 'leanprover-community/riemann-hypothesis'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # One run at a time for each pull request, and one sweep at a time. A run that is dropped
+    # while it waits loses nothing, because each run reads everything from GitHub again.
+    concurrency:
+      group: inbox-${{ github.event.pull_request.number || 'sweep' }}
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Check out this workflow's own copy of the scripts
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        # The default checkout uses GitHub's trusted event commit. After a fork PR merges,
+        # that commit can also equal the PR's merge SHA, which checkout rejects as an explicit ref.
+        with:
+          persist-credentials: false
+          sparse-checkout: scripts
+      - name: Put pull requests in the inbox and take them out
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          EVENT: ${{ github.event.action }}
+        run: |
+          one=()
+          if [ -n "$PR" ]; then one=(--pr "$PR" --event "$EVENT"); fi
+          python3 scripts/inbox-sync.py --repo "$REPO" "${one[@]}" --summary "$GITHUB_STEP_SUMMARY"

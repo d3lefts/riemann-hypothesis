@@ -534,7 +534,7 @@ theorem exists_eq_mul_corner {p : GL (Fin (m + 1)) k} (hp : IsP p) :
     have hp' : ∀ j, (p : Matrix (Fin (m + 1)) (Fin (m + 1)) k) (Fin.last m) j =
         (1 : Matrix (Fin (m + 1)) (Fin (m + 1)) k) (Fin.last m) j := hp
     rw [Matrix.det_succ_row _ (Fin.last m), Fin.sum_univ_castSucc]
-    simp [hp', Matrix.one_apply, hne, Fin.succAbove_last, A, he]
+    simp [hp', hne, Fin.succAbove_last, A, he]
   have hA : A.det ≠ 0 := by
     rw [← hdet]
     exact ((Matrix.isUnit_iff_isUnit_det _).1 p.isUnit).ne_zero
@@ -664,7 +664,6 @@ theorem val_scalar (z : kˣ) :
       Matrix.diagonal fun _ => (z : k) := by
   first
   | rfl
-  | (ext i j; simp [Matrix.GeneralLinearGroup.scalar, Matrix.diagonal_apply])
 
 theorem agree_scalar {ω₁ ω₂ : kˣ →* ℂˣ} (h₁ : HasCentralChar π₁ ω₁) (h₂ : HasCentralChar π₂ ω₂)
     (hl₁ : IsFunctional ψ π₁ l₁) (hl₂ : IsFunctional ψ π₂ l₂)

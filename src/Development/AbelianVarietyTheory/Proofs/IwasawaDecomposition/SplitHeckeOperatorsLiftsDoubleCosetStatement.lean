@@ -84,7 +84,7 @@ open GlobalTheory.Mem.R3.LiftBrg
 theorem _root_.GlobalTheory.T.finiteAdelicUnitary_conj_integralFrame : ∀ (X : Stages) {px : PreX X.B.toPre} (I : Col2.ColIn X.B px) (hX : X.B.fields.Ok) (U : Set I.ι) (Xg : Finset (Gc X.B px → X.B.LL)) (tr : TrI X.B px) (L : Formalism.IndefR.Links.LevCh X.toD7 (TupU I U)) (i : Fin X.toD7.R.m) (t : TupU I U) (A k : GL (Fin X.B.R.nV) (EA X)) (hF : FrameOK X I U i t A k),
     ∃ Φ : Formalism.L2.Col.UAd X.toD7.sp.cm X.B.R.nV ≃* Bridge.Gf (Vc X.toD7 i), ∀ u,
       castGL (rkEq X i).symm (Formalism.UG.bc (swapAE X.toD7) ((Φ u : Bridge.Gf (Vc X.toD7 i)) : GL (Fin (Vc X.toD7 i).rank) _)) = A * k * (u : GL (Fin X.B.R.nV) (EA X)) * (A * k)⁻¹ := by
-  first | exact @GlobalTheory.Mem.R3.LiftBrg.FrameEquiv.frame_equiv | exact GlobalTheory.Mem.R3.LiftBrg.FrameEquiv.frame_equiv | (intros; apply GlobalTheory.Mem.R3.LiftBrg.FrameEquiv.frame_equiv <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftBrg.FrameEquiv.frame_equiv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteAdelicUnitaryConjIntegralFrameStatement =====
@@ -142,7 +142,7 @@ open GlobalTheory.Mem.R3.LiftBrg
 
 theorem _root_.GlobalTheory.T.frameTransport_eta_isHeckeElement_lifts : ∀ (X : Stages) {px : PreX X.B.toPre} (I : Col2.ColIn X.B px) (hX : X.B.fields.Ok) (U : Set I.ι) (Xg : Finset (Gc X.B px → X.B.LL)) (tr : TrI X.B px) (L : Formalism.IndefR.Links.LevCh X.toD7 (TupU I U)) (hI : I.Ok) (hV : ValsIn I) (hL : LevOf X I U L) (cV : ∀ i, CoefA (Vc X.toD7 i)) (i : Fin X.toD7.R.m) (t : TupU I U) (A k : GL (Fin X.B.R.nV) (EA X)) (hF : FrameOK X I U i t A k) (x : (famR X I hX U Xg tr).A.ok t × ℕ) (hx1 : 1 ≤ x.2) (hx2 : x.2 ≤ (Vc X.toD7 i).rank) (v : HeightOneSpectrum (𝓞 X.toD7.host.F)) (Pb : HeightOneSpectrum (𝓞 X.toD7.host.E)) (hPb : Formalism.L2.Col.conjPrime₂ Pb = x.1.1.1) (hv : Formalism.L2.Col.IsOver v Pb) (Ut : Formalism.L2.Col.MhlUnif Pb) (g : Bridge.Gf (Vc X.toD7 i)) (hg : castGL (rkEq X i).symm (Formalism.UG.bc (swapAE X.toD7) ((g : Bridge.Gf (Vc X.toD7 i)) : GL (Fin (Vc X.toD7 i).rank) _)) = A * k * ((Formalism.L2.Col.mhlEta X.toD7.sp.cm X.B.R.nV v Ut.hπ0 x.2 : Formalism.L2.Col.UAd X.toD7.sp.cm X.B.R.nV) : GL (Fin X.B.R.nV) (EA X)) * (A * k)⁻¹),
     (envL X I hX U Xg tr L cV i t).isT x g := by
-  first | exact @GlobalTheory.Mem.R3.LiftBrg.eta_isHecke | exact GlobalTheory.Mem.R3.LiftBrg.eta_isHecke | (intros; apply GlobalTheory.Mem.R3.LiftBrg.eta_isHecke <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftBrg.eta_isHecke
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FrameTransportEtaIsHeckeElementLiftsStatement =====
@@ -233,7 +233,7 @@ theorem _root_.GlobalTheory.T.liftFormLevel_splits_at_offLevel_splitPlace : ∀ 
     ∃ j₁ ∈ (envL X I hX U Xg tr L cV i t).lev.J, ∃ j₂ ∈ (envL X I hX U Xg tr L cV i t).lev.J,
       (envL X I hX U Xg tr L cV i t).isLoc x j₁ ∧ j = j₁ * j₂ ∧
       ∀ l, (envL X I hX U Xg tr L cV i t).isLoc x l → Commute j₂ l := by
-  first | exact @GlobalTheory.Mem.R3.LiftBrg.LevSplitAt.lev_split_at | exact GlobalTheory.Mem.R3.LiftBrg.LevSplitAt.lev_split_at | (intros; apply GlobalTheory.Mem.R3.LiftBrg.LevSplitAt.lev_split_at <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftBrg.LevSplitAt.lev_split_at
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LiftFormLevelSplitsAtOffLevelSplitPlaceStatement =====
@@ -317,7 +317,7 @@ open GlobalTheory.Mem.R3.LiftBrg
 
 theorem _root_.GlobalTheory.T.liftLevelType_trivial_splitPlaceSupport : ∀ (X : Stages) {px : PreX X.B.toPre} (I : Col2.ColIn X.B px) (hX : X.B.fields.Ok) (U : Set I.ι) (Xg : Finset (Gc X.B px → X.B.LL)) (tr : TrI X.B px) (L : Formalism.IndefR.Links.LevCh X.toD7 (TupU I U)) (hI : I.Ok) (hV : ValsIn I) (hL : LevOf X I U L) (cV : ∀ i, CoefA (Vc X.toD7 i)) (i : Fin X.toD7.R.m) (t : TupU I U) (x : (famR X I hX U Xg tr).A.ok t × ℕ) (j : (envL X I hX U Xg tr L cV i t).lev.J) (hj : (envL X I hX U Xg tr L cV i t).isLoc x j),
     (envL X I hX U Xg tr L cV i t).lev.χ j = 1 := by
-  first | exact @GlobalTheory.Mem.R3.LiftBrg.SplitChi.chi_loc_lift | exact GlobalTheory.Mem.R3.LiftBrg.SplitChi.chi_loc_lift | (intros; apply GlobalTheory.Mem.R3.LiftBrg.SplitChi.chi_loc_lift <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftBrg.SplitChi.chi_loc_lift
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LiftLevelTypeTrivialSplitPlaceSupportStatement =====
@@ -339,7 +339,7 @@ theorem _root_.GlobalTheory.T.splitPlaceSupport_level_standardCoordinates : ∀ 
         Formalism.UG.bc (Formalism.UG.prV (E := X.toD7.host.E) w) (u : GL (Fin X.B.R.nV) (EA X)) = 1) ∧
     ((envL X I hX U Xg tr L cV i t).isLoc x g →
       (g ∈ (envL X I hX U Xg tr L cV i t).lev.J ↔ u ∈ Formalism.L2.Col.mhlKv X.toD7.sp.cm X.B.R.nV v)) := by
-  first | exact @GlobalTheory.Mem.R3.LiftBrg.SplitLoc.loc_iff | exact GlobalTheory.Mem.R3.LiftBrg.SplitLoc.loc_iff | (intros; apply GlobalTheory.Mem.R3.LiftBrg.SplitLoc.loc_iff <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftBrg.SplitLoc.loc_iff
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitPlaceSupportLevelStandardCoordinatesStatement =====
@@ -574,7 +574,7 @@ theorem op_eq_of_bij (X : Stages) {px : PreX X.B.toPre} (I : Col2.ColIn X.B px) 
   classical
   funext g
   rw [hR, Bridge.dcOp]
-  simp only [hR]
+  simp only
   erw [heckeCSD_symm_apply]
   rw [Formalism.L2.Col.heckeFam]
   erw [Formalism.L2.Col.heckeD_op_apply]
@@ -720,7 +720,7 @@ theorem _root_.GlobalTheory.T.splitHecke_operators_lifts_doubleCoset : ∀ (X : 
     Nonempty (Bridge.HeckeTie (Bridge.ratF (Vc X.toD7 i)) P ((famR X I hX U Xg tr).A.heckeL i t)
       (fun x => 1 ≤ x.2 ∧ x.2 ≤ (Vc X.toD7 i).rank) (LiftBrg.envL X I hX U Xg tr L cV i t).isT
       (LiftBrg.envL X I hX U Xg tr L cV i t).isLoc) := by
-  first | exact @GlobalTheory.Mem.R3.LiftBrg.SplitTie.split_tie | exact GlobalTheory.Mem.R3.LiftBrg.SplitTie.split_tie | (intros; apply GlobalTheory.Mem.R3.LiftBrg.SplitTie.split_tie <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftBrg.SplitTie.split_tie
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SplitHeckeOperatorsLiftsDoubleCosetStatement =====

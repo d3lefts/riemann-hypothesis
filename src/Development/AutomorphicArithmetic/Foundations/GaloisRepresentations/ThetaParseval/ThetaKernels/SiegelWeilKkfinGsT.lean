@@ -280,7 +280,7 @@ theorem exists_at'_k (ξ : d.κ → mixedEmbedding.mixedSpace F) :
 theorem td_at_mul_k {p : Type} [Fintype p] {Z : Matrix (Fin d.m) p (AE F E)} (hZ : At (evI F) Z) {q : Type}
     (N : Matrix p q (AE F E)) : At (evI F) (Z * N) := fun c hc => by rw [← Matrix.smul_mul, hZ c hc, Matrix.zero_mul]
 theorem incM_diagCols_k : incM F (diagCols (Fin d.n) : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n) E) = _root_.PositivityTheory.SiegelWeilFormula.KK.dg_k d := by
-  ext (i | i) j <;> by_cases h : i = j <;> simp [incM, diagCols, Matrix.one_apply, h]
+  ext (i | i) j <;> by_cases h : i = j <;> simp [incM, diagCols, h]
 theorem split_arch_k {u : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E)} (hu : At (evI F) u) :
     ∃ Z₁ Z₂ : Mx F E d.m d.n, At (evI F) Z₁ ∧ At (evI F) Z₂ ∧ u = Z₁ * (_root_.PositivityTheory.SiegelWeilFormula.KK.dg_k d)ᵀ + Z₂ * (_root_.PositivityTheory.SiegelWeilFormula.KK.secondFrameColumns d)ᵀ := by
   obtain ⟨t, ht⟩ := d.ok.frame.2
@@ -461,7 +461,7 @@ theorem hasDerivAt_translate_secondColumns {Φ : d.Fn} (hΦ : Φ ∈ d.sch) {Z :
     obtain ⟨v, hv, ev⟩ := _root_.PositivityTheory.SiegelWeilFormula.KK.exists_at'_k (d := d) (Pi.single j 1)
     have := hsp v hv
     rw [_root_.PositivityTheory.SiegelWeilFormula.KK.sp_eq_k, ev, _root_.PositivityTheory.SiegelWeilFormula.KK.vec_eq_zero_k (_root_.PositivityTheory.SiegelWeilFormula.KK.at_fst_k hu) ha] at this
-    simp only [zero_dotProduct, dotProduct_zero, zero_sub, neg_eq_zero] at this
+    simp only [dotProduct_zero, zero_sub, neg_eq_zero] at this
     have e3 := congrArg (evI F) this
     rw [_root_.PositivityTheory.SiegelWeilFormula.KK.evI_dot_k] at e3
     have e4 : ∀ i, evI F (Dense.pt (Pi.single j (1 : mixedEmbedding.mixedSpace F)) 0 i) =
@@ -545,7 +545,7 @@ theorem commute_thB_k {d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ} (R
     have := congrArg (fun x => x.map (d.B.emb w).1) R.hε
     simp only [Matrix.map_mul, Matrix.transpose_map, cst] at this
     rw [hDw, this]
-    ext (i | i) (j | j) <;> by_cases hij : i = j <;> simp [jE, Matrix.fromBlocks, Matrix.smul_apply, Matrix.one_apply, hij]
+    ext (i | i) (j | j) <;> by_cases hij : i = j <;> simp [jE, Matrix.fromBlocks, Matrix.smul_apply, hij]
   have hk2 : ((mat2 k).map (piInf (d.B.emb w)))ᵀ * (dbl (incM F d.Y.J)).map (piInf (d.B.emb w)) *
       ((mat2 k).map (piInf (d.B.emb w))).map star = (dbl (incM F d.Y.J)).map (piInf (d.B.emb w)) := by
     have hk0 : (k.1 : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n ⊕ Fin d.n) (AE F E))ᵀ * dbl (incM F d.Y.J) *
@@ -682,7 +682,7 @@ theorem frame_form_k (R : _root_.PositivityTheory.SiegelWeilFormula.RD_k d) (w :
   have := congrArg (fun x => x.map (d.B.emb w).1) R.hε
   simp only [Matrix.map_mul, Matrix.transpose_map, cst, hd] at this
   rw [this]
-  ext (i | i) (j | j) <;> by_cases hij : i = j <;> simp [jE, Matrix.fromBlocks, Matrix.smul_apply, Matrix.one_apply, hij]
+  ext (i | i) (j | j) <;> by_cases hij : i = j <;> simp [jE, Matrix.fromBlocks, Matrix.smul_apply, hij]
 theorem map_mul_incM_T_k {p q r : Type} [Fintype q] (w : InfinitePlace F) (x : Matrix p q (AE F E)) (y : Matrix r q E) :
     (x * (incM F y)ᵀ).map (piInf (d.B.emb w)) = x.map (piInf (d.B.emb w)) * (y.map (d.B.emb w).1)ᵀ := by
   rw [Matrix.map_mul, Matrix.transpose_map, map_incM']

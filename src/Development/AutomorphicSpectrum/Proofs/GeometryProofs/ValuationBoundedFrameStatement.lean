@@ -197,7 +197,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.family_hodge_lattice_data : ∀ (K : Type) [Field K] (C : ACurve K) (p : ℕ) [Fact p.Prime] [CharP K p] (d : ℕ) (O : Type) [CommRing O] [StarRing O] (F : Family C p d O), Nonempty C.I → ∃ D : ConjData C p O d, (∀ a, D.ρH a = rhoH F.B a) ∧ ∀ i y, y ∈ D.H i ↔ y ∈ stdLat (C.v i).valuationSubring.toSubring (transH (F.φ i) (F.ψ i) (F.lam i)) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.family_conj_H_lattices | exact GlobalTheory.CompanionTheory.Ar.Flat.family_conj_H_lattices | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.family_conj_H_lattices <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.family_conj_H_lattices
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.FamilyHodgeLatticeDataStatement =====
@@ -707,7 +707,7 @@ theorem freeAt_of_basis_lattice (K : Type) [Field K] (C : ACurve K) (V : Type) [
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [map_zsmul, zsmul_eq_mul]
         ring
-      · simp [hss]
+      · simp
     | add a a' ha ha' =>
       rw [map_add (f := _), LinearMap.add_apply, map_add (f := _), ha, ha']
       split_ifs <;> simp [map_add (f := _)]
@@ -1026,7 +1026,7 @@ variable {K : Type} [Field K] (C : ACurve K) {V : Type} [AddCommGroup V] [Module
 theorem subDeg_bot (L : C.I → AddSubgroup V) : subDeg C L ⊥ = 0 := by
   haveI : IsEmpty (Fin (Module.finrank K (⊥ : Submodule K V))) := by
     rw [finrank_bot]; infer_instance
-  simp [subDeg, deg, Module.Basis.det_apply, Matrix.det_isEmpty]
+  simp [subDeg, deg]
 
 theorem idealV_bot {A : Type} [CommRing A] (τ : A →+* Module.End K V) : idealV τ ⊥ = ⊥ := by
   refine iSup_eq_bot.2 fun a => ?_
@@ -1218,7 +1218,7 @@ theorem exists_quot_basis {r : ℕ} (x : Fin r → V)
     rw [map_sum, Finset.sum_apply, Fintype.sum_prod_type, Finset.sum_eq_single j]
     · simp [hφB]
     · intro j' _ hj'
-      simp [hφB, Pi.single_apply, Ne.symm hj']
+      simp [hφB, Ne.symm hj']
     · simp
 
 theorem isLatOf_quot {C : ACurve K} (i : C.I) {r : ℕ} {x : Fin r → V}
@@ -1326,7 +1326,7 @@ private theorem vmap_basis_linearIndependent_and_span {Ω : Type} [Field Ω] (A 
     simpa [Function.comp_def, hL] using this
   refine ⟨hK, Submodule.eq_top_of_finrank_eq ?_⟩
   rw [finrank_span_eq_card hK, ← Module.finrank_eq_card_basis (Basis.mk hli hsp.ge)]
-  simp [Module.finrank_prod, Module.finrank_fin_fun]
+  simp [Module.finrank_prod]
 
 theorem isHBasis_trans
     {x : Fin r → (Fin d → (C.v i).valuationSubring) × (Fin d → (C.v i).valuationSubring)}
@@ -1509,7 +1509,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.CompanionTheory.Ar.Flat.DegZ
 
 theorem _root_.GlobalTheory.T.valuation_bounded_frame : ∀ (E : Type) [Field E] [NumberField E] [StarRing (𝓞 E)] (K : Type) [Field K] (C : ACurve K) (p : ℕ) [Fact p.Prime] [CharP K p] (d r : ℕ) (F : Family C p d (𝓞 E)) (χ : 𝓞 E →+* K), (∀ a : 𝓞 E, ((Algebra.lmul ℤ (𝓞 E) a : Module.End ℤ (𝓞 E)).charpoly.map (Int.castRingHom K)).Splits) → (∀ (i : C.I) (a : 𝓞 E), C.v i (χ a) ≤ 1) → ∀ (x₀ : Fin r → (Fin d → K) × (Fin d → K)) (x : ∀ i : C.I, Fin r → (Fin d → (C.v i).valuationSubring) × (Fin d → (C.v i).valuationSubring)) (N : C.I → Matrix (Fin r) (Fin r) K), IsHBasis F.B x₀ → (∀ i, IsHBasis (F.Bi i) (x i)) → (∀ i j, transH (F.φ i) (F.ψ i) (F.lam i) (vmap (C.v i).valuationSubring.subtype (x i j)) - ∑ l, N i j l • x₀ l ∈ eigW F.B χ) → (∀ i, (N i).det ≠ 0) ∧ {i | C.v i (N i).det ≠ 1}.Finite ∧ ∑ᶠ i, (C.w i : ℤ) * WithZero.log (C.v i (N i).det) = 0 := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.DegProd.curve_deg | exact GlobalTheory.CompanionTheory.Ar.Flat.DegProd.curve_deg | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.DegProd.curve_deg <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.DegProd.curve_deg
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ValuationBoundedFrameStatement =====

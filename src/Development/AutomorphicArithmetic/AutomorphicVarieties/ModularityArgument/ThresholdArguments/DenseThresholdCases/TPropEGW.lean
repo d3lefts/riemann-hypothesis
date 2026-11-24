@@ -443,7 +443,7 @@ private theorem heckeC (N k : ℕ) [NeZero N] (hk : 1 ≤ k) (χ : DirichletChar
   by_cases hd : p ∣ n
   · have hq : 1 ≤ n / p := Nat.div_pos (Nat.le_of_dvd (by omega) hd) hp.pos
     simp only [hd, if_true, hf'n _ hq, hf'n _ hpn, hcj, map_add (f := _), map_mul, map_pow, map_natCast]
-  · simp only [hd, if_false, hf'n _ hpn, hcj, map_add (f := _), map_mul, mul_zero, map_zero]
+  · simp only [hd, if_false, hf'n _ hpn, hcj, map_add (f := _), mul_zero, map_zero]
 
 private theorem fT_Phi {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (N : ℕ) (k : ℤ) (g : CuspForm (Gamma1 N) k)
     {p : ℕ} (hp : p.Prime) (e : ℂ) {n : ℕ} (hn : 1 ≤ n) :
@@ -864,7 +864,6 @@ theorem UpperTheory.V.Z.Sym.Unl.propEC :
       rw [hfcoef _ hnp]
       linear_combination hs
     · linear_combination hs
-  beta_reduce
   rw [hkey]
   refine small_mul ι hc ?_
   rw [map_neg, norm_neg]
@@ -945,7 +944,7 @@ theorem ordExT_sv_alt (P : _root_.UpperTheory.V.Af.HypothesesH') (ι : Qbar l �
   have hlN : l * N ≠ 0 := mul_ne_zero hl.out.ne_zero (NeZero.ne N)
   set c : Pl ℚ → ℕ := fun w => N.factorization (normV w) with hc
   have hc0 : ∀ w, c w = 0 ↔ ¬ normV w ∣ N := fun w => by
-    simp [hc, Nat.factorization_eq_zero_iff, normV_prime w, (normV_prime w).ne_one, NeZero.ne N]
+    simp [hc, normV_prime w, (normV_prime w).ne_one, NeZero.ne N]
   set D : G ℚ Ω →* (Qbar l)ˣ := cycBar ℚ Ω l ^ (k - 1) * ψ with hD
   have hDv : ∀ s, (D s : Qbar l) = (cycBar ℚ Ω l s : Qbar l) ^ (k - 1) * Chr.dirG ℚ Ω (χ.ringHomComp ι.symm.toRingHom) s := fun s => by
     rw [hD, ← hm]; simp

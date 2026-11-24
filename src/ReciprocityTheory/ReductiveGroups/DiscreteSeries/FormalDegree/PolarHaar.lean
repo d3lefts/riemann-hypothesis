@@ -137,7 +137,6 @@ theorem jall_diff {ε : Fin n → Bool} {g : Matrix (Fin n) (Fin n) ℂ} (hg : i
     DifferentiableAt ℝ (actR (ε := ε) g) z := by
   first
   | exact (JacB.actR_contDiff' hg).differentiable one_ne_zero z
-  | exact (JacB.actR_contDiff' hg).differentiable le_rfl z
 
 theorem jall_chain {ε : Fin n → Bool} {g h : Matrix (Fin n) (Fin n) ℂ} (hg : inUJ ε g) (hh : inUJ ε h)
     (z : PCoord ε → ℂ) : jdetA (g * h) z = jdetA h (actR g z) * jdetA g z := by
@@ -164,8 +163,6 @@ theorem jall_abs_jdetA_K {ε : Fin n → Bool} (k : KG ε) (z : PCoord ε → �
 theorem jall_inUJ_K {ε : Fin n → Bool} (k : KG ε) : inUJ ε (toMK k) := by
   first
   | exact k.1.2
-  | exact k.val.property
-  | exact k.2.1
 
 theorem jall_actR_K_zero {ε : Fin n → Bool} (k : KG ε) : actR (ε := ε) (toMK k) 0 = 0 := by
   have hp0 : pmat (0 : PCoord ε → ℂ) = 0 := by
@@ -189,9 +186,7 @@ theorem jacAll {ε : Fin n → Bool} {g : Matrix (Fin n) (Fin n) ℂ} (hg : inUJ
     apply actR_of_eq_polarM (k := 1)
     simp only [polarM, hp0, NormedSpace.exp_zero, Matrix.one_mul]
     first
-    | rfl
     | (rw [show toMK (1 : KG ε) = 1 from rfl, Matrix.one_mul])
-    | simp
   have hc1 := jall_chain hEz hg 0
   rw [h0z] at hc1
   have hc2 := jall_chain hK hEw 0
@@ -244,8 +239,6 @@ theorem inv_inUJ {ε : Fin n → Bool} {g : Matrix (Fin n) (Fin n) ℂ} (hg : in
   have h2 : g * (Jm ε * gᴴ * Jm ε) = 1 := by
     first
     | exact mul_eq_one_comm.mp h1
-    | exact Matrix.mul_eq_one_comm.mp h1
-    | exact (Matrix.mul_eq_one_comm_of_equiv (Equiv.refl _)).mp h1
   have h3 : ∀ X : Matrix (Fin n) (Fin n) ℂ, g * (Jm ε * (gᴴ * X)) = Jm ε * X := fun X => by
     calc g * (Jm ε * (gᴴ * X)) = g * (Jm ε * gᴴ * Jm ε) * (Jm ε * X) := by
           simp only [Matrix.mul_assoc, hJJ]

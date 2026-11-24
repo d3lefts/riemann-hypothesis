@@ -139,7 +139,7 @@ private theorem mem_of_translates (π : UnitaryRep G H) {τ Q : Submodule ℂ H}
     induction hv using Submodule.span_induction with
     | mem x hx =>
       obtain ⟨γ, rfl⟩ := hx
-      exact Submodule.subset_span ⟨g * γ, by simp [UnitaryRep.map_mul_apply]⟩
+      exact Submodule.subset_span ⟨g * γ, by simp⟩
     | zero => simp
     | add x y _ _ hx hy =>
       rw [map_add (f := _)]
@@ -1101,7 +1101,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.xOcc :
         by_cases hj : j = i
         · subst hj
           simp [g2]
-        · simp [g2, hj, Pi.mulSingle_eq_of_ne hj]
+        · simp [g2, hj]
       have hn : ι g2 * h' ∈ levOn (im w) U := by
         refine (hlev U _).2 ⟨g2, h', rfl, fun j => ?_, hc, hint⟩
         by_cases hj : j = i

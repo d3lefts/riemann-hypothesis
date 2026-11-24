@@ -92,7 +92,6 @@ theorem UpperTheory.Reformulated.B.MorphismExtOfSpecQuotients.main :
   have : IsSeparated Y'.hom := ‹_›
   have : IsAffine X'.left := inferInstanceAs (IsAffine (Spec (CommRingCat.of A)))
   have hcl : IsClosedImmersion (equalizer.ι f' g').left := inferInstance
-  obtain ⟨haff, hsurj⟩ := IsClosedImmersion.isAffine_surjective_of_isAffine (equalizer.ι f' g').left
   have hfac : ∀ n, ∃ l : UpperTheory.Reformulated.B.MorphismExtOfSpecQuotients.Sp (A ⧸ I n) ⟶ (equalizer f' g').left,
       l ≫ (equalizer.ι f' g').left = UpperTheory.Reformulated.B.MorphismExtOfSpecQuotients.spMap (Ideal.Quotient.mk (I n)) := by
     intro n
@@ -116,22 +115,14 @@ theorem UpperTheory.Reformulated.B.MorphismExtOfSpecQuotients.main :
         rw [← hl, Scheme.Hom.comp_appTop, CommRingCat.comp_apply]
         erw [hy]
         exact map_zero _
-      have h2 := Scheme.ΓSpecIso_inv_naturality (CommRingCat.ofHom (Ideal.Quotient.mk (I n)))
-      have h3 : (Scheme.ΓSpecIso (CommRingCat.of (A ⧸ I n))).inv (Ideal.Quotient.mk (I n) a) = 0 := by
-        have h4 := congr($h2 a)
-        simp only [CommRingCat.comp_apply, CommRingCat.hom_ofHom] at h4
-        exact h4.trans h1
-      have h5 := congr((Scheme.ΓSpecIso (CommRingCat.of (A ⧸ I n))).hom $h3)
-      simp only [map_zero] at h5
-      rw [← Ideal.Quotient.eq_zero_iff_mem]
-      simpa using h5
+      have h2 : (Scheme.ΓSpecIso (CommRingCat.of (A ⧸ I n))).inv (Ideal.Quotient.mk (I n) a) = 0 :=
+        (congr($(Scheme.ΓSpecIso_inv_naturality (CommRingCat.ofHom (Ideal.Quotient.mk (I n)))) a)).trans h1
+      have h3 : Ideal.Quotient.mk (I n) a = 0 := by
+        simpa using congr((Scheme.ΓSpecIso (CommRingCat.of (A ⧸ I n))).hom $h2)
+      exact Ideal.Quotient.eq_zero_iff_mem.mp h3
     simp [ha]
-  have hiso : IsIso (equalizer.ι f' g').left.appTop := by
-    exact (ConcreteCategory.isIso_iff_bijective _).mpr ⟨hinj, hsurj⟩
   have hE : IsIso (equalizer.ι f' g').left :=
-    (MorphismProperty.arrow_mk_iso_iff (MorphismProperty.isomorphisms Scheme)
-      (arrowIsoSpecΓOfIsAffine (equalizer.ι f' g').left)).mpr
-      (inferInstanceAs (IsIso (Spec.map (equalizer.ι f' g').left.appTop)))
+    IsClosedImmersion.isIso_of_injective_of_isAffine hinj
   rw [← cancel_epi (equalizer.ι f' g').left]
   exact congr($(equalizer.condition f' g').left)
 end -- clump:auto

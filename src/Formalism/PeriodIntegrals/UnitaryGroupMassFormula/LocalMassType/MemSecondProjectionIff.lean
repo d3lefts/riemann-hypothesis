@@ -106,7 +106,7 @@ theorem lat_basis {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (�
   refine ⟨Matrix.of fun i j => w (e j) i, ?_, ?_⟩
   · have hA : (Matrix.of fun i j => w (e j) i) = (Pi.basisFun (v.adicCompletion F) (Fin n)).toMatrix (bK.reindex e.symm) := by
       refine Matrix.ext fun i j => ?_
-      simp [Module.Basis.toMatrix_apply, Module.Basis.reindex_apply, bK, Module.Basis.mk_apply]
+      simp [Module.Basis.toMatrix_apply, bK]
     rw [hA]
     letI := (Pi.basisFun (v.adicCompletion F) (Fin n)).invertibleToMatrix (bK.reindex e.symm)
     exact isUnit_of_invertible _
@@ -201,7 +201,6 @@ theorem latD_smul {J : Matrix (Fin n) (Fin n) E} {Λ : Set (Fin n → E)} (hSD :
 theorem sigR_inclR (a : E) : sigR (Fv F v) σ (inclR (F := F) (Fv F v) a) = inclR (F := F) (Fv F v) (σ a) := by
   first
     | rfl
-    | simp [sigR, inclR]
 
 theorem hermitian_snd_projection (J : Matrix (Fin n) (Fin n) E) (x y : Fin n → Fv F v ⊗[F] E) :
     D.π₂ (hR (Fv F v) σ J x y) = c1 D x ⬝ᵥ (Mj D J *ᵥ c2 D y) := by

@@ -284,9 +284,6 @@ theorem level_product_zero (L : R.LevelData (Pr (RadSp k r z z' π π')) r) (w :
     levelProduct L w 0 = bTall L w := by
   have hfr : (List.finRange r).map Fin.val = List.range r := by
     first
-    | exact List.map_val_finRange r
-    | exact List.map_coe_finRange r
-    | exact List.map_coe_finRange
     | simp
   rw [level_product_eq_list_prod L w r 0 (Nat.sub_zero r) (Nat.zero_le r), bTall, ← List.range_eq_range',
     ← hfr, List.map_reverse, List.map_map, List.map_reverse]
@@ -593,8 +590,6 @@ theorem integral_nonneg_complex {α : Type*} [MeasurableSpace α] (ν : Measure 
   rw [hf]
   first
   | rw [integral_complex_ofReal]
-  | rw [integral_ofReal]
-  | rw [← RCLike.ofReal_eq_complex_ofReal, integral_ofReal]
   exact Complex.zero_le_real.mpr (integral_nonneg fun a => (Complex.le_def.mp (h a)).1)
 
 theorem continuous_fsv (s : ℂ) : Continuous (fsv s) := by
@@ -940,7 +935,7 @@ theorem Ts_mem (σ : Site A) (hp : σ.p ∈ 𝒜) (hc : σ.c ∈ 𝒜) (hci : σ
   unfold Ts Formalism.YangianSpanCharacter.T.Tm
   fin_cases i <;> fin_cases j <;>
     simp only [Fin.zero_eta, Fin.mk_one, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
-      Matrix.head_cons, Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_fin_const]
+      Matrix.empty_val', Matrix.cons_val_fin_one]
   · exact add_mem (algebraMap_mem 𝒜 Y) hp
   · exact neg_mem hc
   · exact hci
@@ -1136,7 +1131,7 @@ theorem UUiw_mem {A : Type} [Ring A] [StarRing A] [Algebra ℂ A] [StarModule �
     refine (entSub 𝒜).mul_mem (Formalism.FourierDecayAlt.P5.HerA.ins_mem _ fun i j => ?_) ih
     show io ((Formalism.YangianSpanCharacter.T.Uinv (if l.plus then s else star s) : M2 A) i j) ∈ entSub 𝒜
     apply Formalism.FourierDecayAlt.P5.HerA.io_mem
-    fin_cases i <;> fin_cases j <;> simp [Formalism.YangianSpanCharacter.T.Uinv, 𝒜.one_mem, 𝒜.zero_mem, 𝒜.algebraMap_mem]
+    fin_cases i <;> fin_cases j <;> simp [Formalism.YangianSpanCharacter.T.Uinv, 𝒜.algebraMap_mem]
 
 end Alg
 

@@ -322,7 +322,7 @@ theorem exists_mem_span_sub_one_eq_id_on :
       conv_lhs => rw [← b.sum_repr w]
       refine Finset.sum_congr rfl fun i _ => ?_
       simp only [Module.End.mul_apply, LinearMap.smul_apply, LinearMap.smulRight_apply, map_smul,
-        smul_eq_mul, smul_smul, Module.Basis.coord_apply]
+        smul_smul, Module.Basis.coord_apply]
       congr 1
       field_simp
     rw [heq]
@@ -736,7 +736,7 @@ theorem ad_invariant_eq_zero_of_isIrr {K : Type} [Field K] [IsAlgClosed K] [Char
     rw [this, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul]
     by_cases hij : i = j
     · subst hij; simp
-    · simp [hij, Pi.single_apply, Ne.symm hij]
+    · simp [hij]
   have htr : (2 : K) * μ = 0 := by
     have := trace_ofCoord v
     rw [← hY, hYμ, Matrix.trace_smul, Matrix.trace_one] at this
@@ -792,7 +792,7 @@ theorem form_ne_zero_of_isIrr : ∀ {K : Type} [Field K] [CharZero K] {Γ : Type
     rw [h2, ← Matrix.mul_assoc, ← Matrix.mul_assoc, hu, Matrix.one_mul]
   let Wk : Submodule K (Fin 2 → K) := LinearMap.ker (Matrix.mulVecLin (ofCoord y))
   have hmem : ∀ x, x ∈ Wk ↔ ofCoord y *ᵥ x = 0 := fun x => by
-    simp [Wk, LinearMap.mem_ker, Matrix.mulVecLin_apply]
+    simp [Wk, LinearMap.mem_ker]
   have hinv : IsInv ρ Wk := by
     intro g x hx
     rw [hmem] at hx ⊢
@@ -809,9 +809,9 @@ theorem form_ne_zero_of_isIrr : ∀ {K : Type} [Field K] [CharZero K] {Γ : Type
     · simpa [hc] using h2
   rcases hirr.2.2 Wk le_top hinv with h | h
   · have hv1 : (![y 0, -y 2] : Fin 2 → K) ∈ Wk := by
-      rw [hmem]; ext i; fin_cases i <;> simp [ofCoord, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> first | linear_combination | linear_combination hq | linear_combination -hq
+      rw [hmem]; ext i; fin_cases i <;> simp [ofCoord, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> first | linear_combination | linear_combination hq
     have hv2 : (![y 2, y 1] : Fin 2 → K) ∈ Wk := by
-      rw [hmem]; ext i; fin_cases i <;> simp [ofCoord, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> first | linear_combination | linear_combination hq | linear_combination -hq
+      rw [hmem]; ext i; fin_cases i <;> simp [ofCoord, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> first | linear_combination | linear_combination hq
     rw [h, Submodule.mem_bot] at hv1 hv2
     have a0 := congrFun hv1 0
     have a1 := congrFun hv1 1
@@ -846,9 +846,7 @@ namespace GlobalTheory.Sl2Ad
 
 theorem form_isSymm {K : Type} [Field K] : (form (K := K)).IsSymm := by
   first
-  | exact ⟨fun v w => by simp only [RingHom.id_apply, form_apply]; ring⟩
-  | exact fun v w => by simp only [RingHom.id_apply, form_apply]; ring
-  | (intro v w; simp only [RingHom.id_apply, form_apply]; ring)
+  | exact ⟨fun v w => by simp only [form_apply]; ring⟩
 
 theorem form_ad {K : Type} [Field K] (A : GL (Fin 2) K) (v w : Fin 3 → K) :
     form (ad A *ᵥ v) (ad A *ᵥ w) = form v w := by
@@ -1366,7 +1364,7 @@ theorem noab_inv_det_one {K : Type} [Field K] (A : GL (Fin 2) K) (h : (A : Matri
 theorem noab_trace_eq {K : Type} [Field K] (Z : Matrix (Fin 2) (Fin 2) K) (h : (1 + Z).det = 1) : Z.trace = - Z.det := by
   rw [Matrix.det_fin_two] at h
   rw [Matrix.det_fin_two, Matrix.trace_fin_two]
-  simp [Matrix.add_apply, Matrix.one_apply] at h
+  simp [Matrix.add_apply] at h
   linear_combination h
 
 theorem noab_norm_two (l : ℕ) [Fact l.Prime] : ‖((l : ℕ) : Qbar l)‖ ≤ ‖(2 : Qbar l)‖ := by
@@ -1388,7 +1386,7 @@ theorem noab_pow : ∀ (l : ℕ) [Fact l.Prime] (ε : ℝ) (Z : Matrix (Fin 2) (
   | succ b ih =>
     have e : (1 + Z) ^ (b + 1) - 1 - ((b + 1 : ℕ) : Qbar l) • Z = ((1 + Z) ^ b - 1 - (b : Qbar l) • Z)
         + ((1 + Z) ^ b - 1 - (b : Qbar l) • Z) * Z + (b : Qbar l) • (Z * Z) := by
-      simp only [pow_succ, Nat.cast_succ, add_smul, one_smul, mul_add, add_mul, sub_mul, mul_one, one_mul,
+      simp only [pow_succ, Nat.cast_succ, add_smul, one_smul, mul_add, sub_mul, mul_one, one_mul,
         Matrix.smul_mul]
       abel
     rw [e]
@@ -1931,13 +1929,13 @@ theorem h1dual_of_vanish_fix : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field �
     intro v
     show Matrix.toLin' ((dual1 W a : GL (Fin 2) (Qbar l)) : Matrix (Fin 2) (Fin 2) (Qbar l)) v = _
     rw [dual1, UpperTheory.V.Af.tw_val, hWa]
-    simp [dt, hWa, eps, Matrix.toLin'_apply]
+    simp [dt, hWa, eps]
   have hcomm : ∀ g, z (a * g) = z (g * a) := by
     intro g
     have hn : (g * a)⁻¹ * (a * g) ∈ N0g W := by
       refine ⟨?_, ?_⟩
       · show cycBar ℚ Ω l ((g * a)⁻¹ * (a * g)) = 1
-        simp [map_mul, map_inv, mul_comm, mul_left_comm, mul_assoc]
+        simp [map_mul, map_inv, mul_comm, mul_assoc]
       · show W ((g * a)⁻¹ * (a * g)) = 1
         simp [map_mul, map_inv, hWa]
     have h1 : a * g = (g * a) * ((g * a)⁻¹ * (a * g)) := by group

@@ -113,7 +113,6 @@ theorem hTfe (a b : Fin D.R.rS) : (VS D).hT (X.fY a) (X.eX b) = if b = a then 1 
   have h : starRingEnd D.host.E ((VS D).hT (X.eX b) (X.fY a)) = (VS D).hT (X.fY a) (X.eX b) := by
     first
       | exact (VS D).herm.eq _ _
-      | exact (VS D).herm _ _
   rw [← h, X.ef b a]
   split_ifs <;> simp
 
@@ -147,16 +146,12 @@ def sigF (X : HidaSetting D) : D.host.E ≃ₐ[D.host.F] D.host.E :=
     exact star_F X c c.2
 
 theorem trace_zero (X : HidaSetting D) {y : D.host.E} (hy : y + star y = 0) : Algebra.trace D.host.F D.host.E y = 0 := by
-  have h1 : Algebra.trace D.host.F D.host.E (sigF X y) = Algebra.trace D.host.F D.host.E y :=
-    Algebra.trace_eq_of_algEquiv (sigF X) y
-  have h2 : sigF X y = star y := rfl
+  have h1 := Algebra.trace_eq_of_algEquiv (sigF X) y
   have h3 : star y = -y := eq_neg_of_add_eq_zero_right hy
-  rw [h2, h3, map_neg] at h1
+  rw [show sigF X y = star y from rfl, h3, map_neg] at h1
   have h4 : (2 : D.host.F) * Algebra.trace D.host.F D.host.E y = 0 := by
     linear_combination -h1
-  rcases mul_eq_zero.mp h4 with h5 | h5
-  · exact absurd h5 two_ne_zero
-  · exact h5
+  exact (mul_eq_zero.mp h4).resolve_left two_ne_zero
 
 
 open Formalism.L2.SG.TermOp.Vanish in

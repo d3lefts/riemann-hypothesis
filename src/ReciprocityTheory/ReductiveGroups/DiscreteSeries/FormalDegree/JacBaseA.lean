@@ -513,11 +513,9 @@ variable {ε : Fin n → Bool} (y : PCoord ε → ℂ)
 abbrev Uy : Matrix (Fin n) (Fin n) ℂ := ((pmat_isHermitian y).eigenvectorUnitary : Matrix (Fin n) (Fin n) ℂ)
 
 theorem Uy_star_mul : (Uy y)ᴴ * Uy y = 1 := by
-  have h := Matrix.mem_unitaryGroup_iff'.mp (pmat_isHermitian y).eigenvectorUnitary.prop
-  exact h
+  exact Matrix.mem_unitaryGroup_iff'.mp (pmat_isHermitian y).eigenvectorUnitary.prop
 theorem Uy_mul_star : Uy y * (Uy y)ᴴ = 1 := by
-  have h := Matrix.mem_unitaryGroup_iff.mp (pmat_isHermitian y).eigenvectorUnitary.prop
-  exact h
+  exact Matrix.mem_unitaryGroup_iff.mp (pmat_isHermitian y).eigenvectorUnitary.prop
 
 theorem shcAd_eq (W : Matrix (Fin n) (Fin n) ℂ) :
     shcAd y W = Uy y * Matrix.of (fun i j => ((shc (pev y i - pev y j) : ℝ) : ℂ) *
@@ -632,29 +630,24 @@ variable {ε : Fin n → Bool}
 
 theorem pmat_add' (v w : PCoord ε → ℂ) : pmat (v + w) = pmat v + pmat w := by
   ext a b
-  rw [Matrix.add_apply]
-  simp only [pmat]
+  simp only [pmat, Matrix.add_apply]
   split_ifs <;> simp [star_add]
 
 theorem pmat_smul' (c : ℝ) (v : PCoord ε → ℂ) : pmat (c • v) = c • pmat v := by
   have hs : ∀ r : ℝ, star (r : ℂ) = r := fun r => Complex.conj_ofReal r
   ext a b
-  rw [Matrix.smul_apply]
-  simp only [pmat]
+  simp only [pmat, Matrix.smul_apply]
   split_ifs <;> simp [Complex.real_smul, star_mul', hs]
 
 theorem pmat_apply_coord (v : PCoord ε → ℂ) (ab : PCoord ε) : pmat v ab.1.1 ab.1.2 = v ab := by
   obtain ⟨⟨a, b⟩, h⟩ := ab
-  have h' : b < a ∧ ε a ≠ ε b := h
-  simp only [pmat, dif_pos h']
+  simp only [pmat, dif_pos h]
 
 theorem pmat_ne_zero (v : PCoord ε → ℂ) (hv : v ≠ 0) : pmat v ≠ 0 := by
   intro h
   apply hv
   funext ab
-  have := pmat_apply_coord v ab
-  rw [h] at this
-  simpa using this.symm
+  simpa [h] using (pmat_apply_coord v ab).symm
 
 theorem shcAd_add' (y : PCoord ε → ℂ) (W W' : Matrix (Fin n) (Fin n) ℂ) :
     shcAd y (W + W') = shcAd y W + shcAd y W' := by
@@ -662,7 +655,7 @@ theorem shcAd_add' (y : PCoord ε → ℂ) (W W' : Matrix (Fin n) (Fin n) ℂ) :
   rw [← Matrix.add_mul, ← Matrix.mul_add]
   congr 2
   ext i j
-  simp only [Matrix.of_apply, Matrix.add_apply, Matrix.mul_add, Matrix.add_mul, mul_add]
+  simp only [Matrix.of_apply, Matrix.add_apply, Matrix.add_mul, mul_add]
 
 theorem shcAd_smul' (y : PCoord ε → ℂ) (c : ℝ) (W : Matrix (Fin n) (Fin n) ℂ) :
     shcAd y (c • W) = c • shcAd y W := by
@@ -1039,12 +1032,6 @@ variable {E 𝔸 : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [NormedRing
 
 theorem contDiff_exp_alg : ContDiff ℝ 1 (NormedSpace.exp : 𝔸 → 𝔸) := by
   first
-  | exact contDiff_exp
-  | exact NormedSpace.contDiff_exp
-  | exact (NormedSpace.analyticOnNhd_exp (𝕂 := ℝ)).contDiff
-  | exact (analyticOnNhd_exp (𝕂 := ℝ)).contDiff
-  | exact contDiff_iff_contDiffAt.mpr fun x =>
-      (analyticAt_exp_of_mem_ball (𝕂 := ℝ) x (by simp [expSeries_radius_eq_top])).contDiffAt
   | exact contDiff_iff_contDiffAt.mpr fun x =>
       (NormedSpace.analyticAt_exp_of_mem_ball (𝕂 := ℝ) x (by simp [NormedSpace.expSeries_radius_eq_top])).contDiffAt
 
@@ -1052,7 +1039,6 @@ theorem hasFDerivAt_exp_alg (x : 𝔸) :
     HasFDerivAt (NormedSpace.exp : 𝔸 → 𝔸) (fderiv ℝ (NormedSpace.exp : 𝔸 → 𝔸) x) x := by
   first
   | exact ((contDiff_exp_alg (𝔸 := 𝔸)).differentiable one_ne_zero x).hasFDerivAt
-  | exact ((contDiff_exp_alg (𝔸 := 𝔸)).differentiable le_rfl x).hasFDerivAt
 
 theorem fderiv_exp_eq {x W D : 𝔸} (h : HasDerivAt (fun s : ℝ => NormedSpace.exp (x + s • W)) D 0) :
     fderiv ℝ (NormedSpace.exp : 𝔸 → 𝔸) x W = D := by
@@ -1164,8 +1150,6 @@ theorem exp_two (X : Matrix (Fin n) (Fin n) ℂ) :
   rw [two_smul]
   first
   | exact Matrix.exp_add_of_commute _ _ (Commute.refl X)
-  | exact Matrix.exp_add_of_commute (Commute.refl X)
-  | exact NormedSpace.exp_add_of_commute (Commute.refl X)
 
 theorem exp_two_actR {ε : Fin n → Bool} {g : Matrix (Fin n) (Fin n) ℂ} (hg : inUJ ε g)
     (z : PCoord ε → ℂ) :
@@ -1196,7 +1180,6 @@ def crdC (ε : Fin n → Bool) : Matrix (Fin n) (Fin n) ℂ →L[ℝ] (PCoord ε
 theorem pmat_contDiff (ε : Fin n → Bool) : ContDiff ℝ 1 (fun z : PCoord ε → ℂ => pmat z) := by
   first
   | exact (pmatC ε).contDiff
-  | exact ContinuousLinearMap.contDiff (pmatC ε)
 
 theorem actR_continuous {ε : Fin n → Bool} {g : Matrix (Fin n) (Fin n) ℂ} (hg : inUJ ε g) :
     Continuous (actR (ε := ε) g) := by

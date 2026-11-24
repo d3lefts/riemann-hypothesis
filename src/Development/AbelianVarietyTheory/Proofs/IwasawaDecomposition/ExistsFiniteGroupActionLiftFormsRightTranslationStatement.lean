@@ -116,7 +116,7 @@ theorem _root_.GlobalTheory.T.column_character_complex_eq_level_character : ∀ 
     ∀ (i : Fin X.toD7.R.m) (w : Pl X.toD7.host.E) (hw : w ∈ (X.B.primes px).vGs) (u : (kP w)ˣ),
       X.toD7.what₂.embLL ((Formalism.L2.Col.chiAt I.Ch ⟨w, hw⟩ (i : ℕ) u : X.B.fields.Kˣ) : X.B.fields.K) =
         ((L.chi ((i : ℕ) + 1) w u : ℂˣ) : ℂ) := by
-  first | exact @GlobalTheory.Mem.ChiType.embLL_chiAt_eq_levChi | exact GlobalTheory.Mem.ChiType.embLL_chiAt_eq_levChi | (intros; apply GlobalTheory.Mem.ChiType.embLL_chiAt_eq_levChi <;> assumption)
+  first | exact @GlobalTheory.Mem.ChiType.embLL_chiAt_eq_levChi
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ColumnCharacterComplexEqLevelCharacterStatement =====
@@ -216,7 +216,7 @@ theorem _root_.GlobalTheory.T.levelCharacter_inv_mul_diagEmbedding_eq_char_det :
     (hrn : r ≤ n) (y : GL (Fin a) κ) (hy : y ∈ Formalism.L2.DIV.blockTri (Formalism.L2.DIV.blkOf r t)) (χ : κˣ →* Kˣ)
     (hz : (LiftBrg.castGL h y)⁻¹ * Formalism.L2.Col.diagEmb κ hrn (Formalism.L2.DIV.upperLeftBlock hra y) ∈ Formalism.L2.Col.HKV κ n r t),
     Formalism.L2.Col.lamKV χ n r t ⟨_, hz⟩ = χ (Formalism.L2.DIV.dBlk (Formalism.L2.DIV.blkOf r t) 1 y) := by
-  first | exact @GlobalTheory.Mem.R3.LiftBrg.LamKV.lamKV_inv_mul_diagEmb | exact GlobalTheory.Mem.R3.LiftBrg.LamKV.lamKV_inv_mul_diagEmb | (intros; apply GlobalTheory.Mem.R3.LiftBrg.LamKV.lamKV_inv_mul_diagEmb <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftBrg.LamKV.lamKV_inv_mul_diagEmb
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LevelCharacterInvMulDiagEmbeddingEqCharDetStatement =====
@@ -299,7 +299,7 @@ theorem _root_.GlobalTheory.T.reduction_conj_frame_eq_cast_reduction_at_level_pr
       LiftBrg.ActQ.redZ X I U L i t A k κ w =
         LiftBrg.castGL (LiftBrg.rkEq X i).symm (Formalism.L2.DIV.redFn (L.βV i) w.1
           (Formalism.UG.bc (swapAE X.toD7) ((κ : Bridge.Gf (Vc X.toD7 i)) : GL (Fin (Vc X.toD7 i).rank) _))) := by
-  first | exact @GlobalTheory.Mem.R3.LiftBrg.ActQ.redZ_eq_castGL_redFn | exact GlobalTheory.Mem.R3.LiftBrg.ActQ.redZ_eq_castGL_redFn | (intros; apply GlobalTheory.Mem.R3.LiftBrg.ActQ.redZ_eq_castGL_redFn <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftBrg.ActQ.redZ_eq_castGL_redFn
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ReductionConjFrameEqCastReductionAtLevelPrimeStatement =====
@@ -349,7 +349,7 @@ theorem _root_.GlobalTheory.T.twist_residue_character_complex_eq_level_character
       w ∈ Formalism.L2.Col.QE I.sel (t.1 : Formalism.L2.DIV.Chr X.B.fields.F X.B.fields.E X.B.fields.K) → ∀ (u : (kP w)ˣ),
       X.toD7.what₂.embLL ((Formalism.L2.DIV.resChar (t.1 : Formalism.L2.DIV.Chr X.B.fields.F X.B.fields.E X.B.fields.K) w u :
         X.B.fields.Kˣ) : X.B.fields.K) = ((L.xiR t w u : ℂˣ) : ℂ) := by
-  first | exact @GlobalTheory.Mem.LevResXi.embLL_resChar_eq_xiR | exact GlobalTheory.Mem.LevResXi.embLL_resChar_eq_xiR | (intros; apply GlobalTheory.Mem.LevResXi.embLL_resChar_eq_xiR <;> assumption)
+  first | exact @GlobalTheory.Mem.LevResXi.embLL_resChar_eq_xiR
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TwistResidueCharacterComplexEqLevelCharacterStatement =====
@@ -424,7 +424,7 @@ theorem _root_.GlobalTheory.T.upperParahoric_character_inv_eq_inv_det_block : �
     (hy : y ∈ Formalism.L2.DIV.blockTri (Formalism.L2.DIV.blk2 r)) (χ : κˣ →* Kˣ)
     (hz : (LiftBrg.castGL h y)⁻¹ * 1 ∈ Formalism.L2.Col.HQ κ n r b),
     Formalism.L2.Col.lamQ χ n r b ⟨_, hz⟩ = (χ (Formalism.L2.DIV.dBlk (Formalism.L2.DIV.blk2 r) 1 y))⁻¹ := by
-  first | exact @GlobalTheory.Mem.R3.LiftBrg.LamQInv.lamQ_castGL_inv | exact GlobalTheory.Mem.R3.LiftBrg.LamQInv.lamQ_castGL_inv | (intros; apply GlobalTheory.Mem.R3.LiftBrg.LamQInv.lamQ_castGL_inv <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftBrg.LamQInv.lamQ_castGL_inv
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UpperParahoricCharacterInvEqInvDetBlockStatement =====
@@ -713,7 +713,7 @@ theorem _root_.GlobalTheory.T.flagLift_translation_mem_typeLevel_character : ∀
           (Formalism.L2.Col.mtTyKK I.Ch I.sel t.1 ((i : ℕ) + 1)).inv.grp,
         X.toD7.what₂.embLL (((Formalism.L2.Col.mtTyKK I.Ch I.sel t.1 ((i : ℕ) + 1)).inv.chr ⟨_, hh⟩ : X.B.fields.Kˣ) : X.B.fields.K) =
           (((levEnv (Vc X.toD7 i) (L.βV i) (L.datVt i t)).ch κ : ℂˣ) : ℂ) := by
-  first | exact @GlobalTheory.Mem.R3.LiftBrg.ActQ.inv_redZ_mul_g0Hat_type | exact GlobalTheory.Mem.R3.LiftBrg.ActQ.inv_redZ_mul_g0Hat_type | (intros; apply GlobalTheory.Mem.R3.LiftBrg.ActQ.inv_redZ_mul_g0Hat_type <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftBrg.ActQ.inv_redZ_mul_g0Hat_type
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FlagLiftTranslationMemTypeLevelCharacterStatement =====
@@ -760,7 +760,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open Formalism.IndefR.RecTie Formalism.IndefR.Lev Formalism.L2.Rows GlobalTheory.Mem GlobalTheory.Mem.R3 GlobalTheory.Mem.Col2
 
 theorem _root_.GlobalTheory.T.levelGroup_reduction_onto_finite_group_surjective : ∀ (X : Stages) (px : PreX X.B.toPre) (I : Col2.ColIn X.B px) (U : Set I.ι) (L : Formalism.IndefR.Links.LevCh X.toD7 (TupU I U)) (eG : Gc X.B px ≃* G0 L.Pg X.toD7.R.r), I.Ok → ValsIn I → LevOf X I U L → IsPlacewiseIdentity X (px := px) eG → ∀ (i : Fin X.toD7.R.m) (t : TupU I U), Function.Surjective (LiftBrg.ActQ.redQ X I U L eG i t) := by
-  first | exact @GlobalTheory.Mem.R3.LiftBrg.ActQ.redQ_surjective | exact GlobalTheory.Mem.R3.LiftBrg.ActQ.redQ_surjective | (intros; apply GlobalTheory.Mem.R3.LiftBrg.ActQ.redQ_surjective <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftBrg.ActQ.redQ_surjective
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LevelGroupReductionOntoFiniteGroupSurjectiveStatement =====
@@ -1029,7 +1029,7 @@ theorem _root_.GlobalTheory.T.exists_finiteGroupAction_liftForms_rightTranslatio
         (LiftBrg.envL X I hX U Xg tr L cV i t).lev.ch ((famR X I hX U Xg tr).A.leftGroupActionLift i t),
       ∀ q : (levEnv (Vc X.toD7 i) (L.βV i) (L.datVt i t)).Q,
         eG (a.red q) = rTup (L.βV i) (L.datVt i t) (Formalism.UG.bc (swapAE X.toD7) ((q : Bridge.Gf (Vc X.toD7 i)) : GL _ _)) := by
-  first | exact @GlobalTheory.Mem.R3.LiftBrg.ActQ.exists_actTie | exact GlobalTheory.Mem.R3.LiftBrg.ActQ.exists_actTie | (intros; apply GlobalTheory.Mem.R3.LiftBrg.ActQ.exists_actTie <;> assumption)
+  first | exact @GlobalTheory.Mem.R3.LiftBrg.ActQ.exists_actTie
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsFiniteGroupActionLiftFormsRightTranslationStatement =====

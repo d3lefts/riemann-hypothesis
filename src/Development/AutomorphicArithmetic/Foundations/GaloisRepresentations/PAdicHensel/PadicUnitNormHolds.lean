@@ -91,7 +91,6 @@ private theorem UpperTheory.Gal.G1.exists_local (hF : LocFour) (hU : LocUnit) (h
       have h0 : v.valuation F (c : F) = v.intValuation c := HeightOneSpectrum.valuation_of_algebraMap v c
       rw [h0]
       first
-        | exact (HeightOneSpectrum.intValuation_eq_one_iff v).2 hcm
         | exact le_antisymm (v.intValuation_le_one c)
             (not_lt.1 fun h => hcm ((v.intValuation_lt_one_iff_mem c).1 h))
     have hval' : Valued.v (algebraMap F (v.adicCompletion F) (c : F))⁻¹ = 1 := by
@@ -248,7 +247,7 @@ theorem UpperTheory.Gal.G1.pBlockMat :
     constructor
     · intro i j
       fin_cases i <;> fin_cases j <;> simp [b] <;>
-        first | assumption | exact S.neg_mem hsy
+        first | assumption
     · intro i j
       fin_cases i <;> fin_cases j <;> simp [b'] <;>
         first | exact S.neg_mem (S.mul_mem hcS hy) | exact S.mul_mem hcS hsx | exact S.mul_mem hcS hsy | exact S.mul_mem hcS hx | exact S.mul_mem hcS hy

@@ -313,7 +313,7 @@ theorem idx_mul_map_bar_eq : ∀ (E : Type) [Field E] [NumberField E] (bar : �
     refine ⟨c, RingOfIntegers.ext ?_⟩
     change (b : E) * (c : E) = 1
     rw [hc]
-    simp only [Pi.smul_apply, smul_eq_mul, Algebra.smul_def]
+    simp only [Pi.smul_apply, Algebra.smul_def]
     change (b : E) * ((k : E) * ((b : E)⁻¹ / ((k : E) * d i) * d i)) = 1
     field_simp
   have hsm : ∀ (c : 𝓞 E) (x : E), barE (c • x) = (bar c : E) * barE x := by
@@ -993,7 +993,7 @@ theorem one_mem_dets {F : Type} [Field F] [NumberField F] (p : ℕ) (L : Submodu
     ext i j
     by_cases hij : i = j
     · subst hij; simp
-    · simp [Pi.single_apply, Matrix.one_apply, hij, Ne.symm hij]
+    · simp [hij, Ne.symm hij]
   rw [hI, Matrix.det_one]
 
 theorem dets_std {F : Type} [Field F] [NumberField F] (p : ℕ) :
@@ -1010,7 +1010,7 @@ theorem dets_std {F : Type} [Field F] [NumberField F] (p : ℕ) :
       rw [← hf i]
       by_cases hij : j = f i
       · subst hij; simp
-      · simp [Pi.single_apply, hij]
+      · simp [hij]
     rw [hM]
     exact Submodule.mem_one.2 ⟨_, RingHom.map_det _ _⟩
   · rw [Submodule.one_le]
@@ -1020,7 +1020,7 @@ theorem dets_std {F : Type} [Field F] [NumberField F] (p : ℕ) :
       ext i j
       by_cases hij : i = j
       · subst hij; simp
-      · simp [Pi.single_apply, Matrix.one_apply, hij, Ne.symm hij]
+      · simp [hij, Ne.symm hij]
     rw [hI, Matrix.det_one]
 
 theorem big_eq_map {E K : Type} [Field E] [NumberField E] [Field K] [NumberField K] (τE : E →+* K) {p m n : ℕ}
@@ -1052,7 +1052,7 @@ private lemma sum_single_smul_eq_apply {E K : Type} [Field E] [Field K] (τE : E
   rw [Finset.sum_eq_single b]
   · simp
   · intro a _ hab
-    simp [Pi.single_apply, hab]
+    simp [hab]
   · simp
 
 theorem small_eq_big_std {E K : Type} [Field E] [NumberField E] [Field K] [NumberField K]
@@ -1125,7 +1125,7 @@ theorem idx_image_eq_map : ∀ (E K : Type) [Field E] [NumberField E] [Field K] 
     funext b
     by_cases hab : b = a
     · subst hab; simp
-    · simp [Pi.single_apply, hab]
+    · simp [hab]
   have hD1 : (1 : E) ∈ GlobalTheory.IdxTensor.dets E p Λ := one_mem_dets p Λ hsing
   have hDfg : (GlobalTheory.IdxTensor.dets E p Λ).FG := dets_fg p Λ hΛfg
   have hR := cut_idxmap (V := Fin p → E) p (LinearMap.id) Function.injective_id Λ
@@ -1238,8 +1238,6 @@ theorem latRank_iSup {K V ι : Type} [Field K] [NumberField K] [AddCommGroup V] 
   have hinj : Function.Injective (DirectSum.coeLinearMap fun i => Submodule.span K (N i : Set V)) := by
     first
     | exact hi.dfinsupp_lsum_injective
-    | exact (iSupIndep_iff_dfinsupp_lsum_injective _).1 hi
-    | exact DirectSum.coeLinearMap_injective_of_iSupIndep hi
   rw [← DirectSum.range_coeLinearMap, LinearMap.finrank_range_of_inj hinj, Module.finrank_directSum]
 
 end GlobalTheory.FlatCore.CMDiff
@@ -1302,7 +1300,7 @@ theorem relIndex_iSup_map_eq_pow : ∀ (K : Type) [Field K] [NumberField K] (W V
       · intro b _
         by_cases h : b = a
         · subst h; simpa using hw
-        · simp [Pi.single_apply, h]
+        · simp [h]
       · rw [hΦ, Finset.sum_eq_single a (fun b _ hb => by simp [Pi.single_apply, hb]) (by simp)]
         simp
   let Lp : Submodule (𝓞 K) (Fin p → W) := Submodule.pi Set.univ (fun _ => ℓ)
@@ -1439,7 +1437,7 @@ theorem deg_iSup_map_of_gram : ∀ (K : Type) [Field K] [NumberField K] (W V : T
       rw [← Complex.abs_re_eq_norm.mpr him, abs_of_pos hre]
     rw [heq, hn, Real.log_mul (pow_pos (Complex.pos_iff.mp (hA1 s)).1 p).ne' hre.ne', Real.log_pow]
   have hlogW : ∀ s : K →+* ℂ, Real.log (hW.gram s ![c]).det.re = Real.log (hW.form s c c).re := by
-    intro s; simp [HermFam.gram, Matrix.det_fin_one]
+    intro s; simp [HermFam.gram]
   refine ⟨?_, ?_⟩
   · obtain ⟨s⟩ : Nonempty (K →+* ℂ) := inferInstance
     intro h; have := (hkey s).1; rw [h, map_zero] at this; simp at this
@@ -1722,7 +1720,7 @@ theorem cmDiff_definite : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     rw [h0] at this
     exact H.d_prime.ne_zero (by simpa using this)
   have hτb' : τb H.rt = -ρ := by
-    simp [hτb, GlobalTheory.CM.EigDec.bar_rt, hτ]
+    simp [hτb, hτ]
   have hne : ¬ τb H.rt = ρ := by
     rw [hτb']
     intro e

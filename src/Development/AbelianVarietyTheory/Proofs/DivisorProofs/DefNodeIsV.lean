@@ -179,7 +179,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.character_unramified_off_finite_primes : ∀ (D : D7) (c : (AE D)ˣ →* Circle), Continuous c →
     ∃ S : Finset ℕ, (∀ q ∈ S, q.Prime) ∧ ∀ w : Pl D.host.E, Off S w → ∀ e, Formalism.L2.NTheta.IsIdemAt e w → UnrIdem c e := by
-  first | exact @GlobalTheory.UnrOff.unr_off | exact GlobalTheory.UnrOff.unr_off | (intros; apply GlobalTheory.UnrOff.unr_off <;> assumption)
+  first | exact @GlobalTheory.UnrOff.unr_off
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharacterUnramifiedOffFinitePrimesStatement =====
@@ -281,7 +281,7 @@ theorem _root_.GlobalTheory.T.exists_finite_primeSet_avoiding_gridPlaces : ∀ (
     ∃ S : Finset ℕ, (∀ q ∈ S, q.Prime) ∧ ∀ w : Pl D.host.E, Off S w → w.under (𝓞 D.host.F) ∉ G.pl.S0 ∧
       (∀ t ∈ U, ∀ w' ∈ L.Q t, w.under (𝓞 D.host.F) ≠ w'.under (𝓞 D.host.F)) ∧
       ((D.host.QS * D.host.q * D.host.d * D.host.g 0 * D.host.g 1 * Ideal.absNorm D.host.ccK : ℕ) : 𝓞 D.host.E) ∉ w.asIdeal := by
-  first | exact @GlobalTheory.FunObj.exists_std_primes | exact GlobalTheory.FunObj.exists_std_primes | (intros; apply GlobalTheory.FunObj.exists_std_primes <;> assumption)
+  first | exact @GlobalTheory.FunObj.exists_std_primes
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFinitePrimeSetAvoidingGridPlacesStatement =====
@@ -301,7 +301,7 @@ theorem _root_.GlobalTheory.T.exists_finiteAdelicUnitary_moves_selfDualLattice :
     Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) fr.1 * V.gram * fr.1 = 1 → IsSelfDualC V Λ →
     ∃ x : GA D V, x ∈ GfC V ∧ ∀ v, v ∈ Formalism.L2.Herm.hatL (F := D.host.F) (colLat fr) ↔
       (Formalism.IndefR.Lev.finE V x).1 *ᵥ v ∈ Formalism.L2.Herm.hatL (F := D.host.F) Λ := by
-  first | exact @GlobalTheory.GenusTranslate.exists_move_colLat | exact GlobalTheory.GenusTranslate.exists_move_colLat | (intros; apply GlobalTheory.GenusTranslate.exists_move_colLat <;> assumption)
+  first | exact @GlobalTheory.GenusTranslate.exists_move_colLat
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteAdelicUnitaryMovesSelfDualLatticeStatement =====
@@ -372,7 +372,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_orthonormalBasis_definite_hermitianSpace : ∀ (D : D7) (V : HSp D), V.SigOK → (∀ τ, V.sig τ = (V.rank, 0)) →
     ∃ fr : GL (Fin V.rank) D.host.E, Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) fr.1 * V.gram * fr.1 = 1 := by
-  first | exact @GlobalTheory.DefiniteFrame.exists_unitary_frame | exact GlobalTheory.DefiniteFrame.exists_unitary_frame | (intros; apply GlobalTheory.DefiniteFrame.exists_unitary_frame <;> assumption)
+  first | exact @GlobalTheory.DefiniteFrame.exists_unitary_frame
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOrthonormalBasisDefiniteHermitianSpaceStatement =====
@@ -464,11 +464,7 @@ theorem exists_nat_smul_mem (L L' : Submodule (𝓞 E) (Fin n → E)) (hL : L.FG
     (hsp : Submodule.span E (L' : Set (Fin n → E)) = ⊤) :
     ∃ c : ℕ, 0 < c ∧ ∀ x ∈ L, (c : E) • x ∈ L' := by
   first
-  | exact @_root_.GlobalTheory.NatMultipleIntegralSmulBound.exists_nat_smul_le
-  | exact _root_.GlobalTheory.NatMultipleIntegralSmulBound.exists_nat_smul_le
   | (apply _root_.GlobalTheory.NatMultipleIntegralSmulBound.exists_nat_smul_le <;> assumption)
-  | (intros; apply _root_.GlobalTheory.NatMultipleIntegralSmulBound.exists_nat_smul_le <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.NatMultipleIntegralSmulBound.exists_nat_smul_le <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.NatMultipleIntegralSmulBound.exists_nat_smul_le ..)
 
 theorem fg_colLat (B : GL (Fin n) E) : (colLat B).FG :=
@@ -619,7 +615,7 @@ theorem _root_.GlobalTheory.T.idempotent_support_hermitian_decomposition : ∀ (
       k ∈ GfC V ∧ (∀ v, v ∈ Formalism.L2.Herm.hatL (F := D.host.F) (colLat fr) ↔
         (Formalism.IndefR.Lev.finE V k).1 *ᵥ v ∈ Formalism.L2.Herm.hatL (F := D.host.F) (colLat fr)) ∧
       (Formalism.IndefR.Lev.finE V x).1 = γ.1.map (eToEAf D) * (Formalism.IndefR.Lev.finE V h).1 * (Formalism.IndefR.Lev.finE V k).1 := by
-  first | exact @GlobalTheory.FunObj.StdReps.exists_rep_std | exact GlobalTheory.FunObj.StdReps.exists_rep_std | (intros; apply GlobalTheory.FunObj.StdReps.exists_rep_std <;> assumption)
+  first | exact @GlobalTheory.FunObj.StdReps.exists_rep_std
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdempotentSupportHermitianDecompositionStatement =====
@@ -637,7 +633,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.mem_completedLattice_columnLattice_mul_iff : ∀ (D : D7) {n : ℕ} (γ B : GL (Fin n) D.host.E), ∀ v, v ∈ Formalism.L2.Herm.hatL (F := D.host.F) (colLat (γ * B)) ↔
       (γ⁻¹).1.map (eToEAf D) *ᵥ v ∈ Formalism.L2.Herm.hatL (F := D.host.F) (colLat B) := by
-  first | exact @GlobalTheory.LatMulAd.mem_hatL_colLat_mul | exact GlobalTheory.LatMulAd.mem_hatL_colLat_mul | (intros; apply GlobalTheory.LatMulAd.mem_hatL_colLat_mul <;> assumption)
+  first | exact @GlobalTheory.LatMulAd.mem_hatL_colLat_mul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemCompletedLatticeColumnLatticeMulIffStatement =====
@@ -658,7 +654,7 @@ theorem _root_.GlobalTheory.T.rationalUnitary_conj_splitSupported_finiteAdelicPo
     (∃ (P : Finset (Pl D.host.E)) (e : AE D), IsIdemSum e P ∧ SuppAt e V h ∧ ∀ w ∈ P, Off S w) →
     ∃ u : GA D V, u ∈ GfC V ∧ (∃ (P : Finset (Pl D.host.E)) (e : AE D), IsIdemSum e P ∧ SuppAt e V u ∧ ∀ w ∈ P, Off S w) ∧
       (Formalism.IndefR.Lev.finE V u).1 = γ.1.map (eToEAf D) * (Formalism.IndefR.Lev.finE V h).1 * (γ⁻¹).1.map (eToEAf D) := by
-  first | exact @GlobalTheory.ConjSplit.conj_supp | exact GlobalTheory.ConjSplit.conj_supp | (intros; apply GlobalTheory.ConjSplit.conj_supp <;> assumption)
+  first | exact @GlobalTheory.ConjSplit.conj_supp
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RationalUnitaryConjSplitSupportedFiniteAdelicPoiStatement =====
@@ -757,7 +753,7 @@ theorem _root_.GlobalTheory.T.exists_orthonormalBasis_splitSupported_adelicPoint
       (∃ (P : Finset (Pl D.host.E)) (e : AE D), IsIdemSum e P ∧ SuppAt e V u.1 ∧ ∀ w ∈ P, Off S w) ∧
       ∀ v, v ∈ Formalism.L2.Herm.hatL (F := D.host.F) (colLat fr) ↔
         (Formalism.IndefR.Lev.finE V u.1).1 *ᵥ v ∈ Formalism.L2.Herm.hatL (F := D.host.F) Λ := by
-  first | exact @GlobalTheory.FunObj.StdVertex.exists_std_vertex | exact GlobalTheory.FunObj.StdVertex.exists_std_vertex | (intros; apply GlobalTheory.FunObj.StdVertex.exists_std_vertex <;> assumption)
+  first | exact @GlobalTheory.FunObj.StdVertex.exists_std_vertex
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOrthonormalBasisSplitSupportedAdelicPointStatement =====
@@ -1184,7 +1180,7 @@ theorem _root_.GlobalTheory.T.gridTopVertex_frame_point_transport_lattice : ∀ 
       (∀ i, fr.1 i (Formalism.L2.Col.Br.iL G.sp.topDec.rank.symm) = G.sp.topDec.a i 0) ∧
       HMul.hMul (mt (G.V (.top D.R.m)) u.1) (topEmb G) = HMul.hMul (topEmb G) (mt (G.V (.grid D.R.m D.R.m)) u₀.1) ∧
       mt (G.V (.top D.R.m)) u.1 *ᵥ topVec G = topVec G := by
-  first | exact @GlobalTheory.FunObj.top_transport | exact GlobalTheory.FunObj.top_transport | (intros; apply GlobalTheory.FunObj.top_transport <;> assumption)
+  first | exact @GlobalTheory.FunObj.top_transport
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.GridTopVertexFramePointTransportLatticeStatement =====

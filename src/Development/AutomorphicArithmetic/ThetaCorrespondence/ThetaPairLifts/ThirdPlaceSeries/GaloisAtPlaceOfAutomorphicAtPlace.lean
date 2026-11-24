@@ -699,7 +699,7 @@ theorem _root_.GlobalTheory.T.charpoly_inv_eq_prod_absNorm_cpow_of_isFrob : ∀ 
     ∀ g : G E Ω, IsFrob (F := E) B (normV w) g →
       (r (g ^ (-1 : ℤ))).val.charpoly = (S.map fun z : ℂˣ =>
         Polynomial.X - Polynomial.C (ι.symm ((z : ℂ) * ((Ideal.absNorm w.asIdeal : ℕ) : ℂ) ^ ((-t : ℝ) : ℂ)))).prod := by
-  first | exact @_root_.GlobalTheory.GeomFrobChar.charpoly_inv_frob_eq_prod_X_sub_C | exact _root_.GlobalTheory.GeomFrobChar.charpoly_inv_frob_eq_prod_X_sub_C | (intros; apply _root_.GlobalTheory.GeomFrobChar.charpoly_inv_frob_eq_prod_X_sub_C <;> assumption)
+  first | exact @_root_.GlobalTheory.GeomFrobChar.charpoly_inv_frob_eq_prod_X_sub_C
 end
 end -- clump:auto
 end -- clump:auto
@@ -727,7 +727,7 @@ theorem rec_twist_absPow_alt : ∀ (E Ω : Type) [Field E] [NumberField E] [IsCM
         (CuspSub.isOpen_ker_locDet _ w)).smooth (σ.twist (CuspSub.locDet a (GlobalTheory.HeckeGal.Model.absPow E s) w)
         (CuspSub.isOpen_ker_locDet _ w)).irred) = (rc (GlobalTheory.LocGL.IrrGL.of σ.ρ σ.smooth σ.irred)).lpTw s := by
   intro E Ω _ _ _ _ _ _ w B h rc hrc a σ s
-  first | (have hOpn := UpperTheory.One.M.opn _ (hrc); obtain ⟨_, _, _, H⟩ := hOpn) | obtain ⟨_, _, _, -, H⟩ := hrc
+  first | (have hOpn := UpperTheory.One.M.opn _ (hrc); obtain ⟨_, _, _, H⟩ := hOpn)
   rw [← H.nu_eq]
   refine congrArg _ ((GlobalTheory.LocGL.IrrGL.tw_of σ.ρ σ.smooth σ.irred _
     (GlobalTheory.CuspRep.ParLaws.isSmoothChar_loc (GlobalTheory.HeckeGal.Model.absPow E s) w)).symm.trans ?_)
@@ -1195,7 +1195,7 @@ section
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.DIV Formalism.L2.Pj GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.ExpTie GlobalTheory.ExpFrame Formalism.CohomologicalDescent.DepthNonnegative Formalism.CohomologicalDescent.LogSmallConstantBounds Formalism.CohomologicalDescent.ShortWeightBounds Formalism.CohomologicalDescent.LD Formalism.RankGapBounds.FormsTensorLocalization
 
 theorem _root_.GlobalTheory.T.galois_frame_compatibility_alt : GlobalTheory.Published.ClozelCohomological → GlobalTheory.Published.HeckeLAdicCharacter → GlobalTheory.Published.ChebotarevDegreeOne → _root_.UpperTheory.GalS.CuspUAlt → _root_.GlobalTheory.Published.BaseChangeDefiniteUnitaryGroup → GlobalTheory.Published.BhattScholzeCrystallineLattices → GlobalTheory.Published.HeckeLAdicCharacterAbove → _root_.UpperTheory.Zero.LLC.RecTExists → _root_.GlobalTheory.ExpTie.SmallnessCondition → _root_.GlobalTheory.ExpTie.GaloisStatement := by
-  first | exact @_root_.GlobalTheory.FrameGal.galois_steinberg_local_alt | exact _root_.GlobalTheory.FrameGal.galois_steinberg_local_alt | (intros; apply _root_.GlobalTheory.FrameGal.galois_steinberg_local_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.FrameGal.galois_steinberg_local_alt
 end
 end
 end -- clump:auto

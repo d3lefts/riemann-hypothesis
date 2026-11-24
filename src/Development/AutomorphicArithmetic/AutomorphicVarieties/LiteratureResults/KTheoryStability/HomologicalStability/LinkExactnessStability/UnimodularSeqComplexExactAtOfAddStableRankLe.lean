@@ -166,7 +166,7 @@ private theorem exactAt_of_exactAt_image_injective {V U : Type} (e : V → U) (h
       apply Finsupp.lhom_ext'
       intro l
       apply LinearMap.ext_ring
-      simp [bd, map_sum, Finsupp.lmapDomain_apply, Finsupp.mapDomain_smul, Finsupp.mapDomain_single, List.eraseIdx_map]
+      simp [bd, map_sum, Finsupp.lmapDomain_apply, Finsupp.mapDomain_single, List.eraseIdx_map]
     exact LinearMap.congr_fun E c
   intro c hc hbc
   have hc' : Finsupp.mapDomain (List.map e) c ∈ chains (List.map e '' F) q := by
@@ -286,8 +286,6 @@ open GlobalTheory.SeqCx Matrix
 theorem _root_.GlobalTheory.T.exactAt_linkIn_uniM_of_exactAt_map_linearEquiv : ∀ (R M : Type) [CommRing R] [AddCommGroup M] [Module R M] (ψ : M ≃ₗ[R] M) (X : Set M), (∀ x, ψ x ∈ X ↔ x ∈ X) → ∀ (τ : List M) (p : ℕ), ExactAt (linkIn (uniM R M) X (τ.map ψ)) p → ExactAt (linkIn (uniM R M) X τ) p := by
   first
   | exact @GlobalTheory.SeqCxLinkEquiv.exactAt_linkIn_of_map
-  | exact @GlobalTheory.SeqCxLinkEquiv.linkIn_map
-  | exact @GlobalTheory.SeqCxLinkEquiv.uniM_map_of_mem
 end
 end -- clump:auto
 end -- clump:auto
@@ -359,8 +357,6 @@ open GlobalTheory.SeqCx Matrix
 theorem _root_.GlobalTheory.T.exactAt_link_succ_union_translate_of_coord_one : ∀ (R : Type) [CommRing R] (s n : ℕ), LinkExactAff R s n → ∀ j : ℕ, n + 1 ≤ j → ∀ τ ∈ uniM R (ℕ →₀ R), ∀ v ∈ τ, v n = 1 → ∀ p : ℕ, p + s + τ.length ≤ n + 2 → ExactAt (linkIn (uniM R (ℕ →₀ R)) (low R (n + 1) ∪ aff R (n + 1) j) τ) p := by
   first
   | exact @GlobalTheory.SeqCx.linkIn_exactAt_of_coord_one
-  | exact @GlobalTheory.SeqCx.coord_vanish_low_aff
-  | exact @GlobalTheory.SeqCx.low_aff_subset_succ
 end
 end -- clump:auto
 end -- clump:auto
@@ -564,7 +560,6 @@ open GlobalTheory.SeqCx Matrix UpperTheory.V.KL
 theorem _root_.GlobalTheory.T.exactAt_linkIn_succ_union_translate_of_ne_nil : ∀ (R : Type) [CommRing R] (s : ℕ), StableRangeLe R s → ∀ n : ℕ, s ≤ n → LinkExactAff R s n → ∀ j : ℕ, n + 1 ≤ j → ∀ τ ∈ uniM R (ℕ →₀ R), τ ≠ [] → ∀ p : ℕ, p + s + τ.length ≤ n + 2 → ExactAt (linkIn (uniM R (ℕ →₀ R)) (low R (n + 1) ∪ aff R (n + 1) j) τ) p := by
   first
   | exact @GlobalTheory.linkExact_low_union_aff_of_ne_nil
-  | exact @GlobalTheory.uniM_map_equiv
 end
 end -- clump:auto
 end -- clump:auto
@@ -773,14 +768,14 @@ theorem unimodular_partner_aff : ∀ (R : Type) [CommRing R] (s : ℕ), StableRa
     simp only [y, Finsupp.finsetSum_apply]
     exact Finset.sum_eq_zero fun i _ => by
       have := i.isLt
-      simp [Finsupp.single_apply, show (i : ℕ) ≠ m by omega]
+      simp [show (i : ℕ) ≠ m by omega]
   have hyi : ∀ i : Fin n, y i = -(t i * a j) := by
     intro i
     simp only [y, Finsupp.finsetSum_apply]
     rw [Finset.sum_eq_single i]
     · simp
     · intro b _ hb
-      simp [Finsupp.single_apply, Fin.val_ne_of_ne hb]
+      simp [Fin.val_ne_of_ne hb]
     · intro h
       exact absurd (Finset.mem_univ i) h
   let x : ℕ →₀ R := Finsupp.single j 1 + y
@@ -842,8 +837,6 @@ open GlobalTheory.SeqCx Matrix UpperTheory.V.KL
 theorem _root_.GlobalTheory.T.exists_mem_translate_unimodular_pair_of_stableRangeLe : ∀ (R : Type) [CommRing R] (s : ℕ), StableRangeLe R s → ∀ (n j : ℕ), s ≤ n → n ≤ j → ∀ v : ℕ →₀ R, [v] ∈ uniM R (ℕ →₀ R) → ∃ x ∈ aff R n j, [v, x] ∈ uniM R (ℕ →₀ R) := by
   first
   | exact @GlobalTheory.unimodular_partner_aff
-  | exact @GlobalTheory.finsupp_exists_form_of_span
-  | exact @GlobalTheory.finsupp_coord_ideal_eq_top
 end
 end -- clump:auto
 end -- clump:auto
@@ -902,7 +895,6 @@ open GlobalTheory.SeqCx Matrix
 theorem _root_.GlobalTheory.T.linkExactLow_add_one_of_linkExactAff : ∀ (R : Type) [CommRing R] (s n : ℕ), LinkExactAff R s n → LinkExactLow R s (n + 1) := by
   first
   | exact @GlobalTheory.linkExactLow_succ_of_linkExactAff
-  | exact @GlobalTheory.low_union_aff_subset_low_succ
 end
 end -- clump:auto
 end -- clump:auto
@@ -1021,7 +1013,6 @@ open GlobalTheory.SeqCx Matrix UpperTheory.V.KL
 theorem _root_.GlobalTheory.T.exactAt_unimodularSeqs_of_add_stableRank_le : ∀ (R : Type) [CommRing R] (s : ℕ), StableRangeLe R s → ∀ m q : ℕ, q + s ≤ m → ExactAt (uniSeq R m) q := by
   first
   | exact @GlobalTheory.uniSeq_exactAt_of_stableRangeLe
-  | exact @GlobalTheory.subsingleton_of_stableRangeLe_zero
 end
 end -- clump:auto
 end -- clump:auto
@@ -1047,7 +1038,6 @@ open GlobalTheory.SeqCx Matrix UpperTheory.V.KL
 theorem _root_.GlobalTheory.T.unimodularSeqComplex_exactAt_of_add_stableRank_le : ∀ (R : Type) [CommRing R] (s : ℕ), StableRangeLe R s → ∀ m q : ℕ, q + s ≤ m → ExactAt (uniSeq R m) q := by
   first
   | exact @GlobalTheory.uniSeq_exactAt_stableRange
-  | exact @GlobalTheory.rests
 end
 end -- clump:auto
 end -- clump:auto

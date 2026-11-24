@@ -963,7 +963,7 @@ theorem finite_of_isIntegral_of_birational_of_finite_over_normal
         exact mul_ne_zero ((map_ne_zero_iff _ hAB).mpr hc₂) hy h₂
       refine ⟨⟨a₁ * c₂, ⟨c₁ * a₂, mem_nonZeroDivisors_of_ne_zero (mul_ne_zero hc₁ ha₂)⟩⟩, ?_⟩
       simp only [IsScalarTower.algebraMap_apply A B L, map_mul, ← h₁, ← h₂]
-      simp only [map_mul] at hz ⊢
+      simp only at hz ⊢
       rw [← hz]; ring
     · intro x y hxy
       exact ⟨1, by rw [hAL hxy]⟩
@@ -1213,7 +1213,6 @@ theorem IsLevel.neg {g : ℕ} {τ : Matrix (Fin g) (Fin g) ℂ} {N : ℕ} {f : (
   have := h.2 (-n) (-n') (-z)
   simp only [ofIntVec_neg, mulVec_neg, neg_dotProduct, dotProduct_neg, neg_neg] at this
   rw [← this]
-  congr 1
   abel
 
 theorem IsLevel.sq {g : ℕ} {τ : Matrix (Fin g) (Fin g) ℂ} {N : ℕ} {f : (Fin g → ℂ) → ℂ} (h : IsLevel τ N f) :

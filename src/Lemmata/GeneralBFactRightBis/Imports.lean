@@ -57,8 +57,6 @@ theorem goal1 {k : ℕ} (G : Matrix (Fin k) (Fin k) ℂ) (μ : ℂ) (hμ : G.cha
   obtain ⟨v, hv, h⟩ := Matrix.exists_mulVec_eq_zero_iff.2 hdet
   refine ⟨v, hv, ?_⟩
   rw [Matrix.sub_mulVec, sub_eq_zero] at h
-  rw [← h]
-  ext i
-  simp [Matrix.scalar_apply, Matrix.mulVec_diagonal]
+  simpa [Matrix.scalar_apply, Matrix.mulVec_diagonal, smul_eq_mul] using h.symm
 
 end Bl.general_b_fact_right_bis

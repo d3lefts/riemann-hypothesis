@@ -102,7 +102,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.S Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LabPin.instCM
 
 theorem _root_.GlobalTheory.T.cmField_splitPlace_eq_of_place_eq : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (s s' : ReciprocityTheory.Aut.SplitPlace L), s.w = s'.w → s = s' := by
-  first | exact @GlobalTheory.SplitUniq.splitPlace_eq_of_w_eq | exact GlobalTheory.SplitUniq.splitPlace_eq_of_w_eq | (intros; apply GlobalTheory.SplitUniq.splitPlace_eq_of_w_eq <;> assumption)
+  first | exact @GlobalTheory.SplitUniq.splitPlace_eq_of_w_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.CmFieldSplitPlaceEqOfPlaceEqStatement =====
@@ -118,7 +118,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LabPin.instCM
 
 theorem _root_.GlobalTheory.T.cmFieldFiniteAdeleTensorEquiv_mem_integralAdeles : ∀ (D : D7) (hF : D.host.F = maximalRealSubfield D.host.E) (a : ReciprocityTheory.Aut.AL D.host.E), a ∈ ReciprocityTheory.Aut.ALint D.host.E → GlobalTheory.FixedConj.adeleEquiv D hF a ∈ Formalism.L2.Herm.intAf (↥D.host.F) D.host.E := by
-  first | exact @GlobalTheory.FixedConj.adeleEquiv_mem_intAf | exact GlobalTheory.FixedConj.adeleEquiv_mem_intAf | (intros; apply GlobalTheory.FixedConj.adeleEquiv_mem_intAf <;> assumption)
+  first | exact @GlobalTheory.FixedConj.adeleEquiv_mem_intAf
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.CmFieldFiniteAdeleTensorEquivMemIntegralAdelesStatement =====
@@ -326,7 +326,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LabPin.instCM
 
 theorem _root_.GlobalTheory.T.exists_degreeOne_prime_frame_reduced_matrices : ∀ (I : Formalism.MainNotions.S.AutInst) (β₀ : GL (Fin I.n) (I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F)), Formalism.L2.DIV.IsFrame β₀ I.L → ∀ (N p : ℕ) (hN : I.n = N) (w : IsDedekindDomain.HeightOneSpectrum (𝓞 I.E)), p.Prime → Nat.card (𝓞 I.E ⧸ w.asIdeal) = p → ∃ fr : GlobalTheory.RowLev.PlFrame I N p w, ∀ k ∈ I.Kset, ∀ M : Matrix (Fin N) (Fin N) (ZMod p), (∀ (i j : Fin N) (hij : ((β₀⁻¹ * (k : GL (Fin I.n) (I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F)) * β₀ : GL (Fin I.n) (I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F)) : Matrix (Fin I.n) (Fin I.n) (I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F)) (Fin.cast hN.symm i) (Fin.cast hN.symm j) ∈ Formalism.L2.Herm.intAf I.F I.E), Formalism.L2.DIV.resS I.F w ⟨_, hij⟩ = ((M i j).val : Formalism.L2.DIV.kP w)) → fr.ActsAs k M := by
-  first | exact @GlobalTheory.RowLev.exists_plFrame_of_isFrame | exact GlobalTheory.RowLev.exists_plFrame_of_isFrame | (intros; apply GlobalTheory.RowLev.exists_plFrame_of_isFrame <;> assumption)
+  first | exact @GlobalTheory.RowLev.exists_plFrame_of_isFrame
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsDegreeOnePrimeFrameReducedMatricesStatement =====
@@ -342,7 +342,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LabPin.instCM
 
 theorem _root_.GlobalTheory.T.exists_rectangular_conj_instanceMatrix_standardPsi : ∀ (D : D7) (hF : D.host.F = maximalRealSubfield D.host.E) (PY : RowPsi (Yc D 0) D.R.r) (t : Formalism.L2.Theta.GA D (D.sp.Y 0)), StdPsi hF PY → ∃ (U : Matrix (Fin (Formalism.L2.SG.InstExistsPf.instOf D).n) (Fin D.R.r) (Formalism.IndefR.Lev.EAf D)) (U' : Matrix (Fin D.R.r) (Fin (Formalism.L2.SG.InstExistsPf.instOf D).n) (Formalism.IndefR.Lev.EAf D)), U * U' = 1 ∧ U' * U = 1 ∧ ∀ y : Formalism.AUTREP.GAf D.host.E D.R.r, (Formalism.L2.SG.InstExistsPf.instOf D).fmat ((Formalism.IndefR.RationalEmbedding.iota D (MulAut.conj t (PY.ψ y))).2) = U * ((y : GL (Fin D.R.r) (ReciprocityTheory.Aut.AL D.host.E)) : Matrix (Fin D.R.r) (Fin D.R.r) (ReciprocityTheory.Aut.AL D.host.E)).map (GlobalTheory.FixedConj.adeleEquiv D hF) * U' := by
-  first | exact @GlobalTheory.FixedConjMat.fmat_iota_conj_stdPsi | exact GlobalTheory.FixedConjMat.fmat_iota_conj_stdPsi | (intros; apply GlobalTheory.FixedConjMat.fmat_iota_conj_stdPsi <;> assumption)
+  first | exact @GlobalTheory.FixedConjMat.fmat_iota_conj_stdPsi
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsRectangularConjInstanceMatrixStandardPsiStatement =====
@@ -358,7 +358,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LabPin.instCM
 
 theorem _root_.GlobalTheory.T.mem_maximalCompact_of_trivial_off_splitPair : ∀ (I : Formalism.MainNotions.S.AutInst) (β₀ : GL (Fin I.n) (I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F)), Formalism.L2.DIV.IsFrame β₀ I.L → ∀ (ε : I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F), ε * ε = ε → ε * Formalism.L2.SG.HidaSetting.sigA I ε = 0 → ε ∈ Formalism.MainNotions.S.IntAf I.F I.E → ∀ (k : I.Gf), (∀ i j, (1 - ε - Formalism.L2.SG.HidaSetting.sigA I ε) * (I.fmat k - 1) i j = 0) → (∀ i j, ε * ((β₀⁻¹ * (k : GL (Fin I.n) (I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F)) * β₀ : GL (Fin I.n) (I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F)) : Matrix (Fin I.n) (Fin I.n) (I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F)) i j ∈ Formalism.MainNotions.S.IntAf I.F I.E) → (∀ i j, ε * ((β₀⁻¹ * ((k⁻¹ : I.Gf) : GL (Fin I.n) (I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F)) * β₀ : GL (Fin I.n) (I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F)) : Matrix (Fin I.n) (Fin I.n) (I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F)) i j ∈ Formalism.MainNotions.S.IntAf I.F I.E) → k ∈ I.Kset := by
-  first | exact @GlobalTheory.SplitPairK.mem_kset_of_split | exact GlobalTheory.SplitPairK.mem_kset_of_split | (intros; apply GlobalTheory.SplitPairK.mem_kset_of_split <;> assumption)
+  first | exact @GlobalTheory.SplitPairK.mem_kset_of_split
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemMaximalCompactOfTrivialOffSplitPairStatement =====
@@ -534,7 +534,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LabPin.instCM
 
 theorem _root_.GlobalTheory.T.residue_cmFieldFiniteAdeleTensorEquiv_eq_natCast : ∀ (D : D7) (hF : D.host.F = maximalRealSubfield D.host.E) (s : ReciprocityTheory.Aut.SplitPlace D.host.E) (a : ReciprocityTheory.Aut.AL D.host.E) (ha : GlobalTheory.FixedConj.adeleEquiv D hF a ∈ Formalism.L2.Herm.intAf (↥D.host.F) D.host.E) (m : ℕ), a ∈ ReciprocityTheory.Aut.ALint D.host.E → Valued.v (s.proj a - (m : s.v.adicCompletion (maximalRealSubfield D.host.E))) < 1 → Formalism.L2.DIV.resS (↥D.host.F) s.w ⟨_, ha⟩ = (m : Formalism.L2.DIV.kP s.w) := by
-  first | exact @GlobalTheory.SplitRes.resS_adeleEquiv_eq_natCast | exact GlobalTheory.SplitRes.resS_adeleEquiv_eq_natCast | (intros; apply GlobalTheory.SplitRes.resS_adeleEquiv_eq_natCast <;> assumption)
+  first | exact @GlobalTheory.SplitRes.resS_adeleEquiv_eq_natCast
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ResidueCmFieldFiniteAdeleTensorEquivEqNatCastStatement =====
@@ -609,7 +609,7 @@ open scoped TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LabPin.instCM
 
 theorem _root_.GlobalTheory.T.splitPlace_base_ne_of_distinct_type_primes : ∀ (D : D7) (s s' : ReciprocityTheory.Aut.SplitPlace D.host.E) (kv kv' : Σ k : Fin 2, D.nd.PlG k), s.w = D.naut.plGw kv.1 kv.2 → s'.w = D.naut.plGw kv'.1 kv'.2 → kv ≠ kv' → s.v ≠ s'.v := by
-  first | exact @GlobalTheory.SplitPlaceDistinct.splitPlace_v_ne | exact GlobalTheory.SplitPlaceDistinct.splitPlace_v_ne | (intros; apply GlobalTheory.SplitPlaceDistinct.splitPlace_v_ne <;> assumption)
+  first | exact @GlobalTheory.SplitPlaceDistinct.splitPlace_v_ne
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.SplitPlaceBaseNeOfDistinctTypePrimesStatement =====
@@ -962,7 +962,7 @@ theorem core0 (D : D7) (t : Formalism.L2.Theta.GA D (D.sp.Y 0)) (PY : RowPsi (Yc
     have h3 := smul_conj_sub_one' ((β₀⁻¹ : GL _ _).val : Matrix (Fin (Formalism.L2.SG.InstExistsPf.instOf D).n) (Fin (Formalism.L2.SG.InstExistsPf.instOf D).n) (Formalism.IndefR.Lev.EAf D))
       (β₀.val : Matrix (Fin (Formalism.L2.SG.InstExistsPf.instOf D).n) (Fin (Formalism.L2.SG.InstExistsPf.instOf D).n) (Formalism.IndefR.Lev.EAf D)) MK β₀.inv_mul f hfK
     have h4 := congrFun (congrFun h3 (Fin.cast hn.symm i)) (Fin.cast hn.symm j)
-    simp only [Matrix.smul_apply, smul_eq_mul, Matrix.sub_apply, Matrix.zero_apply] at h4
+    simp only [Matrix.zero_apply] at h4
     have hfe : f = 1 - θ (ε₀ kv + conjAL D.host.E (ε₀ kv)) := by rw [hfdef, map_sub, map_one]
     rw [hfe, hMK] at h4
     have hd : (1 : Matrix (Fin (Formalism.L2.SG.InstExistsPf.instOf D).n) (Fin (Formalism.L2.SG.InstExistsPf.instOf D).n) (Formalism.IndefR.Lev.EAf D)) (Fin.cast hn.symm i) (Fin.cast hn.symm j) ∈
@@ -1022,7 +1022,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.S Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LabPin.instCM
 
 theorem _root_.GlobalTheory.T.exists_fixed_place_conjugator_lifts_act_by_reductions : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D) (t : Formalism.L2.Theta.GA D (D.sp.Y 0)) (PY : RowPsi (Yc D 0) D.R.r) (hF : D.host.F = maximalRealSubfield D.host.E), StdPsi hF PY → (∀ x : X.B.I.E, HEq (X.ιE x) x) → (∀ s s' : ReciprocityTheory.Aut.SplitPlace D.host.E, s.w = s'.w → s = s') → ∃ (c : GAf D.host.E D.R.r) (fr : ∀ (k : Fin 2) (v : D.nd.PlG k), GlobalTheory.RowLev.PlFrame X.B.I D.R.r (D.host.g k) (Formalism.L2.SG.Pf.RowDictPf.wB X (D.naut.plGw k v))), ∀ (kv : Σ k : Fin 2, D.nd.PlG k) (s : ReciprocityTheory.Aut.SplitPlace D.host.E), s.w = D.naut.plGw kv.1 kv.2 → ∀ (x : GAf D.host.E D.R.r) (γ : GL (Fin D.R.r) (ZMod (D.host.g kv.1))), IsLift s x γ → (Formalism.L2.SG.RowsJoinPinned.iotaX X h (MulAut.conj t (PY.ψ (c * x * c⁻¹)))).2 ∈ X.B.I.Kset ∧ (fr kv.1 kv.2).ActsAs (Formalism.L2.SG.RowsJoinPinned.iotaX X h (MulAut.conj t (PY.ψ (c * x * c⁻¹)))).2 (γ : Matrix (Fin D.R.r) (Fin D.R.r) (ZMod (D.host.g kv.1))) ∧ ∀ kv' : Σ k : Fin 2, D.nd.PlG k, kv' ≠ kv → (fr kv'.1 kv'.2).ActsAs (Formalism.L2.SG.RowsJoinPinned.iotaX X h (MulAut.conj t (PY.ψ (c * x * c⁻¹)))).2 1 := by
-  first | exact @GlobalTheory.FixedConj.exists_conj_frames | exact GlobalTheory.FixedConj.exists_conj_frames | (intros; apply GlobalTheory.FixedConj.exists_conj_frames <;> assumption)
+  first | exact @GlobalTheory.FixedConj.exists_conj_frames
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsFixedPlaceConjugatorLiftsActByReductionsStatement =====
@@ -1036,7 +1036,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.S Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LabPin.instCM
 
 theorem _root_.GlobalTheory.T.exists_splitPlace_eq_fixedTypePrimePlace : ∀ (D : D7) (kv : Σ k : Fin 2, D.nd.PlG k), ∃ s : ReciprocityTheory.Aut.SplitPlace D.host.E, s.w = D.naut.plGw kv.1 kv.2 := by
-  first | exact @GlobalTheory.SplitPlaceOfFixed.exists_splitPlace_plGw | exact GlobalTheory.SplitPlaceOfFixed.exists_splitPlace_plGw | (intros; apply GlobalTheory.SplitPlaceOfFixed.exists_splitPlace_plGw <;> assumption)
+  first | exact @GlobalTheory.SplitPlaceOfFixed.exists_splitPlace_plGw
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsSplitPlaceEqFixedTypePrimePlaceStatement =====
@@ -1168,11 +1168,7 @@ theorem exists_int_sub_mem_pow {E : Type} [Field E] [NumberField E] {p : ℕ} (h
     (hP : P.IsMaximal) (hm : (p : 𝓞 E) ∈ P) (hN : Ideal.absNorm P = p) (h2 : (p : 𝓞 E) ∉ P ^ 2) (k : ℕ)
     (a : 𝓞 E) : ∃ m : ℤ, a - m ∈ P ^ k := by
   first
-  | exact @_root_.GlobalTheory.IntSubMemPow.exists_int_sub_mem_pow
-  | exact _root_.GlobalTheory.IntSubMemPow.exists_int_sub_mem_pow
   | (apply _root_.GlobalTheory.IntSubMemPow.exists_int_sub_mem_pow <;> assumption)
-  | (intros; apply _root_.GlobalTheory.IntSubMemPow.exists_int_sub_mem_pow <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.IntSubMemPow.exists_int_sub_mem_pow <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.IntSubMemPow.exists_int_sub_mem_pow ..)
 
 theorem not_isConj_self (I : AutInst) {p : ℕ} (hp : p.Prime) (v : HeightOneSpectrum (𝓞 I.E))
@@ -1318,7 +1314,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.S Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LabPin.instCM
 
 theorem _root_.GlobalTheory.T.fixedTypePrimePlaces_choice_one_per_conjugate_pair : ∀ (D : D7) (X : HidaSetting D), GlobalTheory.RowLev.IsChoice X.B.I D.host.g D.nd.PlG (fun k v => Formalism.L2.SG.Pf.RowDictPf.wB X (D.naut.plGw k v)) := by
-  first | exact @GlobalTheory.RowLev.FixedChoice.isChoice_wB_plGw | exact GlobalTheory.RowLev.FixedChoice.isChoice_wB_plGw | (intros; apply GlobalTheory.RowLev.FixedChoice.isChoice_wB_plGw <;> assumption)
+  first | exact @GlobalTheory.RowLev.FixedChoice.isChoice_wB_plGw
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.FixedTypePrimePlacesChoiceOnePerConjugatePairStatement =====
@@ -1387,7 +1383,7 @@ theorem redMat0_of_actsAs : ∀ (I : AutInst) (N p : ℕ) (w : IsDedekindDomain.
       simp [c, Finset.sum_apply, Pi.single_apply]
     have e1 := (hz _).1 e0
     convert e1 using 1
-    simp [Z, B, Submodule.coe_sum]
+    simp [Z, B]
     rfl
   · let V : I.Lf := ⟨I.fmat x *ᵥ iv I (b i), Inhab.mulVec_mem hx (B i).2⟩
     have hV : fr.c V = M *ᵥ Pi.single i 1 := by rw [← hB i]; exact hM (B i) V.2
@@ -1419,7 +1415,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.S Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LabPin.instCM
 
 theorem _root_.GlobalTheory.T.reducedMatrix_of_actsAs_degree_one_prime_frame : ∀ (I : AutInst) (N p : ℕ) (w : IsDedekindDomain.HeightOneSpectrum (𝓞 I.E)) (fr : GlobalTheory.RowLev.PlFrame I N p w) (x : I.Gf), x ∈ I.Kset → ∀ M : Matrix (Fin N) (Fin N) (ZMod p), fr.ActsAs x M → Formalism.L2.SG.Pf.RowDictPf.RedMat0 I w p x M := by
-  first | exact @GlobalTheory.RowLev.redMat0_of_actsAs | exact GlobalTheory.RowLev.redMat0_of_actsAs | (intros; apply GlobalTheory.RowLev.redMat0_of_actsAs <;> assumption)
+  first | exact @GlobalTheory.RowLev.redMat0_of_actsAs
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ReducedMatrixOfActsAsDegreeOnePrimeFrameStatement =====
@@ -1452,7 +1448,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.S Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LabPin.instCM
 
 theorem _root_.GlobalTheory.T.rowsIdentification_fst_eq_one_of_finiteAdelic : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D) (g : Formalism.L2.Theta.GA D (D.sp.Y 0)), g ∈ GfC (D.sp.Y 0) → (Formalism.L2.SG.RowsJoinPinned.iotaX X h g).1 = 1 := by
-  first | exact @GlobalTheory.RealTrivIota.iotaX_fst_eq_one_of_mem_GfC | exact GlobalTheory.RealTrivIota.iotaX_fst_eq_one_of_mem_GfC | (intros; apply GlobalTheory.RealTrivIota.iotaX_fst_eq_one_of_mem_GfC <;> assumption)
+  first | exact @GlobalTheory.RealTrivIota.iotaX_fst_eq_one_of_mem_GfC
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.RowsIdentificationFstEqOneOfFiniteAdelicStatement =====
@@ -1515,7 +1511,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.S Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.LabPin.instCM
 
 theorem _root_.GlobalTheory.T.exists_maximalCompact_reduction_standardFrame : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Formalism.L2.SG.InstExistsPf.instOf D) (t : Formalism.L2.Theta.GA D (D.sp.Y 0)) (PY : RowPsi (Yc D 0) D.R.r) (hF : D.host.F = maximalRealSubfield D.host.E), StdPsi hF PY → (∀ x : X.B.I.E, HEq (X.ιE x) x) → ∃ c red, FrameRed X h t PY c red := by
-  first | exact @GlobalTheory.LabPin.frameRed_exists | exact GlobalTheory.LabPin.frameRed_exists | (intros; apply GlobalTheory.LabPin.frameRed_exists <;> assumption)
+  first | exact @GlobalTheory.LabPin.frameRed_exists
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsMaximalCompactReductionStandardFrameStatement =====

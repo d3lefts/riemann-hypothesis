@@ -250,7 +250,7 @@ theorem eval_upt_eq_zero_of_skew (L : Type) [Field L] [NumberField L] [IsCMField
       simp only [apply_ite σ, map_zero, hσc]
     simp only [e1, mul_sub, Finset.sum_sub_distrib, mul_ite, mul_zero]
     rw [Fintype.sum_prod_type, Fintype.sum_prod_type]
-    simp only [Fintype.sum_prod_type, ite_and, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    simp only [Fintype.sum_prod_type, ite_and]
     have e2 : ∀ (f : Fin n → Fin n → Module.Free.ChooseBasisIndex ℤ (𝓞 L) → ℂ) (p q : Fin n),
         (∑ x, ∑ x_1, ∑ x_2, if p = x then if q = x_1 then f x x_1 x_2 else 0 else 0) = ∑ k, f p q k := by
       intro f p q
@@ -478,16 +478,16 @@ theorem eval_eq_zero_of_rat : ∀ (L : Type) [Field L] [NumberField L] [IsCMFiel
       ext i j
       by_cases hij : i = j
       · subst hij; simp [Matrix.scalar_apply, hcc, ha']
-      · simp [Matrix.scalar_apply, Matrix.one_apply, hij]
+      · simp [Matrix.scalar_apply, hij]
     have := hF _ hmem
     rw [hF'ev, ← this]
     refine congrArg (fun z => MvPolynomial.eval z F) ?_
     funext p
-    simp [upt, ratPt, hs, Matrix.scalar_apply, Matrix.smul_eq_diagonal_mul]
+    simp [upt, ratPt, hs, Matrix.scalar_apply]
   let X' : (L →+* ℂ) → Matrix (Fin n) (Fin n) ℂ := fun σ => σ a • X σ
   have hX' : IsUPt X' := by
     intro σ
-    simp only [X', Matrix.transpose_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul, hX σ, hemb, ← map_mul, ha, ha',
+    simp only [X', Matrix.transpose_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul, hX σ, hemb, ← map_mul, ha',
       map_one, one_smul]
   have h := vanish_generic L n F' hF' X' hX' hdet
   rw [hF'ev] at h

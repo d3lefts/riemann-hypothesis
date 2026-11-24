@@ -280,7 +280,7 @@ theorem exists_basis_eigSub (d : Int0 v) (hd : d ≠ 0)
     rw [map_sum]
     simp only [map_smul, hze]
     funext j
-    simp [Finset.sum_apply, Pi.single_apply, mul_comm, mul_left_comm]
+    simp [Finset.sum_apply, Pi.single_apply, mul_comm]
   have hli : LinearIndependent (Int0 v) (fun i => (⟨z i, hz i⟩ : eigSub a τ (Fin N → RS a))) := by
     rw [Fintype.linearIndependent_iff]
     intro w hw
@@ -456,7 +456,7 @@ section -- clump:auto
 open GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity GlobalTheory.HermitianPreEigenvalues Polynomial Module
 
 theorem _root_.GlobalTheory.T.herbrand_determinant_identity_of_relativeLength : ∀ (C : Type) [Field C] (v : AddValuation C (WithTop ℝ)) (S : Type) [Fintype S] [DecidableEq S] (a : S → Int0 v), Function.Injective a → ∀ (N : ℕ) (Fil : Submodule (RS a) (Fin N → RS a)), (∀ (c : Int0 v) (x : Fin N → RS a), c ≠ 0 → c • x ∈ Fil → x ∈ Fil) → ∀ τ : S, ∀ r : ℝ, (r : WithTop ℝ) = yExp v a Fil τ → RelLen v ((eigSub a τ (Fin N → RS a)).map (comp a N τ)) ((preEig a Fil τ).map (comp a N τ)) r → DetIdentity v a Fil τ := by
-  first | exact @GlobalTheory.HerbDet.detIdentity_of_relLen | exact GlobalTheory.HerbDet.detIdentity_of_relLen | (intros; apply GlobalTheory.HerbDet.detIdentity_of_relLen <;> assumption)
+  first | exact @GlobalTheory.HerbDet.detIdentity_of_relLen
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HerbrandDeterminantIdentityOfRelativeLengthStatement =====

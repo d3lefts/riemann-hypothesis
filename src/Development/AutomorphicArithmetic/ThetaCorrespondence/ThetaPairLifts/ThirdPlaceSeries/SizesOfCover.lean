@@ -171,7 +171,7 @@ open GlobalTheory.BadCount
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.abs_flatDegVal_logOm_le_nine_mul_of_size : _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.CoversCondition fun Fm x _ ι p i Y PP _ => |GlobalTheory.FlatLine.flatDegVal (dat p i) (Formalism.L2.DIV.ofRecord (Fm.D x ι) (Fm.L x ι) p.Del p.h0).logOm| ≤ 9 * (Fm.D x ι).R.r * (Fm.L x ι).sc.L := by
-  first | exact @_root_.GlobalTheory.CovTop.FlatSz.flatDegVal_covers_alt | exact _root_.GlobalTheory.CovTop.FlatSz.flatDegVal_covers_alt | (intros; apply _root_.GlobalTheory.CovTop.FlatSz.flatDegVal_covers_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.FlatSz.flatDegVal_covers_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -347,7 +347,7 @@ open GlobalTheory.BadCount
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.log_kap_le_and_lenT_mul_le_sqrt : _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.CoversCondition fun Fm x _ ι p i Y PP _ => Real.log (kap p i) ≤ 2 * (Fm.L x ι).sc.L ∧ (lenT p i PP : ℝ) * PP ≤ Real.sqrt (Fm.L x ι).sc.b := by
-  first | exact @_root_.GlobalTheory.CovTop.CovSz.kapT_alt | exact _root_.GlobalTheory.CovTop.CovSz.kapT_alt | (intros; apply _root_.GlobalTheory.CovTop.CovSz.kapT_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.CovSz.kapT_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -414,7 +414,7 @@ theorem T₁_mul_u₁_add_rem (ha : P.a < Dw.p + Dw.q) (τ : Psi H) (i : Fin (Dw
 
 theorem wt_apply (j : ℕ) (τ : Psi H) (i : Fin (Dw.p + Dw.q)) :
     P.wt j τ i = FlagTan.kap Dw τ i + P.rem τ i + ((dimFlag Dw : ℤ) + j + 1) * P.u₁ τ i := by
-  simp only [WtPar.wt, WtPar.uc, WtPar.u₂, Pi.add_apply, Pi.smul_apply, nsmul_eq_mul, Pi.mul_apply, Pi.natCast_apply]
+  simp only [WtPar.wt, WtPar.uc, WtPar.u₂, Pi.add_apply, nsmul_eq_mul, Pi.mul_apply, Pi.natCast_apply]
   ring
 
 end GlobalTheory.CovTop.WtRun
@@ -788,7 +788,7 @@ open GlobalTheory.BadCount
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.weight_param_coeff_sum_le_at_index' : _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.CoversCondition fun Fm x _ ι p i Y PP _ => ∀ j ≤ lenT p i PP, ∑ τ, ∑ k, |((⟨uW p i, cZero (Fm.D x ι) ((i : ℕ) + 1), (Fm.D x ι).R.k - 2, lenT p i PP⟩ : WtPar (dat p i)).wt j τ k : ℝ)| ≤ zBase (Fm.L x ι) ^ 2 * kap p i := by
-  first | exact @_root_.GlobalTheory.CovTop.WtRun.wt_size_alt | exact _root_.GlobalTheory.CovTop.WtRun.wt_size_alt | (intros; apply _root_.GlobalTheory.CovTop.WtRun.wt_size_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.WtRun.wt_size_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1276,7 +1276,7 @@ open GlobalTheory.BadCount
 open scoped TensorProduct
 
 theorem _root_.GlobalTheory.T.weight_param_coeff_sum_bound' : _root_.GlobalTheory.CovTop.SizeCondition → _root_.GlobalTheory.CovTop.CoversCondition fun Fm x _ ι p i Y PP _ => ∀ la ∈ ({(⟨uW p i, cZero (Fm.D x ι) ((i : ℕ) + 1), (Fm.D x ι).R.k - 2, lenT p i PP⟩ : WtPar (dat p i)).u₁, (⟨uW p i, cZero (Fm.D x ι) ((i : ℕ) + 1), (Fm.D x ι).R.k - 2, lenT p i PP⟩ : WtPar (dat p i)).u₂} : Set (AllWt.Weight (dat p i))), ∑ τ, ∑ k, |(la τ k : ℝ)| ≤ zBase (Fm.L x ι) ^ 2 * (kap p i / lenT p i PP + 1) := by
-  first | exact @_root_.GlobalTheory.CovTop.WtSz.wts_le_alt | exact _root_.GlobalTheory.CovTop.WtSz.wts_le_alt | (intros; apply _root_.GlobalTheory.CovTop.WtSz.wts_le_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.CovTop.WtSz.wts_le_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1381,7 +1381,7 @@ theorem sizes_of_cover_alt : _root_.GlobalTheory.CovTop.CoversCondition fun Fm x
       unfold Formalism.BasicNotions.Scale.b; exact Real.exp_le_exp.2 (by linarith)
     have hr5' : ((Fm.D x ι).R.r : ℝ) ≤ (Fm.L x ι).sc.x ^ (5 : ℕ) := by
       have e : (Fm.L x ι).sc.x ^ (5 : ℕ) = (Fm.L x ι).sc.x ^ (5 : ℝ) := by exact_mod_cast (Real.rpow_natCast _ 5).symm
-      first | exact hr5 | (rw [e]; exact hr5)
+      first | (rw [e]; exact hr5)
     have : ((Fm.D x ι).R.r : ℝ) + 1 < (Fm.D x ι).host.g k :=
       calc ((Fm.D x ι).R.r : ℝ) + 1 ≤ (Fm.L x ι).sc.x ^ (5 : ℕ) + 1 := add_le_add hr5' le_rfl
         _ < (Fm.L x ι).sc.x ^ (6 : ℕ) := h5

@@ -343,8 +343,7 @@ private lemma exists_bound_fderiv_logCutoff_mul_norm_mul_log :
   have hlog : Real.log ‖z‖ = (x - 2) * ((k : ℝ) + 1) := by
     simp only [x]; field_simp; ring
   have hNc : ‖N c‖ ≤ ‖c‖ := (N.le_opNorm c).trans (by simpa using mul_le_mul_of_nonneg_right hN (norm_nonneg c))
-  simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.coe_smul', Pi.smul_apply,
-    smul_eq_mul, Real.norm_eq_abs]
+  simp only [ContinuousLinearMap.smul_apply, smul_eq_mul, Real.norm_eq_abs]
   rw [hlog]
   have e : |deriv Real.smoothTransition x * (‖z‖⁻¹ / ((k : ℝ) + 1)) * N c| *
       (‖z‖ * |(x - 2) * ((k : ℝ) + 1)|) = |deriv Real.smoothTransition x| * |x - 2| * |N c| := by
@@ -424,7 +423,7 @@ private lemma fderiv_prod_logCutoff_coordVec {n : ℕ} (k : ℕ) (S : Finset (Fi
     simp only [_root_.GlobalTheory.GoodMetric.coordVec, PiLp.add_apply, PiLp.smul_apply, PiLp.single_apply]
     split_ifs with h
     · subst h; simp [Complex.real_smul]
-    · simp [h]
+    · simp
   have hψline : HasDerivAt (fun t : ℝ => _root_.GlobalTheory.GoodTop.logCutoff k (v b + (t : ℂ) * c))
       (fderiv ℝ (_root_.GlobalTheory.GoodTop.logCutoff k) (v b) c) 0 := by
     have hl : HasDerivAt (fun t : ℝ => v b + (t : ℂ) * c) c 0 := by
@@ -731,7 +730,7 @@ theorem setIntegral_dbar_eq_zero {n : ℕ} (U K : Set (V n)) (g : V n → ℂ) (
     setIntegral_eq_integral_of_forall_compl_eq_zero, hE]
   intro v hv
   rw [dbar_congr (hout v fun h => hv (hKU h))]
-  simp [dbar_apply]
+  simp
 
 end GlobalTheory.GoodTop
 end -- clump:auto
@@ -1187,7 +1186,7 @@ theorem sum_mixTop_position_sub {n : ℕ} {r : Type} [Fintype r] [DecidableEq r]
         simp [h1, this]
       · have : ¬ ((i : ℕ) < j) := fun h => h1 (Fin.lt_def.mpr h)
         by_cases h2 : i = j
-        · simp [h1, h2, this]
+        · simp [h2]
         · simp [h1, h2, this]
   rw [Finset.sum_congr rfl (fun j _ => hterm j)]
   rw [Fin.sum_univ_eq_sum_range (fun k => T (k + 1) - T k) n, Finset.sum_range_sub]

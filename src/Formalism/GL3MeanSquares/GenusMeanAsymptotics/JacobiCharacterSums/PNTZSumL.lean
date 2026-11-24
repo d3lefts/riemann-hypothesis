@@ -81,7 +81,6 @@ private theorem pow_mul_exp_neg_le_of_large_Y (a B c2 θ cZ A₁ ℓ Y L w : ℝ
   obtain ⟨s, hs⟩ : ∃ s, s = 4 * (B + 1) / cZ := ⟨_, rfl⟩
   obtain ⟨μ, hμdef⟩ : ∃ μ, μ = Y / ((A₁ + 2) * ℓ) := ⟨_, rfl⟩
   have hl2 := Real.log_two_gt_d9
-  have hl2' := Real.log_two_lt_d9
   have hg4 : Real.log 4 ≤ g := by rw [hgdef]; exact Real.log_le_log (by norm_num) (by linarith)
   have hl4 : Real.log 4 = 2 * Real.log 2 := by
     rw [show (4 : ℝ) = 2 * 2 by norm_num, Real.log_mul (by norm_num) (by norm_num)]; ring

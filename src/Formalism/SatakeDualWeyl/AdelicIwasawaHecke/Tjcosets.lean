@@ -383,17 +383,11 @@ theorem tjcosets_lt_one_iff (x : ℤᵐ⁰) :
 theorem tjcosets_mem_max (x : Ov F v) :
     IsLocalRing.residue (Ov F v) x = 0 ↔ Valued.v (x : v.adicCompletion F) < 1 := by
   rw [IsLocalRing.residue_eq_zero_iff]
-  refine (ValuationSubring.valuation_lt_one_iff (v.adicCompletionIntegers F) x).trans ?_
-  have e := (Valuation.isEquiv_valuation_valuationSubring
-    (Valued.v : Valuation (v.adicCompletion F) ℤᵐ⁰)).lt_iff_lt (x := (x : v.adicCompletion F)) (y := 1)
-  rw [map_one, map_one] at e
-  exact e.symm
+  exact Valuation.mem_maximalIdeal_iff (v := (Valued.v : Valuation (v.adicCompletion F) ℤᵐ⁰))
 
 theorem tjcosets_ne_zero (ϖ : v.adicCompletion F) (hϖ : IsUnifV F v ϖ) : ϖ ≠ 0 := by
-  intro h
-  unfold IsUnifV at hϖ
-  rw [h, map_zero] at hϖ
-  exact WithZero.zero_ne_coe hϖ
+  rintro rfl
+  simp [IsUnifV] at hϖ
 
 theorem tjcosets_hmax (ϖ : v.adicCompletion F) (hϖ : IsUnifV F v ϖ) (x : Ov F v) :
     ϖ⁻¹ * (x : v.adicCompletion F) ∈ Ov F v ↔ IsLocalRing.residue (Ov F v) x = 0 := by

@@ -129,7 +129,7 @@ theorem isTA_det_of_isUA {F E : Type} [Field F] [NumberField F] [Field E] [Algeb
     rw [Finset.sum_comm]
     convert h using 1
     · rfl
-    · simp [G', Pi.single_apply, apply_ite σ]
+    · simp [G', Pi.single_apply]
   have hdet := congrArg Matrix.det hM
   have hs : (g.map σ).det = σ g.det := by
     rw [show g.map σ = (σ : RA F E →+* RA F E).mapMatrix g from rfl, ← RingHom.map_det]; rfl
@@ -711,7 +711,6 @@ theorem prod_le_locFactor_of_isPrime (E : Type) [Field E] [NumberField E] [IsCMF
     { star := σ
       star_involutive := fun x => by
         obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x
-        change σ (σ _) = _
         rw [hσ, hσ, hcc]
       star_mul := fun x y => by
         change σ (x * y) = σ y * σ x

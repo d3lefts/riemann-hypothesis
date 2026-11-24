@@ -807,7 +807,7 @@ private theorem chi_rep {n : ℕ} {A G : Type} [CommRing A] [Group G] (ρ : G �
   rw [map_sub, MonoidAlgebra.mapRingHom_single, Matrix.charpoly, Matrix.charmatrix]
   congr 2
   · ext1 a b
-    by_cases hab : a = b <;> simp [GDet.repAlg, hab, Matrix.one_apply, Matrix.diagonal_apply]
+    by_cases hab : a = b <;> simp [GDet.repAlg, hab]
   · ext1 a b
     simp [GDet.repAlg]
 
@@ -1655,7 +1655,7 @@ private theorem gDet_chi_map_mapRingHom {n : ℕ} {R R' G : Type} [CommRing R] [
   let g : Polynomial R →ₐ[R] Polynomial R' :=
     { Polynomial.mapRingHom f with
       commutes' := fun c => by
-        simp [RingHom.algebraMap_toAlgebra, Polynomial.algebraMap_apply] }
+        simp [RingHom.algebraMap_toAlgebra] }
   have h := D.nat (Polynomial R) (Polynomial R') g
     (MonoidAlgebra.single 1 Polynomial.X - MonoidAlgebra.mapRingHom G Polynomial.C x)
   refine Eq.trans ?_ h
@@ -1882,7 +1882,7 @@ private theorem lift_pt (hA : Adapted T (r := r))
           rw [Matrix.charpoly]
           congr 1
           ext i j : 2
-          by_cases hij : i = j <;> simp [GDet.repAlg, Matrix.charmatrix_apply, hij, Matrix.one_apply, Matrix.diagonal_apply]
+          by_cases hij : i = j <;> simp [GDet.repAlg, hij]
         rw [e2, (x.eig p.1).2]
         exact Polynomial.Splits.prod fun i _ => Polynomial.Splits.X_sub_C _) P hP h
   refine ⟨{ x' with commutes' := fun a => ?_ }, fun b => DFunLike.congr_fun h1 b, h2⟩

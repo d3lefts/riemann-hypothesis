@@ -170,7 +170,6 @@ open GlobalTheory.SeqCx Matrix UpperTheory.V.KL
 theorem _root_.GlobalTheory.T.exists_GL_moving_unimodular_pair_to_last_basis : ∀ (R : Type) [CommRing R] (s : ℕ), StableRangeLe R s → ∀ (n : ℕ), s ≤ n → ∀ v f : Fin (n + 1) → R, f ⬝ᵥ v = 1 → ∃ g : GL (Fin (n + 1)) R, (g : Matrix (Fin (n + 1)) (Fin (n + 1)) R) *ᵥ v = Pi.single (Fin.last n) 1 ∧ f ᵥ* ((g⁻¹ : GL (Fin (n + 1)) R) : Matrix (Fin (n + 1)) (Fin (n + 1)) R) = Pi.single (Fin.last n) 1 := by
   first
   | exact @GlobalTheory.UnimodTransvect.main
-  | exact @GlobalTheory.UnimodTransvect.reach_first_unimod
   | exact @GlobalTheory.UnimodTransvect.reach_last_one
   | exact @GlobalTheory.UnimodTransvect.reach_of_last_one
   | exact @GlobalTheory.UnimodTransvect.reach_trans
@@ -296,7 +295,7 @@ def pmat {n : ℕ} (π : Equiv.Perm (Fin n)) : Matrix (Fin n) (Fin n) R :=
 
 theorem pmat_mul_symm {n : ℕ} (π : Equiv.Perm (Fin n)) : (pmat π : Matrix (Fin n) (Fin n) R) * pmat π.symm = 1 := by
   ext i j
-  simp [pmat, Matrix.mul_apply, Matrix.one_apply, Equiv.apply_eq_iff_eq_symm_apply]
+  simp [pmat, Matrix.mul_apply, Matrix.one_apply]
 
 def pGL {n : ℕ} (π : Equiv.Perm (Fin n)) : GL (Fin n) R :=
   ⟨pmat π, pmat π.symm, pmat_mul_symm π, by simpa using pmat_mul_symm (R := R) π.symm⟩
@@ -307,7 +306,7 @@ theorem pGL_mulVec {n : ℕ} (π : Equiv.Perm (Fin n)) (a : Fin n) :
   simp only [pGL, pmat, Matrix.mulVec, dotProduct, Matrix.of_apply]
   rw [Finset.sum_eq_single a]
   · simp [Pi.single_apply]
-  · intro b _ hb; simp [Pi.single_apply, hb]
+  · intro b _ hb; simp [hb]
   · simp
 
 theorem vecMul_pGL_inv {n : ℕ} (π : Equiv.Perm (Fin n)) (a : Fin n) :
@@ -316,7 +315,7 @@ theorem vecMul_pGL_inv {n : ℕ} (π : Equiv.Perm (Fin n)) (a : Fin n) :
   simp only [pGL, pmat, Matrix.vecMul, dotProduct, Matrix.of_apply, Units.inv_mk]
   rw [Finset.sum_eq_single a]
   · simp [Pi.single_apply, Equiv.eq_symm_apply, eq_comm]
-  · intro b _ hb; simp [Pi.single_apply, hb]
+  · intro b _ hb; simp [hb]
   · simp
 
 theorem exists_perm {n k : ℕ} (σ ι : Fin k → Fin n) (hσ : Function.Injective σ) (hι : Function.Injective ι) :

@@ -139,7 +139,7 @@ theorem tv_Hpk_tv (k r : ℕ) (c : Fin r → ℂ) (hc : ∀ a, c a ≠ 0) (i j :
   have key : (i.val < r ∧ i.val + j.val = 2 * r + k) ∨ (j.val < r ∧ i.val + j.val = 2 * r + k) ∨
       (r ≤ i.val ∧ i.val ≤ r + k ∧ i = j) := by
     unfold Hpk at hz
-    split_ifs at hz <;> first | tauto | simp at hz
+    split_ifs at hz <;> first | tauto
   rcases key with ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2, rfl⟩
   · have hH : Hpk k r i j = 1 := by unfold Hpk; rw [if_pos ⟨h1, h2⟩]
     have hti : tv k r c i = c ⟨i.val, h1⟩ := by unfold tv; rw [dite_eq_left h1]
@@ -167,7 +167,7 @@ theorem conjTranspose_mul_mul_monomial {n : Type*} [Fintype n] [DecidableEq n]
     (hg : ∀ b j, g b j = if b = ρ j then v j else 0) (i j : n) :
     (gᴴ * H * g) i j = star (v i) * H (ρ i) (ρ j) * v j := by
   simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, hg]
-  simp [apply_ite star, Finset.sum_ite_eq', ite_mul, mul_ite, Finset.sum_mul]
+  simp [apply_ite star, Finset.sum_ite_eq', ite_mul, mul_ite]
 
 theorem bigCellG : BigCellG := by
   intro k r c hc
@@ -1056,7 +1056,6 @@ private theorem SideA_unrealify_RL (X : Mat k r) : unrealify (RL X) = X := by
   ext i j
   first
     | (apply Complex.ext <;> simp [unrealify, RL, realifyFun])
-    | (apply Complex.ext <;> rfl)
 
 private theorem SideA_rhoS_le (S : Set (Mat k r)) (X : Mat k r) (hX : RL X ∈ lieE S) (x : Mt k r)
     (hx : NormedSpace.exp X = Matrix.of x) :
@@ -1070,8 +1069,6 @@ private theorem SideA_rhoS_le (S : Set (Mat k r)) (X : Mat k r) (hX : RL X ∈ l
     _ = ENNReal.ofReal (‖RL X‖ ^ 2) := by
       first
         | (rw [← ENNReal.ofReal_coe_nnreal, coe_nnnorm, ENNReal.ofReal_pow (norm_nonneg _)])
-        | (rw [ENNReal.ofReal_pow (norm_nonneg _), ofReal_norm_eq_enorm]; rfl)
-        | simp [ENNReal.ofReal_pow]
 
 theorem sideA : SideA := by
   intro hNR hLG hLW hGU hPF hW0 hLEN hExpN hLI hCB k r ε hε hε1
@@ -1272,7 +1269,6 @@ private theorem SideB_vnorm (X Z X' : Mat k r) (x : Fin r → ℂ) (N : ℝ) (hN
     nlinarith
   first
   | exact norm_prod_le_iff.2 ⟨hX, norm_prod_le_iff.2 ⟨hx, norm_prod_le_iff.2 ⟨hZ, hX'⟩⟩⟩
-  | (simp only [Prod.norm_def]; exact max_le hX (max_le hx (max_le hZ hX')))
 
 private theorem SideB_arith (ε ρ N Y : ℝ) (hε0 : 0 < ε) (hε1 : ε < 1) (hρ : 0 < ρ) (hN0 : 0 ≤ N) (hY0 : 0 ≤ Y)
     (hN : N ^ 2 < ρ ^ 2 * ((1 - ε) ^ 2 + ε ^ 2 / 8)) (hY : Y ≤ (1 + ε) * N) : N < ρ ∧ Y < ρ := by
@@ -1376,7 +1372,7 @@ theorem Log_Hpk_eq (i j : Fin (2 * r + k + 1)) :
   rcases i with ⟨i, hi⟩
   rcases j with ⟨j, hj⟩
   unfold Hpk sgI
-  split_ifs <;> (try simp only [Fin.ext_iff, Fin.val_mk] at *) <;> first | rfl | (exfalso; omega)
+  split_ifs <;> (try simp only [Fin.ext_iff] at *) <;> first | rfl | (exfalso; omega)
 
 theorem Log_sgI_sgI (i : Fin (2 * r + k + 1)) : sgI k r (sgI k r i) = i := by
   unfold sgI

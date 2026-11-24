@@ -126,7 +126,7 @@ theorem _root_.GlobalTheory.T.coeffSum_smooth_rightDerivWords : ∀ (n : ℕ) (�
     ∀ x : Fin d → H, (∀ a, Sm ε σ (x a)) →
     CSm ε (fun y => ∑ a, L a (σ y (x a))) ∧ ∀ (u : List (Ltr ε)), ∀ y ∈ UJset ε,
       wordF u (fun y => ∑ a, L a (σ y (x a))) y = ∑ a, L a (σ y (wordV σ u (x a))) := by
-  first | exact @GlobalTheory.TypeSum.CoefClos.coefSum_cSm_wordF | exact GlobalTheory.TypeSum.CoefClos.coefSum_cSm_wordF | (intros; apply GlobalTheory.TypeSum.CoefClos.coefSum_cSm_wordF <;> assumption)
+  first | exact @GlobalTheory.TypeSum.CoefClos.coefSum_cSm_wordF
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.CoeffSumSmoothRightDerivWordsStatement =====
@@ -209,7 +209,7 @@ open GlobalTheory.TypeSum.CoefClos
 theorem _root_.GlobalTheory.T.coeffWord_moderateGrowth_bound : ∀ (n : ℕ) (ε : Fin n → Bool) (N : ℕ) (f : Mx n → ℂ) (F : List (Mx n) → Mx n → ℂ),
     (∀ g ∈ UJset ε, F [] g = f g) → IsDerFam ε F → FamGrowth ε N F →
     ∀ u : List (Ltr ε), ∃ C : ℝ, ∀ g ∈ UJset ε, ‖wordF u f g‖ ≤ C * (1 + Formalism.REAL.hs g) ^ N := by
-  first | exact @GlobalTheory.TypeSum.CoefClos.wordF_growth | exact GlobalTheory.TypeSum.CoefClos.wordF_growth | (intros; apply GlobalTheory.TypeSum.CoefClos.wordF_growth <;> assumption)
+  first | exact @GlobalTheory.TypeSum.CoefClos.wordF_growth
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.CoeffWordModerateGrowthBoundStatement =====
@@ -421,7 +421,7 @@ open GlobalTheory.TypeSum.CoefClos
 
 theorem _root_.GlobalTheory.T.continuousOn_rightDerivativeFamily_moderateGrowth : ∀ (n : ℕ) (ε : Fin n → Bool) (N : ℕ) (F : List (Mx n) → Mx n → ℂ), IsDerFam ε F → FamGrowth ε N F →
     ∀ l : List (Mx n), (∀ Y ∈ l, Y ∈ lieSet ε) → ContinuousOn (F l) (UJset ε) := by
-  first | exact @GlobalTheory.TypeSum.DerFamCont.continuousOn_of_isDerFam | exact GlobalTheory.TypeSum.DerFamCont.continuousOn_of_isDerFam | (intros; apply GlobalTheory.TypeSum.DerFamCont.continuousOn_of_isDerFam <;> assumption)
+  first | exact @GlobalTheory.TypeSum.DerFamCont.continuousOn_of_isDerFam
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.ContinuousOnRightDerivativeFamilyModerateGrowthStatement =====
@@ -639,7 +639,7 @@ theorem _root_.GlobalTheory.T.exists_maps_of_relations_alt : GlobalTheory.Publis
       ∑ i, c i • wordE τ (u i) m₀ = 0) →
     ∃ T : Fin d → (H →ₗ[ℂ] M), (∀ a v, IsKFin ε σ v → ∀ x, T a (ltrV σ x v) = τ x (T a v)) ∧ ∑ a, T a (w a) = m₀ ∧
       ∀ a v, IsKFin ε σ v → ∃ (m : ℕ) (c : Fin m → ℂ) (u : Fin m → List (Ltr ε)), T a v = ∑ i, c i • wordE τ (u i) m₀ := by
-  first | exact @GlobalTheory.TypeSum.CoefClos.exists_maps_of_relations | exact GlobalTheory.TypeSum.CoefClos.exists_maps_of_relations | (intros; apply GlobalTheory.TypeSum.CoefClos.exists_maps_of_relations <;> assumption)
+  first | exact @GlobalTheory.TypeSum.CoefClos.exists_maps_of_relations
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.ExistsMapsOfRelationsStatement =====
@@ -787,7 +787,7 @@ theorem _root_.GlobalTheory.T.exists_sobolevContinuous_form_of_moderateGrowthMap
     (∀ v, IsKFin ε σ v → ∀ X ∈ lieSet ε, ∀ g ∈ UJset ε,
       HasDerivAt (fun t : ℝ => T v (g * NormedSpace.exp (t • X))) (T (dRep σ X v) g) 0) →
     ∃ L : H →ₗ[ℂ] ℂ, Sobolev₂ (lieSet ε) σ L ∧ ∀ v, IsKFin ε σ v → ∀ y ∈ UJset ε, T v y = L (σ y v) := by
-  first | exact @GlobalTheory.TypeSum.GrowthForm.exists_form | exact GlobalTheory.TypeSum.GrowthForm.exists_form | (intros; apply GlobalTheory.TypeSum.GrowthForm.exists_form <;> assumption)
+  first | exact @GlobalTheory.TypeSum.GrowthForm.exists_form
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.ExistsSobolevContinuousFormOfModerateGrowthMapStatement =====
@@ -1174,7 +1174,7 @@ theorem _root_.GlobalTheory.T.eq_matrixCoeff_of_locallyUniform_limit_kFinite : G
           ∀ y ∈ C, y ∈ UJset ε → ‖h y - ∑ a, L a (σ y (w a))‖ < δ) →
     ∃ L : Fin d → (H →ₗ[ℂ] ℂ), (∀ a, Sobolev₂ (GlobalTheory.SmoothGlob.lieSet ε) σ (L a)) ∧
       ∀ y ∈ UJset ε, h y = ∑ a, L a (σ y (w a)) := by
-  first | exact @GlobalTheory.TypeSum.CoefClos.eq_coef_of_closure | exact GlobalTheory.TypeSum.CoefClos.eq_coef_of_closure | (intros; apply GlobalTheory.TypeSum.CoefClos.eq_coef_of_closure <;> assumption)
+  first | exact @GlobalTheory.TypeSum.CoefClos.eq_coef_of_closure
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.HeightProofs.EqMatrixCoeffOfLocallyUniformLimitKFiniteStatement =====

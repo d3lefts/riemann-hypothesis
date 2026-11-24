@@ -65,13 +65,6 @@ lemma ofReal_cpow_conj {x : ℝ} (hx : 0 ≤ x) (s : ℂ) :
     (by rw [Complex.arg_ofReal_of_nonneg hx]; exact Real.pi_pos.ne)
   rwa [Complex.conj_ofReal, Complex.conj_conj] at h
 
-lemma Gammaℝ_conj (s : ℂ) : Gammaℝ ((starRingEnd ℂ) s) = (starRingEnd ℂ) (Gammaℝ s) := by
-  have h1 : -(starRingEnd ℂ) s / 2 = (starRingEnd ℂ) (-s / 2) := by
-    rw [map_div₀, map_neg, map_ofNat]
-  have h2 : (starRingEnd ℂ) s / 2 = (starRingEnd ℂ) (s / 2) := by
-    rw [map_div₀, map_ofNat]
-  rw [Gammaℝ, Gammaℝ, h1, h2, ofReal_cpow_conj Real.pi_pos.le, Complex.Gamma_conj, map_mul]
-
 lemma hurwitz_conj_of_re {a : ℝ} (ha : a ∈ Icc (0 : ℝ) 1) {s : ℂ} (hs : 1 < s.re) :
     hurwitzZeta a ((starRingEnd ℂ) s) = (starRingEnd ℂ) (hurwitzZeta a s) := by
   have hs' : 1 < ((starRingEnd ℂ) s).re := by rwa [Complex.conj_re]
@@ -98,7 +91,7 @@ lemma differentiable_reg (a : UnitAddCircle) : Differentiable ℂ (reg a) := by
 
 lemma pole_conj (s : ℂ) : 1 / ((starRingEnd ℂ) s - 1) / Gammaℝ ((starRingEnd ℂ) s)
     = (starRingEnd ℂ) (1 / (s - 1) / Gammaℝ s) := by
-  rw [Gammaℝ_conj]
+  rw [Complex.Gammaℝ_conj]
   simp [map_div₀]
 
 lemma hurwitz_conj_real {a : ℝ} (ha : a ∈ Icc (0 : ℝ) 1) (s : ℂ) :

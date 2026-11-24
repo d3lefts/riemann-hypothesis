@@ -167,7 +167,7 @@ theorem repro_sigma (b : Basis ι ℤ Y) (β : SymB cj Y) (σ : E →+* ℂ) (y 
         σ (ed E i) := by
     simp_rw [← gram_expand b B (RingOfIntegers.basis E _ • y) (RingOfIntegers.basis E _ • z)]
     simp_rw [e2]
-    simp only [comp, Finset.sum_mul_sum, Finset.mul_sum, Finset.sum_mul, Complex.ofReal_sum,
+    simp only [comp, Finset.mul_sum, Finset.sum_mul, Complex.ofReal_sum,
       Complex.ofReal_mul]
     conv_lhs => arg 2; ext a; rw [Finset.sum_comm]; arg 2; ext i; rw [Finset.sum_comm]
     rw [Finset.sum_comm]
@@ -349,7 +349,7 @@ theorem halfTrace_holds : HalfTraceStatement := by
     intro v
     have h := hH.eigenvectorBasis.sum_inner_mul_inner (WithLp.toLp 2 v) (WithLp.toLp 2 (C *ᵥ v))
     rw [EuclideanSpace.inner_eq_star_dotProduct] at h
-    simp only [hinner, hinner', star_trivial, WithLp.ofLp_toLp] at h
+    simp only [hinner, hinner', star_trivial] at h
     rw [dotProduct_comm, ← h]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [dotProduct_comm (ev j), ← hsym, hCev, smul_dotProduct, smul_eq_mul, dotProduct_comm v]
@@ -358,7 +358,7 @@ theorem halfTrace_holds : HalfTraceStatement := by
     intro v
     have h := hH.eigenvectorBasis.sum_inner_mul_inner (WithLp.toLp 2 v) (WithLp.toLp 2 v)
     rw [EuclideanSpace.inner_eq_star_dotProduct] at h
-    simp only [hinner, hinner', star_trivial, WithLp.ofLp_toLp] at h
+    simp only [hinner, hinner', star_trivial] at h
     rw [← h]
     exact Finset.sum_congr rfl fun j _ => by ring
   have hlam0 : ∀ j, 0 ≤ lam j := fun j => hCpsd.eigenvalues_nonneg j
@@ -390,7 +390,7 @@ theorem halfTrace_holds : HalfTraceStatement := by
     have hq2 := hquad u
     have hsum1 : ∑ j, lam j * ((ev j ⬝ᵥ ev i) ^ 2 * (u ⬝ᵥ u)) = lam i * (u ⬝ᵥ u) := by
       simp only [hort]
-      simp [Finset.sum_ite_eq', Finset.mem_univ]
+      simp [Finset.mem_univ]
     have hbes : ∑ j, lam j * ((ev j ⬝ᵥ ev i) ^ 2 * (u ⬝ᵥ u) + (ev j ⬝ᵥ u) ^ 2) ≤
         ∑ j, lam j * (u ⬝ᵥ u) := by
       refine Finset.sum_le_sum fun j _ => mul_le_mul_of_nonneg_left ?_ (hlam0 j)
@@ -574,7 +574,7 @@ private theorem amgm_lemma_3 (w : (E →+* ℂ) → ℝ) (hw : ∀ σ, 0 ≤ w �
   have hcard : (Fintype.card (E →+* ℂ) : ℝ) = finrank ℚ E := by
     rw [NumberField.Embeddings.card]
   have hn : (0 : ℝ) < finrank ℚ E := by
-    first | exact_mod_cast Module.finrank_pos | exact_mod_cast FiniteDimensional.finrank_pos
+    first | exact_mod_cast Module.finrank_pos
   have hn' : (finrank ℚ E : ℝ) ≠ 0 := hn.ne'
   have hsum : ∑ _σ : E →+* ℂ, (1 : ℝ) / finrank ℚ E = 1 := by
     rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, hcard, mul_one_div_cancel hn']
@@ -619,7 +619,7 @@ theorem lower_bound {cj : E → E} (hcj : ∀ (φ : E →+* ℂ) (z : E), φ (cj
     by_contra hcon
     push_neg at hcon
     have hP : Pm hcj (Algebra.linearMap ℤ ℝ ∘ₗ ν) (Algebra.linearMap ℤ ℝ ∘ₗ ν) ≠ 0 := by
-      first | exact Pm_ne_zero hcj hη | exact Pm_ne_zero hη
+      first | exact Pm_ne_zero hcj hη
     apply hP
     apply Subtype.ext
     apply LinearMap.ext₂
@@ -627,7 +627,7 @@ theorem lower_bound {cj : E → E} (hcj : ∀ (φ : E →+* ℂ) (z : E), φ (cj
     simp [Pm_apply, Pf, hv, hcon]
   have hne : Nonempty (E →+* ℂ) := by
     rw [← Fintype.card_pos_iff, NumberField.Embeddings.card]
-    first | exact Module.finrank_pos | exact FiniteDimensional.finrank_pos
+    first | exact Module.finrank_pos
   obtain ⟨L, hL⟩ : ∃ L : (E →+* ℂ) → ℝ, ∀ σ, L σ = ∑ i, (comp (Algebra.linearMap ℤ ℝ ∘ₗ ν) σ (x i) *
       conj (comp (Algebra.linearMap ℤ ℝ ∘ₗ ν) σ (x' i))).re := ⟨_, fun _ => rfl⟩
   have hLpos : ∀ σ, 0 < L σ := by
@@ -936,7 +936,6 @@ theorem Kmat_det (b : Basis (Fin d) ℤ Y) (θ : 𝓞 E) (hθ : θ ≠ 0) : IsUn
   have hint : IsIntegral ℤ θ := by
     first
     | exact NumberField.RingOfIntegers.isIntegral θ
-    | exact Algebra.IsIntegral.isIntegral θ
   have hc0 : (minpoly ℤ θ).coeff 0 ≠ 0 := by
     intro h0c
     obtain ⟨r, hr⟩ := Polynomial.X_dvd_iff.mpr h0c
@@ -949,7 +948,7 @@ theorem Kmat_det (b : Basis (Fin d) ℤ Y) (θ : 𝓞 E) (hθ : θ ≠ 0) : IsUn
   have h0 : Polynomial.aeval θ (minpoly ℤ θ) = 0 := minpoly.aeval ℤ θ
   have h1 : θ * Polynomial.aeval θ q = -(((minpoly ℤ θ).coeff 0 : ℤ) : 𝓞 E) := by
     have h := congrArg (Polynomial.aeval θ) hq
-    simp only [map_sub, Polynomial.aeval_C, map_mul, Polynomial.aeval_X, h0, zero_sub,
+    simp only [map_sub, map_mul, Polynomial.aeval_X, h0, zero_sub,
       eq_intCast, map_intCast] at h
     linear_combination -h
   have h2 : θ * (-(Polynomial.aeval θ q) * (((minpoly ℤ θ).coeff 0 : ℤ) : 𝓞 E)) =
@@ -960,7 +959,6 @@ theorem Kmat_det (b : Basis (Fin d) ℤ Y) (θ : 𝓞 E) (hθ : θ ≠ 0) : IsUn
         push_cast
         first
         | exact sq_abs _
-        | exact Int.natAbs_sq _
       rw [← Int.cast_natCast, h', Int.cast_pow]
     rw [hc]
     linear_combination (-(((minpoly ℤ θ).coeff 0 : ℤ) : 𝓞 E)) * h1

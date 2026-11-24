@@ -141,7 +141,7 @@ theorem UpperTheory.eigIn_finite_above_of_isCompactOperator :
     simp
   have hmem : ∀ x : ℝ, ∀ w, w ∈ eigIn W A x ↔ w ∈ W ∧ A w = (x : ℂ) • w := by
     intro x w
-    simp [eigIn, Module.End.mem_eigenspace_iff]
+    simp [eigIn]
   have hB : IsSelfAdjoint (A ∘L prj W) := by
     rw [ContinuousLinearMap.isSelfAdjoint_iff_isSymmetric]
     intro u v
@@ -280,7 +280,7 @@ theorem UpperTheory.prj_eigIn_of_eigenvector_prj :
     exact this w (W.le_topologicalClosure hw)
   have hmem : ∀ w, w ∈ eigIn W A x ↔ w ∈ W ∧ A w = (x : ℂ) • w := by
     intro w
-    simp [eigIn, Module.End.mem_eigenspace_iff]
+    simp [eigIn]
   have key : ∀ u ∈ eigIn W A x, (∀ w ∈ eigIn W A x, inner ℂ w (v - u) = 0) →
       prj (eigIn W A x) v = u := by
     intro u hu h

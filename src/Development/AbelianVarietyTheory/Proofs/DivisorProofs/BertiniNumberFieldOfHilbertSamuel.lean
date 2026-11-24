@@ -756,7 +756,7 @@ theorem exists_pt_of_mem_cone_of_isAlgClosed : ∀ (F : Type) [Field F] (S : Lin
   change y i₀ ≠ 0 at hi₀
   let u : Fin S.N → Fin S.N → K := fun j => y i₀ • Pi.single j 1 - y j • Pi.single i₀ 1
   have hu : ∀ (j : Fin S.N) (c : Fin S.N → K), ∑ l, u j l * c l = y i₀ * c j - y j * c i₀ := fun j c => by
-    simp [u, sub_mul, Finset.sum_sub_distrib, Pi.single_apply, mul_assoc]
+    simp [u, sub_mul, Finset.sum_sub_distrib, Pi.single_apply]
 
   have hcov : ∀ z : (S.baseChange K).Y, ∃ j, z ∈ nonzeroLocus ((S.baseChange K).comb (u j)) := by
     by_contra hc
@@ -1301,7 +1301,7 @@ theorem lineSubst_lin {K : Type} [Field K] {N : ℕ} (a b y : Fin N → K) :
     lineSubst a b (lin y) = Polynomial.C (∑ j, a j * y j) + Polynomial.C (∑ j, b j * y j) * Polynomial.X := by
 
   simp only [lin, lineSubst, map_sum, map_mul, aeval_X, aeval_C, Polynomial.algebraMap_eq, add_mul,
-  Finset.sum_add_distrib, Polynomial.C_mul, Finset.sum_mul, map_sum]
+  Finset.sum_add_distrib, Finset.sum_mul, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   ring

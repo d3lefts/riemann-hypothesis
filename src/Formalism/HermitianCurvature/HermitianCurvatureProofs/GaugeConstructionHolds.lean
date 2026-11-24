@@ -156,7 +156,7 @@ theorem hasDerivAt_genW {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
   refine hcomp.congr_of_eventuallyEq ?_
   have hc : Filter.Tendsto (fun t : ℝ => (x.1, x.2 * NormedSpace.exp ((t : ℂ) • genW k r w))) (nhds 0) (nhds x) := by
     have h := hγ.continuousAt.tendsto
-    first | (rw [hγ0] at h; exact h) | exact hγ0 ▸ h | (simp only [hγ0] at h; exact h)
+    first | (simp only [hγ0] at h; exact h)
   filter_upwards [hc (hU.mem_nhds hx)] with t ht
   exact he _ ht (glev_mul_exp hxG w t)
 
@@ -182,9 +182,9 @@ theorem hs_apply (p i m : Fin (2 * r + k + 1)) :
     (Hpk k r * Matrix.single p p (1 : ℂ)) i m = if m = p then Hpk k r i p else 0 := by
   rw [Matrix.mul_apply, Finset.sum_eq_single p]
   · by_cases hm : m = p
-    · subst hm; simp [Matrix.single_apply]
-    · simp [Matrix.single_apply, Ne.symm hm, hm]
-  · intro l _ hl; simp [Matrix.single_apply, Ne.symm hl]
+    · subst hm; simp
+    · simp [Ne.symm hm, hm]
+  · intro l _ hl; simp [Ne.symm hl]
   · intro h; exact absurd (Finset.mem_univ p) h
 
 theorem hpk_single (p : Fin (2 * r + k + 1)) (hp : r ≤ p.val ∧ p.val ≤ r + k) :
@@ -662,21 +662,21 @@ theorem nu_rot (hk : 1 ≤ k) (w s : ℂ) (φ : ℝ) :
   ext i j
   simp only [dOne, dTwo, Matrix.diagonal_mul, Matrix.mul_diagonal, Matrix.smul_apply, smul_eq_mul]
   rcases eq_or_ne i 0 with rfl | hi0 <;> rcases eq_or_ne j 0 with rfl | hj0
-  · simp [nu, vecMulVec, Matrix.one_apply, Pi.single_apply, hl, hl.symm]
+  · simp [nu, vecMulVec, Pi.single_apply, hl]
     linear_combination (-(Complex.exp (↑φ * Complex.I) * (starRingEnd ℂ) w)) * he
   · rcases eq_or_ne j (Fin.last k) with rfl | hjl
-    · simp [nu, vecMulVec, Matrix.one_apply, Pi.single_apply, hl, hl.symm]
-    · simp [nu, vecMulVec, Matrix.one_apply, Pi.single_apply, hl, hl.symm, hj0, hjl, Ne.symm hj0, Ne.symm hjl]
+    · simp [nu, vecMulVec, Pi.single_apply, hl, hl.symm]
+    · simp [nu, vecMulVec, Pi.single_apply, hl, hj0, hjl, Ne.symm hj0]
   · rcases eq_or_ne i (Fin.last k) with rfl | hil
-    · simp [nu, vecMulVec, Matrix.one_apply, Pi.single_apply, hl, hl.symm]
+    · simp [nu, vecMulVec, Pi.single_apply, hl, hl.symm]
       ring
-    · simp [nu, vecMulVec, Matrix.one_apply, Pi.single_apply, hl, hl.symm, hi0, hil, Ne.symm hi0, Ne.symm hil]
+    · simp [nu, vecMulVec, Pi.single_apply, hl, hi0, hil]
   · rcases eq_or_ne i (Fin.last k) with rfl | hil <;> rcases eq_or_ne j (Fin.last k) with rfl | hjl
-    · simp [nu, vecMulVec, Matrix.one_apply, Pi.single_apply, hl, hl.symm]
+    · simp [nu, vecMulVec, Pi.single_apply, hl.symm]
       ring
-    · simp [nu, vecMulVec, Matrix.one_apply, Pi.single_apply, hl, hl.symm, hj0, hjl, Ne.symm hj0, Ne.symm hjl]
-    · simp [nu, vecMulVec, Matrix.one_apply, Pi.single_apply, hl, hl.symm, hi0, hil, Ne.symm hi0, Ne.symm hil]
-    · simp [nu, vecMulVec, Matrix.one_apply, Pi.single_apply, hi0, hil, hj0, hjl, Ne.symm hi0, Ne.symm hil, Ne.symm hj0, Ne.symm hjl]
+    · simp [nu, vecMulVec, Pi.single_apply, hj0, hjl, Ne.symm hjl]
+    · simp [nu, vecMulVec, Pi.single_apply, hl.symm, hi0, hil]
+    · simp [nu, vecMulVec, Matrix.one_apply, Pi.single_apply, hil, hj0, hjl]
 
 theorem wZ_rot (T T' : ℝ) (ζ e : ℂ) : wZ T T' (ζ * e) = wZ T T' ζ * e := by
   unfold wZ; ring
@@ -720,8 +720,8 @@ theorem dOne_fix_last (φ : ℝ) (c : ℂ) :
   simp only [dOne]
   rw [mulVec_diagonal]
   by_cases hj : j = Fin.last k
-  · simp [dOne, hj]
-  · simp [dOne, hj, Pi.single_apply]
+  · simp [hj]
+  · simp [hj]
 
 theorem dTwo_fix_last (hk : 1 ≤ k) (φ : ℝ) (c : ℂ) :
     dTwo k φ *ᵥ (c • Pi.single (Fin.last k) 1) = c • Pi.single (Fin.last k) 1 := by
@@ -734,8 +734,8 @@ theorem dTwo_fix_last (hk : 1 ≤ k) (φ : ℝ) (c : ℂ) :
       have := congrArg Fin.val h
       simp at this
       omega
-    simp [dTwo, hj, h0]
-  · simp [dTwo, hj, Pi.single_apply]
+    simp [hj, h0]
+  · simp [hj]
 
 end block2
 
@@ -898,7 +898,6 @@ theorem rotation_wirtinger_holds : GTRRWirt := by
       ((0 : Fin r → ℂ), x.2 * Complex.I) 0 := by
     first
     | exact (hasDerivAt_const (0 : ℝ) x.1).prodMk h2
-    | exact (hasDerivAt_const (0 : ℝ) x.1).prod h2
   have hx : x = ((x.1, x.2 * Complex.exp ((((0 : ℝ) : ℂ)) * Complex.I)) : MA.E r) := by simp
   have hc := hu.hasFDerivAt.comp_hasDerivAt_of_eq (0 : ℝ) hγ hx
   have hdir1 : MA.dirE (M.vz (r := r)) = ((0 : Fin r → ℂ), (1 : ℂ)) := by simp [MA.dirE, M.vz]

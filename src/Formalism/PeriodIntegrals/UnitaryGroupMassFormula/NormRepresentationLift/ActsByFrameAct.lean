@@ -80,9 +80,8 @@ theorem tvMap_comp (e v : S.V) (l μ : E) (hee : S.hT e e = 0) (hev : S.hT e v =
     (hve : S.hT v e = 0) (y : S.V) :
     tvMap e (-v) μ (tvMap e v l y) = y + (S.hT e y * (l + S.hT v v + μ)) • e := by
   rw [tvMap_apply, tvMap_apply]
-  simp only [map_add (f := _), map_sub, map_smul, map_neg, LinearMap.neg_apply, LinearMap.add_apply,
-    LinearMap.sub_apply, LinearMap.smul_apply, hee, hev, hve, smul_eq_mul, mul_zero, add_zero,
-    sub_zero, smul_zero]
+  simp only [map_add (f := _), map_sub, map_smul, map_neg, LinearMap.neg_apply, hee, hev, hve, smul_eq_mul, mul_zero, add_zero,
+    sub_zero]
   module
 
 end PI.NRL
@@ -237,7 +236,7 @@ theorem tvMap_isom (e v : S.V) (l : E) (hee : S.hT e e = 0) (hev : S.hT e v = 0)
   rw [tvMap_apply, tvMap_apply]
   simp only [map_add (f := _), map_sub, map_smul, map_smulₛₗ, LinearMap.add_apply, LinearMap.sub_apply,
     LinearMap.smul_apply, hee, hev, hve, hxe, hxv, smul_eq_mul, starRingEnd_apply, star_mul',
-    mul_zero, zero_mul, add_zero, sub_zero, zero_add]
+    mul_zero, add_zero, sub_zero]
   linear_combination (star (S.hT e x) * S.hT e y) * hl
 
 def IntLat (Λ : Submodule (𝓞 E) S.V) : Prop := ∀ x ∈ Λ, ∀ y ∈ Λ, ∃ o : 𝓞 E, S.hT x y = (o : E)
@@ -301,22 +300,18 @@ theorem span_zero {s : Set S.V} {φ : S.V →ₗ[E] E} (h : ∀ y ∈ s, φ y = 
 variable {r : ℕ} {T : E}
 
 theorem e_mem_Xflag (F : LFlag S r T) (a : Fin r) (j : ℕ) (h : a.val < j) : F.fl.e a ∈ Xflag F j := by
-  show F.fl.e a ∈ Submodule.span E (F.fl.e '' {i | i.1 < j})
   exact Submodule.subset_span ⟨a, h, rfl⟩
 
 theorem e_mem_Xsp (F : LFlag S r T) (a : Fin r) : F.fl.e a ∈ Xsp F := by
-  show F.fl.e a ∈ Submodule.span E (Set.range F.fl.e)
   exact Submodule.subset_span ⟨a, rfl⟩
 
 theorem hT_e_frame (F : LFlag S r T) (a : Fin r) (b : Fin (r + 1)) : S.hT (F.fl.e a) (frame F b) = 0 := by
   show S.hT (F.fl.e a) (Fin.snoc (α := fun _ => S.V) F.fl.e F.fl.z b) = 0
   cases b using Fin.lastCases with
   | last =>
-    rw [Fin.snoc_last]
-    exact F.fl.z_orth a
+    simpa [Fin.snoc_last] using F.fl.z_orth a
   | cast c =>
-    rw [Fin.snoc_castSucc]
-    exact F.fl.e_iso a c
+    simpa [Fin.snoc_castSucc] using F.fl.e_iso a c
 
 theorem tv_mem_NLam (Λ : Submodule (𝓞 E) S.V) (hint : IntLat Λ) (F : LFlag S r T) (a : Fin r)
     (hea : F.fl.e a ∈ Λ) (v : S.V) (hv : v ∈ Λ) (hperp : ∀ i : Fin r, i ≤ a → S.hT v (F.fl.e i) = 0)
@@ -334,8 +329,6 @@ theorem tv_mem_NLam (Λ : Submodule (𝓞 E) S.V) (hint : IntLat Λ) (F : LFlag 
     have hc : ((-ov - l : 𝓞 E) : E) = -S.hT v v - (l : E) := by
       first
         | (rw [hov]; push_cast; ring)
-        | (rw [hov]; push_cast)
-        | simp [hov]
     have h := tvMap_comp (F.fl.e a) (-v) (-S.hT v v - (l : E)) (l : E) hee (by simp [hev])
       (by simp [hve]) y
     rw [neg_neg] at h
@@ -377,8 +370,6 @@ theorem actsBy_frameAct {n : ℕ} {φ : S.V ≃ₗ[E] S.V} {f : Fin n → S.V} {
     rw [Matrix.mul_apply]
     first
       | (push_cast; rfl)
-      | push_cast
-      | simp
   unfold ActsBy at h
 
   simp only [frameAct, map_sum, map_smul, h, Finset.smul_sum, smul_smul, hcoe, Finset.sum_smul]
@@ -392,12 +383,7 @@ theorem actsBy_mul {n : ℕ} {φ ψ : S.V ≃ₗ[E] S.V} {f : Fin n → S.V} {M 
   rw [h2 b, actsBy_frameAct h1 N b]
 
 theorem frameAct_one {n : ℕ} (f : Fin n → S.V) (b : Fin n) : frameAct f 1 b = f b := by
-  unfold frameAct
-  rw [Finset.sum_eq_single b]
-  · simp
-  · intro a _ hab
-    simp [Matrix.one_apply_ne hab]
-  · simp
+  simp [frameAct, Matrix.one_apply, Finset.sum_ite_eq']
 
 theorem actsBy_one {n : ℕ} (f : Fin n → S.V) : ActsBy (1 : S.V ≃ₗ[E] S.V) f 1 := by
   intro b

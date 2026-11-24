@@ -84,7 +84,7 @@ theorem _root_.GlobalTheory.T.flippedLocalTotalTensor_fixed_by_innerVertex_level
     ∀ (κ : GL (Fin ((locGrid G t w).rank (j + 1, D.R.m))) (Kw w)), κ ∈ givenLevel G t w (j + 1, D.R.m) →
     (locGrid G t w).pathAct .one (oppositePath D.R.m) (Pi.mulSingle (j + 1, D.R.m) κ) (Tflip W S.B t Φ w) =
       Tflip W S.B t Φ w := by
-  first | exact @GlobalTheory.FlipVertexInv.main | exact GlobalTheory.FlipVertexInv.main | (intros; apply GlobalTheory.FlipVertexInv.main <;> assumption)
+  first | exact @GlobalTheory.FlipVertexInv.main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.FlippedLocalTotalTensorFixedByInnerVertexLevelStatement =====
@@ -207,7 +207,7 @@ theorem _root_.GlobalTheory.T.termDatum_rowMove_level_edgeFactors : ∀ {D : D7}
     ((oppositePath D.R.m).map ((locGrid G t w.1).edgeFactor .one (Pi.mulSingle (j + 1, D.R.m) κ))).prod *
       (S.term t Φ β w).datum x (Function.update (Function.update y j (y j * κ.val)) (j + 1) (κ⁻¹.val * y (j + 1))) =
     (S.term t Φ β w).datum x y := by
-  first | exact @GlobalTheory.FlatRowMove.term_datum_move | exact GlobalTheory.FlatRowMove.term_datum_move | (intros; apply GlobalTheory.FlatRowMove.term_datum_move <;> assumption)
+  first | exact @GlobalTheory.FlatRowMove.term_datum_move
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.TermDatumRowMoveLevelEdgeFactorsStatement =====
@@ -228,7 +228,7 @@ theorem _root_.GlobalTheory.T.determinantIdeleAtSplitPlace_moved_gridNode : ∀ 
     detIdl (idemAt w) (G.V (.grid (j + 1) D.R.m)) (moved S j k) =
       GlobalTheory.LFun.locIdele D.host.F w (gdet (inBasis (rank_vertex G t w (X := (j + 1, D.R.m)) ⟨hj.le, le_rfl⟩)
         (S.B.β (j + 1) D.R.m) w (finG (G.V (.grid (j + 1) D.R.m)) k))) := by
-  first | exact @GlobalTheory.RowDetLocal.detIdl_moved_eq_locIdele | exact GlobalTheory.RowDetLocal.detIdl_moved_eq_locIdele | (intros; apply GlobalTheory.RowDetLocal.detIdl_moved_eq_locIdele <;> assumption)
+  first | exact @GlobalTheory.RowDetLocal.detIdl_moved_eq_locIdele
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DeterminantIdeleAtSplitPlaceMovedGridNodeStatement =====
@@ -283,10 +283,10 @@ theorem oppositePath_prod_mulSingle {k : Type} [Field k] [ValuativeRel k] [Topol
     apow_of_valuation_eq_one (valuation_gdet_of_mem_KO (Assignment.one.read_mem_KO hκ)) z
   have hj1 : (j + 1 + 1, Γ.m) ≠ (j + 1, Γ.m) := by simp
   have hj0 : (j, Γ.m) ≠ (j + 1, Γ.m) := by simp
-  simp only [Grid.edgeFactor, Edge.src, Edge.tgt, ha, mul_one, hg, Pi.mulSingle_eq_of_ne hj1,
+  simp only [Grid.edgeFactor, Edge.src, Edge.tgt, mul_one, hg, Pi.mulSingle_eq_of_ne hj1,
     Pi.mulSingle_eq_of_ne hj0, Pi.mulSingle_eq_same, hκa, map_one, hap, Units.val_one, inv_one, one_mul]
   simp only [Grid.kappa, Grid.blockChar, MonoidHom.div_apply, Units.val_div_eq_div_val,
-    Units.val_inv_eq_inv_val, Nat.add_sub_cancel]
+    Units.val_inv_eq_inv_val]
   have h1 := Units.ne_zero (Γ.chi (Γ.m - (j + 1)) (gdet κ))
   have h2 := Units.ne_zero (Γ.chi (Γ.m - j) (gdet κ))
   have h3 := Units.ne_zero ((Γ.eta ^ ((Γ.rank (j + 1, Γ.m) + 1) % 2)) (gdet κ))
@@ -312,7 +312,7 @@ theorem _root_.GlobalTheory.T.oppositePath_edgeFactor_prod_integral_vertex : ∀
     j + 1 < Γ.m → ∀ (κ : GL (Fin (Γ.rank (j + 1, Γ.m))) k), κ ∈ GlobalTheory.SplitWeil.KO k _ →
     ((oppositePath Γ.m).map (Γ.edgeFactor .one (Pi.mulSingle (j + 1, Γ.m) κ))).prod =
       ((Γ.chi (Γ.m - (j + 1)) (gdet κ) : ℂˣ) : ℂ) * (((Γ.chi (Γ.m - j) (gdet κ))⁻¹ : ℂˣ) : ℂ) := by
-  first | exact @GlobalTheory.OppositeEdges.oppositePath_prod_mulSingle | exact GlobalTheory.OppositeEdges.oppositePath_prod_mulSingle | (intros; apply GlobalTheory.OppositeEdges.oppositePath_prod_mulSingle <;> assumption)
+  first | exact @GlobalTheory.OppositeEdges.oppositePath_prod_mulSingle
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.OppositePathEdgeFactorProdIntegralVertexStatement =====
@@ -420,7 +420,7 @@ theorem _root_.GlobalTheory.T.splitPlaceScalars_mul_eq_oppositePath_edgeFactors 
     ((oppositePath D.R.m).map ((locGrid G t w).edgeFactor .one (Pi.mulSingle (j + 1, D.R.m)
       (inBasis (rank_vertex G t w (X := (j + 1, D.R.m)) ⟨hj.le, le_rfl⟩) (S.B.β (j + 1) D.R.m) w
         (finG (G.V (.grid (j + 1) D.R.m)) k))))).prod := by
-  first | exact @GlobalTheory.RowVacScalar.splitScal_mul_eq_oppositePath | exact GlobalTheory.RowVacScalar.splitScal_mul_eq_oppositePath | (intros; apply GlobalTheory.RowVacScalar.splitScal_mul_eq_oppositePath <;> assumption)
+  first | exact @GlobalTheory.RowVacScalar.splitScal_mul_eq_oppositePath
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SplitPlaceScalarsMulEqOppositePathEdgeFactorsStatement =====
@@ -496,7 +496,7 @@ theorem _root_.GlobalTheory.T.vacuum_scalars_eq_product_edge_factors_row : ∀ {
     c₁ * c₂ = ∏ w : locPl G t, ((oppositePath D.R.m).map ((locGrid G t w.1).edgeFactor .one (Pi.mulSingle (j + 1, D.R.m)
       (inBasis (rank_vertex G t w.1 (X := (j + 1, D.R.m)) ⟨hj.le, le_rfl⟩) (S.B.β (j + 1) D.R.m) w.1
         (finG (G.V (.grid (j + 1) D.R.m)) k))))).prod := by
-  first | exact @GlobalTheory.RowVacScalar.scalars_eq_edgeFactors | exact GlobalTheory.RowVacScalar.scalars_eq_edgeFactors | (intros; apply GlobalTheory.RowVacScalar.scalars_eq_edgeFactors <;> assumption)
+  first | exact @GlobalTheory.RowVacScalar.scalars_eq_edgeFactors
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.VacuumScalarsEqProductEdgeFactorsRowStatement =====
@@ -575,16 +575,16 @@ theorem scale_movFn_apply (S : GridChoice W U) {t : T} (j : ℕ) (hj : j + 1 < D
         v (.inr ⟨j + 1, hj⟩) (movPt S j hj k z (.inr ⟨j + 1, hj⟩)) :=
       (movFn_two S j hj k v (z (.inr ⟨j + 1, hj⟩))).trans (congrArg (v _) (movPt_two S j hj k z).symm)
     rw [Pi.smul_apply, smul_eq_mul, e1]
-    simp [scaleAt, Pi.mulSingle_apply, hne.symm]
+    simp [scaleAt, hne.symm]
   · by_cases h1' : a = .inr ⟨j, by omega⟩
     · subst h1'
       have e1 : movFn S j hj k v (.inr ⟨j, by omega⟩) (z (.inr ⟨j, by omega⟩)) =
           v (.inr ⟨j, by omega⟩) (movPt S j hj k z (.inr ⟨j, by omega⟩)) :=
         (movFn_one S j hj k v (z (.inr ⟨j, by omega⟩))).trans (congrArg (v _) (movPt_one S j hj k z).symm)
       rw [Pi.smul_apply, smul_eq_mul, e1]
-      simp [scaleAt, Pi.mulSingle_apply, hne, Function.update_of_ne hne]
+      simp [scaleAt, hne]
     · rw [Pi.smul_apply, smul_eq_mul, movFn_other S j hj k v a h1' h2', movPt_other S j hj k z a h1' h2']
-      simp [scaleAt, Pi.mulSingle_apply, h1', h2', Function.update_of_ne h1', Function.update_of_ne h2']
+      simp [scaleAt, h1', h2']
 
 end GlobalTheory.RowVertexInv
 
@@ -743,7 +743,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 
 theorem _root_.GlobalTheory.T.sum_prod_expansion_functions_rowVertex_invariant : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T} (S : GridChoice W U) {t : T} {Φ : G.Datum} {β : CosFam G t} {τ : PureDat G t →₀ ℂ} {μ₀ : T},
     L.Is μ₀ → (Nat.Coprime D.host.pde (D.host.QS * D.host.q) ∧ Nat.Coprime D.host.pde' (D.host.QS * D.host.q)) → (∀ P ∈ L.Q t, ((Ideal.absNorm D.host.ccK : ℕ) : 𝓞 D.host.E) ∉ P.asIdeal) → t ∈ U → β ∈ S.supp t Φ → S.IsExpansion t Φ β τ → (∀ d ∈ τ.support, (∀ j, S.Z.HasVec (d.1 j)) ∧ ∀ i, S.Z.HasVec (d.2 i)) → ∀ (j : ℕ) (hj : j + 1 < D.R.m) (k : FinPt G (.grid (j + 1) D.R.m)), finG (G.V (.grid (j + 1) D.R.m)) k ∈ S.levRow t (j + 1) hj.le → ∀ c₁ c₂ : ℂ, W.om (.chi j D.R.m) (G.toPair (.chi j D.R.m) 1 (moved S j k)) (S.Z.vac (.chi j D.R.m)) = c₁ • S.Z.vac (.chi j D.R.m) → W.om (.chi (j + 1) D.R.m) (G.toPair (.chi (j + 1) D.R.m) (moved S j k) 1) (S.Z.vac (.chi (j + 1) D.R.m)) = c₂ • S.Z.vac (.chi (j + 1) D.R.m) → ∀ z : ∀ a, WO (G.pS (positionPair t D.R.m a)) (G.pT (positionPair t D.R.m a)), (τ.sum fun d c => c * ∏ a, (scaleAt j hj c₁ c₂ a • movFn S j hj k (fnOf d) a) (z a)) = τ.sum fun d c => c * ∏ a, fnOf d a (z a) := by
-  first | exact @GlobalTheory.RowVertexInv.sum_prod_scale_movFn_eq | exact GlobalTheory.RowVertexInv.sum_prod_scale_movFn_eq | (intros; apply GlobalTheory.RowVertexInv.sum_prod_scale_movFn_eq <;> assumption)
+  first | exact @GlobalTheory.RowVertexInv.sum_prod_scale_movFn_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SumProdExpansionFunctionsRowVertexInvariantStatement =====
@@ -799,7 +799,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar GlobalTheory.Local
 
 theorem _root_.GlobalTheory.T.expansionTensorSum_invariant_gridRowLevel : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} {W : G.Weil} {U : Set T} (S : GridChoice W U) {t : T} {Φ : G.Datum} {β : CosFam G t} {τ : PureDat G t →₀ ℂ} {μ₀ : T},
     L.Is μ₀ → (Nat.Coprime D.host.pde (D.host.QS * D.host.q) ∧ Nat.Coprime D.host.pde' (D.host.QS * D.host.q)) → (∀ P ∈ L.Q t, ((Ideal.absNorm D.host.ccK : ℕ) : 𝓞 D.host.E) ∉ P.asIdeal) → t ∈ U → β ∈ S.supp t Φ → S.IsExpansion t Φ β τ → (∀ d ∈ τ.support, (∀ j, S.Z.HasVec (d.1 j)) ∧ ∀ i, S.Z.HasVec (d.2 i)) → ∀ (j : ℕ) (hj : j + 1 < D.R.m) (k : FinPt G (.grid (j + 1) D.R.m)), finG (G.V (.grid (j + 1) D.R.m)) k ∈ S.levRow t (j + 1) hj.le → ∀ z : ∀ a, WO (G.pS (positionPair t D.R.m a)) (G.pT (positionPair t D.R.m a)), (τ.sum fun d c => c * ∏ a, moveV S j hj k (vecOf S d) a (z a)) = τ.sum fun d c => c * ∏ a, vecOf S d a (z a) := by
-  first | exact @GlobalTheory.RowVertexInv.sum_prod_moveV_eq | exact GlobalTheory.RowVertexInv.sum_prod_moveV_eq | (intros; apply GlobalTheory.RowVertexInv.sum_prod_moveV_eq <;> assumption)
+  first | exact @GlobalTheory.RowVertexInv.sum_prod_moveV_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExpansionTensorSumInvariantGridRowLevelStatement =====
@@ -967,7 +967,7 @@ theorem negGA_mem_GfC_row (V : HSp D) {g : GA D V} (hg : g ∈ GfC V) : negGA V 
 theorem ker_mul_row (W : G.Weil) (p : Pair T) (F : WO (G.pS p) (G.pT p) → ℂ) (g k : GA D (G.V p.small))
     (h k' : GA D (G.V p.big)) : W.ker p F (g * k) (h * k') = W.ker p (W.om p (G.toPair p k k') F) g h := by
   have e : G.toPair p (g * k) (h * k') = G.toPair p g h * G.toPair p k k' := by
-    cases p <;> simp [GridData.toPair, map_mul, Prod.ext_iff]
+    cases p <;> simp [GridData.toPair, map_mul]
   unfold GridData.Weil.ker
   rw [e]
   simp only [thetaKO, Prod.mk.eta, map_mul, Module.End.mul_apply]
@@ -1181,7 +1181,7 @@ theorem _root_.GlobalTheory.T.expansionPairing_invariant_innerVertex_level : ∀
     ∀ (x : ∀ j, FinPt G (.top j)) (y : ∀ i, FinPt G (.grid i D.R.m)) (i : ℕ) (hi : 0 < i) (him : i < D.R.m) (k : FinPt G (.grid i D.R.m)),
       finG (G.V (.grid i D.R.m)) k ∈ S.levRow t i him.le →
       pairPts S τ x (Function.update y i (y i * k)) (Ψ (x 0)) (F (Function.update y i (y i * k) 0)) = pairPts S τ x y (Ψ (x 0)) (F (y 0)) := by
-  first | exact @GlobalTheory.RowVertexInv.pairPts_update_row | exact GlobalTheory.RowVertexInv.pairPts_update_row | (intros; apply GlobalTheory.RowVertexInv.pairPts_update_row <;> assumption)
+  first | exact @GlobalTheory.RowVertexInv.pairPts_update_row
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExpansionPairingInvariantInnerVertexLevelTer =====

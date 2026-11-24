@@ -356,7 +356,7 @@ theorem frames_at_point : ∀ {X : Scheme.{0}} {Ω : Type} [Field Ω] (ξ : Spec
     by_cases hx : x c₁ ^ m = 0
     · exfalso
       have h2 := congrFun (congrFun hBC a) a
-      simp [Matrix.mul_apply, hx, Matrix.one_apply] at h2
+      simp [Matrix.mul_apply, hx] at h2
     · field_simp
   · intro j a
     exact hCreg j a
@@ -498,7 +498,7 @@ theorem _root_.GlobalTheory.T.minor_expansion_of_scaled_product : ∀ {Ψ : Type
     (S : Finset (Fin (p + q))) (hS : S.card = (t.2 : ℕ) + 1),
     ∑ I, cMin A t J I * minorIJ (tMat Ts τ * h) I S =
       x ^ (m t.1 * ((t.2 : ℕ) + 1)) * ∑ I, cMin C t J I * minorIJ h I S := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.PB.FMX.Frm.sum_cMin_tMat_mul | exact GlobalTheory.CompanionTheory.Ar.PB.FMX.Frm.sum_cMin_tMat_mul | (intros; apply GlobalTheory.CompanionTheory.Ar.PB.FMX.Frm.sum_cMin_tMat_mul <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.PB.FMX.Frm.sum_cMin_tMat_mul
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.MetricProofs.MinorExpansionOfScaledProductStatement =====
@@ -657,7 +657,7 @@ theorem prod_stepFac [Fintype Ψ] [Fintype K₀] (z : Ω) (s : Ψ ⊕ Ψ) (hz : 
       · subst e
         have := a.2
         omega
-      · simp [stepFac, e]
+      · simp [stepFac]
 
 theorem prod_xb_zpow_bF {Ψ : Type} [Fintype Ψ] {p q : ℕ} {Ω : Type} [Field Ω] {n : Ψ ⊕ Ψ → ℕ}
     (A : ∀ s, Matrix (Fin (n s)) (Fin (rk Ψ p q s)) Ω) {K₀ : Type} [Fintype K₀] {J₀ : K₀ → Type}

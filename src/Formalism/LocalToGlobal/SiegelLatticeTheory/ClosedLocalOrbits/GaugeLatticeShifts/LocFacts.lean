@@ -258,8 +258,7 @@ namespace PI.LocLatEq.W
 theorem core_fg_of_le {R M : Type*} [CommRing R] [IsNoetherianRing R] [AddCommGroup M]
     [Module R M] {N P : Submodule R M} (hN : N.FG) (h : P ≤ N) : P.FG := by
   have : IsNoetherian R N := isNoetherian_of_fg_of_noetherian N hN
-  have h1 : (P.comap N.subtype).FG := IsNoetherian.noetherian _
-  have h2 := h1.map N.subtype
+  have h2 := (IsNoetherian.noetherian (P.comap N.subtype)).map N.subtype
   rwa [Submodule.map_comap_subtype, inf_eq_right.2 h] at h2
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
@@ -525,7 +524,7 @@ theorem coeff_mem (h2 : Module.finrank F E = 2) (A : LocAt F E sig p) (a : E)
     simp only [Matrix.cons_val_zero, Matrix.cons_val_one] at hx
     have : A.ιE x = A.ιF (B.repr x 0) • (1 : A.Ep) + A.ιF (B.repr x 1) • A.ιE a := by
       conv_lhs => rw [← hx]
-      simp only [map_add (f := _), map_mul, map_one, Algebra.smul_def, A.compat, mul_one]
+      simp only [map_add (f := _), map_mul, Algebra.smul_def, A.compat, mul_one]
     rw [SetLike.mem_coe, this]
     apply Submodule.add_mem
     · exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨0, rfl⟩)

@@ -289,7 +289,7 @@ theorem repMass_eq_prod_psi (hK : Formalism.HermitianLatticesTheory.IsCMUnram K)
     (hL : Submodule.IsFullLattice K L) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {c : ℝ}
     (hc : MassConst K F (finrank K V - 1) c) :
     repMass h L (h S.x₀ S.x₀) = c * ∏' 𝔭 : {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}, psiP S L 𝔭.1 :=
-  MassProductFormula.repMass_eq_prod_psi' hK hF hs hd S (by first | exact hL | exact hL.toIsLattice) hLi hc
+  MassProductFormula.repMass_eq_prod_psi' hK hF hs hd S (by first | exact hL) hLi hc
 
 end Formalism.HermitianLattices.Ext.L3
 end -- clump:auto
@@ -624,7 +624,7 @@ def piBasis : Basis (Σ _ : ι, Free.ChooseBasisIndex ℤ (𝓞 K)) ℝ (ι → 
 theorem fundamentalDomain_piBasis : ZSpan.fundamentalDomain (piBasis K ι) =
     Set.pi Set.univ fun _ => ZSpan.fundamentalDomain (latticeBasis K) := by
   ext y
-  simp only [ZSpan.mem_fundamentalDomain, Set.mem_pi, Set.mem_univ, true_implies, forall_const, piBasis,
+  simp only [ZSpan.mem_fundamentalDomain, Set.mem_pi, Set.mem_univ, forall_const, piBasis,
     Pi.basis_repr, Sigma.forall]
 
 theorem mem_span_piBasis (y : ι → mixedSpace K) :

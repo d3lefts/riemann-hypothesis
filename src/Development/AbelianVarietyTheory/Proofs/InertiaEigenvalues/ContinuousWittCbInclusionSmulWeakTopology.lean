@@ -325,7 +325,7 @@ theorem high_pow_coeff_mem_span_pow :
   have hu : WittVector.frobenius u = y.shift 1 := by
     ext n
     rw [WittVector.coeff_frobenius_charP]
-    simp only [u, WittVector.coeff_mk]
+    simp only [u]
     exact frobenius_apply_frobeniusEquiv_symm R p _
   have hyp : y = u * (p : WittVector p R) := by
     rw [hyV, ← hu, WittVector.verschiebung_frobenius]
@@ -388,7 +388,6 @@ theorem lt_of_mem_span_pow {l : ℕ} [Fact l.Prime] (ϖ : OCb l) (hϖ : ¬ IsUni
   obtain ⟨m₀, b, hb⟩ := hdiv a ha
   refine ⟨m₀ + 1, fun x hx => ?_⟩
   obtain ⟨t, rfl⟩ := Ideal.mem_span_singleton'.1 hx
-  change Valued.v _ < Valued.v _
   rw [← not_le, hle]
   rintro ⟨e, he⟩
   rw [eq_div_iff hd0] at he
@@ -605,7 +604,7 @@ theorem linearMap_pi_continuous_coord : ∀ {l : ℕ} [Fact l.Prime] {O M ι : T
     rw [LinearMap.pi_apply_eq_sum_univ f c]
     refine Finset.sum_congr rfl fun i _ => ?_
     have hc : (fun j => if i = j then (1:O) else 0) = Pi.single i 1 := by
-      funext j; by_cases h : i = j <;> simp [Pi.single_apply, h, eq_comm]
+      funext j; by_cases h : i = j <;> simp [h, eq_comm]
     rw [hc]
     conv_lhs => rw [← bO.sum_equivFun (c i)]
     rw [Finset.sum_smul]

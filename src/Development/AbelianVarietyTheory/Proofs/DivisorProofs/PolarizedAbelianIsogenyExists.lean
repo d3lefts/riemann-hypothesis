@@ -87,7 +87,7 @@ theorem _root_.GlobalTheory.T.hermitian_forms_add_of_factor_product : ∀ (g : �
     M₁.IsLB → M₂.IsLB → M₃.IsLB → u₂.ex = u₁.ex → u₃.ex = u₁.ex →
     IsFactorAH u₁ H₁ χ₁ → IsFactorAH u₂ H₂ χ₂ → IsFactorAH u₃ H₃ χ₃ → H₃ = H₁ + H₂ →
     LBIso (abelian₂ A M₂) (LB.div (abelian₂ A M₃) (abelian₂ A M₁)) := by
-  first | exact @GlobalTheory.TorusRM.lbIso_lam_of_add | exact GlobalTheory.TorusRM.lbIso_lam_of_add | (intros; apply GlobalTheory.TorusRM.lbIso_lam_of_add <;> assumption)
+  first | exact @GlobalTheory.TorusRM.lbIso_lam_of_add
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto
@@ -129,7 +129,7 @@ def trivUnif {L : LB A.left} {g : ℕ} (u : HolUnif A L g) : HolUnif A (LB.triv 
   fr_hol := fun _ => differentiableOn_const 1
   fr_ne := fun _ _ _ => one_ne_zero
   fr_compat := fun i j z h => by
-    simp [valAt', valAt, h]
+    simp [valAt', valAt]
 
 theorem trivUnif_factor {L : LB A.left} {g : ℕ} (u : HolUnif A L g) :
     IsFactorAH (trivUnif u) 0 (fun _ => 1) :=

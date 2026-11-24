@@ -542,7 +542,7 @@ theorem sigNeg_card_le {n ι : Type} [Fintype n] [DecidableEq n] [Fintype ι]
 theorem linIndep_map {K L ι n : Type} [Field K] [Field L] [Fintype ι] [Fintype n] [DecidableEq ι]
     [DecidableEq n] (τ : K →+* L) (c : ι → n → K) (hc : LinearIndependent K c) :
     LinearIndependent L (fun a => fun i => τ (c a i)) := by
-  first | exact Bl.SecondBlockLemmaJ.goal1 .. | (apply Bl.SecondBlockLemmaJ.goal1 <;> assumption) | (intros; apply Bl.SecondBlockLemmaJ.goal1 <;> assumption) | (apply @Bl.SecondBlockLemmaJ.goal1 <;> assumption) | (intros; apply @Bl.SecondBlockLemmaJ.goal1 <;> assumption) | (apply @Bl.SecondBlockLemmaJ.goal1 <;> first | assumption | infer_instance)
+  first | (apply Bl.SecondBlockLemmaJ.goal1 <;> assumption)
 
 end PI.UnitaryGroupMassFormula.CntFormula.WbDefC
 end -- clump:auto
@@ -642,7 +642,6 @@ theorem tau_negT (D : D7) (u : D.what₂.Word) (φ : D.host.E →+* ℂ) : (φ (
   have hT := (D.mem u).A.T_prime.pos
   first
     | simp [Tn, hT]
-    | (unfold Tn; simp; exact hT)
 
 theorem rank_VS (D : D7) : (VS D).rank = D.R.k + D.R.rS + (D.R.rS + 1) := by
   unfold VS

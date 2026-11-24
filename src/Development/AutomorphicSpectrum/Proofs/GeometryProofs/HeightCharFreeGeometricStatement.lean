@@ -208,7 +208,7 @@ theorem charpoly_lsmul (E : Type) [Field E] [NumberField E] (Λ : Type) [AddComm
       (LinearMap.lsmul (𝓞 E) Λ (algebraMap ℤ (𝓞 E) t - a)).restrictScalars ℤ := by
     apply LinearMap.ext
     intro x
-    simp [sub_smul, Module.algebraMap_end_apply, Int.cast_smul_eq_zsmul]
+    simp [Int.cast_smul_eq_zsmul]
   have h2 : algebraMap ℤ (Module.End ℤ (𝓞 E)) t - (Algebra.lmul ℤ (𝓞 E) a : Module.End ℤ (𝓞 E)) =
       Algebra.lmul ℤ (𝓞 E) (algebraMap ℤ (𝓞 E) t - a) := by
     rw [map_sub, AlgHom.commutes]
@@ -240,7 +240,7 @@ theorem corank_le {M : Type} [AddCommGroup M] [Module.Free ℤ M] [Module.Finite
     by_cases hij : i = j
     · subst hij
       simp
-    · simp [Matrix.diagonal_apply, Finsupp.single_apply, hij, Ne.symm hij]
+    · simp [hij]
   have hQ : IsUnit (LinearMap.toMatrix t s (e : M →ₗ[ℤ] LinearMap.range f)).det := by
     have h1 : LinearMap.toMatrix s t (e.symm : LinearMap.range f →ₗ[ℤ] M) *
         LinearMap.toMatrix t s (e : M →ₗ[ℤ] LinearMap.range f) = 1 := by
@@ -450,7 +450,7 @@ theorem chi_injective {a b : Ch} (h : chi (S := Sp k) Ch a = chi (S := Sp k) Ch 
   rw [torusGamma_chi, torusGamma_chi] at this
   by_contra hab
   have h3 := congrArg (fun p => p.coeff a) this
-  simp [AddMonoidAlgebra.coeff_single, Finsupp.single_apply, Ne.symm hab] at h3
+  simp [AddMonoidAlgebra.coeff_single, Ne.symm hab] at h3
 
 
 open Rosenlicht GlobalTheory.Diag in
@@ -891,7 +891,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.abelian_quotient_lattice : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (X : Scheme.{0}) (t : SAB H X) (k : Type) [Field k] [IsAlgClosed k] (p : ℕ) [Fact p.Prime] [CharP k p] (x : Sp k ⟶ X) (Q : AbQuot t x) (d d' : ℕ) (g : GermAt t x d) (gB : GermAt Q.tB (𝟙 (Sp k)) d'), ∃ (Λ : Type) (_ : AddCommGroup Λ) (_ : Module (𝓞 E) Λ) (_ : Module.Free ℤ Λ) (_ : Module.Finite ℤ Λ) (P : Matrix (Fin d') (Fin d) k) (j : TensorProduct ℤ k Λ →ₗ[k] (Fin d → k)), Q.IsDiff g gB P ∧ Function.Surjective P.mulVec ∧ Function.Injective j ∧ (∀ u, P.mulVec u = 0 ↔ u ∈ LinearMap.range j) ∧ (∀ a, P * rho g.B a = rho gB.B a * P) ∧ ∀ a v, j (LinearMap.baseChange k ((LinearMap.lsmul (𝓞 E) Λ a).restrictScalars ℤ) v) = (rho g.B a).mulVec (j v) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.LieSeq.lie_seq | exact GlobalTheory.CompanionTheory.Ar.LieSeq.lie_seq | (intros; apply GlobalTheory.CompanionTheory.Ar.LieSeq.lie_seq <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.LieSeq.lie_seq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.AbelianQuotientLatticeStatement =====
@@ -907,7 +907,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.picard_class_trivial_by_seesaw : ∀ (k : Type) [Field k] [IsAlgClosed k] (G : Over (Sp k)) [GrpObj G] [IsCommMonObj G], IsSemiAbelian G → ∀ (T : TorusExtension G) (Y : Over (Sp k)), Smooth Y.hom → GeometricallyConnected Y.hom → ∀ (y₀ : 𝟙_ (Over (Sp k)) ⟶ Y) (c : Pic (T.B ⊗ Y).left), pull (lift (fst G Y ≫ T.q) (snd G Y)).left c = 0 → pull (lift (𝟙 T.B) (toUnit T.B ≫ y₀)).left c = 0 → c = 0 := by
-  first | exact @GlobalTheory.CompanionTheory.TorusPic.pic_inj | exact GlobalTheory.CompanionTheory.TorusPic.pic_inj | (intros; apply GlobalTheory.CompanionTheory.TorusPic.pic_inj <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.TorusPic.pic_inj
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.PicardClassTrivialBySeesawStatement =====
@@ -1145,7 +1145,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.abelian_quotient_of_power_fns : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (X : Scheme.{0}) (t : SAB H X), PowFns t → ∀ (k : Type) [Field k] [IsAlgClosed k] (p : ℕ) [Fact p.Prime] [CharP k p] (x : Sp k ⟶ X), GeomPF t x → Nonempty (AbQuot t x) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.AbQ.exists_abQuot | exact GlobalTheory.CompanionTheory.Ar.AbQ.exists_abQuot | (intros; apply GlobalTheory.CompanionTheory.Ar.AbQ.exists_abQuot <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.AbQ.exists_abQuot
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.AbelianQuotientOfPowerFnsStatement =====
@@ -1181,7 +1181,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.exists_formal_germ_local : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (X0 : Scheme.{0}) (t : SAB H X0), PowFns t → ∀ (S : Type) [CommRing S] [IsLocalRing S] (x : Sp S ⟶ X0), ∃ d, Nonempty (GermAt t x d) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Conj.germAt_exists_of_isLocalRing | exact GlobalTheory.CompanionTheory.Ar.Conj.germAt_exists_of_isLocalRing | (intros; apply GlobalTheory.CompanionTheory.Ar.Conj.germAt_exists_of_isLocalRing <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Conj.germAt_exists_of_isLocalRing
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsFormalGermLocalStatement =====
@@ -1222,7 +1222,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.proper_has_power_fns : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (k : Type) [Field k] [IsAlgClosed k] (tB : SAB H (Sp k)), IsProper tB.G.hom → PowFns tB := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Conj.ProperPowFns.powFns_of_proper_algClosed | exact GlobalTheory.CompanionTheory.Ar.Conj.ProperPowFns.powFns_of_proper_algClosed | (intros; apply GlobalTheory.CompanionTheory.Ar.Conj.ProperPowFns.powFns_of_proper_algClosed <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Conj.ProperPowFns.powFns_of_proper_algClosed
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.ProperHasPowerFnsStatement =====
@@ -1526,7 +1526,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.height_char_free_geometric : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (X : Scheme.{0}) (t : SAB H X), PowFns t → ∀ (k : Type) [Field k] [IsAlgClosed k] (p : ℕ) [Fact p.Prime] [CharP k p] (x : Sp k ⟶ X), GeomPF t x → ∀ (d r : ℕ) (g : GermAt t x d), HChar g.B r → HFree g.B r := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.hfree_geom | exact GlobalTheory.CompanionTheory.Ar.Flat.hfree_geom | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.hfree_geom <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.hfree_geom
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.HeightCharFreeGeometricStatement =====

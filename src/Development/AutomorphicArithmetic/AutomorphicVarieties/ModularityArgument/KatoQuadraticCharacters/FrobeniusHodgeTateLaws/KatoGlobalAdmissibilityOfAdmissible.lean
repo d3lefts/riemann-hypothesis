@@ -102,7 +102,7 @@ theorem _root_.GlobalTheory.T.untwisted_representation_ordinary_triangular_shape
     (∀ s ∈ Ine (F := ℚ) A, (ρ s : Matrix (Fin 2) (Fin 2) (Qbar l)) 1 1 = 1) ∧
     ∃ F : Finset Ω, ∀ s ∈ Ine (F := ℚ) A, (∀ y ∈ F, s y = y) →
       (ρ s : Matrix (Fin 2) (Fin 2) (Qbar l)) 0 0 = ((cycZ ℚ Ω l s : ℤ_[l]) : Qbar l) ^ (2 * e) := by
-  first | (exact @GlobalTheory.RhoAdm.rho_ordinary_shape) | (exact GlobalTheory.RhoAdm.rho_ordinary_shape) | (intros; apply GlobalTheory.RhoAdm.rho_ordinary_shape  <;> assumption)
+  first | (exact @GlobalTheory.RhoAdm.rho_ordinary_shape)
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.FoundationProofs.UntwistedRepresentationOrdinaryTriangularShapeStatement =====
@@ -562,7 +562,7 @@ theorem UpperTheory.V.Z.Kato.Joint.chiQuad :
       rw [map_inv]
       rfl
     rw [hw] at hdet
-    simp only [mul_inv_rev, inv_inv, Units.val_mul, Units.val_pow_eq_pow_val, Units.val_zpow_eq_zpow_val,
+    simp only [mul_inv_rev, inv_inv, Units.val_mul, Units.val_zpow_eq_zpow_val,
       Units.val_inv_eq_inv_val, map_mul, map_pow, map_inv₀, map_zpow₀, hcyc, map_natCast] at hdet
     set a := ι ((χ σ : (Qbar l)ˣ) : Qbar l) with ha_def
     set δ := ι ((dt W σ : (Qbar l)ˣ) : Qbar l) with hδ_def
@@ -583,7 +583,6 @@ theorem UpperTheory.V.Z.Kato.Joint.chiQuad :
     show a ^ 4 * g.χ (u σ : ZMod g.M) ^ 2 = 1
     rw [hus, hχp, mul_pow, hδ]
     field_simp
-    try ring
   obtain ⟨c, hc1, hcd⟩ := Nat.chineseRemainder ((Nat.Prime.coprime_iff_not_dvd hlp).mpr hl) 1 d
   have hcop : c.Coprime (l * g.M) := by
     apply Nat.Coprime.mul_right

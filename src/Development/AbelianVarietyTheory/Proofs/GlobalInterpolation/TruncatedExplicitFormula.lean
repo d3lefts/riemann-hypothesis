@@ -2,11 +2,10 @@ module
 
 public import Mathlib.Analysis.Analytic.Order
 public import Mathlib.Analysis.CStarAlgebra.Classes
-public import Mathlib.Analysis.Calculus.Deriv.Mul
-public import Mathlib.Analysis.Calculus.Deriv.Pow
 public import Mathlib.NumberTheory.LSeries.DirichletContinuation
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.CompletedLFunctionNeZeroOfReNonpos
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ImportsMore
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LogDerivEqOrderDivAddAnalytic
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LogDerivLFunctionStrip
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.AnalyticAtDslope
 public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsBoundRight
@@ -17,10 +16,9 @@ public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.Trunca
 import Mathlib.Algebra.Order.Floor.Extended
 import Mathlib.Algebra.Order.Floor.Semifield
 import Mathlib.Algebra.Order.Interval.Basic
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
 import Mathlib.Analysis.Normed.Algebra.GelfandRadius
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Combinatorics.Enumerative.DyckWord
 import Mathlib.Combinatorics.SimpleGraph.Triangle.Removal
@@ -30,10 +28,13 @@ import Mathlib.Geometry.Euclidean.Volume.Basic
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.Height.NumberField
 import Mathlib.NumberTheory.Height.Projectivization
+import Mathlib.NumberTheory.LSeries.Nonvanishing
 import Mathlib.NumberTheory.LucasLehmer
 import Mathlib.NumberTheory.SelbergSieve
 import Mathlib.RingTheory.Radical.NatInt
 import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.Basify
+import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Echelon.Zsqrtd
 import Mathlib.Tactic.Inclusion.Extension.Core.Core
 import Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit
@@ -56,64 +57,10 @@ import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Polynomial.Basic
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Topology.Sheaves.Init
-import Mathlib.NumberTheory.DirichletCharacter.Basic
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.NumberTheory.LSeries.Nonvanishing
-import Mathlib.Tactic.Basify
-import Mathlib.Tactic.ENatToNat
 import Std.Tactic.BVDecide.Normalize.Prop
 
 -- This file was produced by scripts/clump.py from the modules listed below.
--- Members: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LogDerivEqOrderDivAddAnalytic, Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LogDerivLFunctionNearZero, Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.PerronIntegralShiftPrimitiveLFunction, Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.TruncatedExplicitFormula
-
--- ===== clump member: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LogDerivEqOrderDivAddAnalytic =====
--- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LogDerivEqOrderDivAddAnalytic", "h": "module\n\npublic import Mathlib.Analysis.Analytic.Order\npublic import Mathlib.Analysis.CStarAlgebra.Classes\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Bernstein\nimport Mathlib.Analysis.SpecialFunctions.Gamma.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\npublic import Mathlib.Analysis.Calculus.Deriv.Mul\npublic import Mathlib.Analysis.Calculus.Deriv.Pow\nimport Mathlib.NumberTheory.DirichletCharacter.Basic\n\n"}
-section -- clump:auto
-@[expose] public section
-
-open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology
-
-namespace GlobalTheory
-
-theorem logDeriv_eq_order_div_add_analytic :
-    ∀ (f : ℂ → ℂ) (p : ℂ), AnalyticAt ℂ f p → (¬ ∀ᶠ s in 𝓝 p, f s = 0) →
-      ∃ g : ℂ → ℂ, AnalyticAt ℂ g p ∧ ∀ᶠ s in 𝓝[≠] p, f s ≠ 0 ∧
-        deriv f s / f s = ((analyticOrderNatAt f p : ℕ) : ℂ) / (s - p) + g s := by
-  intro f p hf hne
-  have htop : analyticOrderAt f p ≠ ⊤ := by
-    rw [Ne, analyticOrderAt_eq_top]; exact hne
-  obtain ⟨g, hg, hg0, hfg⟩ := (hf.analyticOrderNatAt_eq_iff htop (n := analyticOrderNatAt f p)).mp rfl
-  set m := analyticOrderNatAt f p with hm
-  refine ⟨fun s => deriv g s / g s, hg.deriv.div hg hg0, ?_⟩
-  have h1 : ∀ᶠ s in 𝓝 p, g s ≠ 0 := hg.continuousAt.eventually_ne hg0
-  have h2 : ∀ᶠ s in 𝓝 p, AnalyticAt ℂ g s := hg.eventually_analyticAt
-  have h3 := hfg.eventually_nhds
-  have h4 : ∀ᶠ s in 𝓝[≠] p, s ≠ p := self_mem_nhdsWithin
-  filter_upwards [h4, nhdsWithin_le_nhds h1, nhdsWithin_le_nhds h2, nhdsWithin_le_nhds h3]
-    with s hsp hs1 hs2 hs3
-  have hsub : s - p ≠ 0 := sub_ne_zero.mpr hsp
-  have hev : f =ᶠ[𝓝 s] fun z => (z - p) ^ m * g z := by
-    filter_upwards [hs3] with z hz
-    rw [hz, smul_eq_mul]
-  have hfs : f s = (s - p) ^ m * g s := hev.eq_of_nhds
-  have hd : HasDerivAt (fun z => (z - p) ^ m * g z)
-      ((m : ℂ) * (s - p) ^ (m - 1) * 1 * g s + (s - p) ^ m * deriv g s) s :=
-    (((hasDerivAt_id s).sub_const p).pow m).mul hs2.differentiableAt.hasDerivAt
-  have hdf : deriv f s = (m : ℂ) * (s - p) ^ (m - 1) * 1 * g s + (s - p) ^ m * deriv g s := by
-    rw [hev.deriv_eq, hd.deriv]
-  refine ⟨by rw [hfs]; exact mul_ne_zero (pow_ne_zero _ hsub) hs1, ?_⟩
-  rw [hdf, hfs]
-  rcases Nat.eq_zero_or_pos m with h0 | h0
-  · rw [h0]; simp
-  · obtain ⟨k, hk⟩ : ∃ k, m = k + 1 := ⟨m - 1, by omega⟩
-    rw [hk, Nat.add_sub_cancel]
-    field_simp
-    ring
-
-end GlobalTheory
-end -- clump:auto
-end -- clump:auto
--- ===== end clump member: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LogDerivEqOrderDivAddAnalytic =====
+-- Members: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LogDerivLFunctionNearZero, Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.PerronIntegralShiftPrimitiveLFunction, Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.TruncatedExplicitFormula
 
 -- ===== clump member: Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LogDerivLFunctionNearZero =====
 -- clump-header: {"m": "Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LogDerivLFunctionNearZero", "h": "module\n\npublic import Mathlib.Analysis.Analytic.Order\npublic import Mathlib.Analysis.CStarAlgebra.Classes\npublic import Mathlib.NumberTheory.LSeries.DirichletContinuation\npublic import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.CompletedLFunctionNeZeroOfReNonpos\npublic import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ImportsMore\npublic import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LogDerivEqOrderDivAddAnalytic\npublic import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.LogDerivLFunctionStrip\nimport Mathlib.Algebra.Order.Floor.Extended\nimport Mathlib.Algebra.Order.Floor.Semifield\nimport Mathlib.Algebra.Order.Interval.Basic\nimport Mathlib.Algebra.Order.Star.Real\nimport Mathlib.Analysis.Complex.UpperHalfPlane.Basic\nimport Mathlib.Analysis.Normed.Algebra.GelfandRadius\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Combinatorics.Enumerative.DyckWord\nimport Mathlib.Combinatorics.SimpleGraph.Triangle.Removal\nimport Mathlib.Data.NNRat.Floor\nimport Mathlib.Data.Nat.Choose.Multinomial\nimport Mathlib.Geometry.Euclidean.Volume.Basic\nimport Mathlib.NumberTheory.Chebyshev\nimport Mathlib.NumberTheory.Height.NumberField\nimport Mathlib.NumberTheory.Height.Projectivization\nimport Mathlib.NumberTheory.LSeries.Nonvanishing\nimport Mathlib.NumberTheory.LucasLehmer\nimport Mathlib.NumberTheory.SelbergSieve\nimport Mathlib.RingTheory.Radical.NatInt\nimport Mathlib.RingTheory.WittVector.IsPoly\nimport Mathlib.Tactic.Basify\nimport Mathlib.Tactic.ENatToNat\nimport Mathlib.Tactic.Echelon.Zsqrtd\nimport Mathlib.Tactic.Inclusion.Extension.Core.Core\nimport Mathlib.Tactic.Inclusion.Extension.Interval.BinarySplit\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Exp\nimport Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Hypotheses\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Basic\nimport Mathlib.Tactic.Inclusion.Extension.IntervalInt.Hypotheses\nimport Mathlib.Tactic.NormNum.Irrational\nimport Mathlib.Tactic.NormNum.IsCoprime\nimport Mathlib.Tactic.NormNum.IsSquare\nimport Mathlib.Tactic.NormNum.LegendreSymbol\nimport Mathlib.Tactic.NormNum.ModEq\nimport Mathlib.Tactic.NormNum.NatFib\nimport Mathlib.Tactic.NormNum.NatLog\nimport Mathlib.Tactic.NormNum.NatSqrt\nimport Mathlib.Tactic.NormNum.Ordinal\nimport Mathlib.Tactic.NormNum.Parity\nimport Mathlib.Tactic.NormNum.Prime\nimport Mathlib.Tactic.NormNum.RealSqrt\nimport Mathlib.Tactic.Polynomial.Basic\nimport Mathlib.Tactic.ReduceModChar\nimport Mathlib.Topology.Sheaves.Init\n\n"}
@@ -340,7 +287,8 @@ private theorem norm_finsum_div_sub_le_two_mul_finsum_of_half_le_dist {S : Set �
   have hpos : 0 < ‖s - w‖ := by linarith
   rw [norm_div, Complex.norm_natCast, div_le_iff₀ hpos]
   have : (0 : ℝ) ≤ k w := Nat.cast_nonneg _
-  nlinarith
+  have := mul_le_mul_of_nonneg_left hw' (show (0 : ℝ) ≤ 2 * (k w : ℝ) by positivity)
+  linarith
 
 open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology in
 private theorem exists_norm_logDeriv_LFunction_neg_half_le_log_conductor :
@@ -359,7 +307,7 @@ private theorem exists_norm_logDeriv_LFunction_neg_half_le_log_conductor :
     Real.log_le_log (by norm_num) (by linarith [abs_nonneg t])
   have hN : (1 : ℝ) ≤ N := by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne N)
   have hlogN : Real.log (|t| + 2) ≤ Real.log (N * (|t| + 2)) :=
-    Real.log_le_log (by positivity) (by nlinarith [abs_nonneg t])
+    Real.log_le_log (by positivity) (le_mul_of_one_le_left (by positivity) hN)
   have hL0 : 0 ≤ Real.log (N * (|t| + 2)) := by linarith
   by_cases h1 : χ = 1
   · subst h1
@@ -397,7 +345,7 @@ private theorem exists_norm_logDeriv_LFunction_neg_half_le_log_conductor :
       exact hsum.trans (by linarith)
     rw [him] at key
     simp only [Nat.cast_one, one_mul]
-    nlinarith [mul_nonneg hC₁.le (by linarith : (0:ℝ) ≤ Real.log (|t| + 2))]
+    linarith [mul_nonneg hC₁.le (by linarith : (0:ℝ) ≤ Real.log (|t| + 2))]
   · have hLs := LFunction_ne_zero_of_re_eq_neg_half χ hχ hre
     obtain ⟨hfin, hcnt, hbd⟩ := H₁ N χ h1 s (by rw [hre]; norm_num) (by rw [hre]; norm_num) hLs
     rw [him] at hcnt hbd
@@ -412,7 +360,7 @@ private theorem exists_norm_logDeriv_LFunction_neg_half_le_log_conductor :
     rw [e]
     refine (norm_add_le _ _).trans ?_
     have := add_le_add hbd (hsum.trans (by linarith : _ ≤ 2 * (C₁ * Real.log (N * (|t| + 2)))))
-    nlinarith
+    linarith [mul_nonneg hC₂.le hL0]
 
 open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology in
 private theorem norm_neg_mul_ofReal_cpow_div_eq (a s : ℂ) {u : ℝ} (hu : 0 < u) :
@@ -449,7 +397,7 @@ private theorem norm_integral_logDeriv_LFunction_mul_cpow_div_neg_half_le :
   obtain ⟨C₀, hC₀, H⟩ := exists_norm_logDeriv_LFunction_neg_half_le_log_conductor
   refine ⟨4 * C₀, by positivity, fun N _ χ hχ u T' hu hT' => ?_⟩
   have hN : (1 : ℝ) ≤ N := by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne N)
-  have hL : 0 ≤ Real.log (N * (T' + 2)) := Real.log_nonneg (by nlinarith)
+  have hL : 0 ≤ Real.log (N * (T' + 2)) := Real.log_nonneg (one_le_mul_of_one_le_of_one_le hN (by linarith))
   have hg : Continuous fun t : ℝ => 2 * C₀ * Real.log (N * (T' + 2)) * (1 / (|t| + 1 / 2)) :=
     continuous_const.mul
       (continuous_const.div (continuous_abs.add continuous_const) (fun t => by change (|t| + 1 / 2 : ℝ) ≠ 0; positivity))
@@ -464,7 +412,7 @@ private theorem norm_integral_logDeriv_LFunction_mul_cpow_div_neg_half_le :
     have hp0 : 0 ≤ u ^ (-(1 / 2) : ℝ) := Real.rpow_nonneg (by linarith) _
     have hA : ‖deriv (LFunction χ) s / LFunction χ s‖ ≤ C₀ * Real.log (N * (T' + 2)) := by
       refine (H N χ hχ t).trans (mul_le_mul_of_nonneg_left (Real.log_le_log (by positivity)
-        (by nlinarith)) hC₀.le)
+        (mul_le_mul_of_nonneg_left (by linarith) (by linarith))) hC₀.le)
     have hs1 : |t| ≤ ‖s‖ := by rw [← him]; exact Complex.abs_im_le_norm s
     have hs2 : 1 / 2 ≤ ‖s‖ := by
       have := Complex.abs_re_le_norm s; rw [hre] at this; norm_num at this; linarith
@@ -489,7 +437,8 @@ private theorem rpow_one_add_inv_log_le_three_mul (u : ℝ) (hu : 1 < u) :
   rw [Real.rpow_add (by linarith), Real.rpow_one, Real.rpow_def_of_pos (by linarith),
     mul_one_div_cancel hl.ne']
   have := Real.exp_one_lt_d9
-  nlinarith
+  have hmul := mul_le_mul_of_nonneg_left (by linarith : Real.exp 1 ≤ 3) (by linarith : (0 : ℝ) ≤ u)
+  linarith
 
 open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology in
 private theorem inv_two_pi_mul_sub_add_eq_of_contour_identity (H₁ H₂ V W M S E : ℂ)
@@ -548,42 +497,57 @@ theorem _root_.GlobalTheory.PerronShift.perron_shift : ∃ C : ℝ, 0 < C ∧ �
   rw [inv_two_pi_mul_sub_add_eq_of_contour_identity _ _ _ _ _ _ _ hid]
   refine (norm_neg_add_inv_two_pi_mul_add_I_mul_sub_le _ _ _ _).trans ?_
   have hN : (1 : ℝ) ≤ N := by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne N)
-  have hP4 : 4 ≤ (N : ℝ) * u * T := by nlinarith [mul_le_mul hN hTu (by linarith) (by linarith)]
+  have hP4 : 4 ≤ (N : ℝ) * u * T := by
+    have huT : 4 ≤ u * T := by
+      have := mul_le_mul (by linarith : (2 : ℝ) ≤ u) hT (by norm_num) (by linarith)
+      linarith
+    have := le_mul_of_one_le_left (by linarith : (0 : ℝ) ≤ u * T) hN
+    linarith
   have hlogP : 0 ≤ Real.log (N * u * T) := Real.log_nonneg (by linarith)
   have hP2 : Real.log (((N : ℝ) * u * T) ^ 2) = 2 * Real.log (N * u * T) := by
     rw [Real.log_pow]; norm_num
-  have hNuT : (N : ℝ) * u * T * (N * u * T) ≥ 4 * (N * u * T) := by nlinarith
-  have hNT : (N : ℝ) * T ≤ N * u * T := by nlinarith
+  have hNuT : (N : ℝ) * u * T * (N * u * T) ≥ 4 * (N * u * T) :=
+    mul_le_mul_of_nonneg_right hP4 (by positivity)
+  have hNT : (N : ℝ) * T ≤ N * u * T := by
+    have := le_mul_of_one_le_right (by positivity : (0 : ℝ) ≤ (N : ℝ) * T) hu1.le
+    linarith
   have hNT2 : 2 * ((N : ℝ) * T) ≤ N * u * T := by
-    nlinarith [mul_nonneg (by positivity : (0 : ℝ) ≤ N * T) (by linarith : (0 : ℝ) ≤ u - 2)]
-  have hsq : 4 * ((N : ℝ) * u * T) ≤ ((N : ℝ) * u * T) ^ 2 := by nlinarith
+    linarith [mul_nonneg (by positivity : (0 : ℝ) ≤ N * T) (by linarith : (0 : ℝ) ≤ u - 2)]
+  have hsq : 4 * ((N : ℝ) * u * T) ≤ ((N : ℝ) * u * T) ^ 2 := by rw [sq]; exact hNuT
 
   have hS0 : 0 ≤ ∑ᶠ ρ ∈ {ρ : ℂ | 0 < ρ.re ∧ ρ.re < 1 ∧ |ρ.im| < 1 ∧ LFunction χ ρ = 0},
       ((analyticOrderNatAt (LFunction χ) ρ : ℕ) : ℝ) / ‖ρ‖ :=
     finsum_nonneg fun ρ => finsum_nonneg fun _ => by positivity
   have hlogNu : Real.log u ≤ Real.log (N * u) :=
-    Real.log_le_log (by linarith) (by nlinarith)
+    Real.log_le_log (by linarith) (le_mul_of_one_le_left (by linarith) hN)
   have hlog2N : Real.log (2 * N) ≤ Real.log (N * u) :=
-    Real.log_le_log (by positivity) (by nlinarith)
+    Real.log_le_log (by positivity) (by have := mul_le_mul_of_nonneg_left (by linarith : (2 : ℝ) ≤ u) (by linarith : (0 : ℝ) ≤ N); linarith)
   have hE : ‖(m : ℂ) * ((Real.log u : ℝ) : ℂ) + h 0‖ ≤ Real.log u + ‖h 0‖ := by
     refine (norm_add_le _ _).trans ?_
     rw [norm_mul, Complex.norm_natCast, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hlogu]
     have : (m : ℝ) ≤ 1 := by exact_mod_cast hm
-    nlinarith
+    have := mul_le_mul_of_nonneg_right this hlogu.le
+    linarith
 
   have hW := HV N χ hχ u T' hu1.le (by linarith)
   have hW1 : Real.log (N * (T' + 2)) ≤ 2 * Real.log (N * u * T) := by
-    rw [← hP2]; exact Real.log_le_log (by nlinarith) (by nlinarith)
+    rw [← hP2]
+    exact Real.log_le_log (mul_pos (by linarith) (by linarith)) (by
+      have := mul_le_mul_of_nonneg_left (by linarith : T' + 2 ≤ 4 * T) (by linarith : (0 : ℝ) ≤ N)
+      linarith)
   have hW2 : Real.log (2 * T' + 1) ≤ 2 * Real.log (N * u * T) := by
-    rw [← hP2]; exact Real.log_le_log (by linarith) (by nlinarith)
+    rw [← hP2]
+    exact Real.log_le_log (by linarith) (by
+      have := le_mul_of_one_le_left (by linarith : (0 : ℝ) ≤ T) hN
+      linarith)
   have hW0 : 0 ≤ Real.log (2 * T' + 1) := Real.log_nonneg (by linarith)
-  have hW10 : 0 ≤ Real.log (N * (T' + 2)) := Real.log_nonneg (by nlinarith)
+  have hW10 : 0 ≤ Real.log (N * (T' + 2)) := Real.log_nonneg (one_le_mul_of_one_le_of_one_le hN (by linarith))
   have hX : Real.log (N * u * T) ^ 2 ≤ u * Real.log (N * u * T) ^ 2 / T := by
     rw [le_div_iff₀ (by linarith)]
     have := mul_le_mul_of_nonneg_left hTu (sq_nonneg (Real.log (N * u * T)))
     linarith
 
-  have hlogNT : 0 ≤ Real.log (N * T) := Real.log_nonneg (by nlinarith)
+  have hlogNT : 0 ≤ Real.log (N * T) := Real.log_nonneg (one_le_mul_of_one_le_of_one_le hN (by linarith))
   have hlogNT' : Real.log (N * T) ≤ Real.log (N * u * T) := Real.log_le_log (by positivity) hNT
   have hH : ∀ y : ℝ, |y| = T' → ‖∫ x in -(1 / 2)..c, -(deriv (LFunction χ) (↑x + ↑y * I) /
       LFunction χ (↑x + ↑y * I)) * (u : ℂ) ^ (↑x + ↑y * I) / (↑x + ↑y * I)‖ ≤
@@ -623,8 +587,9 @@ theorem _root_.GlobalTheory.PerronShift.perron_shift : ∃ C : ℝ, 0 < C ∧ �
   have hXn : 0 ≤ u * Real.log (N * u * T) ^ 2 / T := by positivity
   have hWb : C₂ * Real.log (N * (T' + 2)) * Real.log (2 * T' + 1) ≤
       4 * C₂ * (u * Real.log (N * u * T) ^ 2 / T) := by
-    have := mul_le_mul hW1 hW2 hW0 (by linarith)
-    nlinarith
+    have h1 := mul_le_mul_of_nonneg_left (mul_le_mul hW1 hW2 hW0 (by linarith)) hC₂.le
+    have h2 := mul_le_mul_of_nonneg_left hX (show (0 : ℝ) ≤ 4 * C₂ by positivity)
+    linarith [show C₂ * (2 * Real.log (N * u * T) * (2 * Real.log (N * u * T))) = 4 * C₂ * Real.log (N * u * T) ^ 2 by ring]
   have hLg : 0 ≤ Real.log (N * u) := hlogu.le.trans hlogNu
   have key := add_le_add (add_le_add (add_le_add (hE.trans (add_le_add le_rfl hh0))
     (hW.trans hWb)) hH1) hH2

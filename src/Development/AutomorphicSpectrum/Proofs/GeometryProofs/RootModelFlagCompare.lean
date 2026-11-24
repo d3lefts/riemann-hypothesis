@@ -516,9 +516,9 @@ theorem nat_hasVal (hz : z ∈ ptsOver L (mCoordIdeal y)) (n : ℕ) (hn : (n : L
     (n : Ω) ≠ 0 ∧ HasVal y (0 : K → ℤ) (n : Ω)⁻¹ z (n : L)⁻¹ := by
   have h : HasVal y (0 : K → ℤ) (n : Ω) z (n : L) := by
     refine ⟨0, 0, C (n : ℤ), 1, homog_const _, by simpa using homog_const (ι := ι) 1, fun k => by simp, ?_, ?_, ?_⟩
-    · simp [aeval_C]
     · simp
-    · simp [aeval_C]
+    · simp
+    · simp
   exact hasVal_inv hz h hn
 
 end Ev
@@ -1014,7 +1014,7 @@ theorem genUnit_join : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
     have hsgn : HodgeCpt.rootSgn D r = 1 ∨ HodgeCpt.rootSgn D r = -1 := by
       unfold HodgeCpt.rootSgn
       split_ifs <;> simp
-    rcases hsgn with h' | h' <;> rw [h'] <;> simp only [zpow_one, _root_.zpow_neg, inv_inv, inv_div] <;> constructor <;>
+    rcases hsgn with h' | h' <;> rw [h'] <;> simp only [zpow_one, _root_.zpow_neg, inv_div] <;> constructor <;>
       first | exact ut | exact ut₀
   obtain ⟨s, hsdef⟩ : ∃ s : M.Ω, s = i (m₂ * e₀ r * t₀ ^ (-HodgeCpt.rootSgn D r)) *
       (m₁ * e r * t ^ (-HodgeCpt.rootSgn D r))⁻¹ * (i t₀ / t) ^ HodgeCpt.rootSgn D r := ⟨_, rfl⟩

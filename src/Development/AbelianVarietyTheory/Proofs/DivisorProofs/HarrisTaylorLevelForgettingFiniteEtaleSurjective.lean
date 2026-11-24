@@ -212,7 +212,7 @@ theorem exists_liftScheme : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type
       have hG := tateAt_congr o N' (x' := (x ≫ h.left) ≫ Z.hom)
         (by rw [Category.assoc, Over.w h]) _
         (fun a => (Over.homMk (x ≫ h.left) rfl : Over.mk ((x ≫ h.left) ≫ Z.hom) ⟶ Z) ≫ et a)
-        (fun a => by rw [← hh a, ← Category.assoc, ← Category.assoc]; congr 1; try (ext; simp)) (hgeo k x)
+        (fun a => by rw [← hh a, ← Category.assoc, ← Category.assoc]; congr 1) (hgeo k x)
       refine (key k (x ≫ h.left)).1 hG ⟨u, ?_⟩
       rw [Scheme.Hom.comp_apply, hu]
     obtain ⟨h', hh'⟩ := (Hi T h).1 hr
@@ -233,7 +233,6 @@ theorem exists_liftScheme : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type
     rw [hf' a]
     simp only [← Category.assoc]
     congr 1
-    try (ext; simp)
 
 end GlobalTheory.UPel.HT
 end -- clump:auto
@@ -615,10 +614,7 @@ theorem forget_map_finite_etale_surjective : ∀ (p : ℕ) [Fact p.Prime] (D : D
       exact (_root_.GlobalTheory.HTSpecTate.tateIsoO_iff_of_specializes p D R b N N' hc M.X M.s M.univ T lv hadd hker hlin (𝟙 T.left) x'
         (x'.base (⊥ : PrimeSpectrum k')) (⊥ : PrimeSpectrum k') (by
           first
-          | exact specializes_rfl
-          | (rw [Scheme.id.base_apply])
-          | (simp only [Scheme.Hom.id_apply]; exact specializes_rfl)
-          | exact (Subsingleton.elim (α := PrimeSpectrum k) _ _) ▸ specializes_rfl)).1 h1
+          | exact specializes_rfl)).1 h1
   obtain ⟨f, -, -⟩ := (HY T lv).1 hlv
   obtain ⟨u, hu⟩ : z ∈ Set.range g := by rw [hg]; rfl
   refine ⟨(f.left ≫ h).base u, ?_⟩

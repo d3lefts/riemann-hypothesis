@@ -226,8 +226,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Fo.capelli :
   simp only [ha, Fin.sum_univ_two, h2, h01, h10, if_true, if_false]
   refine ⟨?_, ?_, ?_⟩
   all_goals
-    try simp only [mul_add, add_mul, mul_sub, sub_mul, mul_neg, neg_mul, neg_zero, zero_sub, neg_neg, mul_one, one_mul, mul_assoc, hDX, hDX', h01, h10, and_self, and_true, true_and, and_false, false_and, if_true, if_false, add_zero,
-      hX 1 1 0 0, hX 1 1 0 1, hX 1 1 1 0, hX 1 0 0 0, hX 1 0 0 1, hX 0 1 0 0,
+    try simp only [mul_add, add_mul, mul_sub, sub_mul, mul_neg, neg_mul, neg_zero, zero_sub, mul_one, one_mul, mul_assoc, hDX, hDX', h01, h10, and_self, and_true, and_false, if_true, if_false, add_zero,
       hX' 1 1 0 0, hX' 1 1 0 1, hX' 1 1 1 0, hX' 1 0 0 0, hX' 1 0 0 1, hX' 0 1 0 0,
       hD 1 1 0 0, hD 1 1 0 1, hD 1 1 1 0, hD 1 0 0 0, hD 1 0 0 1, hD 0 1 0 0]
   all_goals abel
@@ -626,15 +625,15 @@ private lemma Da_Xa (θ : ℂ) (hθ : θ ≠ 0) {x d : Fin 4 → A}
     Da θ d a b * Xa θ x c e = Xa θ x c e * Da θ d a b + if a = c ∧ b = e then 1 else 0 := by
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases e <;>
     simp only [Xa, Da, Fin.zero_eta, Fin.mk_one, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_one,
-      Matrix.cons_val, add_mul, mul_add, sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm, smul_add, smul_sub, hw] <;>
+      add_mul, mul_add, sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm, smul_add, smul_sub, hw] <;>
     simp <;> match_scalars <;> field_simp <;> ring
 
 private lemma Xa_det (θ c : ℂ) (hc : θ ^ 2 = c) {x : Fin 4 → A} (h : ∀ i j, Commute (x i) (x j)) :
     Xa θ x 0 1 * Xa θ x 1 0 - Xa θ x 0 0 * Xa θ x 1 1 = x 2 * x 2 - c • (x 3 * x 3) - x 1 * x 0 := by
   have h32 : x 3 * x 2 = x 2 * x 3 := h 3 2
   subst hc
-  simp only [Xa, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val, add_mul, mul_add, sub_mul, mul_sub,
-    smul_mul_assoc, mul_smul_comm, smul_add, smul_sub, smul_smul, h32]
+  simp only [Xa, Matrix.cons_val_zero, Matrix.cons_val_one, add_mul, mul_sub,
+    smul_mul_assoc, mul_smul_comm, smul_add, smul_smul, h32]
   match_scalars <;> ring
 
 private lemma Da_det (θ c : ℂ) (hθ : θ ≠ 0) (hc : θ ^ 2 = c) {d : Fin 4 → A} (h : ∀ i j, Commute (d i) (d j)) :
@@ -642,14 +641,13 @@ private lemma Da_det (θ c : ℂ) (hθ : θ ≠ 0) (hc : θ ^ 2 = c) {d : Fin 4 
       (4 : ℂ)⁻¹ • (d 2 * d 2) - (4 * c)⁻¹ • (d 3 * d 3) - d 1 * d 0 := by
   have h32 : d 3 * d 2 = d 2 * d 3 := h 3 2
   subst hc
-  simp only [Da, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val, add_mul, mul_add, sub_mul, mul_sub,
+  simp only [Da, Matrix.cons_val_zero, Matrix.cons_val_one, add_mul, mul_sub,
     smul_mul_assoc, mul_smul_comm, smul_add, smul_sub, smul_smul, h32]
   match_scalars <;> field_simp <;> ring
 
 private lemma Xa_Da_sum (θ : ℂ) (hθ : θ ≠ 0) (x d : Fin 4 → A) :
     ∑ a, ∑ b, Xa θ x a b * Da θ d a b = ∑ i, x i * d i := by
-  simp only [Fin.sum_univ_two, Fin.sum_univ_four, Xa, Da, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val,
-    add_mul, mul_add, sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm, smul_add, smul_sub, smul_smul]
+  simp only [Fin.sum_univ_two, Fin.sum_univ_four, Xa, Da, Matrix.cons_val_zero, Matrix.cons_val_one, add_mul, mul_add, sub_mul, mul_sub, smul_mul_assoc, mul_smul_comm, smul_add, smul_sub, smul_smul]
   match_scalars <;> field_simp <;> ring
 
 end Abstract
@@ -780,7 +778,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Fo.liftLin :
     simp only [lift, Pi.add_apply, e, add_mul]
     exact integral_add (hI f hf φ hφ h) (hI f' hf' φ hφ h)
   · funext h
-    simp only [lift, Pi.add_apply, map_add (f := _), LinearMap.add_apply, th_add, mul_add]
+    simp only [lift, Pi.add_apply, map_add (f := _), th_add, mul_add]
     exact integral_add (hI f hf φ hφ h) (hI f hf φ' hφ' h)
   · funext h
     have e : ∀ x, (c • f).1 x = c * f.1 x := fun x => rfl
@@ -965,7 +963,7 @@ private theorem ab_aI (w : InfinitePlace F) (t : ℝ) : ab (aI w t) = Real.exp t
 private theorem h_apply (O : Fo.Ops F) (w : InfinitePlace F) (φ : S4 F) (v : V4 F) :
     (O.h w φ).1 v = (∑ i, Fo.cw w (v i) * (O.d w i φ).1 v) + 2 * φ.1 v := by
   have e : O.h w φ = (∑ i, O.x w i (O.d w i φ)) + (2 : ℂ) • φ := by
-    simp [Fo.Ops.h, LinearMap.add_apply, LinearMap.sum_apply, Module.End.mul_apply, two_smul, two_mul]
+    simp [Fo.Ops.h, LinearMap.add_apply, LinearMap.sum_apply, two_smul]
   rw [e]
   change ((∑ i, O.x w i (O.d w i φ) : S4 F)).1 v + 2 * φ.1 v = _
   congr 1
@@ -1023,8 +1021,8 @@ private theorem hasDerivAt_eR_neg (w : InfinitePlace F) :
 
 private def cT (w : InfinitePlace F) (t : ℝ) : GL (Fin 2) (TR.Rinf F) :=
   ⟨!![eR w t, 0; 0, eR w (-t)], !![eR w (-t), 0; 0, eR w t],
-    by simp [Matrix.mul_fin_two, Matrix.one_fin_two, eR_mul_neg, eR_neg_mul],
-    by simp [Matrix.mul_fin_two, Matrix.one_fin_two, eR_mul_neg, eR_neg_mul]⟩
+    by simp [Matrix.one_fin_two, eR_mul_neg, eR_neg_mul],
+    by simp [Matrix.one_fin_two, eR_mul_neg, eR_neg_mul]⟩
 
 private theorem cT_add (w : InfinitePlace F) (s t : ℝ) : cT w (s + t) = cT w s * cT w t := by
   refine Units.ext ?_
@@ -1129,7 +1127,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.moveH :
   have hF := opsFock F E D O
   have hh : O.h w φ ∈ Fock D.δ := by
     have h2 : O.h w φ = (∑ i, O.x w i (O.d w i φ)) + (2 : ℂ) • φ := by
-      simp [Fo.Ops.h, LinearMap.sum_apply, two_smul, LinearMap.add_apply, Module.End.mul_apply, one_add_one_eq_two.symm, add_mul, Module.End.one_apply]
+      simp [Fo.Ops.h, LinearMap.sum_apply, LinearMap.add_apply, one_add_one_eq_two.symm]
       rw [add_smul, one_smul]
     rw [h2]
     exact add_mem (sum_mem fun i _ => (hF w i _ (hF w i φ hφ).2).1) (Submodule.smul_mem _ _ hφ)
@@ -1252,10 +1250,10 @@ private noncomputable def cU (w : InfinitePlace F) (t : ℝ) : GL (Fin 2) (TR.Ri
   ⟨!![1, Pi.single w t; 0, 1], !![1, Pi.single w (-t); 0, 1],
     by
       ext i j v
-      fin_cases i <;> fin_cases j <;> by_cases h : v = w <;> simp [Matrix.mul_apply, Fin.sum_univ_two, Pi.single_apply, h],
+      fin_cases i <;> fin_cases j <;> by_cases h : v = w <;> simp [Matrix.mul_apply, Fin.sum_univ_two, h],
     by
       ext i j v
-      fin_cases i <;> fin_cases j <;> by_cases h : v = w <;> simp [Matrix.mul_apply, Fin.sum_univ_two, Pi.single_apply, h]⟩
+      fin_cases i <;> fin_cases j <;> by_cases h : v = w <;> simp [Matrix.mul_apply, Fin.sum_univ_two, h]⟩
 
 private theorem cU_val (w : InfinitePlace F) (t : ℝ) : (cU w t).val = !![1, Pi.single w t; 0, 1] := rfl
 
@@ -1263,7 +1261,7 @@ private theorem cU_add (w : InfinitePlace F) (s t : ℝ) : cU w (s + t) = cU w s
   refine Units.ext ?_
   rw [Units.val_mul, cU_val, cU_val, cU_val]
   ext i j v
-  fin_cases i <;> fin_cases j <;> by_cases h : v = w <;> simp [Matrix.mul_apply, Fin.sum_univ_two, Pi.single_apply, h, add_comm]
+  fin_cases i <;> fin_cases j <;> by_cases h : v = w <;> simp [Matrix.mul_apply, Fin.sum_univ_two, h, add_comm]
 
 private theorem cU_der (w : InfinitePlace F) :
     HasDerivAt (fun t => TR.toL (cU w t).val) (TR.toL (Matrix.single 0 1 (Pi.single w 1))) 0 := by
@@ -1271,7 +1269,7 @@ private theorem cU_der (w : InfinitePlace F) :
       fun t : ℝ => TR.toL (1 : Matrix (Fin 2) (Fin 2) (TR.Rinf F)) + t • TR.toL (Matrix.single 0 1 (Pi.single w 1)) := by
     funext t
     ext i j v
-    fin_cases i <;> fin_cases j <;> by_cases h : v = w <;> simp [cU_val, Matrix.single_apply, Pi.single_apply, h]
+    fin_cases i <;> fin_cases j <;> by_cases h : v = w <;> simp [cU_val, h]
   rw [e]
   have h := ((hasDerivAt_id (0 : ℝ)).smul_const (TR.toL (Matrix.single 0 1 (Pi.single w 1)) : TR.Lie F 2)).const_add
     (TR.toL (1 : Matrix (Fin 2) (Fin 2) (TR.Rinf F)) : TR.Lie F 2)

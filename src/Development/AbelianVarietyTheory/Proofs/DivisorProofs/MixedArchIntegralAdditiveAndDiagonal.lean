@@ -137,7 +137,7 @@ theorem GlobalTheory.ChernLinRel.sum_chernInt_eq_zero : ∀ (k : Type) [CommRing
     have h0 : ∀ j (ε : ℤˣ), P j ε Uᶜ = 0 := fun j ε =>
       Weight.chernPart_eq_zero ε hUo.measurableSet.compl fun c =>
         Set.disjoint_compl_right_iff_subset.2 (Set.subset_iUnion (fun c : AlgChart p σ D => c.e.source) c)
-    simp [μ, Measure.coe_finsetSum, Finset.sum_apply, Measure.add_apply, Measure.smul_apply, h0]
+    simp [μ, h0]
 
   have hbal : μ ap an = μ an ap := by
     obtain ⟨T, hTc, hT⟩ := TopologicalSpace.isOpen_iUnion_countable (fun c : AlgChart p σ D => c.e.source)
@@ -359,7 +359,7 @@ theorem pderiv_linF {ι : Type} [Fintype ι] (x : ι → ℝ) (j : ι) :
   rw [linF, map_sum, Finset.sum_eq_single j]
   · simp
   · intro b _ hb
-    simp [MvPolynomial.pderiv_X, Pi.single_apply, hb, hb.symm]
+    simp [hb]
   · simp
 
 theorem iterD_linF_pow {ι : Type} [Fintype ι] (x : ι → ℝ) (N : ℕ) : ∀ (m : ℕ) (a : Fin m → ι),
@@ -441,7 +441,7 @@ theorem exists_linear_of_rel {α V : Type} [AddCommGroup V] [Module ℝ V] (v : 
   have e2 := LinearMap.congr_fun hg ⟨A (Finsupp.single a 1), LinearMap.mem_range_self _ _⟩
   rw [e1]
   simp only [LinearMap.comp_apply, Submodule.subtype_apply, LinearEquiv.coe_coe,
-    LinearMap.quotKerEquivRange_symm_apply_image, Submodule.liftQ_apply] at e2
+    LinearMap.quotKerEquivRange_symm_apply_image] at e2
   rw [e2]
   simp [F]
 

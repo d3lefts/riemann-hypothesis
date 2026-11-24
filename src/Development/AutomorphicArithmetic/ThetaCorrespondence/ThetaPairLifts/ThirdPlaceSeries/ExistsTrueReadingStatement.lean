@@ -64,7 +64,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.isotypic_row_local_split_exists : ∀ (D : D7) (rep : D.what₂.FT → NG.FinTyp D.host.E D.R.r) (j : ℕ) (_ : RowMod D rep j) (σ : D.what₂.FT), D.what₂.isot j σ ≠ ⊥ → ∀ s : SplitPlace D.host.E, ∃ τ, IsLocS (rep σ).S s τ := by
-  first | exact @GlobalTheory.RowLocal.finTyp_exists_isLocS | exact GlobalTheory.RowLocal.finTyp_exists_isLocS | (intros; apply GlobalTheory.RowLocal.finTyp_exists_isLocS <;> assumption)
+  first | exact @GlobalTheory.RowLocal.finTyp_exists_isLocS
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsotypicRowLocalSplitExistsStatement =====
@@ -224,7 +224,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 
 theorem _root_.GlobalTheory.T.exists_true_reading_with_laws_suppLaws : GlobalTheory.Published.AutomorphicFormsFiniteGL → ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (D : D7) (P : _root_.GlobalTheory.NPin.CharacterChoiceData hL D), (∀ i : D.nd.Loc, Nonempty (RowMod D P.rep (D.nd.j i))) → ∃ S : Reading P.T, _root_.GlobalTheory.NPin.IsFaithfulReading P S ∧ _root_.GlobalTheory.SplitRead.LawsAlt S ∧ SuppLaws S := by
-  first | exact @_root_.GlobalTheory.TrueReading.exists_true_reading_alt | exact _root_.GlobalTheory.TrueReading.exists_true_reading_alt | (intros; apply _root_.GlobalTheory.TrueReading.exists_true_reading_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.TrueReading.exists_true_reading_alt
 end
 end -- clump:auto
 end -- clump:auto

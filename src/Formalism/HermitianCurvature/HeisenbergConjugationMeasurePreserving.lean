@@ -216,10 +216,8 @@ theorem poissonStep : PoissonStep := by
   rw [← Complex.ofReal_inv, Complex.re_ofReal_mul]
   unfold poissonBound
   refine mul_le_mul_of_nonneg_left ?_ (inv_nonneg.mpr (ZLattice.covolume_pos Λ volume).le)
-  have hexp : ∀ μ : dual Λ, ‖Complex.exp (2 * Real.pi * Complex.I * (⟪(μ : V), x⟫ : ℝ))‖ = 1 := by
-    intro μ
-    rw [Complex.norm_exp]
-    simp
+  have hexp : ∀ μ : dual Λ, ‖Complex.exp (2 * Real.pi * Complex.I * (⟪(μ : V), x⟫ : ℝ))‖ = 1 := fun μ => by
+    simp [Complex.norm_exp]
   set a : dual Λ → ℂ := fun μ => (𝓕 (fun v => (φ v : ℂ)) : V → ℂ) μ *
       Complex.exp (2 * Real.pi * Complex.I * (⟪(μ : V), x⟫ : ℝ)) with ha
   have hsn := summable_norm_iff.mpr hs
@@ -231,8 +229,7 @@ theorem poissonStep : PoissonStep := by
   gcongr
   refine (Complex.re_le_norm _).trans ((norm_tsum_le_tsum_norm (hsn.subtype _)).trans (le_of_eq ?_))
   refine tsum_congr fun μ => ?_
-  simp only [ha]
-  rw [norm_mul, hexp, mul_one]
+  simp only [ha, norm_mul, hexp, mul_one]
 
 section Summable
 
@@ -258,10 +255,8 @@ theorem loc_cont (Λ : Submodule ℤ V) (φ : V → ℂ) (hc : Continuous φ) (h
 omit [MeasurableSpace V] [BorelSpace V] [FiniteDimensional ℝ V] [InnerProductSpace ℝ V] in
 theorem loc_per (Λ : Submodule ℤ V) (φ : V → ℂ) (l₀ : Λ) (x : V) :
     ∑' l : Λ, φ ((l:V) + ((l₀:V) + x)) = ∑' l : Λ, φ ((l:V) + x) := by
-  have := (Equiv.addRight l₀).tsum_eq (fun l : Λ => φ ((l : V) + x))
-  rw [← this]
-  refine tsum_congr fun l => ?_
-  simp only [Equiv.coe_addRight, Submodule.coe_add, add_assoc]
+  simpa only [Equiv.coe_addRight, Submodule.coe_add, add_assoc] using
+    (Equiv.addRight l₀).tsum_eq (fun l : Λ => φ ((l : V) + x))
 
 theorem loc_integrable (Λ : Submodule ℤ V) [DiscreteTopology Λ] [IsZLattice ℝ Λ] (φ : V → ℂ)
     (hc : Continuous φ) (h : LocSummable Λ φ) : Integrable φ := by
@@ -303,10 +298,8 @@ theorem poissonSummable : PoissonSummable := by
   have hsumF : Summable (fun μ : dual Λ => (𝓕 φ : V → ℂ) μ) := summable_norm_iff.mp hsum
   have hLFS := lattice_fourier_series V Λ _ hGc hGp _ hD (by simpa only [hcoef] using hsumF) x
   simp only [hcoef] at hLFS
-  have hexp : ∀ μ : dual Λ, ‖Complex.exp (2 * Real.pi * Complex.I * (⟪(μ : V), x⟫ : ℝ))‖ = 1 := by
-    intro μ
-    rw [Complex.norm_exp]
-    simp
+  have hexp : ∀ μ : dual Λ, ‖Complex.exp (2 * Real.pi * Complex.I * (⟪(μ : V), x⟫ : ℝ))‖ = 1 := fun μ => by
+    simp [Complex.norm_exp]
   refine ⟨Summable.of_norm_bounded hsum (fun μ => by rw [norm_mul, hexp, mul_one]), ?_⟩
   have hG : (∑' l : Λ, φ ((l : V) + x)) = (ZLattice.covolume Λ : ℂ)⁻¹ * ∑' μ : dual Λ,
       (𝓕 φ : V → ℂ) μ * Complex.exp (2 * Real.pi * Complex.I * (⟪(μ : V), x⟫ : ℝ)) := by
@@ -412,9 +405,7 @@ private theorem nonneg_of_norm_le_mul_gP {V : Type} [NormedAddCommGroup V] [Inne
   by_contra hneg
   have hneg' : C < 0 := lt_of_not_ge hneg
   have h1 : C * gP π 0 < 0 := mul_neg_of_neg_of_pos hneg' (gP_pos π 0)
-  have h2 : ‖φ 0‖ ≤ C * gP π 0 := hφ' 0
-  have h3 : 0 ≤ ‖φ 0‖ := norm_nonneg _
-  linarith
+  linarith [hφ' 0, h1, norm_nonneg (φ 0)]
 
 private theorem gP_add_mul_prod_inv_le_gP_of_norm_le {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
     [FiniteDimensional ℝ V] {ι : Type} [Fintype ι] (π : ι → V →L[ℝ] ℂ) (R : ℝ) (y x : V)
@@ -452,8 +443,7 @@ private theorem locSummable_of_norm_le_mul_gP {V : Type} [NormedAddCommGroup V] 
     ((gP_summable π hπ Λ).mul_left C).div_const _
   refine ⟨_, hs, fun l x hx => ?_⟩
   have hxR : ‖x‖ ≤ R := by
-    have := hR hx
-    rwa [Metric.mem_closedBall, dist_zero_right] at this
+    simpa [Metric.mem_closedBall, dist_zero_right] using hR hx
   exact norm_add_le_mul_gP_div_prod_of_norm_le π φ C R hC hR0 hφ' (l : V) x hxR
 
 theorem productDecay : ProductDecaySummable := by

@@ -104,8 +104,6 @@ theorem tof_uMap_sq_smul {dim : (E →+* ℂ) → ℕ} (I : Submodule ℤ (Vsp d
   have h : ((r1 : ℂ) ^ 2) • a - ((r1 : ℂ) ^ 2) • y = ((r1 : ℝ) ^ 2) • (a - y) := by
     first
     | (rw [← smul_sub, ← Complex.coe_smul, Complex.ofReal_pow, Complex.ofReal_natCast])
-    | (rw [← smul_sub]; norm_cast)
-    | (rw [← smul_sub, ← Complex.coe_smul]; push_cast; rfl)
   rw [h, map_smul, map_sub, norm_smul, mul_pow, Real.norm_eq_abs,
     abs_of_nonneg (by positivity)]
   ring
@@ -372,8 +370,6 @@ theorem tof_inv_sqrt_le [IsCMField E] {X : PT E} {DF : ℕ} (P : Par X DF) (hph 
     unfold omStar
     first
       | nlinarith [Real.one_le_rpow hF (by norm_num : (0 : ℝ) ≤ 3 / 2)]
-      | nlinarith [one_le_pow₀ (n := 3 / 2) hF]
-      | (norm_num; nlinarith)
   have hZ : (1 : ℝ) ≤ ((dstar (E := E) P.m : ℕ) : ℝ) ^ 2 * omStar (E := E) :=
     one_le_mul_of_one_le_of_one_le (one_le_pow₀ hd1) hom
   have h2 := mul_self_lt_mul_self hL0 hlt
@@ -399,11 +395,9 @@ theorem tof_inv_sqrt_le [IsCMField E] {X : PT E} {DF : ℕ} (P : Par X DF) (hph 
   have e1 := by
     first
       | exact pow_le_pow_left₀ (Real.sqrt_nonneg _) (Real.sqrt_le_sqrt hU) n
-      | exact pow_le_pow_left (Real.sqrt_nonneg _) (Real.sqrt_le_sqrt hU) n
   have e2 : √K ^ n ≤ √K ^ (dstar (E := E) P.m) := by
     first
       | exact pow_le_pow_right₀ hsK hn
-      | exact pow_le_pow_right hsK hn
   have hcK : 1 ≤ c * √K ^ (dstar (E := E) P.m) :=
     h1.trans (mul_le_mul_of_nonneg_left (e1.trans e2) hc.le)
   have hpow : (K ^ (((dstar (E := E) P.m : ℕ) : ℝ) / 4)) ^ 2 = √K ^ (dstar (E := E) P.m) := by
@@ -499,8 +493,6 @@ theorem tof_covol_lb [IsCMField E] {X : PT E} {DF : ℕ} (P : Par X DF) {I : Sub
       ← Matrix.det_mul, hmat]
     first
       | exact (Int.cast_det Gz).symm
-      | exact (RingHom.map_det (Int.castRingHom ℝ) Gz).symm
-      | simp [Int.cast_det]
   have hGz : Gz.det ≠ 0 := by
     intro h0
     have h00 : ob.toBasis.det u' * ob.toBasis.det a = 0 := by rw [hdetG, h0, Int.cast_zero]
@@ -1147,14 +1139,14 @@ theorem zm_norm_eq (hI : IsSplit P I) (hP : Ext.PackingCount) {s : (Fin 1 → Vs
     rw [Submodule.coe_inner, inner_uc (IR I) _ _ (Ib hI i).2, cp_pair]
     by_cases h : j = i
     · subst h; simp
-    · simp [h, Pi.single_apply, Ne.symm h]
+    · simp [h, Ne.symm h]
   have hgl := gauss_lin (Col.ob (IR I)) (fun j => (⟨uc (IR I) (cp hI j), uc_mem _ _⟩ : IR I))
     (Ib hI) hub
   have hnorm : ∀ a : Fin (Module.finrank ℝ (IR I)) → ℝ,
       ‖∑ j, a j • (⟨uc (IR I) (cp hI j), uc_mem _ _⟩ : IR I)‖ = ‖∑ j, a j • uc (IR I) (cp hI j)‖ :=
     fun a => by
       have h : ((∑ j, a j • (⟨uc (IR I) (cp hI j), uc_mem _ _⟩ : IR I) : IR I) : Vsp X.dim) =
-          ∑ j, a j • uc (IR I) (cp hI j) := by simp [Submodule.coe_sum]
+          ∑ j, a j • uc (IR I) (cp hI j) := by simp
       rw [← h]; rfl
   simp only [hnorm] at hgl
   have hl0 : 0 ≤ (YB hI hP 1).l2 1 (zmB hI s) := by

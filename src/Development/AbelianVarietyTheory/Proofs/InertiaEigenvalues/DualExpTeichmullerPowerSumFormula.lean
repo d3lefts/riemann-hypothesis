@@ -1128,15 +1128,10 @@ theorem nearZ_mul (e M : ℕ) {x b : (LT l).R.BdR} {σ τ : GQ l}
   rw [PadicInt.coe_add, PadicInt.coe_mul]
   exact fil_mul LT e h hy hz
 
-theorem exists_pow_lt {ε : ℝ} (hε : 0 < ε) : ∃ n : ℕ, (l : ℝ) ^ (-(n : ℤ)) < ε := by
-  have hl : (1 : ℝ) < l := by exact_mod_cast (Fact.out : l.Prime).one_lt
-  obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one hε (inv_lt_one_of_one_lt₀ hl)
-  exact ⟨n, by rwa [zpow_neg, zpow_natCast, ← inv_pow]⟩
-
 theorem eq_zero_of_fil {P : LocPrime l} {AI : LocAinf l P} (T : LocTied l P AI) {M : ℕ}
     (hM : 1 ≤ M) {c : ℚ_[l]} (hc : qB P c ∈ FilB P (M : ℤ)) : c = 0 := by
   by_contra h
-  obtain ⟨n, hn⟩ := exists_pow_lt (l := l) (norm_pos_iff.2 h)
+  obtain ⟨n, hn⟩ := PadicInt.exists_pow_neg_lt (p := l) (norm_pos_iff.2 h)
   exact absurd (_root_.GlobalTheory.ExpImage.norm_le_of_qB_mem_Lat l P AI T M n hM c (FilB_le_Lat AI hc)) (not_le.2 hn)
 
 end GlobalTheory.ExpImage.IntCoc
@@ -1182,7 +1177,7 @@ theorem integral_cocycle_of_gen : ∀ (LT : LocTheory) (l : ℕ) [Fact l.Prime] 
   · intro σ hσ
     rw [ContinuousWithinAt, Metric.tendsto_nhds]
     intro ε hε
-    obtain ⟨n, hn⟩ := exists_pow_lt (l := l) hε
+    obtain ⟨n, hn⟩ := PadicInt.exists_pow_neg_lt (p := l) hε
     filter_upwards [self_mem_nhdsWithin, nhdsWithin_le_nhds
       (coc_near LT T e (e + 1) n hx hb σ (hfix σ hσ))] with τ hτ h1
     rw [dist_eq_norm]

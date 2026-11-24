@@ -362,7 +362,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.series_ref_of_decay_artin_ray_seriesRat : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.IndefiniteRowSideFullHecke.RationalRayLevels.SeriesRat → _root_.GlobalTheory.BigOn.Exp.SerRefAlt := by
-  first | exact @_root_.GlobalTheory.SerRefPt.serRef_of_reciprocity_ray_class | exact _root_.GlobalTheory.SerRefPt.serRef_of_reciprocity_ray_class | (intros; apply _root_.GlobalTheory.SerRefPt.serRef_of_reciprocity_ray_class <;> assumption)
+  first | exact @_root_.GlobalTheory.SerRefPt.serRef_of_reciprocity_ray_class
 end
 end -- clump:auto
 end -- clump:auto
@@ -401,7 +401,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.expAlg_of_cusp_decay_and_reciprocity : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.SerStd.SeriesRatS → _root_.GlobalTheory.BigOn.Exp.ExpAlgAlt := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.expAlg_alt | exact _root_.GlobalTheory.BigOn.Exp.expAlg_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.expAlg_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.expAlg_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -895,7 +895,7 @@ theorem _root_.GlobalTheory.T.real_datum_normalized_rational_base_alt : GlobalTh
           ν • ρ.theta ((Fm.ex x hx i).nch.twI w) j ((Fm.ex x hx i).nch.sd w) h P = ∑ k, b k • evW p.nexp p.v₀ j (g k).val ∧
           ∑ k, τ (b k) • evW p.nexp p.v₀ j (g k).val =
             c • (ν • ρ.theta ((Fm.ex x hx i).nch.twI w) j ((Fm.ex x hx i).nch.sd w) h P) := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.expOne_level_alt | exact _root_.GlobalTheory.BigOn.Exp.expOne_level_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.expOne_level_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.expOne_level_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1114,7 +1114,7 @@ theorem _root_.GlobalTheory.T.real_datum_rational_normalization_alt : GlobalTheo
         ∃ c : ℂ, (∃ m : ℕ, m ≠ 0 ∧ c ^ m = 1) ∧
           ∑ k, τ (ρ.e ((Fm.ex x hx i).nch.twI w) ((Fm.ex x hx i).nch.sd w) (a k)) • evW p.nexp p.v₀ j (g k).val =
             c • ∑ k, ρ.e ((Fm.ex x hx i).nch.twI w) ((Fm.ex x hx i).nch.sd w) (a k) • evW p.nexp p.v₀ j (g k).val := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.expConj_alt | exact _root_.GlobalTheory.BigOn.Exp.expConj_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.expConj_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.expConj_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1214,7 +1214,7 @@ theorem _root_.GlobalTheory.T.norm_ratio_realization_same_dual_alt : GlobalTheor
     ∀ f, rdAt p w j hρ ν f = ρ.theta ((Fm.ex x hx i).nch.twI w) j ((Fm.ex x hx i).nch.sd w) h P →
       ∃ c : ℂ, (∃ n : ℕ, n ≠ 0 ∧ c ^ n = 1) ∧
         rdAt p w j hρ' ν f = c • ρ.theta ((Fm.ex x hx i).nch.twI w) j ((Fm.ex x hx i).nch.sd w) h P := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.conjRoot_alt | exact _root_.GlobalTheory.BigOn.Exp.conjRoot_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.conjRoot_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.conjRoot_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1415,7 +1415,7 @@ theorem _root_.GlobalTheory.T.norm_ratio_realization_same_alt : GlobalTheory.Pub
     ∀ f f', rdAt p w j hρ ν f = ρ.theta ((Fm.ex x hx i).nch.twI w) j ((Fm.ex x hx i).nch.sd w) h P →
       rdAt p w j hρ' ν' f' = ρ.theta ((Fm.ex x hx i).nch.twI w) j ((Fm.ex x hx i).nch.sd w) h P →
       ∃ u : FractionRing ((Fm.D x i).ntw.O ((Fm.ex x hx i).nch.twI w)), (∃ n : ℕ, n ≠ 0 ∧ u ^ n = 1) ∧ f' = u • f := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.seriesUnit_alt | exact _root_.GlobalTheory.BigOn.Exp.seriesUnit_alt | (intros; apply _root_.GlobalTheory.BigOn.Exp.seriesUnit_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.seriesUnit_alt
 end
 end -- clump:auto
 end -- clump:auto
@@ -1485,7 +1485,7 @@ section
 open GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.BigOn.Exp
 
 theorem _root_.GlobalTheory.T.conjBase_of_ray_class_field_and_seriesRat : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.GlobalArtinReciprocity → GlobalTheory.Published.RayClassFieldSt → GlobalTheory.SerStd.SeriesRatS → _root_.GlobalTheory.BigOn.Exp.ConjugateBase := by
-  first | exact @_root_.GlobalTheory.BigOn.Exp.conjBase_of_cusp_decay_and_reciprocity | exact _root_.GlobalTheory.BigOn.Exp.conjBase_of_cusp_decay_and_reciprocity | (intros; apply _root_.GlobalTheory.BigOn.Exp.conjBase_of_cusp_decay_and_reciprocity <;> assumption)
+  first | exact @_root_.GlobalTheory.BigOn.Exp.conjBase_of_cusp_decay_and_reciprocity
 end
 end -- clump:auto
 end -- clump:auto

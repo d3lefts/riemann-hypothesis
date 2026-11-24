@@ -82,9 +82,7 @@ lemma domLE_first {n : ℕ} [NeZero n] {la mu : Fin n → ℤ} (h : DomLE la mu)
       have h2 : b.val ≤ (0 : Fin n).val := hb
       exact Fin.ext (by simpa using h2)
     · rintro rfl; exact le_refl _
-  have := h.1 0
-  rw [e] at this
-  simpa using this
+  simpa only [e, Finset.sum_singleton] using h.1 0
 
 lemma domLE_last {n : ℕ} [NeZero n] {la mu : Fin n → ℤ} (h : DomLE la mu) : mu (lastIdx n) ≤ la (lastIdx n) := by
   have key : ∀ f : Fin n → ℤ, ∑ b, f b = ∑ b ∈ univ.filter (· ≠ lastIdx n), f b + f (lastIdx n) := by
@@ -119,18 +117,15 @@ lemma domLE_refl {n : ℕ} (mu : Fin n → ℤ) : DomLE mu mu := ⟨fun _ => le_
 lemma size_of_path {n N : ℕ} {LL : Letters (Fin N)} {b : Fin N → ℕ} (P : PPath n N LL b) (i : Fin N) :
     (b i : ℤ) = if LL.vec i then ∑ a, P.mu i.succ a - ∑ a, P.mu i.castSucc a
       else ∑ a, P.mu i.castSucc a - ∑ a, P.mu i.succ a := by
-  have := P.step i
-  split_ifs at this ⊢ with hv
-  · rw [← this.2.2, Finset.sum_sub_distrib]
-  · rw [← this.2.2, Finset.sum_sub_distrib]
+  have this := P.step i
+  split_ifs at this ⊢ with hv <;> rw [← this.2.2, Finset.sum_sub_distrib]
 
 lemma sizes_eq {n N : ℕ} {LL : Letters (Fin N)} {b b' : Fin N → ℕ} (P : PPath n N LL b) (P' : PPath n N LL b')
     (h : ∀ i, ∑ a, P.mu i a = ∑ a, P'.mu i a) : b = b' := by
   funext i
   have h1 := size_of_path P i
-  have h2 := size_of_path P' i
-  rw [h, h] at h1
-  exact Int.natCast_inj.1 (h1.trans h2.symm)
+  rw [h, h, ← size_of_path P' i] at h1
+  exact Int.natCast_inj.1 h1
 
 lemma pp_down (D : Formalism.BasicNotions.D7) {N r K : ℕ} [NeZero r] [NeZero K] (LL : Letters (Fin N)) (B : Fin N → ℕ)
     (hK : N + r ≤ K) (L : List (PathInequality N))
@@ -149,9 +144,8 @@ lemma pp_down (D : Formalism.BasicNotions.D7) {N r K : ℕ} [NeZero r] [NeZero K
     intro i
     have := hC i
     unfold CondC at this ⊢
-    split_ifs at this ⊢ with hv
-    · exact (domLE_first (hle2 _)).trans (this.trans (domLE_last (hle1 _)))
-    · exact (domLE_first (hle2 _)).trans (this.trans (domLE_last (hle1 _)))
+    split_ifs at this ⊢ with hv <;>
+      exact (domLE_first (hle2 _)).trans (this.trans (domLE_last (hle1 _)))
   · intro e he
     have := hx.2 e he
     cases e with
@@ -212,9 +206,8 @@ lemma fracSub_top : fracSub O (⊤ : Submodule O (MvPolynomial σ O)) = ⊤ := b
 lemma pol_of_map {O : Type*} [CommRing O] [IsDomain O] {ι : Type*} {n : ℕ} (d : ι → ℕ)
     (f : MvPolynomial (ι × Fin n) O) (h : MvPolynomial.map (algebraMap O (KK O)) f ∈ Pol (KK O) n d) :
     f ∈ Pol O n d := by
-  unfold Pol at h ⊢
-  rw [MvPolynomial.mem_restrictSupport_iff] at h ⊢
-  rwa [MvPolynomial.support_map_of_injective _ (IsFractionRing.injective O (KK O))] at h
+  simpa [Pol, MvPolynomial.mem_restrictSupport_iff,
+    MvPolynomial.support_map_of_injective _ (IsFractionRing.injective O (KK O))] using h
 
 end Frac
 

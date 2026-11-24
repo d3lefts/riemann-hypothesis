@@ -381,7 +381,7 @@ private theorem common_eigenvector_commuting_family {T D : Type}
       let E : Submodule ℂ D := W ⊓ _root_.Module.End.eigenspace (φ t) c
       have hE : ∀ y, y ∈ E ↔ y ∈ W ∧ φ t y = c • y := by
         intro y
-        simp [E, Submodule.mem_inf, _root_.Module.End.mem_eigenspace_iff]
+        simp [E, Submodule.mem_inf]
       have hEbot : E ≠ ⊥ := by
         intro h
         have : (v : D) ∈ E := (hE _).2 ⟨v.2, hv1⟩
@@ -675,7 +675,6 @@ private theorem rho_smooth (B : Subgroup G) (χ : B →* ℂˣ) : IsSmooth (rho 
   have h2 : (φ : G → ℂ) (x * y) = (φ : G → ℂ) (x * g) := by
     have := hf _ hy' (x * g)
     rw [← this]
-    congr 1
     group
   rw [h2, ← rho_apply, hg]
 

@@ -78,7 +78,7 @@ theorem centre_commutes_embedded_block {R : Type} [CommRing R] (hn : ρ + p = n)
         (blk4 1 (bl hn z 0 0 0) 0 1) := by
   have h1 : HMul.hMul (bl hn z 0 0 0) (bl hn 0 0 0 c) = 0 := by
     simp only [bl, Matrix.submatrix_mul_equiv, Matrix.fromBlocks_multiply]
-    simp [bl]
+    simp
   have h2 : HMul.hMul (bl hn z 0 0 0) (bl hn 1 0 0 d) = bl hn z 0 0 0 := by
     simp only [bl, Matrix.submatrix_mul_equiv, Matrix.fromBlocks_multiply]
     simp
@@ -87,7 +87,7 @@ theorem centre_commutes_embedded_block {R : Type} [CommRing R] (hn : ρ + p = n)
     simp
   have h4 : HMul.hMul (bl hn 0 0 0 c) (bl hn z 0 0 0) = 0 := by
     simp only [bl, Matrix.submatrix_mul_equiv, Matrix.fromBlocks_multiply]
-    simp [bl]
+    simp
   rw [submatrix_fromBlocks_mul, submatrix_fromBlocks_mul, h1, h2, h3, h4]
   congr 1 <;> simp [add_comm]
 
@@ -161,7 +161,7 @@ theorem _root_.GlobalTheory.T.heisenberg_centre_rational_form : ∀ {D : D7} {n 
     (∀ z h, M.nzx z 0 * M.emb h = M.emb h * M.nzx z 0) ∧
     ∀ l : ratHerm D ρ, M.nzx l.1 0 ∈ GF D n ∧ ∃ ζ : Matrix (Fin ρ) (Fin ρ) D.host.E,
       ζ.map (incA D) = l.1.1 ∧ mat (M.nzx l.1 0) = blk4 1 ((bl hn ζ 0 0 0).map (incA D)) 0 1 := by
-  first | exact @GlobalTheory.CompanionTheory.ZUnf.centre_nzx | exact GlobalTheory.CompanionTheory.ZUnf.centre_nzx | (intros; apply GlobalTheory.CompanionTheory.ZUnf.centre_nzx <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.ZUnf.centre_nzx
 end -- clump:auto
 end -- clump:auto
 end -- clump:auto

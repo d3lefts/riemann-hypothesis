@@ -120,11 +120,7 @@ variable {M M' : Type} [AddCommGroup M] [Module (𝓞 K) M] [AddCommGroup M'] [M
 theorem exists_zsmul_mem_of_isLattice {Λ : Submodule (𝓞 K) (Fin r → K)} (hΛ : IsLattice Λ)
     (v : Fin r → K) : ∃ n : ℤ, n ≠ 0 ∧ n • v ∈ Λ := by
   first
-  | exact @_root_.GlobalTheory.IntSmulIntegral.exists_int_smul_mem
-  | exact _root_.GlobalTheory.IntSmulIntegral.exists_int_smul_mem
   | (apply _root_.GlobalTheory.IntSmulIntegral.exists_int_smul_mem <;> assumption)
-  | (intros; apply _root_.GlobalTheory.IntSmulIntegral.exists_int_smul_mem <;> assumption)
-  | (intros; apply @_root_.GlobalTheory.IntSmulIntegral.exists_int_smul_mem <;> first | assumption | infer_instance)
   | (intros; exact _root_.GlobalTheory.IntSmulIntegral.exists_int_smul_mem ..)
 
 def IsLatticeEmb (φ : M →ₗ[𝓞 K] (Fin r → K)) : Prop :=
@@ -133,10 +129,6 @@ def IsLatticeEmb (φ : M →ₗ[𝓞 K] (Fin r → K)) : Prop :=
 theorem isLatticeEmb_subtype {Λ : Submodule (𝓞 K) (Fin r → K)} (hΛ : IsLattice Λ) :
     IsLatticeEmb Λ.subtype :=
   ⟨Λ.injective_subtype, by rwa [Submodule.range_subtype]⟩
-
-theorem isLatticeEmb_of_span [Module.Finite (𝓞 K) M] {φ : M →ₗ[𝓞 K] (Fin r → K)}
-    (hi : Function.Injective φ) (hs : Submodule.span K (Set.range φ) = ⊤) : IsLatticeEmb φ :=
-  ⟨hi, by rw [LinearMap.range_eq_map]; exact Module.Finite.fg_top.map _, hs⟩
 
 namespace IsLatticeEmb
 

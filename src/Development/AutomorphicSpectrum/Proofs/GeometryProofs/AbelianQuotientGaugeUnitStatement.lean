@@ -316,7 +316,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.adjoint_relation_generator_corr : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (X : Scheme.{0}) (t : SAB H X) (S : Type) [CommRing S] (x : Sp S ⟶ X) (d : ℕ) (g : GermAt t x d) (a : 𝓞 E) (wL : AdTy t a), wL.IsGen → AdRel t x d g.x g.B.A.act g.B.ad g.e a wL → ∀ m, LB.Gen.Corr t.PP.L _ _ _ _ (LB.pullGen t.PP.L _ _ wL (lift (1 : jOG x d m 1 ⟶ t.G) (g.x m)).left) (LB.oneGen t.PP.L) ∧ LB.Gen.Corr t.PP.L _ _ _ _ (LB.pullGen t.PP.L _ _ wL (lift (g.x m) (1 : jOG x d m 1 ⟶ t.G)).left) (LB.oneGen t.PP.L) := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.FrGauge.WAxis.adAxes | exact GlobalTheory.CompanionTheory.Ar.Flat.FrGauge.WAxis.adAxes | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.FrGauge.WAxis.adAxes <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.FrGauge.WAxis.adAxes
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.AdjointRelationGeneratorCorrStatement =====
@@ -561,7 +561,7 @@ theorem eq_one_of_jets (hs : ∀ a : 𝓞 E, star a = H.bar a) {X : Scheme.{0}} 
     have e : ((xk m).appLE ⊤ ⊤ (le_rfl : (⊤ : (Sp (Jet k (Fin 1 × Fin d) m)).Opens) ≤ xk m ⁻¹ᵁ ⊤)).hom (f - 1) =
         (xk m).appTop.hom (f - 1) := by
       simp only [Scheme.Hom.appLE, homOfLE_refl, op_id, CategoryTheory.Functor.map_id, map_sub, map_one]
-      first | rfl | (erw [Category.comp_id]; rfl)
+      first | rfl
     rw [e, map_sub, map_one, h m, sub_self])
   exact sub_eq_zero.1 (h0 hz)
 
@@ -612,7 +612,7 @@ open scoped CategoryTheory.Obj
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem _root_.GlobalTheory.T.abelian_quotient_gauge_unit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) [StarRing (𝓞 E)], (∀ a : 𝓞 E, star a = H.bar a) → ∀ (X : Scheme.{0}) (t : SAB H X) (k : Type) [Field k] [IsAlgClosed k] (p : ℕ) [Fact p.Prime] [CharP k p] (x : Sp k ⟶ X) (Q : AbQuot t x) (d d' : ℕ) (g : GermAt t x d) (gB : GermAt Q.tB (𝟙 (Sp k)) d'), ∀ (w : LB.Iso (t.PP.L.pull (pullback.fst t.G.hom x)) (Q.tB.PP.L.pull Q.q.left)), w.IsGen → ∀ Qs : Fin d' → PS k 1 d, (∀ i, MvPowerSeries.constantCoeff (Qs i) = 0) → (∀ m, fibPt t x (g.x m) ≫ Q.q = homAt (𝟙 (Sp k)) (sub1 Qs m) ≫ gB.x m) → ∀ (a : 𝓞 E) (wL : AdTy t a) (wB : AdTy Q.tB a), wL.IsGen → wB.IsGen → AdRel t x d g.x g.B.A.act g.B.ad g.e a wL → AdRel Q.tB (𝟙 (Sp k)) d' gB.x gB.B.A.act gB.B.ad gB.e a wB → ∀ u : Γ((GF t x ⊗ GF t x).left, ⊤)ˣ, Tr w (adF t x a) (fun i => sqMap t x ≫ Sum.elim (cφG t ![fst t.G t.G, snd t.G t.G ≫ t.act.act (H.bar a)]) (cφG t ![fst t.G t.G ≫ t.act.act a, snd t.G t.G]) i) (fun i => qq Q ≫ Sum.elim (cφG Q.tB ![fst Q.tB.G Q.tB.G, snd Q.tB.G Q.tB.G ≫ Q.tB.act.act (H.bar a)]) (cφG Q.tB ![fst Q.tB.G Q.tB.G ≫ Q.tB.act.act a, snd Q.tB.G Q.tB.G]) i) (Sum.elim (cε 2) fun I => -cε 2 I) (LB.pullGen t.PP.L _ _ wL (sqMap t x)) (LB.pullGen Q.tB.PP.L _ _ wB (qq Q)) u → (ax0 t x).appTop.hom u.val = 1 ∧ (ax1 t x).appTop.hom u.val = 1 := by
-  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.FrGauge.UAxis.unit_one_on_axes | exact GlobalTheory.CompanionTheory.Ar.Flat.FrGauge.UAxis.unit_one_on_axes | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.FrGauge.UAxis.unit_one_on_axes <;> assumption)
+  first | exact @GlobalTheory.CompanionTheory.Ar.Flat.FrGauge.UAxis.unit_one_on_axes
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.GeometryProofs.AbelianQuotientGaugeUnitStatement =====

@@ -618,7 +618,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.goodTwist_of_seed_character_powers : ∀ (D₁ D₂ D₃ : D7) (A : D₁.ntw.Tw → Finset (PlE D₁.host)) (σ : Seed D₁ A) (C₂ : NChoice D₂) (C₃ : NChoice D₃) (xd : ThData D₃) (u : D₃.what₂.places.Pl → D₁.what₂.places.Pl), SameExport D₁ D₂ → Kept C₂ C₃ → avPrimes D₂ = avPrimes D₃ → D₂.what₂.places.Pl = D₃.what₂.places.Pl → XdAll xd → (∀ i, avD D₁ (avDesign D₁) i ⊆ A i) → (∀ v₂ v₃, HEq v₂ v₃ → TwistedAt D₃ v₃ → TwistedAt D₁ (u v₃) ∧ ∃ a : ℤ, Nat.Coprime a.natAbs (D₁.ntw.l (σ.s (u v₃))) ∧ HEq (rawPack C₂ v₂) (GlobalTheory.HeightCounting.twPackPow D₁ a (σ.pack (u v₃)))) → GoodO D₃ C₃ xd := by
-  first | exact @GlobalTheory.HeightCounting.Up.GoodPrimeSelection.goodO_of_seed | exact GlobalTheory.HeightCounting.Up.GoodPrimeSelection.goodO_of_seed | (intros; apply GlobalTheory.HeightCounting.Up.GoodPrimeSelection.goodO_of_seed <;> assumption)
+  first | exact @GlobalTheory.HeightCounting.Up.GoodPrimeSelection.goodO_of_seed
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GoodTwistOfSeedCharacterPowersStatement =====
@@ -1580,7 +1580,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.bareK_of_discreteSeriesExists : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → GlobalTheory.Published.DiscreteSeriesExists → BareK := by
-  first | exact @_root_.GlobalTheory.HeightCounting.Up.minimal_ktype_of_local_components_alt | exact _root_.GlobalTheory.HeightCounting.Up.minimal_ktype_of_local_components_alt | (intros; apply _root_.GlobalTheory.HeightCounting.Up.minimal_ktype_of_local_components_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.Up.minimal_ktype_of_local_components_alt
 end
 end
 end -- clump:auto
@@ -1766,7 +1766,7 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formal
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.stageAExists_of_inputs_phtCmp : _root_.GlobalTheory.HeightCounting.Up.PublishedInputsThirdLayerAlt → PhtCmp → ∀ hL : _root_.UpperTheory.Zero.LLC.RecTExists, _root_.GlobalTheory.HeightCounting.Up.FirstStageExists hL := by
-  first | exact @_root_.GlobalTheory.HeightCounting.Up.satake_parameter_of_prime_to_level_alt | exact _root_.GlobalTheory.HeightCounting.Up.satake_parameter_of_prime_to_level_alt | (intros; apply _root_.GlobalTheory.HeightCounting.Up.satake_parameter_of_prime_to_level_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.HeightCounting.Up.satake_parameter_of_prime_to_level_alt
 end
 end
 end -- clump:auto

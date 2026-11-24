@@ -245,7 +245,7 @@ theorem bracket (F : C ⥤ CommAlgCat.{0} R) (n : ℕ) (y : Cn F 1) (hy : dn F 1
       GlobalTheory.CompanionTheory.HodgeCx.act F (GlobalTheory.CompanionTheory.HopfLe.DnCup.dl 1 0) y - GlobalTheory.CompanionTheory.HodgeCx.act F (GlobalTheory.CompanionTheory.HopfLe.DnCup.dl 1 1) y
         + GlobalTheory.CompanionTheory.HodgeCx.act F (GlobalTheory.CompanionTheory.HopfLe.DnCup.dl 1 2) y := by
     rw [MainStatements.Hodge.dn, LinearMap.sum_apply, Fin.sum_univ_three]
-    simp only [LinearMap.smul_apply, hface, Fin.val_zero, Fin.val_one, Fin.val_two, pow_zero,
+    simp only [hface, Fin.val_zero, Fin.val_one, Fin.val_two, pow_zero,
       pow_one, neg_one_sq, one_smul, neg_smul, sub_eq_add_neg]
     first | done | rfl
   rw [GlobalTheory.CompanionTheory.HopfLe.DnCup.dl_front_zero, GlobalTheory.CompanionTheory.HopfLe.DnCup.dl_front_one, GlobalTheory.CompanionTheory.HopfLe.DnCup.front_eq_incl,
@@ -301,7 +301,7 @@ theorem coboundary_cup1 (F : C ⥤ CommAlgCat.{0} R) {n : ℕ} (y : Cn F 1) (z :
 
   simp only [hface, GlobalTheory.CompanionTheory.HopfLe.cup1, map_add (f := _), map_neg, map_sum, map_smul, map_zsmul,
   mul_add, Finset.mul_sum, mul_smul_comm, Fin.val_zero, Fin.val_one, Fin.val_succ, pow_zero,
-  pow_one, pow_succ, one_smul, neg_smul, mul_neg, mul_one, neg_neg, Finset.sum_neg_distrib]
+  pow_succ, one_smul, neg_smul, mul_neg, mul_one, neg_neg, Finset.sum_neg_distrib]
   rw [key]
   abel
 
@@ -432,7 +432,7 @@ theorem slv_pure (Λ : (∀ i, M i) →ₗ[R] R) (f : ∀ i, M i) (v : V) :
   rw [← Finset.sum_smul, ← map_sum]
   congr 2
   ext j
-  simp [Finset.sum_apply, Pi.single_apply]
+  simp [Finset.sum_apply]
 
 theorem slv_ext {W : Type} [AddCommGroup W] [Module R W] (A B : (∀ i, M i ⊗[R] V) →ₗ[R] W)
     (h : ∀ (f : ∀ i, M i) (v : V), A (fun i ↦ f i ⊗ₜ[R] v) = B (fun i ↦ f i ⊗ₜ[R] v)) : A = B := by
@@ -444,7 +444,7 @@ theorem slv_ext {W : Type} [AddCommGroup W] [Module R W] (A B : (∀ i, M i ⊗[
     by_cases hj : j = i
     · subst hj
       simp
-    · simp [Pi.single_apply, hj]
+    · simp [hj]
   simp only [LinearMap.comp_apply, e, h]
 
 theorem slv_add (Λ Λ' : (∀ i, M i) →ₗ[R] R) (t : ∀ i, M i ⊗[R] V) :
@@ -600,7 +600,7 @@ theorem th_frontS (q : ℕ) (i : Fin (q + 1)) :
 theorem sg_frontS (q : ℕ) (i : Fin (q + 1)) : (sg (q + 1) i.succ).comp (front (q + 1)) = front q := by
   ext j
   fin_cases j
-  · simp [sg_apply, front_zero, Fin.predAbove, Fin.lt_def]
+  · simp [sg_apply, front_zero, Fin.predAbove]
   · simp [sg_apply, front_one, Fin.predAbove, Fin.lt_def]
 
 theorem th_backS (q : ℕ) (i : Fin (q + 1)) : (th (q + 1) i.succ).comp (back (q + 1)) = th q i := by
@@ -652,7 +652,7 @@ theorem S_cup_R (q : ℕ) (x : Cn F 1) (hx : dn F 1 x = 0) (w : Cn (box F) (q + 
   rw [h0, zero_mul, smul_zero, zero_add, hS, Finset.sum_apply, Finset.sum_apply, Finset.sum_apply,
     Finset.sum_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ ↦ ?_
-  simp only [Pi.smul_apply, Pi.mul_apply, bi_boxR, sg_frontS, th_backS, sg_backS, Fin.val_succ, pow_succ, mul_neg,
+  simp only [Pi.smul_apply, Pi.mul_apply, bi_boxR, th_backS, sg_backS, Fin.val_succ, pow_succ, mul_neg,
     mul_one, neg_smul, TensorProduct.tmul_neg, neg_mul, mul_smul_comm]
   have e : act F ((sg (q + 1) i.succ).comp (front (q + 1))) x = act F (front q) x :=
     congrArg (fun θ ↦ act F θ x) (sg_frontS q i)
@@ -669,7 +669,7 @@ theorem S_cup_L (q : ℕ) (x : Cn F 1) (hx : dn F 1 x = 0) (w : Cn (box F) (q + 
     rw [bi_boxL, act_const F x hx _ (th_frontS q i)]
     simp
   have e : (cst 0 (1 : Fin 2)).comp (cst (q + 1) (0 : Fin 1)) = cst (q + 1) (1 : Fin 2) := rfl
-  simp only [h0, zero_mul, smul_zero, Finset.sum_const_zero, add_zero, th_front0, th_back0, sg_back0, Fin.val_zero,
+  simp only [h0, zero_mul, smul_zero, Finset.sum_const_zero, add_zero, th_back0, sg_back0, Fin.val_zero,
     pow_zero, one_smul, S0, bisimplicial_action_first_factor, e]
   have e2 : act F ((th (q + 1) 0).comp (front (q + 1))) x = x :=
     (congrArg (fun θ ↦ act F θ x) (th_front0 q)).trans (act_id F x)
@@ -896,7 +896,7 @@ theorem stepMap_zero (q : ℕ) : stepMap q 0 = cst (q + 1) 1 := by
 theorem stepMap_top (q : ℕ) : stepMap q (q + 2) = cst (q + 1) 0 := by
   ext x
   have := x.2
-  simp [stepMap, cst, this]
+  simp [stepMap, cst]
   rfl
 
 theorem th_off (q : ℕ) (i : Fin (q + 2)) (k : Fin (q + 1)) :
@@ -972,7 +972,7 @@ theorem prism_faces {A : Type} [AddCommGroup A] (q : ℕ)
     rw [Fin.sum_univ_succAbove _ i.castSucc, Fin.sum_univ_succAbove _ i,
       Fin.succAbove_castSucc_self, th_diag, sg_diag, th_next, sg_next]
     have e1 : ((-1 : ℤ) ^ ((i : ℕ) + ((i.castSucc : Fin (q + 3)) : ℕ))) = 1 := by
-      simp [Even.neg_one_pow, ← two_mul]
+      simp [← two_mul]
     have e2 : ((-1 : ℤ) ^ ((i : ℕ) + ((i.succ : Fin (q + 3)) : ℕ))) = -1 := by
       simp [← add_assoc, ← two_mul, pow_succ]
     rw [e1, e2, one_smul, neg_smul, one_smul]

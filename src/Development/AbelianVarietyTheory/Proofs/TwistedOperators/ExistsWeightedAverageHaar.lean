@@ -243,7 +243,7 @@ theorem _root_.GlobalTheory.T.definiteBottom_deepPoints_fix_lattice_stdFirst : �
       ∀ x, GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.stdFst (L.mu t (j + 1) * L.eta ^ (rankV D i j % 2) / (G.ch.chi (D.R.m - i) * L.eta ^ (rankV D i j % 2))) (X.e t) (X.ideal (locPl G) t) A WW X.rA.β X.rW.β
           (actO (GlobalTheory.Grid.neg A) WW ((GlobalTheory.Grid.ofSgn true A).symm k)⁻¹ 1⁻¹ x) =
         GlobalTheory.IndefiniteRowSideFullHecke.UnitCharTriangle.stdFst (L.mu t (j + 1) * L.eta ^ (rankV D i j % 2) / (G.ch.chi (D.R.m - i) * L.eta ^ (rankV D i j % 2))) (X.e t) (X.ideal (locPl G) t) A WW X.rA.β X.rW.β x := by
-  first | exact @GlobalTheory.StdFstFix.stdFst_fixed | exact GlobalTheory.StdFstFix.stdFst_fixed | (intros; apply GlobalTheory.StdFstFix.stdFst_fixed <;> assumption)
+  first | exact @GlobalTheory.StdFstFix.stdFst_fixed
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.DefiniteBottomDeepPointsFixLatticeStdFirstStatement =====
@@ -342,7 +342,7 @@ theorem exists_open_fix_vac_neg : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : 
   · show GlobalTheory.Member.FinCong (neg A) (N₁ * n.factorial) ((GlobalTheory.Grid.ofSgn true A).symm k)
     have h1 : finHom (neg A) ((GlobalTheory.Grid.ofSgn true A).symm k) = 1 := hk
     intro z hz
-    refine ⟨0, by first | exact zero_mem _ | exact Submodule.zero_mem _ | exact AddSubgroup.zero_mem _ | simp [Formalism.L2.Pj.latHat], ?_⟩
+    refine ⟨0, by first | exact zero_mem _ | simp [Formalism.L2.Pj.latHat], ?_⟩
     rw [h1, Units.val_one, Matrix.one_mulVec, sub_self]
     exact (nsmul_zero _).symm
   · have h1 := hn ((GlobalTheory.Grid.ofSgn true A).symm k) hk hU
@@ -373,7 +373,7 @@ theorem _root_.GlobalTheory.T.exists_open_fixing_negative_vacuum_definite_bottom
     {A A' WW : HSp D} {X : Tri T A A' WW}, IsBottomTri W i j X → ∀ t : T,
     ∃ U : Subgroup (GA D A), IsOpen (U : Set (GA D A)) ∧ GinfC A ≤ U ∧
       ∀ k ∈ U, k ∈ GfC A → X.ω t (k, 1) X.vac = X.vac := by
-  first | exact @GlobalTheory.VacFixNeg.exists_open_fix_vac_neg | exact GlobalTheory.VacFixNeg.exists_open_fix_vac_neg | (intros; apply GlobalTheory.VacFixNeg.exists_open_fix_vac_neg <;> assumption)
+  first | exact @GlobalTheory.VacFixNeg.exists_open_fix_vac_neg
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsOpenFixingNegativeVacuumDefiniteBottomStatement =====
@@ -510,7 +510,7 @@ theorem _root_.GlobalTheory.T.exists_openCompactLevel_thetaKernel_source : ∀ {
     ∃ K : Subgroup (GL (Fin A.rank) (Lev.EAf D)), GlobalTheory.IndefiniteRowSideFullHecke.ClassFunctionSumIntegral.IsOpenCompactLevel A K ∧
       ∀ (P : PolF D WW.rank A.rank) (h : GA D WW), ∀ k ∈ Lev.levA A K, ∀ g,
         X.ker W.ψ W.θ t P h (g * k) = X.ker W.ψ W.θ t P h g := by
-  first | exact @GlobalTheory.SrcLevel.exists_level_ker | exact GlobalTheory.SrcLevel.exists_level_ker | (intros; apply GlobalTheory.SrcLevel.exists_level_ker <;> assumption)
+  first | exact @GlobalTheory.SrcLevel.exists_level_ker
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsOpenCompactLevelThetaKernelSourceStatement =====
@@ -581,13 +581,13 @@ theorem level_all [Finite T] (t₀ : T) (hX : IsBottomTri W i j X) :
   refine ⟨⨅ t, K t, ⟨?_, ?_⟩, fun t P h k hk g => hinv t P h k ?_ g⟩
   · have e : (((⨅ t, K t).comap (Lev.finE A) : Subgroup (GA D A)) : Set (GA D A)) =
         ⋂ t, (((K t).comap (Lev.finE A) : Subgroup (GA D A)) : Set (GA D A)) := by
-      ext x; simp [Subgroup.mem_iInf]
+      ext x; simp
     rw [e]
     exact isOpen_iInter_of_finite fun t => (hK t).1
   · have hcl : IsClosed ((((⨅ t, K t).comap (Lev.finE A) : Subgroup (GA D A)) : Set (GA D A))) := by
       have e : (((⨅ t, K t).comap (Lev.finE A) : Subgroup (GA D A)) : Set (GA D A)) =
           ⋂ t, (((K t).comap (Lev.finE A) : Subgroup (GA D A)) : Set (GA D A)) := by
-        ext x; simp [Subgroup.mem_iInf]
+        ext x; simp
       rw [e]
       exact isClosed_iInter fun t => Subgroup.isClosed_of_isOpen _ (hK t).1
     have e2 : ((Lev.levA A (⨅ t, K t) : Subgroup (GA D A)) : Set (GA D A)) =

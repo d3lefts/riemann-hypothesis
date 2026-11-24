@@ -72,7 +72,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.Hk3 (hyp IsVacAt UnrPl)
 
 theorem _root_.GlobalTheory.T.mem_hyperspecialSubgroupAtPlace_iff_local_stabilizer : ∀ (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) (w : HeightOneSpectrum (𝓞 D.host.E)), w.under (𝓞 D.host.F) = v → ∀ (V : HSp D) (g : GA D V), g ∈ hyp V w ↔ ∃ k ∈ Kv V v, g = embV V v k := by
-  first | exact @GlobalTheory.HypDict.mem_hyp_iff_embV | exact GlobalTheory.HypDict.mem_hyp_iff_embV | (intros; apply GlobalTheory.HypDict.mem_hyp_iff_embV <;> assumption)
+  first | exact @GlobalTheory.HypDict.mem_hyp_iff_embV
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.MemHyperspecialSubgroupAtPlaceIffLocalStabilizerStatement =====
@@ -94,7 +94,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.Hk3 (hyp IsVacAt UnrPl)
 
 theorem _root_.GlobalTheory.T.splitPlace_uniformiserIdele_value_unramifiedChar : ∀ (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) (w : HeightOneSpectrum (𝓞 D.host.E)), w.under (𝓞 D.host.F) = v → IsSplit (E := D.host.E) v → ∀ χ : (AE D)ˣ →* Circle, UnrAt χ w → ∃ (e : AE D) (ϖ : 𝓞 D.host.E) (x : (AE D)ˣ), Formalism.L2.NTheta.IsIdemAt e w ∧ ϖ ∈ w.asIdeal ∧ ϖ ∉ w.asIdeal ^ 2 ∧ (x : AE D) = e * incA D (ϖ : D.host.E) + (1 - e) ∧ ∀ χ' : (AE D)ˣ →* Circle, UnrAt χ' w → ((χ' x : Circle) : ℂ) = ((val (F := D.host.F) χ' w : ℂˣ) : ℂ) := by
-  first | exact @GlobalTheory.SplitUnifIdele.value_eq_val | exact GlobalTheory.SplitUnifIdele.value_eq_val | (intros; apply GlobalTheory.SplitUnifIdele.value_eq_val <;> assumption)
+  first | exact @GlobalTheory.SplitUnifIdele.value_eq_val
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.SplitPlaceUniformiserIdeleValueUnramifiedCharStatement =====
@@ -203,7 +203,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.Hk3 (hyp IsVacAt UnrPl)
 
 theorem _root_.GlobalTheory.T.theta_lattice_vacuum_nonsplit_place_vacuum_at_prime : ∀ (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) (w : HeightOneSpectrum (𝓞 D.host.E)), w.under (𝓞 D.host.F) = v → Formalism.DivisionValues.conjPl w = w → ∀ (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (f : WO S T → ℂ), VacFin ψ S T v f → IsVacAt ψ S T w f := by
-  first | exact @GlobalTheory.VacInertAt.isVacAt_of_vacFin | exact GlobalTheory.VacInertAt.isVacAt_of_vacFin | (intros; apply GlobalTheory.VacInertAt.isVacAt_of_vacFin <;> assumption)
+  first | exact @GlobalTheory.VacInertAt.isVacAt_of_vacFin
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ThetaLatticeVacuumNonsplitPlaceVacuumAtPrimeStatement =====
@@ -308,7 +308,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.Hk3 (hyp IsVacAt UnrPl)
 
 theorem _root_.GlobalTheory.T.theta_lattice_vacuum_split_place_vacuum_at_prime : ∀ (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) (w : HeightOneSpectrum (𝓞 D.host.E)), w.under (𝓞 D.host.F) = v → Formalism.DivisionValues.conjPl w ≠ w → ∀ (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (f : WO S T → ℂ), VacFin ψ S T v f → IsVacAt ψ S T w f := by
-  first | exact @GlobalTheory.VacSplit.isVacAt_of_vacFin | exact GlobalTheory.VacSplit.isVacAt_of_vacFin | (intros; apply GlobalTheory.VacSplit.isVacAt_of_vacFin <;> assumption)
+  first | exact @GlobalTheory.VacSplit.isVacAt_of_vacFin
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ThetaLatticeVacuumSplitPlaceVacuumAtPrimeStatement =====
@@ -330,7 +330,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.Hk3 (hyp IsVacAt UnrPl)
 
 theorem _root_.GlobalTheory.T.unramified_char_trivial_on_integral_units_at_place : ∀ (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) (w : HeightOneSpectrum (𝓞 D.host.E)), w.under (𝓞 D.host.F) = v → ∀ χ : (AE D)ˣ →* Circle, (∀ w' : HeightOneSpectrum (𝓞 D.host.E), w'.under (𝓞 D.host.F) = v → UnrAt χ w') → UnrPl w χ := by
-  first | exact @GlobalTheory.UnrPlDict.unrPl_of_unrAt | exact GlobalTheory.UnrPlDict.unrPl_of_unrAt | (intros; apply GlobalTheory.UnrPlDict.unrPl_of_unrAt <;> assumption)
+  first | exact @GlobalTheory.UnrPlDict.unrPl_of_unrAt
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.UnramifiedCharTrivialOnIntegralUnitsAtPlaceStatement =====

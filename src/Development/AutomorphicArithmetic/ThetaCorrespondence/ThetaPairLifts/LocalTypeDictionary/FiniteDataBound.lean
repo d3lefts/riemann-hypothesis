@@ -926,7 +926,7 @@ theorem UpperTheory.nu_det_mul_sliceB_block_action :
     have e1 : g (i, j + 1) = 1 := hg1 _ (by simp)
     have e2 : g (i + 1, j) = 1 := hg1 _ (by simp)
     simp only [Grid.edgeFactor, Edge.src, Edge.tgt, hg0, e1, e2, ha, map_one, apow_one, mul_one]
-    simp only [Grid.kappa, Grid.blockChar, Grid.nu, gdet, map_one, map_inv, MonoidHom.div_apply,
+    simp only [Grid.kappa, Grid.blockChar, Grid.nu, gdet, map_inv, MonoidHom.div_apply,
       Units.val_div_eq_div_val, Units.val_inv_eq_inv_val, Units.val_one, inv_one, mul_one, one_mul]
     field_simp
   have hprod : (γ.map (G.edgeFactor .one g)).prod = (G.nu i j (gdet u⁻¹) : ℂ) := by
@@ -970,6 +970,7 @@ section -- clump:auto
 
 open GlobalTheory.SplitFlip GlobalTheory.SplitWeil
 attribute [-instance] Formalism.DoubleCosetMeasures.instMeasGL Formalism.DoubleCosetMeasures.instMeasMat
+attribute [local instance high] GlobalTheory.SplitWeil.matrixMeasurableSpace
 
 noncomputable section
 
@@ -1053,7 +1054,6 @@ theorem fourierSum_mem {A D : Type} [Fintype A] [DecidableEq A] [Fintype D] [Dec
     · rw [mem_Lo, mul_inv_cancel₀ (pow_ne_zero _ (by exact_mod_cast hq))]
       exact isIntegral_one
     rw [← Valuation.mem_integer_iff]
-    change _ ∈ 𝒪[k]
     rw [pairCols, Finset.mul_sum]
     refine Subring.sum_mem _ fun i _ => ?_
     rw [Finset.mul_sum]
@@ -1071,7 +1071,6 @@ theorem invFourierSum_inv_mem {A D : Type} [Fintype A] [DecidableEq A] [Decidabl
   split_ifs with h
   · refine sum_mem fun S _ => Lo_mul (b := 0) (hΦ _) (Lo_zero (hψ _ ?_))
     rw [← Valuation.mem_integer_iff]
-    change _ ∈ 𝒪[k]
     have e1 : ((ϖ ^ e : kˣ) : k) * pairCols P T ((ϖ ^ e)⁻¹ • liftRes S) = ∑ i, ∑ j : P, liftRes S i j * T i j := by
       rw [pairCols, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
@@ -1402,7 +1401,7 @@ theorem UpperTheory.exists_pow_locK_mul_inf_eq_one_of_levelLe_two :
       simp only [one_pow] at hp
       rw [← hp, ← pow_mul, ← zpow_natCast, mul_zpow, ← zpow_natCast (χ.locK P k) h, ← zpow_mul,
         ← zpow_mul]
-      congr 2 <;> push_cast <;> ring
+      congr 2 <;> push_cast
     have e2 : χ.inf a ^ (c * ((mf P * N : ℕ) : ℤ)) * χ.locK P a ^ (c * ((mf P * N : ℕ) : ℤ)) = 1 := by
       rw [← mul_zpow, show c * ((mf P * N : ℕ) : ℤ) = (N : ℤ) * (c * mf P) by push_cast; ring,
         zpow_mul, zpow_natCast, hA, one_zpow]
@@ -1712,7 +1711,7 @@ private theorem nu_int {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : Gr
   have h12 := (GlobalTheory.SizesOfRows.sizes_of_sizeRows large₂ hS).2.2.2.2.2.2.2
   have e1 : (((locGrid G t w).nu i j (unifAt w) : ℂˣ) : ℂ) =
       ((L.C.mu0 ⟨j, hj⟩).val w : ℂ) * ((L.xiH t).val w : ℂ) * (((G.ch.chiH (D.R.m - i)).val w : ℂ))⁻¹ := by
-    simp only [Grid.nu, locGrid, muBase, dif_pos hj, MonoidHom.div_apply, Units.val_div_eq_div_val, div_eq_mul_inv]
+    simp only [Grid.nu, locGrid, muBase, dif_pos hj, div_eq_mul_inv]
     rw [MonoidHom.mul_apply, MonoidHom.inv_apply, Units.val_mul, Units.val_inv_eq_inv_val]
     rfl
   have hμ := L.C.isMu0 ⟨j, hj⟩
@@ -1886,7 +1885,7 @@ section
 open GlobalTheory.SumSize GlobalTheory.RowClaim
 
 theorem _root_.GlobalTheory.T.finDatK_of_theta_inputs : _root_.GlobalTheory.FunPr.ThetaLocalInputs → FinDatK := by
-  first | exact @_root_.GlobalTheory.FunDat.finDatK_alt | exact _root_.GlobalTheory.FunDat.finDatK_alt | (intros; apply _root_.GlobalTheory.FunDat.finDatK_alt <;> assumption)
+  first | exact @_root_.GlobalTheory.FunDat.finDatK_alt
 end
 end -- clump:auto
 end -- clump:auto

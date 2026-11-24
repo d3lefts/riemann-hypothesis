@@ -115,7 +115,7 @@ theorem harmonicAt_update_of_levi_eq_zero :
     rw [← hupd]
     simpa using hz
   have hφ2 : ∀ y ∈ O, ContDiffAt ℝ 2 φ y := fun y hy =>
-    ((hφ y hy).contDiffAt (hO.mem_nhds hy)).of_le (by first | exact WithTop.coe_le_coe.mpr le_top | simp)
+    ((hφ y hy).contDiffAt (hO.mem_nhds hy)).of_le (by first | exact WithTop.coe_le_coe.mpr le_top)
   have hlap : ∀ t ∈ (fun t : ℂ => z0 + t • e) ⁻¹' O,
       Laplacian.laplacian (fun t : ℂ => φ (z0 + t • e)) t = 0 := by
     intro t ht
@@ -182,7 +182,7 @@ theorem levi_eq_zero_of_compatChart : ∀ (e : ℕ) (X : Type) [TopologicalSpace
   have hopen2 : IsOpen ((A.chart j).target ∩ (A.chart j).symm ⁻¹' U) :=
     (A.chart j).continuousOn_symm.isOpen_inter_preimage (A.chart j).open_target hU
   have hsm : ContDiffAt ℝ 2 (g ∘ ⇑(A.chart j).symm) ((⇑(A.chart j) ∘ ⇑ψ.symm) z) :=
-    ((hg j).contDiffAt (hopen2.mem_nhds hcz)).of_le (by first | exact WithTop.coe_le_coe.mpr le_top | simp | norm_num | exact_mod_cast (le_top : ((2 : ℕ) : ℕ∞) ≤ ⊤))
+    ((hg j).contDiffAt (hopen2.mem_nhds hcz)).of_le (by first | exact WithTop.coe_le_coe.mpr le_top)
   rw [levi_congr hEq w, levi_comp w hτ hsm]
   exact hA j _ hcz _
 

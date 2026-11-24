@@ -248,7 +248,6 @@ private theorem card_quotient_eq_index {R N : Type*} [Ring R] [AddCommGroup N] [
 private theorem mem_smul_univ_iff_coe_mem_smul (I : Ideal (𝓞 K)) (N : Submodule (𝓞 K) M) (x : N) :
     x ∈ I • (⊤ : Submodule (𝓞 K) N) ↔ (x : M) ∈ I • N := by
   first
-  | exact Submodule.mem_smul_top_iff N x
   | (have e : Submodule.map N.subtype (I • (⊤ : Submodule (𝓞 K) N)) = I • N := by
        rw [Submodule.map_smul'', Submodule.map_subtype_top]
      rw [← e, Submodule.mem_map]
@@ -491,7 +490,6 @@ theorem relIndex_eq (n : ℕ) (𝔞 : Ideal (𝓞 K)) (h𝔞 : 𝔞 ≠ ⊥) (N 
       (𝔞 • N).toAddSubgroup.relIndex N.toAddSubgroup < Ideal.absNorm 𝔟 ^ n * Ideal.absNorm 𝔞 ^ n := by
     first
     | exact lt_of_le_of_lt (Nat.mul_le_mul_right _ h2) (Nat.mul_lt_mul_of_pos_left hlt hB)
-    | nlinarith
   exact absurd hprod (ne_of_lt hlt2)
 
 end General
@@ -527,7 +525,7 @@ theorem memDv (t : D.host.E) :
     t ∈ Dv D ↔ ∀ o : 𝓞 D.host.E, ∃ z : ℤ, Algebra.trace ℚ D.host.E (t * o) = z := by
   have h10 : (1 : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E) ≠ 0 := fun h => by
     have := congrArg (fun I : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E => (1 : D.host.E) ∈ I) h
-    simp [FractionalIdeal.one_mem_one, FractionalIdeal.mem_zero_iff] at this
+    simp [FractionalIdeal.mem_zero_iff] at this
   rw [FractionalIdeal.mem_dual h10]
   simp only [FractionalIdeal.mem_one_iff, forall_exists_index, forall_apply_eq_imp_iff,
     Algebra.traceForm_apply, RingHom.mem_range, eq_intCast]
@@ -631,7 +629,7 @@ theorem Lsharp {z : (VS D).V} (hz : z ∈ Wb X) (hd : ∀ y ∈ X.Lb, ∃ o : �
     obtain ⟨o, ho⟩ := hd l hl
     have e : (VS D).hT (∑ c, α c • X.eX c + l + ∑ c, β c • X.fY c) z = (VS D).hT l z := by
 
-      simp [map_add (f := _), map_sum, LinearMap.map_smulₛₗ₂, (hzW _).1, (hzW _).2]
+      simp [map_add (f := _), map_sum, (hzW _).1, (hzW _).2]
     rw [Submodule.mem_one]
     exact ⟨o, by rw [e]; exact ho⟩
   obtain ⟨α, β, l, hl, hzeq⟩ := decomp X hzL
@@ -656,7 +654,6 @@ theorem Lsharp {z : (VS D).V} (hz : z ∈ Wb X) (hd : ∀ y ∈ X.Lb, ∃ o : �
 
 theorem herm_swap (x y : (VS D).V) : (VS D).hT y x = star ((VS D).hT x y) := by
   first
-    | exact ((VS D).herm x y).symm
     | exact ((VS D).herm.eq x y).symm
 
 theorem F4 {x y : (VS D).V} (hx : x ∈ Ldual X) (hy : y ∈ X.Lb) : (VS D).hT x y ∈ Dv D := by
@@ -665,7 +662,6 @@ theorem F4 {x y : (VS D).V} (hx : x ∈ Ldual X) (hy : y ∈ X.Lb) : (VS D).hT x
   obtain ⟨z, hz⟩ := hx.2 (o • y) (X.Lb.smul_mem o hy)
   refine ⟨z, ?_⟩
   rw [← hz, ← algebraMap_smul D.host.E o y, LinearMap.map_smul, smul_eq_mul, mul_comm]
-  try rfl
 
 theorem coe_different :
     ((differentIdeal ℤ (𝓞 D.host.E) : Ideal (𝓞 D.host.E)) : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E) = (Dv D)⁻¹ := by
@@ -993,7 +989,6 @@ theorem gr_change {N : ℕ} (w w' : Fin N → (VS D).V) (A : Matrix (Fin N) (Fin
     trB_sum_left, trB_sum_right, Finset.mul_sum, Finset.sum_mul]
   first
     | exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
-    | (rw [Finset.sum_comm]; exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring)
     | (conv_rhs => rw [Finset.sum_comm])
       exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 
@@ -1040,7 +1035,7 @@ theorem finrank_eq_of_sandwich (A B : Submodule (𝓞 D.host.E) (VS D).V) (hA : 
       LinearMap.codRestrict (A.restrictScalars ℤ) ((c : ℤ) • (B.restrictScalars ℤ).subtype) (fun x => hmem x x.2)
     refine LinearMap.finrank_le_finrank_of_injective (f := f) fun x y hxy => ?_
     have h := congrArg Subtype.val hxy
-    simp only [f, LinearMap.codRestrict_apply, LinearMap.smul_apply, Submodule.coe_subtype] at h
+    simp only [f] at h
     have : (c : ℤ) • ((x : (VS D).V) - y) = 0 := by rw [smul_sub]; exact sub_eq_zero.2 h
     exact Subtype.ext (sub_eq_zero.1 ((smul_eq_zero.1 this).resolve_left (by exact_mod_cast hc)))
 

@@ -413,7 +413,7 @@ theorem UpperTheory.exists_mem_KO_eq_stdFrame_mul_of_isPrimFrame_fin :
   have hYrank : Y.rank = a' := by
     have hY0 : Y0 k σ * (Y0 k σ).transpose = 1 := by
       ext i j
-      simp [Y0, Matrix.mul_apply, Matrix.one_apply, Finset.sum_ite_eq']
+      simp [Y0, Matrix.mul_apply, Matrix.one_apply]
     have hW : Y * (((h⁻¹ : GL D k) : Matrix D D k) * (Y0 k σ).transpose) = 1 := by
       rw [hYeq, Matrix.mul_assoc, ← Matrix.mul_assoc (h : Matrix D D k), ← Units.val_mul,
         mul_inv_cancel, Units.val_one, Matrix.one_mul, hY0]
@@ -590,10 +590,8 @@ theorem UpperTheory.Reformulated.B.SumRightInverse.sum_rightInv :
   let C : G ⧸ K → Set G := fun Q => (fun g => (Quotient.out Q)⁻¹ * g) ⁻¹' (K : Set G)
   have hC : ∀ Q g, g ∈ C Q ↔ (QuotientGroup.mk g : G ⧸ K) = Q := by
     intro Q g
-    have h := QuotientGroup.eq (s := K) (a := Quotient.out Q) (b := g)
-    rw [QuotientGroup.out_eq'] at h
-    rw [eq_comm, h]
-    rfl
+    simpa only [C, Set.mem_preimage, QuotientGroup.out_eq', SetLike.mem_coe, eq_comm] using
+      (QuotientGroup.eq (s := K) (a := Quotient.out Q) (b := g)).symm
   have hout : ∀ Q ∈ hfin.toFinset, Quotient.out Q ∈ S := by
     intro Q hQ
     obtain ⟨s, hs, rfl⟩ := hfin.mem_toFinset.1 hQ
@@ -610,13 +608,11 @@ theorem UpperTheory.Reformulated.B.SumRightInverse.sum_rightInv :
     · intro hg
       exact ⟨_, hfin.mem_toFinset.2 ⟨g, hg, rfl⟩, (hC _ g).2 rfl⟩
     · rintro ⟨Q, hQ, hg⟩
-      have := hSK _ (hout Q hQ) _ hg
-      simpa using this
+      simpa using hSK _ (hout Q hQ) _ hg
   refine ⟨hfin.toFinset, hout, fun f hf => ?_⟩
   have hconst : ∀ Q ∈ hfin.toFinset, Set.EqOn f (fun _ => f (Quotient.out Q)) (C Q) := by
     intro Q hQ g hg
-    have := hf _ (hout Q hQ) _ hg
-    simpa using this
+    simpa using hf _ (hout Q hQ) _ hg
   have hsplit : ∫ g in ⋃ Q ∈ hfin.toFinset, C Q, f g ∂μ
       = ∑ Q ∈ hfin.toFinset, ∫ g in C Q, f g ∂μ := by
     refine MeasureTheory.integral_biUnion_finset _ (fun Q _ => hmeas Q) ?_ ?_
@@ -1283,7 +1279,7 @@ private theorem local_grid_entries_unitary {K : Type} [Field K] {ι τ : K →+*
     {i j : ℕ} (hi : i < D.R.m) (hj : j < D.R.m) (u : (Kw w)ˣ) : Un ι τ ((locGrid G t w).nu i j u : ℂ) := by
   have e1 : (((locGrid G t w).nu i j u : ℂˣ) : ℂ) =
       ((L.C.mu0 ⟨j, hj⟩).loc w u : ℂ) * ((L.xiH t).loc w u : ℂ) * (((G.ch.chiH (D.R.m - i)).loc w u : ℂ))⁻¹ := by
-    simp only [Grid.nu, locGrid, muBase, dif_pos hj, MonoidHom.div_apply, Units.val_div_eq_div_val, div_eq_mul_inv]
+    simp only [Grid.nu, locGrid, muBase, dif_pos hj, div_eq_mul_inv]
     simp [HChar.loc]
   rw [e1]
   exact ((hmu _ _).mul (hxi _)).mul (hchi _ (by omega) (by omega) _).inv

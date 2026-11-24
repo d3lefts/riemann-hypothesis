@@ -156,7 +156,6 @@ theorem exists_irreducible_big (k : Type) [Field k] [Finite k] (N : ℕ) :
   haveI hKinf : Infinite (AlgebraicClosure k) := by
     first
     | exact inferInstance
-    | exact IsAlgClosed.instInfinite
   obtain ⟨S, hS⟩ := Infinite.exists_subset_card_eq (AlgebraicClosure k) (N + 1)
   haveI hfd : FiniteDimensional k (IntermediateField.adjoin k (S : Set (AlgebraicClosure k))) :=
     IntermediateField.finiteDimensional_adjoin (fun x _ => Algebra.IsIntegral.isIntegral x)
@@ -166,7 +165,6 @@ theorem exists_irreducible_big (k : Type) [Field k] [Finite k] (N : ℕ) :
       IntermediateField.adjoin k {α} = ⊤ := by
     first
     | exact Field.exists_primitive_element_of_finite_top k _
-    | exact Field.exists_primitive_element k _
   have hint : IsIntegral k α := Algebra.IsIntegral.isIntegral α
   refine ⟨minpoly k α, minpoly.monic hint, minpoly.irreducible hint, ?_⟩
   have e1 : Cardinal.mk (AdjoinRoot (minpoly k α)) =
@@ -330,7 +328,7 @@ private theorem blockPoly_map_lemma {A B : Type*} [CommRing A] [CommRing B] (f :
   rw [← Polynomial.coe_mapRingHom, RingHom.map_det]
   congr 1
   ext i j
-  by_cases h : i = j <;> simp [h, Matrix.one_apply]
+  by_cases h : i = j <;> simp [h]
 
 theorem blockPoly_bc (x : X) :
     blockPoly ((bcM O' eB x).map (algebraMap O' (FractionRing O')))
@@ -478,7 +476,7 @@ theorem bcR'_mem (hD : RingDef O T r π χ₁ ε g₀ eB e₁ s D)
   funext y'
   ext i j
 
-  simp [Finset.sum_apply, Matrix.sum_apply, map_sum, hr, hr', hσ1, hκ, bcR, bcM]
+  simp [Finset.sum_apply, Matrix.sum_apply, map_sum, hr, hr', hσ1, bcR, bcM]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [Algebra.smul_def, Algebra.smul_def, map_mul, hκ, hκ, ← IsScalarTower.algebraMap_apply O O' (FractionRing O')]
 
@@ -527,7 +525,7 @@ private theorem sum_extend_embedding_zero_eq_sum {α β M : Type*} [Fintype α] 
     (f : α ↪ β) (φ : α → M) : ∑ l, Function.extend f φ 0 l = ∑ j, φ j := by
   classical
   rw [← Finset.sum_subset (Finset.subset_univ (Finset.univ.map f)), Finset.sum_map]
-  · simp only [Function.Embedding.coeFn_mk, f.injective.extend_apply]
+  · simp only [f.injective.extend_apply]
   · intro l _ hl
     rw [Function.extend_apply']
     · rfl
@@ -797,8 +795,6 @@ theorem blockPoly_separable_splits {O : Type} (O' : Type) [CommRing O] [IsDomain
     rw [blockPoly_map, he]
     first
       | exact Polynomial.Splits.prod fun i _ => Polynomial.Splits.X_sub_C _
-      | exact Polynomial.splits_prod_X_sub_C _
-      | simp
 
 theorem lemma_five_three_extension_of_module (hM : StatModuleBc) : LemmaFiveThreeOverExtension := by
   intro O _ _ _ X _ d G _ _ _ t ht bl T r π χ₁ ε g₀ eB e₁ s hP hA hI hX D hD _ _ Z NN _ _ g n hn hφ

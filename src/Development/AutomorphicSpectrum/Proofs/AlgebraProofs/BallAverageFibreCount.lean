@@ -77,9 +77,8 @@ theorem measurePreserving_swapMat (m n : ℕ) :
           (Equiv.prodComm (Fin m) (Fin n))) ∘
           (MeasurableEquiv.curry (Fin m) (Fin n) ℂ).symm := by
     funext π j i
-    simp only [MeasurableEquiv.coe_curry_symm, MeasurableEquiv.curry, Function.comp]
-    simp only [MeasurableEquiv.coe_mk, Equiv.coe_fn_mk, Function.curry_apply,
-      MeasurableEquiv.coe_piCongrLeft]
+    simp only [MeasurableEquiv.curry, Function.comp]
+    simp only [MeasurableEquiv.coe_mk, MeasurableEquiv.coe_piCongrLeft]
     exact (Equiv.piCongrLeft_apply_apply (fun _ : Fin n × Fin m => ℂ)
       (Equiv.prodComm (Fin m) (Fin n)) (Function.uncurry π) (i, j)).symm
   rw [h5]
@@ -273,7 +272,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.ball_average_fibre_count : ∀
         ∫⁻ w in (Metric.ball (0 : EuclideanSpace ℂ (Fin (e + 1))) 1), T (cntOver S π w) =
       volume (Metric.ball (0 : EuclideanSpace ℂ (Fin (e + 1))) 1) *
         ∫⁻ π : Fin (e + 1) → Fin n → ℂ, matGauss π * T (cntOver S π (firstCoordVec (e + 1))) := by
-  first | exact @PositivityTheory.Xgn.t_xgz_chow_mahler_e0reduce | exact PositivityTheory.Xgn.t_xgz_chow_mahler_e0reduce
+  first | exact @PositivityTheory.Xgn.t_xgz_chow_mahler_e0reduce
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AutomorphicSpectrum.Proofs.AlgebraProofs.BallAverageFibreCount =====

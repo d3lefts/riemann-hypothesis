@@ -532,7 +532,7 @@ theorem _root_.GlobalTheory.T.kFinite_algebra_closed_under_derivation : _root_.G
     ∃ U : Submodule ℂ ((Fin a × Fin (a + a') → AF F) → ℂ), FiniteDimensional ℂ U ∧
       U ≤ GlobalTheory.SquareAgree.algD Γ.M Bs.ψ Bs.emb ∧ ΦD ∈ U ∧
       ∀ k ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.KInf σ Γ.V Bs.emb, ∀ x ∈ U, om (k, 1) x ∈ U := by
-  first | exact @_root_.GlobalTheory.SquareAgree.KFinAlg.derivation_algebra_kFinite | exact _root_.GlobalTheory.SquareAgree.KFinAlg.derivation_algebra_kFinite | (intros; apply _root_.GlobalTheory.SquareAgree.KFinAlg.derivation_algebra_kFinite <;> assumption)
+  first | exact @_root_.GlobalTheory.SquareAgree.KFinAlg.derivation_algebra_kFinite
 end
 end -- clump:auto
 end -- clump:auto
@@ -1083,7 +1083,7 @@ theorem _root_.GlobalTheory.T.kInfinity_action_prod_lines : _root_.GlobalTheory.
       (∀ q ∈ l, q.2 ∈ lieAt W q.1 ∧ ∀ t : ℝ,
         GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU W 1 hJ (oneP θ W q.1 q.2 t) ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.KInf D.sp.cm.sig V Bs.emb) ∧
       k = (l.map fun q => GlobalTheory.IndefiniteRowSideFullHecke.UnitaryConjugation.conjU W 1 hJ (oneP θ W q.1 q.2 1)).prod := by
-  first | exact @_root_.GlobalTheory.KInfLines.kInfinity_prod_lines | exact _root_.GlobalTheory.KInfLines.kInfinity_prod_lines | (intros; apply _root_.GlobalTheory.KInfLines.kInfinity_prod_lines <;> assumption)
+  first | exact @_root_.GlobalTheory.KInfLines.kInfinity_prod_lines
 end
 end -- clump:auto
 end -- clump:auto
@@ -1184,7 +1184,7 @@ theorem _root_.GlobalTheory.T.weil_projection_kInfty_invariant : _root_.GlobalTh
     ∀ Pi rf rl p p', IsMatch ψ θ A A₁ B α β ωA ωB Pi rf rl p p' →
     ∀ k ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.KInf D.sp.cm.sig Γ.V Bs.emb, ∀ ΦD ∈ algD Γ.M Bs.ψ Bs.emb, ∀ Φ Φ₁,
     IsDatum Γ.M ψ cA ΦD Φ → IsDatum Γ.M ψ cA (om (k, 1) ΦD) Φ₁ → p Φ₁ = p Φ := by
-  first | exact @_root_.GlobalTheory.KInvData.projection_kInfty_invariant | exact _root_.GlobalTheory.KInvData.projection_kInfty_invariant | (intros; apply _root_.GlobalTheory.KInvData.projection_kInfty_invariant <;> assumption)
+  first | exact @_root_.GlobalTheory.KInvData.projection_kInfty_invariant
 end
 end -- clump:auto
 end -- clump:auto

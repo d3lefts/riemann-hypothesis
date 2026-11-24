@@ -80,7 +80,7 @@ theorem _root_.GlobalTheory.T.adeleLinearEquiv_maps_open_finite_subgroup_to_open
     (M : AddSubgroup ((κ → FiniteAdeleRing (𝓞 F) F) × (κ → FiniteAdeleRing (𝓞 F) F))), IsOpen (M : Set ((κ → FiniteAdeleRing (𝓞 F) F) × (κ → FiniteAdeleRing (𝓞 F) F))) →
       ∃ M' : AddSubgroup ((κ → FiniteAdeleRing (𝓞 F) F) × (κ → FiniteAdeleRing (𝓞 F) F)), IsOpen (M' : Set ((κ → FiniteAdeleRing (𝓞 F) F) × (κ → FiniteAdeleRing (𝓞 F) F))) ∧
         ∀ m' ∈ M', ∃ m ∈ M, B (GlobalTheory.WeilAdm.finE2 F m) = GlobalTheory.WeilAdm.finE2 F m' := by
-  first | exact @GlobalTheory.WeilAdm.fintrans | exact GlobalTheory.WeilAdm.fintrans | (intros; apply GlobalTheory.WeilAdm.fintrans <;> assumption)
+  first | exact @GlobalTheory.WeilAdm.fintrans
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdeleLinearEquivMapsOpenFiniteSubgroupToOpenStatement =====
@@ -102,7 +102,7 @@ theorem _root_.GlobalTheory.T.adeleLinearEquiv_restricts_realLinearEquiv_archime
     (B : ((κ → AdeleRing (𝓞 F) F) × (κ → AdeleRing (𝓞 F) F)) ≃ₗ[AdeleRing (𝓞 F) F] ((κ → AdeleRing (𝓞 F) F) × (κ → AdeleRing (𝓞 F) F))),
       ∃ L : ((κ → mixedEmbedding.mixedSpace F) × (κ → mixedEmbedding.mixedSpace F)) ≃ₗ[ℝ] ((κ → mixedEmbedding.mixedSpace F) × (κ → mixedEmbedding.mixedSpace F)),
         ∀ v, B (GlobalTheory.WeilAdm.mixedSpaceVecPairAsAdeles F v) = GlobalTheory.WeilAdm.mixedSpaceVecPairAsAdeles F (L v) := by
-  first | exact @GlobalTheory.WeilAdm.infLin_main | exact GlobalTheory.WeilAdm.infLin_main | (intros; apply GlobalTheory.WeilAdm.infLin_main <;> assumption)
+  first | exact @GlobalTheory.WeilAdm.infLin_main
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdeleLinearEquivRestrictsRealLinearEquivArchimedStatement =====
@@ -125,7 +125,7 @@ theorem _root_.GlobalTheory.T.adelicPureTensor_fixed_by_open_finiteHeisenberg : 
       ∃ M : AddSubgroup ((κ → FiniteAdeleRing (𝓞 F) F) × (κ → FiniteAdeleRing (𝓞 F) F)), IsOpen (M : Set ((κ → FiniteAdeleRing (𝓞 F) F) × (κ → FiniteAdeleRing (𝓞 F) F))) ∧
         ∀ m ∈ M, ∀ f : (κ → mixedEmbedding.mixedSpace F) → ℂ,
           GlobalTheory.WeilM.schr ψ (GlobalTheory.WeilAdm.finE2 F m) (GlobalTheory.WeilM.pureA F f g) = GlobalTheory.WeilM.pureA F f g := by
-  first | exact @GlobalTheory.WeilAdm.pureA_fixed_fin | exact GlobalTheory.WeilAdm.pureA_fixed_fin | (intros; apply GlobalTheory.WeilAdm.pureA_fixed_fin <;> assumption)
+  first | exact @GlobalTheory.WeilAdm.pureA_fixed_fin
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicPureTensorFixedByOpenFiniteHeisenbergStatement =====
@@ -196,13 +196,13 @@ theorem realTrace_nondeg : ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F �
     by_cases hu : u = v
     · subst hu
       simp [he, hb, hv]
-    · simp [he, hb, Pi.single_apply, hu]
+    · simp [he, hb, hu]
   have hee : e * e = e := by
     funext u
     rw [hmul]
     by_cases hu : u = v
     · subst hu; simp [he]
-    · simp [he, Pi.single_apply, hu]
+    · simp [he, hu]
   have hidem : ∀ σ, χ σ e = 0 ∨ χ σ e = 1 := by
     intro σ
     have h1 : χ σ e * χ σ e = χ σ e := by rw [← map_mul, hee]
@@ -255,7 +255,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem _root_.GlobalTheory.T.realTrace_archimedeanEmbeddings_nondegenerate : ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)),
     IsInfFam θ → ∀ a : Ainf D.host.F, a ≠ 0 →
       ∃ b : Ainf D.host.F, (∑ ρ, θ ρ ((a * b) ⊗ₜ[D.host.F] (1 : D.host.E))).re ≠ 0 := by
-  first | exact @GlobalTheory.InfTraceNondeg.realTrace_nondeg | exact GlobalTheory.InfTraceNondeg.realTrace_nondeg | (intros; apply GlobalTheory.InfTraceNondeg.realTrace_nondeg <;> assumption)
+  first | exact @GlobalTheory.InfTraceNondeg.realTrace_nondeg
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.RealTraceArchimedeanEmbeddingsNondegenerateStatement =====
@@ -478,7 +478,7 @@ theorem _root_.GlobalTheory.T.archSchwartz_L2Bounded_intertwiner_continuous : �
       (∀ v (f f' : SchwartzMap (κ → mixedEmbedding.mixedSpace D.host.F) ℂ), ⇑f' = GlobalTheory.WeilAdm.schrInf D.host.F ψ v ⇑f →
         ⇑(A f') = GlobalTheory.WeilAdm.schrInf D.host.F ψ (L v) ⇑(A f)) →
       Continuous A := by
-  first | exact @GlobalTheory.WeilAdm.realcont | exact GlobalTheory.WeilAdm.realcont | (intros; apply GlobalTheory.WeilAdm.realcont <;> assumption)
+  first | exact @GlobalTheory.WeilAdm.realcont
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ArchSchwartzL2BoundedIntertwinerContinuousStatement =====
@@ -503,7 +503,7 @@ theorem _root_.GlobalTheory.T.eq_finset_sum_pureTensor_coset_indicator : ∀ (F 
         ∀ Φ : (κ → AdeleRing (𝓞 F) F) → ℂ, (∀ x, ∀ u ∈ U, Φ (x + GlobalTheory.WeilAdm.finE F u) = Φ x) →
           (∀ x, (fun i => (x i).2) ∉ K → Φ x = 0) →
             Φ = ∑ r ∈ R, GlobalTheory.WeilM.pureA F (GlobalTheory.WeilAdm.slice F Φ r) (Set.indicator {y | y - r ∈ U} fun _ => (1 : ℂ)) := by
-  first | exact @GlobalTheory.WeilAdm.eq_sum_pureA_coset_indicator | exact GlobalTheory.WeilAdm.eq_sum_pureA_coset_indicator | (intros; apply GlobalTheory.WeilAdm.eq_sum_pureA_coset_indicator <;> assumption)
+  first | exact @GlobalTheory.WeilAdm.eq_sum_pureA_coset_indicator
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqFinsetSumPureTensorCosetIndicatorStatement =====
@@ -528,7 +528,7 @@ theorem _root_.GlobalTheory.T.exists_haar_adelicVectors_bounds_pureTensors_slice
           (∀ f : SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ, ∫⁻ x, ‖GlobalTheory.WeilM.pureA F f g x‖ₑ ^ 2 ∂μ ≤ C * ∫⁻ z, ‖f z‖ₑ ^ 2) ∧
           ∀ Φ ∈ GlobalTheory.WeilM.schA F κ, (∀ x, ∀ u ∈ U, Φ (x + GlobalTheory.WeilAdm.finE F u) = Φ x) →
             ∀ y, c * ∫⁻ z, ‖GlobalTheory.WeilAdm.slice F Φ y z‖ₑ ^ 2 ≤ ∫⁻ x, ‖Φ x‖ₑ ^ 2 ∂μ := by
-  first | exact @GlobalTheory.WeilAdm.HaarSplit.haar_pure_slice_bounds | exact GlobalTheory.WeilAdm.HaarSplit.haar_pure_slice_bounds | (intros; apply GlobalTheory.WeilAdm.HaarSplit.haar_pure_slice_bounds <;> assumption)
+  first | exact @GlobalTheory.WeilAdm.HaarSplit.haar_pure_slice_bounds
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsHaarAdelicVectorsBoundsPureTensorsSlicesStatement =====
@@ -552,7 +552,7 @@ theorem _root_.GlobalTheory.T.heisenberg_fixed_invariant_open_compact_compact_su
         IsCompact (U : Set (κ → FiniteAdeleRing (𝓞 D.host.F) D.host.F)) ∧ IsCompact K ∧
         ∀ Φ : (κ → AF D.host.F) → ℂ, (∀ m ∈ M, GlobalTheory.WeilM.schr ψ (GlobalTheory.WeilAdm.finE2 D.host.F m) Φ = Φ) →
           (∀ x, ∀ u ∈ U, Φ (x + GlobalTheory.WeilAdm.finE D.host.F u) = Φ x) ∧ ∀ x, (fun i => (x i).2) ∉ K → Φ x = 0 := by
-  first | exact @GlobalTheory.WeilAdm.fixed_invariant_compactSupport | exact GlobalTheory.WeilAdm.fixed_invariant_compactSupport | (intros; apply GlobalTheory.WeilAdm.fixed_invariant_compactSupport <;> assumption)
+  first | exact @GlobalTheory.WeilAdm.fixed_invariant_compactSupport
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeisenbergFixedInvariantOpenCompactCompactSupporStatement =====
@@ -701,7 +701,7 @@ theorem _root_.GlobalTheory.T.transportedWeilDatum_keeps_admissible_forms : ∀ 
       GlobalTheory.WeilM.UG (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (incM D.host.F JB) →* Module.End ℂ ((κ → AF D.host.F) → ℂ),
                        GlobalTheory.WeilSchrodinger.IsTransport ψ co ω om →
                        ∀ p, ∀ l ∈ (GlobalTheory.WeilM.adeleClass D.host.F).adm κ, l ∘ₗ om p ∈ (GlobalTheory.WeilM.adeleClass D.host.F).adm κ := by
-  first | exact @GlobalTheory.WeilAdm.transport_adm | exact GlobalTheory.WeilAdm.transport_adm | (intros; apply GlobalTheory.WeilAdm.transport_adm <;> assumption)
+  first | exact @GlobalTheory.WeilAdm.transport_adm
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.TransportedWeilDatumKeepsAdmissibleFormsStatement =====

@@ -116,9 +116,9 @@ theorem hat_mix_twist : ∀ (N l : ℕ) (ν : DirichletCharacter ℂ N) (ω : Di
     rw [Finset.mul_sum]
     refine Fintype.sum_congr _ _ (fun q => ?_)
     have hN1 : ZMod.castHom (Dvd.intro l rfl : N ∣ N * l) (ZMod N) (f (p, q)) = p * l := by
-      simp only [f, hcN]; push_cast; simp [ZMod.natCast_self]
+      simp only [f, hcN]; push_cast; simp
     have hl1 : ZMod.castHom (Dvd.intro_left N rfl : l ∣ N * l) (ZMod l) (f (p, q)) = q * N := by
-      simp only [f, hcl]; push_cast; simp [ZMod.natCast_self]
+      simp only [f, hcl]; push_cast; simp
     have htq := htw ((a : ZMod l) * N) q haN
     have hval : ν (-(c : ZMod N) * ZMod.castHom (Dvd.intro l rfl : N ∣ N * l) (ZMod N) (f (p, q))) *
         φ ((a : ZMod l) * ZMod.castHom (Dvd.intro_left N rfl : l ∣ N * l) (ZMod l) (f (p, q)))
@@ -531,7 +531,7 @@ theorem atkin_lehner_eis : ∀ (j N l : ℕ) (ω : DirichletCharacter ℂ l) (ν
   rw [GlobalTheory.EisM.lat_smul j l (0, 1) Φ₁ Φ₁' γ₀ τ' htr]
   have hv : ((0 : ℤ) * γ₀ 0 0 + 1 * γ₀ 1 0, (0 : ℤ) * γ₀ 0 1 + 1 * γ₀ 1 1) = ((l : ℤ) * c, (N : ℤ) * d) := by
     simp [γ₀]
-  simp only [Prod.fst, Prod.snd] at hv ⊢
+  simp only at hv ⊢
   rw [hv, _root_.GlobalTheory.EisM.lat_dilate j l N _ Φ₁' τ τ' hN rfl]
   have hrow : (fun y : ℤ × ℤ => if (N : ℤ) ∣ y.1 then Φ₁' (y.1 / N, y.2) else 0) = Ψ := by
     funext y; exact _root_.GlobalTheory.latF_rows_subst N l ν φ a b c d hdet hN hl0 y

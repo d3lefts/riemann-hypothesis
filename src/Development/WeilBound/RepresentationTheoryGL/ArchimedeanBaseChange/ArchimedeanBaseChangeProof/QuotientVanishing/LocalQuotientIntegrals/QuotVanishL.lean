@@ -110,7 +110,7 @@ theorem locVanish_of (hN : NilChange) (hQ : QuotVanish) : LocVanish := by
       have hm : (uOf X).val - 1 ∈ nilrad W₁ W₂ := by simpa using X.2
       rw [huN _ hm, mul_comm]
       congr 2
-      simp only [hg, hΦ, twConj, map_mul, _root_.mul_inv_rev]
+      simp only [hΦ, twConj, map_mul, _root_.mul_inv_rev]
       group
     have e2 : ∫ X, g (Φ X) ∂ν = (c : ℝ) • ∫ Y, g Y ∂ν := by
       rw [← integral_map hΦc.measurable.aemeasurable hgc.aestronglyMeasurable, hc,
@@ -185,8 +185,7 @@ private theorem cptRight_lemma_2 {H : Type} [Group H] [TopologicalSpace H] [IsTo
   haveI := mapMulRight_lemma κ a
   have h := Measure.isMulLeftInvariant_eq_smul (κ.map (· * a)) κ
   have hu := congrArg (fun ν : Measure H => ν Set.univ) h
-  simp only [Measure.map_apply (measurable_mul_const a) MeasurableSet.univ, Set.preimage_univ,
-    Measure.nnreal_smul_coe_apply] at hu
+  simp only [Measure.map_apply (measurable_mul_const a) MeasurableSet.univ, Set.preimage_univ] at hu
   have h0 : κ Set.univ ≠ 0 := (isOpen_univ.measure_pos κ Set.univ_nonempty).ne'
   have ht : κ Set.univ ≠ ⊤ := measure_ne_top κ _
   have hc : ((κ.map (· * a)).haarScalarFactor κ : ℝ≥0∞) = 1 :=
@@ -842,7 +841,7 @@ def uniRad (hW : W₁ ≤ W₂) : Subgroup (GL (Fin n) ℂ) where
     have e : a = uOf hW ⟨a.val - 1, ha⟩ := Units.ext (by rw [uOf_val']; simp)
     change (a⁻¹ : GL (Fin n) ℂ).val - 1 ∈ nilrad W₁ W₂
     rw [e, uOf_inv_val]
-    simp only [uOf_val', add_sub_cancel_left]
+    simp only
     rw [show (1 - (a.val - 1) + (a.val - 1) * (a.val - 1) - 1 : Matrix (Fin n) (Fin n) ℂ) =
         -(a.val - 1) + (a.val - 1) * (a.val - 1) by abel]
     exact (nilrad W₁ W₂).add_mem ((nilrad W₁ W₂).neg_mem ha) (GlobalTheory.CompanionTheory.LocVan.nil_mul_mem hW ha ha)

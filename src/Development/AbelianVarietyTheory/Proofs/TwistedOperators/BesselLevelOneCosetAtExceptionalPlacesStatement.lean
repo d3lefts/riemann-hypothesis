@@ -244,7 +244,7 @@ theorem _root_.GlobalTheory.T.besselStep_basePoint_scaled_coordinates : OnStd fu
   ∃ s t : Fin (σ + 1) → k, (∀ q, s q • (β.b' *ᵥ fun i => p.pr (xZero (F.dJ (σ + 1) h) i q)) = Pi.single (κ ⟨q.1, by omega⟩) 1) ∧
     (∀ q, t q • ((fun i => p.pr (cA D (xZero (F.dJ (σ + 1) h) i q))) ᵥ*
     ((G.V (.grid (2 * (σ + 1) + 1) 0)).gram.map (fun c => p.pr (incA D c)) * β.b)) = Pi.single (κ ⟨2 * (σ + 1) - 1 - q.1, by omega⟩) 1) := by
-  first | exact @GlobalTheory.FrameZero.xclauses | exact GlobalTheory.FrameZero.xclauses | (intros; apply GlobalTheory.FrameZero.xclauses <;> assumption)
+  first | exact @GlobalTheory.FrameZero.xclauses
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.BesselStepBasePointScaledCoordinatesStatement =====
@@ -455,7 +455,7 @@ theorem exists_frame {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : HermitianOrtho
             · subst hq; simpa using hu
             · rw [Pi.single_eq_of_ne hq]; exact (𝔟 q').zero_mem
           · funext i
-            simp [mulVec_single, mul_comm]
+            simp [mulVec_single]
         have h3 := int_mul_mem (sec_mem_intAt p _ (mul_mem ho (hx (σ (Sum.inr q))))) hz
         convert h3 using 2 with i
         rw [sec_mul_right, sec_mul_right, hso, map_mul (incA D), map_mul p.pr, emb_apply]
@@ -755,7 +755,7 @@ theorem _root_.GlobalTheory.T.exists_splitPoint_besselStaircaseLattice_frame : O
   (∀ r i, β.b i (κ r) = (ϖ : k) ^ (G.pl.depth sc v * (r.1 + 1)) * p.pr (incA D ((G.colDec (2 * (σ + 1) + 1) (by omega) (by omega)).a i r))) ∧
   (∀ j, j ∉ Set.range κ → ∀ r, ((Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) (G.colDec (2 * (σ + 1) + 1) (by omega) (by omega)).a * (G.V (.grid (2 * (σ + 1) + 1) 0)).gram).map
       (fun c => p.pr (incA D c)) * β.b) r j = 0) := by
-  first | exact @GlobalTheory.StairFrame.frame_shape | exact GlobalTheory.StairFrame.frame_shape | (intros; apply GlobalTheory.StairFrame.frame_shape <;> assumption)
+  first | exact @GlobalTheory.StairFrame.frame_shape
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsSplitPointBesselStaircaseLatticeFrameStatement =====
@@ -1522,7 +1522,7 @@ theorem _root_.GlobalTheory.T.split_frame_odd_lattice_right : OnStd fun {D} _ _ 
   ∀ a ∈ (pcBF W F (σ + 1) h).A₁, ∀ q i, ∃ z ∈ IsLocalRing.maximalIdeal 𝒪[k] ^ G.pl.depth sc v,
     (z : k) = t q * ((fun j => p.pr (cA D (a j q))) ᵥ*
       ((G.V (.grid (2 * (σ + 1) + 1) 0)).gram.map (fun c => p.pr (incA D c)) * β.b)) i := by
-  first | exact @GlobalTheory.AscFin.FrameBarBF.bessel_step_conj_place_column_functional_bound | exact GlobalTheory.AscFin.FrameBarBF.bessel_step_conj_place_column_functional_bound | (intros; apply GlobalTheory.AscFin.FrameBarBF.bessel_step_conj_place_column_functional_bound <;> assumption)
+  first | exact @GlobalTheory.AscFin.FrameBarBF.bessel_step_conj_place_column_functional_bound
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SplitFrameOddLatticeRightStatement =====
@@ -1608,7 +1608,7 @@ theorem _root_.GlobalTheory.T.split_local_frame_odd_level : OnStd fun {D} _ _ {s
     (∀ q i, ∃ z ∈ IsLocalRing.maximalIdeal 𝒪[k] ^ G.pl.depth sc v, (z : k) = s q * (β.b' *ᵥ fun j => p.pr (a j q)) i) ∧
     (∀ q i, ∃ z ∈ IsLocalRing.maximalIdeal 𝒪[k] ^ G.pl.depth sc v, (z : k) = t q * ((fun j => p.pr (cA D (a j q))) ᵥ*
       ((G.V (.grid (2 * (σ + 1) + 1) 0)).gram.map (fun c => p.pr (incA D c)) * β.b)) i) := by
-  first | exact @GlobalTheory.AscFin.FrameBF.frame_bf | exact GlobalTheory.AscFin.FrameBF.frame_bf | (intros; apply GlobalTheory.AscFin.FrameBF.frame_bf <;> assumption)
+  first | exact @GlobalTheory.AscFin.FrameBF.frame_bf
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.SplitLocalFrameOddLevelStatement =====
@@ -1666,7 +1666,7 @@ open GlobalTheory.AscFin
 
 
 theorem _root_.GlobalTheory.T.besselStep_orbit_at_badPlace_eq_congruenceTranslate : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m), ∀ v ∈ G.pl.S0, ∀ g ∈ grpAt (G.V (.grid (2 * ρ + 1) 0)) (· = v), ∀ (u : UX D ρ), ∀ a ∈ (pcBF W F ρ h).A₁, MxOff (· = v) (mt (G.V (.grid (2 * ρ + 1) 0)) g⁻¹ ⬝ (xZero (F.dJ ρ h) ⬝ u.1.1) - xZero (F.dJ ρ h) - a) → ∃ k ∈ lev G (.grid (2 * ρ + 1) 0), k ∈ grpAt (G.V (.grid (2 * ρ + 1) 0)) (· = v) ∧ MxOff (· = v) (mt (G.V (.grid (2 * ρ + 1) 0)) k ⬝ xZero (F.dJ ρ h) - mt (G.V (.grid (2 * ρ + 1) 0)) g⁻¹ ⬝ (xZero (F.dJ ρ h) ⬝ u.1.1)) := by
-  first | exact @GlobalTheory.CosetBF.besselOrbit_at_badPlace_eq_congruenceTranslate | exact GlobalTheory.CosetBF.besselOrbit_at_badPlace_eq_congruenceTranslate | (intros; apply GlobalTheory.CosetBF.besselOrbit_at_badPlace_eq_congruenceTranslate <;> assumption)
+  first | exact @GlobalTheory.CosetBF.besselOrbit_at_badPlace_eq_congruenceTranslate
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.BesselStepOrbitAtBadPlaceEqCongruenceTranslateStatement =====
@@ -1712,7 +1712,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.besselLevel_one_coset_at_place : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m), ∀ v ∈ G.pl.S0, ∀ g ∈ grpAt (G.V (.grid (2 * ρ + 1) 0)) (· = v), (∃ u : UX D ρ, ∃ a ∈ (pcBF W F ρ h).A₁, MxOff (· = v) (Formalism.L2.Theta.mt (G.V (.grid (2 * ρ + 1) 0)) g⁻¹ ⬝ (xZero (F.dJ ρ h) ⬝ u.1.1) - xZero (F.dJ ρ h) - a)) → ∃ r ∈ Rgrp (G.V (.grid (2 * ρ + 1) 0)) (xZero (F.dJ ρ h)), r ∈ grpAt (G.V (.grid (2 * ρ + 1) 0)) (· = v) ∧ ∃ k ∈ lev G (.grid (2 * ρ + 1) 0), k ∈ grpAt (G.V (.grid (2 * ρ + 1) 0)) (· = v) ∧ g = r * k := by
-  first | exact @GlobalTheory.OneCosetBFPlace.one_coset_place | exact GlobalTheory.OneCosetBFPlace.one_coset_place | (intros; apply GlobalTheory.OneCosetBFPlace.one_coset_place <;> assumption)
+  first | exact @GlobalTheory.OneCosetBFPlace.one_coset_place
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.BesselLevelOneCosetAtPlaceStatement =====
@@ -1931,7 +1931,7 @@ open scoped nonZeroDivisors ContDiff
 open GlobalTheory.AscFin
 
 theorem _root_.GlobalTheory.T.besselLevel_oneCoset_at_exceptionalPlaces : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D.R.m), ∀ g ∈ grpAt _ (fun v => v ∈ G.pl.S0), Cond (F.dJ ρ h) (pcBF W F ρ h) (xZero (F.dJ ρ h)) (yBF F ρ h) W.ψ (fun v => v ∈ G.pl.S0) g → ∃ r ∈ Rgrp _ (xZero (F.dJ ρ h)), r ∈ grpAt _ (fun v => v ∈ G.pl.S0) ∧ ∃ k ∈ lev G (.grid (2 * ρ + 1) 0), k ∈ grpAt _ (fun v => v ∈ G.pl.S0) ∧ g = r * k := by
-  first | exact @GlobalTheory.OneCosetBF.one_coset_bf | exact GlobalTheory.OneCosetBF.one_coset_bf | (intros; apply GlobalTheory.OneCosetBF.one_coset_bf <;> assumption)
+  first | exact @GlobalTheory.OneCosetBF.one_coset_bf
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.TwistedOperators.BesselLevelOneCosetAtExceptionalPlacesStatement =====

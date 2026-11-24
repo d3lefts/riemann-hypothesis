@@ -279,7 +279,7 @@ theorem _root_.GlobalTheory.T.exists_level_curvePhase_eq_of_close : ∀ {D : D7}
   ∀ {a d : ℕ} (x : Formalism.MainNotions.StandardLatticesGL3.GA D a) (y : Formalism.MainNotions.StandardLatticesGL3.GA D d) (z : Matrix (Fin d) (Fin a) D.host.E),
   ∃ n : ℕ, 0 < n ∧ ∀ z', Formalism.MainNotions.StandardLatticesGL3.CloseTo D cc n (x : GL (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) (y : GL (Fin d) (Formalism.MainNotions.StandardLatticesGL3.AE D)) z z' →
     Formalism.MainNotions.StandardLatticesGL3.wdPh D (tor0 D cc δ) (pt D (tor0 D cc δ) δ z') = Formalism.MainNotions.StandardLatticesGL3.wdPh D (tor0 D cc δ) (pt D (tor0 D cc δ) δ z) := by
-  first | exact @GlobalTheory.PhaseMove.phase_eq | exact GlobalTheory.PhaseMove.phase_eq | (intros; apply GlobalTheory.PhaseMove.phase_eq <;> assumption)
+  first | exact @GlobalTheory.PhaseMove.phase_eq
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsLevelCurvePhaseEqOfCloseStatement =====
@@ -308,7 +308,7 @@ theorem _root_.GlobalTheory.T.heisenbergTranslate_fixes_theta_deepLevel : ∀ {D
   ∀ F : WO S T → ℂ, IsThetaFunO ψ S T F → ∀ z : Matrix (Fin d) (Fin a) D.host.E,
   ∃ n : ℕ, 0 < n ∧ ∀ z', Formalism.MainNotions.StandardLatticesGL3.CloseTo D cc n (x : GL (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) (y : GL (Fin d) (Formalism.MainNotions.StandardLatticesGL3.AE D)) z z' →
     heisO ψ S T (actO S T g h (finPt hS hT r z) - finPt hS hT r z') F = F := by
-  first | exact @GlobalTheory.LevelTr.level_translate | exact GlobalTheory.LevelTr.level_translate | (intros; apply GlobalTheory.LevelTr.level_translate <;> assumption)
+  first | exact @GlobalTheory.LevelTr.level_translate
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeisenbergTranslateFixesThetaDeepLevelStatement =====
@@ -504,7 +504,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem _root_.GlobalTheory.T.exists_nsmul_symplecticPairing_character_trivial : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), Continuous ψ → (∀ x, ‖ψ x‖ = 1) →
     ∀ (S T : HSp D) (A0 : WO S T), ∃ N : ℕ, 0 < N ∧ ∀ v : WO S T, (∀ i j, infPart D (v i j) = 0) →
       (∀ i j, GlobalTheory.BotClassDict.finQ D (v i j) ∈ Formalism.MainNotions.StandardLatticesGL3.OhE D) → ψ (symplOH S T A0 (N • v)) = 1 := by
-  first | exact @GlobalTheory.FinCharInt.char_sympl_nsmul_int | exact GlobalTheory.FinCharInt.char_sympl_nsmul_int | (intros; apply GlobalTheory.FinCharInt.char_sympl_nsmul_int <;> assumption)
+  first | exact @GlobalTheory.FinCharInt.char_sympl_nsmul_int
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNsmulSymplecticPairingCharacterTrivialStatement =====
@@ -597,7 +597,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem _root_.GlobalTheory.T.exists_pos_nat_mul_inv_idealLattice_mem_integral : ∀ {D : D7} (cc : Ideal (𝓞 D.host.K)) (r : D.host.E), ∃ M : ℕ, 0 < M ∧
     ∀ t ∈ Formalism.MainNotions.StandardLatticesGL3.IhE D cc, (M : Formalism.MainNotions.StandardLatticesGL3.AE D) * (Formalism.MainNotions.StandardLatticesGL3.inc D r⁻¹ * t) ∈ Formalism.MainNotions.StandardLatticesGL3.OhE D := by
-  first | exact @GlobalTheory.NormSum.IdealDenom.exists_nat_mul_inv_mul_mem | exact GlobalTheory.NormSum.IdealDenom.exists_nat_mul_inv_mul_mem | (intros; apply GlobalTheory.NormSum.IdealDenom.exists_nat_mul_inv_mul_mem <;> assumption)
+  first | exact @GlobalTheory.NormSum.IdealDenom.exists_nat_mul_inv_mul_mem
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsPosNatMulInvIdealLatticeMemIntegralStatement =====
@@ -819,7 +819,7 @@ theorem _root_.GlobalTheory.T.standardChar_halfSymplectic_movedFinitePoint_trivi
   ∀ z : Matrix (Fin d) (Fin a) D.host.E,
   ∃ n : ℕ, 0 < n ∧ ∀ z', Formalism.MainNotions.StandardLatticesGL3.CloseTo D cc n (x : GL (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) (y : GL (Fin d) (Formalism.MainNotions.StandardLatticesGL3.AE D)) z z' →
     ψ (symplOH S T (finPt hS hT r z') (actO S T g h (finPt hS hT r z) - finPt hS hT r z')) = 1 := by
-  first | exact @GlobalTheory.MovedTrChar.psi_sympl_moved_eq_one | exact GlobalTheory.MovedTrChar.psi_sympl_moved_eq_one | (intros; apply GlobalTheory.MovedTrChar.psi_sympl_moved_eq_one <;> assumption)
+  first | exact @GlobalTheory.MovedTrChar.psi_sympl_moved_eq_one
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardCharHalfSymplecticMovedFinitePointTriviaStatement =====
@@ -929,7 +929,7 @@ theorem _root_.GlobalTheory.T.weilPair_moves_phasedHeisenbergTranslate : ∀ {D 
   ∃ n : ℕ, 0 < n ∧ ∀ z', Formalism.MainNotions.StandardLatticesGL3.CloseTo D cc n (x : GL (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D)) (y : GL (Fin d) (Formalism.MainNotions.StandardLatticesGL3.AE D)) z z' →
     Formalism.MainNotions.StandardLatticesGL3.wdPh D (tor0 D cc δ) (pt D (tor0 D cc δ) δ z) • om (g, h) (heisO ψ S T (finPt hS hT r z) f₀) =
       Formalism.MainNotions.StandardLatticesGL3.wdPh D (tor0 D cc δ) (pt D (tor0 D cc δ) δ z') • heisO ψ S T (finPt hS hT r z') (om (g, h) f₀) := by
-  first | exact @GlobalTheory.MovedTr.moved_translate | exact GlobalTheory.MovedTr.moved_translate | (intros; apply GlobalTheory.MovedTr.moved_translate <;> assumption)
+  first | exact @GlobalTheory.MovedTr.moved_translate
 end -- clump:auto
 end -- clump:auto
 -- ===== end clump member: Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilPairMovesPhasedHeisenbergTranslateStatement =====
