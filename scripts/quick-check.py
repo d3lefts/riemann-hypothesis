@@ -42,6 +42,10 @@ def imports(path):
                 else: cleaned.append(raw_line[i]); i += 1
             line = ''.join(cleaned).strip()
             if not line or line in ('module', 'prelude'): continue
+            # These tokens can continue an import header on the next line.
+            if (re.fullmatch(r'(?:public|meta)(?:\s+(?:public|meta))*', line)
+                    or re.match(r'(?:module|prelude)\b', line)):
+                raise ValueError('unsupported import header')
             match = re.fullmatch(r'(?:public\s+)?(?:meta\s+)?import(?:\s+all)?\s+([\w\']+(?:\.[\w\']+)*)', line)
             if match: result.append(match[1]); continue
             if re.match(r'(?:public\s+|meta\s+)*import\b', line): raise ValueError('unsupported import header')

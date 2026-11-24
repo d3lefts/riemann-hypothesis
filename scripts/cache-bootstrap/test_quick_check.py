@@ -20,6 +20,16 @@ class QuickChecks(unittest.TestCase):
   self.assertEqual(q.imports(p),['B','C'])
  def test_real_module_system_header(self):
   p=self.source('A','module\npublic meta import Foo\nimport all Bar\n\ndef x:=1\n');self.assertEqual(q.imports(p),['Foo','Bar'])
+ def test_split_header_modifiers_defer_closure(self):
+  for prefix in ('module\npublic', 'module\nmeta', 'module\npublic /- nested /- c -/ -/ meta', 'module public', 'module\nprelude public'):
+   with self.subTest(prefix=prefix):
+    self.source('A',prefix+'\nimport Foo\nimport Bar\n')
+    with self.assertRaisesRegex(ValueError,'unsupported import header'):
+     q.dependency_closure(self.root,['A'])
+ def test_modified_body_command_ends_header(self):
+  for body in ('public section','public meta section','meta def x := 1'):
+   with self.subTest(body=body):
+    self.assertEqual(q.imports(self.source('A','module\nimport Foo\n'+body+'\n')),['Foo'])
  def test_unrecognized_header_deferred(self):
   p=self.source('A','module\nimport «A B»\n')
   with self.assertRaisesRegex(ValueError,'unsupported'):q.imports(p)
